@@ -74,20 +74,20 @@ local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 	Ent2 = Ent2 or Ent1
 
 	-- Does Ent1 have a constraint system?
-	if ( !Ent1:IsWorld() && IsValid( Ent1.ConstraintSystem ) && !Ent1.ConstraintSystem.__BadConstraintSystem ) then
+	if ( !Ent1:IsWorld() and IsValid( Ent1.ConstraintSystem ) and !Ent1.ConstraintSystem.__BadConstraintSystem ) then
 		System = Ent1.ConstraintSystem
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( IsValid( System ) && ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( IsValid( System ) and ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- Does Ent2 have a constraint system?
-	if ( !IsValid( System ) && !Ent2:IsWorld() && IsValid( Ent2.ConstraintSystem ) && !Ent2.ConstraintSystem.__BadConstraintSystem ) then
+	if ( !IsValid( System ) and !Ent2:IsWorld() and IsValid( Ent2.ConstraintSystem ) and !Ent2.ConstraintSystem.__BadConstraintSystem ) then
 		System = Ent2.ConstraintSystem
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( IsValid( System ) && ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( IsValid( System ) and ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- No constraint system yet (Or they're both full) - make a new one
 	if ( !IsValid( System ) ) then
@@ -176,7 +176,7 @@ function RemoveConstraints( Ent, Type )
 		Ent:IsConstrained()
 	end
 
-	local bool = i != 0
+	local bool = i ~= 0
 	return bool, i
 
 end
@@ -210,7 +210,7 @@ function RemoveAll( Ent )
 	-- Update the network var and clear the constraints table.
 	Ent:IsConstrained()
 
-	local bool = i != 0
+	local bool = i ~= 0
 	return bool, i
 
 end
@@ -225,13 +225,13 @@ function Find( Ent1, Ent2, Type, Bone1, Bone2 )
 
 	for k, v in pairs( Ent1.Constraints ) do
 
-		if ( IsValid( v ) && v.Type == Type ) then
+		if ( IsValid( v ) and v.Type == Type ) then
 
-			if ( v.Ent1 == Ent1 && v.Ent2 == Ent2 && v.Bone1 == Bone1 && v.Bone2 == Bone2 ) then
+			if ( v.Ent1 == Ent1 and v.Ent2 == Ent2 and v.Bone1 == Bone1 and v.Bone2 == Bone2 ) then
 				return v
 			end
 
-			if ( v.Ent2 == Ent1 && v.Ent1 == Ent2 && v.Bone2 == Bone1 && v.Bone1 == Bone2 ) then
+			if ( v.Ent2 == Ent1 and v.Ent1 == Ent2 and v.Bone2 == Bone1 and v.Bone1 == Bone2 ) then
 				return v
 			end
 
@@ -251,7 +251,7 @@ function CanConstrain( Ent, Bone )
 
 	if ( !Ent ) then return false end
 	if ( !isnumber( Bone ) ) then return false end
-	if ( !Ent:IsWorld() && !Ent:IsValid() ) then return false end
+	if ( !Ent:IsWorld() and !Ent:IsValid() ) then return false end
 	if ( !IsValid( Ent:GetPhysicsObjectNum( Bone ) ) ) then return false end
 
 	return true
@@ -310,7 +310,7 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	if ( isstring( material ) ) then
 		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
 		local mat = Material( material )
-		if ( mat && !string.find( mat:GetShader():lower(), "spritecard", nil, true ) && !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
+		if ( mat and !string.find( mat:GetShader():lower(), "spritecard", nil, true ) and !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
 			rope:SetKeyValue( "RopeMaterial", material )
 		end
 	end
@@ -353,7 +353,7 @@ function AddConstraintTable( Ent, Constraint, Ent2, Ent3, Ent4 )
 
 	if ( !IsValid( Constraint ) ) then return end
 
-	if ( IsValid( Ent ) || ( Ent && Ent:IsWorld() ) ) then
+	if ( IsValid( Ent ) or ( Ent and Ent:IsWorld() ) ) then
 
 		Ent.Constraints = Ent.Constraints or {}
 		table.insert( Ent.Constraints, Constraint )
@@ -361,7 +361,7 @@ function AddConstraintTable( Ent, Constraint, Ent2, Ent3, Ent4 )
 
 	end
 
-	if ( Ent2 && Ent2 != Ent ) then
+	if ( Ent2 and Ent2 ~= Ent ) then
 		AddConstraintTable( Ent2, Constraint, Ent3, Ent4 )
 	end
 
@@ -375,14 +375,14 @@ function AddConstraintTableNoDelete( Ent, Constraint, Ent2, Ent3, Ent4 )
 
 	if ( !IsValid( Constraint ) ) then return end
 
-	if ( IsValid( Ent ) || ( Ent && Ent:IsWorld() ) ) then
+	if ( IsValid( Ent ) or ( Ent and Ent:IsWorld() ) ) then
 
 		Ent.Constraints = Ent.Constraints or {}
 		table.insert( Ent.Constraints, Constraint )
 
 	end
 
-	if ( Ent2 && Ent2 != Ent ) then
+	if ( Ent2 and Ent2 ~= Ent ) then
 		AddConstraintTableNoDelete( Ent2, Constraint, Ent3, Ent4 )
 	end
 
@@ -395,7 +395,7 @@ end
 ------------------------------------------------------------------------]]
 function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
-	if ( Ent1 == Ent2 && Bone1 == Bone2 ) then return false end
+	if ( Ent1 == Ent2 and Bone1 == Bone2 ) then return false end
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
@@ -478,7 +478,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	local Constraint = nil
 
 	-- Make Constraint
-	if ( Phys1 != Phys2 ) then
+	if ( Phys1 ~= Phys2 ) then
 
 		onStartConstraint( Ent1, Ent2 )
 
@@ -507,7 +507,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	if ( rigid ) then kv.Type = 2 end
 
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
-	if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
+	if ( IsValid( rope ) and color ) then rope:SetColor( color ) end
 
 	-- What the fuck
 	if ( !Constraint ) then Constraint, rope = rope, nil end
@@ -557,7 +557,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 	local rope = nil
 
 	-- Make Constraint
-	if ( Phys1 != Phys2 ) then
+	if ( Phys1 ~= Phys2 ) then
 
 		onStartConstraint( Ent1, Ent2 )
 
@@ -605,7 +605,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 			Type = 0
 		}
 		rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
-		if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
+		if ( IsValid( rope ) and color ) then rope:SetColor( color ) end
 
 	end
 
@@ -623,7 +623,7 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	if ( !CanConstrain( Ent, Bone ) ) then return false end
 	-- This was once here. Is there any specific reason this was the case?
 	--if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
-	if ( Ent:IsPlayer() || Ent:IsWorld() ) then return false end
+	if ( Ent:IsPlayer() or Ent:IsWorld() ) then return false end
 	if ( !angularlimit or angularlimit < 0 ) then return end
 
 	local Phys = Ent:GetPhysicsObjectNum( Bone )
@@ -739,7 +739,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 		Subdiv = 1,
 	}
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
-	if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
+	if ( IsValid( rope ) and color ) then rope:SetColor( color ) end
 
 	-- If we have a static anchor - delete it when we die.
 	if ( StaticAnchor ) then
@@ -795,10 +795,10 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "hingeaxis", tostring( WPos2 ) )
-		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
-		if ( torquelimit && torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
-		if ( friction && friction > 0 ) then Constraint:SetKeyValue( "hingefriction", friction ) end
-		if ( nocollide && nocollide > 0 ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
+		if ( forcelimit and forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
+		if ( torquelimit and torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
+		if ( friction and friction > 0 ) then Constraint:SetKeyValue( "hingefriction", friction ) end
+		if ( nocollide and nocollide > 0 ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 		Constraint:Spawn()
 		Constraint:Activate()
@@ -852,8 +852,8 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 	onStartConstraint( Ent1, Ent2 )
 
 		local flags = 0
-		if ( onlyrotation && onlyrotation > 0 ) then flags = flags + 2 end
-		if ( nocollide && nocollide > 0 ) then flags = flags + 1 end
+		if ( onlyrotation and onlyrotation > 0 ) then flags = flags + 2 end
+		if ( nocollide and nocollide > 0 ) then flags = flags + 1 end
 
 		local Constraint = ents.Create( "phys_ragdollconstraint" )
 		ConstraintCreated( Constraint )
@@ -864,11 +864,11 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 		Constraint:SetKeyValue( "ymax", ymax )
 		Constraint:SetKeyValue( "zmin", zmin )
 		Constraint:SetKeyValue( "zmax", zmax )
-		if ( xfric && xfric > 0 ) then Constraint:SetKeyValue( "xfriction", xfric ) end
-		if ( yfric && yfric > 0 ) then Constraint:SetKeyValue( "yfriction", yfric ) end
-		if ( zfric && zfric > 0 ) then Constraint:SetKeyValue( "zfriction", zfric ) end
-		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
-		if ( torquelimit && torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
+		if ( xfric and xfric > 0 ) then Constraint:SetKeyValue( "xfriction", xfric ) end
+		if ( yfric and yfric > 0 ) then Constraint:SetKeyValue( "yfriction", yfric ) end
+		if ( zfric and zfric > 0 ) then Constraint:SetKeyValue( "zfriction", zfric ) end
+		if ( forcelimit and forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
+		if ( torquelimit and torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
 		Constraint:SetKeyValue( "spawnflags", flags )
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 		Constraint:Spawn()
@@ -1230,9 +1230,9 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 		local Constraint = ents.Create( "phys_ballsocket" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos )
-		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
-		if ( torquelimit && torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
-		if ( nocollide && nocollide > 0 ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
+		if ( forcelimit and forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
+		if ( torquelimit and torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
+		if ( nocollide and nocollide > 0 ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 		Constraint:Spawn()
 		Constraint:Activate()
@@ -1374,7 +1374,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	}
 	Constraint:SetTable( ctable )
 
-	if ( Constraint && Constraint != rope ) then
+	if ( Constraint and Constraint ~= rope ) then
 
 		local slider
 
@@ -1521,7 +1521,7 @@ function HasConstraints( ent )
 
 	end
 
-	return count != 0
+	return count ~= 0
 
 end
 
@@ -1547,7 +1547,7 @@ function GetTable( ent )
 
 		for i = 1, 6 do
 
-			if ( con[ "Ent" .. i ] && ( con[ "Ent" .. i ]:IsWorld() or con[ "Ent" .. i ]:IsValid() ) ) then
+			if ( con[ "Ent" .. i ] and ( con[ "Ent" .. i ]:IsWorld() or con[ "Ent" .. i ]:IsValid() ) ) then
 
 				con.Entity[ i ] = {}
 				con.Entity[ i ].Index = con[ "Ent" .. i ]:EntIndex()
@@ -1646,7 +1646,7 @@ function GetAllConstrainedEntities( ent, ResultTable )
 
 	local ResultTable = ResultTable or {}
 
-	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
+	if ( !IsValid( ent ) and !ent:IsWorld() ) then return end
 	if ( ResultTable[ ent ] ) then return end
 
 	ResultTable[ ent ] = ent

@@ -32,7 +32,7 @@ function debug.Trace()
 		local info = debug.getinfo( level, "Sln" )
 		if ( !info ) then break end
 
-		if ( info.what ) == "C" then
+		if info.what == "C" then
 
 			Msg( string.format( "\t%i: C function\t\"%s\"\n", level, info.name ) )
 

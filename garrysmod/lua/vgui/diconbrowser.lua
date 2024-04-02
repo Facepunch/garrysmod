@@ -88,13 +88,13 @@ function PANEL:Fill()
 
 			btn.Paint = function( pnl, w, h )
 
-				if ( self.m_pSelectedIcon != pnl ) then return end
+				if ( self.m_pSelectedIcon ~= pnl ) then return end
 
 				derma.SkinHook( "Paint", "Selection", pnl, w, h )
 
 			end
 
-			if ( !self.m_pSelectedIcon || self.m_strSelectedIcon == btn:GetImage() ) then
+			if ( !self.m_pSelectedIcon or self.m_strSelectedIcon == btn:GetImage() ) then
 				self.m_pSelectedIcon = btn
 				--self:ScrollToChild( btn )
 			end
@@ -113,7 +113,7 @@ function PANEL:FilterByText( text )
 
 	for k, v in ipairs( self.IconLayout:GetChildren() ) do
 
-		v:SetVisible( v.FilterText:find( text_lwr ) != nil )
+		v:SetVisible( v.FilterText:find( text_lwr ) ~= nil )
 
 	end
 

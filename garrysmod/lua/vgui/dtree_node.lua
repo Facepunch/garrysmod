@@ -63,7 +63,7 @@ function PANEL:InternalDoClick()
 	if ( self:DoClick() ) then return end
 	if ( self:GetRoot():DoClick( self ) ) then return end
 
-	if ( !self.m_bDoubleClickToOpen || ( SysTime() - self.fLastClick < 0.3 ) ) then
+	if ( !self.m_bDoubleClickToOpen or ( SysTime() - self.fLastClick < 0.3 ) ) then
 		self:SetExpanded( !self:GetExpanded() )
 	end
 
@@ -74,7 +74,7 @@ end
 function PANEL:OnNodeSelected( node )
 
 	local parent = self:GetParentNode()
-	if ( IsValid( parent ) && parent.OnNodeSelected ) then
+	if ( IsValid( parent ) and parent.OnNodeSelected ) then
 		parent:OnNodeSelected( node )
 	end
 
@@ -129,7 +129,7 @@ function PANEL:AnimSlide( anim, delta, data )
 end
 
 function PANEL:SetIcon( str )
-	if ( !str || str == "" ) then return end
+	if ( !str or str == "" ) then return end
 
 	self.Icon:SetImage( str )
 end
@@ -186,7 +186,7 @@ function PANEL:SetExpanded( bExpand, bSurpressAnimation )
 	self.animSlide:Stop()
 
 	-- Populate the child folders..
-	if ( bExpand && self:PopulateChildrenAndSelf( true ) ) then
+	if ( bExpand and self:PopulateChildrenAndSelf( true ) ) then
 		-- Could really do with a 'loading' thing here
 		return
 	end
@@ -275,7 +275,7 @@ function PANEL:PerformLayout()
 
 		self.Expander:SetPos( 2, 0 )
 		self.Expander:SetSize( 15, 15 )
-		self.Expander:SetVisible( self:HasChildren() || self:GetForceShowExpander() )
+		self.Expander:SetVisible( self:HasChildren() or self:GetForceShowExpander() )
 		self.Expander:SetZPos( 10 )
 
 	end
@@ -292,7 +292,7 @@ function PANEL:PerformLayout()
 		self.Label:SetTextInset( self.Expander.x + self.Expander:GetWide() + 4, 0 )
 	end
 
-	if ( !IsValid( self.ChildNodes ) || !self.ChildNodes:IsVisible() ) then
+	if ( !IsValid( self.ChildNodes ) or !self.ChildNodes:IsVisible() ) then
 		self:SetTall( LineHeight )
 		return
 	end
@@ -318,7 +318,7 @@ function PANEL:CreateChildNodes()
 		self.ChildNodes:InvalidateLayout()
 
 		-- Root node should never be closed
-		if ( !self.ChildNodes:HasChildren() && !self:IsRootNode() ) then
+		if ( !self.ChildNodes:HasChildren() and !self:IsRootNode() ) then
 			self:SetExpanded( false )
 		end
 
@@ -415,10 +415,10 @@ function PANEL:MakeFolder( strFolder, strPath, bShowFiles, strWildCard, bDontFor
 
 	-- Store the data
 	self:SetNeedsPopulating( true )
-	self:SetWildCard( strWildCard || "*" )
+	self:SetWildCard( strWildCard or "*" )
 	self:SetFolder( strFolder )
 	self:SetPathID( strPath )
-	self:SetShowFiles( bShowFiles || false )
+	self:SetShowFiles( bShowFiles or false )
 
 	self:CreateChildNodes()
 	self:SetNeedsChildSearch( true )
@@ -499,10 +499,10 @@ function PANEL:FilePopulate( bAndChildren, bExpand )
 	local path = self:GetPathID()
 	local wildcard = self:GetWildCard()
 
-	if ( !folder || !wildcard || !path ) then return false end
+	if ( !folder or !wildcard or !path ) then return false end
 
 	local files, folders = file.Find( string.Trim( folder .. "/" .. wildcard, "/" ), path )
-	if ( folders && folders[ 1 ] == "/" ) then table.remove( folders, 1 ) end
+	if ( folders and folders[ 1 ] == "/" ) then table.remove( folders, 1 ) end
 
 	self:SetNeedsPopulating( false )
 	self:SetNeedsChildSearch( false )
@@ -600,7 +600,7 @@ function PANEL:CleanList()
 
 	for k, panel in pairs( self.Items ) do
 
-		if ( !IsValid( panel ) || panel:GetParent() != self.pnlCanvas ) then
+		if ( !IsValid( panel ) or panel:GetParent() ~= self.pnlCanvas ) then
 			self.Items[k] = nil
 		end
 

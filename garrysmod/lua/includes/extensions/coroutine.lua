@@ -22,5 +22,5 @@ function coroutine.wait( seconds )
 		coroutine.yield()
 
 	end
-	  
+
 end

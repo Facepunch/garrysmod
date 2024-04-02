@@ -21,7 +21,7 @@ function meta:AnimationThinkInternal()
 
 	local systime = SysTime()
 
-	if ( self.Term && self.Term <= systime ) then self:Remove() return end
+	if ( self.Term and self.Term <= systime ) then self:Remove() return end
 	if ( !self.m_AnimList ) then return end -- This can happen if we only have term
 
 	for k, anim in pairs( self.m_AnimList ) do
@@ -38,7 +38,7 @@ function meta:AnimationThinkInternal()
 				-- Ease of -1 == ease in out
 				if ( anim.Ease < 0 ) then
 					Frac = Fraction ^ ( 1.0 - ( ( Fraction - 0.5 ) ) )
-				elseif ( anim.Ease > 0 && anim.Ease < 1 ) then
+				elseif ( anim.Ease > 0 and anim.Ease < 1 ) then
 					Frac = 1 - ( ( 1 - Fraction ) ^ ( 1 / anim.Ease ) )
 				end
 
@@ -148,7 +148,7 @@ end
 -----------------------------------------------------------]]
 function meta:MoveTo( x, y, length, delay, ease, callback )
 
-	if ( self.x == x && self.y == y ) then return end
+	if ( self.x == x and self.y == y ) then return end
 
 	local anim = self:NewAnimation( length, delay, ease, callback )
 	anim.Pos = Vector( x, y, 0 )
@@ -162,7 +162,7 @@ local function SizeThink( anim, panel, fraction )
 
 	local size = LerpVector( fraction, anim.StartSize, anim.Size )
 
-	if ( anim.SizeX && anim.SizeY ) then
+	if ( anim.SizeX and anim.SizeY ) then
 		panel:SetSize( size.x, size.y )
 	elseif ( anim.SizeX ) then
 		panel:SetWide( size.x )
@@ -183,8 +183,8 @@ function meta:SizeTo( w, h, length, delay, ease, callback )
 
 	local anim = self:NewAnimation( length, delay, ease, callback )
 
-	anim.SizeX = w != -1
-	anim.SizeY = h != -1
+	anim.SizeX = w ~= -1
+	anim.SizeY = h ~= -1
 
 	if ( !anim.SizeX ) then  w = self:GetWide() end
 	if ( !anim.SizeY ) then  h = self:GetTall() end
@@ -301,7 +301,7 @@ local function LerpPositions( anim, panel )
 	local Distance = panel.TargetPos - Pos
 	local Length = Distance:Length()
 
-	if ( anim.UseGravity && Length > 1 ) then
+	if ( anim.UseGravity and Length > 1 ) then
 		Speed = Speed * ( Length * 0.1 )
 	else
 		Speed = Speed * 10

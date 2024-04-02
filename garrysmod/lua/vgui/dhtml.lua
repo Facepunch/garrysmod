@@ -21,7 +21,7 @@ end
 
 function PANEL:Think()
 
-	if ( self.JS && !self:IsLoading() ) then
+	if ( self.JS and !self:IsLoading() ) then
 
 		for k, v in pairs( self.JS ) do
 
@@ -48,7 +48,7 @@ function PANEL:QueueJavascript( js )
 	--
 	-- Can skip using the queue if there's nothing else in it
 	--
-	if ( !self.JS && !self:IsLoading() ) then
+	if ( !self.JS and !self:IsLoading() ) then
 		return self:RunJavascript( js )
 	end
 
@@ -70,7 +70,7 @@ function PANEL:ConsoleMessage( msg, file, line )
 	--
 	-- Handle error messages
 	--
-	if ( isstring( file ) && isnumber( line ) ) then
+	if ( isstring( file ) and isnumber( line ) ) then
 
 		if ( #file > 64 ) then
 			file = string.sub( file, 1, 64 ) .. "..."
@@ -85,7 +85,7 @@ function PANEL:ConsoleMessage( msg, file, line )
 	--
 	-- Handle Lua execution
 	--
-	if ( self.m_bAllowLua && msg:StartsWith( "RUNLUA:" ) ) then
+	if ( self.m_bAllowLua and msg:StartsWith( "RUNLUA:" ) ) then
 
 		local strLua = msg:sub( 8 )
 

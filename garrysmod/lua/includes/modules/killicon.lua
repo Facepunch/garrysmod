@@ -62,7 +62,7 @@ end
 
 function Exists( name )
 
-	return Icons[name] != nil
+	return Icons[name] ~= nil
 
 end
 
@@ -147,7 +147,7 @@ local function DrawInternal( x, y, name, alpha, noCorrections, dontEqualizeHeigh
 	if ( t.type == TYPE_FONT ) then
 
 		-- HACK: Default font killicons are anchored to the top, so correct for it
-		if ( noCorrections && !dontEqualizeHeight ) then
+		if ( noCorrections and !dontEqualizeHeight ) then
 			local _, h2 = GetSize( name, !dontEqualizeHeight )
 			y = y + ( h - h2 ) / 2
 		end

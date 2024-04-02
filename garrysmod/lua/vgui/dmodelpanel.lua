@@ -79,7 +79,7 @@ function PANEL:DrawModel()
 	local curparent = self
 	local leftx, topy = self:LocalToScreen( 0, 0 )
 	local rightx, bottomy = self:LocalToScreen( self:GetWide(), self:GetTall() )
-	while ( curparent:GetParent() != nil ) do
+	while ( curparent:GetParent() ~= nil ) do
 		curparent = curparent:GetParent()
 
 		local x1, y1 = curparent:LocalToScreen( 0, 0 )
@@ -98,7 +98,7 @@ function PANEL:DrawModel()
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 
 	local ret = self:PreDrawModel( self.Entity )
-	if ( ret != false ) then
+	if ( ret ~= false ) then
 		self.Entity:DrawModel()
 		self:PostDrawModel( self.Entity )
 	end

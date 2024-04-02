@@ -126,9 +126,9 @@ function PANEL:DoRightClick()
 
 	local tabs = DermaMenu()
 	for k, v in pairs( self:GetPropertySheet().Items ) do
-		if ( !v || !IsValid( v.Tab ) || !v.Tab:IsVisible() ) then continue end
+		if ( !v or !IsValid( v.Tab ) or !v.Tab:IsVisible() ) then continue end
 		local option = tabs:AddOption( v.Tab:GetText(), function()
-			if ( !v || !IsValid( v.Tab ) || !IsValid( self:GetPropertySheet() ) || !IsValid( self:GetPropertySheet().tabScroller ) ) then return end
+			if ( !v or !IsValid( v.Tab ) or !IsValid( self:GetPropertySheet() ) or !IsValid( self:GetPropertySheet().tabScroller ) ) then return end
 			v.Tab:DoClick()
 			self:GetPropertySheet().tabScroller:ScrollToChild( v.Tab )
 		end )
@@ -211,7 +211,7 @@ end
 
 function PANEL:SetActiveTab( active )
 
-	if ( !IsValid( active ) || self.m_pActiveTab == active ) then return end
+	if ( !IsValid( active ) or self.m_pActiveTab == active ) then return end
 
 	if ( IsValid( self.m_pActiveTab ) ) then
 
@@ -253,12 +253,12 @@ end
 
 function PANEL:CrossFade( anim, delta, data )
 
-	if ( !data || !IsValid( data.OldTab ) || !IsValid( data.NewTab ) ) then return end
+	if ( !data or !IsValid( data.OldTab ) or !IsValid( data.NewTab ) ) then return end
 
 	local old = data.OldTab:GetPanel()
 	local new = data.NewTab:GetPanel()
 
-	if ( !IsValid( old ) && !IsValid( new ) ) then return end
+	if ( !IsValid( old ) and !IsValid( new ) ) then return end
 
 	if ( anim.Finished ) then
 		if ( IsValid( old ) ) then
@@ -406,7 +406,7 @@ function PANEL:CloseTab( tab, bRemovePanelToo )
 
 	for k, v in pairs( self.Items ) do
 
-		if ( v.Tab != tab ) then continue end
+		if ( v.Tab ~= tab ) then continue end
 
 		table.remove( self.Items, k )
 
@@ -414,7 +414,7 @@ function PANEL:CloseTab( tab, bRemovePanelToo )
 
 	for k, v in pairs( self.tabScroller.Panels ) do
 
-		if ( v != tab ) then continue end
+		if ( v ~= tab ) then continue end
 
 		table.remove( self.tabScroller.Panels, k )
 

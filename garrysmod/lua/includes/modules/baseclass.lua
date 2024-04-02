@@ -33,11 +33,11 @@ function Get( name )
 
 	if ( ENT )	then ENT.Base = name end
 	if ( SWEP ) then SWEP.Base = name end
-	
+
 	BaseClassTable[name] = BaseClassTable[name] or {}
-	
+
 	return BaseClassTable[name]
-	
+
 end
 
 function Set( name, tab )

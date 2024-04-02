@@ -22,8 +22,8 @@ if SERVER then
 
 		end
 
-		if ( Data.GravityToggle != nil )	then Bone:EnableGravity( Data.GravityToggle ) end
-		if ( Data.Material != nil )			then Bone:SetMaterial( Data.Material ) end
+		if ( Data.GravityToggle ~= nil )	then Bone:EnableGravity( Data.GravityToggle ) end
+		if ( Data.Material ~= nil )			then Bone:SetMaterial( Data.Material ) end
 
 		-- todo: Rename/Implement
 		--[[
@@ -56,7 +56,7 @@ if SERVER then
 	local function MagnetOff( pl, magnet )
 
 		if ( !IsValid( magnet ) ) then return false end
-		if ( magnet:GetTable().toggle != 0 ) then return true end
+		if ( magnet:GetTable().toggle ~= 0 ) then return true end
 
 		magnet:Fire( "TurnOff", "" , 0 )
 
@@ -69,7 +69,7 @@ if SERVER then
 
 		if ( !IsValid( magnet ) ) then return false end
 
-		if ( magnet:GetTable().toggle != 0 ) then
+		if ( magnet:GetTable().toggle ~= 0 ) then
 
 			magnet:GetTable().toggle_state = !magnet:GetTable().toggle_state
 
@@ -101,8 +101,8 @@ if SERVER then
 		if ( material ) then magnet:SetMaterial( material ) end
 
 		local spawnflags = 4
-		if ( nopull && nopull > 0 ) then spawnflags = spawnflags - 4 end		-- no pull required: remove the suck flag
-		if ( allowrot && allowrot > 0 ) then spawnflags = spawnflags + 8 end
+		if ( nopull and nopull > 0 ) then spawnflags = spawnflags - 4 end		-- no pull required: remove the suck flag
+		if ( allowrot and allowrot > 0 ) then spawnflags = spawnflags + 8 end
 
 		if ( maxobjects ) then magnet:SetKeyValue( "maxobjects", maxobjects ) end
 		if ( strength ) then magnet:SetKeyValue( "forcelimit", strength ) end
@@ -116,10 +116,10 @@ if SERVER then
 			local Phys = magnet:GetPhysicsObject()
 			if ( Vel ) then Phys:SetVelocity( Vel ) end
 			if ( aVel ) then Phys:AddAngleVelocity( aVel ) end
-			Phys:EnableMotion( frozen != true )
+			Phys:EnableMotion( frozen ~= true )
 		end
 
-		if ( alwayson && alwayson > 0 ) then
+		if ( alwayson and alwayson > 0 ) then
 			magnet:Input( "TurnOn", nil, nil, nil )
 		else
 			magnet:Input( "TurnOff", nil, nil, nil )

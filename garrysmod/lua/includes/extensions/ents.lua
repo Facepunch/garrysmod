@@ -13,7 +13,7 @@ function ents.FindByClassAndParent( classname, entity )
 
 		local p = v:GetParent()
 		if ( !IsValid(p) ) then continue end
-		if ( p != entity ) then continue end
+		if ( p ~= entity ) then continue end
 
 		table.insert( out, v )
 

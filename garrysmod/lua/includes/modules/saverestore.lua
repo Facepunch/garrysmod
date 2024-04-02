@@ -108,7 +108,7 @@ local function IsWritable( k, v )
 
 	local itype = GetType( k )
 	if ( itype == TYPE_NONE ) then return false end
-	if ( itype == TYPE_STRING && k == "SR_Recursion" ) then return false end
+	if ( itype == TYPE_STRING and k == "SR_Recursion" ) then return false end
 
 	local itype = GetType( v )
 	if ( itype == TYPE_NONE ) then return false end
@@ -407,7 +407,7 @@ function LoadGlobal( restore )
 	restore:EndBlock()
 
 
-	while ( name != "EndGlobal" ) do
+	while ( name ~= "EndGlobal" ) do
 
 		name = restore:StartBlock()
 

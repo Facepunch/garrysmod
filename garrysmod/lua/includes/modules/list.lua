@@ -17,7 +17,7 @@ function GetForEdit( listid, nocreate )
 
 	local list = Lists[ listid ]
 
-	if ( !nocreate && list == nil ) then
+	if ( !nocreate and list == nil ) then
 		list = {}
 		Lists[ listid ] = list
 	end
@@ -61,6 +61,6 @@ function HasEntry( listid, key )
 
 	local list = Lists[ listid ]
 
-	return list != nil && list[ key ] != nil
+	return list ~= nil and list[ key ] ~= nil
 
 end

@@ -81,19 +81,19 @@ function meta:StretchToParent( l, u, r, d )
 
 	local w, h = self:GetParent():GetSize()
 
-	if ( l != nil ) then
+	if ( l ~= nil ) then
 		self.x = l
 	end
 
-	if ( u != nil ) then
+	if ( u ~= nil ) then
 		self.y = u
 	end
 
-	if ( r != nil ) then
+	if ( r ~= nil ) then
 		self:SetWide( w - self.x - r )
 	end
 
-	if ( d != nil ) then
+	if ( d ~= nil ) then
 		self:SetTall( h - self.y - d )
 	end
 
@@ -330,7 +330,7 @@ end
 function meta:SizeToContentsY( addval )
 
 	local w, h = self:GetContentSize()
-	if ( !w || !h ) then return end
+	if ( !w or !h ) then return end
 
 	self:SetTall( h + ( addval or 0 ) )
 
@@ -342,7 +342,7 @@ end
 function meta:SizeToContentsX( addval )
 
 	local w, h = self:GetContentSize()
-	if ( !w || !h ) then return end
+	if ( !w or !h ) then return end
 
 	self:SetWide( w + ( addval or 0 ) )
 
@@ -387,13 +387,13 @@ function meta:GetSkin()
 	end
 
 	-- We have a default skin
-	if ( !skin && self.m_ForceSkinName ) then
+	if ( !skin and self.m_ForceSkinName ) then
 		skin = derma.GetNamedSkin( self.m_ForceSkinName )
 	end
 
 	-- No skin, inherit from parent
 	local parent = self:GetParent()
-	if ( !skin && IsValid( parent ) ) then
+	if ( !skin and IsValid( parent ) ) then
 		skin = parent:GetSkin()
 	end
 
@@ -444,7 +444,7 @@ function meta:GetChildPosition( pnl )
 	local x = 0
 	local y = 0
 
-	while ( IsValid( pnl ) && pnl != self ) do
+	while ( IsValid( pnl ) and pnl ~= self ) do
 
 		x = x + pnl.x
 		y = y + pnl.y
@@ -499,7 +499,7 @@ function meta:CopyBase( pnl )
 	self:CopyBounds( pnl )
 	self:Dock( pnl:GetDock() )
 
-	// TODO. More.
+	-- TODO. More.
 
 end
 

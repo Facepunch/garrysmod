@@ -28,7 +28,7 @@ function Register( t, name, derived )
 			Call( "OnReloaded" );
 		end
 
-		if ( CurrentGM.BaseClass && CurrentGM.BaseClass.FolderName == name ) then
+		if ( CurrentGM.BaseClass and CurrentGM.BaseClass.FolderName == name ) then
 			table.Merge( CurrentGM.BaseClass, t )
 			Call( "OnReloaded" );
 		end
@@ -36,7 +36,7 @@ function Register( t, name, derived )
 	end
 
 	-- This gives the illusion of inheritence
-	if ( name != "base" ) then
+	if ( name ~= "base" ) then
 
 		local basetable = Get( derived )
 		if ( basetable ) then
@@ -76,7 +76,7 @@ function Call( name, ... )
 	local CurrentGM = gmod.GetGamemode()
 
 	-- If the gamemode function doesn't exist just return false
-	if ( CurrentGM && CurrentGM[name] == nil ) then return false end
+	if ( CurrentGM and CurrentGM[name] == nil ) then return false end
 
 	return hook.Call( name, CurrentGM, ... )
 

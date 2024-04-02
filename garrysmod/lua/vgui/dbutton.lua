@@ -86,7 +86,7 @@ end
 function PANEL:UpdateColours( skin )
 
 	if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-	if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+	if ( self:IsDown() or self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
 	if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
 
 	return self:SetTextStyleColor( skin.Colours.Button.Normal )

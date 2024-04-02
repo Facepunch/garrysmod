@@ -204,7 +204,7 @@ end
 
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
-	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
+	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) ~= 2 ) then
 		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
 	else
 		ClearProblem( "mat_hdr_level" )
@@ -222,7 +222,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 		ClearProblem( "mat_specular" )
 	end
 
-	if ( math.floor( math.abs( GetConVarNumber( "gmod_mcore_test" ) ) ) != 0 ) then
+	if ( math.floor( math.abs( GetConVarNumber( "gmod_mcore_test" ) ) ) ~= 0 ) then
 		FireProblem( { id = "gmod_mcore_test", text = "#problem.gmod_mcore_test", type = "config" } )
 	else
 		ClearProblem( "gmod_mcore_test" )
@@ -241,7 +241,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	-- These are not saved, but still affect gameplay
-	if ( GetConVarNumber( "cl_forwardspeed" ) != 10000 or GetConVarNumber( "cl_sidespeed" ) != 10000 or GetConVarNumber( "cl_backspeed" ) != 10000 ) then
+	if ( GetConVarNumber( "cl_forwardspeed" ) ~= 10000 or GetConVarNumber( "cl_sidespeed" ) ~= 10000 or GetConVarNumber( "cl_backspeed" ) ~= 10000 ) then
 		FireProblem( { id = "cl_speeds", text = "#problem.cl_speeds", type = "config", fix = function()
 			RunConsoleCommand( "cl_forwardspeed", "10000" )
 			RunConsoleCommand( "cl_sidespeed", "10000" )
@@ -251,7 +251,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 		ClearProblem( "cl_speeds" )
 	end
 
-	if ( render.GetDXLevel() != 95 and render.GetDXLevel() != 90 ) then
+	if ( render.GetDXLevel() ~= 95 and render.GetDXLevel() ~= 90 ) then
 		FireProblem( { id = "mat_dxlevel", text = language.GetPhrase( "problem.mat_dxlevel" ):format( render.GetDXLevel() ), type = "config" } )
 	else
 		ClearProblem( "mat_dxlevel" )

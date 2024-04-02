@@ -80,13 +80,13 @@ function PANEL:Add( strName )
 
 		if ( panel.AltLine ) then
 
-			if ( panel.Depressed || panel.m_bSelected ) then	return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
+			if ( panel.Depressed or panel.m_bSelected ) then	return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
 			if ( panel.Hovered ) then							return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
 			return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text )
 
 		end
 
-		if ( panel.Depressed || panel.m_bSelected ) then	return panel:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
+		if ( panel.Depressed or panel.m_bSelected ) then	return panel:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
 		if ( panel.Hovered ) then							return panel:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
 		return panel:SetTextStyleColor( skin.Colours.Category.Line.Text )
 
@@ -134,7 +134,7 @@ end
 function PANEL:UpdateAltLines()
 
 	for k, v in ipairs( self:GetChildren() ) do
-		v.AltLine = k % 2 != 1
+		v.AltLine = k % 2 ~= 1
 	end
 
 end
@@ -181,7 +181,7 @@ function PANEL:SetContents( pContents )
 
 		self.OldHeight = self:GetTall()
 
-	elseif ( self:GetExpanded() && IsValid( self.Contents ) && self.Contents:GetTall() < 1 ) then
+	elseif ( self:GetExpanded() and IsValid( self.Contents ) and self.Contents:GetTall() < 1 ) then
 
 		self.Contents:SizeToChildren( false, true )
 		self.OldHeight = self.Contents:GetTall()
@@ -198,7 +198,7 @@ function PANEL:SetExpanded( expanded )
 	self.m_bSizeExpanded = tobool( expanded )
 
 	if ( !self:GetExpanded() ) then
-		if ( !self.animSlide.Finished && self.OldHeight ) then return end
+		if ( !self.animSlide.Finished and self.OldHeight ) then return end
 		self.OldHeight = self:GetTall()
 	end
 
@@ -250,12 +250,12 @@ function PANEL:PerformLayout()
 
 	if ( self:GetExpanded() ) then
 
-		if ( IsValid( self.Contents ) && #self.Contents:GetChildren() > 0 ) then self.Contents:SizeToChildren( false, true ) end
+		if ( IsValid( self.Contents ) and #self.Contents:GetChildren() > 0 ) then self.Contents:SizeToChildren( false, true ) end
 		self:SizeToChildren( false, true )
 
 	else
 
-		if ( IsValid( self.Contents ) && !self.OldHeight ) then self.OldHeight = self.Contents:GetTall() end
+		if ( IsValid( self.Contents ) and !self.OldHeight ) then self.OldHeight = self.Contents:GetTall() end
 		self:SetTall( self:GetHeaderHeight() )
 
 	end
@@ -282,7 +282,7 @@ function PANEL:AnimSlide( anim, delta, data )
 	self:InvalidateParent()
 
 	if ( anim.Started ) then
-		if ( !IsValid( self.Contents ) && ( self.OldHeight || 0 ) < self.Header:GetTall() ) then
+		if ( !IsValid( self.Contents ) and ( self.OldHeight or 0 ) < self.Header:GetTall() ) then
 			-- We are not using self.Contents and our designated height is less
 			-- than the header size, something is clearly wrong, try to rectify
 			self.OldHeight = 0

@@ -15,7 +15,7 @@ function PANEL:Init()
 	for key, ctrl in SortedPairs( Controls ) do
 
 		local Ctrls = _G[ key ]
-		if ( Ctrls && Ctrls.GenerateExample ) then
+		if ( Ctrls and Ctrls.GenerateExample ) then
 
 			Ctrls:GenerateExample( key, self.ContentPanel, w, h )
 

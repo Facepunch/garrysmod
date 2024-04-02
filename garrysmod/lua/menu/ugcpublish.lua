@@ -173,7 +173,7 @@ function PANEL:Setup( ugcType, file, imageFile, handler )
 					if ( pnl == s or !val ) then continue end
 					pnl:SetValue( false ) -- Validate that only 1 is selected
 				end
-				if ( !val && num == 0 ) then s:SetValue( true ) end -- Don't allow to unselect the only 1 selected
+				if ( !val and num == 0 ) then s:SetValue( true ) end -- Don't allow to unselect the only 1 selected
 			end
 
 			Derma_Hook( rb.Button, "Paint", "Paint", "RadioButton" )
@@ -232,7 +232,7 @@ function PANEL:GetChosenTag()
 end
 
 function PANEL:CheckInput()
-	if ( self.TagsPerType[ self.ugcType ] && !self:GetChosenTag() ) then return self.Publish:SetEnabled( false ) end
+	if ( self.TagsPerType[ self.ugcType ] and !self:GetChosenTag() ) then return self.Publish:SetEnabled( false ) end
 	if ( self.Title:GetText() == "" ) then return self.Publish:SetEnabled( false ) end
 
 	self.Publish:SetEnabled( true )
@@ -279,7 +279,7 @@ end
 function PANEL:DoPublish()
 	local ChosenTag = self:GetChosenTag()
 
-	if ( self.TagsPerType[ self.ugcType ] && ChosenTag == nil ) then
+	if ( self.TagsPerType[ self.ugcType ] and ChosenTag == nil ) then
 		self:DisplayError( "You must choose a tag!")
 		return
 	end

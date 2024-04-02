@@ -31,7 +31,7 @@ function PANEL:SetOnViewMaterial( MatName, MatNameBackup )
 end
 
 function PANEL:Unloaded()
-	return self.m_strMatName != nil
+	return self.m_strMatName ~= nil
 end
 
 function PANEL:LoadMaterial()
@@ -49,7 +49,7 @@ function PANEL:DoLoadMaterial()
 	local mat = Material( self:GetMatName() )
 	self:SetMaterial( mat )
 
-	if ( self.m_Material:IsError() && self:GetFailsafeMatName() ) then
+	if ( self.m_Material:IsError() and self:GetFailsafeMatName() ) then
 		self:SetMaterial( Material( self:GetFailsafeMatName() ) )
 	end
 
@@ -90,7 +90,7 @@ end
 
 function PANEL:SetImage( strImage, strBackup )
 
-	if ( strBackup && !file.Exists( "materials/" .. strImage .. ".vmt", "GAME" ) && !file.Exists( "materials/" .. strImage, "GAME" ) ) then
+	if ( strBackup and !file.Exists( "materials/" .. strImage .. ".vmt", "GAME" ) and !file.Exists( "materials/" .. strImage, "GAME" ) ) then
 		strImage = strBackup
 	end
 
@@ -168,7 +168,7 @@ function PANEL:PaintAt( x, y, dw, dh )
 		local h = self.ActualHeight
 
 		-- Image is bigger than panel, shrink to suitable size
-		if ( w > dw && h > dh ) then
+		if ( w > dw and h > dh ) then
 
 			if ( w > dw ) then
 

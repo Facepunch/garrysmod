@@ -21,7 +21,7 @@ local function GetCrosshairColor()
 end
 
 local function DrawCrosshairRect( color, x0, y0, x1, y1, bAdditive )
-	if ( GetConVarNumber( "cl_crosshair_drawoutline" ) != 0 ) then
+	if ( GetConVarNumber( "cl_crosshair_drawoutline" ) ~= 0 ) then
 		local flThick = GetConVarNumber( "cl_crosshair_outlinethickness" )
 		surface.SetDrawColor( 0, 0, 0, color.a )
 		surface.DrawRect( x0 - flThick, y0 - flThick, (x1 + flThick) - x0 + flThick, (y1 + flThick) - y0 + flThick )
@@ -73,7 +73,7 @@ local function DrawSimpleCrosshairPreview( x, y )
 	DrawCrosshairRect( color, x0, iInnerBottom, x1, iOuterBottom, bAdditive )
 
 	-- draw dot
-	if ( GetConVarNumber( "cl_crosshairdot" ) != 0 ) then
+	if ( GetConVarNumber( "cl_crosshairdot" ) ~= 0 ) then
 		x0 = x - iBarThickness / 2
 		x1 = x0 + iBarThickness
 		y0 = y - iBarThickness / 2
@@ -121,7 +121,7 @@ concommand.Add( "crosshair_setup", function()
 			DrawSimpleCrosshairPreview( w / 2, h / 2 )
 		end
 
-		if ( GetConVarNumber( "hud_quickinfo" ) != 0 ) then
+		if ( GetConVarNumber( "hud_quickinfo" ) ~= 0 ) then
 			surface.SetFont( "QuickInfoLarge" )
 			surface.SetTextColor( 255, 208, 64, 200 )
 			local width, height = surface.GetTextSize( "{ ]" )
@@ -153,7 +153,7 @@ concommand.Add( "crosshair_setup", function()
 		for i, pnl in pairs( settings:GetChildren() ) do
 			if ( pnl.ClassName == "DColorMixer" and style == 0 ) then
 				pnl:SetVisible( false )
-			elseif ( pnl.ClassName == "DNumSlider" and style != 2 ) then
+			elseif ( pnl.ClassName == "DNumSlider" and style ~= 2 ) then
 				pnl:SetVisible( false )
 			elseif ( pnl.ClassName == "DCheckBoxLabel" ) then
 				pnl:SetVisible( pnl.Button.m_strConVar == "hud_quickinfo" or style == 2 )

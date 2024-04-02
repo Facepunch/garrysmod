@@ -46,7 +46,7 @@ end
 
 function PANEL:Think()
 
-	if ( self.NextPoll && self.NextPoll > CurTime() ) then return end
+	if ( self.NextPoll and self.NextPoll > CurTime() ) then return end
 
 	self.NextPoll = CurTime() + 0.1
 

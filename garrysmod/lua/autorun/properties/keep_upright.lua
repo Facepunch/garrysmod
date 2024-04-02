@@ -9,7 +9,7 @@ properties.Add( "keepupright", {
 	Filter = function( self, ent, ply )
 
 		if ( !IsValid( ent ) ) then return false end
-		if ( ent:GetClass() != "prop_physics" ) then return false end
+		if ( ent:GetClass() ~= "prop_physics" ) then return false end
 		if ( ent:GetNWBool( "IsUpright" ) ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "keepupright", ent ) ) then return false end
 
@@ -31,7 +31,7 @@ properties.Add( "keepupright", {
 		if ( !IsValid( ent ) ) then return end
 		if ( !IsValid( ply ) ) then return end
 		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
-		if ( ent:GetClass() != "prop_physics" ) then return end
+		if ( ent:GetClass() ~= "prop_physics" ) then return end
 		if ( ent:GetNWBool( "IsUpright" ) ) then return end
 		if ( !self:Filter( ent, ply ) ) then return end
 
@@ -65,7 +65,7 @@ properties.Add( "keepupright_stop", {
 
 	Filter = function( self, ent )
 		if ( !IsValid( ent ) ) then return false end
-		if ( ent:GetClass() != "prop_physics" ) then return false end
+		if ( ent:GetClass() ~= "prop_physics" ) then return false end
 		if ( !ent:GetNWBool( "IsUpright" ) ) then return false end
 		return true
 	end,
@@ -85,7 +85,7 @@ properties.Add( "keepupright_stop", {
 		if ( !IsValid( ent ) ) then return end
 		if ( !IsValid( ply ) ) then return end
 		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
-		if ( ent:GetClass() != "prop_physics" ) then return end
+		if ( ent:GetClass() ~= "prop_physics" ) then return end
 		if ( !ent:GetNWBool( "IsUpright" ) ) then return end
 
 		constraint.RemoveConstraints( ent, "Keepupright" )

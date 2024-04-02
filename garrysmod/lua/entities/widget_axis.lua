@@ -107,7 +107,7 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowZ:SetLocalAngles( Vector( 0, 0, 1 ):Angle() )
 	self.ArrowZ:SetAxisIndex( 3 )
 
-	if ( self.IsScaleArrow && EntName == "widget_axis_arrow" ) then
+	if ( self.IsScaleArrow and EntName == "widget_axis_arrow" ) then
 		if ( IsValid( self.ArrowX ) ) then self.ArrowX:SetIsScaleArrow( true ) end
 		if ( IsValid( self.ArrowY ) ) then self.ArrowY:SetIsScaleArrow( true ) end
 		if ( IsValid( self.ArrowZ ) ) then self.ArrowZ:SetIsScaleArrow( true ) end

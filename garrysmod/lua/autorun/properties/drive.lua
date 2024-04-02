@@ -8,13 +8,13 @@ properties.Add( "drive", {
 
 	Filter = function( self, ent, ply )
 
-		if ( !IsValid( ent ) || !IsValid( ply ) ) then return false end
-		if ( ent:IsPlayer() || IsValid( ply:GetVehicle() ) ) then return false end
+		if ( !IsValid( ent ) or !IsValid( ply ) ) then return false end
+		if ( ent:IsPlayer() or IsValid( ply:GetVehicle() ) ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "drive", ent ) ) then return false end
 		if ( !gamemode.Call( "CanDrive", ply, ent ) ) then return false end
 
 		-- We cannot drive these, maybe this should have a custom GetEntityDriveMode?
-		if ( ent:GetClass() == "prop_vehicle_jeep" || ent:GetClass() == "prop_vehicle_jeep_old" ) then return false end
+		if ( ent:GetClass() == "prop_vehicle_jeep" or ent:GetClass() == "prop_vehicle_jeep_old" ) then return false end
 
 		-- Make sure nobody else is driving this or we can get into really invalid states
 		for id, pl in ipairs( player.GetAll() ) do

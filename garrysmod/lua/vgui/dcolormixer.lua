@@ -192,7 +192,7 @@ end
 
 function PANEL:SetConVarA( cvar )
 	self.m_ConVarA = cvar
-	self:SetAlphaBar( cvar != nil )
+	self:SetAlphaBar( cvar ~= nil )
 end
 
 function PANEL:PerformLayout( w, h )
@@ -253,25 +253,25 @@ function PANEL:UpdateColor( color )
 	self.Alpha:SetBarColor( ColorAlpha( color, 255 ) )
 	self.Alpha:SetValue( color.a / 255 )
 
-	if ( color.r != self.txtR:GetValue() ) then
+	if ( color.r ~= self.txtR:GetValue() ) then
 		self.txtR.notuserchange = true
 		self.txtR:SetValue( color.r )
 		self.txtR.notuserchange = nil
 	end
 
-	if ( color.g != self.txtG:GetValue() ) then
+	if ( color.g ~= self.txtG:GetValue() ) then
 		self.txtG.notuserchange = true
 		self.txtG:SetValue( color.g )
 		self.txtG.notuserchange = nil
 	end
 
-	if ( color.b != self.txtB:GetValue() ) then
+	if ( color.b ~= self.txtB:GetValue() ) then
 		self.txtB.notuserchange = true
 		self.txtB:SetValue( color.b )
 		self.txtB.notuserchange = nil
 	end
 
-	if ( color.a != self.txtA:GetValue() ) then
+	if ( color.a ~= self.txtA:GetValue() ) then
 		self.txtA.notuserchange = true
 		self.txtA:SetValue( color.a )
 		self.txtA.notuserchange = nil

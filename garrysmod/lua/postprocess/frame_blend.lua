@@ -26,7 +26,7 @@ local function FixupCurve( num )
 
 	overflow = overflow * math.Rand( 0, 0.5 )
 
-	for i=0, num-1 do
+	for i = 0, num-1 do
 
 		FrameCurves[ num ][ i ] = FrameCurves[ num ][ i ] + ( overflow / num )
 
@@ -42,7 +42,7 @@ local function FrameCurve( f, num )
 
 	local curve = {}
 
-	for i=0, num-1 do
+	for i = 0, num-1 do
 
 		local delta = ( i + 1 ) / num
 		curve[ i ] = math.sin( delta * math.pi )
@@ -51,7 +51,7 @@ local function FrameCurve( f, num )
 
 	FrameCurves[ num ] = curve
 
-	for i=0, 10 do
+	for i = 0, 10 do
 		FixupCurve( num )
 	end
 
@@ -108,7 +108,7 @@ frame_blend.ShouldSkipFrame = function()
 
 	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
 
-	if ( NumFramesTaken < padding || NumFramesTaken >= pp_fb_frames:GetInt() - padding ) then
+	if ( NumFramesTaken < padding or NumFramesTaken >= pp_fb_frames:GetInt() - padding ) then
 		return true
 	end
 
@@ -182,7 +182,7 @@ hook.Add( "PostRender", "RenderFrameBlend", function()
 		render.CopyRenderTargetToTexture( texFB )
 		frame_blend.BlendFrame()
 	end
-	
+
 	frame_blend.AddFrame()
 	frame_blend.DrawPreview()
 

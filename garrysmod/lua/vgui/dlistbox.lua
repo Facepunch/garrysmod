@@ -126,10 +126,10 @@ end
 
 function PANEL:SelectItem( item, onlyme )
 
-	if ( !onlyme && item:IsSelected() ) then return end
+	if ( !onlyme and item:IsSelected() ) then return end
 
 	-- Unselect old items
-	if ( onlyme || !self.m_bSelectMultiple ) then
+	if ( onlyme or !self.m_bSelectMultiple ) then
 
 		for k, v in pairs( self.SelectedItems ) do
 			v:SetSelected( false )

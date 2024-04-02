@@ -118,7 +118,7 @@ end
 
 function PANEL:SetValue( val )
 
-	val = math.Clamp( tonumber( val ) || 0, self:GetMin(), self:GetMax() )
+	val = math.Clamp( tonumber( val ) or 0, self:GetMin(), self:GetMax() )
 
 	if ( self:GetValue() == val ) then return end
 
@@ -147,13 +147,13 @@ end
 --
 function PANEL:IsEditing()
 
-	return self.Scratch:IsEditing() || self.TextArea:IsEditing() || self.Slider:IsEditing()
+	return self.Scratch:IsEditing() or self.TextArea:IsEditing() or self.Slider:IsEditing()
 
 end
 
 function PANEL:IsHovered()
 
-	return self.Scratch:IsHovered() || self.TextArea:IsHovered() || self.Slider:IsHovered() || vgui.GetHoveredPanel() == self
+	return self.Scratch:IsHovered() or self.TextArea:IsHovered() or self.Slider:IsHovered() or vgui.GetHoveredPanel() == self
 
 end
 
@@ -178,9 +178,9 @@ end
 
 function PANEL:ValueChanged( val )
 
-	val = math.Clamp( tonumber( val ) || 0, self:GetMin(), self:GetMax() )
+	val = math.Clamp( tonumber( val ) or 0, self:GetMin(), self:GetMax() )
 
-	if ( self.TextArea != vgui.GetKeyboardFocus() ) then
+	if ( self.TextArea ~= vgui.GetKeyboardFocus() ) then
 		self.TextArea:SetValue( self.Scratch:GetTextValue() )
 	end
 

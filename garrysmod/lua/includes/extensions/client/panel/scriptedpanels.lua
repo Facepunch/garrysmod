@@ -17,7 +17,7 @@ function vgui.GetControlTable( classname )
 end
 
 function vgui.Exists( classname )
-	return PanelFactory[ classname ] != nil
+	return PanelFactory[ classname ] ~= nil
 end
 
 function vgui.Create( classname, parent, name )
@@ -86,7 +86,7 @@ function vgui.Register( classname, mtable, base )
 	local mt = {}
 	mt.__index = function( t, k )
 
-		if ( PanelFactory[ mtable.Base ] && PanelFactory[ mtable.Base ][k] ) then return PanelFactory[ mtable.Base ][k] end
+		if ( PanelFactory[ mtable.Base ] and PanelFactory[ mtable.Base ][k] ) then return PanelFactory[ mtable.Base ][k] end
 		return panel_metatable[k]
 
 	end

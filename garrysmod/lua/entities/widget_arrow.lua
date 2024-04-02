@@ -39,7 +39,7 @@ function ENT:OverlayRender()
 
 	local c = self:GetColor()
 
-	if ( !self:IsHovered() && !self:IsPressed() ) then
+	if ( !self:IsHovered() and !self:IsPressed() ) then
 		c.r = c.r * 0.5
 		c.g = c.g * 0.5
 		c.b = c.b * 0.5

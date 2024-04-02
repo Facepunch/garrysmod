@@ -17,8 +17,8 @@ properties.Add( "motioncontrol_ragdoll", {
 
 	Filter = function( self, ent, ply )
 
-		if ( CLIENT && !motionsensor ) then return false end
-		if ( CLIENT && !motionsensor.IsAvailable() ) then return false end
+		if ( CLIENT and !motionsensor ) then return false end
+		if ( CLIENT and !motionsensor.IsAvailable() ) then return false end
 		if ( !ent:IsRagdoll() ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "motioncontrol_ragdoll", ent ) ) then return false end
 
@@ -48,7 +48,7 @@ properties.Add( "motioncontrol_ragdoll", {
 
 		-- Do not spam please!
 		local timeout = playerTimeouts[ player ]
-		if ( timeout && timeout.time > CurTime() ) then
+		if ( timeout and timeout.time > CurTime() ) then
 			if ( !timeout.sentMessage ) then
 				ServerLog( "Player " .. tostring( player ) .. " tried to use 'motioncontrol_ragdoll' property too rapidly!\n" )
 				player:PrintMessage( HUD_PRINTTALK, "Please wait at least 0.2 seconds before trying to control another ragdoll." )

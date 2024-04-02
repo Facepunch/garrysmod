@@ -36,7 +36,7 @@ end
 
 function PANEL:IsRestricted()
 
-	return self.RestrictX && ConVar_RestrictFingers:GetBool()
+	return self.RestrictX and ConVar_RestrictFingers:GetBool()
 
 end
 
@@ -69,7 +69,7 @@ end
 
 function PANEL:OnMousePressed( mousecode )
 
-	if ( mousecode == MOUSE_RIGHT || mousecode == MOUSE_MIDDLE ) then
+	if ( mousecode == MOUSE_RIGHT or mousecode == MOUSE_MIDDLE ) then
 		self:SetValue( 0, 0 )
 		self:UpdateConVar()
 
@@ -115,7 +115,7 @@ end
 function PANEL:Think()
 
 	-- Update shift state change when cursor not moving
-	if ( self.Dragging && self.LastShiftState != input.IsShiftDown() ) then
+	if ( self.Dragging and self.LastShiftState ~= input.IsShiftDown() ) then
 
 		self.LastShiftState = input.IsShiftDown()
 		self:OnCursorMoved( self:LocalCursorPos() )
@@ -139,10 +139,10 @@ function PANEL:Paint( w, h )
 	if ( !IsValid( wep ) ) then return end
 
 	local ent = wep:GetNWEntity( "HandEntity" )
-	if ( !IsValid( ent ) || !ent.FingerIndex ) then return end
+	if ( !IsValid( ent ) or !ent.FingerIndex ) then return end
 
 	local boneid = ent.FingerIndex[ tonumber( self.VarName:sub( 8 ) ) + 1 + 15 * wep:GetNWInt( "HandNum", 0 ) ]
-	if ( !boneid || ent:GetBoneName( boneid ) == "__INVALIDBONE__" ) then return end
+	if ( !boneid or ent:GetBoneName( boneid ) == "__INVALIDBONE__" ) then return end
 
 	local v = self:GetValue()
 

@@ -128,7 +128,7 @@ end
 
 function PANEL:Think()
 
-	if ( IsValid( self.VBar ) && self.VBar:Changed() ) then
+	if ( IsValid( self.VBar ) and self.VBar:Changed() ) then
 
 		local MaxOffset = self.pnlCanvas:GetTall() - self:GetTall()
 		self.YOffset = MaxOffset * self.VBar:Value()
@@ -161,7 +161,7 @@ end
 
 function PANEL:OnMousePressed( mcode )
 
-	if ( mcode == MOUSE_RIGHT && IsValid( self.VBar ) ) then
+	if ( mcode == MOUSE_RIGHT and IsValid( self.VBar ) ) then
 		self.VBar:Grip()
 	end
 

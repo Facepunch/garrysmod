@@ -64,7 +64,7 @@ function PANEL:FindFreeTile( x, y, w, h )
 			-- If we're on the first part
 			-- and the line is empty
 			-- add it. It might be too long to fit on anyway
-			if ( i == 1 && self:FitsInTile( i, y, w, h ) ) then
+			if ( i == 1 and self:FitsInTile( i, y, w, h ) ) then
 				return i, y
 			end
 
@@ -156,8 +156,8 @@ function PANEL:PerformLayout()
 
 	local ShouldLayout = false
 
-	if ( self.LastW != self:GetWide() ) then ShouldLayout = true end
-	if ( self.LastH != self:GetTall() ) then ShouldLayout = true end
+	if ( self.LastW ~= self:GetWide() ) then ShouldLayout = true end
+	if ( self.LastH ~= self:GetTall() ) then ShouldLayout = true end
 
 	self.LastW = self:GetWide()
 	self.LastH = self:GetTall()

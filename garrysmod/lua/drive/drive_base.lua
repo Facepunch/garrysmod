@@ -45,7 +45,7 @@ drive.Register( "drive_base",
 		local neworigin = view.origin - self.Player:EyeAngles():Forward() * dist
 
 
-		if ( hullsize && hullsize > 0 ) then
+		if ( hullsize and hullsize > 0 ) then
 
 			--
 			-- > Trace a hull (cube) from the old eye position to the new

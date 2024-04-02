@@ -14,14 +14,14 @@ function gmsave.LoadMap( strMapContents, ply, callback )
 
 	-- Strip off any crap before the start char..
 	local startchar = string.find( strMapContents, '' )
-	if ( startchar != nil ) then
+	if ( startchar ~= nil ) then
 		strMapContents = string.sub( strMapContents, startchar )
 	end
 
 	-- Strip off any crap after the end char..
 	strMapContents = strMapContents:reverse()
 	local startchar = string.find( strMapContents, '' )
-	if ( startchar != nil ) then
+	if ( startchar ~= nil ) then
 		strMapContents = string.sub( strMapContents, startchar )
 	end
 	strMapContents = strMapContents:reverse()
@@ -90,7 +90,7 @@ function gmsave.SaveMap( ply )
 
 	for k, v in ipairs( Ents ) do
 
-		if ( !gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) || v:IsConstraint() ) then
+		if ( !gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) or v:IsConstraint() ) then
 			Ents[ k ] = nil
 		end
 

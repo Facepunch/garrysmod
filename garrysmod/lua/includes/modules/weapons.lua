@@ -13,7 +13,7 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
+		elseif ( k ~= "BaseClass" and istable( t[ k ] ) and istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
@@ -74,7 +74,7 @@ function Register( t, name )
 	-- If we're reloading this entity class
 	-- then refresh all the existing entities.
 	--
-	if ( old != nil ) then
+	if ( old ~= nil ) then
 
 		-- Update SWEP table of entities that are based on this SWEP
 		for _, e in ipairs( ents.GetAll() ) do
@@ -147,7 +147,7 @@ function Get( name, retval )
 
 	-- If we're not derived from ourselves (a base weapon)
 	-- then derive from our 'Base' weapon.
-	if ( retval.Base != name ) then
+	if ( retval.Base ~= name ) then
 
 		local base = Get( retval.Base )
 

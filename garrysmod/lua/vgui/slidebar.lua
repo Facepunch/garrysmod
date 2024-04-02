@@ -139,13 +139,13 @@ function PANEL:Think()
 		return
 	end
 
-	if ( self.Velocity != 0 ) then
+	if ( self.Velocity ~= 0 ) then
 
 		self.HasChanged = true
 		self.Pos = self.Pos + ( self.Velocity / self.BarScale ) * FrameTime()
 		self.Velocity = math.Approach( self.Velocity, 0, FrameTime() * self.Velocity * 10 )
 
-		if ( self.Pos < 0 || self.Pos > 1 ) then
+		if ( self.Pos < 0 or self.Pos > 1 ) then
 
 			--self.Velocity = self.Velocity * -0.5
 			self.Velocity = 0
@@ -159,7 +159,7 @@ end
 
 function PANEL:Paint()
 
-	if ( !self.Enabled || self.BarScale <= 0 ) then	return true	end
+	if ( !self.Enabled or self.BarScale <= 0 ) then	return true	end
 
 	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 200, 200, 200, 100 ) )
 
@@ -182,7 +182,7 @@ function PANEL:Grip( direction )
 	if ( !self.Enabled ) then return end
 
 	self:MouseCapture( true )
-	self.DragDirection = direction || ( -1 / self.BarScale )
+	self.DragDirection = direction or ( -1 / self.BarScale )
 	self.Dragging = 1
 	self.Velocity = 0
 	self.StartDraggingPos = gui.MouseY()

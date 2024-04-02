@@ -62,7 +62,7 @@ function PANEL:AddMenu( label )
 
 	b.OnCursorEntered = function()
 		local opened = self:GetOpenMenu()
-		if ( !IsValid( opened ) || opened == m ) then return end
+		if ( !IsValid( opened ) or opened == m ) then return end
 		opened:Hide()
 		b:DoClick()
 	end

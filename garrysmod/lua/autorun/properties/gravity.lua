@@ -6,7 +6,7 @@ local GravityDuplicator
 if ( SERVER ) then
 	function GravityDuplicator( ply, ent, data )
 
-		if ( !data || !data.enabled ) then
+		if ( !data or !data.enabled ) then
 
 			duplicator.ClearEntityModifier( ent, "gravity_property" )
 			return

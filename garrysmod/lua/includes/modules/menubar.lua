@@ -6,14 +6,14 @@ function menubar.Init()
 	menubar.Control = vgui.Create( "DMenuBar" )
 	menubar.Control:Dock( TOP )
 	menubar.Control:SetVisible( false )
-	
+
 	hook.Run( "PopulateMenuBar", menubar.Control )
 
 end
 
 function menubar.ParentTo( pnl )
 
-	// I don't like this
+	-- I don't like this
 	if ( !IsValid( menubar.Control ) ) then
 		menubar.Init()
 	end

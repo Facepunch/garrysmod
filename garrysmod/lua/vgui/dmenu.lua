@@ -107,10 +107,10 @@ function PANEL:OpenSubMenu( item, menu )
 
 	-- Do we already have a menu open?
 	local openmenu = self:GetOpenSubMenu()
-	if ( IsValid( openmenu ) && openmenu:IsVisible() ) then
+	if ( IsValid( openmenu ) and openmenu:IsVisible() ) then
 
 		-- Don't open it again!
-		if ( menu && openmenu == menu ) then return end
+		if ( menu and openmenu == menu ) then return end
 
 		-- Close it!
 		self:CloseSubMenu( openmenu )
@@ -195,7 +195,7 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 
 	RegisterDermaMenuForClose( self )
 
-	local maunal = x && y
+	local maunal = x and y
 
 	x = x or gui.MouseX()
 	y = y or gui.MouseY()
@@ -214,13 +214,13 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 
 	self:SetSize( w, h )
 
-	if ( y + h > ScrH() ) then y = ( ( maunal && ScrH() ) or ( y + OwnerHeight ) ) - h end
-	if ( x + w > ScrW() ) then x = ( ( maunal && ScrW() ) or x ) - w end
+	if ( y + h > ScrH() ) then y = ( ( maunal and ScrH() ) or ( y + OwnerHeight ) ) - h end
+	if ( x + w > ScrW() ) then x = ( ( maunal and ScrW() ) or x ) - w end
 	if ( y < 1 ) then y = 1 end
 	if ( x < 1 ) then x = 1 end
 
 	local p = self:GetParent()
-	if ( IsValid( p ) && p:IsModal() ) then
+	if ( IsValid( p ) and p:IsModal() ) then
 		-- Can't popup while we are parented to a modal panel
 		-- We will end up behind the modal panel in that case
 

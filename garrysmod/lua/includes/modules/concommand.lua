@@ -50,7 +50,7 @@ function Run( player, command, arguments, args )
 
 	local LowerCommand = string.lower( command )
 
-	if ( CommandList[ LowerCommand ] != nil ) then
+	if ( CommandList[ LowerCommand ] ~= nil ) then
 		CommandList[ LowerCommand ]( player, command, arguments, args )
 		return true
 	end
@@ -68,7 +68,7 @@ function AutoComplete( command, arguments )
 
 	local LowerCommand = string.lower( command )
 
-	if ( CompleteList[ LowerCommand ] != nil ) then
+	if ( CompleteList[ LowerCommand ] ~= nil ) then
 		return CompleteList[ LowerCommand ]( command, arguments )
 	end
 

@@ -85,7 +85,7 @@ function PANEL:SetEnabled( b )
 
 	-- We're probably changing the width of something in our parent
 	-- by appearing or hiding, so tell them to re-do their layout.
-	if ( self.Enabled != b ) then
+	if ( self.Enabled ~= b ) then
 
 		self:GetParent():InvalidateLayout()
 
@@ -136,7 +136,7 @@ function PANEL:AddScroll( dlta )
 	dlta = dlta * 25
 	self:SetScroll( self:GetScroll() + dlta )
 
-	return OldScroll != self:GetScroll()
+	return OldScroll ~= self:GetScroll()
 
 end
 

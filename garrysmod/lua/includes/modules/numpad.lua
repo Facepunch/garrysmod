@@ -173,7 +173,7 @@ end
 -----------------------------------------------------------]]
 function OnDown( ply, key, name, ... )
 
-	if ( !key || key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnDown' (number expected, got ", type( key ), ")" ) return end
+	if ( !key or key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnDown' (number expected, got ", type( key ), ")" ) return end
 	keys_in[ key ] = keys_in[ key ] or {}
 
 	local impulse = {}
@@ -191,7 +191,7 @@ end
 -----------------------------------------------------------]]
 function OnUp( ply, key, name, ... )
 
-	if ( !key || key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnUp' (number expected, got ", type( key ), ")" ) return end
+	if ( !key or key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnUp' (number expected, got ", type( key ), ")" ) return end
 	keys_out[ key ] = keys_out[ key ] or {}
 
 	local impulse = {}
@@ -213,7 +213,7 @@ local function RemoveFromKeyTable( tab, idx )
 
 		for k_, v_player in pairs( v_key ) do
 
-			if ( v_player[ idx ] != nil ) then
+			if ( v_player[ idx ] ~= nil ) then
 				v_player[ idx ] = nil
 			end
 

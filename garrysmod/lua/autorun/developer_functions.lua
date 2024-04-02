@@ -20,12 +20,12 @@ local function FindInTable( tab, find, parents, depth )
 
 			-- Recurse
 			if ( istable( v ) and
-				k != "_R" and
-				k != "_E" and
-				k != "_G" and
-				k != "_M" and
-				k != "_LOADED" and
-				k != "__index" ) then
+				k ~= "_R" and
+				k ~= "_E" and
+				k ~= "_G" and
+				k ~= "_M" and
+				k ~= "_LOADED" and
+				k ~= "__index" ) then
 
 				local NewParents = parents .. k .. "."
 				FindInTable( v, find, NewParents, depth )
@@ -127,7 +127,7 @@ if ( SERVER ) then
 	What am I looking at?
 -----------------------------------------------------------]]
 concommand.Add( "trace", function( ply )
-	if ( !game.SinglePlayer() && !ply:IsListenServerHost() ) then return end
+	if ( !game.SinglePlayer() and !ply:IsListenServerHost() ) then return end
 
 	local tr = util.TraceLine( {
 		start = ply:EyePos(),

@@ -127,14 +127,14 @@ function PANEL:OnCursorMoved( x, y )
 	x = math.Clamp( x - self:GetHoldPos(), self:GetLeftMin(), self:GetWide() - self:GetRightMin() - self:GetDividerWidth() )
 
 	self:SetLeftWidth( x )
-	if ( oldLeftWidth != x ) then self:InvalidateLayout() end
+	if ( oldLeftWidth ~= x ) then self:InvalidateLayout() end
 
 end
 
 function PANEL:Think()
 
 	-- If 2 or more panels use the same cookie name, make every panel resize automatically to the same size
-	if ( self._OldCookieW != self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) && !self:GetDragging() ) then
+	if ( self._OldCookieW ~= self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) and !self:GetDragging() ) then
 		self:LoadCookies()
 		self:InvalidateLayout()
 	end

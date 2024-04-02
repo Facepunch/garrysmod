@@ -29,7 +29,7 @@ function PANEL:SetModelList( modelList, conVar, dontSort, dontCallListConVars )
 
 		-- some model lists, like from wheels, have extra convars in the ModelList
 		-- we'll need to add those too
-		if ( !dontCallListConVars && istable( v ) ) then
+		if ( !dontCallListConVars and istable( v ) ) then
 			table.Merge( convars, v ) -- copy them in to new list
 		end
 

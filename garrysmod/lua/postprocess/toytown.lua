@@ -1,6 +1,6 @@
 
 local matToytown = Material( "pp/toytown-top" )
-//matToytown:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
+--matToytown:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 --[[---------------------------------------------------------
 	Register the convars that will control this effect

@@ -55,7 +55,7 @@ function OutQuad( x )
 end
 
 function InOutQuad( x )
-	return x < 0.5 && 2 * x ^ 2 || 1 - ( ( -2 * x + 2 ) ^ 2 ) / 2
+	return x < 0.5 and 2 * x ^ 2 or 1 - ( ( -2 * x + 2 ) ^ 2 ) / 2
 end
 
 function InCubic( x )
@@ -67,7 +67,7 @@ function OutCubic( x )
 end
 
 function InOutCubic( x )
-	return x < 0.5 && 4 * x ^ 3 || 1 - ( ( -2 * x + 2 ) ^ 3 ) / 2
+	return x < 0.5 and 4 * x ^ 3 or 1 - ( ( -2 * x + 2 ) ^ 3 ) / 2
 end
 
 function InQuart( x )
@@ -79,7 +79,7 @@ function OutQuart( x )
 end
 
 function InOutQuart( x )
-	return x < 0.5 && 8 * x ^ 4 || 1 - ( ( -2 * x + 2 ) ^ 4 ) / 2
+	return x < 0.5 and 8 * x ^ 4 or 1 - ( ( -2 * x + 2 ) ^ 4 ) / 2
 end
 
 function InQuint( x )
@@ -91,24 +91,24 @@ function OutQuint( x )
 end
 
 function InOutQuint( x )
-	return x < 0.5 && 16 * x ^ 5 || 1 - ( ( -2 * x + 2 ) ^ 5 ) / 2
+	return x < 0.5 and 16 * x ^ 5 or 1 - ( ( -2 * x + 2 ) ^ 5 ) / 2
 end
 
 function InExpo( x )
-	return x == 0 && 0 || ( 2 ^ ( 10 * x - 10 ) )
+	return x == 0 and 0 or ( 2 ^ ( 10 * x - 10 ) )
 end
 
 function OutExpo( x )
-	return x == 1 && 1 || 1 - ( 2 ^ ( -10 * x ) )
+	return x == 1 and 1 or 1 - ( 2 ^ ( -10 * x ) )
 end
 
 function InOutExpo( x )
 	return x == 0
-		&& 0
-		|| x == 1
-		&& 1
-		|| x < 0.5 && ( 2 ^ ( 20 * x - 10 ) ) / 2
-		|| ( 2 - ( 2 ^ ( -20 * x + 10 ) ) ) / 2
+		and 0
+		or x == 1
+		and 1
+		or x < 0.5 and ( 2 ^ ( 20 * x - 10 ) ) / 2
+		or ( 2 - ( 2 ^ ( -20 * x + 10 ) ) ) / 2
 end
 
 function InCirc( x )
@@ -121,8 +121,8 @@ end
 
 function InOutCirc( x )
 	return x < 0.5
-		&& ( 1 - sqrt( 1 - ( ( 2 * x ) ^ 2 ) ) ) / 2
-		|| ( sqrt( 1 - ( ( -2 * x + 2 ) ^ 2 ) ) + 1 ) / 2
+		and ( 1 - sqrt( 1 - ( ( 2 * x ) ^ 2 ) ) ) / 2
+		or ( sqrt( 1 - ( ( -2 * x + 2 ) ^ 2 ) ) + 1 ) / 2
 end
 
 function InBack( x )
@@ -135,34 +135,34 @@ end
 
 function InOutBack( x )
 	return x < 0.5
-		&& ( ( ( 2 * x ) ^ 2 ) * ( ( c2 + 1 ) * 2 * x - c2 ) ) / 2
-		|| ( ( ( 2 * x - 2 ) ^ 2 ) * ( ( c2 + 1 ) * ( x * 2 - 2 ) + c2 ) + 2 ) / 2
+		and ( ( ( 2 * x ) ^ 2 ) * ( ( c2 + 1 ) * 2 * x - c2 ) ) / 2
+		or ( ( ( 2 * x - 2 ) ^ 2 ) * ( ( c2 + 1 ) * ( x * 2 - 2 ) + c2 ) + 2 ) / 2
 end
 
 function InElastic( x )
 	return x == 0
-		&& 0
-		|| x == 1
-		&& 1
-		|| -( 2 ^ ( 10 * x - 10 ) ) * sin( ( x * 10 - 10.75 ) * c4 )
+		and 0
+		or x == 1
+		and 1
+		or -( 2 ^ ( 10 * x - 10 ) ) * sin( ( x * 10 - 10.75 ) * c4 )
 end
 
 function OutElastic( x )
 	return x == 0
-		&& 0
-		|| x == 1
-		&& 1
-		|| ( 2 ^ ( -10 * x ) ) * sin( ( x * 10 - 0.75 ) * c4 ) + 1
+		and 0
+		or x == 1
+		and 1
+		or ( 2 ^ ( -10 * x ) ) * sin( ( x * 10 - 0.75 ) * c4 ) + 1
 end
 
 function InOutElastic( x )
 	return x == 0
-		&& 0
-		|| x == 1
-		&& 1
-		|| x < 0.5
-		&& -( ( 2 ^ ( 20 * x - 10 ) ) * sin( ( 20 * x - 11.125 ) * c5 ) ) / 2
-		|| ( ( 2 ^ ( -20 * x + 10 ) ) * sin( ( 20 * x - 11.125 ) * c5 ) ) / 2 + 1
+		and 0
+		or x == 1
+		and 1
+		or x < 0.5
+		and -( ( 2 ^ ( 20 * x - 10 ) ) * sin( ( 20 * x - 11.125 ) * c5 ) ) / 2
+		or ( ( 2 ^ ( -20 * x + 10 ) ) * sin( ( 20 * x - 11.125 ) * c5 ) ) / 2 + 1
 end
 
 function InBounce( x )
@@ -186,6 +186,6 @@ end
 
 function InOutBounce( x )
 	return x < 0.5
-		&& ( 1 - OutBounce( 1 - 2 * x ) ) / 2
-		|| ( 1 + OutBounce( 2 * x - 1 ) ) / 2
+		and ( 1 - OutBounce( 1 - 2 * x ) ) / 2
+		or ( 1 + OutBounce( 2 * x - 1 ) ) / 2
 end

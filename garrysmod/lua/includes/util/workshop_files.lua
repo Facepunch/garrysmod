@@ -31,13 +31,13 @@ function WorkshopFileBase( namespace, requiredtags )
 
 		local cachename = type .. "-" .. table.concat( tags, "/" ) .. offset .. "-" .. perpage .. "-" .. userid
 
-		if ( type != "favorite" && ListCache[ cachename ] ) then
+		if ( type ~= "favorite" and ListCache[ cachename ] ) then
 			self:FillFileInfo( ListCache[ cachename ] )
 			return
 		end
 
 		steamworks.GetList( type, tags, offset, perpage, 0, userid, function( data )
-			if ( type != "favorite" ) then ListCache[ cachename ] = data end
+			if ( type ~= "favorite" ) then ListCache[ cachename ] = data end
 			self:FillFileInfo( data )
 		end )
 
@@ -93,14 +93,14 @@ function WorkshopFileBase( namespace, requiredtags )
 			if ( !found ) then continue end
 
 			-- Search for searchText
-			if ( searchText:Trim() != "" && !item.title:lower():find( searchText:lower(), 1, true ) ) then
+			if ( searchText:Trim() ~= "" and !item.title:lower():find( searchText:lower(), 1, true ) ) then
 				continue
 			end
 
-			if ( filter && filter == "enabledonly" && !steamworks.ShouldMountAddon( item.wsid ) ) then
+			if ( filter and filter == "enabledonly" and !steamworks.ShouldMountAddon( item.wsid ) ) then
 				continue
 			end
-			if ( filter && filter == "disabledonly" && steamworks.ShouldMountAddon( item.wsid ) ) then
+			if ( filter and filter == "disabledonly" and steamworks.ShouldMountAddon( item.wsid ) ) then
 				continue
 			end
 
@@ -217,14 +217,14 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result || result.error != nil ) then
+					if ( !result or result.error ~= nil ) then
 						-- Try to get the title from the GetAddons(), this probably could be done more efficiently
 						local title = "Offline addon"
-						for id, t in pairs( isUGC && engine.GetUserContent() || engine.GetAddons() ) do
+						for id, t in pairs( isUGC and engine.GetUserContent() or engine.GetAddons() ) do
 							if ( tonumber( v ) == tonumber( t.wsid ) ) then title = t.title break end
 						end
 
-						local jsonErr = util.TableToJSON( { title = title, description = "Failed to get addon info, error code " .. ( result && result.error || "unknown" ) }, false )
+						local jsonErr = util.TableToJSON( { title = title, description = "Failed to get addon info, error code " .. ( result and result.error or "unknown" ) }, false )
 						self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. jsonErr .. " )" )
 						return
 					end
@@ -235,7 +235,7 @@ function WorkshopFileBase( namespace, requiredtags )
 						result.description = string.Trim( result.description )
 					end
 
-					if ( result.owner && ( !result.ownername || result.ownername == "" || result.ownername == "[unknown]" ) ) then
+					if ( result.owner and ( !result.ownername or result.ownername == "" or result.ownername == "[unknown]" ) ) then
 						self:RetrieveUserName( result.owner, function( name )
 							result.ownername = name
 
@@ -251,7 +251,7 @@ function WorkshopFileBase( namespace, requiredtags )
 					--
 					-- Now we have the preview id - get the preview image!
 					--
-					if ( !PreviewCache[ v ] && result.previewid ) then
+					if ( !PreviewCache[ v ] and result.previewid ) then
 
 						steamworks.Download( result.previewid, false, function( name )
 

@@ -81,9 +81,9 @@ SKIN.tex.Selection					= GWEN.CreateTextureBorder( 384, 32, 31, 31, 4, 4, 4, 4 )
 
 SKIN.tex.Panels = {}
 SKIN.tex.Panels.Normal				= GWEN.CreateTextureBorder( 256,	0, 63, 63, 16, 16, 16, 16 )
-SKIN.tex.Panels.Bright				= GWEN.CreateTextureBorder( 256+64, 0, 63, 63, 16, 16, 16, 16 )
+SKIN.tex.Panels.Bright				= GWEN.CreateTextureBorder( 256 + 64, 0, 63, 63, 16, 16, 16, 16 )
 SKIN.tex.Panels.Dark				= GWEN.CreateTextureBorder( 256,	64, 63, 63, 16, 16, 16, 16 )
-SKIN.tex.Panels.Highlight			= GWEN.CreateTextureBorder( 256+64, 64, 63, 63, 16, 16, 16, 16 )
+SKIN.tex.Panels.Highlight			= GWEN.CreateTextureBorder( 256 + 64, 64, 63, 63, 16, 16, 16, 16 )
 
 SKIN.tex.Button						= GWEN.CreateTextureBorder( 480, 0, 31, 31, 8, 8, 8, 8 )
 SKIN.tex.Button_Hovered				= GWEN.CreateTextureBorder( 480, 32, 31, 31, 8, 8, 8, 8 )
@@ -338,7 +338,7 @@ function SKIN:PaintFrame( panel, w, h )
 	if ( panel.m_bPaintShadow ) then
 
 		local wasEnabled = DisableClipping( true )
-		self.tex.Shadow( -4, -4, w+10, h+10 )
+		self.tex.Shadow( -4, -4, w + 10, h + 10 )
 		DisableClipping( wasEnabled )
 
 	end
@@ -362,7 +362,7 @@ function SKIN:PaintButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel.Depressed || panel:IsSelected() || panel:GetToggle() ) then
+	if ( panel.Depressed or panel:IsSelected() or panel:GetToggle() ) then
 		return self.tex.Button_Down( 0, 0, w, h )
 	end
 
@@ -470,7 +470,7 @@ function SKIN:PaintTextEntry( panel, w, h )
 	end
 
 	-- Hack on a hack, but this produces the most close appearance to what it will actually look if text was actually there
-	if ( panel.GetPlaceholderText && panel.GetPlaceholderColor && panel:GetPlaceholderText() && panel:GetPlaceholderText():Trim() != "" && panel:GetPlaceholderColor() && ( !panel:GetText() || panel:GetText() == "" ) ) then
+	if ( panel.GetPlaceholderText and panel.GetPlaceholderColor and panel:GetPlaceholderText() and panel:GetPlaceholderText():Trim() ~= "" and panel:GetPlaceholderColor() and ( !panel:GetText() or panel:GetText() == "" ) ) then
 
 		local oldText = panel:GetText()
 
@@ -517,12 +517,12 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuOption( panel, w, h )
 
-	if ( panel.m_bBackground && !panel:IsEnabled() ) then
+	if ( panel.m_bBackground and !panel:IsEnabled() ) then
 		surface.SetDrawColor( Color( 0, 0, 0, 50 ) )
 		surface.DrawRect( 0, 0, w, h )
 	end
 
-	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight ) ) then
+	if ( panel.m_bBackground and ( panel.Hovered or panel.Highlight ) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 
@@ -603,7 +603,7 @@ function SKIN:PaintWindowCloseButton( panel, w, h )
 		return self.tex.Window.Close( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
 
-	if ( panel.Depressed || panel:IsSelected() ) then
+	if ( panel.Depressed or panel:IsSelected() ) then
 		return self.tex.Window.Close_Down( 0, 0, w, h )
 	end
 
@@ -623,7 +623,7 @@ function SKIN:PaintWindowMinimizeButton( panel, w, h )
 		return self.tex.Window.Mini( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
 
-	if ( panel.Depressed || panel:IsSelected() ) then
+	if ( panel.Depressed or panel:IsSelected() ) then
 		return self.tex.Window.Mini_Down( 0, 0, w, h )
 	end
 
@@ -643,7 +643,7 @@ function SKIN:PaintWindowMaximizeButton( panel, w, h )
 		return self.tex.Window.Maxi( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
 
-	if ( panel.Depressed || panel:IsSelected() ) then
+	if ( panel.Depressed or panel:IsSelected() ) then
 		return self.tex.Window.Maxi_Down( 0, 0, w, h )
 	end
 
@@ -701,7 +701,7 @@ function SKIN:PaintButtonDown( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel.Depressed || panel:IsSelected() ) then
+	if ( panel.Depressed or panel:IsSelected() ) then
 		return self.tex.Scroller.DownButton_Down( 0, 0, w, h )
 	end
 
@@ -724,7 +724,7 @@ function SKIN:PaintButtonUp( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel.Depressed || panel:IsSelected() ) then
+	if ( panel.Depressed or panel:IsSelected() ) then
 		return self.tex.Scroller.UpButton_Down( 0, 0, w, h )
 	end
 
@@ -747,7 +747,7 @@ function SKIN:PaintButtonLeft( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel.Depressed || panel:IsSelected() ) then
+	if ( panel.Depressed or panel:IsSelected() ) then
 		return self.tex.Scroller.LeftButton_Down( 0, 0, w, h )
 	end
 
@@ -770,7 +770,7 @@ function SKIN:PaintButtonRight( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel.Depressed || panel:IsSelected() ) then
+	if ( panel.Depressed or panel:IsSelected() ) then
 		return self.tex.Scroller.RightButton_Down( 0, 0, w, h )
 	end
 
@@ -795,7 +795,7 @@ function SKIN:PaintComboDownArrow( panel, w, h )
 		return self.tex.Input.ComboBox.Button.Disabled( 0, 0, w, h )
 	end
 
-	if ( panel.ComboBox.Depressed || panel.ComboBox:IsMenuOpen() ) then
+	if ( panel.ComboBox.Depressed or panel.ComboBox:IsMenuOpen() ) then
 		return self.tex.Input.ComboBox.Button.Down( 0, 0, w, h )
 	end
 
@@ -816,7 +816,7 @@ function SKIN:PaintComboBox( panel, w, h )
 		return self.tex.Input.ComboBox.Disabled( 0, 0, w, h )
 	end
 
-	if ( panel.Depressed || panel:IsMenuOpen() ) then
+	if ( panel.Depressed or panel:IsMenuOpen() ) then
 		return self.tex.Input.ComboBox.Down( 0, 0, w, h )
 	end
 
@@ -993,13 +993,13 @@ function SKIN:PaintCategoryButton( panel, w, h )
 
 	if ( panel.AltLine ) then
 
-		if ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Selected )
+		if ( panel.Depressed or panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Selected )
 		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Hover )
 		else surface.SetDrawColor( self.Colours.Category.LineAlt.Button ) end
 
 	else
 
-		if ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Selected )
+		if ( panel.Depressed or panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Selected )
 		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Hover )
 		else surface.SetDrawColor( self.Colours.Category.Line.Button ) end
 

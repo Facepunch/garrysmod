@@ -11,7 +11,7 @@ concommand.Add( "whereis", function( _, _, _, path )
 	local relativePath = util.FullPathToRelative_Menu( absolutePath, "MOD" )
 
 	-- If the relative path is inside the workshop dir, it's part of a workshop addon
-	if ( relativePath && relativePath:match( "^workshop[\\/].*" ) ) then
+	if ( relativePath and relativePath:match( "^workshop[\\/].*" ) ) then
 
 		local addonInfo = util.RelativePathToGMA_Menu( path )
 

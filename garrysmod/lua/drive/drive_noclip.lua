@@ -112,7 +112,7 @@ drive.Register( "drive_noclip",
 		--
 		-- If we have a physics object update that too. But only on the server.
 		--
-		if ( SERVER && IsValid( self.Entity:GetPhysicsObject() ) ) then
+		if ( SERVER and IsValid( self.Entity:GetPhysicsObject() ) ) then
 
 			self.Entity:GetPhysicsObject():EnableMotion( true )
 			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() )

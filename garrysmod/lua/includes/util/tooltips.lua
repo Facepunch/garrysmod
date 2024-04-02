@@ -25,7 +25,7 @@ function FindTooltip( panel )
 	-- Look at the parent panel for tooltips.
 	while ( IsValid( panel ) ) do
 
-		if ( panel.strTooltipText || panel.pnlTooltipPanel || panel.pnlTooltipPanelOverride ) then
+		if ( panel.strTooltipText or panel.pnlTooltipPanel or panel.pnlTooltipPanelOverride ) then
 			return panel.strTooltipText, panel.pnlTooltipPanel, panel, panel.pnlTooltipPanelOverride
 		end
 
@@ -44,7 +44,7 @@ function ChangeTooltip( panel )
 	RemoveTooltip()
 
 	local Text, ContentPanel, PositionPanel, PanelOverride = FindTooltip( panel )
-	if ( !Text && !IsValid( ContentPanel ) && !PanelOverride ) then return end
+	if ( !Text and !IsValid( ContentPanel ) and !PanelOverride ) then return end
 
 	Tooltip = vgui.Create( PanelOverride or "DTooltip" )
 

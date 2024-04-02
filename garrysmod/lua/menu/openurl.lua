@@ -146,7 +146,7 @@ end
 function PANEL:AlwaysThink()
 
 	-- Ping the server for details
-	if ( SysTime() - self.StartTime > 0.1 && self.Type == "askconnect" && !self.CustomPanel:IsVisible() ) then
+	if ( SysTime() - self.StartTime > 0.1 and self.Type == "askconnect" and !self.CustomPanel:IsVisible() ) then
 		self:LoadServerInfo()
 	end
 
@@ -236,7 +236,7 @@ function PANEL:SetType( t )
 	self:SetTitle( "#" .. t .. ".title" )
 	self.Garble:SetText( "#" .. t .. ".text" )
 
-	if ( self.Type == "permission" || self.Type == "askconnect" ) then
+	if ( self.Type == "permission" or self.Type == "askconnect" ) then
 		self.YesPerma:SetVisible( true )
 	end
 
@@ -245,7 +245,7 @@ end
 local PanelInst = nil
 local function OpenConfirmationDialog( address, confirm_type )
 
-	if ( IsValid( PanelInst ) && PanelInst:GetURL() == address ) then return end
+	if ( IsValid( PanelInst ) and PanelInst:GetURL() == address ) then return end
 	if ( !IsValid( PanelInst ) ) then PanelInst = vgui.CreateFromTable( PANEL ) end
 
 	PanelInst:SetType( confirm_type )

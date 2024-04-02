@@ -4,7 +4,7 @@
 function file.Read( filename, path )
 
 	if ( path == true ) then path = "GAME" end
-	if ( path == nil || path == false ) then path = "DATA" end
+	if ( path == nil or path == false ) then path = "DATA" end
 
 	local f = file.Open( filename, "rb", path )
 	if ( !f ) then return end

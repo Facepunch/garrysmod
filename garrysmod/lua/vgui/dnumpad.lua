@@ -47,7 +47,7 @@ end
 function PANEL:ButtonPressed( btn, iNum )
 
 	-- Toggle off
-	if ( self.m_bStickyKeys && self.m_SelectedButton && self.m_SelectedButton == btn ) then
+	if ( self.m_bStickyKeys and self.m_SelectedButton and self.m_SelectedButton == btn ) then
 		self.m_SelectedButton:SetSelected( false )
 		self:SetSelected( -1 )
 
@@ -73,7 +73,7 @@ function PANEL:SetSelected( iNum )
 
 	self.m_SelectedButton = btn
 
-	if ( btn && self.m_bStickyKeys ) then
+	if ( btn and self.m_bStickyKeys ) then
 
 		btn:SetSelected( true )
 

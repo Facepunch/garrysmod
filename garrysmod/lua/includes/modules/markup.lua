@@ -278,7 +278,7 @@ local escapeEntities, unescapeEntities = {
 	["&gt;"] = ">"
 }
 function Escape( str )
-	return ( string.gsub( tostring( str ), "[&<>]", escapeEntities ) )
+	return string.gsub( tostring( str ), "[&<>]", escapeEntities )
 end
 
 --[[---------------------------------------------------------
@@ -320,7 +320,7 @@ function Parse( ml, maxwidth )
 	for i, blk in ipairs( blocks ) do
 
 		surface.SetFont( blk.font )
-		
+
 		blk.text = string.gsub( blk.text, "(&.-;)", unescapeEntities )
 
 		local thisY = 0
@@ -386,7 +386,7 @@ function Parse( ml, maxwidth )
 						xMax = xOffset + x1
 					end
 				end
-				
+
 				curString = ""
 
 				local xOldSize = xSize
@@ -396,7 +396,7 @@ function Parse( ml, maxwidth )
 
 				if ( xOffset == xOldOffset ) then
 					xOffset = xOffset + 50
-					
+
 					if ( maxwidth and xOffset > maxwidth ) then
 						-- Needs a new line
 						if ( thisY == 0 ) then
@@ -432,7 +432,7 @@ function Parse( ml, maxwidth )
 						end
 
 						local previous_block = new_block_list[ #new_block_list ]
-						local wrap = lastSpacePos == string.len( curString ) && lastSpacePos > 0
+						local wrap = lastSpacePos == string.len( curString ) and lastSpacePos > 0
 						if ( previous_block and previous_block.text:match(" $") and wrap and surface.GetTextSize( blk.text ) < maxwidth ) then
 							-- If the block was preceded by a space, wrap the block onto the next line first, as we can probably fit it there
 							local trimmed, trimCharNum = previous_block.text:gsub(" +$", "")

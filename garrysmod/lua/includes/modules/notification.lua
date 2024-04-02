@@ -116,10 +116,10 @@ local function UpdateNotice( pnl, total_h )
 
 	local dist = ideal_y - y
 	pnl.VelY = pnl.VelY + dist * spd * 1
-	if ( math.abs( dist ) < 2 && math.abs( pnl.VelY ) < 0.1 ) then pnl.VelY = 0 end
+	if ( math.abs( dist ) < 2 and math.abs( pnl.VelY ) < 0.1 ) then pnl.VelY = 0 end
 	dist = ideal_x - x
 	pnl.VelX = pnl.VelX + dist * spd * 1
-	if ( math.abs( dist ) < 2 && math.abs( pnl.VelX ) < 0.1 ) then pnl.VelX = 0 end
+	if ( math.abs( dist ) < 2 and math.abs( pnl.VelX ) < 0.1 ) then pnl.VelX = 0 end
 
 	-- Friction.. kind of FPS independant.
 	pnl.VelX = pnl.VelX * ( 0.95 - RealFrameTime() * 8 )
@@ -150,7 +150,7 @@ local function Update()
 
 	for k, Panel in pairs( Notices ) do
 
-		if ( !IsValid( Panel ) || Panel:KillSelf() ) then Notices[ k ] = nil end
+		if ( !IsValid( Panel ) or Panel:KillSelf() ) then Notices[ k ] = nil end
 
 	end
 
@@ -226,7 +226,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	local shouldDraw = !( LocalPlayer && IsValid( LocalPlayer() ) && IsValid( LocalPlayer():GetActiveWeapon() ) && LocalPlayer():GetActiveWeapon():GetClass() == "gmod_camera" )
+	local shouldDraw = !( LocalPlayer and IsValid( LocalPlayer() ) and IsValid( LocalPlayer():GetActiveWeapon() ) and LocalPlayer():GetActiveWeapon():GetClass() == "gmod_camera" )
 
 	if ( IsValid( self.Label ) ) then self.Label:SetVisible( shouldDraw ) end
 	if ( IsValid( self.Image ) ) then self.Image:SetVisible( shouldDraw ) end

@@ -62,7 +62,7 @@ local function AddButton( panel, color, size, id )
 	-- If the cookie value exists, then use it
 	--
 	local col_saved = panel:GetCookie( "col." .. id, nil )
-	if ( col_saved != nil ) then
+	if ( col_saved ~= nil ) then
 		color = col_saved:ToColor()
 	end
 
@@ -108,7 +108,7 @@ function PANEL:NetworkColorChange()
 
 	for id, pnl in pairs( g_ColorPalettePanels ) do
 		if ( !IsValid( pnl ) or pnl == self ) then continue end
-		if ( pnl:GetNumRows() != self:GetNumRows() or pnl:GetCookieName() != self:GetCookieName() ) then continue end
+		if ( pnl:GetNumRows() ~= self:GetNumRows() or pnl:GetCookieName() ~= self:GetCookieName() ) then continue end
 		local tab = {}
 		for pid, p in ipairs( self:GetChildren() ) do
 			tab[ p:GetID() ] = p:GetColor()

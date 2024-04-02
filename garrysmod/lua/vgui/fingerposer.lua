@@ -35,13 +35,13 @@ function PANEL:Init()
 
 	for i = 0, 14 do
 
-		if ( self.NumVars == 18 && i > 10 ) then break end
+		if ( self.NumVars == 18 and i > 10 ) then break end
 
 		self.FingerVars[ i ] = vgui.Create( "FingerVar", self )
 
 		self.FingerVars[ i ]:SetVarName( "finger_" .. i )
 
-		if ( i > 2 && i % 3 != 0 ) then
+		if ( i > 2 and i % 3 ~= 0 ) then
 
 			self.FingerVars[ i ]:SetRestrictX( true )
 
@@ -83,7 +83,7 @@ function PANEL:PerformLayout( w, h )
 			local ID = ( finger * 3 ) + var
 
 			local Pos = self.FingerPositions[ ID + 1 ]
-			if ( Pos && self.FingerVars[ ID ] ) then
+			if ( Pos and self.FingerVars[ ID ] ) then
 				-- Scale the finger "sliders" a bit
 				local fsize = math.floor( math.Remap( targetH, 256, 512, 48, 64 ) )
 				self.FingerVars[ ID ]:SetSize( fsize, fsize )
@@ -143,7 +143,7 @@ function PANEL:UpdateHovered()
 
 	end
 
-	if ( !hovered || hovered != self.HoveredPanel ) then
+	if ( !hovered or hovered ~= self.HoveredPanel ) then
 
 		if ( IsValid( self.HoveredPanel ) ) then
 			self.HoveredPanel.HoveredFingerVar = nil

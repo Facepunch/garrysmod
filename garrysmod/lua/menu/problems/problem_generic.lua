@@ -95,7 +95,7 @@ function PANEL:Setup( problem )
 
 	self.Markup = markup.Parse( "<font=DermaDefault>" .. language.GetPhrase( self.Problem.text ) .. "</font>", self:GetWide() - self.CopyBtn:GetWide() - copyIconPad * 2 - severityOffset - textPaddingX * 2 )
 
-	self.FixBtn:SetEnabled( problem.fix != nil )
+	self.FixBtn:SetEnabled( problem.fix ~= nil )
 	self.FixBtn:SetText( problem.fix and "#problems.quick_fix" or "#problems.no_quick_fix" )
 	self.FixBtn:SizeToContentsX( 10 )
 

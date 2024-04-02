@@ -17,7 +17,7 @@ function PANEL:Think()
 	--
 	-- Periodically update the value
 	--
-	if ( !self:IsEditing() && isfunction( self.m_pRow.DataUpdate ) ) then
+	if ( !self:IsEditing() and isfunction( self.m_pRow.DataUpdate ) ) then
 
 		self.m_pRow:DataUpdate()
 
@@ -30,7 +30,7 @@ end
 --
 function PANEL:ValueChanged( newval, bForce )
 
-	if ( ( self:IsEditing() || bForce ) && isfunction( self.m_pRow.DataChanged ) ) then
+	if ( ( self:IsEditing() or bForce ) and isfunction( self.m_pRow.DataChanged ) ) then
 
 		self.m_pRow:DataChanged( newval )
 
@@ -43,7 +43,7 @@ function PANEL:Setup( vars )
 	self:Clear()
 
 	local text = self:Add( "DTextEntry" )
-	if ( !vars || !vars.waitforenter ) then text:SetUpdateOnType( true ) end
+	if ( !vars or !vars.waitforenter ) then text:SetUpdateOnType( true ) end
 	text:SetPaintBackground( false )
 	text:Dock( FILL )
 

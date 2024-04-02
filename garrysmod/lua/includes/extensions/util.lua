@@ -22,7 +22,7 @@ function util.IsValidPhysicsObject( ent, num )
 	-- anyway - so we're not really losing anything.
 
 	local MoveType = ent:GetMoveType()
-	if ( !ent:IsWorld() and MoveType != MOVETYPE_VPHYSICS and !( ent:GetModel() and ent:GetModel():StartsWith( "*" ) ) ) then return false end
+	if ( !ent:IsWorld() and MoveType ~= MOVETYPE_VPHYSICS and !( ent:GetModel() and ent:GetModel():StartsWith( "*" ) ) ) then return false end
 
 	local Phys = ent:GetPhysicsObjectNum( num )
 	return IsValid( Phys )
@@ -195,7 +195,7 @@ local T =
 	--
 	Started = function( self )
 
-		return self.endtime != nil
+		return self.endtime ~= nil
 
 	end,
 
@@ -402,7 +402,7 @@ function util.IsBinaryModuleInstalled( name )
 	end
 
 	-- Edge case - on Linux 32-bit x86-64 branch, linux32 is also supported as a suffix
-	if ( jit.versionnum != 20004 and jit.arch == "x86" and system.IsLinux() ) then
+	if ( jit.versionnum ~= 20004 and jit.arch == "x86" and system.IsLinux() ) then
 		return file.Exists( string.format( fmt, name, "linux32" ), "MOD" )
 	end
 

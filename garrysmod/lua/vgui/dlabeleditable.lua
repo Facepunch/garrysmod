@@ -21,7 +21,7 @@ function PANEL:GetContentSize()
 	local w, h = DLabel.GetContentSize( self )
 
 	-- Expand the label to fit our text
-	if ( self:IsEditing() && self:GetAutoStretch() ) then
+	if ( self:IsEditing() and self:GetAutoStretch() ) then
 		surface.SetFont( self:GetFont() )
 		w, h = surface.GetTextSize( self._TextEdit:GetText() )
 	end

@@ -24,7 +24,7 @@ function Register( t, name )
 	-- If we're reloading this entity class
 	-- then refresh all the existing entities.
 	--
-	if ( old != nil ) then
+	if ( old ~= nil ) then
 
 		--
 		-- For each entity using this class

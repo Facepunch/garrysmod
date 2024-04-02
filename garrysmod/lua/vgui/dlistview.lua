@@ -155,7 +155,7 @@ function PANEL:FixColumnsLayout()
 	local TotalMaxWidth = 0
 
 	-- If there's a remainder, try to palm it off on the other panels, equally
-	while ( Remainder != 0 ) do
+	while ( Remainder ~= 0 ) do
 
 		local PerPanel = math.floor( Remainder / NumColumns )
 
@@ -374,19 +374,19 @@ end
 function PANEL:OnClickLine( Line, bClear )
 
 	local bMultiSelect = self:GetMultiSelect()
-	if ( !bMultiSelect && !bClear ) then return end
+	if ( !bMultiSelect and !bClear ) then return end
 
 	--
 	-- Control, multi select
 	--
-	if ( bMultiSelect && input.IsKeyDown( KEY_LCONTROL ) ) then
+	if ( bMultiSelect and input.IsKeyDown( KEY_LCONTROL ) ) then
 		bClear = false
 	end
 
 	--
 	-- Shift block select
 	--
-	if ( bMultiSelect && input.IsKeyDown( KEY_LSHIFT ) ) then
+	if ( bMultiSelect and input.IsKeyDown( KEY_LSHIFT ) ) then
 
 		local Selected = self:GetSortedID( self:GetSelectedLine() )
 		if ( Selected ) then
@@ -420,7 +420,7 @@ function PANEL:OnClickLine( Line, bClear )
 	--
 	-- Check for double click
 	--
-	if ( Line:IsSelected() && Line.m_fClickTime && ( !bMultiSelect || bClear ) ) then
+	if ( Line:IsSelected() and Line.m_fClickTime and ( !bMultiSelect or bClear ) ) then
 
 		local fTimeDistance = SysTime() - Line.m_fClickTime
 
@@ -435,7 +435,7 @@ function PANEL:OnClickLine( Line, bClear )
 	-- If it's a new mouse click, or this isn't
 	-- multiselect we clear the selection
 	--
-	if ( !bMultiSelect || bClear ) then
+	if ( !bMultiSelect or bClear ) then
 		self:ClearSelection()
 	end
 
@@ -455,22 +455,22 @@ function PANEL:SortByColumns( c1, d1, c2, d2, c3, d3, c4, d4 )
 		if ( !IsValid( a ) ) then return true end
 		if ( !IsValid( b ) ) then return false end
 
-		if ( c1 && a:GetColumnText( c1 ) != b:GetColumnText( c1 ) ) then
+		if ( c1 and a:GetColumnText( c1 ) ~= b:GetColumnText( c1 ) ) then
 			if ( d1 ) then a, b = b, a end
 			return a:GetColumnText( c1 ) < b:GetColumnText( c1 )
 		end
 
-		if ( c2 && a:GetColumnText( c2 ) != b:GetColumnText( c2 ) ) then
+		if ( c2 and a:GetColumnText( c2 ) ~= b:GetColumnText( c2 ) ) then
 			if ( d2 ) then a, b = b, a end
 			return a:GetColumnText( c2 ) < b:GetColumnText( c2 )
 		end
 
-		if ( c3 && a:GetColumnText( c3 ) != b:GetColumnText( c3 ) ) then
+		if ( c3 and a:GetColumnText( c3 ) ~= b:GetColumnText( c3 ) ) then
 			if ( d3 ) then a, b = b, a end
 			return a:GetColumnText( c3 ) < b:GetColumnText( c3 )
 		end
 
-		if ( c4 && a:GetColumnText( c4 ) != b:GetColumnText( c4 ) ) then
+		if ( c4 and a:GetColumnText( c4 ) ~= b:GetColumnText( c4 ) ) then
 			if ( d4 ) then a, b = b, a end
 			return a:GetColumnText( c4 ) < b:GetColumnText( c4 )
 		end
@@ -491,11 +491,11 @@ function PANEL:SortByColumn( ColumnID, Desc )
 			a, b = b, a
 		end
 
-		local aval = a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
-		local bval = b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
+		local aval = a:GetSortValue( ColumnID ) or a:GetColumnText( ColumnID )
+		local bval = b:GetSortValue( ColumnID ) or b:GetColumnText( ColumnID )
 
 		-- Maintain nicer sorting for numbers
-		if ( isnumber( aval ) && isnumber( bval ) ) then return aval < bval end
+		if ( isnumber( aval ) and isnumber( bval ) ) then return aval < bval end
 
 		return tostring( aval ) < tostring( bval )
 

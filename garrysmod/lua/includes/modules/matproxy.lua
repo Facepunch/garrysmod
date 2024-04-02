@@ -10,7 +10,7 @@ ActiveList = {}
 --
 function ShouldOverrideProxy( name )
 
-	return ProxyList[ name ] != nil
+	return ProxyList[ name ] ~= nil
 
 end
 
@@ -22,7 +22,7 @@ function Add( tbl )
 	if ( !tbl.name ) then return end
 	if ( !tbl.bind ) then return end
 
-	local bReloading = ProxyList[ tbl.name ] != nil
+	local bReloading = ProxyList[ tbl.name ] ~= nil
 
 	ProxyList[ tbl.name ] = tbl
 
@@ -33,7 +33,7 @@ function Add( tbl )
 
 		for k, v in pairs( ActiveList ) do
 
-			if ( tbl.name != v.name ) then continue end
+			if ( tbl.name ~= v.name ) then continue end
 
 			Msg( "Reloading: ", v.Material, "\n" )
 			Init( tbl.name, k, v.Material, v.Values )

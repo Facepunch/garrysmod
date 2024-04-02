@@ -39,7 +39,7 @@ end
 function PlayerStartDriving( ply, ent, mode )
 
 	local method = Type[mode]
-	if ( !method ) then ErrorNoHalt( "Unknown drive type " .. ( mode ) .. "!\n" ) return end
+	if ( !method ) then ErrorNoHalt( "Unknown drive type " ..  mode  .. "!\n" ) return end
 
 	local id = util.NetworkStringToID( mode )
 
@@ -66,13 +66,13 @@ function GetMethod( ply )
 	--
 	-- Entity is invalid or mode isn't set - return out
 	--
-	if ( !IsValid( ent ) || modeid == 0 ) then return end
+	if ( !IsValid( ent ) or modeid == 0 ) then return end
 
 	--
 	-- Have we already got a drive method? If so then reuse.
 	--
 	local method = ply.m_CurrentDriverMethod
-	if ( method && method.Entity == ent && method.ModeID == modeid ) then return method end
+	if ( method and method.Entity == ent and method.ModeID == modeid ) then return method end
 
 	--
 	-- No method - lets create one. Get the string from the modeid.
@@ -216,14 +216,14 @@ function End( ply, ent )
 	--
 	-- If the player is valid then set the view entity to nil
 	--
-	if ( SERVER && IsValid( ply ) ) then
+	if ( SERVER and IsValid( ply ) ) then
 
-		if ( ply.m_PreDriveEyeAngles != nil ) then
+		if ( ply.m_PreDriveEyeAngles ~= nil ) then
 			ply:SetEyeAngles( ply.m_PreDriveEyeAngles )
 			ply.m_PreDriveEyeAngles = nil
 		end
 
-		if ( ply.m_PreDriveObserveMode != nil ) then
+		if ( ply.m_PreDriveObserveMode ~= nil ) then
 			ply:SetObserverMode( ply.m_PreDriveObserveMode )
 			ply.m_PreDriveObserveMode = nil
 		end

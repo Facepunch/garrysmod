@@ -74,7 +74,7 @@ properties.Add( "bodygroups", {
 
 				for i = 1, v.num do
 					local modelname = "model #" .. i
-					if ( v.submodels and v.submodels[ i - 1 ] != "" ) then modelname = v.submodels[ i - 1 ] end
+					if ( v.submodels and v.submodels[ i - 1 ] ~= "" ) then modelname = v.submodels[ i - 1 ] end
 					modelname = string.Trim( modelname, "." )
 					modelname = string.Trim( modelname, "/" )
 					modelname = string.Trim( modelname, "\\" )

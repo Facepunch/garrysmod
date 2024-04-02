@@ -141,7 +141,7 @@ function PANEL:OnCursorMoved( x, y )
 
 	self:LockCursor()
 
-	if ( oldValue != value ) then self:OnValueChanged( value ) end
+	if ( oldValue ~= value ) then self:OnValueChanged( value ) end
 	self:UpdateConVar()
 
 end

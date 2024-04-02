@@ -24,7 +24,7 @@ function PANEL:Init()
 		if ( !self.Problem ) then return end
 
 		local prepend = ""
-		if ( self.Problem.title and self.Problem.title:len() > 0 and self.Problem.title != "Other" ) then prepend = "[" .. self.Problem.title .. "] " end
+		if ( self.Problem.title and self.Problem.title:len() > 0 and self.Problem.title ~= "Other" ) then prepend = "[" .. self.Problem.title .. "] " end
 		SetClipboardText( prepend .. self.Problem.text )
 	end
 
@@ -151,7 +151,7 @@ end
 
 function PANEL:OnMousePressed( code )
 
-	if ( code != MOUSE_LEFT ) then return end
+	if ( code ~= MOUSE_LEFT ) then return end
 
 	self.Collapsed = !self.Collapsed
 	self:InvalidateLayout()

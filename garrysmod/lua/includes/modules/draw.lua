@@ -36,7 +36,7 @@ local CachedFontHeights = {}
 -----------------------------------------------------------]]
 function GetFontHeight( font )
 
-	if ( CachedFontHeights[ font ] != nil ) then
+	if ( CachedFontHeights[ font ] ~= nil ) then
 		return CachedFontHeights[ font ]
 	end
 
@@ -79,7 +79,7 @@ function SimpleText( text, font, x, y, colour, xalign, yalign )
 
 	surface.SetTextPos( math.ceil( x ), math.ceil( y ) )
 
-	if ( colour != nil ) then
+	if ( colour ~= nil ) then
 		surface.SetTextColor( colour.r, colour.g, colour.b, colour.a )
 	else
 		surface.SetTextColor( 255, 255, 255, 255 )
@@ -124,7 +124,7 @@ local max = math.max
 function DrawText( text, font, x, y, colour, xalign )
 
 	if ( font == nil ) then font = "DermaDefault" end
-	if ( text != nil ) then text = tostring( text ) end
+	if ( text ~= nil ) then text = tostring( text ) end
 	if ( x == nil ) then x = 0 end
 	if ( y == nil ) then y = 0 end
 
@@ -252,7 +252,7 @@ function WordBox( bordersize, x, y, text, font, color, fontcolor, xalign, yalign
 		y = y - ( bordersize * 2 + h )
 	end
 
-	RoundedBox( bordersize, x, y, w+bordersize * 2, h+bordersize * 2, color )
+	RoundedBox( bordersize, x, y, w + bordersize * 2, h + bordersize * 2, color )
 
 	surface.SetTextColor( fontcolor.r, fontcolor.g, fontcolor.b, fontcolor.a )
 	surface.SetTextPos( x + bordersize, y + bordersize )

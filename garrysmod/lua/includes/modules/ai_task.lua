@@ -53,11 +53,11 @@ function Task:InitFunctionName( _start, _end, _taskdata_ )
 end
 
 function Task:IsEngineType()
-	return ( self.Type == TYPE_ENGINE )
+	return self.Type == TYPE_ENGINE
 end
 
 function Task:IsFNameType()
-	return ( self.Type == TYPE_FNAME )
+	return self.Type == TYPE_FNAME
 end
 
 function Task:Start( npc )

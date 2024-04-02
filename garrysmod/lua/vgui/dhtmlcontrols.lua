@@ -163,7 +163,7 @@ end
 function PANEL:UpdateNavButtonStatus()
 
 	self.ForwardButton:SetEnabled( self.Cur < table.Count( self.History ) )
-	self.BackButton:SetEnabled( self.Cur != 1 )
+	self.BackButton:SetEnabled( self.Cur ~= 1 )
 
 end
 

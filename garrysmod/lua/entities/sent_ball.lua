@@ -112,7 +112,7 @@ local BounceSound = Sound( "garrysmod/balloon_pop_cute.wav" )
 function ENT:PhysicsCollide( data, physobj )
 
 	-- Play sound on bounce
-	if ( data.Speed > 60 && data.DeltaTime > 0.2 ) then
+	if ( data.Speed > 60 and data.DeltaTime > 0.2 ) then
 
 		local pitch = 32 + 128 - math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize )
 		sound.Play( BounceSound, self:GetPos(), 75, math.random( pitch - 10, pitch + 10 ), math.Clamp( data.Speed / 150, 0, 1 ) )

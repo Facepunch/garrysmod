@@ -21,7 +21,7 @@ function meta:__index( key )
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
 	local val = meta[ key ]
-	if ( val != nil ) then return val end
+	if ( val ~= nil ) then return val end
 
 	--
 	-- Search the entity table
@@ -29,7 +29,7 @@ function meta:__index( key )
 	local tab = self:GetTable()
 	if ( tab ) then
 		local tabval = tab[ key ]
-		if ( tabval != nil ) then return tabval end
+		if ( tabval ~= nil ) then return tabval end
 	end
 
 	--
@@ -141,7 +141,7 @@ local function DoDieFunction( ent )
 	for k, v in pairs( ent.OnDieFunctions ) do
 
 		-- Functions aren't saved - so this could be nil if we loaded a game.
-		if ( v && v.Function ) then
+		if ( v and v.Function ) then
 
 			v.Function( ent, unpack( v.Args ) )
 
@@ -201,7 +201,7 @@ function meta:GetChildBones( bone )
 	local bones = {}
 
 	for k = 0, bonecount - 1 do
-		if ( self:GetBoneParent( k ) != bone ) then continue end
+		if ( self:GetBoneParent( k ) ~= bone ) then continue end
 		table.insert( bones, k )
 	end
 
@@ -263,10 +263,10 @@ function meta:InstallDataTable()
 
 	self.DTVar = function( ent, typename, index, name )
 
-		if ( isstring( index ) && !name ) then
+		if ( isstring( index ) and !name ) then
 			name = index
 			index = FindUnusedIndex( typename )
-		elseif ( !index && isstring( name ) ) then
+		elseif ( !index and isstring( name ) ) then
 			index = FindUnusedIndex( typename )
 		end
 
@@ -344,7 +344,7 @@ function meta:InstallDataTable()
 
 	self.CallDTVarProxies = function( ent, typename, index, newVal )
 
-		local t = typetable[ typename ] && typetable[ typename ][ index ] or nil
+		local t = typetable[ typename ] and typetable[ typename ][ index ] or nil
 		if ( t ) then
 			CallProxies( ent, t.Notify, t.name, t.GetFunc( ent, index ), newVal )
 		end
@@ -353,11 +353,11 @@ function meta:InstallDataTable()
 
 	self.NetworkVar = function( ent, typename, index, name, other_data )
 
-		if ( isstring( index ) && ( istable( name ) or !name ) ) then
+		if ( isstring( index ) and ( istable( name ) or !name ) ) then
 			other_data = name
 			name = index
 			index = FindUnusedIndex( typename )
-		elseif ( !index && isstring( name ) ) then
+		elseif ( !index and isstring( name ) ) then
 			index = FindUnusedIndex( typename )
 		end
 
@@ -402,12 +402,12 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarElement = function( ent, typename, index, element, name, other_data )
 
-		if ( isstring( index ) && isstring( element ) ) then
+		if ( isstring( index ) and isstring( element ) ) then
 			other_data = name
 			name = element
 			element = index
 			index = FindUnusedIndex( typename )
-		elseif ( !index && isstring( name ) ) then
+		elseif ( !index and isstring( name ) ) then
 			index = FindUnusedIndex( typename )
 		end
 
@@ -504,7 +504,7 @@ function meta:InstallDataTable()
 			if ( tab[ k ] == nil ) then continue end
 
 			-- Support old saves/dupes with incorrectly saved data
-			if ( v.element && ( isangle( tab[ k ] ) or isvector( tab[ k ] ) ) ) then
+			if ( v.element and ( isangle( tab[ k ] ) or isvector( tab[ k ] ) ) ) then
 				tab[ k ] = tab[ k ][ v.element ]
 			end
 
@@ -575,7 +575,7 @@ if ( SERVER ) then
 
 		if ( !IsValid( ent ) ) then return end
 		if ( !isfunction( ent.GetEditingData ) ) then return end
-		if ( ent.AdminOnly && !( client:IsAdmin() or game.SinglePlayer() ) ) then return end
+		if ( ent.AdminOnly and !( client:IsAdmin() or game.SinglePlayer() ) ) then return end
 
 		local key = net.ReadString()
 

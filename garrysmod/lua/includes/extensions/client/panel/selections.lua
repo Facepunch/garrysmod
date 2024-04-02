@@ -146,7 +146,7 @@ function meta:StartBoxSelection()
 
 	self:MouseCapture( true )
 
-	if ( !input.IsShiftDown() && !input.IsControlDown() ) then
+	if ( !input.IsShiftDown() and !input.IsControlDown() ) then
 		self:UnselectAll()
 	end
 
@@ -222,7 +222,7 @@ end
 
 function meta:EndBoxSelection()
 
-	if ( SelectionCanvas != self ) then return false end
+	if ( SelectionCanvas ~= self ) then return false end
 
 	self:MouseCapture( false )
 

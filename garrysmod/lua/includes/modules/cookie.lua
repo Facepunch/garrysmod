@@ -17,7 +17,7 @@ local function GetCache( key )
 
 	local entry = CachedEntries[ key ]
 
-	if ( entry == nil || SysTime() > entry[ 1 ] ) then
+	if ( entry == nil or SysTime() > entry[ 1 ] ) then
 		local name = SQLStr( key )
 		local val = sql.QueryValue( "SELECT value FROM cookies WHERE key = " .. name )
 

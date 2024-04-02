@@ -109,7 +109,7 @@ end
 
 function PANEL:PerformLayout()
 
-	if ( self.m_bDepressImage && self.m_bImageDepressed ) then
+	if ( self.m_bDepressImage and self.m_bImageDepressed ) then
 
 		self:DepressImage()
 

@@ -148,7 +148,7 @@ end
 
 function GetScore(index)
 
-	return GetGlobalInt( "Team."..tostring(index)..".Score", 0 )
+	return GetGlobalInt( "Team." .. tostring(index) .. ".Score", 0 )
 
 end
 
@@ -177,7 +177,7 @@ end
 
 function SetScore(index, score)
 
-	return SetGlobalInt( "Team."..tostring(index)..".Score", score )
+	return SetGlobalInt( "Team." .. tostring(index) .. ".Score", score )
 
 end
 
@@ -194,10 +194,10 @@ function BestAutoJoinTeam()
 
 	for id, tm in pairs( team.GetAllTeams() ) do
 
-		if ( id != TEAM_SPECTATOR && id != TEAM_UNASSIGNED && id != TEAM_CONNECTING && tm.Joinable ) then
+		if ( id ~= TEAM_SPECTATOR and id ~= TEAM_UNASSIGNED and id ~= TEAM_CONNECTING and tm.Joinable ) then
 
 			local PlayerCount = team.NumPlayers( id )
-			if ( PlayerCount < SmallestPlayers || (PlayerCount == SmallestPlayers && id < SmallestTeam ) ) then
+			if ( PlayerCount < SmallestPlayers or (PlayerCount == SmallestPlayers and id < SmallestTeam ) ) then
 				SmallestPlayers = PlayerCount
 				SmallestTeam = id
 			end

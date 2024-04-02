@@ -37,7 +37,7 @@ local function FindPanelsByClass( SeekingClass )
 	local tbl = debug.getregistry()
 	for k, v in pairs( tbl ) do
 
-		if ( ispanel( v ) && v.ClassName && v.ClassName == SeekingClass ) then
+		if ( ispanel( v ) and v.ClassName and v.ClassName == SeekingClass ) then
 
 			table.insert( outtbl, v )
 
@@ -98,7 +98,7 @@ end
 -----------------------------------------------------------]]
 function DefineControl( strName, strDescription, strTable, strBase )
 
-	local bReloading = Controls[ strName ] != nil
+	local bReloading = Controls[ strName ] ~= nil
 
 	-- Add Derma table to PANEL table.
 	strTable.Derma = {
@@ -135,7 +135,7 @@ function DefineSkin( strName, strDescription, strTable )
 	strTable.Description = strDescription
 	strTable.Base = strTable.Base or "Default"
 
-	if ( strName != "Default" ) then
+	if ( strName ~= "Default" ) then
 		setmetatable( strTable, SkinMetaTable )
 	else
 		DefaultSkin = strTable

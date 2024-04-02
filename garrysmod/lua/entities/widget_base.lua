@@ -89,11 +89,11 @@ function ENT:PressedThinkInternal( ply, mv )
 	local OldPos = self:GetGrabPos( ply.WidgetMove.EyePos, ply.WidgetMove.EyeVec )
 	local NewPos = self:GetGrabPos( ply:EyePos(), ply:GetAimVector() )
 
-	if ( NewPos && OldPos ) then
+	if ( NewPos and OldPos ) then
 
 		local dist = self:WorldToLocal( OldPos ) - self:WorldToLocal( NewPos )
 
-		if ( dist:Length() > 0.01 && dist:Length() < 512 ) then
+		if ( dist:Length() > 0.01 and dist:Length() < 512 ) then
 			self:DragThink( ply, mv, dist )
 		end
 
@@ -140,7 +140,7 @@ function ENT:OnRelease( ply, iButton, mv )
 	-- or we assume they clicked and changed their mind
 	-- so dragged off.. like people do sometimes.
 	--
-	if ( ply:GetHoveredWidget() != self ) then return end
+	if ( ply:GetHoveredWidget() ~= self ) then return end
 
 	--
 	-- Left Mouse

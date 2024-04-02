@@ -78,7 +78,7 @@ end
 --
 function net.WritePlayer( ply )
 
-	if ( !IsValid( ply ) || !ply:IsPlayer() ) then 
+	if ( !IsValid( ply ) or !ply:IsPlayer() ) then
 		net.WriteUInt( 0, 8 )
 	else
 		net.WriteUInt( ply:EntIndex(), 8 )
@@ -90,10 +90,10 @@ function net.ReadPlayer()
 
 	local i = net.ReadUInt( 8 )
 	if ( !i ) then return end
-	
+
 	local ply = Entity( i )
 	return ply
-	
+
 end
 
 
@@ -103,7 +103,7 @@ end
 function net.WriteColor( col, writeAlpha )
 	if ( writeAlpha == nil ) then writeAlpha = true end
 
-	assert( IsColor( col ), "net.WriteColor: color expected, got ".. type( col ) )
+	assert( IsColor( col ), "net.WriteColor: color expected, got " .. type( col ) )
 
 	local r, g, b, a = col:Unpack()
 	net.WriteUInt( r, 8 )

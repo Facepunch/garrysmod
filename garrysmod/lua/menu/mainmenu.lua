@@ -71,7 +71,7 @@ function PANEL:Paint()
 
 	DrawBackground()
 
-	if ( self.IsInGame != IsInGame() ) then
+	if ( self.IsInGame ~= IsInGame() ) then
 
 		self.IsInGame = IsInGame()
 
@@ -91,7 +91,7 @@ function PANEL:Paint()
 
 	local canAdd = CanAddServerToFavorites()
 	local isFav = serverlist.IsCurrentServerFavorite()
-	if ( self.CanAddServerToFavorites != canAdd or self.IsCurrentServerFavorite != isFav ) then
+	if ( self.CanAddServerToFavorites ~= canAdd or self.IsCurrentServerFavorite ~= isFav ) then
 
 		self.CanAddServerToFavorites = canAdd
 		self.IsCurrentServerFavorite = isFav
@@ -563,7 +563,7 @@ end )
 
 hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
 	local button2 = nil
-	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "Open map on Steam Workshop" end
+	if ( wsid and wsid:len() > 0 and wsid ~= "0" ) then button2 = "Open map on Steam Workshop" end
 
 	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
 	gui.ActivateGameUI()

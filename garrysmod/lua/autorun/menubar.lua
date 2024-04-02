@@ -4,8 +4,8 @@ AddCSLuaFile()
 if ( SERVER ) then return end
 
 local checkList = {}
-checkList[ "cheat" ] = { tooltip = "#menubar.cheatstip", func = function() return GetConVarNumber( "sv_cheats" ) != 0 end }
-checkList[ "cheatSP" ] = { tooltip = "#menubar.cheatstip", func = function() return GetConVarNumber( "sv_cheats" ) != 0 or game.SinglePlayer() end }
+checkList[ "cheat" ] = { tooltip = "#menubar.cheatstip", func = function() return GetConVarNumber( "sv_cheats" ) ~= 0 end }
+checkList[ "cheatSP" ] = { tooltip = "#menubar.cheatstip", func = function() return GetConVarNumber( "sv_cheats" ) ~= 0 or game.SinglePlayer() end }
 checkList[ "host" ] = { tooltip = "#menubar.host_only", func = function() return IsValid( LocalPlayer() ) and LocalPlayer():IsListenServerHost() end }
 
 local function AddCVar( s, checkStr, ... )

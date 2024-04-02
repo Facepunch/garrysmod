@@ -25,7 +25,7 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
+		elseif ( k ~= "BaseClass" and istable( t[ k ] ) and istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
@@ -43,7 +43,7 @@ end
 -----------------------------------------------------------]]
 function IsBasedOn( name, base )
 	local t = GetStored( name )
-	if not t then return false end
+	if !t then return false end
 	if t.Base == name then return false end
 
 	if t.Base == base then return true end
@@ -83,7 +83,7 @@ function Register( t, name )
 	-- If we're reloading this entity class
 	-- then refresh all the existing entities.
 	--
-	if ( old != nil ) then
+	if ( old ~= nil ) then
 
 		--
 		-- For each entity using this class
@@ -176,7 +176,7 @@ function Get( name, retval )
 	end
 
 	-- Derive from base class
-	if ( SEntList[ name ].Base != name ) then
+	if ( SEntList[ name ].Base ~= name ) then
 
 		local base = Get( SEntList[ name ].Base )
 
@@ -268,7 +268,7 @@ function GetMember( entity_name, membername )
 	if ( !ent ) then return end
 
 	local member = ent.t[ membername ]
-	if ( member != nil ) then return member end
+	if ( member ~= nil ) then return member end
 
 	-- If our base is the same as us - don't infinite loop!
 	if ( entity_name == ent.Base ) then return end

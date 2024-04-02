@@ -69,7 +69,7 @@ function PANEL:OnKeyCodeTyped( code )
 
 	self:OnKeyCode( code )
 
-	if ( code == KEY_ENTER && !self:IsMultiline() && self:GetEnterAllowed() ) then
+	if ( code == KEY_ENTER and !self:IsMultiline() and self:GetEnterAllowed() ) then
 
 		if ( IsValid( self.Menu ) ) then
 			self.Menu:Remove()
@@ -81,14 +81,14 @@ function PANEL:OnKeyCodeTyped( code )
 
 	end
 
-	if ( self.m_bHistory || IsValid( self.Menu ) ) then
+	if ( self.m_bHistory or IsValid( self.Menu ) ) then
 
 		if ( code == KEY_UP ) then
 			self.HistoryPos = self.HistoryPos - 1
 			self:UpdateFromHistory()
 		end
 
-		if ( code == KEY_DOWN || code == KEY_TAB ) then
+		if ( code == KEY_DOWN or code == KEY_TAB ) then
 			self.HistoryPos = self.HistoryPos + 1
 			self:UpdateFromHistory()
 		end
@@ -110,25 +110,25 @@ end
 
 function PANEL:GetTextColor()
 
-	return self.m_colText || self:GetSkin().colTextEntryText
+	return self.m_colText or self:GetSkin().colTextEntryText
 
 end
 
 function PANEL:GetPlaceholderColor()
 
-	return self.m_colPlaceholder || self:GetSkin().colTextEntryTextPlaceholder
+	return self.m_colPlaceholder or self:GetSkin().colTextEntryTextPlaceholder
 
 end
 
 function PANEL:GetHighlightColor()
 
-	return self.m_colHighlight || self:GetSkin().colTextEntryTextHighlight
+	return self.m_colHighlight or self:GetSkin().colTextEntryTextHighlight
 
 end
 
 function PANEL:GetCursorColor()
 
-	return self.m_colCursor || self:GetSkin().colTextEntryTextCursor
+	return self.m_colCursor or self:GetSkin().colTextEntryTextCursor
 
 end
 
@@ -194,7 +194,7 @@ function PANEL:OnTextChanged( noMenuRemoval )
 		self:OnValueChange( self:GetText() )
 	end
 
-	if ( IsValid( self.Menu ) && !noMenuRemoval ) then
+	if ( IsValid( self.Menu ) and !noMenuRemoval ) then
 		self.Menu:Remove()
 	end
 
@@ -365,7 +365,7 @@ end
 
 function PANEL:AddHistory( txt )
 
-	if ( !txt || txt == "" ) then return end
+	if ( !txt or txt == "" ) then return end
 
 	table.RemoveByValue( self.History, txt )
 	table.insert( self.History, txt )
@@ -418,7 +418,7 @@ function TextEntryLoseFocus( panel, mcode )
 	-- We do it from the panel clicked, not the KB focus, which is necessary for DTextEntry autocomplete to not break
 	local prnt = panel
 	while ( IsValid( prnt ) ) do
-		if ( prnt:GetClassName() == "EditablePanel" || prnt:GetClassName() == "LuaEditablePanel" ) then
+		if ( prnt:GetClassName() == "EditablePanel" or prnt:GetClassName() == "LuaEditablePanel" ) then
 			prnt:KillFocus()
 			return
 		end

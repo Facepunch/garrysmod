@@ -169,13 +169,13 @@ end
 
 function PANEL:IsMenuOpen()
 
-	return IsValid( self.Menu ) && self.Menu:IsVisible()
+	return IsValid( self.Menu ) and self.Menu:IsVisible()
 
 end
 
 function PANEL:OpenMenu( pControlOpener )
 
-	if ( pControlOpener && pControlOpener == self.TextEntry ) then
+	if ( pControlOpener and pControlOpener == self.TextEntry ) then
 		return
 	end
 
@@ -189,7 +189,7 @@ function PANEL:OpenMenu( pControlOpener )
 	-- If we have a modal parent at some level, we gotta parent to
 	-- that or our menu items are not gonna be selectable
 	local parent = self
-	while ( IsValid( parent ) && !parent:IsModal() ) do
+	while ( IsValid( parent ) and !parent:IsModal() ) do
 		parent = parent:GetParent()
 	end
 	if ( !IsValid( parent ) ) then parent = self end
@@ -200,7 +200,7 @@ function PANEL:OpenMenu( pControlOpener )
 		local sorted = {}
 		for k, v in pairs( self.Choices ) do
 			local val = tostring( v ) --tonumber( v ) || v -- This would make nicer number sorting, but SortedPairsByMemberValue doesn't seem to like number-string mixing
-			if ( string.len( val ) > 1 && !tonumber( val ) && val:StartsWith( "#" ) ) then val = language.GetPhrase( val:sub( 2 ) ) end
+			if ( string.len( val ) > 1 and !tonumber( val ) and val:StartsWith( "#" ) ) then val = language.GetPhrase( val:sub( 2 ) ) end
 			table.insert( sorted, { id = k, data = v, label = val } )
 		end
 		for k, v in SortedPairsByMemberValue( sorted, "label" ) do

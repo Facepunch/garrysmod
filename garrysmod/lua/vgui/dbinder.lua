@@ -49,7 +49,7 @@ end
 
 function PANEL:Think()
 
-	if ( input.IsKeyTrapping() && self.Trapping ) then
+	if ( input.IsKeyTrapping() and self.Trapping ) then
 
 		local code = input.CheckKeyTrapping()
 		if ( code ) then

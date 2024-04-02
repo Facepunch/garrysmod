@@ -26,7 +26,7 @@ local function OnChange( name, oldvalue, newvalue )
 
 	if ( !GAMEMODE:PostProcessPermitted( "bokeh" ) ) then return end
 
-	if ( newvalue != "0" ) then
+	if ( newvalue ~= "0" ) then
 		DOFModeHack( true )
 	else
 		DOFModeHack( false )

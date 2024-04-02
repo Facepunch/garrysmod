@@ -197,7 +197,7 @@ local function UpdateMaps()
 		local Name = gm.title or "Unnammed Gamemode"
 		local Maps = string.Split( gm.maps, "|" )
 
-		if ( Maps and gm.maps != "" ) then
+		if ( Maps and gm.maps ~= "" ) then
 
 			for _, pattern in ipairs( Maps ) do
 				-- When in doubt, just try to match it with string.find

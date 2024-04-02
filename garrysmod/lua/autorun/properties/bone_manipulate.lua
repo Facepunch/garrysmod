@@ -79,7 +79,7 @@ properties.Add( "bone_manipulate_end", {
 
 		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end -- If our ent has an attached entity, we want to use and modify its bones instead
 
-		return ents.FindByClassAndParent( "widget_bones", ent ) != nil
+		return ents.FindByClassAndParent( "widget_bones", ent ) ~= nil
 
 	end,
 

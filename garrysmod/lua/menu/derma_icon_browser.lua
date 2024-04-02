@@ -21,7 +21,7 @@ function Derma_OpenIconBrowser()
 	-- Remember the user's custom size for the icon browser
 	-- If any dimension of the custom size is bigger than the screen bounds, or smaller than the minimum bounds, forget about it
 	local frameW, frameH = cookie.GetNumber( "Derma_IconBrowser_W", 400 ), cookie.GetNumber( "Derma_IconBrowser_H", 400 )
-	if ( frameW > ScrW() || frameH > ScrH() ) then
+	if ( frameW > ScrW() or frameH > ScrH() ) then
 		frameW, frameH = 400, 400
 		cookie.Delete( "Derma_IconBrowser_W" )
 		cookie.Delete( "Derma_IconBrowser_H" )
@@ -40,7 +40,7 @@ function Derma_OpenIconBrowser()
 	end
 	Derma_IconBrowser.OnSizeChanged = function( self )
 		-- Don't store the custom size in the database yet, we don't want to spam it
-		if ( self.m_bStoreResize != false ) then
+		if ( self.m_bStoreResize ~= false ) then
 			self.m_bStoreResize = true
 		else
 			-- The screen resolution just changed, we already stored that in the database
@@ -71,7 +71,7 @@ function Derma_OpenIconBrowser()
 	local matCopyIcon = Material( "icon16/page_copy.png" )
 	Derma_IconBrowser.PaintOver = function( self )
 		-- Nice animation for feedback when copying an icon
-		if ( self.m_nCopiedTime && SysTime() <= self.m_nCopiedTime ) then
+		if ( self.m_nCopiedTime and SysTime() <= self.m_nCopiedTime ) then
 			local wasEnabled = DisableClipping( true )
 
 			-- Animation lasts 1 second (the fade starts after .25 seconds)

@@ -89,12 +89,12 @@ function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 	local fProgressCalc = 1 / ( 2 - fEaseIn - fEaseOut )
 
 	if ( fProgress < fEaseIn ) then
-		return ( ( fProgressCalc / fEaseIn ) * fProgress * fProgress )
+		return  ( fProgressCalc / fEaseIn ) * fProgress * fProgress
 	elseif ( fProgress < 1 - fEaseOut ) then
-		return ( fProgressCalc * ( 2 * fProgress - fEaseIn ) )
+		return  fProgressCalc * ( 2 * fProgress - fEaseIn )
 	else
 		fProgress = 1 - fProgress
-		return ( 1 - ( fProgressCalc / fEaseOut ) * fProgress * fProgress )
+		return  1 - ( fProgressCalc / fEaseOut ) * fProgress * fProgress
 	end
 end
 

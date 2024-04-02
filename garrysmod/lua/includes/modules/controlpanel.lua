@@ -6,11 +6,11 @@ module( "controlpanel", package.seeall )
 -- A hack for a very annoying race condition where spawnmenu_reload deletes the controlpanels on the next frame
 -- But some panels are updated "this" frame after spawnmenu reloaded
 local function ShouldReCreate( pnl )
-	if ( !IsValid( pnl ) || pnl:IsMarkedForDeletion() ) then return true end
+	if ( !IsValid( pnl ) or pnl:IsMarkedForDeletion() ) then return true end
 
 	local p = pnl
 	-- Can't use IsValid because it's false for marked for deletion panels
-	while ( IsValid( p ) && p:GetParent() != nil ) do
+	while ( IsValid( p ) and p:GetParent() ~= nil ) do
 		if ( p:GetParent():IsMarkedForDeletion() ) then return true end
 		p = p:GetParent()
 	end

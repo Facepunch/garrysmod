@@ -78,7 +78,7 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 		drawmonitors	= true
 	}
 
-	if ( VideoSettings.dofsteps && VideoSettings.dofpasses ) then
+	if ( VideoSettings.dofsteps and VideoSettings.dofpasses ) then
 
 		local trace = util.TraceHull( {
 			start	= view.origin,

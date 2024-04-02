@@ -160,7 +160,7 @@ function PANEL:NumberWang( strLabel, strConVar, numMin, numMax, numDecimals )
 	local right = vgui.Create( "DNumberWang", self )
 	right:SetMinMax( numMin, numMax )
 
-	if ( numDecimals != nil ) then right:SetDecimals( numDecimals ) end
+	if ( numDecimals ~= nil ) then right:SetDecimals( numDecimals ) end
 
 	right:SetConVar( strConVar )
 	right:SizeToContents()
@@ -178,7 +178,7 @@ function PANEL:NumSlider( strLabel, strConVar, numMin, numMax, numDecimals )
 	left:SetMinMax( numMin, numMax )
 	left:SetDark( true )
 
-	if ( numDecimals != nil ) then left:SetDecimals( numDecimals ) end
+	if ( numDecimals ~= nil ) then left:SetDecimals( numDecimals ) end
 
 	left:SetConVar( strConVar )
 	left:SizeToContents()

@@ -119,11 +119,11 @@ function PANEL:SetValue( val )
 	val = tonumber( val )
 	val = val or 0
 
-	if ( self.m_numMax != nil ) then
+	if ( self.m_numMax ~= nil ) then
 		val = math.min( self.m_numMax, val )
 	end
 
-	if ( self.m_numMin != nil ) then
+	if ( self.m_numMin ~= nil ) then
 		val = math.max( self.m_numMin, val )
 	end
 
@@ -132,7 +132,7 @@ function PANEL:SetValue( val )
 
 		valText = Format( "%i", val )
 
-	elseif ( val != 0 ) then
+	elseif ( val ~= 0 ) then
 
 		valText = Format( "%." .. self.m_iDecimals .. "f", val )
 
@@ -146,7 +146,7 @@ function PANEL:SetValue( val )
 
 	end
 
-	local hasChanged = tonumber( val ) != tonumber( self:GetValue() )
+	local hasChanged = tonumber( val ) ~= tonumber( self:GetValue() )
 
 	--
 	-- Don't change the value while we're typing into it!
@@ -199,7 +199,7 @@ function PANEL:SizeToContents()
 
 	chars = chars + math.max( minchars, maxchars )
 
-	if ( self:GetDecimals() && self:GetDecimals() > 0 ) then
+	if ( self:GetDecimals() and self:GetDecimals() > 0 ) then
 
 		chars = chars + 1 -- .
 		chars = chars + self:GetDecimals()

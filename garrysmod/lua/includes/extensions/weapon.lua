@@ -16,21 +16,21 @@ function meta:__index( key )
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
 	local val = meta[key]
-	if ( val != nil ) then return val end
+	if ( val ~= nil ) then return val end
 
 	--
 	-- Search the entity metatable
 	--
 	local val = entity[key]
-	if ( val != nil ) then return val end
+	if ( val ~= nil ) then return val end
 
 	--
 	-- Search the entity table
 	--
 	local tab = entity.GetTable( self )
-	if ( tab != nil ) then
+	if ( tab ~= nil ) then
 		local val = tab[ key ]
-		if ( val != nil ) then return val end
+		if ( val ~= nil ) then return val end
 	end
 
 	--
@@ -38,8 +38,8 @@ function meta:__index( key )
 	-- This needs to be retired, just like self.Entity was.
 	--
 	if ( key == "Owner" ) then return entity.GetOwner( self ) end
-	
+
 	return nil
-	
+
 end
 

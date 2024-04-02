@@ -63,7 +63,7 @@ local tblRow = vgui.RegisterTable( {
 		end
 
 		-- If the field is read only, disable it
-		if ( vars && vars.readonly ) then
+		if ( vars and vars.readonly ) then
 			self:SetEnabled( false )
 		end
 
@@ -74,7 +74,7 @@ local tblRow = vgui.RegisterTable( {
 		--
 		-- Don't update the value if our cache'd value is the same.
 		--
-		if ( self.CacheValue && self.CacheValue == val ) then return end
+		if ( self.CacheValue and self.CacheValue == val ) then return end
 		self.CacheValue = val
 
 		if ( IsValid( self.Inner ) ) then
@@ -89,7 +89,7 @@ local tblRow = vgui.RegisterTable( {
 
 		local Skin = self:GetSkin()
 		local editing = self.Inner:IsEditing()
-		local disabled = !self.Inner:IsEnabled() || !self:IsEnabled()
+		local disabled = !self.Inner:IsEnabled() or !self:IsEnabled()
 
 		if ( disabled ) then
 			surface.SetDrawColor( Skin.Colours.Properties.Column_Disabled )

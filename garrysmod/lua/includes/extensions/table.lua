@@ -725,7 +725,7 @@ end
 function table.MemberValuesFromKey( tab, key )
 	local res = {}
 	for k, v in pairs( tab ) do
-		if ( istable( v ) and v[ key ] != nil ) then res[ #res + 1 ] = v[ key ] end
+		if ( istable( v ) and v[ key ] ~= nil ) then res[ #res + 1 ] = v[ key ] end
 	end
 	return res
 end
@@ -786,7 +786,7 @@ if ( !table.move ) then
 		if ( !isnumber( from ) ) then error( "bad argument #2 to 'move' (number expected, got " .. type( from ) .. ")" ) end
 		if ( !isnumber( to ) ) then error( "bad argument #3 to 'move' (number expected, got " .. type( to ) .. ")" ) end
 		if ( !isnumber( dest ) ) then error( "bad argument #4 to 'move' (number expected, got " .. type( dest ) .. ")" ) end
-		if ( destTbl != nil ) then
+		if ( destTbl ~= nil ) then
 			if ( !istable( destTbl ) ) then error( "bad argument #5 to 'move' (table expected, got " .. type( destTbl ) .. ")" ) end
 		else
 			destTbl = sourceTbl

@@ -28,7 +28,7 @@ end
 function PANEL:AddItem( item, LifeLength )
 
 	if ( !IsValid( item ) ) then return end
-	LifeLength = LifeLength || self.m_fLifeLength
+	LifeLength = LifeLength or self.m_fLifeLength
 
 	item:SetVisible( true )
 	item:SetParent( self )
@@ -66,7 +66,7 @@ function PANEL:Shuffle()
 
 	local y = 0
 
-	if ( self.Alignment == 1 || self.Alignment == 3 ) then
+	if ( self.Alignment == 1 or self.Alignment == 3 ) then
 		y = self:GetTall()
 	end
 
@@ -77,13 +77,13 @@ function PANEL:Shuffle()
 
 			local x = 0
 
-			if ( self.Alignment == 8 || self.Alignment == 2 ) then
+			if ( self.Alignment == 8 or self.Alignment == 2 ) then
 				x = (self:GetWide() + panel:GetWide()) / 2
-			elseif ( self.Alignment == 9 || self.Alignment == 3 ) then
+			elseif ( self.Alignment == 9 or self.Alignment == 3 ) then
 				x = self:GetWide() - panel:GetWide()
 			end
 
-			if ( self.Alignment == 1 || self.Alignment == 3 ) then
+			if ( self.Alignment == 1 or self.Alignment == 3 ) then
 				y = y - panel:GetTall()
 			end
 
@@ -96,7 +96,7 @@ function PANEL:Shuffle()
 				panel.bHasEntered = true
 			end
 
-			if ( self.Alignment == 1 || self.Alignment == 3 ) then
+			if ( self.Alignment == 1 or self.Alignment == 3 ) then
 				y = y - self.Spacing
 			else
 				y = y + panel:GetTall() + self.Spacing
@@ -110,7 +110,7 @@ function PANEL:Shuffle()
 
 	-- By only removing them when the list is empty
 	-- we keep the order.
-	if ( Count == 0 && #self.Items > 0 ) then
+	if ( Count == 0 and #self.Items > 0 ) then
 		self.Items = {}
 	end
 
