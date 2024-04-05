@@ -490,7 +490,7 @@ local function ReceiveRagdollSearch()
    
    hook.Call("TTTBodySearchEquipment", nil, search, eq)
 
-   if search.show then
+   if search.show and hook.Run("TTTShowSearchScreen", search) == nil then
       ShowSearchScreen(search)
    end
 
