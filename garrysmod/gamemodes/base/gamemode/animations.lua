@@ -335,7 +335,7 @@ IdleActivityTranslate[ ACT_MP_JUMP ]						= ACT_HL2MP_JUMP_SLAM
 IdleActivityTranslate[ ACT_MP_SWIM ]						= IdleActivity + 9
 IdleActivityTranslate[ ACT_LAND ]							= ACT_LAND
 
--- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not tranlsate through the weapon do it here
+-- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not translate through the weapon do it here
 function GM:TranslateActivity( ply, act )
 
 	local newact = ply:TranslateWeaponActivity( act )
