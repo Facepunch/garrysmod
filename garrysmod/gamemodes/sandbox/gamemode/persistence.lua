@@ -19,12 +19,12 @@ hook.Add( "PersistenceSave", "PersistenceSave", function( name )
 	local PersistPage = ( name or GetConVarString( "sbox_persist" ) ):Trim()
 	if ( PersistPage == "" ) then return end
 
-	local Ents = ents.GetAll()
+	local Ents = {}
 
-	for k, v in ipairs( Ents ) do
+	for _, v in ents.Iterator() do
 
-		if ( !v:GetPersistent() ) then
-			Ents[ k ] = nil
+		if ( v:GetPersistent() ) then
+			table.insert( Ents, v )
 		end
 
 	end

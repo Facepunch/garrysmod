@@ -77,7 +77,7 @@ function Register( t, name )
 	if ( old != nil ) then
 
 		-- Update SWEP table of entities that are based on this SWEP
-		for _, e in ipairs( ents.GetAll() ) do
+		for _, e in ents.Iterator() do
 			local class = e:GetClass()
 
 			if ( class == name ) then
