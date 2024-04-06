@@ -115,10 +115,7 @@ local function MsgKey( indent, k )
 	end
 end
 
-function table.Print( tbl, lvl, already )
-	already = already or { [ tbl ] = true }
-	lvl = lvl or 1
-
+local function tablePrint( tbl, _lvl, _done )
 	local len = 0
 	for _ in pairs( tbl ) do
 		len = len + 1
@@ -152,8 +149,8 @@ function table.Print( tbl, lvl, already )
 	end
 
 	local iter = isSeq and ipairs or pairs
-	local indent = string.rep( "\t", lvl )
-	local table_indent = string.rep( "\t", lvl - 1 )
+	local indent = string.rep( "\t", _lvl )
+	local table_indent = string.rep( "\t", _lvl - 1 )
 	local i = 1
 
 	MsgC( red, "{\n" )
@@ -167,11 +164,11 @@ function table.Print( tbl, lvl, already )
 		end
 
 		if ( istable( v ) and IsColor( v ) == false ) then
-			if already[ v ] then
+			if _done[ v ] then
 				MsgC( purple, tostring( v ) )
 			else
-				already[ v ] = true
-				table.Print( v, lvl + 1, already )
+				_done[ v ] = true
+				tablePrint( v, _lvl + 1, _done )
 			end
 		else
 			MsgValue( v )
@@ -189,4 +186,8 @@ function table.Print( tbl, lvl, already )
 	MsgC( table_indent, red, "}" )
 
 	if ( lvl == 1 ) then Msg( "\n" ) end
+end
+
+function table.Print( tbl )
+	tablePrint( tbl, 1, { [ tbl ] = true } )
 end
