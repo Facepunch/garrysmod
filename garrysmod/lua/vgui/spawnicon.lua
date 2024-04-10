@@ -252,7 +252,10 @@ spawnmenu.AddContentType( "model", function( container, obj )
 
 	icon:SetTooltip( string.Replace( string.GetFileFromFilename( obj.model ), ".mdl", "" ) )
 
-	icon.DoClick = function( s ) surface.PlaySound( "ui/buttonclickrelease.wav" ) RunConsoleCommand( "gm_spawn", s:GetModelName(), s:GetSkinID() or 0, s:GetBodyGroup() or "" ) end
+	icon.DoClick = function( s )
+		surface.PlaySound( "ui/buttonclickrelease.wav" )
+		RunConsoleCommand( "gm_spawn", s:GetModelName(), s:GetSkinID() or 0, s:GetBodyGroup() or "" )
+	end
 	icon.OpenMenu = function( pnl )
 
 		-- Use the containter that we are dragged onto, not the one we were created on
@@ -262,14 +265,28 @@ spawnmenu.AddContentType( "model", function( container, obj )
 
 		local menu = DermaMenu()
 		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( obj.model, "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end ):SetIcon( "icon16/brick_add.png" )
 
-		local submenu, submenu_opt = menu:AddSubMenu( "#spawnmenu.menu.rerender", function() pnl:RebuildSpawnIcon() end )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "4" )
+			RunConsoleCommand( "creator_name", obj.model )
+		end ):SetIcon( "icon16/brick_add.png" )
+
+		local submenu, submenu_opt = menu:AddSubMenu( "#spawnmenu.menu.rerender", function()
+			if ( IsValid( pnl ) ) then pnl:RebuildSpawnIcon() end
+		end )
 		submenu_opt:SetIcon( "icon16/picture_save.png" )
-		submenu:AddOption( "#spawnmenu.menu.rerender_this", function() pnl:RebuildSpawnIcon() end ):SetIcon( "icon16/picture.png" )
-		submenu:AddOption( "#spawnmenu.menu.rerender_all", function() container:RebuildAll() end ):SetIcon( "icon16/pictures.png" )
+
+		submenu:AddOption( "#spawnmenu.menu.rerender_this", function()
+			if ( IsValid( pnl ) ) then pnl:RebuildSpawnIcon() end
+		end ):SetIcon( "icon16/picture.png" )
+		submenu:AddOption( "#spawnmenu.menu.rerender_all", function()
+			if ( IsValid( container ) ) then container:RebuildAll() end
+		end ):SetIcon( "icon16/pictures.png" )
 
 		menu:AddOption( "#spawnmenu.menu.edit_icon", function()
+
+			if ( !IsValid( pnl ) ) then return end
 
 			local editor = vgui.Create( "IconEditor" )
 			editor:SetIcon( pnl )
@@ -284,6 +301,8 @@ spawnmenu.AddContentType( "model", function( container, obj )
 
 		pnl:InternalAddResizeMenu( menu, function( w, h )
 
+			if ( !IsValid( pnl ) ) then return end
+
 			pnl:SetSize( w, h )
 			pnl:InvalidateLayout( true )
 			container:OnModified()
@@ -293,7 +312,15 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		end )
 
 		menu:AddSpacer()
-		menu:AddOption( "#spawnmenu.menu.delete", function() pnl:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
+		menu:AddOption( "#spawnmenu.menu.delete", function()
+
+			if ( !IsValid( pnl ) ) then return end
+
+			pnl:Remove()
+			hook.Run( "SpawnlistContentChanged" )
+
+		end ):SetIcon( "icon16/bin_closed.png" )
+
 		menu:Open()
 
 	end
