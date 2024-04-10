@@ -38,6 +38,36 @@ killicon.AddAlias( "func_rot_button", "prop_physics" )
 killicon.AddAlias( "func_tracktrain", "prop_physics" )
 killicon.AddAlias( "func_train", "prop_physics" )
 
+local function HandleAchievements( victimType )
+
+	-- Try to find by name
+	for id, tab in pairs( list.Get( "NPC" ) ) do
+		if ( tab.Name == victimType ) then
+			victimType = tab.Class
+		end
+	end
+	-- If fails, try to omit the translation system #
+	if ( victimType:StartsWith( "#" ) ) then
+		victimType = victimType:sub( 2 )
+	end
+
+	local bIsEnemy = IsEnemyEntityName( victimType )
+	local bIsFriend = IsFriendEntityName( victimType )
+
+	if ( bIsEnemy ) then
+		achievements.IncBaddies()
+	end
+
+	if ( bIsFriend ) then
+		achievements.IncGoodies()
+	end
+
+	if ( !bIsFriend && !bIsEnemy ) then
+		achievements.IncBystander()
+	end
+
+end
+
 -- Backwards compatiblity for addons
 net.Receive( "PlayerKilledByPlayer", function()
 
@@ -87,20 +117,8 @@ net.Receive( "PlayerKilledNPC", function()
 	hook.Run( "AddDeathNotice", attacker:Name(), attacker:Team(), inflictor, "#" .. victimtype, -1, 0 )
 
 	local bIsLocalPlayer = ( IsValid( attacker ) && attacker == LocalPlayer() )
-
-	local bIsEnemy = IsEnemyEntityName( victimtype )
-	local bIsFriend = IsFriendEntityName( victimtype )
-
-	if ( bIsLocalPlayer && bIsEnemy ) then
-		achievements.IncBaddies()
-	end
-
-	if ( bIsLocalPlayer && bIsFriend ) then
-		achievements.IncGoodies()
-	end
-
-	if ( bIsLocalPlayer && ( !bIsFriend && !bIsEnemy ) ) then
-		achievements.IncBystander()
+	if ( bIsLocalPlayer ) then
+		HandleAchievements( victimtype )
 	end
 
 end )
@@ -142,12 +160,23 @@ net.Receive( "DeathNoticeEvent", function()
 
 	local flags = net.ReadUInt( 8 )
 
+	local bIsLocalPlayer = ( isentity( attacker ) && IsValid( attacker ) && attacker == LocalPlayer() )
+	if ( bIsLocalPlayer && isstring( victim ) ) then
+		HandleAchievements( victim )
+	end
+
 	local team_a = -1
 	local team_v = -1
 	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_VICTIM ) != 0 ) then team_v = -2 end
 	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_ATTACKER ) != 0 ) then team_a = -2 end
+
+	-- Handle player entities
 	if ( isentity( attacker ) and attacker:IsValid() and attacker:IsPlayer() ) then team_a = attacker:Team() attacker = attacker:Name() end
-	if ( isentity( victim ) and victim:IsValid() and victim:IsPlayer() ) then team_v = victim:Team() victim = victim:Name()  end
+	if ( isentity( victim ) and victim:IsValid() and victim:IsPlayer() ) then team_v = victim:Team() victim = victim:Name() end
+
+	-- Handle other entities
+	if ( isentity( attacker ) and attacker:IsValid() ) then attacker = attacker:GetClass() end
+	if ( isentity( victim ) and victim:IsValid() ) then victim = victim:GetClass() end
 
 	hook.Run( "AddDeathNotice", attacker, team_a, inflictor, victim, team_v, flags )
 
