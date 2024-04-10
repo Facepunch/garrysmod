@@ -146,7 +146,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 		ActiveVideo, error = video.Record( settings )
 
 		if ( !ActiveVideo ) then
-			MsgN( "Couldn't record video: ", error )
+			Derma_Message( "Couldn't record video: \n" .. error, "Make Video Error", "OK" )
 			return
 		end
 
@@ -158,7 +158,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 
 		VideoSettings = table.Copy( settings )
 
-		--Window:Remove()
+		Window:Remove()
 
 	end
 
@@ -217,6 +217,27 @@ local function DrawOverlay()
 	surface.SetFont( "DermaDefault" )
 	surface.SetTextColor( 255, 255, 255, 255 )
 
+	-- Static text
+	local info = "Rendering " .. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ) .. "fps "
+
+	local with = {}
+	if ( VideoSettings.dofsteps > 0 ) then table.insert( with, "DOF" ) end
+	if ( VideoSettings.frameblend > 1 ) then table.insert( with, "Frame Blending" ) end
+	if ( VideoSettings.viewsmooth > 0 ) then table.insert( with, "View Smoothing" ) end
+	if ( VideoSettings.possmooth > 0 ) then table.insert( with, "Position Smoothing" ) end
+
+	if ( #with > 0 ) then
+		local withS = table.concat( with, ", " )
+		info = info .. "with " .. withS
+	end
+
+	info = info .. " (rendering " .. ( VideoSettings.frameblend * math.max( VideoSettings.dofsteps, 1 ) * math.max( VideoSettings.dofpasses, 1 ) ) .. " frames per frame)"
+
+	local tw, th = surface.GetTextSize( info )
+	surface.SetTextPos( x, y - th - 10 )
+	surface.DrawText( info )
+
+	-- The box
 	surface.SetDrawColor( 0, 0, 0, 50 )
 	surface.DrawRect( x-3, y-3, w + 6, h + 6 )
 
@@ -229,6 +250,15 @@ local function DrawOverlay()
 	surface.SetDrawColor( 255, 255, 100, 150 )
 	surface.DrawRect( x + 1, y + 1, w * complete - 2, h - 2 )
 
+	-- Demo length
+	local demolength = "Demo Length: " .. string.FormattedTime( engine.GetDemoPlaybackTotalTicks() * engine.TickInterval(), "%2i:%02i" )
+	local tw, th = surface.GetTextSize( demolength )
+	surface.SetTextPos( x + w - tw, y - th - 10 )
+	surface.DrawText( demolength )
+
+	if ( !VideoSettings.started ) then return end
+
+	-- Timers
 	surface.SetTextPos( x, y + h + 10 )
 	surface.DrawText( "Time Taken: " .. string.NiceTime( SysTime() - stats.starttime ) )
 
@@ -236,29 +266,6 @@ local function DrawOverlay()
 	surface.SetTextPos( x + w - tw, y + h + 10 )
 	surface.DrawText( "Time Left: " .. string.NiceTime( stats.timeremaining ) )
 
-	local demolength = "Demo Length: " .. string.FormattedTime( engine.GetDemoPlaybackTotalTicks() * engine.TickInterval(), "%2i:%02i" )
-	local tw, th = surface.GetTextSize( demolength )
-	surface.SetTextPos( x + w - tw, y - th - 10 )
-	surface.DrawText( demolength )
-
-	local info = "Rendering " .. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ) .. "fps "
-
-	local with = {}
-	if ( VideoSettings.dofsteps > 0 ) then table.insert( with, "DOF" ) end
-	if ( VideoSettings.frameblend > 1 ) then table.insert( with, "Frame Blending" ) end
-	if ( VideoSettings.viewsmooth > 0 ) then table.insert( with, "View Smoothing" ) end
-	if ( VideoSettings.possmooth > 0 ) then table.insert( with, "Position Smoothing" ) end
-
-	if ( #with > 0 ) then
-		with = table.concat( with, ", " )
-		info = info .. "with " .. with
-	end
-
-	info = info .. " (rendering " .. ( VideoSettings.frameblend * VideoSettings.dofsteps * VideoSettings.dofpasses ) .. " frames per frame)"
-
-	local tw, th = surface.GetTextSize( info )
-	surface.SetTextPos( x, y - th - 10 )
-	surface.DrawText( info )
 
 	local demotime = string.FormattedTime( engine.GetDemoPlaybackTick() * engine.TickInterval(), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demotime )
@@ -306,6 +313,8 @@ end )
 
 function RecordDemoFrame()
 
+	if ( !ActiveVideo ) then return end
+	if ( !VideoSettings ) then return end
 	if ( !VideoSettings.started ) then return end
 
 	ActiveVideo:AddFrame( 1 / VideoSettings.fps, true )
