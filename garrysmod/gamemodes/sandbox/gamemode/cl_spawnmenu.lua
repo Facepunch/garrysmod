@@ -69,7 +69,7 @@ end
 	Backwards compatibility. Do Not Use!!!
 -----------------------------------------------------------]]
 function GM:AddSTOOL( category, itemname, text, command, controls, cpanelfunction )
-	self:AddToolmenuOption( "Main", category, itemname, text, command, controls, cpanelfunction )
+	self:AddToolMenuOption( "Main", category, itemname, text, command, controls, cpanelfunction )
 end
 
 function GM:PreReloadToolsMenu()

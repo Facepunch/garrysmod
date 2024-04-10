@@ -40,11 +40,11 @@ function PANEL:Setup( name, icon, label )
 
 		if ( !self.PP.cpanel ) then return end
 
-		if ( !IsValid(self.cp) ) then
+		if ( !IsValid( self.cp ) ) then
 
 			self.cp = vgui.Create( "ControlPanel" )
 			self.cp:SetName( name )
-			self.cp:FillViaFunction( self.PP.cpanel )
+			self.PP.cpanel( self.cp )
 
 		end
 

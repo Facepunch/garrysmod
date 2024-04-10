@@ -335,7 +335,7 @@ end
 
 function PANEL:DoConVarThink( convar )
 
-	if ( !convar ) then return end
+	if ( !convar ) then return 255, false end
 
 	local fValue = GetConVarNumber( convar )
 	local fOldValue = self[ "ConVarOld" .. convar ]

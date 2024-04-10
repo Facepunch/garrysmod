@@ -110,7 +110,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
 
 		local bdcontrolspanel = bdcontrols:Add( "DPanelList" )
-		bdcontrolspanel:EnableVerticalScrollbar( true )
+		bdcontrolspanel:EnableVerticalScrollbar()
 		bdcontrolspanel:Dock( FILL )
 
 		local bgtab = sheet:AddSheet( "#smwidget.bodygroups", bdcontrols, "icon16/cog.png" )

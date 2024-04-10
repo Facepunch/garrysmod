@@ -75,7 +75,7 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidThrusterModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "thrusters" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "thrusters" ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90

@@ -44,7 +44,7 @@ function TOOL:RightClick( trace, worldweld )
 
 	-- Check the model's validity
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidButtonModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "buttons" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "buttons" ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90

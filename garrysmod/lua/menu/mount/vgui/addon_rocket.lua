@@ -10,6 +10,7 @@ function PANEL:Init()
 
 end
 
+--[[
 function PANEL:Think()
 
 	if ( self.Blasting ) then
@@ -27,6 +28,7 @@ function PANEL:Think()
 	end
 
 end
+]]
 
 function PANEL:Paint()
 

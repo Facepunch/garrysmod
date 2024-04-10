@@ -75,7 +75,7 @@ function TOOL:LeftClick( trace, attach )
 	--
 	-- Hit the balloon limit, bail
 	--
-	if ( !self:GetSWEP():CheckLimit( "balloons" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "balloons" ) ) then return false end
 
 	local balloon = MakeBalloon( ply, r, g, b, force, { Pos = trace.HitPos, Model = modeltable.model, Skin = modeltable.skin } )
 	if ( !IsValid( balloon ) ) then return false end

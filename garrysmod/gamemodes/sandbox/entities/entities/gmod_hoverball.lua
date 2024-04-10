@@ -228,7 +228,7 @@ end
 
 if ( SERVER ) then
 
-	numpad.Register( "Hoverball_Up", function( ply, ent, keydown, idx )
+	numpad.Register( "Hoverball_Up", function( ply, ent, keydown )
 
 		if ( !IsValid( ent ) ) then return false end
 
@@ -246,7 +246,7 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "Hoverball_Toggle", function( ply, ent, keydown )
+	numpad.Register( "Hoverball_Toggle", function( ply, ent )
 
 		if ( !IsValid( ent ) ) then return false end
 

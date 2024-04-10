@@ -165,7 +165,7 @@ function TOOL:RightClick( trace )
 	local AddLength = self:GetClientNumber( "addlength", 0 )
 	local fixed = self:GetClientNumber( "fixed", 1 )
 	local period = self:GetClientNumber( "period", 64 )
-	local starton = self:GetClientNumber( "starton" )
+	local starton = self:GetClientNumber( "starton" ) > 0
 	local material = self:GetClientInfo( "material" )
 	local colorR = self:GetClientNumber( "color_r" )
 	local colorG = self:GetClientNumber( "color_g" )

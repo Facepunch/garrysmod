@@ -111,7 +111,7 @@ function ENT:TriggerOutput( name, activator, data )
 
 	for idx = #OutputList, 1, -1 do
 
-		if ( OutputList[ idx ] and !FireSingleOutput( OutputList[ idx ], self.Entity, activator, data ) ) then
+		if ( OutputList[ idx ] and !FireSingleOutput( OutputList[ idx ], self, activator, data ) ) then
 
 			-- Shift the indexes so this loop doesn't fail later
 			table.remove( self.m_tOutputs[ name ], idx )

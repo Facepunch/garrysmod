@@ -133,7 +133,7 @@ concommand.Add( "trace", function( ply )
 		start = ply:EyePos(),
 		endpos = ply:EyePos() + ply:GetAimVector() * 30000,
 		filter = ply,
-		mask = MASK_OPAQUE_AND_NPCS,
+		//mask = MASK_OPAQUE_AND_NPCS,
 	} )
 
 	PrintTable( tr )

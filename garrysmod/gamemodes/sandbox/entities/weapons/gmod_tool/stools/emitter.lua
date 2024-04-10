@@ -54,7 +54,7 @@ function TOOL:LeftClick( trace, worldweld )
 
 	end
 
-	if ( !self:GetSWEP():CheckLimit( "emitters" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "emitters" ) ) then return false end
 
 	local pos = trace.HitPos
 	local shouldWeld = ( trace.Entity != NULL && ( !trace.Entity:IsWorld() or worldweld ) )

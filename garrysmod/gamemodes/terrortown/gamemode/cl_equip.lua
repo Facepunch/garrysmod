@@ -212,7 +212,7 @@ local function TraitorMenuPopup()
    local dlist = vgui.Create("EquipSelect", dequip)
    dlist:SetPos(0,0)
    dlist:SetSize(216, h - 75)
-   dlist:EnableVerticalScrollbar(true)
+   dlist:EnableVerticalScrollbar()
    dlist:EnableHorizontal(true)
    dlist:SetPadding(4)
 

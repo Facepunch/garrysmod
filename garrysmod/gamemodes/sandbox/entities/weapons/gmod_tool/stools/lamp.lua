@@ -80,7 +80,7 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( mdl ) or !util.IsValidProp( mdl ) or !IsValidLampModel( mdl ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "lamps" ) ) then return false end
 
 	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = angle_zero } )
 	if ( !IsValid( lamp ) ) then return false end

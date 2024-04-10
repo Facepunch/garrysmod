@@ -73,7 +73,7 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidHoverballModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "hoverballs" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "hoverballs" ) ) then return false end
 
 	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, nil, nil, nil, key_o )
 	if ( !IsValid( ball ) ) then return false end

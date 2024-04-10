@@ -66,7 +66,7 @@ function TOOL:LeftClick( trace, attach )
 
 	end
 
-	if ( !self:GetSWEP():CheckLimit( "lights" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "lights" ) ) then return false end
 
 	local light = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
 	if ( !IsValid( light ) ) then return false end

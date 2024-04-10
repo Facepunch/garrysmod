@@ -184,7 +184,7 @@ function PANEL:ValueChanged( val )
 		self.TextArea:SetValue( self.Scratch:GetTextValue() )
 	end
 
-	self.Slider:SetSlideX( self.Scratch:GetFraction( val ) )
+	self.Slider:SetSlideX( self.Scratch:GetFraction() )
 
 	self:OnValueChanged( val )
 

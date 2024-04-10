@@ -286,7 +286,7 @@ function AddContentType( name, func )
 	cp[ name ] = func
 end
 
-function GetContentType( name, func )
+function GetContentType( name )
 
 	if ( !cp[ name ] ) then
 

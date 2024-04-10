@@ -48,7 +48,7 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidDynamiteModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "dynamite" ) ) then return false end
 
 	local dynamite = MakeDynamite( ply, trace.HitPos, angle_zero, group, damage, model, remove, delay )
 	if ( !IsValid( dynamite ) ) then return false end

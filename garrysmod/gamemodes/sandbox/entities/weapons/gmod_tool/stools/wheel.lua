@@ -39,7 +39,7 @@ function TOOL:LeftClick( trace )
 
 	if ( CLIENT ) then return true end
 
-	if ( !self:GetSWEP():CheckLimit( "wheels" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "wheels" ) ) then return false end
 
 	-- Check the model's validity
 	local model = self:GetClientInfo( "model" )

@@ -40,7 +40,7 @@ function TOOL:LeftClick( trace )
 		end
 
 		-- Get client's CVars
-		local material = self:GetClientInfo( "rope_material", "cable/rope" )
+		local material = self:GetClientInfo( "rope_material" )
 		local width = self:GetClientNumber( "rope_width", 3 )
 		local fwd_bind = self:GetClientNumber( "fwd_group", 44 )
 		local bwd_bind = self:GetClientNumber( "bwd_group", 41 )
@@ -137,7 +137,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Get client's CVars
-	local material = self:GetClientInfo( "rope_material", "cable/rope" )
+	local material = self:GetClientInfo( "rope_material" )
 	local width = self:GetClientNumber( "rope_width", 3 )
 	local fwd_bind = self:GetClientNumber( "fwd_group", 44 )
 	local bwd_bind = self:GetClientNumber( "bwd_group", 41 )
@@ -146,13 +146,14 @@ function TOOL:RightClick( trace )
 	local colorR = self:GetClientNumber( "color_r" )
 	local colorG = self:GetClientNumber( "color_g" )
 	local colorB = self:GetClientNumber( "color_b" )
+	local toggle = false
 
 	-- Get information we're about to use
 	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 	local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
-	local constr, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, Color( colorR, colorG, colorB, 255 ) )
+	local constr, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle, Color( colorR, colorG, colorB, 255 ) )
 	if ( IsValid( constr ) ) then
 		undo.Create( "Winch" )
 			undo.AddEntity( constr )
