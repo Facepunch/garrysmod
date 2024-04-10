@@ -5,7 +5,7 @@ DEFINE_BASECLASS( "base_gmodentity" )
 ENT.PrintName = "Thruster"
 
 if ( CLIENT ) then
-	CreateConVar( "cl_drawthrusterseffects", "1" )
+	CreateConVar( "cl_drawthrusterseffects", "1", 0, "Should Sandbox Thruster effects be visible?" )
 end
 
 function ENT:SetEffect( name )

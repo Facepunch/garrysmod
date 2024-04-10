@@ -1,5 +1,5 @@
 
-local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE } )
+local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE }, "Amount of empty space around the Sandbox spawn menu." )
 
 include( "toolmenu.lua" )
 include( "contextmenu.lua" )

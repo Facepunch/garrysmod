@@ -1,5 +1,5 @@
 
-local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE } )
+local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE }, "Whether to draw the spawn effect when spawning objects." )
 
 local matRefract = Material( "models/spawn_effect" )
 

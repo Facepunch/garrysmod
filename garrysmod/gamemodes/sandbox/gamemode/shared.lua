@@ -42,7 +42,7 @@ cleanup.Register( "sents" )
 cleanup.Register( "vehicles" )
 
 
-local physgun_limited = CreateConVar( "physgun_limited", "0", FCVAR_REPLICATED )
+local physgun_limited = CreateConVar( "physgun_limited", "0", FCVAR_REPLICATED, "Prevent the Physics Gun from picking up certain map entities." )
 
 --[[---------------------------------------------------------
    Name: gamemode:CanTool( ply, trace, mode, tool, button )

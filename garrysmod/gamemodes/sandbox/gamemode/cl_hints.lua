@@ -1,6 +1,6 @@
 
 
-CreateClientConVar( "cl_showhints", "1", true, false )
+CreateClientConVar( "cl_showhints", "1", true, false, "Whether to display popup hints." )
 
 -- A list of hints we've already done so we don't repeat ourselves`
 local ProcessedHints = {}

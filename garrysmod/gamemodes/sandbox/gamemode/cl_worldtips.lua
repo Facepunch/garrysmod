@@ -7,7 +7,7 @@ surface.CreateFont( "GModWorldtip",
 	weight		= 700
 })
 
-local cl_drawworldtooltips = CreateConVar( "cl_drawworldtooltips", "1", { FCVAR_ARCHIVE } )
+local cl_drawworldtooltips = CreateConVar( "cl_drawworldtooltips", "1", { FCVAR_ARCHIVE }, "Whether tooltips should draw when looking at certain Sandbox entities." )
 local WorldTip = nil
 
 local TipColor = Color( 250, 250, 200, 255 )

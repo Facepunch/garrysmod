@@ -3,7 +3,7 @@
 -- The delay before a tooltip appears
 -- Can be overridden with PANEL:SetTooltipDelay
 --
-local tooltip_delay = CreateConVar( "tooltip_delay", "0.5", FCVAR_ARCHIVE + FCVAR_DONTRECORD )
+local tooltip_delay = CreateConVar( "tooltip_delay", "0.5", FCVAR_ARCHIVE + FCVAR_DONTRECORD, "Delay between hovering over a panel, and a tooltip appearing, if it has one." )
 
 local PANEL = {}
 

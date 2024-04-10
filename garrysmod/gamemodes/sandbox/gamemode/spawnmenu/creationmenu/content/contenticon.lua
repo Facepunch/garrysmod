@@ -278,7 +278,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 
 end )
 
-local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE } )
+local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE }, "Overrides the weapon all spawnmenu NPCs will spawn with. Set to \"\" to not override." )
 
 spawnmenu.AddContentType( "npc", function( container, obj )
 

@@ -1,7 +1,7 @@
 
 local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false, "Should the tool HUD be displayed when the tool gun is active?" )
-local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
-CreateClientConVar( "gmod_drawtooleffects", "1", true, false, "Should tools draw certain UI elements or effects? ( Will not work for all tools )" )
+local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true, "Currently selected tool mode for the Tool Gun." )
+CreateClientConVar( "gmod_drawtooleffects", "1", true, false, "Should tools draw certain UI elements or effects? (Will not work for all tools)" )
 
 cvars.AddChangeCallback( "gmod_toolmode", function( name, old, new )
 	if ( old == new ) then return end

@@ -5,7 +5,7 @@ if ( SERVER ) then
 	-- use the convar. The higher you set it the more accurate physics will be.
 	-- This is set to 4 by default, since we are a physics mod.
 
-	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE } )
+	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE }, "Improves physics accuracy at the expense of performance." )
 
 end
 
