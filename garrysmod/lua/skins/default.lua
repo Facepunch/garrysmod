@@ -298,16 +298,20 @@ SKIN.Colours.Category.Line = {}
 SKIN.Colours.Category.Line.Text				= GWEN.TextureColor( 4 + 8 * 20, 508 )
 SKIN.Colours.Category.Line.Text_Hover		= GWEN.TextureColor( 4 + 8 * 21, 508 )
 SKIN.Colours.Category.Line.Text_Selected	= GWEN.TextureColor( 4 + 8 * 20, 500 )
+SKIN.Colours.Category.Line.Text_Disabled	= GWEN.TextureColor( 4 + 8 * 16, 508 )
 SKIN.Colours.Category.Line.Button			= GWEN.TextureColor( 4 + 8 * 21, 500 )
 SKIN.Colours.Category.Line.Button_Hover		= GWEN.TextureColor( 4 + 8 * 22, 508 )
 SKIN.Colours.Category.Line.Button_Selected	= GWEN.TextureColor( 4 + 8 * 23, 508 )
+SKIN.Colours.Category.Line.Button_Disabled	= Color( 210, 210, 210 )
 SKIN.Colours.Category.LineAlt = {}
 SKIN.Colours.Category.LineAlt.Text				= GWEN.TextureColor( 4 + 8 * 22, 500 )
 SKIN.Colours.Category.LineAlt.Text_Hover		= GWEN.TextureColor( 4 + 8 * 23, 500 )
 SKIN.Colours.Category.LineAlt.Text_Selected		= GWEN.TextureColor( 4 + 8 * 24, 508 )
+SKIN.Colours.Category.LineAlt.Text_Disabled		= GWEN.TextureColor( 4 + 8 * 16, 508 )
 SKIN.Colours.Category.LineAlt.Button			= GWEN.TextureColor( 4 + 8 * 25, 508 )
 SKIN.Colours.Category.LineAlt.Button_Hover		= GWEN.TextureColor( 4 + 8 * 24, 500 )
 SKIN.Colours.Category.LineAlt.Button_Selected	= GWEN.TextureColor( 4 + 8 * 25, 500 )
+SKIN.Colours.Category.LineAlt.Button_Disabled	= Color( 200, 200, 200 )
 
 SKIN.Colours.TooltipText = GWEN.TextureColor( 4 + 8 * 26, 500 )
 
@@ -993,13 +997,15 @@ function SKIN:PaintCategoryButton( panel, w, h )
 
 	if ( panel.AltLine ) then
 
-		if ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Selected )
+		if ( !panel:IsEnabled() ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Disabled )
+		elseif ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Selected )
 		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Hover )
 		else surface.SetDrawColor( self.Colours.Category.LineAlt.Button ) end
 
 	else
 
-		if ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Selected )
+		if ( !panel:IsEnabled() ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Disabled )
+		elseif ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Selected )
 		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Hover )
 		else surface.SetDrawColor( self.Colours.Category.Line.Button ) end
 
