@@ -92,8 +92,7 @@ function PANEL:DrawModel()
 		previous = curparent
 	end
 
-	-- Causes issues with stencils, but only for some people?
-	-- render.ClearDepth()
+	render.ClearDepth( false )
 
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 
