@@ -90,11 +90,17 @@ function PANEL:GetButtons()
 
 	local arBut = self.Array
 
-	if ( not arBut ) then return nil end
+	if ( not arBut ) then
+		return nil
+	end
 
-	if ( not arBut.Size ) then return nil end
+	if ( not arBut.Size ) then
+		return nil
+	end
 
-	if ( arBut.Size <= 0 ) then return nil end
+	if ( arBut.Size <= 0 ) then
+		return nil
+	end
 
 	return arBut -- Collapse arguments
 
@@ -104,7 +110,9 @@ function PANEL:GetCount()
 
 	local arBut = self:GetButtons()
 
-	if ( not arBut ) then return 0 end
+	if ( not arBut ) then
+		return 0
+	end
 
 	return arBut.Size -- Return buttons count
 
@@ -222,25 +230,25 @@ end
 
 function PANEL:SetSlider( namVar, guiName, guiTip )
 
-	local slider = vgui.Create( "DNumSlider", self )
+	local crSlider = vgui.Create( "DNumSlider", self )
 
-	if ( not IsValid( slider ) ) then
+	if ( not IsValid( crSlider ) ) then
 		return self
 	end
 
-	slider:SetParent( self )
-	slider:Dock( TOP )
-	slider:SetDark( true )
-	slider:SetTall( self.sizeSliderY )
-	slider:SetText( guiName )
-	slider:SetConVar( namVar )
-	slider:SizeToContents()
+	crSlider:SetParent( self )
+	crSlider:Dock( TOP )
+	crSlider:SetDark( true )
+	crSlider:SetTall( self.sizeSliderY )
+	crSlider:SetText( guiName )
+	crSlider:SetConVar( namVar )
+	crSlider:SizeToContents()
 
 	if ( guiTip ~= nil ) then
-		slider:SetTooltip( tostring( guiTip ) )
+		crSlider:SetTooltip( tostring( guiTip ) )
 	end
 
-	self.Slider = slider
+	self.Slider = crSlider
 
 	return self
 
@@ -248,24 +256,24 @@ end
 
 function PANEL:Configure( limMin, limMax, defValue, numDigits )
 
-	local slider = self.Slider -- Slider reference
+	local crSlider = self.Slider -- Slider reference
 
-	if ( not IsValid( slider ) ) then
+	if ( not IsValid( crSlider ) ) then
 		return self
 	end
 
-	slider:SetMin( tonumber( limMin ) or -10 )
-	slider:SetMax( tonumber( limMax ) or  10 )
+	crSlider:SetMin( tonumber( limMin ) or -10 )
+	crSlider:SetMax( tonumber( limMax ) or  10 )
 
 	if ( numDigits ~= nil ) then
-		slider:SetDecimals( numDigits )
+		crSlider:SetDecimals( numDigits )
 	end
 
 	if ( defValue ~= nil ) then
-		slider:SetDefaultValue( defValue )
+		crSlider:SetDefaultValue( defValue )
 	end
 
-	slider:UpdateNotches()
+	crSlider:UpdateNotches()
 
 	return self
 
@@ -301,7 +309,7 @@ function PANEL:SetButton( guiName, guiTip )
 
 end
 
-function PANEL:SetAction( Left, Right, iD )
+function PANEL:SetAction( funcLeft, funcRight, iD )
 
 	local iD = self:GetButtonID( iD )
 
@@ -309,13 +317,13 @@ function PANEL:SetAction( Left, Right, iD )
 		return self
 	end
 
-	local crBut, slider = self.Array[ iD ], self.Slider
+	local crBut, crSlider = self.Array[ iD ], self.Slider
 
-	if ( Left ) then
+	if ( funcLeft ) then
 
 		crBut.DoClick = function()
 
-			local OK, ERR = pcall( Left, crBut, slider, slider:GetValue() )
+			local OK, ERR = pcall( funcLeft, crBut, crSlider, crSlider:GetValue() )
 
 			if ( not OK ) then
 				error( "[" .. crBut:GetText() .. "]: " .. ERR )
@@ -335,11 +343,11 @@ function PANEL:SetAction( Left, Right, iD )
 
 	end
 
-	if ( Right ) then
+	if ( funcRight ) then
 
 		crBut.DoRightClick = function()
 
-			local OK, ERR = pcall( Right, crBut, slider, slider:GetValue() )
+			local OK, ERR = pcall( funcRight, crBut, crSlider, crSlider:GetValue() )
 
 			if ( not OK ) then
 				error( "[" .. crBut:GetText() .. "]: " .. ERR )
@@ -352,8 +360,11 @@ function PANEL:SetAction( Left, Right, iD )
 		if ( not crBut.DoRightClick ) then
 
 			crBut.DoRightClick = function()
+
 				SetClipboardText( crBut:GetText() )
+
 			end
+
 		end
 
 	end
@@ -366,7 +377,9 @@ function PANEL:RemoveButton( iD )
 
 	local iD = self:GetButtonID( iD )
 
-	if ( iD == 0 ) then return self end
+	if ( iD == 0 ) then
+		return self
+	end
 
 	local crBut = table.remove( arBut, iD )
 
@@ -410,7 +423,7 @@ end
 
 function PANEL:UpdateView()
 
-	local slider = self.Slider -- Retrieve slider reference
+	local crSlider = self.Slider -- Retrieve slider reference
 
 	local arBut = self:GetButtons() -- Validate buttons array
 
@@ -422,9 +435,9 @@ function PANEL:UpdateView()
 
 	self.posSliderY = self.paddingY -- Slider position Y
 
-	slider:SetPos( self.posSliderX, self.posSliderY ) -- Apply position
+	crSlider:SetPos( self.posSliderX, self.posSliderY ) -- Apply position
 
-	slider:SetSize( self.sizeSliderX, self.sizeSliderY ) -- Apply panel size
+	crSlider:SetSize( self.sizeSliderX, self.sizeSliderY ) -- Apply panel size
 
 	if ( arBut ) then
 
@@ -456,17 +469,23 @@ end
 
 local function Run( mePanel, callName, ... )
 
-	local slider, arBut = mePanel.Slider, mePanel:GetButtons()
+	local crSlider, arBut = mePanel.Slider, mePanel:GetButtons()
 
-	if ( slider and slider[ callName ]) then slider[ callName ]( slider, ... ) end
+	if ( crSlider and crSlider[ callName ]) then
+		crSlider[ callName ]( crSlider, ... )
+	end
 
-	if ( not arBut ) then return mePanel end
+	if ( not arBut ) then
+		return mePanel
+	end
 
 	for iD = 1, arBut.Size do
 
 		local crBut = arBut[ iD ]
 
-		if ( crBut and crBut[ callName ]) then crBut[ callName ]( crBut, ... ) end
+		if ( crBut and crBut[ callName ]) then
+			crBut[ callName ]( crBut, ... )
+		end
 
 	end
 
@@ -496,13 +515,13 @@ function PANEL:Think()
 
 		if ( IsValid( parBase )) then
 
+			local guiUpdate = false
+			local sX, sY = parBase:GetSize()
 			local dX, dY = self:GetAutoResize()
-
-			local rU, sX, sY = false, parBase:GetSize()
 
 			if ( rX and dX ~= sX ) then
 
-				rU = true
+				guiUpdate = true
 
 				self:SetAutoResize( sX, nil )
 
@@ -515,7 +534,7 @@ function PANEL:Think()
 
 			if ( rY and dY ~= sY ) then
 
-				rU = true
+				guiUpdate = true
 
 				self:SetAutoResize( nil, sY )
 
@@ -526,7 +545,7 @@ function PANEL:Think()
 
 			end
 
-			if ( rU ) then
+			if ( guiUpdate ) then
 				self:UpdateView()
 			end
 
