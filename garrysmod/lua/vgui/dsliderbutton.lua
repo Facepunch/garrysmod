@@ -1,3 +1,4 @@
+
 local PANEL = {}
 
 function PANEL:Init()
@@ -25,19 +26,19 @@ function PANEL:Init()
 
 end
 
-local function SetXY( oP, vX, kX, vY, kY, fA )
+local function SetXY( mePanel, valX, keyX, valY, keyY, actFunc )
 
-	local cX, cY = fA( vX ), fA( vY )
+	local conX, conY = actFunc( valX ), actFunc( valY )
 
-	if ( vX ~= nil ) then
-		oP[ kX ] = cX
+	if ( valX ~= nil ) then
+		mePanel[ keyX ] = conX
 	end
 
-	if ( vY ~= nil ) then
-		oP[ kY ] = cY
+	if ( valY ~= nil ) then
+		mePanel[ keyY ] = conY
 	end
 
-	return oP -- Return the panel itself
+	return mePanel -- Return the panel itself
 
 end
 
@@ -87,83 +88,83 @@ end
 
 function PANEL:GetButtons()
 
-	local ArBut = self.Array
+	local arBut = self.Array
 
-	if ( not ArBut ) then return nil end
+	if ( not arBut ) then return nil end
 
-	if ( not ArBut.Size ) then return nil end
+	if ( not arBut.Size ) then return nil end
 
-	if ( ArBut.Size <= 0 ) then return nil end
+	if ( arBut.Size <= 0 ) then return nil end
 
-	return ArBut -- Collapse arguments
+	return arBut -- Collapse arguments
 
 end
 
 function PANEL:GetCount()
 
-	local ArBut = self:GetButtons()
+	local arBut = self:GetButtons()
 
-	if ( not ArBut ) then return 0 end
+	if ( not arBut ) then return 0 end
 
-	return ArBut.Size -- Return buttons count
+	return arBut.Size -- Return buttons count
 
 end
 
-function PANEL:GetButtonID( Idx )
+function PANEL:GetButtonID( iD )
 
-	local iSiz = self:GetCount()
+	local btnSize = self:GetCount()
 
-	if ( iSiz <= 0 ) then
+	if ( btnSize <= 0 ) then
 		return 0
 	end
 
-	local nIdx = math.floor( tonumber( Idx ) or 0 )
+	local floorIdx = math.floor( tonumber( iD ) or 0 )
 
-	local bIdx = ( nIdx > 0 and nIdx <= iSiz )
+	local isIdx = ( floorIdx > 0 and floorIdx <= btnSize )
 
-	return ( bIdx and nIdx or iSiz )
+	return ( isIdx and floorIdx or btnSize )
 
 end
 
-function PANEL:GetButton( Idx )
+function PANEL:GetButton( iD )
 
-	local Idx = self:GetButtonID( Idx )
+	local iD = self:GetButtonID( iD )
 
-	if ( Idx == 0 ) then
+	if ( iD == 0 ) then
 		return nil
 	end
 
-	return self.Array[ Idx ]
+	return self.Array[ iD ]
 
 end
 
-function PANEL:SetTall( Pos, Size, nB )
+function PANEL:SetTall( sizePanel, sizeSlider, sizeButton )
 
-	local Pos = tonumber( Pos )
+	local sizePanel = tonumber( sizePanel )
 
-	if ( Pos ) then -- Scale everything
+	if ( sizePanel ) then -- Scale everything
 
-		local ArBut = self:GetButtons()
+		local arBut = self:GetButtons()
 
-		if ( ArBut ) then
+		if ( arBut ) then
 
-			self.panelSizeY = Pos
+			self.panelSizeY = sizePanel
 
-			self.sizeSliderY = ( Pos - 2 * self.paddingY - self.elementDeltaY ) / 2
+			self.sizeSliderY = ( sizePanel - 2 * self.paddingY - self.elementDeltaY ) / 2
 
 			self.sizeButtonY = self.sizeSliderY
 
 		else
 
-			self.panelSizeY = Pos
+			self.panelSizeY = sizePanel
 
-			self.sizeSliderY = Pos - 2 * self.paddingY
+			self.sizeSliderY = sizePanel - 2 * self.paddingY
 
 		end
 
 	else -- Adjust elements only
 
-		SetXY( self, Size, "sizeSliderY", nB, "sizeButtonY", tonumber )
+		SetXY( self, sizeSlider, "sizeSliderY", sizeButton, "sizeButtonY", tonumber )
 
 	end
 
@@ -177,33 +178,33 @@ function PANEL:GetTall()
 
 end
 
-function PANEL:SetWide( Pos, Size, nB )
+function PANEL:SetWide( sizePanel, sizeSlider, sizeButton )
 
-	local Pos = tonumber( Pos )
+	local sizePanel = tonumber( sizePanel )
 
-	if ( Pos ) then -- Scale everything
+	if ( sizePanel ) then -- Scale everything
 
-		local ArBut = self:GetButtons()
+		local arBut = self:GetButtons()
 
-		if ( ArBut ) then
+		if ( arBut ) then
 
-			self.panelSizeX = Pos -- Use the new panel X
+			self.panelSizeX = sizePanel -- Use the new panel X
 
 			self.sizeSliderX = self.panelSizeX - 2 * self.paddingX -- Scale slider
 
-			self.sizeButtonX = self.sizeSliderX - ( ( ArBut.Size - 1 ) * self.elementDeltaX )
+			self.sizeButtonX = self.sizeSliderX - ( ( arBut.Size - 1 ) * self.elementDeltaX )
 
 		else
 
-			self.panelSizeX = Pos
+			self.panelSizeX = sizePanel
 
-			self.sizeSliderX = Pos - 2 * self.paddingX
+			self.sizeSliderX = sizePanel - 2 * self.paddingX
 
 		end
 
 	else -- Adjust elements only
 
-		SetXY( self, Size, "sizeSliderX", nB, "sizeButtonX", tonumber )
+		SetXY( self, sizeSlider, "sizeSliderX", sizeButton, "sizeButtonX", tonumber )
 
 	end
 
@@ -219,7 +220,7 @@ end
 
 -- https://github.com/Facepunch/garrysmod/blob/master/garrysmod/lua/vgui/dnumslider.lua
 
-function PANEL:SetSlider( Var, Name, Type )
+function PANEL:SetSlider( namVar, guiName, guiTip )
 
 	local slider = vgui.Create( "DNumSlider", self )
 
@@ -228,21 +229,15 @@ function PANEL:SetSlider( Var, Name, Type )
 	end
 
 	slider:SetParent( self )
-
 	slider:Dock( TOP )
-
 	slider:SetDark( true )
-
 	slider:SetTall( self.sizeSliderY )
-
-	slider:SetText( Name )
-
-	slider:SetConVar( Var )
-
+	slider:SetText( guiName )
+	slider:SetConVar( namVar )
 	slider:SizeToContents()
 
-	if ( Type ~= nil ) then
-		slider:SetTooltip( tostring( Type ) )
+	if ( guiTip ~= nil ) then
+		slider:SetTooltip( tostring( guiTip ) )
 	end
 
 	self.Slider = slider
@@ -251,7 +246,7 @@ function PANEL:SetSlider( Var, Name, Type )
 
 end
 
-function PANEL:Configure( Min, Max, Default, Digits )
+function PANEL:Configure( limMin, limMax, defValue, numDigits )
 
 	local slider = self.Slider -- Slider reference
 
@@ -259,16 +254,15 @@ function PANEL:Configure( Min, Max, Default, Digits )
 		return self
 	end
 
-	slider:SetMin( tonumber( Min ) or - 10 )
+	slider:SetMin( tonumber( limMin ) or -10 )
+	slider:SetMax( tonumber( limMax ) or  10 )
 
-	slider:SetMax( tonumber( Max ) or 10 )
-
-	if ( Digits ~= nil ) then
-		slider:SetDecimals( Digits )
+	if ( numDigits ~= nil ) then
+		slider:SetDecimals( numDigits )
 	end
 
-	if ( Default ~= nil ) then
-		slider:SetDefaultValue( Default )
+	if ( defValue ~= nil ) then
+		slider:SetDefaultValue( defValue )
 	end
 
 	slider:UpdateNotches()
@@ -279,62 +273,62 @@ end
 
 -- https://github.com/Facepunch/garrysmod/blob/master/garrysmod/lua/vgui/dbutton.lua
 
-function PANEL:SetButton( Name, Type )
+function PANEL:SetButton( guiName, guiTip )
 
-	local CrBut = vgui.Create( "DButton", self )
+	local crBut = vgui.Create( "DButton", self )
 
-	local ArBut = self.Array -- Read button array
+	local arBut = self.Array -- Read button array
 
-	if ( not ArBut ) then -- No button array. Create one
-		ArBut = { Size = 0 } -- Create button array
-		self.Array = ArBut -- Write down the array
+	if ( not arBut ) then -- No button array. Create one
+		arBut = { Size = 0 } -- Create button array
+		self.Array = arBut -- Write down the array
 	end -- Retrieve the buttons array
 
-	local iSiz = ( ArBut.Size + 1 )
+	local btnSize = ( arBut.Size + 1 )
 
-	table.insert( ArBut, CrBut )
+	table.insert( arBut, crBut )
 
-	CrBut:SetParent( self )
-	CrBut:SetText( Name )
+	crBut:SetParent( self )
+	crBut:SetText( guiName )
 
-	if ( Type ~= nil ) then
-		CrBut:SetTooltip( tostring( Type ) )
+	if ( guiTip ~= nil ) then
+		crBut:SetTooltip( tostring( guiTip ) )
 	end
 
-	ArBut.Size = iSiz
+	arBut.Size = btnSize
 
 	return self
 
 end
 
-function PANEL:SetAction( Left, Right, Idx )
+function PANEL:SetAction( Left, Right, iD )
 
-	local Idx = self:GetButtonID( Idx )
+	local iD = self:GetButtonID( iD )
 
-	if ( Idx == 0 ) then
+	if ( iD == 0 ) then
 		return self
 	end
 
-	local CrBut, slider = self.Array[ Idx ], self.Slider
+	local crBut, slider = self.Array[ iD ], self.Slider
 
 	if ( Left ) then
 
-		CrBut.DoClick = function()
+		crBut.DoClick = function()
 
-			local pS, sE = pcall( Left, CrBut, slider, slider:GetValue() )
+			local OK, ERR = pcall( Left, crBut, slider, slider:GetValue() )
 
-			if ( not pS ) then
-				error( "[" .. CrBut:GetText() .. "]: " .. sE )
+			if ( not OK ) then
+				error( "[" .. crBut:GetText() .. "]: " .. ERR )
 			end
 
 		end
 
 	else
 
-		if ( not CrBut.DoClick ) then
+		if ( not crBut.DoClick ) then
 
-			CrBut.DoClick = function()
-				SetClipboardText( CrBut:GetText() )
+			crBut.DoClick = function()
+				SetClipboardText( crBut:GetText() )
 			end
 
 		end
@@ -343,22 +337,22 @@ function PANEL:SetAction( Left, Right, Idx )
 
 	if ( Right ) then
 
-		CrBut.DoRightClick = function()
+		crBut.DoRightClick = function()
 
-			local pS, sE = pcall( Right, CrBut, slider, slider:GetValue() )
+			local OK, ERR = pcall( Right, crBut, slider, slider:GetValue() )
 
-			if ( not pS ) then
-				error( "[" .. CrBut:GetText() .. "]: " .. sE )
+			if ( not OK ) then
+				error( "[" .. crBut:GetText() .. "]: " .. ERR )
 			end
 
 		end
 
 	else
 
-		if ( not CrBut.DoRightClick ) then
+		if ( not crBut.DoRightClick ) then
 
-			CrBut.DoRightClick = function()
-				SetClipboardText( CrBut:GetText() )
+			crBut.DoRightClick = function()
+				SetClipboardText( crBut:GetText() )
 			end
 		end
 
@@ -368,19 +362,19 @@ function PANEL:SetAction( Left, Right, Idx )
 
 end
 
-function PANEL:RemoveButton( Idx )
+function PANEL:RemoveButton( iD )
 
-	local Idx = self:GetButtonID( Idx )
+	local iD = self:GetButtonID( iD )
 
-	if ( Idx == 0 ) then return self end
+	if ( iD == 0 ) then return self end
 
-	local CrBut = table.remove( ArBut, Idx )
+	local crBut = table.remove( arBut, iD )
 
-	if ( IsValid( CrBut ) ) then
+	if ( IsValid( crBut ) ) then
 
-		CrBut:Remove()
+		crBut:Remove()
 
-		ArBut.Size = ArBut.Size - 1
+		arBut.Size = arBut.Size - 1
 
 	end
 
@@ -390,23 +384,23 @@ end
 
 function PANEL:ClearButtons()
 
-	local ArBut = self:GetButtons()
+	local arBut = self:GetButtons()
 
-	if ( not ArBut ) then
+	if ( not arBut ) then
 		return self
 	end
 
-	for iD = 1, ArBut.Size do
+	for iD = 1, arBut.Size do
 
-		local CrBut = table.remove( ArBut )
+		local crBut = table.remove( arBut )
 
-		if ( IsValid( CrBut ) ) then
-			CrBut:Remove()
+		if ( IsValid( crBut ) ) then
+			crBut:Remove()
 		end
 
 	end
 
-	table.Empty( ArBut ) -- Clear array
+	table.Empty( arBut ) -- Clear array
 
 	self.Array = nil -- Wipe table
 
@@ -418,7 +412,7 @@ function PANEL:UpdateView()
 
 	local slider = self.Slider -- Retrieve slider reference
 
-	local ArBut = self:GetButtons() -- Validate buttons array
+	local arBut = self:GetButtons() -- Validate buttons array
 
 	self.panelSizeY = self.sizeSliderY + 2 * self.paddingY -- Panel size Y
 
@@ -432,9 +426,9 @@ function PANEL:UpdateView()
 
 	slider:SetSize( self.sizeSliderX, self.sizeSliderY ) -- Apply panel size
 
-	if ( ArBut ) then
+	if ( arBut ) then
 
-		local iSiz = ArBut.Size -- Read button array size
+		local btnSize = arBut.Size -- Read button array size
 
 		self.posButtonX = self.posSliderX -- Store the current X for button position
 
@@ -442,13 +436,13 @@ function PANEL:UpdateView()
 
 		self.panelSizeY = self.sizeSliderY + self.sizeButtonY + 2 * self.paddingY + self.elementDeltaY
 
-		self.sizeButtonX = ( self.panelSizeX - ( iSiz - 1 ) * self.elementDeltaX - 2 * self.paddingX ) / iSiz
+		self.sizeButtonX = ( self.panelSizeX - ( btnSize - 1 ) * self.elementDeltaX - 2 * self.paddingX ) / btnSize
 
-		for iD = 1, iSiz do -- Trough all button panels in array
+		for iD = 1, btnSize do -- Trough all button panels in array
 
-			ArBut[ iD ]:SetPos( self.posButtonX, self.posButtonY )
+			arBut[ iD ]:SetPos( self.posButtonX, self.posButtonY )
 
-			ArBut[ iD ]:SetSize( self.sizeButtonX, self.sizeButtonY )
+			arBut[ iD ]:SetSize( self.sizeButtonX, self.sizeButtonY )
 
 			self.posButtonX = self.posButtonX + self.sizeButtonX + self.elementDeltaX
 
@@ -460,29 +454,29 @@ function PANEL:UpdateView()
 
 end
 
-local function Run( oP, sN, ... )
+local function Run( mePanel, callName, ... )
 
-	local slider, ArBut = oP.Slider, oP:GetButtons()
+	local slider, arBut = mePanel.Slider, mePanel:GetButtons()
 
-	if ( slider and slider[ sN ]) then slider[ sN ]( slider, ... ) end
+	if ( slider and slider[ callName ]) then slider[ callName ]( slider, ... ) end
 
-	if ( not ArBut ) then return oP end
+	if ( not arBut ) then return mePanel end
 
-	for iD = 1, ArBut.Size do
+	for iD = 1, arBut.Size do
 
-		local CrBut = ArBut[ iD ]
+		local crBut = arBut[ iD ]
 
-		if ( CrBut and CrBut[ sN ]) then CrBut[ sN ]( CrBut, ... ) end
+		if ( crBut and crBut[ callName ]) then crBut[ callName ]( crBut, ... ) end
 
 	end
 
-	return oP
+	return mePanel
 
 end
 
-function PANEL:UpdateColours( tSkin )
+function PANEL:UpdateColours( guiSkin )
 
-	return Run( self, "UpdateColours", tSkin )
+	return Run( self, "UpdateColours", guiSkin )
 
 end
 
@@ -498,23 +492,22 @@ function PANEL:Think()
 
 	if ( rX or rY ) then
 
-		local pBase = self:GetParent()
+		local parBase = self:GetParent()
 
-		if ( IsValid( pBase )) then
+		if ( IsValid( parBase )) then
 
 			local dX, dY = self:GetAutoResize()
 
-			local rU, sX, sY = false, pBase:GetSize()
+			local rU, sX, sY = false, parBase:GetSize()
 
 			if ( rX and dX ~= sX ) then
 
-				self:SetAutoResize( sX, nil )
-
 				rU = true
 
-				local slef, stop, srgh, sbot = self:GetDockMargin()
+				self:SetAutoResize( sX, nil )
 
-				local blef, btop, brgh, bbot = pBase:GetDockPadding()
+				local slef, stop, srgh, sbot = self:GetDockMargin()
+				local blef, btop, brgh, bbot = parBase:GetDockPadding()
 
 				self:SetWide( sX - slef - srgh - blef - brgh )
 
@@ -522,13 +515,12 @@ function PANEL:Think()
 
 			if ( rY and dY ~= sY ) then
 
-				self:SetAutoResize( nil, sY )
-
 				rU = true
 
-				local slef, stop, srgh, sbot = self:GetDockMargin()
+				self:SetAutoResize( nil, sY )
 
-				local blef, btop, brgh, bbot = pBase:GetDockPadding()
+				local slef, stop, srgh, sbot = self:GetDockMargin()
+				local blef, btop, brgh, bbot = parBase:GetDockPadding()
 
 				self:SetTall( sY - stop - sbot - btop - bbot )
 
