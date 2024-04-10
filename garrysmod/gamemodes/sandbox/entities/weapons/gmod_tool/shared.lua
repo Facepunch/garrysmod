@@ -210,7 +210,8 @@ function SWEP:PrimaryAttack()
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -239,7 +240,8 @@ function SWEP:SecondaryAttack()
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -271,7 +273,8 @@ function SWEP:Reload()
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
