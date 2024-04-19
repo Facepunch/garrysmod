@@ -364,6 +364,26 @@ end
 local Servers = {}
 local ShouldStop = {}
 
+local function SendServer( pnlMainMenu, category, id,
+	ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid, isAnon, netVersion, luaVersion, loc, gmcat )
+
+	name = string.JavascriptSafe( name )
+	desc = string.JavascriptSafe( desc )
+	map = string.JavascriptSafe( map )
+	address = string.JavascriptSafe( address )
+	gm = string.JavascriptSafe( gm )
+	workshopid = string.JavascriptSafe( workshopid )
+	netVersion = string.JavascriptSafe( tostring( netVersion ) )
+	loc = string.JavascriptSafe( loc )
+	gmcat = string.JavascriptSafe( gmcat )
+
+	pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );]],
+		category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid,
+		tostring( isAnon ), netVersion, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
+
+
+end
+
 function GetServers( category, id )
 
 	category = string.JavascriptSafe( category )
@@ -381,18 +401,9 @@ function GetServers( category, id )
 			local blackListMatch = IsServerBlacklisted( address, name, desc, gm, map )
 			if ( blackListMatch == nil ) then
 
-				name = string.JavascriptSafe( name )
-				desc = string.JavascriptSafe( desc )
-				map = string.JavascriptSafe( map )
-				address = string.JavascriptSafe( address )
-				gm = string.JavascriptSafe( gm )
-				workshopid = string.JavascriptSafe( workshopid )
-				netVersion = string.JavascriptSafe( tostring( netVersion ) )
-				loc = string.JavascriptSafe( loc )
-				gmcat = string.JavascriptSafe( gmcat )
-
-				pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );]],
-					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), netVersion, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
+				SendServer( pnlMainMenu, category, id,
+					ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid,
+					isAnon, netVersion, luaVersion, loc, gmcat )
 
 			else
 
@@ -411,8 +422,9 @@ function GetServers( category, id )
 
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
-			pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s", "%s" );]],
-					category, id, 2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, "false", 0, address, "unkn", "0", "true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" ) )
+			SendServer( pnlMainMenu, category, id,
+				2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]
 
@@ -436,6 +448,76 @@ function DoStopServers( category )
 	pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
 	ShouldStop[ category ] = true
 	Servers[ category ] = {}
+end
+
+function PingServer( srvAddress )
+
+	serverlist.PingServer( srvAddress, function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid, isAnon, netVersion, luaVersion, loc, gmcat )
+
+		if ( !name ) then return end
+
+		name = string.JavascriptSafe( name )
+		map = string.JavascriptSafe( map )
+		address = string.JavascriptSafe( address )
+
+		pnlMainMenu:Call( string.format( [[UpdateServer( "%s", %i, "%s", "%s", %i, %i, %i, %s );]],
+			address, ping, name, map, players, maxplayers, botplayers, tostring( pass ) ) )
+
+	end )
+
+end
+
+function FindServersAtAddress( inputStr )
+
+	local hasPort = string.find( inputStr, ":", 0, true )
+
+	local addresses = {}
+	if ( hasPort ) then
+		table.insert( addresses, inputStr )
+	else
+		for i = 0, 5 do
+			table.insert( addresses, inputStr .. ":" .. tostring( 27015 + i ) )
+			table.insert( addresses, inputStr .. ":" .. tostring( 26900 + i ) )
+		end
+
+	end
+
+	local output = {}
+	for i, addr in ipairs( addresses ) do
+
+		serverlist.PingServer( addr, function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, ... )
+
+			if ( !name ) then
+				table.insert( output, { name = "Server at " .. addr .. " did not respond", address = addr, ping = 2000, favorite = false, players = 0, maxplayers = 0, botplayers = 0, map = "", gamemode = "" } )
+			else
+				name = string.JavascriptSafe( name )
+				map = string.JavascriptSafe( map )
+				address = string.JavascriptSafe( address )
+				gm = string.JavascriptSafe( gm )
+
+				table.insert( output, {
+					address = address,
+					name = name,
+					ping = ping,
+					map = map,
+					gamemode = gm,
+					favorite = serverlist.IsServerFavorite( address ),
+					players = players,
+					botplayers = botplayers,
+					maxplayers = maxplayers,
+				} )
+			end
+
+			//if ( #output == #addresses ) then
+
+				local json = util.TableToJSON( output )
+				pnlMainMenu:Call( "ReceiveFoundServers(" .. json .. ")" )
+			//end
+
+		end )
+
+	end
+
 end
 
 --

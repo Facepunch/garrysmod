@@ -34,7 +34,7 @@ INPUT.searchbox
 }
 INPUT.gm_search
 {
-	width: 80%;
+	width: 100%;
 	margin-bottom: 5px;
 }
 INPUT[type="text"], INPUT[type="number"]
