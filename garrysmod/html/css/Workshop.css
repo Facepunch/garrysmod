@@ -203,7 +203,8 @@ workshopmessage
 	margin: 64px;
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 800px)
+{
 	workshopmessage
 	{
 		margin: 16px;

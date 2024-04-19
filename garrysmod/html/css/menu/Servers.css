@@ -501,7 +501,7 @@ SPAN.installgamemode:hover
 }
 
 /* Server search box */
-.controls .searchbox,
+.controls .searchbox
 {
 	border-radius: 2px;
 	margin-top: 4px;
@@ -608,52 +608,62 @@ input[type=number]::-webkit-inner-spin-button {
 /* just make it not unacceptable */
 @media screen and (max-width: 700px)
 {
-	DIV.page DIV.innerpage {
+	DIV.page DIV.innerpage
+	{
 		right: 5px;
 		top: 5px;
 		bottom: 5px;
 	}
 
-	.serverinfo {
+	.serverinfo
+	{
 		padding: 5px;
 		width: 150px;
 	}
 
-	.serverlist {
+	.serverlist
+	{
 		/*padding: 5px;*/
 		right: 160px;
 	}
 
-	.serverlist .header {
+	.serverlist .header
+	{
 		top: 3px;
 		left: 3px;
 		right: 3px;
 		height: 18px;
 	}
-	.serverlist .body {
+	.serverlist .body
+	{
 		top: 25px;
 		left: 3px;
 		right: 3px;
 		bottom: 3px;
 	}
 
-	.serverlist name {
+	.serverlist name
+	{
 		left: 0px;
 		right: 158px;
 	}
-	.serverlist map {
+	.serverlist map
+	{
 		right: 100px; /*overlaps but its 640x480*/
 		width: 56px;
 	}
-	.serverlist players {
+	.serverlist players
+	{
 		right: 60px;
 		width: 46px;
 	}
-	.serverlist ping {
+	.serverlist ping
+	{
 		right: 40px;
 		width: 18px;
 	}
-	.serverlist rank {
+	.serverlist rank
+	{
 		right: 0px;
 		width: 40px;
 
@@ -661,7 +671,8 @@ input[type=number]::-webkit-inner-spin-button {
 		background-repeat: no-repeat;
 	}
 
-	DIV.installgamemode, INPUT.searchbox {
+	DIV.installgamemode, INPUT.searchbox
+	{
 		margin-right: 0px;
 	}
 }
