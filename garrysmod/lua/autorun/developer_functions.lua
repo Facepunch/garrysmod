@@ -127,7 +127,7 @@ if ( SERVER ) then
 	What am I looking at?
 -----------------------------------------------------------]]
 concommand.Add( "trace", function( ply )
-	if ( !game.SinglePlayer() && !ply:IsListenServerHost() ) then return end
+	if ( !IsValid( ply ) || ( !game.SinglePlayer() && !ply:IsListenServerHost() ) ) then return end
 
 	local tr = util.TraceLine( {
 		start = ply:EyePos(),
