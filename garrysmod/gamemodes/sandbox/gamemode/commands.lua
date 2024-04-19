@@ -507,11 +507,14 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 	NPC.NPCTable = NPCData
 	NPC._wasSpawnedOnCeiling = wasSpawnedOnCeiling
 
-	-- For those NPCs that set their model in Spawn function
+	-- For those NPCs that set their model/skin in Spawn function
 	-- We have to keep the call above for NPCs that want a model set by Spawn() time
 	-- BAD: They may adversly affect entity collision bounds
 	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
+	end
+	if ( NPCData.Skin ) then
+		NPC:SetSkin( NPCData.Skin )
 	end
 
 	if ( bDropToFloor ) then
