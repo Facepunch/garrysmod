@@ -21,7 +21,7 @@ local function recurseAddFiles( folder, pathid, list )
 
 end
 
-function GenerateSpawnlistFromPath( folder, path, name, icon, appid )
+local function GenerateSpawnlistFromPath( folder, path, name, icon, appid )
 
 	local contents = {}
 	recurseAddFiles( folder, path, contents )
