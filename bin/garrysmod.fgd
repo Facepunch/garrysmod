@@ -154,9 +154,9 @@
 	upperThreshold(float) : "Upper Threshold" : "0.30" : "Flung object must be within this percentage value in order to activate fling. Specify a value between [0...1] (default is .30) This is only used if Use Threshold Check is set to yes."
 	launchDirection(angle) : "Launch direction" : "0 0 0" : "Direction to launch the player in."
 	launchTarget(target_destination) : "Launch target" : "" : "Entity to try to 'hit' when we're launched."
-	onlyVelocityCheck(integer) : "Only check velocity" : 0 : "Only check velocity of the touching object - don't actually catapult it.  Use in conjunction with OnCatapulted to create velocity checking triggers.  Only works when Use Threshhold Check is enabled."
+	onlyVelocityCheck(integer) : "Only check velocity" : 0 : "Only check velocity of the touching object - don't actually catapult it.  Use in conjunction with OnCatapulted to create velocity checking triggers.  Only works when Use Threshold Check is enabled."
 	applyAngularImpulse(integer) : "Apply angular impulse" : 1 : "If a random angular impulse should be applied to physics objects being catapulted."
-	//AirCtrlSupressionTime(float) : "Air Control SupressionTime" : "-1.0" : "[Launch by target only!]If greater than zero, supress player aircontrol for this number (in seconds). If less than zero use the default (quarter second)."
+	//AirCtrlSupressionTime(float) : "Air Control SupressionTime" : "-1.0" : "[Launch by target only!]If greater than zero, suppress player aircontrol for this number (in seconds). If less than zero use the default (quarter second)."
 
 	output OnCatapulted(void) : "The object has been launched."
 ]
