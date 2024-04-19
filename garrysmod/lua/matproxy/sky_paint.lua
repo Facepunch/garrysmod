@@ -1,6 +1,3 @@
-local IsValid = IsValid
-local RealTime = RealTime
-
 matproxy.Add( {
 	name = "SkyPaint",
 
