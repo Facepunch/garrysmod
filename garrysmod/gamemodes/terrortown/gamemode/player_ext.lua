@@ -56,7 +56,7 @@ function plymeta:SetDefaultCredits()
       if CountTraitors() == 1 then
          c = c + GetConVar("ttt_credits_alonebonus"):GetInt()
       end
-      self:SetCredits(math.ceil(c))
+      self:SetCredits(c)
    elseif self:GetDetective() then
       self:SetCredits(GetConVar("ttt_det_credits_starting"):GetInt())
    else
