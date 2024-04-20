@@ -141,7 +141,7 @@ local ttt_playercolors = {
 
 local playercolor_mode = CreateConVar("ttt_playercolor_mode", "1")
 function GM:TTTPlayerColor(model)
-   local mode = playercolor_mode:GetInt() or 0
+   local mode = playercolor_mode:GetInt()
    if mode == 1 then
       return table.Random(ttt_playercolors.serious)
    elseif mode == 2 then

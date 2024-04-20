@@ -509,7 +509,7 @@ local function CheckCreditAward(victim, attacker)
 
    -- DETECTIVE AWARD
    if IsValid(attacker) and attacker:IsPlayer() and attacker:IsActiveDetective() and victim:IsTraitor() then
-      local amt = GetConVar("ttt_det_credits_traitordead"):GetInt() or 1
+      local amt = GetConVar("ttt_det_credits_traitordead"):GetInt()
       for _, ply in player.Iterator() do
          if ply:IsActiveDetective() then
             ply:AddCredits(amt)
