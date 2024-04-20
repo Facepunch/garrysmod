@@ -309,14 +309,14 @@ local function GetKillerSample(victim, attacker, dmg)
    if IsValid(infl) and infl:IsNPC() then return end
 
    local dist = victim:GetPos():Distance(attacker:GetPos())
-   if dist > GetConVarNumber("ttt_killer_dna_range") then return nil end
+   if dist > GetConVar("ttt_killer_dna_range"):GetFloat() then return nil end
 
    local sample = {}
    sample.killer = attacker
    sample.killer_sid = attacker:SteamID() -- backwards compatibility; use sample.killer_sid64 instead
    sample.killer_sid64 = attacker:SteamID64()
    sample.victim = victim
-   sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVarNumber("ttt_killer_dna_basetime"))
+   sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVar("ttt_killer_dna_basetime"):GetFloat())
 
    return sample
 end
