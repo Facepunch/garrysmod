@@ -509,7 +509,7 @@ local function CheckCreditAward(victim, attacker)
 
    -- DETECTIVE AWARD
    if IsValid(attacker) and attacker:IsPlayer() and attacker:IsActiveDetective() and victim:IsTraitor() then
-      local amt = GetConVarNumber("ttt_det_credits_traitordead") or 1
+      local amt = GetConVar("ttt_det_credits_traitordead"):GetInt()
       for _, ply in player.Iterator() do
          if ply:IsActiveDetective() then
             ply:AddCredits(amt)
@@ -548,9 +548,9 @@ local function CheckCreditAward(victim, attacker)
       end
 
       local pct = inno_dead / inno_total
-      if pct >= GetConVarNumber("ttt_credits_award_pct") then
+      if pct >= GetConVar("ttt_credits_award_pct"):GetFloat() then
          -- Traitors have killed sufficient people to get an award
-         local amt = GetConVarNumber("ttt_credits_award_size")
+         local amt = GetConVar("ttt_credits_award_size"):GetInt()
 
          -- If size is 0, awards are off
          if amt > 0 then
@@ -646,9 +646,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    if IsValid(attacker) and attacker:IsPlayer() then
       local reward = 0
       if attacker:IsActiveTraitor() and ply:GetDetective() then
-         reward = math.ceil(GetConVarNumber("ttt_credits_detectivekill"))
+         reward = GetConVar("ttt_credits_detectivekill"):GetInt()
       elseif attacker:IsActiveDetective() and ply:GetTraitor() then
-         reward = math.ceil(GetConVarNumber("ttt_det_credits_traitorkill"))
+         reward = GetConVar("ttt_det_credits_traitorkill"):GetInt()
       end
 
       if reward > 0 then
