@@ -10,25 +10,27 @@ matproxy.Add( {
 		local skyPaint = g_SkyPaint
 		if ( !IsValid( skyPaint ) ) then return end
 
-		mat:SetVector( "$TOPCOLOR",		skyPaint:GetTopColor() )
-		mat:SetVector( "$BOTTOMCOLOR",	skyPaint:GetBottomColor() )
-		mat:SetVector( "$DUSKCOLOR",	skyPaint:GetDuskColor() )
-		mat:SetFloat( "$DUSKSCALE",		skyPaint:GetDuskScale() )
-		mat:SetFloat( "$DUSKINTENSITY",	skyPaint:GetDuskIntensity() )
-		mat:SetFloat( "$FADEBIAS",		skyPaint:GetFadeBias() )
-		mat:SetFloat( "$HDRSCALE",		skyPaint:GetHDRScale() )
+		local values = skyPaint:GetNetworkVars()
 
-		mat:SetVector( "$SUNNORMAL",	skyPaint:GetSunNormal() )
-		mat:SetVector( "$SUNCOLOR",		skyPaint:GetSunColor() )
-		mat:SetFloat( "$SUNSIZE",		skyPaint:GetSunSize() )
+		mat:SetVector( "$TOPCOLOR",		values.TopColor )
+		mat:SetVector( "$BOTTOMCOLOR",	values.BottomColor )
+		mat:SetVector( "$DUSKCOLOR",	values.DuskColor )
+		mat:SetFloat( "$DUSKSCALE",		values.DuskScale )
+		mat:SetFloat( "$DUSKINTENSITY",	values.DuskIntensity )
+		mat:SetFloat( "$FADEBIAS",		values.FadeBias )
+		mat:SetFloat( "$HDRSCALE",		values.HDRScale )
 
-		if ( skyPaint:GetDrawStars() ) then
+		mat:SetVector( "$SUNNORMAL",	values.SunNormal )
+		mat:SetVector( "$SUNCOLOR",		values.SunColor )
+		mat:SetFloat( "$SUNSIZE",		values.SunSize )
 
-			mat:SetInt( "$STARLAYERS",		skyPaint:GetStarLayers() )
-			mat:SetFloat( "$STARSCALE",		skyPaint:GetStarScale() )
-			mat:SetFloat( "$STARFADE",		skyPaint:GetStarFade() )
-			mat:SetFloat( "$STARPOS",		skyPaint:GetStarSpeed() * RealTime() )
-			mat:SetTexture( "$STARTEXTURE",	skyPaint:GetStarTexture() )
+		if ( values.DrawStars ) then
+
+			mat:SetInt( "$STARLAYERS",		values.StarLayers )
+			mat:SetFloat( "$STARSCALE",		values.StarScale )
+			mat:SetFloat( "$STARFADE",		values.StarFade )
+			mat:SetFloat( "$STARPOS",		values.StarSpeed * RealTime() )
+			mat:SetTexture( "$STARTEXTURE",	values.StarTexture )
 
 		else
 
