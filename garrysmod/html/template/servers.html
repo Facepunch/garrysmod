@@ -26,7 +26,7 @@
 					<input id="gms_name" type="radio" name="gmsort" value="info.title" ng-model="GMSort"/><label for="gms_name" ng-tranny="'gmsort_name'"></label><br>
 					<span ng-tranny="'addons.filter_by'"></span><br/>
 					<div ng-repeat="cat in GMCats">
-						<input id="gmf_{{cat}}" type="checkbox" id="gmfltr_hide_{{cat}}" onclick="SwitchFilter( '{{cat}}', this )"/><label for="gmf_{{cat}}" ng-tranny="'gmfltr_hide_' + cat"></label>
+						<input type="checkbox" id="gmfltr_hide_{{cat}}" onclick="SwitchFilter( '{{cat}}', this )"/><label for="gmfltr_hide_{{cat}}" ng-tranny="'gmfltr_hide_' + cat"></label>
 						<img class="gmfilter_rev" src="img/remove.png" onclick="ReverseFilter( '{{cat}}', this )" /><br>
 					</div>
 					<input type="text" ng-model="GMSearch" class="gm_search" ng-tranny="'gmsearch_placeholder'" /><br/>
