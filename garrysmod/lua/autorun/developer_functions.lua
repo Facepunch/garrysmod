@@ -101,7 +101,7 @@ local function Find( ply, command, arguments )
 
 		Msg( "Finding '", arguments[1], "' ", ( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n\n" )
 		FindInTable( _G, arguments[1] )
-		FindInTable( debug.getregistry(), arguments[1] )
+		--FindInTable( debug.getregistry(), arguments[1] )
 
 	end
 
