@@ -66,7 +66,7 @@ list.Set( "PostProcess", "#colormod_pp", {
 		CPanel:AddControl( "CheckBox", { Label = "#colormod_pp.enable", Command = "pp_colormod" } )
 
 		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "colormod" }
-		params.Options[ "#preset.default" ] = { pp_colormod_addr = "0", pp_colormod_addg = "0", pp_colormod_addb = "0", pp_colormod_brightness = "0", pp_colormod_contrast = "1", pp_colormod_color = "1", pp_colormod_mulr = "0", pp_colormod_mulg = "0", pp_colormod_mulb = "0" }
+		params.Options[ "#preset.default" ] = { pp_colormod_addr = "0", pp_colormod_addg = "0", pp_colormod_addb = "0", pp_colormod_brightness = "0", pp_colormod_contrast = "1", pp_colormod_color = "1", pp_colormod_mulr = "0", pp_colormod_mulg = "0", pp_colormod_mulb = "0", pp_colormod_inv = "0" }
 		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
 		CPanel:AddControl( "ComboBox", params )
 
