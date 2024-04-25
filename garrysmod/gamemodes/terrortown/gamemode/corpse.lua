@@ -173,6 +173,8 @@ local function bitsRequired(num)
    return bits
 end
 
+local plyBits = bitsRequired(game.MaxPlayers()) -- first game.MaxPlayers() of entities are for players.
+
 function GM:TTTCanSearchCorpse(ply, corpse, is_covert, is_long_range, was_traitor)
    -- return true to allow corpse search, false to disallow.
    return true
@@ -196,7 +198,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local traitor = (rag.was_role == ROLE_TRAITOR)
    local role  = rag.was_role
    local eq    = rag.equipment or EQUIP_NONE
-   local c4    = rag.bomb_wire or -1
+   local c4    = rag.bomb_wire or 0
    local dmg   = rag.dmgtype or DMG_GENERIC
    local wep   = rag.dmgwep or ""
    local words = rag.last_words or ""
@@ -256,32 +258,31 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    -- Send a message with basic info
    net.Start("TTT_RagdollSearch")
       net.WriteUInt(rag:EntIndex(), 16) -- 16 bits
-      net.WriteUInt(owner, 8) -- 128 max players. ( 8 bits )
+      net.WriteUInt(owner, plyBits) -- 128 max players. ( 8 bits )
       net.WriteString(nick)
-      net.WriteUInt(eq, 16) -- Equipment ( 16 = max. )
+      net.WriteUInt(eq, bitsRequired(EQUIP_MAX)) -- Equipment ( default: 3 bits )
       net.WriteUInt(role, 2) -- ( 2 bits )
-      net.WriteInt(c4, bitsRequired(C4_WIRE_COUNT) + 1) -- -1 -> 2^bits ( default c4: 4 bits )
+      net.WriteUInt(c4, bitsRequired(C4_WIRE_COUNT)) -- 0 -> 2^bits ( default c4: 3 bits )
       net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits )
       net.WriteString(wep)
-      net.WriteBit(hshot) -- ( 1 bit )
-      net.WriteInt(dtime, 16)
-      net.WriteInt(stime, 16)
+      net.WriteBool(hshot) -- ( 1 bit )
+      net.WriteUInt(dtime, 15)
+      net.WriteUInt(stime, 15)
 
       net.WriteUInt(#kill_entids, 8)
-      for k, idx in pairs(kill_entids) do
-         net.WriteUInt(idx, 8) -- first game.MaxPlayers() of entities are for players.
+      for k, idx in ipairs(kill_entids) do
+         net.WriteUInt(idx, plyBits)
       end
 
-      net.WriteUInt(lastid, 8)
+      net.WriteUInt(lastid, plyBits)
 
       -- Who found this, so if we get this from a detective we can decide not to
       -- show a window
-      net.WriteUInt(ply:EntIndex(), 8)
+      net.WriteUInt(ply:EntIndex(), plyBits)
 
       net.WriteString(words)
 
-      -- 133 + string data + #kill_entids * 8
-      -- 200
+      -- 93 + string data + plyBits * (3 + #kill_entids)
 
    -- If found by detective, send to all, else just the finder
    if ply:IsActiveDetective() then
