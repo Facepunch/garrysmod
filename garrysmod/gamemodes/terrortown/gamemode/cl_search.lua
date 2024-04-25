@@ -173,7 +173,7 @@ function PreprocSearch(raw)
          local num = table.Count(d)
          if num == 1 then
             local vic = Entity(d[1])
-            local dc = d[1] == -1 -- disconnected
+            local dc = d[1] == 0 -- disconnected
             if dc or (IsValid(vic) and vic:IsPlayer()) then
                search[t].text = PT("search_kills1", {player = (dc and "<Disconnected>" or vic:Nick())})
             end
@@ -181,9 +181,9 @@ function PreprocSearch(raw)
             local txt = T("search_kills2") .. "\n"
 
             local nicks = {}
-            for k, idx in pairs(d) do
+            for k, idx in ipairs(d) do
                local vic = Entity(idx)
-               local dc = idx == -1
+               local dc = idx == 0
                if dc or (IsValid(vic) and vic:IsPlayer()) then
                   table.insert(nicks, (dc and "<Disconnected>" or vic:Nick()))
                end
@@ -196,7 +196,7 @@ function PreprocSearch(raw)
 
          search[t].p = 30
       elseif t == "lastid" then
-         if d and d.idx != -1 then
+         if d and d.idx != 0 then
             local ent = Entity(d.idx)
             if IsValid(ent) and ent:IsPlayer() then
                search[t].text = PT("search_eyes", {player = ent:Nick()})

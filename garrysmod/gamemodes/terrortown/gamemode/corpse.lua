@@ -93,7 +93,7 @@ local function IdentifyBody(ply, rag)
    end
 
    -- Handle kill list
-   for k, vicsid64 in pairs(rag.kills) do
+   for k, vicsid64 in ipairs(rag.kills) do
       -- filter out disconnected
       local vic = player.GetBySteamID64(vicsid64)
 
@@ -206,7 +206,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local dtime = rag.time or 0
 
    local owner = player.GetBySteamID64(rag.sid64)
-   owner = IsValid(owner) and owner:EntIndex() or -1
+   owner = IsValid(owner) and owner:EntIndex() or 0
 
    -- basic sanity check
    if nick == nil or eq == nil or role == nil then return end
@@ -242,17 +242,17 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
 
    -- build list of people this traitor killed
    local kill_entids = {}
-   for k, vicsid64 in pairs(rag.kills) do
+   for k, vicsid64 in ipairs(rag.kills) do
       -- also send disconnected players as a marker
       local vic = player.GetBySteamID64(vicsid64)
-      table.insert(kill_entids, IsValid(vic) and vic:EntIndex() or -1)
+      table.insert(kill_entids, IsValid(vic) and vic:EntIndex() or 0)
    end
 
-   local lastid = -1
+   local lastid = 0
    if rag.lastid and ply:IsActiveDetective() then
-      -- if the person this victim last id'd has since disconnected, send -1 to
+      -- if the person this victim last id'd has since disconnected, send 0 to
       -- indicate this
-      lastid = IsValid(rag.lastid.ent) and rag.lastid.ent:EntIndex() or -1
+      lastid = IsValid(rag.lastid.ent) and rag.lastid.ent:EntIndex() or 0
    end
 
    -- Send a message with basic info
