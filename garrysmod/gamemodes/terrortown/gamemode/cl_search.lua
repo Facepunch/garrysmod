@@ -173,7 +173,7 @@ function PreprocSearch(raw)
          local num = table.Count(d)
          if num == 1 then
             local vic = Entity(d[1])
-            local dc = d[1] == -1 -- disconnected
+            local dc = d[1] == 0 -- disconnected
             if dc or (IsValid(vic) and vic:IsPlayer()) then
                search[t].text = PT("search_kills1", {player = (dc and "<Disconnected>" or vic:Nick())})
             end
@@ -181,9 +181,9 @@ function PreprocSearch(raw)
             local txt = T("search_kills2") .. "\n"
 
             local nicks = {}
-            for k, idx in pairs(d) do
+            for k, idx in ipairs(d) do
                local vic = Entity(idx)
-               local dc = idx == -1
+               local dc = idx == 0
                if dc or (IsValid(vic) and vic:IsPlayer()) then
                   table.insert(nicks, (dc and "<Disconnected>" or vic:Nick()))
                end
@@ -196,7 +196,7 @@ function PreprocSearch(raw)
 
          search[t].p = 30
       elseif t == "lastid" then
-         if d and d.idx != -1 then
+         if d and d.idx != 0 then
             local ent = Entity(d.idx)
             if IsValid(ent) and ent:IsPlayer() then
                search[t].text = PT("search_eyes", {player = ent:Nick()})
@@ -431,6 +431,8 @@ local function bitsRequired(num)
    return bits
 end
 
+local plyBits = bitsRequired(game.MaxPlayers())
+
 local search = {}
 local function ReceiveRagdollSearch()
    search = {}
@@ -438,7 +440,7 @@ local function ReceiveRagdollSearch()
    -- Basic info
    search.eidx = net.ReadUInt(16)
 
-   search.owner = Entity(net.ReadUInt(8))
+   search.owner = Entity(net.ReadUInt(plyBits))
    if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:IsTerror())) then
       search.owner = nil
    end
@@ -446,7 +448,7 @@ local function ReceiveRagdollSearch()
    search.nick = net.ReadString()
 
    -- Equipment
-   local eq = net.ReadUInt(16)
+   local eq = net.ReadUInt(bitsRequired(EQUIP_MAX))
 
    -- All equipment pieces get their own icon
    search.eq_armor = util.BitSet(eq, EQUIP_ARMOR)
@@ -455,30 +457,30 @@ local function ReceiveRagdollSearch()
 
    -- Traitor things
    search.role = net.ReadUInt(2)
-   search.c4 = net.ReadInt(bitsRequired(C4_WIRE_COUNT) + 1)
+   search.c4 = net.ReadUInt(bitsRequired(C4_WIRE_COUNT))
 
    -- Kill info
    search.dmg = net.ReadUInt(30)
    search.wep = net.ReadString()
-   search.head = net.ReadBit() == 1
-   search.dtime = net.ReadInt(16)
-   search.stime = net.ReadInt(16)
+   search.head = net.ReadBool()
+   search.dtime = net.ReadUInt(15)
+   search.stime = net.ReadUInt(15)
 
    -- Players killed
    local num_kills = net.ReadUInt(8)
    if num_kills > 0 then
       search.kills = {}
       for i=1,num_kills do
-         table.insert(search.kills, net.ReadUInt(8))
+         table.insert(search.kills, net.ReadUInt(plyBits))
       end
    else
       search.kills = nil
    end
 
-   search.lastid = {idx=net.ReadUInt(8)}
+   search.lastid = {idx=net.ReadUInt(plyBits)}
 
    -- should we show a menu for this result?
-   search.finder = net.ReadUInt(8)
+   search.finder = net.ReadUInt(plyBits)
 
    search.show = (LocalPlayer():EntIndex() == search.finder)
 
