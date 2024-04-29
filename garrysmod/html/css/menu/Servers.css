@@ -579,10 +579,16 @@ SPAN.installgamemode:hover
 DIV.page DIV.options UL LI.sb_filters
 {
 	font-size: 16px;
-	color: black;
-	text-shadow: none;
+	/*color: black;
+	text-shadow: none;*/
 	margin-right: 42px;
-	padding: 8px 16px;
+	/*padding: 8px 16px;*/
+}
+DIV.page DIV.options UL LI.sb_filter_sep
+{
+	border-top: 1px solid white;
+	margin-right: 42px;
+	margin-bottom: 24px;
 }
 .gmfilter_rev
 {

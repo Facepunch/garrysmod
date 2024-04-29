@@ -19,7 +19,8 @@
 				<li>&nbsp;</li>
 				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-tranny="'legacy_browser'"></a></li>
 				<li>&nbsp;</li>
-				<li class="sb_filters whiterounded" ng-hide="CurrentGamemode != null">
+				<li class="sb_filter_sep"></li>
+				<li class="sb_filters" ng-hide="CurrentGamemode != null">
 					<span ng-tranny="'addons.sort_by'"></span><br/>
 					<input id="gms_players" type="radio" name="gmsort" value="-(order)" ng-model="GMSort"/><label for="gms_players" ng-tranny="'gmsort_players'"></label><br>
 					<input id="gms_servers" type="radio" name="gmsort" value="-(num_servers)" ng-model="GMSort"/><label for="gms_servers" ng-tranny="'gmsort_servers'"></label><br>
@@ -31,7 +32,7 @@
 					</div>
 					<input type="text" ng-model="GMSearch" class="gm_search" ng-tranny="'gmsearch_placeholder'" /><br/>
 				</li>
-				<li class="sb_filters whiterounded" ng-show="CurrentGamemode != null">
+				<li class="sb_filters" ng-show="CurrentGamemode != null">
 					<label ng-tranny="'svfltr_ply_limit'"></label><br/>
 					<input ng-model="SVFilterPlyMin" type="number" class="smalltextbox" placeholder="0`"/>
 					&nbsp;-&nbsp;
