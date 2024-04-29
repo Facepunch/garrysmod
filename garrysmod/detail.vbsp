@@ -28,13 +28,13 @@ detail
 
 			Model1
 			{
-				"model" "models/perftest/Grass_tuft_003a.mdl"
+				"model" "models/perftest/grass_tuft_003a.mdl"
 				"amount" "0.05"
 			}
 
 			Model2
 			{
-				"model" "models/perftest/Grass_tuft_004b.mdl"
+				"model" "models/perftest/grass_tuft_004b.mdl"
 				"amount" "0.05"
 			}
 		}
@@ -67,13 +67,13 @@ detail
 
 			Model1
 			{
-				"model" "models/props_foliage/Grass_tuft_001a.mdl"
+				"model" "models/perftest/grass_tuft_001.mdl"
 				"amount" "0.1"
 			}
 
 			Model2
 			{
-				"model" "models/props_foliage/Grass_tuft_001b.mdl"
+				"model" "models/perftest/grass_tuft_001b.mdl"
 				"amount" "0.1"
 			}
 		}
@@ -89,13 +89,13 @@ detail
 
 			Model1
 			{
-				"model" "models/perftest/Grass_tuft_001a.mdl"
+				"model" "models/perftest/grass_tuft_001.mdl"
 				"amount" "0.3"
 			}
 
 			Model2
 			{
-				"model" "models/perftest/Grass_tuft_001b.mdl"
+				"model" "models/perftest/grass_tuft_001b.mdl"
 				"amount" "0.3"
 			}
 		}
@@ -106,13 +106,13 @@ detail
 
 			Model1
 			{
-				"model" "models/perftest/Grass_tuft_003a.mdl"
+				"model" "models/perftest/grass_tuft_003a.mdl"
 				"amount" "0.1"
 			}
 
 			Model2
 			{
-				"model" "models/perftest/Grass_tuft_004b.mdl"
+				"model" "models/perftest/grass_tuft_004b.mdl"
 				"amount" "0.3"
 			}
 		}
@@ -128,23 +128,23 @@ detail
 
 			Model1
 			{
-				"model" "models/perftest/Grass_tuft_004a.mdl"
+				"model" "models/perftest/grass_tuft_004a.mdl"
 				"amount" "0.1"
 			}
 
 			Model2
 			{
-				"model" "models/perftest/Grass_tuft_004b.mdl"
+				"model" "models/perftest/grass_tuft_004b.mdl"
 				"amount" "0.1"
 			}
 			Model3
 			{
-				"model" "models/perftest/Grass_tuft_004c.mdl"
+				"model" "models/perftest/grass_tuft_004c.mdl"
 				"amount" "0.1"
 			}
 			Model4
 			{
-				"model" "models/perftest/Grass_tuft_004d.mdl"
+				"model" "models/perftest/grass_tuft_004d.mdl"
 				"amount" "0.1"
 			}
 		}
@@ -154,13 +154,13 @@ detail
 
 			Model1
 			{
-				"model" "models/perftest/Grass_tuft_001a.mdl"
+				"model" "models/perftest/grass_tuft_001.mdl"
 				"amount" "0.1"
 			}
 
 			Model2
 			{
-				"model" "models/perftest/Grass_tuft_001b.mdl"
+				"model" "models/perftest/grass_tuft_001b.mdl"
 				"amount" "0.1"
 			}
 	
@@ -172,22 +172,6 @@ detail
 		Group4
 		{
 			"alpha" "1.0"
-		}
-	}
-
-	grassland2
-	{
-		"density" "1000.0"
-
-		Group1
-		{
-			"alpha" "1.0"
-
-			Model1
-			{
-				"model" "models/junk/w_traffcone.mdl"
-				"amount" "0.4"
-			}
 		}
 	}
 
@@ -219,7 +203,7 @@ detail
 				"model" "models/perftest/rocksground01d.mdl"
 				"amount" "0.1"
 			}
-	                Model5
+			Model5
 			{
 				"model" "models/perftest/rocksground01e.mdl"
 				"amount" "0.1"
@@ -265,7 +249,7 @@ detail
 				"model" "models/perftest/rocksground01d.mdl"
 				"amount" "0.1"
 			}
-	                Model5
+			Model5
 			{
 				"model" "models/perftest/rocksground01e.mdl"
 				"amount" "0.1"
@@ -307,18 +291,7 @@ detail
 			Model1
 			{
 				"model" "models/props_foliage/shrub_01a.mdl"
-				"amount" "0.2"
-			}
-
-			Model2
-			{
-				"model" "models/props_foliage/shrub_03a.mdl"
-				"amount" "0.1"
-			}
-			Model4
-			{
-				"model" "models/props_foliage/shrub_03c.mdl"
-				"amount" "0.1"
+				"amount" "0.3"
 			}
 		}
 
@@ -334,7 +307,7 @@ detail
 		}
 	}
 
-	test
+	grassland2
 	{
 		"density" "600.0"
 
@@ -344,13 +317,13 @@ detail
 
 			Model1
 			{
-				"model" "models/perftest/Grass_tuft_001a.mdl"
+				"model" "models/perftest/grass_tuft_001.mdl"
 				"amount" "0.3"
 			}
 
 			Model2
 			{
-				"model" "models/perftest/Grass_tuft_001b.mdl"
+				"model" "models/perftest/grass_tuft_001b.mdl"
 				"amount" "0.3"
 			}
 		}
@@ -361,23 +334,23 @@ detail
 
 			Model1
 			{
-				"model" "models/perftest/Grass_tuft_003a.mdl"
+				"model" "models/perftest/grass_tuft_003a.mdl"
 				"amount" "0.1"
 			}
 
 			Model2
 			{
-				"model" "models/perftest/Grass_tuft_004b.mdl"
+				"model" "models/perftest/grass_tuft_004b.mdl"
 				"amount" "0.3"
 			}
 			Model3
 			{
-				"model" "models/perftest/Grass_tuft_004a.mdl"
+				"model" "models/perftest/grass_tuft_004a.mdl"
 				"amount" "0.05"
 			}
 			Model4
 			{
-				"model" "models/perftest/Grass_tuft_004c.mdl"
+				"model" "models/perftest/grass_tuft_004c.mdl"
 				"amount" "0.05"
 			}
 		}
@@ -1121,13 +1094,13 @@ detail
 
 			Model1
 			{
-				"model" "models/PerfTest/Grass_tuft_004a.mdl"
+				"model" "models/perftest/grass_tuft_004a.mdl"
 				"amount" "0.25"
 			}
 
 			Model2
 			{
-				"model" "models/PerfTest/Grass_tuft_004b.mdl"
+				"model" "models/perftest/grass_tuft_004b.mdl"
 				"amount" "0.25"
 			}
 			Model3
@@ -1305,7 +1278,7 @@ detail
 			}
 			Model8
 			{
-				"model" "models/props_foliage/detail_rocks01a.mdl"
+				"model" "models/perftest/rocksground02b.mdl"
 				"amount" "0.05"
 			}
 		}
@@ -1334,18 +1307,33 @@ detail
 
 			Model1
 			{
-				"model" "models/props_junk/detail_junk01.mdl"
-				"amount" "0.33"
+				"model" "models/props_junk/garbage128_composite001a.mdl"
+				"amount" "0.05"
 			}
 			Model2
 			{
-				"model" "models/props_junk/detail_junk02.mdl"
-				"amount" "0.33"
+				"model" "models/props_junk/garbage128_composite001b.mdl"
+				"amount" "0.05"
 			}
 			Model3
 			{
-				"model" "models/props_junk/detail_junk03.mdl"
-				"amount" "0.33"
+				"model" "models/props_junk/garbage128_composite001c.mdl"
+				"amount" "0.05"
+			}
+			Model4
+			{
+				"model" "models/props_junk/garbage128_composite001d.mdl"
+				"amount" "0.05"
+			}
+			Model5
+			{
+				"model" "models/props_junk/garbage_carboard001a.mdl"
+				"amount" "0.10"
+			}
+			Model6
+			{
+				"model" "models/props_junk/garbage_carboard002a.mdl"
+				"amount" "0.10"
 			}
 		}
 	}
