@@ -3,7 +3,6 @@ local PANEL = {}
 
 DEFINE_BASECLASS( "DMenuOption" )
 
-AccessorFunc( PANEL, "m_strConVar", "ConVar" )
 AccessorFunc( PANEL, "m_strValueOn", "ValueOn" )
 AccessorFunc( PANEL, "m_strValueOff", "ValueOff" )
 
@@ -17,12 +16,34 @@ function PANEL:Init()
 
 end
 
+function PANEL:SetConVar( strConVar )
+
+	self.m_strConVar = strConVar
+	self.m_ConVar = GetConVar( strConVar )
+
+end
+
+function PANEL:GetConVar()
+
+	return self.m_strConVar
+
+end
+
+local justChecked = false
 function PANEL:Think()
 
 	if ( !self.m_strConVar ) then return end
-	local strValue = GetConVarString( self.m_strConVar )
+	local strValue = self.m_ConVar:GetString()
+	
+	local b = strValue == self.m_strValueOn 
+	if ( self:GetChecked() == b ) then return end
 
-	self:SetChecked( strValue == self.m_strValueOn )
+	if ( justChecked ) then
+		justChecked = false
+		return
+	end
+
+	self:SetChecked( b )
 
 end
 
@@ -35,6 +56,8 @@ function PANEL:OnChecked( b )
 	else
 		RunConsoleCommand( self.m_strConVar, self.m_strValueOff )
 	end
+
+	justChecked = true
 
 end
 
