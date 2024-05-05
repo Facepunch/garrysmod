@@ -3,6 +3,7 @@ local PANEL = {}
 
 DEFINE_BASECLASS( "DMenuOption" )
 
+AccessorFunc( PANEL, "m_strConVar", "ConVar" )
 AccessorFunc( PANEL, "m_strValueOn", "ValueOn" )
 AccessorFunc( PANEL, "m_strValueOff", "ValueOff" )
 
@@ -20,12 +21,6 @@ function PANEL:SetConVar( strConVar )
 
 	self.m_strConVar = strConVar
 	self.m_ConVar = GetConVar( strConVar )
-
-end
-
-function PANEL:GetConVar()
-
-	return self.m_strConVar
 
 end
 
