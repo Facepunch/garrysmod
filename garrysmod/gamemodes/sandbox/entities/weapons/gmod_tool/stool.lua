@@ -40,14 +40,26 @@ function ToolObj:CreateConVars()
 
 	if ( CLIENT ) then
 
+		local helpText = "Tool specific client setting (" .. mode .. ")"
+
 		for cvar, default in pairs( self.ClientConVar ) do
-			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true, "Tool specific client setting (" .. mode .. ")" )
+			if ( istable ( default ) ) then
+				self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default.Value or "", true, true, default.HelpText or helpText, default.Min, default.Max )
+			else
+				self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true, helpText )
+			end
 		end
 
 	else
 
+		local helpText = "Tool specific server setting (" .. mode .. ")"
+
 		for cvar, default in pairs( self.ServerConVar ) do
-			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE, "Tool specific server setting (" .. mode .. ")" )
+			if ( istable ( default ) ) then
+				self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default.Value or "", default.Flags or FCVAR_ARCHIVE, default.HelpText or helpText, default.Min, default.Max )
+			else
+				self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE, helpText )
+			end
 		end
 
 	end
