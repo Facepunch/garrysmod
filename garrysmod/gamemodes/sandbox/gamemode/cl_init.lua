@@ -123,7 +123,7 @@ local PhysgunHalos = {}
 -----------------------------------------------------------]]
 function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
-	if ( physgun_halo:GetInt() == 0 ) then 
+	if ( !physgun_halo:GetBool() ) then 
 		
 		PhysgunHalos = nil
 		
@@ -144,13 +144,16 @@ end
 
 hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
-	if ( !PhysgunHalos || table.IsEmpty( PhysgunHalos ) ) then return end
+	if ( !PhysgunHalos ) then return end
 
 	for k, v in pairs( PhysgunHalos ) do
 
 		if ( !IsValid( k ) ) then
+
 			PhysgunHalos[ k ] = nil
+
 			continue
+
 		end
 
 		if ( !v[1] ) then continue end
