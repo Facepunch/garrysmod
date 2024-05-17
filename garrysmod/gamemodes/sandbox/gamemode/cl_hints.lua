@@ -1,62 +1,193 @@
 
+--[[---------------------------------------------------------
 
-CreateClientConVar( "cl_showhints", "1", true, false, "Whether to display popup hints." )
+	Sandbox Gamemode
 
--- A list of hints we've already done so we don't repeat ourselves`
-local ProcessedHints = {}
+	This is GMod's default gamemode
+
+-----------------------------------------------------------]]
+
+include( "shared.lua" )
+include( "cl_spawnmenu.lua" )
+include( "cl_notice.lua" )
+include( "cl_hints.lua" )
+include( "cl_worldtips.lua" )
+include( "cl_search_models.lua" )
+include( "gui/IconEditor.lua" )
 
 --
--- Throw's a Hint to the screen
+-- Make BaseClass available
 --
-local function ThrowHint( name )
+DEFINE_BASECLASS( "gamemode_base" )
 
-	local show = GetConVarNumber( "cl_showhints" )
-	if ( show == 0 ) then return end
 
-	if ( engine.IsPlayingDemo() ) then return end
+local physgun_halo = CreateConVar( "physgun_halo", "1", { FCVAR_ARCHIVE }, "Draw the Physics Gun grab effect?" )
 
-	local text = language.GetPhrase( "Hint_" .. name )
+function GM:Initialize()
 
-	local s, e, group = string.find( text, "%%([^%%]+)%%" )
-	while ( s ) do
-		local key = input.LookupBinding( group )
-		if ( !key ) then key = "<NOT BOUND>" end
+	BaseClass.Initialize( self )
 
-		text = string.gsub( text, "%%([^%%]+)%%", "'" .. key:upper() .. "'" )
-		s, e, group = string.find( text, "%%([^%%]+)%%" )
+end
+
+function GM:LimitHit( name )
+
+	local str = "#SBoxLimit_" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.hitXlimit" ), language.GetPhrase( name ) )
 	end
 
-	GAMEMODE:AddNotify( text, NOTIFY_HINT, 20 )
-
-	surface.PlaySound( "ambient/water/drip" .. math.random( 1, 4 ) .. ".wav" )
-
-end
-
-
---
--- Adds a hint to the queue
---
-function GM:AddHint( name, delay )
-
-	if ( ProcessedHints[ name ] ) then return end
-
-	timer.Create( "HintSystem_" .. name, delay, 1, function() ThrowHint( name ) end )
-	ProcessedHints[ name ] = true
+	self:AddNotify( translated, NOTIFY_ERROR, 6 )
+	surface.PlaySound( "buttons/button10.wav" )
 
 end
 
---
--- Removes a hint from the queue
---
-function GM:SuppressHint( name )
+function GM:OnUndo( name, strCustomString )
 
-	timer.Remove( "HintSystem_" .. name )
+	local text = strCustomString
+
+	if ( !text ) then
+		local strId = "#Undone_" .. name
+		text = language.GetPhrase( strId )
+		if ( strId == text ) then
+			-- No translation available, generate our own
+			text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( name ) )
+		end
+	end
+
+	-- This is a hack for SWEPs, Tools, etc, that already have hardcoded English only translations
+	-- TODO: Do this for non English languages only
+	local strMatch = string.match( text, "^Undone (.*)$" )
+	if ( strMatch ) then
+		text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( strMatch ) )
+	end
+
+	self:AddNotify( text, NOTIFY_UNDO, 2 )
+
+	-- Find a better sound :X
+	surface.PlaySound( "buttons/button15.wav" )
 
 end
 
--- Show opening menu hint if they haven't opened the menu within 30 seconds
-GM:AddHint( "OpeningMenu", 30 )
+function GM:OnCleanup( name )
 
--- Tell them how to turn the hints off after 1 minute
-GM:AddHint( "Annoy1", 5 )
-GM:AddHint( "Annoy2", 7 )
+	local str = "#Cleaned_" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.cleanedX" ), language.GetPhrase( name ) )
+	end
+
+	self:AddNotify( translated, NOTIFY_CLEANUP, 5 )
+
+	-- Find a better sound :X
+	surface.PlaySound( "buttons/button15.wav" )
+
+end
+
+function GM:UnfrozeObjects( num )
+
+	self:AddNotify( string.format( language.GetPhrase( "hint.unfrozeX" ), num ), NOTIFY_GENERIC, 3 )
+
+	-- Find a better sound :X
+	surface.PlaySound( "npc/roller/mine/rmine_chirp_answer1.wav" )
+
+end
+
+function GM:HUDPaint()
+
+	self:PaintWorldTips()
+
+	-- Draw all of the default stuff
+	BaseClass.HUDPaint( self )
+
+	self:PaintNotes()
+
+end
+
+--[[---------------------------------------------------------
+	Draws on top of VGUI..
+-----------------------------------------------------------]]
+function GM:PostRenderVGUI()
+
+	BaseClass.PostRenderVGUI( self )
+
+end
+
+local PhysgunHalos = {}
+
+--[[---------------------------------------------------------
+	Name: gamemode:DrawPhysgunBeam()
+	Desc: Return false to override completely
+-----------------------------------------------------------]]
+function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
+
+	if ( !physgun_halo:GetBool() ) then 
+		
+		PhysgunHalos = nil
+		
+		return true 
+
+	end
+
+	PhysgunHalos = PhysgunHalos || {}
+
+	local ent = PhysgunHalos[ ply ] || {}
+	ent[1] = IsValid( target ) && target || nil
+
+	PhysgunHalos[ ply ] = ent
+
+	return true
+
+end
+
+hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
+
+	if ( !PhysgunHalos ) then return end
+
+	for k, v in pairs( PhysgunHalos ) do
+
+		if ( !IsValid( k ) ) then
+
+			PhysgunHalos[ k ] = nil
+
+			continue
+
+		end
+
+		if ( !v[1] ) then continue end
+
+		local size = math.random( 1, 2 )
+		local colr = k:GetWeaponColor() + VectorRand() * 0.3
+
+		halo.Add( v, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
+
+	end
+
+end )
+
+
+--[[---------------------------------------------------------
+	Name: gamemode:NetworkEntityCreated()
+	Desc: Entity is created over the network
+-----------------------------------------------------------]]
+function GM:NetworkEntityCreated( ent )
+
+	--
+	-- If the entity wants to use a spawn effect
+	-- then create a propspawn effect if the entity was
+	-- created within the last second (this function gets called
+	-- on every entity when joining a server)
+	--
+
+	if ( ent:GetSpawnEffect() && ent:GetCreationTime() > ( CurTime() - 1.0 ) ) then
+
+		local ed = EffectData()
+			ed:SetOrigin( ent:GetPos() )
+			ed:SetEntity( ent )
+		util.Effect( "propspawn", ed, true, true )
+
+	end
+
+end
