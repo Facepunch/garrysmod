@@ -304,7 +304,6 @@ function util.IntervalTimer()
 	local it = {}
 	setmetatable( it, IT )
 	it:Invalidate()
-
 	return it
 
 end
