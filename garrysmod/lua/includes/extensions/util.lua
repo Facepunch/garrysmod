@@ -225,6 +225,89 @@ function util.Timer( startdelay )
 
 end
 
+--
+-- Interval Timer
+--
+--
+local IT = 
+{
+	--
+	-- Restarts the Timer
+	--
+	Reset = function( self )
+
+		self.m_timestamp = CurTime()
+
+	end
+
+	--
+	-- Starts the Timer
+	--
+	Start = function( self )
+
+		self.m_timestamp = CurTime()
+
+	end
+
+	--
+	-- Invalidates the Timer
+	--
+	Invalidate = function( self )
+
+		self.m_timestamp = -1.0
+
+	end
+
+	--
+	-- Returns true if the Timer was started
+	--
+	HasStarted = function( self )
+
+		return self.m_timestamp > 0
+
+	end
+
+	--
+	-- Returns the amount of time that has passed since the Timer was started
+	--
+	GetElaspedTime = function( self )
+
+		return Either( self:HasStarted(), CurTime() - self.m_timestamp, 99999.9 )
+
+	end
+
+	--
+	-- Returns true if the amount of time that has elapsed is less than the entered duration
+	--
+	IsLessThan = function( self, duration )
+
+		return CurTime() - self.m_timestamp < duration
+
+	end
+
+	--
+	-- Returns true if the amount of time that has elapsed is greater than the entered duration
+	--
+	IsGreaterThan = function( self, duration )
+
+		return CurTime() - self.m_timestamp > duration
+
+	end
+
+}
+
+IT.__index = IT
+
+-- Create a new Interval Timer object
+function util.IntervalTimer()
+
+	local it = {}
+	setmetatable( it, IT )
+	it:Invalidate()
+
+	return it
+
+end
 
 local function PopStack( self, num )
 
