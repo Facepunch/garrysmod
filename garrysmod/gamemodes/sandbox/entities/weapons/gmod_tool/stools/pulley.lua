@@ -25,8 +25,8 @@ function TOOL:LeftClick( trace )
 
 	local iNum = self:NumObjects()
 
-	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
-	if ( !IsValid( trace.Entity ) && ( iNum == nil || iNum == 0 || iNum > 2 ) ) then return end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) && ( iNum == nil || iNum == 0 || iNum > 2 ) ) then return false end
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -53,14 +53,21 @@ function TOOL:LeftClick( trace )
 		local WPos2 = self:GetPos( 2 )
 		local WPos3 = self:GetPos( 3 )
 
-		local constraint, rop1, rop2, rop3 = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope1, rope2, rope3 = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, Color( colorR, colorG, colorB, 255 ) )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Pulley" )
+				undo.AddEntity( constr )
+				if ( IsValid( rope1 ) ) then undo.AddEntity( rope1 ) end
+				if ( IsValid( rope2 ) ) then undo.AddEntity( rope2 ) end
+				if ( IsValid( rope3 ) ) then undo.AddEntity( rope3 ) end
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Pulley" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
+			self:GetOwner():AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope1 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope1 ) end
+			if ( IsValid( rope2 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope2 ) end
+			if ( IsValid( rope3 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope3 ) end
+		end
 
 		self:ClearObjects()
 

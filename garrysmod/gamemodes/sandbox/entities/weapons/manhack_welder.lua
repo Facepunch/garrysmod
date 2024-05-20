@@ -50,7 +50,9 @@ end
 -----------------------------------------------------------]]
 function SWEP:PrimaryAttack()
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self.Owner ) )
+	local owner = self:GetOwner()
+
+	local tr = util.TraceLine( util.GetPlayerTrace( owner ) )
 	--if ( tr.HitWorld ) then return end
 
 	if ( IsFirstTimePredicted() ) then
@@ -65,7 +67,7 @@ function SWEP:PrimaryAttack()
 
 	self:EmitSound( ShootSound )
 
-	self:ShootEffects( self )
+	self:ShootEffects()
 
 	-- The rest is only done on the server
 	if ( CLIENT ) then return end
@@ -74,7 +76,7 @@ function SWEP:PrimaryAttack()
 	local ent = ents.Create( "npc_manhack" )
 	if ( !IsValid( ent ) ) then return end
 
-	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	ent:SetPos( tr.HitPos + owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
@@ -92,12 +94,11 @@ function SWEP:PrimaryAttack()
 
 	end
 
-	if ( self.Owner:IsPlayer() ) then
+	if ( owner:IsPlayer() ) then
 		undo.Create( "Manhack" )
 			undo.AddEntity( weld )
-			undo.AddEntity( nocl )
 			undo.AddEntity( ent )
-			undo.SetPlayer( self.Owner )
+			undo.SetPlayer( owner )
 		undo.Finish()
 	end
 
@@ -108,11 +109,13 @@ end
 -----------------------------------------------------------]]
 function SWEP:SecondaryAttack()
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self.Owner ) )
+	local owner = self:GetOwner()
+
+	local tr = util.TraceLine( util.GetPlayerTrace( owner ) )
 	--if ( tr.HitWorld ) then return end
 
 	self:EmitSound( ShootSound )
-	self:ShootEffects( self )
+	self:ShootEffects()
 
 	if ( IsFirstTimePredicted() ) then
 		local effectdata = EffectData()
@@ -132,7 +135,7 @@ function SWEP:SecondaryAttack()
 	local ent = ents.Create( "npc_rollermine" )
 	if ( !IsValid( ent ) ) then return end
 
-	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	ent:SetPos( tr.HitPos + owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
@@ -145,12 +148,11 @@ function SWEP:SecondaryAttack()
 
 	end
 
-	if ( self.Owner:IsPlayer() ) then
+	if ( owner:IsPlayer() ) then
 		undo.Create( "Rollermine" )
 			undo.AddEntity( weld )
-			undo.AddEntity( nocl )
 			undo.AddEntity( ent )
-			undo.SetPlayer( self.Owner )
+			undo.SetPlayer( owner )
 		undo.Finish()
 	end
 

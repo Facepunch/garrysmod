@@ -66,7 +66,11 @@ function PANEL:AddColumn( strName, iPosition )
 			ErrorNoHaltWithStack( "Attempted to insert column at invalid position ", iPosition )
 			return
 		end
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> upstream/master
 		if ( IsValid( self.Columns[ iPosition ] ) ) then
 			ErrorNoHaltWithStack( "Attempted to insert duplicate column." )
 			return
@@ -138,7 +142,7 @@ function PANEL:FixColumnsLayout()
 
 	local AllWidth = 0
 	for k, Column in pairs( self.Columns ) do
-		AllWidth = AllWidth + Column:GetWide()
+		AllWidth = AllWidth + math.ceil( Column:GetWide() )
 	end
 
 	local ChangeRequired = self.pnlCanvas:GetWide() - AllWidth
@@ -147,7 +151,7 @@ function PANEL:FixColumnsLayout()
 
 	for k, Column in pairs( self.Columns ) do
 
-		local TargetWidth = Column:GetWide() + ChangePerColumn
+		local TargetWidth = math.ceil( Column:GetWide() ) + ChangePerColumn
 		Remainder = Remainder + ( TargetWidth - Column:SetWidth( TargetWidth ) )
 
 	end
@@ -163,12 +167,12 @@ function PANEL:FixColumnsLayout()
 
 			Remainder = math.Approach( Remainder, 0, PerPanel )
 
-			local TargetWidth = Column:GetWide() + PerPanel
+			local TargetWidth = math.ceil( Column:GetWide() ) + PerPanel
 			Remainder = Remainder + ( TargetWidth - Column:SetWidth( TargetWidth ) )
 
 			if ( Remainder == 0 ) then break end
 
-			TotalMaxWidth = TotalMaxWidth + Column:GetMaxWidth()
+			TotalMaxWidth = TotalMaxWidth + math.ceil( Column:GetMaxWidth() )
 
 		end
 
@@ -184,9 +188,9 @@ function PANEL:FixColumnsLayout()
 	for k, Column in pairs( self.Columns ) do
 
 		Column.x = x
-		x = x + Column:GetWide()
+		x = x + math.ceil( Column:GetWide() )
 
-		Column:SetTall( self:GetHeaderHeight() )
+		Column:SetTall( math.ceil( self:GetHeaderHeight() ) )
 		Column:SetVisible( !self:GetHideHeaders() )
 
 	end
@@ -280,13 +284,17 @@ function PANEL:DataLayout()
 	local y = 0
 	local h = self.m_iDataHeight
 
+	local alt = false
 	for k, Line in ipairs( self.Sorted ) do
+
+		if ( !Line:IsVisible() ) then continue end
 
 		Line:SetPos( 1, y )
 		Line:SetSize( self:GetWide() - 2, h )
 		Line:DataLayout( self )
 
-		Line:SetAltLine( k % 2 == 1 )
+		Line:SetAltLine( alt )
+		alt = !alt
 
 		y = y + Line:GetTall()
 
@@ -446,8 +454,6 @@ end
 
 function PANEL:SortByColumns( c1, d1, c2, d2, c3, d3, c4, d4 )
 
-	table.Copy( self.Sorted, self.Lines )
-
 	table.sort( self.Sorted, function( a, b )
 
 		if ( !IsValid( a ) ) then return true end
@@ -482,8 +488,6 @@ function PANEL:SortByColumns( c1, d1, c2, d2, c3, d3, c4, d4 )
 end
 
 function PANEL:SortByColumn( ColumnID, Desc )
-
-	table.Copy( self.Sorted, self.Lines )
 
 	table.sort( self.Sorted, function( a, b )
 
@@ -577,11 +581,10 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 
-	local Col1 = ctrl:AddColumn( "Address" )
+	ctrl:AddColumn( "Address" )
 	local Col2 = ctrl:AddColumn( "Port" )
 
-	Col2:SetMinWidth( 30 )
-	Col2:SetMaxWidth( 30 )
+	Col2:SetFixedWidth( 30 )
 
 	for i = 1, 128 do
 		ctrl:AddLine( "192.168.0." .. i, "80" )

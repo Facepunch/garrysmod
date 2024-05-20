@@ -18,7 +18,7 @@ function PANEL:Init()
 
 	self.pnlCanvas = vgui.Create( "DPanel", self )
 	self.pnlCanvas:SetPaintBackground( false )
-	self.pnlCanvas.OnMousePressed = function( self, code ) self:GetParent():OnMousePressed( code ) end
+	self.pnlCanvas.OnMousePressed = function( slf, code ) slf:GetParent():OnMousePressed( code ) end
 	self.pnlCanvas.OnChildRemoved = function() self:OnChildRemoved() end
 	self.pnlCanvas:SetMouseInputEnabled( true )
 	self.pnlCanvas.InvalidateLayout = function() self:InvalidateLayout() end

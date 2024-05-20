@@ -552,8 +552,8 @@ function CLSCORE:Init(events)
 
          selected = true
       elseif e.id == EVENT_SPAWN then
-         scores[e.sid] = ScoreInit()
-         nicks[e.sid] = e.ni
+         scores[e.sid64] = ScoreInit()
+         nicks[e.sid64] = e.ni
 
          if game and selected then
             break

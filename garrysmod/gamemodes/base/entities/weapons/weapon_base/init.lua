@@ -45,7 +45,7 @@ end
 --[[---------------------------------------------------------
 	Name: EquipAmmo
 	Desc: The player has picked up the weapon and has taken the ammo from it
-		The weapon will be removed immidiately after this call.
+		The weapon will be removed immediately after this call.
 -----------------------------------------------------------]]
 function SWEP:EquipAmmo( newOwner )
 end

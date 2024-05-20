@@ -25,8 +25,9 @@
 !/garrysmod/gameinfo.txt
 !/garrysmod/lights.rad
 
-# Prevent secrets from being accidentally leaked by not allowing cfg folder to be updated normally
+# Don't add user config files
 /garrysmod/cfg/*
+garrysmod/settings/addonpresets.txt
 
 # Don't add spawnlists
 /garrysmod/settings/spawnlist/*
@@ -36,3 +37,4 @@ garrysmod/gamemodes/*
 !garrysmod/gamemodes/base
 !garrysmod/gamemodes/sandbox
 !garrysmod/gamemodes/terrortown
+

@@ -97,8 +97,8 @@ function PANEL:ReceivedError( uid, err )
 
 		-- Sort
 		local z = 0
-		for gid, pnl in SortedPairs( self.ErrorPanels ) do
-			pnl:SetZPos( z )
+		for gid, epnl in SortedPairs( self.ErrorPanels ) do
+			epnl:SetZPos( z )
 			z = z + 1
 		end
 		self:InvalidateLayout()

@@ -89,7 +89,7 @@ local function FireSingleOutput( output, this, activator, data )
 		entitiesToFire = ents.FindByName( output.entities )
 	end
 
-	for _, ent in pairs( entitiesToFire ) do
+	for _, ent in ipairs( entitiesToFire ) do
 		ent:Fire( output.input, data or output.param, output.delay, activator, this )
 	end
 
@@ -111,7 +111,7 @@ function ENT:TriggerOutput( name, activator, data )
 
 	for idx = #OutputList, 1, -1 do
 
-		if ( OutputList[ idx ] and !FireSingleOutput( OutputList[ idx ], self.Entity, activator, data ) ) then
+		if ( OutputList[ idx ] and !FireSingleOutput( OutputList[ idx ], self, activator, data ) ) then
 
 			-- Shift the indexes so this loop doesn't fail later
 			table.remove( self.m_tOutputs[ name ], idx )

@@ -22,13 +22,12 @@ function ENT:Initialize()
 		--
 		self:AddCallback( "OnAngleChange", self.OnAngleChange )
 
-
 		--
 		-- Find an env_sun entity
 		--
 		local list = ents.FindByClass( "env_sun" )
 		if ( #list > 0 ) then
-			self.EnvSun = list[1]
+			self.EnvSun = list[ 1 ]
 		end
 
 	end
@@ -72,6 +71,16 @@ function ENT:OnAngleChange( newang )
 end
 
 --
+-- Force update everything after being pasted in
+--
+function ENT:PostEntityPaste( ply, ent )
+
+	self:OnAngleChange( ent:GetAngles() )
+	self:OnVariableChanged()
+
+end
+
+--
 -- Update all the variables on the sun, from our variables in this entity
 --
 function ENT:OnVariableChanged()
@@ -81,11 +90,11 @@ function ENT:OnVariableChanged()
 	self.EnvSun:SetKeyValue( "size", self:GetSunSize() )
 	self.EnvSun:SetKeyValue( "overlaysize", self:GetOverlaySize() )
 
-	local vec = self:GetOverlayColor()
-	self.EnvSun:SetKeyValue( "overlaycolor", Format( "%i %i %i", vec.x * 255, vec.y * 255, vec.z * 255 ) )
+	local overlay = self:GetOverlayColor()
+	self.EnvSun:SetKeyValue( "overlaycolor", Format( "%i %i %i", overlay.x * 255, overlay.y * 255, overlay.z * 255 ) )
 
-	local vec = self:GetSunColor()
-	self.EnvSun:SetKeyValue( "suncolor", Format( "%i %i %i", vec.x * 255, vec.y * 255, vec.z * 255 ) )
+	local sun = self:GetSunColor()
+	self.EnvSun:SetKeyValue( "suncolor", Format( "%i %i %i", sun.x * 255, sun.y * 255, sun.z * 255 ) )
 
 end
 
@@ -97,3 +106,19 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 
 end
+
+-- Player just spawned this entity from the spawnmenu - not from a duplication.
+-- Copy over the settings of the map
+hook.Add( "PlayerSpawnedSENT", "CopyOverEditSunSettings", function( ply, ent )
+
+	if ( ent:GetClass() != "edit_sun" ) then return end
+
+	local envSun = ents.FindByClass( "env_sun" )[ 1 ];
+	if ( !IsValid( envSun ) ) then return end
+
+	ent:SetSunSize( envSun:GetInternalVariable( "size" ) )
+	ent:SetOverlaySize( envSun:GetInternalVariable( "overlaysize" ) )
+	ent:SetOverlayColor( Vector( envSun:GetInternalVariable( "overlaycolor" ) ) / 255 )
+	ent:SetSunColor( Vector( envSun:GetInternalVariable( "rendercolor" ) ) / 255 )
+
+end )

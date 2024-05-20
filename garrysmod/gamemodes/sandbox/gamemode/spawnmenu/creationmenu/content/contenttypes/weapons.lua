@@ -1,5 +1,5 @@
 
-hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, node )
+hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, browseNode )
 
 	-- Loop through the weapons and add them to the menu
 	local Weapons = list.Get( "Weapon" )
@@ -18,13 +18,12 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 
 	end
 
-	Weapons = nil
-
 	-- Loop through each category
+	local CustomIcons = list.Get( "ContentCategoryIcons" )
 	for CategoryName, v in SortedPairs( Categorised ) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/gun.png" )
+		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/gun.png" )
 
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )

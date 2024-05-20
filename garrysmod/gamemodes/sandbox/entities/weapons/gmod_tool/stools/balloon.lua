@@ -75,9 +75,10 @@ function TOOL:LeftClick( trace, attach )
 	--
 	-- Hit the balloon limit, bail
 	--
-	if ( !self:GetSWEP():CheckLimit( "balloons" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "balloons" ) ) then return false end
 
 	local balloon = MakeBalloon( ply, r, g, b, force, { Pos = trace.HitPos, Model = modeltable.model, Skin = modeltable.skin } )
+	if ( !IsValid( balloon ) ) then return false end
 
 	local CurPos = balloon:GetPos()
 	local NearestPoint = balloon:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -103,12 +104,16 @@ function TOOL:LeftClick( trace, attach )
 
 			end
 
-			local constraint, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material, nil )
+			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material )
+			if ( IsValid( constr ) ) then
+				undo.AddEntity( constr )
+				ply:AddCleanup( "balloons", constr )
+			end
 
-			undo.AddEntity( rope )
-			undo.AddEntity( constraint )
-			ply:AddCleanup( "balloons", rope )
-			ply:AddCleanup( "balloons", constraint )
+			if ( IsValid( rope ) ) then
+				undo.AddEntity( rope )
+				ply:AddCleanup( "balloons", rope )
+			end
 
 		end
 
@@ -127,9 +132,9 @@ end
 
 if ( SERVER ) then
 
-	function MakeBalloon( pl, r, g, b, force, Data )
+	function MakeBalloon( ply, r, g, b, force, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "balloons" ) ) then return end
+		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return end
 
 		local balloon = ents.Create( "gmod_balloon" )
 		if ( !IsValid( balloon ) ) then return end
@@ -140,23 +145,23 @@ if ( SERVER ) then
 
 		DoPropSpawnedEffect( balloon )
 
-		duplicator.DoGenericPhysics( balloon, pl, Data )
+		duplicator.DoGenericPhysics( balloon, ply, Data )
 
 		force = math.Clamp( force, -1E34, 1E34 )
 
 		balloon:SetColor( Color( r, g, b, 255 ) )
 		balloon:SetForce( force )
-		balloon:SetPlayer( pl )
+		balloon:SetPlayer( ply )
 
-		balloon.Player = pl
+		balloon.Player = ply
 		balloon.r = r
 		balloon.g = g
 		balloon.b = b
 		balloon.force = force
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "balloons", balloon )
-			pl:AddCleanup( "balloons", balloon )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "balloons", balloon )
+			ply:AddCleanup( "balloons", balloon )
 		end
 
 		return balloon

@@ -1,4 +1,9 @@
 
+-- This is just enough for the entity index. This however is not perfect
+-- as the entity at given index may have changed during transport.
+-- If this becomes a problem, inclusion of entity's serial will also be necessary
+local MAX_EDICT_BITS = 13
+
 TYPE_COLOR = 255
 
 net.Receivers = {}
@@ -51,21 +56,46 @@ end
 function net.WriteEntity( ent )
 
 	if ( !IsValid( ent ) ) then
-		net.WriteUInt( 0, 16 )
+		net.WriteUInt( 0, MAX_EDICT_BITS )
 	else
-		net.WriteUInt( ent:EntIndex(), 16 )
+		net.WriteUInt( ent:EntIndex(), MAX_EDICT_BITS )
 	end
 
 end
 
 function net.ReadEntity()
 
-	local i = net.ReadUInt( 16 )
+	local i = net.ReadUInt( MAX_EDICT_BITS )
 	if ( !i ) then return end
 
 	return Entity( i )
 
 end
+
+
+--
+-- Read/Write a player to the stream
+--
+function net.WritePlayer( ply )
+
+	if ( !IsValid( ply ) || !ply:IsPlayer() ) then 
+		net.WriteUInt( 0, 8 )
+	else
+		net.WriteUInt( ply:EntIndex(), 8 )
+	end
+
+end
+
+function net.ReadPlayer()
+
+	local i = net.ReadUInt( 8 )
+	if ( !i ) then return end
+	
+	local ply = Entity( i )
+	return ply
+	
+end
+
 
 --
 -- Read/Write a color to/from the stream
@@ -106,32 +136,61 @@ end
 -- item indivdually and in a specific order
 -- because it adds type information before each var
 --
-function net.WriteTable( tab )
+function net.WriteTable( tab, seq )
 
-	for k, v in pairs( tab ) do
+	if ( seq ) then
 
-		net.WriteType( k )
-		net.WriteType( v )
+		local len = #tab
+		net.WriteUInt( len, 32 )
+
+		for i = 1, len do
+
+			net.WriteType( tab[ i ] )
+
+		end
+
+	else
+
+		for k, v in pairs( tab ) do
+
+			net.WriteType( k )
+			net.WriteType( v )
+
+		end
+
+		-- End of table
+		net.WriteType( nil )
 
 	end
-
-	-- End of table
-	net.WriteType( nil )
 
 end
 
-function net.ReadTable()
+function net.ReadTable( seq )
 
 	local tab = {}
 
-	while true do
+	if ( seq ) then
 
-		local k = net.ReadType()
-		if ( k == nil ) then return tab end
+		for i = 1, net.ReadUInt( 32 ) do
 
-		tab[ k ] = net.ReadType()
+			tab[ i ] = net.ReadType()
+
+		end
+
+	else
+
+		while true do
+
+			local k = net.ReadType()
+			if ( k == nil ) then break end
+
+			tab[ k ] = net.ReadType()
+
+		end
 
 	end
+
+	return tab
 
 end
 

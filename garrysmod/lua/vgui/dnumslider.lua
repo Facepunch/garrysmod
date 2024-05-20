@@ -70,9 +70,9 @@ function PANEL:ApplySchemeSettings()
 
 	self.TextArea:SetTextColor( col )
 
-	local col = table.Copy( col )
-	col.a = 100 -- Fade it out a bit so it looks right
-	self.Slider:SetNotchColor( col )
+	local color = table.Copy( col )
+	color.a = 100 -- Fade it out a bit so it looks right
+	self.Slider:SetNotchColor( color )
 
 end
 
@@ -184,7 +184,7 @@ function PANEL:ValueChanged( val )
 		self.TextArea:SetValue( self.Scratch:GetTextValue() )
 	end
 
-	self.Slider:SetSlideX( self.Scratch:GetFraction( val ) )
+	self.Slider:SetSlideX( self.Scratch:GetFraction() )
 
 	self:OnValueChanged( val )
 
@@ -284,7 +284,7 @@ end
 
 function PANEL:SetActionFunction( func )
 
-	self.OnValueChanged = function( self, val ) func( self, "SliderMoved", val, 0 ) end
+	self.OnValueChanged = function( pnl, val ) func( pnl, "SliderMoved", val, 0 ) end
 
 end
 

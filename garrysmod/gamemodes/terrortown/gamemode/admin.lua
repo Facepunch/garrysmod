@@ -46,7 +46,7 @@ function PrintGroups(ply)
    local pr = GetPrintFn(ply)
 
    pr("User", "-", "Group")
-   for _, p in ipairs(player.GetAll()) do
+   for _, p in player.Iterator() do
       pr(p:Nick(), "-", p:GetNWString("UserGroup"))
    end
 end
@@ -60,7 +60,7 @@ function PrintReport(ply)
 
       for k, e in pairs(SCORE.Events) do
          if e.id == EVENT_KILL then
-            if e.att.sid == -1 then
+            if e.att.sid64 == -1 then
                pr("<something> killed " .. e.vic.ni .. (e.vic.tr and " [TRAITOR]" or " [inno.]"))
             else
                pr(e.att.ni .. (e.att.tr and " [TRAITOR]" or " [inno.]") .. " killed " .. e.vic.ni .. (e.vic.tr and " [TRAITOR]" or " [inno.]"))

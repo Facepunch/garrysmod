@@ -146,6 +146,8 @@ local function UpdateMaps()
 	MapNames[ "tr_" ] = "Team Fortress 2"
 	MapNames[ "trade_" ] = "Team Fortress 2"
 	MapNames[ "pass_" ] = "Team Fortress 2"
+	MapNames[ "vsh_" ] = "Team Fortress 2"
+	MapNames[ "zi_" ] = "Team Fortress 2"
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
@@ -154,6 +156,7 @@ local function UpdateMaps()
 	MapNames[ "zph_" ] = "Zombie Panic! Source"
 
 	MapNames[ "fof_" ] = "Fistful of Frags"
+	MapNames[ "fofhr_" ] = "Fistful of Frags"
 	MapNames[ "cm_" ] = "Fistful of Frags"
 	MapNames[ "gt_" ] = "Fistful of Frags"
 	MapNames[ "tp_" ] = "Fistful of Frags"
@@ -194,9 +197,9 @@ local function UpdateMaps()
 		local Name = gm.title or "Unnammed Gamemode"
 		local Maps = string.Split( gm.maps, "|" )
 
-		if ( Maps && gm.maps != "" ) then
+		if ( Maps and gm.maps != "" ) then
 
-			for k, pattern in ipairs( Maps ) do
+			for _, pattern in ipairs( Maps ) do
 				-- When in doubt, just try to match it with string.find
 				MapPatterns[ string.lower( pattern ) ] = Name
 			end
@@ -210,7 +213,11 @@ local function UpdateMaps()
 
 		local name = addon.title or "Unnammed Addon"
 
+<<<<<<< HEAD
 		local files, folders = file.Find( "maps/*.bsp", name )
+=======
+		local files = file.Find( "maps/*.bsp", name )
+>>>>>>> upstream/master
 		if ( #files > 0 ) then AddonMaps[ name ] = files end
 
 	end
@@ -222,7 +229,16 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
+	favmaps = favmaps or ( cookiestr and string.Explode( ";", cookiestr ) or {} )
+
+end
+
+function UpdateAddonMapList()
+
+	local json = util.TableToJSON( AddonMaps )
+	if ( !json ) then return end
+
+	pnlMainMenu:Call( "UpdateAddonMaps(" .. json .. ")" )
 
 end
 
@@ -328,13 +344,11 @@ local function RefreshMaps( skip )
 
 		local csgo = false
 
-		if ( Category == "Counter-Strike" ) then
-			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
-				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
-					csgo = true
-				else
-					Category = "Counter-Strike: GO"
-				end
+		if ( Category == "Counter-Strike" and file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
+			if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
+				csgo = true
+			else
+				Category = "Counter-Strike: GO"
 			end
 		end
 

@@ -3,7 +3,7 @@ EFFECT.Mat = Material( "pp/dof" )
 
 function EFFECT:Init( data )
 
-	table.insert( DOF_Ents, self.Entity )
+	table.insert( DOF_Ents, self )
 	self.Scale = data:GetScale()
 
 	local size = 32
@@ -11,7 +11,7 @@ function EFFECT:Init( data )
 
 end
 
-function EFFECT:Think( )
+function EFFECT:Think()
 
 	-- If the spacing or offset has changed we need to reconfigure our positions
 	local ply = LocalPlayer()
@@ -45,7 +45,7 @@ function EFFECT:Render()
 
 	-- Note: UpdateScreenEffectTexture fucks up the water, RefractTexture is lower quality
 	render.UpdateRefractTexture()
-	//render.UpdateScreenEffectTexture()
+	--render.UpdateScreenEffectTexture()
 
 	local SpriteSize = ( self.spacing + self.offset ) * 8
 

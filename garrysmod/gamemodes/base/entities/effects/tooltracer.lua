@@ -23,7 +23,7 @@ function EFFECT:Think()
 	self.Life = self.Life + FrameTime() * 4
 	self.Alpha = 255 * ( 1 - self.Life )
 
-	return ( self.Life < 1 )
+	return self.Life < 1
 
 end
 
@@ -34,7 +34,7 @@ function EFFECT:Render()
 	render.SetMaterial( self.Mat )
 	local texcoord = math.Rand( 0, 1 )
 
-	local norm = (self.StartPos - self.EndPos) * self.Life
+	local norm = ( self.StartPos - self.EndPos ) * self.Life
 
 	self.Length = norm:Length()
 
@@ -45,7 +45,7 @@ function EFFECT:Render()
 					8,								-- Width
 					texcoord,						-- Start tex coord
 					texcoord + self.Length / 128,	-- End tex coord
-					color_white )		-- Color (optional)
+					color_white )					-- Color (optional)
 	end
 
 	render.DrawBeam( self.StartPos,

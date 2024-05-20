@@ -5,7 +5,7 @@ if ( SERVER ) then
 	-- use the convar. The higher you set it the more accurate physics will be.
 	-- This is set to 4 by default, since we are a physics mod.
 
-	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE } )
+	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE }, "Improves physics accuracy at the expense of performance." )
 
 end
 
@@ -46,13 +46,15 @@ local function CreateConstraintSystem()
 
 	local iterations = GetConVarNumber( "gmod_physiterations" )
 
-	local System = ents.Create( "phys_constraintsystem" )
-	System:SetKeyValue( "additionaliterations", iterations )
-	System:Spawn()
-	System:Activate()
-	System.__ConstraintCount = 0
+	local csystem = ents.Create( "phys_constraintsystem" )
+	if ( !IsValid( csystem ) ) then return end
 
-	return System
+	csystem:SetKeyValue( "additionaliterations", iterations )
+	csystem:Spawn()
+	csystem:Activate()
+	csystem.__ConstraintCount = 0
+
+	return csystem
 
 end
 
@@ -261,21 +263,21 @@ end
 	This attempts to scale the elastic constraints such as the winch
 	to keep a stable but responsive constraint..
 ------------------------------------------------------------------------]]
-local function CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, iFixed )
+local function CalcElasticConsts( phys1, phys2, ent1, Ent2, fixed )
 
 	local minMass = 0
 
-	if ( Ent1:IsWorld() ) then minMass = Phys2:GetMass()
-	elseif ( Ent2:IsWorld() ) then minMass = Phys1:GetMass()
+	if ( ent1:IsWorld() ) then minMass = phys2:GetMass()
+	elseif ( Ent2:IsWorld() ) then minMass = phys1:GetMass()
 	else
-		minMass = math.min( Phys1:GetMass(), Phys2:GetMass() )
+		minMass = math.min( phys1:GetMass(), phys2:GetMass() )
 	end
 
 	-- const, damp
 	local const = minMass * 100
 	local damp = const * 0.2
 
-	if ( iFixed == 0 ) then
+	if ( !fixed ) then
 
 		const = minMass * 50
 		damp = const * 0.1
@@ -294,12 +296,14 @@ end
 function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
 
 	-- No rope if 0 or minus
-	if ( width <= 0 ) then return nil end
+	if ( width <= 0 ) then return end
 
 	-- Clamp the rope to a sensible width
 	width = math.Clamp( width, 0.2, 100 )
 
 	local rope = ents.Create( "keyframe_rope" )
+	if ( !IsValid( rope ) ) then return end
+
 	rope:SetPos( Pos )
 	rope:SetKeyValue( "Width", width )
 
@@ -322,11 +326,11 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	rope:SetKeyValue( "EndBone", Bone2 )
 
 	if ( kv ) then
+
 		for k, v in pairs( kv ) do
-
 			rope:SetKeyValue( k, tostring( v ) )
-
 		end
+
 	end
 
 	rope:Spawn()
@@ -617,7 +621,9 @@ duplicator.RegisterConstraint( "Elastic", Elastic, "Ent1", "Ent2", "Bone1", "Bon
 function Keepupright( Ent, Ang, Bone, angularlimit )
 
 	if ( !CanConstrain( Ent, Bone ) ) then return false end
-	if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
+	-- This was once here. Is there any specific reason this was the case?
+	--if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
+	if ( Ent:IsPlayer() || Ent:IsWorld() ) then return false end
 	if ( !angularlimit or angularlimit < 0 ) then return end
 
 	local Phys = Ent:GetPhysicsObjectNum( Bone )
@@ -658,16 +664,17 @@ end
 duplicator.RegisterConstraint( "Keepupright", Keepupright, "Ent1", "Ang", "Bone", "angularlimit" )
 
 
-function CreateStaticAnchorPoint( Pos )
+function CreateStaticAnchorPoint( pos )
 
 	-- Creates an invisible frozen, not interactive prop.
-	local Anchor = ents.Create( "gmod_anchor" )
+	local anchor = ents.Create( "gmod_anchor" )
+	if ( !IsValid( anchor ) ) then return end
 
-	Anchor:SetPos( Pos )
-	Anchor:Spawn()
-	Anchor:Activate()
+	anchor:SetPos( pos )
+	anchor:Spawn()
+	anchor:Activate()
 
-	return Anchor, Anchor:GetPhysicsObject(), 0, vector_origin
+	return anchor, anchor:GetPhysicsObject(), 0, vector_origin
 
 end
 
@@ -922,6 +929,7 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	end
 
 	-- Make Constraint
+<<<<<<< HEAD
 	local Constraint = ents.Create( "logic_collision_pair" )
 	Constraint:SetKeyValue( "startdisabled", 1 )
 	Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
@@ -930,6 +938,18 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	Constraint:Input( "DisableCollisions", nil, nil, nil )
 
 	AddConstraintTable( Ent1, Constraint, Ent2 )
+=======
+	local constr = ents.Create( "logic_collision_pair" )
+	if ( !IsValid( constr ) ) then return end
+
+	constr:SetKeyValue( "startdisabled", 1 )
+	constr:SetPhysConstraintObjects( Phys1, Phys2 )
+	constr:Spawn()
+	constr:Activate()
+	constr:Input( "DisableCollisions", nil, nil, nil )
+
+	AddConstraintTable( Ent1, constr, Ent2 )
+>>>>>>> upstream/master
 
 	local ctable = {
 		Type = "NoCollide",
@@ -939,9 +959,9 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 		Bone2 = Bone2,
 	}
 
-	Constraint:SetTable( ctable )
+	constr:SetTable( ctable )
 
-	return Constraint
+	return constr
 
 end
 duplicator.RegisterConstraint( "NoCollide", NoCollide, "Ent1", "Ent2", "Bone1", "Bone2" )
@@ -1340,7 +1360,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	if ( Phys1 == Phys2 ) then return false end
 	if ( toggle == nil ) then toggle = true end -- Retain original behavior
 
-	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
+	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, tobool( fixed ) )
 
 	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false, color )
 	local ctable = {
@@ -1424,7 +1444,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 
 	if ( Phys1 == Phys2 ) then return false end
 
-	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
+	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, tobool( fixed ) )
 
 	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false, color )
 	if ( !Constraint ) then return false end

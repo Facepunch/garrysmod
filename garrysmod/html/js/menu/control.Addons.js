@@ -10,8 +10,12 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.CreatePresetOpen = false;
 	$scope.CreatePresetSaveEnabled = true;
 	$scope.CreatePresetSaveDisabled = true;
-	$scope.CreatePresetNew = "disable";
+	$scope.CreatePresetNewAct = "disable";
 	$scope.CreatePresetName = "";
+
+	$scope.ImportPresetOpen = false;
+	$scope.ImportPresetLoading = false;
+	$scope.ImportPresetSource = "";
 
 	$scope.PresetList = {}
 	$scope.LoadPresetMenuOpen = false;
@@ -63,9 +67,9 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 
 	lua.Run( "UpdateAddonDisabledState()" );
 
-	addon.Init( 'addon', $scope, $rootScope );
+	addon.Init( "addon", $scope, $rootScope );
 
-	$scope.Switch( 'subscribed', 0 );
+	$scope.Switch( "subscribed", 0 );
 
 	$scope.Subscribe = function( file )
 	{
@@ -152,18 +156,22 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.PopupMessageDisplayedMessage = txt;
 		$scope.PopupMessageDisplayedFunc = func;
 	}
-	$scope.ClosePopupMessage = function( txt, func )
+	$scope.ClosePopupMessage = function( notPresetLoad )
 	{
 		$scope.PopupMessageDisplayed = false;
 		$scope.PopupMessageFiles = [];
 
 		$scope.CreatePresetOpen = false;
-		$scope.LoadPresetMenuOpen = false;
-		$scope.SelectedPreset = undefined;
+		$scope.ImportPresetOpen = false;
+		if ( !notPresetLoad )
+		{
+			$scope.LoadPresetMenuOpen = false;
+			$scope.SelectedPreset = undefined;
+		}
 	}
 	$scope.ExecutePopupFunction = function()
 	{
-		$scope.ClosePopupMessage();
+		$scope.ClosePopupMessage( true );
 		if ( $scope.PopupMessageDisplayedFunc )
 		{
 			$scope.PopupMessageDisplayedFunc()
@@ -203,6 +211,14 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.UnselectAll(); // Unselect items that might be not in subscriptions.GetAll()
 
 		for ( var k in subscriptions.GetAll() ) $scope.SelectedItems[ k ] = true;
+	}
+	$scope.ToggleSelect = function( file, event )
+	{
+		var en = event.target.nodeName.toLowerCase();
+		if ( en != "controls" && en != "description" && en != "workshopicon" ) return;
+
+		$scope.SelectedItems[file.id] = !$scope.SelectedItems[file.id];
+		if ( event ) event.stopPropagation();
 	}
 	$scope.EnableAllSelected = function()
 	{
@@ -266,22 +282,36 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.UGCSettingsOpen = !$scope.UGCSettingsOpen;
 	}
 
+	$scope.OpenImportPresetMenu = function()
+	{
+		// Reset to defaults..
+		$scope.CreatePresetSaveEnabled = true;
+		$scope.CreatePresetSaveDisabled = true;
+		$scope.CreatePresetNewAct = "disable";
+		$scope.CreatePresetName = "";
+		$scope.ImportPresetSource = "";
+
+		$scope.ImportPresetOpen = true
+	}
+
 	$scope.OpenCreatePresetMenu = function()
 	{
 		// Reset to defaults..
 		$scope.CreatePresetSaveEnabled = true;
 		$scope.CreatePresetSaveDisabled = true;
-		$scope.CreatePresetNew = "disable";
+		$scope.CreatePresetNewAct = "disable";
 		$scope.CreatePresetName = "";
 
 		$scope.CreatePresetOpen = true;
 	}
 	$scope.CreateNewPreset = function()
 	{
+		if ( $scope.CreatePresetName == "" ) return;
+
 		var newPreset = {
 			enabled: [], disabled: [],
 			name: $scope.CreatePresetName,
-			newAction: $scope.CreatePresetNew
+			newAction: $scope.CreatePresetNewAct
 		}
 
 		var files = subscriptions.GetAll();
@@ -307,17 +337,19 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.SelectPreset = function( preset, newAction )
 	{
 		$scope.SelectedPreset = preset;
-		$scope.CreatePresetNew = newAction;
+		$scope.CreatePresetNewAct = newAction;
 	}
 	$scope.DeletePreset = function( preset )
 	{
-		lua.Run( "DeleteAddonPreset( %s )", preset );
-		$scope.SelectedPreset = undefined;
+		$scope.DisplayPopupMessage( "addons.delete_preset_warn " + preset, function() {
+			lua.Run( "DeleteAddonPreset( %s )", preset );
+			$scope.SelectedPreset = undefined;
+		} );
 	}
 	$scope.LoadSelectedPreset = function()
 	{
 		var preset = $scope.PresetList[ $scope.SelectedPreset ];
-		var newAct = $scope.CreatePresetNew;
+		var newAct = $scope.CreatePresetNewAct;
 
 		// Resub to missing stuff
 		if ( $scope.LoadPresetResub )
@@ -366,6 +398,71 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.SelectedPreset = undefined;
 	}
 
+	$scope.CopySelectedPreset = function()
+	{
+		var preset = $scope.PresetList[ $scope.SelectedPreset ];
+		var oldHashKey = preset[ "$$hashKey" ]; // Bit of a hack
+		preset[ "$$hashKey" ] = undefined;
+		lua.Run( "SetClipboardText( %s )", JSON.stringify( preset ) );
+		preset[ "$$hashKey" ] = oldHashKey;
+	}
+
+	$scope.ImportPreset = function()
+	{
+		if ( $scope.CreatePresetName == "" ) return;
+
+		$scope.ImportPresetOpen = false;
+
+		// Try extracting workshop ID
+		if ( $scope.ImportPresetSource.indexOf( "http" ) === 0 || /^([0-9]+)$/.test( $scope.ImportPresetSource ) )
+		{
+			$scope.ImportPresetLoading = true;
+			var re = /https?:\/\/steamcommunity\.com\/sharedfiles\/filedetails\/\?(?:.*)id=([0-9]+)(?:.*)/;
+			var d = re.exec( $scope.ImportPresetSource );
+
+			// Try just the ID
+			if ( !d || !d[ 1 ] )
+			{
+				var re2 = /([0-9]+)/;
+				d = re2.exec( $scope.ImportPresetSource );
+			}
+
+			if ( !d || !d[ 1 ] )
+			{
+				OnImportPresetFailed();
+			}
+			else
+			{
+				var newPreset = {
+					enabled: [], disabled: [],
+					name: $scope.CreatePresetName,
+					newAction: $scope.CreatePresetNewAct
+				}
+
+				lua.Run( "ImportAddonPreset( %s, %s )", d[ 1 ], JSON.stringify( newPreset ) );
+			}
+		}
+		else
+		{
+			try
+			{
+				var importedPreset = JSON.parse( $scope.ImportPresetSource );
+				var newPreset = {
+					enabled: importedPreset.enabled || [],
+					disabled: importedPreset.disabled || [],
+					name: $scope.CreatePresetName,
+					newAction: $scope.CreatePresetNewAct
+				}
+
+				lua.Run( "CreateNewAddonPreset( %s )", JSON.stringify( newPreset ) );
+			}
+			catch ( err )
+			{
+				OnImportPresetFailed();
+			}
+		}
+	}
+
 	$scope.GetAddonClasses = function( file )
 	{
 		var classes = [];
@@ -412,6 +509,16 @@ function OnReceivePresetList( list )
 	if ( !Scope ) return;
 
 	Scope.PresetList = list;
+	Scope.ImportPresetLoading = false;
+	UpdateDigest( Scope, 50 );
+}
+
+function OnImportPresetFailed()
+{
+	if ( !Scope ) return;
+
+	Scope.ImportPresetLoading = false;
+	Scope.DisplayPopupMessage( "addons.import_preset_notcollection" );
 	UpdateDigest( Scope, 50 );
 }
 
@@ -421,4 +528,11 @@ function UpdateAddonDisabledState( noaddons, noworkshop )
 
 	Scope.Disabled = noworkshop;
 	UpdateDigest( Scope, 50 );
+}
+
+function OnSubscriptionsChanged()
+{
+	if ( !Scope || !Scope.RefreshCurrentView ) return;
+
+	Scope.RefreshCurrentView();
 }

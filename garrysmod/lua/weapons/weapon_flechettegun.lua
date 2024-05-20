@@ -53,7 +53,7 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire( CurTime() + 0.1 )
 
 	self:EmitSound( ShootSound )
-	self:ShootEffects( self )
+	self:ShootEffects()
 
 	if ( CLIENT ) then return end
 
@@ -62,11 +62,13 @@ function SWEP:PrimaryAttack()
 	local ent = ents.Create( "hunter_flechette" )
 	if ( !IsValid( ent ) ) then return end
 
-	local Forward = self.Owner:GetAimVector()
+	local owner = self:GetOwner()
 
-	ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
-	ent:SetAngles( self.Owner:EyeAngles() )
-	ent:SetOwner( self.Owner )
+	local Forward = owner:GetAimVector()
+
+	ent:SetPos( owner:GetShootPos() + Forward * 32 )
+	ent:SetAngles( owner:EyeAngles() )
+	ent:SetOwner( owner )
 	ent:Spawn()
 	ent:Activate()
 

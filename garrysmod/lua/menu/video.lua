@@ -1,7 +1,7 @@
 
-local vid_width = CreateConVar( "vid_width", "640", { FCVAR_ARCHIVE }, "Specifies the width of the recorded video. The height will be adjusted automatically based on your aspect ratio" )
-local vid_fps   = CreateConVar( "vid_fps",   "30",  { FCVAR_ARCHIVE }, "The FPS of the recorded video" )
-local vid_sound = CreateConVar( "vid_sound", "1",   { FCVAR_ARCHIVE }, "Enable sound recording" )
+local vid_width = CreateConVar( "vid_width", "640", { FCVAR_ARCHIVE + FCVAR_DONTRECORD }, "Specifies the width of the recorded video. The height will be adjusted automatically based on your aspect ratio" )
+local vid_fps   = CreateConVar( "vid_fps",   "30",  { FCVAR_ARCHIVE + FCVAR_DONTRECORD }, "The FPS of the recorded video" )
+local vid_sound = CreateConVar( "vid_sound", "1",   { FCVAR_ARCHIVE + FCVAR_DONTRECORD }, "Enable sound recording" )
 
 local activeVideo
 local videoStart

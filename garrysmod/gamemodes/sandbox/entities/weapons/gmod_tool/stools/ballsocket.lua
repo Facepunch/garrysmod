@@ -35,7 +35,7 @@ function TOOL:LeftClick( trace )
 		-- Get client's CVars
 		local nocollide = self:GetClientNumber( "nocollide", 0 )
 		local forcelimit = self:GetClientNumber( "forcelimit", 0 )
-		
+
 		-- Force this to 0 for now, it does not do anything, and if we fix it in the future, this way existing contraptions won't break
 		local torquelimit = 0 --self:GetClientNumber( "torquelimit", 0 )
 
@@ -44,14 +44,15 @@ function TOOL:LeftClick( trace )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos = self:GetLocalPos( 2 )
 
-		local constraint = constraint.Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, nocollide )
+		local constr = constraint.Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, nocollide )
+		if ( IsValid( constr ) ) then
+			undo.Create( "BallSocket" )
+				undo.AddEntity( constr )
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "BallSocket" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "constraints", constraint )
+			self:GetOwner():AddCleanup( "constraints", constr )
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()

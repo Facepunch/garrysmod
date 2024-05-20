@@ -32,6 +32,11 @@ end
 
 function PANEL:AddModel( model, ConVars )
 
+	if ( ConVars && !istable( ConVars ) ) then
+		ErrorNoHaltWithStack( "bad argument #2 to 'PropSelect.AddModel' (table expected, got " .. type( ConVars ) .. ")" )
+		ConVars = nil
+	end
+
 	-- Creeate a spawnicon and set the model
 	local Icon = vgui.Create( "SpawnIcon", self )
 	Icon:SetModel( model )
@@ -42,9 +47,9 @@ function PANEL:AddModel( model, ConVars )
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self )
+	Icon.DoClick = function ( pnl )
 
-		for k, v in pairs( self.ConVars ) do
+		for k, v in pairs( pnl.ConVars ) do
 			LocalPlayer():ConCommand( Format( "%s \"%s\"\n", k, v ) )
 		end
 
@@ -73,12 +78,12 @@ function PANEL:AddModelEx( name, model, skin )
 	Icon:SetTooltip( model )
 	Icon.Model = model
 	Icon.Value = name
-	Icon.ConVars = ConVars || {}
+	Icon.ConVars = {}
 
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self ) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value ) ) end
+	Icon.DoClick = function ( pnl ) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value ) ) end
 	Icon.OpenMenu = function( button )
 		local menu = DermaMenu()
 		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )

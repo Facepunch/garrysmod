@@ -63,7 +63,7 @@ end
 
 function PANEL:GetDecimals()
 
-	return ( self.m_iDecimals or 0 )
+	return self.m_iDecimals or 0
 
 end
 
@@ -194,7 +194,7 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
 		local nx = mid + n * size
 
-		if ( nx > x + w || nx < x ) then continue end
+		if ( nx > x + w or nx < x ) then continue end
 
 		local dist = 1 - ( math.abs( halfw - nx + x ) / w )
 
@@ -347,7 +347,7 @@ end
 --
 -- For your pleasure.
 --
-function PANEL:OnValueChanged()
+function PANEL:OnValueChanged( value )
 end
 
 PANEL.AllowAutoRefresh = true

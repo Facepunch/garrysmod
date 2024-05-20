@@ -34,36 +34,63 @@ function ToolObj:CreateConVars()
 
 	local mode = self:GetMode()
 
+	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, "1", { FCVAR_NOTIFY, FCVAR_REPLICATED }, "Set to 0 to disallow players being able to use the \"" .. mode .. "\" tool." )
+	self.ClientConVars = {}
+	self.ServerConVars = {}
+
 	if ( CLIENT ) then
 
 		for cvar, default in pairs( self.ClientConVar ) do
-
-			CreateClientConVar( mode .. "_" .. cvar, default, true, true )
-
+			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true, "Tool specific client setting (" .. mode .. ")" )
 		end
 
-		return
-	end
-
-	-- Note: I changed this from replicated because replicated convars don't work
-	-- when they're created via Lua.
-
-	if ( SERVER ) then
-
-		self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, FCVAR_NOTIFY )
+	else
 
 		for cvar, default in pairs( self.ServerConVar ) do
-			CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
+			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE, "Tool specific server setting (" .. mode .. ")" )
 		end
+
 	end
 
 end
 
 function ToolObj:GetServerInfo( property )
 
-	local mode = self:GetMode()
+	if ( self.ServerConVars[ property ] and SERVER ) then
+		return self.ServerConVars[ property ]:GetString()
+	end
 
-	return GetConVarString( mode .. "_" .. property )
+	return GetConVarString( self:GetMode() .. "_" .. property )
+
+end
+
+function ToolObj:GetClientInfo( property )
+
+	if ( self.ClientConVars[ property ] and CLIENT ) then
+		return self.ClientConVars[ property ]:GetString()
+	end
+
+	return self:GetOwner():GetInfo( self:GetMode() .. "_" .. property )
+
+end
+
+function ToolObj:GetClientNumber( property, default )
+
+	if ( self.ClientConVars[ property ] and CLIENT ) then
+		return self.ClientConVars[ property ]:GetFloat()
+	end
+
+	return self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 )
+
+end
+
+function ToolObj:GetClientBool( property, default )
+
+	if ( self.ClientConVars[ property ] and CLIENT ) then
+		return self.ClientConVars[ property ]:GetBool()
+	end
+
+	return math.floor( self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 ) ) != 0
 
 end
 
@@ -78,21 +105,8 @@ function ToolObj:BuildConVarList()
 
 end
 
-function ToolObj:GetClientInfo( property )
-
-	return self:GetOwner():GetInfo( self:GetMode() .. "_" .. property )
-
-end
-
-function ToolObj:GetClientNumber( property, default )
-
-	return self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 )
-
-end
-
 function ToolObj:Allowed()
 
-	if ( CLIENT ) then return true end
 	return self.AllowedCVar:GetBool()
 
 end
@@ -102,9 +116,9 @@ end
 function ToolObj:Init() end
 
 function ToolObj:GetMode()		return self.Mode end
-function ToolObj:GetSWEP()		return self.SWEP end
-function ToolObj:GetOwner()		return self:GetSWEP().Owner or self.Owner end
-function ToolObj:GetWeapon()	return self:GetSWEP().Weapon or self.Weapon end
+function ToolObj:GetWeapon()	return self.SWEP end
+function ToolObj:GetOwner()		return self:GetWeapon():GetOwner() or self.Owner end
+function ToolObj:GetSWEP()		return self:GetWeapon() end
 
 function ToolObj:LeftClick()	return false end
 function ToolObj:RightClick()	return false end
@@ -121,7 +135,7 @@ function ToolObj:CheckObjects()
 
 	for k, v in pairs( self.Objects ) do
 
-		if ( !v.Ent:IsWorld() && !v.Ent:IsValid() ) then
+		if ( !v.Ent:IsWorld() and !v.Ent:IsValid() ) then
 			self:ClearObjects()
 		end
 
@@ -129,11 +143,9 @@ function ToolObj:CheckObjects()
 
 end
 
-local toolmodes = file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" )
+for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
-for key, val in pairs( toolmodes ) do
-
-	local char1, char2, toolmode = string.find( val, "([%w_]*).lua" )
+	local _, _, toolmode = string.find( val, "([%w_]*).lua" )
 
 	TOOL = ToolObj:Create()
 	TOOL.Mode = toolmode
@@ -143,7 +155,9 @@ for key, val in pairs( toolmodes ) do
 
 	TOOL:CreateConVars()
 
-	SWEP.Tool[ toolmode ] = TOOL
+	if ( hook.Run( "PreRegisterTOOL", TOOL, toolmode ) != false ) then
+		SWEP.Tool[ toolmode ] = TOOL
+	end
 
 	TOOL = nil
 
@@ -159,17 +173,19 @@ local TOOLS_LIST = SWEP.Tool
 -- Add the STOOLS to the tool menu
 hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 
-	for ToolName, TOOL in pairs( TOOLS_LIST ) do
+	for ToolName, tool in pairs( TOOLS_LIST ) do
 
-		if ( TOOL.AddToMenu != false ) then
+		if ( tool.AddToMenu != false ) then
 
-			spawnmenu.AddToolMenuOption( TOOL.Tab or "Main",
-										TOOL.Category or "New Category",
-										ToolName,
-										TOOL.Name or "#" .. ToolName,
-										TOOL.Command or "gmod_tool " .. ToolName,
-										TOOL.ConfigName or ToolName,
-										TOOL.BuildCPanel )
+			spawnmenu.AddToolMenuOption(
+				tool.Tab or "Main",
+				tool.Category or "New Category",
+				ToolName,
+				tool.Name or "#" .. ToolName,
+				tool.Command or "gmod_tool " .. ToolName,
+				tool.ConfigName or ToolName,
+				tool.BuildCPanel
+			)
 
 		end
 
@@ -187,9 +203,9 @@ search.AddProvider( function( str )
 	for k, v in pairs( TOOLS_LIST ) do
 
 		local niceName = v.Name or "#" .. k
-		if ( niceName:StartWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
+		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
-		if ( !k:lower():find( str, nil, true ) && !niceName:lower():find( str, nil, true ) ) then continue end
+		if ( !k:lower():find( str, nil, true ) and !niceName:lower():find( str, nil, true ) ) then continue end
 
 		local entry = {
 			text = niceName,
@@ -231,14 +247,14 @@ spawnmenu.AddContentType( "tool", function( container, obj )
 
 	end
 
-	icon.OpenMenu = function( icon )
+	icon.OpenMenu = function( pnl )
 
 		-- Do not allow removal from read only panels
-		if ( IsValid( icon:GetParent() ) && icon:GetParent().GetReadOnly && icon:GetParent():GetReadOnly() ) then return end
+		if ( IsValid( pnl:GetParent() ) and pnl:GetParent().GetReadOnly and pnl:GetParent():GetReadOnly() ) then return end
 
 		local menu = DermaMenu()
 			menu:AddOption( "#spawnmenu.menu.delete", function()
-				icon:Remove()
+				pnl:Remove()
 				hook.Run( "SpawnlistContentChanged" )
 			end ):SetIcon( "icon16/bin_closed.png" )
 		menu:Open()

@@ -71,10 +71,11 @@ function PANEL:Init()
 
 	self:SetMultiple( true )
 	self:EnableHorizontal( false )
-	self:EnableVerticalScrollbar( true )
+	self:EnableVerticalScrollbar()
 
 	self:SetPadding( 1 )
 
+	self.m_bSelectionCanvas = true
 	self.SelectedItems = {}
 
 end

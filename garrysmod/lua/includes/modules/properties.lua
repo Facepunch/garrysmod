@@ -178,11 +178,20 @@ end
 
 if ( CLIENT ) then
 
+	local lastEyePos = vector_origin
+	local function UpdateEyePos()
+		-- A bit of a hack due to EyePos() being affected by other rendering functions
+		-- So we cache the value when we know it is the correct value for the frame
+		lastEyePos = EyePos()
+	end
+	
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
 		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
-		local ent = GetHovered( EyePos(), LocalPlayer():GetAimVector() )
+		UpdateEyePos()
+
+		local ent = GetHovered( lastEyePos, LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
 
 		local c = Color( 255, 255, 255, 255 )
@@ -196,12 +205,16 @@ if ( CLIENT ) then
 
 	end )
 
+	hook.Add( "PreDrawEffects", "PropertiesUpdateEyePos", function()
+		UpdateEyePos()
+	end )
+
 	hook.Add( "GUIMousePressed", "PropertiesClick", function( code, vector )
 
 		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		if ( code == MOUSE_RIGHT && !input.IsButtonDown( MOUSE_LEFT ) ) then
-			OnScreenClick( EyePos(), vector )
+			OnScreenClick( lastEyePos, vector )
 		end
 
 	end )
@@ -227,7 +240,7 @@ if ( CLIENT ) then
 			--
 			-- Are we hovering an entity? If so, then stomp the action
 			--
-			local hovered = GetHovered( EyePos(), ply:GetAimVector() )
+			local hovered = GetHovered( lastEyePos, ply:GetAimVector() )
 
 			if ( IsValid( hovered ) ) then
 				wasPressed = true

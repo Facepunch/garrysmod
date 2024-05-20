@@ -3,7 +3,7 @@ local PANEL = {}
 
 DEFINE_BASECLASS( "DCollapsibleCategory" )
 
-AccessorFunc( PANEL, "m_bSizeToContents",	"AutoSize", FORCE_BOOL)
+AccessorFunc( PANEL, "m_bSizeToContents",	"AutoSize", FORCE_BOOL )
 AccessorFunc( PANEL, "m_iSpacing",			"Spacing" )
 AccessorFunc( PANEL, "m_Padding",			"Padding" )
 
@@ -31,7 +31,7 @@ function PANEL:Clear()
 
 	for k, v in pairs( self.Items ) do
 
-		if ( IsValid(v) ) then v:Remove() end
+		if ( IsValid( v ) ) then v:Remove() end
 
 	end
 
@@ -97,17 +97,14 @@ function PANEL:PropSelect( label, convar, models, height )
 
 	props.Height = height or 2
 
-	-- Build a list of models for sorting, support both ways
-	local modellist = {}
-
 	local firstKey, firstVal = next( models )
 	if ( firstVal.model == nil ) then
 
 		-- Lowercase model names for sorting purposes
-		local models = table.LowerKeyNames( models )
+		local models_lower = table.LowerKeyNames( models )
 
 		-- list.Get where key is the model and value is the cvars to set when that model is selected
-		for k, v in SortedPairs( models ) do
+		for k, v in SortedPairs( models_lower ) do
 			props:AddModel( k, v )
 		end
 
@@ -115,13 +112,13 @@ function PANEL:PropSelect( label, convar, models, height )
 
 		local tmp = {} -- HACK: Order by skin too
 		for k, v in SortedPairsByMemberValue( models, "model" ) do
-			tmp[ k ] = v.model:lower() .. ( v.skin || 0 )
+			tmp[ k ] = v.model:lower() .. ( v.skin or 0 )
 		end
 
 		for k, v in SortedPairsByValue( tmp ) do
 			v = models[ k ]
-			local icon = props:AddModelEx( k, v.model, v.skin || 0 )
-			if ( v.tooltip ) then icon:SetToolTip( v.tooltip ) end
+			local icon = props:AddModelEx( k, v.model, v.skin or 0 )
+			if ( v.tooltip ) then icon:SetTooltip( v.tooltip ) end
 		end
 
 	end
@@ -279,8 +276,9 @@ end
 
 function PANEL:ListBox( strLabel )
 
+	local left = nil
 	if ( strLabel ) then
-		local left = vgui.Create( "DLabel", self )
+		left = vgui.Create( "DLabel", self )
 		left:SetText( strLabel )
 		self:AddItem( left )
 		left:SetDark( true )

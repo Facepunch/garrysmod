@@ -37,13 +37,15 @@ SWEP.CanDeploy = true
 
 function SWEP:InitializeTools()
 
+	local owner = self:GetOwner()
+
 	local temp = {}
 
-	for k,v in pairs( self.Tool ) do
+	for k, v in pairs( self.Tool ) do
 
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self
-		temp[k].Owner = self.Owner
+		temp[k].Owner = owner
 		temp[k].Weapon = self
 		temp[k]:Init()
 
@@ -119,7 +121,7 @@ function SWEP:Think()
 
 	-- SWEP:Think is called one more time clientside
 	-- after holstering using Player:SelectWeapon in multiplayer
-	if ( CLIENT && self.m_uHolsterFrame == FrameNumber() ) then return end
+	if ( CLIENT and self.m_uHolsterFrame == FrameNumber() ) then return end
 
 	local owner = self:GetOwner()
 	if ( !owner:IsPlayer() ) then return end
@@ -149,18 +151,18 @@ function SWEP:Think()
 		return
 	end
 
-	if ( lastmode && lastmode != curmode ) then
+	if ( lastmode and lastmode ~= curmode ) then
 		local lastmode_obj = self:GetToolObject( lastmode )
 
 		if ( lastmode_obj ) then
 			-- We want to release the ghost entity just in case
-			lastmode_obj:Holster()
+			lastmode_obj:ReleaseGhostEntity()
 		end
 	end
 
-	self.Primary.Automatic = tool.LeftClickAutomatic || false
-	self.Secondary.Automatic = tool.RightClickAutomatic || false
-	self.RequiresTraceHit = tool.RequiresTraceHit || true
+	self.Primary.Automatic = tool.LeftClickAutomatic or false
+	self.Secondary.Automatic = tool.RightClickAutomatic or false
+	self.RequiresTraceHit = tool.RequiresTraceHit or true
 
 	tool:Think()
 
@@ -169,12 +171,14 @@ end
 -- The shoot effect
 function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePredicted )
 
+	local owner = self:GetOwner()
+
 	self:EmitSound( self.ShootSound )
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) -- View model animation
 
 	-- There's a bug with the model that's causing a muzzle to
 	-- appear on everyone's screen when we fire this animation.
-	self.Owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
+	owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
 
 	if ( !bFirstTimePredicted ) then return end
 	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
@@ -186,12 +190,12 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 	effectdata:SetAttachment( physbone )
 	util.Effect( "selection_indicator", effectdata )
 
-	local effectdata = EffectData()
-	effectdata:SetOrigin( hitpos )
-	effectdata:SetStart( self.Owner:GetShootPos() )
-	effectdata:SetAttachment( 1 )
-	effectdata:SetEntity( self )
-	util.Effect( "ToolTracer", effectdata )
+	local effect_tr = EffectData()
+	effect_tr:SetOrigin( hitpos )
+	effect_tr:SetStart( owner:GetShootPos() )
+	effect_tr:SetAttachment( 1 )
+	effect_tr:SetEntity( self )
+	util.Effect( "ToolTracer", effect_tr )
 
 end
 
@@ -200,9 +204,14 @@ local toolmask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, C
 -- Trace a line then send the result to a mode function
 function SWEP:PrimaryAttack()
 
-	local tr = util.GetPlayerTrace( self.Owner )
+	local owner = self:GetOwner()
+
+	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
 	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -215,7 +224,7 @@ function SWEP:PrimaryAttack()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 1 ) ) then return end
+	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 1 ) ) then return end
 
 	if ( !tool:LeftClick( trace ) ) then return end
 
@@ -225,9 +234,14 @@ end
 
 function SWEP:SecondaryAttack()
 
-	local tr = util.GetPlayerTrace( self.Owner )
+	local owner = self:GetOwner()
+
+	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
 	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -240,7 +254,7 @@ function SWEP:SecondaryAttack()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 2 ) ) then return end
+	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 2 ) ) then return end
 
 	if ( !tool:RightClick( trace ) ) then return end
 
@@ -250,12 +264,17 @@ end
 
 function SWEP:Reload()
 
-	-- This makes the reload a semi-automatic thing rather than a continuous thing
-	if ( !self.Owner:KeyPressed( IN_RELOAD ) ) then return end
+	local owner = self:GetOwner()
 
-	local tr = util.GetPlayerTrace( self.Owner )
-	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+	-- This makes the reload a semi-automatic thing rather than a continuous thing
+	if ( !owner:KeyPressed( IN_RELOAD ) ) then return end
+
+	local tr = util.GetPlayerTrace( owner )
+	tr.mask = toolmask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
 	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -268,7 +287,7 @@ function SWEP:Reload()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 3 ) ) then return end
+	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 3 ) ) then return end
 
 	if ( !tool:Reload( trace ) ) then return end
 
@@ -291,7 +310,9 @@ function SWEP:Holster()
 
 	-- Save the frame the weapon was holstered on to prevent
 	-- the extra Think call after calling Player:SelectWeapon in multiplayer
-	if ( CLIENT && CanHolster == true ) then self.m_uHolsterFrame = FrameNumber() end
+	if ( CLIENT and CanHolster == true ) then self.m_uHolsterFrame = FrameNumber() end
+
+	if ( CanHolster == true and toolobj ) then toolobj:ReleaseGhostEntity() end
 
 	return CanHolster
 
@@ -334,6 +355,13 @@ end
 function SWEP:GetToolObject( tool )
 
 	local mode = tool or self:GetMode()
+
+	if ( !mode ) then
+		local owner = self:GetOwner()
+		if ( IsValid( owner ) and owner:IsPlayer() and ( SERVER or owner == LocalPlayer() ) ) then
+			mode = owner:GetInfo( "gmod_toolmode" )
+		end
+	end
 
 	if ( !self.Tool[ mode ] ) then return false end
 

@@ -18,7 +18,7 @@ function PANEL:Init()
 		local bg = left:Add( "DPanel" )
 		bg:Dock( FILL )
 		bg:DockMargin( 0, 0, 0, 4 )
-		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
+		bg.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
 
 		self.SpawnIcon = bg:Add( "SpawnIcon" )
 		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
@@ -231,6 +231,17 @@ function PANEL:Init()
 		origin.LoadCookies = function( p ) local b = p:GetCookie( "checkbox_checked" ) p:SetChecked( b ) p:OnChange( tobool( b ) ) end
 		origin:SetCookieName( "model_editor_origin" )
 
+		local playSpeed = settings:Add( "DNumSlider" )
+		playSpeed:SetText( "Playback Speed" )
+		playSpeed:Dock( TOP )
+		playSpeed:DockMargin( 0, 0, 0, 3 )
+		playSpeed:SetMin( -1 )
+		playSpeed:SetDark( true )
+		playSpeed:SetMax( 2 )
+		playSpeed.OnValueChanged = function( s, value )
+			self.ModelPanel:GetEntity():SetPlaybackRate( value )
+		end
+
 		local angle = settings:Add( "DTextEntry" )
 		angle:SetTooltip( "Entity Angles" )
 		angle:Dock( TOP )
@@ -261,17 +272,24 @@ function PANEL:Init()
 		end
 		self.TargetCamPosPanel = cam_pos
 
-		local playSpeed = settings:Add( "DNumSlider" )
-		playSpeed:SetText( "Playback Speed" )
-		playSpeed:Dock( TOP )
-		playSpeed:DockMargin( 0, 0, 0, 3 )
-		playSpeed:SetMin( -1 )
-		playSpeed:SetDark( true )
-		playSpeed:SetMax( 2 )
-		playSpeed.OnValueChanged = function( s, value )
-			self.ModelPanel:GetEntity():SetPlaybackRate( value )
+		local labels = { "Pitch", "Yaw", "Roll" }
+		for i = 1, 3 do
+			local rotate45yaw = settings:Add( "DButton" )
+			rotate45yaw:SetText( "Rotate Entity +/-45 " .. labels[ i ] )
+			rotate45yaw:Dock( TOP )
+			rotate45yaw:DockMargin( 0, 0, 0, 3 )
+			rotate45yaw:SetZPos( 102 + i )
+			rotate45yaw.DoClick = function( p, b )
+				local aang = self.ModelPanel:GetEntity():GetAngles()
+				aang[ i ] = aang[ i ] + 45
+				self.ModelPanel:GetEntity():SetAngles( aang )
+			end
+			rotate45yaw.DoRightClick = function( p, b )
+				local aang = self.ModelPanel:GetEntity():GetAngles()
+				aang[ i ] = aang[ i ] - 45
+				self.ModelPanel:GetEntity():SetAngles( aang )
+			end
 		end
-
 end
 
 function PANEL:SetDefaultLighting()
@@ -290,6 +308,8 @@ end
 function PANEL:BestGuessLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local ang = ent:GetAngles()
 
@@ -307,6 +327,8 @@ end
 function PANEL:FullFrontalLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + Vector( -200, 0, 0 )
 
@@ -319,6 +341,8 @@ end
 function PANEL:AboveLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + Vector( 0, 0, 200 )
 
@@ -331,6 +355,8 @@ end
 function PANEL:RightLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + Vector( 0, 200, 0 )
 
@@ -343,6 +369,8 @@ end
 function PANEL:OriginLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + vector_origin
 
@@ -443,9 +471,11 @@ function PANEL:Refresh()
 	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )
+	ent:SetLOD( 0 )
 
 	self:BestGuessLayout()
 	self:FillAnimations( ent )

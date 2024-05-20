@@ -83,7 +83,7 @@ end
 -----------------------------------------------------------]]
 function ENT:GetRelationship( entity )
 
-	--return D_NU;
+	--return D_NU
 
 end
 

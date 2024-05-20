@@ -75,12 +75,13 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidThrusterModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "thrusters" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "thrusters" ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
 
 	local thruster = MakeThruster( ply, model, Ang, trace.HitPos, key, key_bk, force, toggle, effect, damageable, soundname )
+	if ( !IsValid( thruster ) ) then return false end
 
 	local min = thruster:OBBMins()
 	thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
@@ -91,7 +92,11 @@ function TOOL:LeftClick( trace )
 		-- Don't weld to world
 		if ( IsValid( trace.Entity ) ) then
 
-			local const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
+			local weld = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "thrusters", weld )
+				undo.AddEntity( weld )
+			end
 
 			-- Don't disable collision if it's not attached to anything
 			if ( collision ) then
@@ -101,9 +106,6 @@ function TOOL:LeftClick( trace )
 				thruster.nocollide = true
 
 			end
-
-			ply:AddCleanup( "thrusters", const )
-			undo.AddEntity( const )
 
 		end
 
@@ -116,18 +118,23 @@ end
 
 if ( SERVER ) then
 
-	function MakeThruster( pl, model, ang, pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide )
+	function MakeThruster( ply, model, ang, pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "thrusters" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "thrusters" ) ) then return false end
 		if ( !IsValidThrusterModel( model ) ) then return false end
 
 		local thruster = ents.Create( "gmod_thruster" )
 		if ( !IsValid( thruster ) ) then return false end
 
-		thruster:SetModel( model )
+		duplicator.DoGeneric( thruster, Data )
+		thruster:SetModel( model ) -- Backwards compatible for addons directly calling this function
 		thruster:SetAngles( ang )
 		thruster:SetPos( pos )
 		thruster:Spawn()
+
+		DoPropSpawnedEffect( thruster )
+
+		duplicator.DoGenericPhysics( thruster, ply, Data )
 
 		force = math.Clamp( force, 0, 1E10 )
 
@@ -135,14 +142,14 @@ if ( SERVER ) then
 		thruster:SetForce( force )
 		thruster:SetToggle( toggle == 1 )
 		thruster.ActivateOnDamage = ( damageable == 1 )
-		thruster:SetPlayer( pl )
+		thruster:SetPlayer( ply )
 		thruster:SetSound( soundname )
 
-		thruster.NumDown = numpad.OnDown( pl, key, "Thruster_On", thruster, 1 )
-		thruster.NumUp = numpad.OnUp( pl, key, "Thruster_Off", thruster, 1 )
+		thruster.NumDown = numpad.OnDown( ply, key, "Thruster_On", thruster, 1 )
+		thruster.NumUp = numpad.OnUp( ply, key, "Thruster_Off", thruster, 1 )
 
-		thruster.NumBackDown = numpad.OnDown( pl, key_bck, "Thruster_On", thruster, -1 )
-		thruster.NumBackUp = numpad.OnUp( pl, key_bck, "Thruster_Off", thruster, -1 )
+		thruster.NumBackDown = numpad.OnDown( ply, key_bck, "Thruster_On", thruster, -1 )
+		thruster.NumBackUp = numpad.OnUp( ply, key_bck, "Thruster_Off", thruster, -1 )
 
 		if ( nocollide == true ) then
 			if ( IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
@@ -154,25 +161,24 @@ if ( SERVER ) then
 			key_bck = key_bck,
 			force = force,
 			toggle = toggle,
-			pl = pl,
+			pl = ply,
 			effect = effect,
 			nocollide = nocollide,
 			damageable = damageable,
 			soundname = soundname
 		} )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "thrusters", thruster )
-			pl:AddCleanup( "thrusters", thruster )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "thrusters", thruster )
+			ply:AddCleanup( "thrusters", thruster )
 		end
 
-		DoPropSpawnedEffect( thruster )
 
 		return thruster
 
 	end
 
-	duplicator.RegisterEntityClass( "gmod_thruster", MakeThruster, "Model", "Ang", "Pos", "key", "key_bck", "force", "toggle", "effect", "damageable", "soundname", "nocollide" )
+	duplicator.RegisterEntityClass( "gmod_thruster", MakeThruster, "Model", "Ang", "Pos", "key", "key_bck", "force", "toggle", "effect", "damageable", "soundname", "nocollide", "Data" )
 
 end
 

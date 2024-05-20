@@ -80,28 +80,39 @@ Subscriptions.prototype.GetCount = function()
 	return i;
 }
 
-// Called from engine for Subscriptions
+// Called from engine for addons
 Subscriptions.prototype.Update = function( json )
 {
+	var oldNum = Object.keys( this.Files ).length;
+
 	this.Files = {};
 
 	for ( k in json )
 	{
 		var wsid = String( json[k].wsid );
-		if ( wsid == "0" ) continue;
+		if ( wsid == "0" ) continue; // local .gma
+
 		this.Files[ wsid ] = json[ k ];
 	}
+
+	var newNum = Object.keys( this.Files ).length;
+	if ( oldNum < newNum ) OnSubscriptionsChanged(); // control.Addons.js
 }
 
 // Called from engine for dupes/saves/demos
 Subscriptions.prototype.UpdateUGC = function( json )
 {
+	var oldNum = Object.keys( this.FilesUGC ).length;
+
 	this.FilesUGC = {};
 
 	for ( k in json )
 	{
 		this.FilesUGC[ String( json[k].wsid ) ] = json[ k ];
 	}
+
+	var newNum = Object.keys( this.FilesUGC ).length;
+	if ( oldNum < newNum ) OnSubscriptionsChanged();
 
 	UpdateDigest( this.Scope, 50 );
 }

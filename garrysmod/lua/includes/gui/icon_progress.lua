@@ -6,7 +6,7 @@ hook.Add( "SpawniconGenerated", "SpawniconGenerated", function( lastmodel, image
 	if ( !IsValid( g_Progress ) ) then
 
 		g_Progress = vgui.Create( "DPanel" )
-		g_Progress:SetSize( 64+10, 64+10+20 )
+		g_Progress:SetSize( 64 + 10, 64 + 10 + 20 )
 		g_Progress:SetBackgroundColor( Color( 0, 0, 0, 100 ) )
 		g_Progress:SetDrawOnTop( true )
 		g_Progress:DockPadding( 5, 0, 5, 5 )

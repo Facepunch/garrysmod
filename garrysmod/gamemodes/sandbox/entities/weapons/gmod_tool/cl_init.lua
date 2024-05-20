@@ -1,7 +1,7 @@
 
 local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false, "Should the tool HUD be displayed when the tool gun is active?" )
-local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
-CreateClientConVar( "gmod_drawtooleffects", "1", true, false, "Should tools draw certain UI elements or effects? ( Will not work for all tools )" )
+local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true, "Currently selected tool mode for the Tool Gun." )
+CreateClientConVar( "gmod_drawtooleffects", "1", true, false, "Should tools draw certain UI elements or effects? (Will not work for all tools)" )
 
 cvars.AddChangeCallback( "gmod_toolmode", function( name, old, new )
 	if ( old == new ) then return end
@@ -47,11 +47,12 @@ surface.CreateFont( "GModToolHelp", {
 function SWEP:DrawHUD()
 
 	local mode = gmod_toolmode:GetString()
+	local toolObject = self:GetToolObject()
 
 	-- Don't draw help for a nonexistant tool!
-	if ( !self:GetToolObject() ) then return end
+	if ( !toolObject ) then return end
 
-	self:GetToolObject():DrawHUD()
+	toolObject:DrawHUD()
 
 	if ( !gmod_drawhelp:GetBool() ) then return end
 
@@ -89,7 +90,7 @@ function SWEP:DrawHUD()
 
 	QuadTable.y = y
 	QuadTable.h = self.InfoBoxHeight
-	local alpha = math.Clamp( 255 + ( self:GetToolObject().LastMessage - CurTime() ) * 800, 10, 255 )
+	local alpha = math.Clamp( 255 + ( toolObject.LastMessage - CurTime() ) * 800, 10, 255 )
 	QuadTable.color = Color( alpha, alpha, alpha, 230 )
 	draw.TexturedQuad( QuadTable )
 
@@ -97,9 +98,9 @@ function SWEP:DrawHUD()
 
 	TextTable.font = "GModToolHelp"
 
-	if ( !self:GetToolObject().Information ) then
+	if ( !toolObject.Information ) then
 		TextTable.pos = { x + self.InfoBoxHeight, y }
-		TextTable.text = self:GetToolObject():GetHelpText()
+		TextTable.text = toolObject:GetHelpText()
 		w, h = draw.TextShadow( TextTable, 1 )
 
 		surface.SetDrawColor( 255, 255, 255, 255 )
@@ -113,45 +114,48 @@ function SWEP:DrawHUD()
 
 	local h2 = 0
 
-	for k, v in pairs( self:GetToolObject().Information ) do
+	for _, v in pairs( toolObject.Information ) do
 		if ( isstring( v ) ) then v = { name = v } end
 
-		if ( !v.name ) then continue end
-		if ( v.stage && v.stage != self:GetStage() ) then continue end
-		if ( v.op && v.op != self:GetToolObject():GetOperation() ) then continue end
+		local name = v.name
 
-		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. v.name
-		if ( v.name == "info" ) then
-			txt = self:GetToolObject():GetHelpText()
-		end
+		if ( !name ) then continue end
+		if ( v.stage && v.stage != self:GetStage() ) then continue end
+		if ( v.op && v.op != toolObject:GetOperation() ) then continue end
+
+		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. name
+		if ( name == "info" ) then txt = toolObject:GetHelpText() end
 
 		TextTable.text = txt
 		TextTable.pos = { x + 21, y + h2 }
 
 		w, h = draw.TextShadow( TextTable, 1 )
 
-		if ( !v.icon ) then
-			if ( v.name:StartWith( "info" ) ) then v.icon = "gui/info" end
-			if ( v.name:StartWith( "left" ) ) then v.icon = "gui/lmb.png" end
-			if ( v.name:StartWith( "right" ) ) then v.icon = "gui/rmb.png" end
-			if ( v.name:StartWith( "reload" ) ) then v.icon = "gui/r.png" end
-			if ( v.name:StartWith( "use" ) ) then v.icon = "gui/e.png" end
+		local icon1 = v.icon
+		local icon2 = v.icon2
+
+		if ( !icon1 ) then
+			if ( string.StartsWith( name, "info" ) ) then icon1 = "gui/info" end
+			if ( string.StartsWith( name, "left" ) ) then icon1 = "gui/lmb.png" end
+			if ( string.StartsWith( name, "right" ) ) then icon1 = "gui/rmb.png" end
+			if ( string.StartsWith( name, "reload" ) ) then icon1 = "gui/r.png" end
+			if ( string.StartsWith( name, "use" ) ) then icon1 = "gui/e.png" end
 		end
-		if ( !v.icon2 && !v.name:StartWith( "use" ) && v.name:EndsWith( "use" ) ) then v.icon2 = "gui/e.png" end
+		if ( !icon2 && !string.StartsWith( name, "use" ) && string.EndsWith( name, "use" ) ) then icon2 = "gui/e.png" end
 
 		self.Icons = self.Icons or {}
-		if ( v.icon && !self.Icons[ v.icon ] ) then self.Icons[ v.icon ] = Material( v.icon ) end
-		if ( v.icon2 && !self.Icons[ v.icon2 ] ) then self.Icons[ v.icon2 ] = Material( v.icon2 ) end
+		if ( icon1 && !self.Icons[ icon1 ] ) then self.Icons[ icon1 ] = Material( icon1 ) end
+		if ( icon2 && !self.Icons[ icon2 ] ) then self.Icons[ icon2 ] = Material( icon2 ) end
 
-		if ( v.icon && self.Icons[ v.icon ] && !self.Icons[ v.icon ]:IsError() ) then
+		if ( icon1 && self.Icons[ icon1 ] && !self.Icons[ icon1 ]:IsError() ) then
 			surface.SetDrawColor( 255, 255, 255, 255 )
-			surface.SetMaterial( self.Icons[ v.icon ] )
+			surface.SetMaterial( self.Icons[ icon1 ] )
 			surface.DrawTexturedRect( x, y + h2, 16, 16 )
 		end
 
-		if ( v.icon2 && self.Icons[ v.icon2 ] && !self.Icons[ v.icon2 ]:IsError() ) then
+		if ( icon2 && self.Icons[ icon2 ] && !self.Icons[ icon2 ]:IsError() ) then
 			surface.SetDrawColor( 255, 255, 255, 255 )
-			surface.SetMaterial( self.Icons[ v.icon2 ] )
+			surface.SetMaterial( self.Icons[ icon2 ] )
 			surface.DrawTexturedRect( x - 25, y + h2, 16, 16 )
 
 			draw.SimpleText( "+", "default", x - 8, y + h2 + 2, color_white )
@@ -197,8 +201,6 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 end
 
 function SWEP:FreezeMovement()
-
-	local mode = self:GetMode()
 
 	if ( !self:GetToolObject() ) then return false end
 

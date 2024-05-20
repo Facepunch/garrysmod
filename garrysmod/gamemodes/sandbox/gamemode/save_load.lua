@@ -36,8 +36,8 @@ if ( SERVER ) then
 		local send_size = 60000
 		local parts = math.ceil( len / send_size )
 
-		local ShowSave = 0
-		if ( args[ 1 ] == "spawnmenu" ) then ShowSave = 1 end
+		local ShowSave = false
+		if ( args[ 1 ] == "spawnmenu" ) then ShowSave = true end
 
 		local start = 0
 		for i = 1, parts do
@@ -66,7 +66,7 @@ if ( SERVER ) then
 			timer.Create( "LoadGModSave_WaitForPlayer", 0.1, 0, function()
 				if ( !IsValid( Entity( 1 ) ) ) then return end
 
-				timer.Destroy( "LoadGModSave_WaitForPlayer" )
+				timer.Remove( "LoadGModSave_WaitForPlayer" )
 				LoadGModSave( savedata )
 			end )
 

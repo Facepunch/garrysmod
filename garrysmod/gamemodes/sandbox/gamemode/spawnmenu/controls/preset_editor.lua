@@ -115,7 +115,7 @@ function PANEL:OnPresetSelected( item )
 	local name = item:GetValue( 1 )
 
 	self.txtRename:SetText( name )
-	for id, pnl in pairs( self.txtRename:GetParent():GetChildren() ) do pnl:SetEnabled( true ) end
+	for id, pnl in ipairs( self.txtRename:GetParent():GetChildren() ) do pnl:SetEnabled( true ) end
 
 	self.pnlDetails:Clear()
 	for cvar, val in SortedPairs( item:GetTable().Data ) do

@@ -16,7 +16,7 @@ local function GetTextForRole(role)
 
    else
       local traitors = {}
-      for _, ply in ipairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          if ply:IsTraitor() then
             table.insert(traitors, ply)
          end

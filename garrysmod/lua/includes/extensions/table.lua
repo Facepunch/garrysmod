@@ -1,4 +1,8 @@
 
+function table.Pack( ... )
+	return { ... }, select( "#", ... )
+end
+
 --[[---------------------------------------------------------
 	Name: Inherit( t, base )
 	Desc: Copies any missing data from base to t
@@ -78,10 +82,10 @@ end
 	Name: Merge
 	Desc: xx
 -----------------------------------------------------------]]
-function table.Merge( dest, source )
+function table.Merge( dest, source, forceOverride )
 
 	for k, v in pairs( source ) do
-		if ( istable( v ) && istable( dest[ k ] ) ) then
+		if ( !forceOverride and istable( v ) and istable( dest[ k ] ) ) then
 			-- don't overwrite one table with another
 			-- instead merge them recurisvely
 			table.Merge( dest[ k ], v )
@@ -110,6 +114,8 @@ end
 	Desc: Unlike merge this adds the two tables together and discards keys.
 -----------------------------------------------------------]]
 function table.Add( dest, source )
+	-- The tables should be different otherwise this will just freeze the whole game
+	if ( dest == source ) then return dest end
 
 	-- At least one of them needs to be a table or this whole thing will fall on its ass
 	if ( !istable( source ) ) then return dest end
@@ -207,10 +213,12 @@ end
 -----------------------------------------------------------]]
 local function MakeTable( t, nice, indent, done )
 	local str = ""
-	local done = done or {}
-	local indent = indent or 0
+	done = done or {}
+	indent = indent or 0
+
 	local idt = ""
-	if nice then idt = string.rep( "\t", indent ) end
+	if ( nice ) then idt = string.rep( "\t", indent ) end
+
 	local nl, tab  = "", ""
 	if ( nice ) then nl, tab = "\n", "\t" end
 
@@ -230,7 +238,7 @@ local function MakeTable( t, nice, indent, done )
 			key = ""
 		end
 
-		if ( istable( value ) && !done[ value ] ) then
+		if ( istable( value ) and !done[ value ] ) then
 
 			if ( IsColor( value ) ) then
 				done[ value ] = true
@@ -238,8 +246,8 @@ local function MakeTable( t, nice, indent, done )
 				str = str .. key .. tab .. value .. "," .. nl
 			else
 				done[ value ] = true
-				str = str .. key .. tab .. '{' .. nl .. MakeTable (value, nice, indent + 1, done)
-				str = str .. idt .. tab .. tab ..tab .. tab .."},".. nl
+				str = str .. key .. tab .. '{' .. nl .. MakeTable( value, nice, indent + 1, done )
+				str = str .. idt .. tab .. tab .. tab .. tab .. "}," .. nl
 			end
 
 		else
@@ -277,12 +285,16 @@ end
 -----------------------------------------------------------]]
 function table.Sanitise( t, done )
 
-	local done = done or {}
+	done = done or {}
 	local tbl = {}
 
 	for k, v in pairs ( t ) do
 
+<<<<<<< HEAD
 		if ( istable( v ) and not IsColor( v ) and !done[ v ] ) then
+=======
+		if ( istable( v ) and !IsColor( v ) and !done[ v ] ) then
+>>>>>>> upstream/master
 
 			done[ v ] = true
 			tbl[ k ] = table.Sanitise( v, done )
@@ -337,12 +349,16 @@ end
 -----------------------------------------------------------]]
 function table.DeSanitise( t, done )
 
-	local done = done or {}
+	done = done or {}
 	local tbl = {}
 
 	for k, v in pairs ( t ) do
 
+<<<<<<< HEAD
 		if ( istable( v ) and not IsColor(v) and !done[ v ] ) then
+=======
+		if ( istable( v ) and !IsColor( v ) and !done[ v ] ) then
+>>>>>>> upstream/master
 
 			done[ v ] = true
 
@@ -398,7 +414,7 @@ end
 	Name: table.SortByMember( table )
 	Desc: Sorts table by named member
 -----------------------------------------------------------]]
-function table.SortByMember( Table, MemberName, bAsc )
+function table.SortByMember( tab, memberName, bAsc )
 
 	local TableMemberSort = function( a, b, MemberName, bReverse )
 
@@ -428,7 +444,7 @@ function table.SortByMember( Table, MemberName, bAsc )
 
 	end
 
-	table.sort( Table, function( a, b ) return TableMemberSort( a, b, MemberName, bAsc or false ) end )
+	table.sort( tab, function( a, b ) return TableMemberSort( a, b, memberName, bAsc or false ) end )
 
 end
 
@@ -436,11 +452,11 @@ end
 	Name: table.LowerKeyNames( table )
 	Desc: Lowercase the keynames of all tables
 -----------------------------------------------------------]]
-function table.LowerKeyNames( Table )
+function table.LowerKeyNames( tab )
 
 	local OutTable = {}
 
-	for k, v in pairs( Table ) do
+	for k, v in pairs( tab ) do
 
 		-- Recurse
 		if ( istable( v ) ) then
@@ -520,11 +536,23 @@ local function toKeyValues( tbl )
 
 	local result = {}
 
-	for k,v in pairs( tbl ) do
+	for k, v in pairs( tbl ) do
 		table.insert( result, { key = k, val = v } )
 	end
 
 	return result
+
+end
+
+local function getKeys( tbl )
+
+	local keys = {}
+
+	for k in pairs( tbl ) do
+		table.insert( keys, k )
+	end
+
+	return keys
 
 end
 
@@ -534,15 +562,23 @@ end
 -----------------------------------------------------------]]
 function SortedPairs( pTable, Desc )
 
-	local sortedTbl = toKeyValues( pTable )
+	local keys = getKeys( pTable )
 
 	if ( Desc ) then
-		table.sort( sortedTbl, function( a, b ) return a.key > b.key end )
+		table.sort( keys, function( a, b )
+			return a > b
+		end )
 	else
-		table.sort( sortedTbl, function( a, b ) return a.key < b.key end )
+		table.sort( keys, function( a, b )
+			return a < b
+		end )
 	end
 
-	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
+	local i, key
+	return function()
+		i, key = next( keys, i )
+		return key, pTable[key]
+	end
 
 end
 
@@ -572,7 +608,7 @@ function SortedPairsByMemberValue( pTable, pValueName, Desc )
 
 	local sortedTbl = toKeyValues( pTable )
 
-	for k,v in pairs( sortedTbl ) do
+	for k, v in pairs( sortedTbl ) do
 		v.member = v.val[ pValueName ]
 	end
 
@@ -589,15 +625,15 @@ function RandomPairs( pTable, Desc )
 
 	local sortedTbl = toKeyValues( pTable )
 
-	for k,v in pairs( sortedTbl ) do
+	for k, v in pairs( sortedTbl ) do
 		v.rand = math.random( 1, 1000000 )
 	end
 
 	-- descending/ascending for a random order, really?
 	if ( Desc ) then
-		table.sort( sortedTbl, function(a,b) return a.rand > b.rand end )
+		table.sort( sortedTbl, function( a, b ) return a.rand > b.rand end )
 	else
-		table.sort( sortedTbl, function(a,b) return a.rand < b.rand end )
+		table.sort( sortedTbl, function( a, b ) return a.rand < b.rand end )
 	end
 
 	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
@@ -608,22 +644,22 @@ end
 	GetFirstKey
 -----------------------------------------------------------]]
 function table.GetFirstKey( t )
-	local k, v = next( t )
+	local k, _ = next( t )
 	return k
 end
 
 function table.GetFirstValue( t )
-	local k, v = next( t )
+	local _, v = next( t )
 	return v
 end
 
 function table.GetLastKey( t )
-	local k, v = next( t, table.Count( t ) - 1 )
+	local k, _ = next( t, table.Count( t ) - 1 )
 	return k
 end
 
 function table.GetLastValue( t )
-	local k, v = next( t, table.Count( t ) - 1 )
+	local _, v = next( t, table.Count( t ) - 1 )
 	return v
 end
 
@@ -697,7 +733,7 @@ end
 function table.MemberValuesFromKey( tab, key )
 	local res = {}
 	for k, v in pairs( tab ) do
-		if ( istable( v ) && v[ key ] != nil ) then res[ #res + 1 ] = v[ key ] end
+		if ( istable( v ) and v[ key ] != nil ) then res[ #res + 1 ] = v[ key ] end
 	end
 	return res
 end
@@ -735,4 +771,43 @@ function table.GetKeys( tab )
 
 	return keys
 
+end
+
+function table.Flip( tab )
+
+	local res = {}
+
+	for k, v in pairs( tab ) do
+		res[ v ] = k
+	end
+
+	return res
+
+end
+
+-- Polyfill for table.move on 32-bit
+-- Don't forget to remove this when it's no longer necessary
+if ( !table.move ) then
+	function table.move( sourceTbl, from, to, dest, destTbl )
+
+		if ( !istable( sourceTbl ) ) then error( "bad argument #1 to 'move' (table expected, got " .. type( sourceTbl ) .. ")" ) end
+		if ( !isnumber( from ) ) then error( "bad argument #2 to 'move' (number expected, got " .. type( from ) .. ")" ) end
+		if ( !isnumber( to ) ) then error( "bad argument #3 to 'move' (number expected, got " .. type( to ) .. ")" ) end
+		if ( !isnumber( dest ) ) then error( "bad argument #4 to 'move' (number expected, got " .. type( dest ) .. ")" ) end
+		if ( destTbl != nil ) then
+			if ( !istable( destTbl ) ) then error( "bad argument #5 to 'move' (table expected, got " .. type( destTbl ) .. ")" ) end
+		else
+			destTbl = sourceTbl
+		end
+
+		local buffer = { unpack( sourceTbl, from, to ) }
+
+		dest = math.floor( dest - 1 )
+		for i, v in ipairs( buffer ) do
+			destTbl[ dest + i ] = v
+		end
+
+		return destTbl
+
+	end
 end

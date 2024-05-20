@@ -240,8 +240,8 @@ local SCORE_BOARD = {
 		--
 		-- Loop through each player, and if one doesn't have a score entry - create it.
 		--
-		local plyrs = player.GetAll()
-		for id, pl in pairs( plyrs ) do
+		
+		for id, pl in ipairs( player.GetAll() ) do
 
 			if ( IsValid( pl.ScoreEntry ) ) then continue end
 

@@ -29,7 +29,9 @@ local function SetMaterial( Player, Entity, Data )
 	return true
 
 end
-duplicator.RegisterEntityModifier( "material", SetMaterial )
+if ( SERVER ) then
+	duplicator.RegisterEntityModifier( "material", SetMaterial )
+end
 
 -- Left click applies the current material
 function TOOL:LeftClick( trace )
@@ -132,7 +134,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	-- Remove duplicate materials. table.HasValue is used to preserve material order
 	local materials = {}
-	for id, str in pairs( list.Get( "OverrideMaterials" ) ) do
+	for id, str in ipairs( list.Get( "OverrideMaterials" ) ) do
 		if ( !table.HasValue( materials, str ) ) then
 			table.insert( materials, str )
 		end
@@ -141,7 +143,7 @@ function TOOL.BuildCPanel( CPanel )
 	local matlist = CPanel:MatSelect( "material_override", materials, true, 0.25, 0.25 )
 
 	filter.OnValueChange = function( s, txt )
-		for id, pnl in pairs( matlist.Controls ) do
+		for id, pnl in ipairs( matlist.Controls ) do
 			if ( !pnl.Value:lower():find( txt:lower(), nil, true ) ) then
 				pnl:SetVisible( false )
 			else

@@ -47,7 +47,7 @@ end
 local function RoleChatMsg(sender, role, msg)
    net.Start("TTT_RoleChat")
       net.WriteUInt(role, 2)
-      net.WriteEntity(sender)
+      net.WritePlayer(sender)
       net.WriteString(msg)
    net.Send(GetRoleFilter(role))
 end
@@ -55,7 +55,7 @@ end
 
 -- Round start info popup
 function ShowRoundStartPopup()
-   for k, v in ipairs(player.GetAll()) do
+   for k, v in player.Iterator() do
       if IsValid(v) and v:Team() == TEAM_TERROR and v:Alive() then
          v:ConCommand("ttt_cl_startpopup")
       end
@@ -64,7 +64,7 @@ end
 
 local function GetPlayerFilter(pred)
    local filter = {}
-   for k, v in ipairs(player.GetAll()) do
+   for k, v in player.Iterator() do
       if IsValid(v) and pred(v) then
          table.insert(filter, v)
       end
@@ -235,6 +235,13 @@ local function TraitorGlobalVoice(ply, cmd, args)
 end
 concommand.Add("tvog", TraitorGlobalVoice)
 
+local MuteModes = {
+   [MUTE_NONE] = "mute_off",
+   [MUTE_TERROR] = "mute_living",
+   [MUTE_ALL] = "mute_all",
+   [MUTE_SPEC] = "mute_specs"
+}
+
 local function MuteTeam(ply, cmd, args)
    if not IsValid(ply) then return end
    if not (#args == 1 and tonumber(args[1])) then return end
@@ -246,13 +253,9 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   if t == MUTE_ALL then
-      ply:ChatPrint("All muted.")
-   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
-      ply:ChatPrint("None muted.")
-   else
-      ply:ChatPrint(team.GetName(t) .. " muted.")
-   end
+   -- remove all ifs
+   LANG.Msg(ply, MuteModes[t])
+   
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -274,7 +277,11 @@ local function LastWordsMsg(ply, words)
    local lastWordsStr = words .. (final and "" or "--") .. context
 
    net.Start("TTT_LastWordsMsg")
+<<<<<<< HEAD
       net.WriteEntity(ply)
+=======
+      net.WritePlayer(ply)
+>>>>>>> upstream/master
       net.WriteString(lastWordsStr)
    net.Broadcast()
 
@@ -366,7 +373,7 @@ local function RadioCommand(ply, cmd, args)
       end
 
       net.Start("TTT_RadioMsg")
-         net.WriteEntity(ply)
+         net.WritePlayer(ply)
          net.WriteString(msg_name)
          net.WriteString(name)
          if rag_name then

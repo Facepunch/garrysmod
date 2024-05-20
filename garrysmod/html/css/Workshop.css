@@ -162,13 +162,13 @@ workshopicon description
 	top: 0px;
 	bottom: 0px;
 	right: 0;
-	text-align: justify;
+	text-align: left;
 	background-color: rgba( 70, 180, 250, 0.95 );
 	font-size: 11px;
 	padding: 32px 8px;
 	color: #fff;
 	cursor: default;
-	word-break: break-all;
+	word-break: break-word;
 
 	opacity: 0;
 	-webkit-transition: opacity 100ms ease-in 0ms;
@@ -203,7 +203,8 @@ workshopmessage
 	margin: 64px;
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 800px)
+{
 	workshopmessage
 	{
 		margin: 16px;
@@ -254,6 +255,13 @@ controls control IMG
 controls control:hover
 {
 	background-color: white;
+}
+
+
+controls control.disabled
+{
+	background-color: #bfbfbf;
+	cursor: default;
 }
 
 .ugc_settings_button
@@ -350,7 +358,7 @@ controls control:hover
 	width: 150px;
 	display: inline-block;
 	max-height: 400px;
-	min-height: 230px;
+	min-height: 290px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }

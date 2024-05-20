@@ -102,7 +102,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
 		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
-		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
+		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
 
 		sheet:AddSheet( "#smwidget.colors", controls, "icon16/color_wheel.png" )
 
@@ -110,7 +110,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
 
 		local bdcontrolspanel = bdcontrols:Add( "DPanelList" )
-		bdcontrolspanel:EnableVerticalScrollbar( true )
+		bdcontrolspanel:EnableVerticalScrollbar()
 		bdcontrolspanel:Dock( FILL )
 
 		local bgtab = sheet:AddSheet( "#smwidget.bodygroups", bdcontrols, "icon16/cog.png" )
@@ -118,14 +118,18 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		-- Helper functions
 
 		local function MakeNiceName( str )
-			local newname = {}
+			local nicename = {}
 
-			for _, s in pairs( string.Explode( "_", str ) ) do
-				if ( string.len( s ) == 1 ) then table.insert( newname, string.upper( s ) ) continue end
-				table.insert( newname, string.upper( string.Left( s, 1 ) ) .. string.Right( s, string.len( s ) - 1 ) ) -- Ugly way to capitalize first letters.
+			for i, word in ipairs( string.Explode( "_", str ) ) do
+				if ( #word == 1 ) then
+					nicename[i] = string.upper( string.sub( word, 1, 1 ) )
+					continue
+				end
+
+				nicename[i] = string.upper( string.sub( word, 1, 1 ) ) .. string.sub( word, 2 )
 			end
 
-			return string.Implode( " ", newname )
+			return table.concat( nicename, " " )
 		end
 
 		local function PlayPreviewAnimation( panel, playermodel )
@@ -258,7 +262,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		-- Hold to rotate
 
 		function mdl:DragMousePress()
-			self.PressX, self.PressY = gui.MousePos()
+			self.PressX, self.PressY = input.GetCursorPos()
 			self.Pressed = true
 		end
 
@@ -268,10 +272,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
-				local mx = gui.MousePos()
+				local mx, my = input.GetCursorPos()
 				self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
 
-				self.PressX, self.PressY = gui.MousePos()
+				self.PressX, self.PressY = mx, my
 			end
 
 			ent:SetAngles( self.Angles )

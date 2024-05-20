@@ -1,5 +1,5 @@
 
-local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE } )
+local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE }, "Whether to draw the spawn effect when spawning objects." )
 
 local matRefract = Material( "models/spawn_effect" )
 
@@ -23,8 +23,9 @@ function EFFECT:Init( data )
 	self:SetAngles( ent:GetAngles() )
 	self:SetParent( ent )
 
-	self.ParentEntity.RenderOverride = self.RenderParent
+	self.OldRenderOverride = self.ParentEntity.RenderOverride
 	self.ParentEntity.SpawnEffect = self
+	self.ParentEntity.RenderOverride = self.RenderParent
 
 
 end
@@ -41,7 +42,10 @@ function EFFECT:Think()
 		return true
 	end
 
-	self.ParentEntity.RenderOverride = nil
+	-- Remove the override only if our override was not overridden.
+	if ( self.ParentEntity.RenderOverride == self.RenderParent ) then
+		self.ParentEntity.RenderOverride = self.OldRenderOverride
+	end
 	self.ParentEntity.SpawnEffect = nil
 
 	return false
@@ -98,9 +102,13 @@ end
 
 function EFFECT:RenderParent()
 
+	if ( !IsValid( self ) ) then return end
+	if ( !IsValid( self.SpawnEffect ) ) then self.RenderOverride = nil return end
+
 	local bClipping = self.SpawnEffect:StartClip( self, 1 )
 
 	self:DrawModel()
+
 	render.PopCustomClipPlane()
 	render.EnableClipping( bClipping )
 
@@ -115,7 +123,7 @@ function EFFECT:StartClip( model, spd )
 	local Bottom = model:GetPos() + mn
 	local Top = model:GetPos() + mx
 
-	local Fraction = (self.LifeTime - CurTime()) / self.Time
+	local Fraction = ( self.LifeTime - CurTime() ) / self.Time
 	Fraction = math.Clamp( Fraction / spd, 0, 1 )
 
 	local Lerped = LerpVector( Fraction, Bottom, Top )
