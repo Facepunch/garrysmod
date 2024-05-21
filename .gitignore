@@ -26,6 +26,8 @@
 !/garrysmod/lights.rad
 # include mapvote config
 !/garrysmod/data
+# include rearm scripts
+!/garrysmod/maps
 
 # Don't add user config files
 /garrysmod/cfg/*
