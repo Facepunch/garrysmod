@@ -10,7 +10,8 @@
 !/.gitignore
 !/README.md
 !/CONTRIBUTING.md
-
+# include Nick Cagematch addons
+!/addons
 
 # garrysmod directory - Only allow repo files
 /garrysmod/*
