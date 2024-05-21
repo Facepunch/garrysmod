@@ -1,4 +1,4 @@
---traitor equipment - Roundabout Bomb
+--traitor equipment - Roundbomb
 --repackaged and modified by gravetracer
 --based on http://steamcommunity.com/sharedfiles/filedetails/?id=892101684
 
@@ -21,7 +21,7 @@ SWEP.EquipMenuData = {
 
 
 if CLIENT then
-   SWEP.PrintName           = "Roundabout Bomb"
+   SWEP.PrintName           = "Roundabomb"
    SWEP.Slot                = 6
    
    SWEP.ViewModelFlip      = false
@@ -30,11 +30,11 @@ if CLIENT then
 
    SWEP.EquipMenuData = {
       type  = "item_weapon",
-      name  = "Roundabout Bomb",
+      name  = "Roundabomb",
       desc  = "Left click to make you out 'n' out.\nRight click to spend the day your way."
    };
 
-   SWEP.Icon                = "vgui/ttt/icon_c4"
+   SWEP.Icon                = "vgui/ttt/icon_roundabout"
    SWEP.IconLetter          = "I"
 end
 
@@ -81,8 +81,8 @@ end
 
 
 function SWEP:Initialize()
-    util.PrecacheSound("roundabout/explosion.wav") --default util.PrecacheSound("jihad/explosion.wav")
-    util.PrecacheSound("roundabout/roundabout.wav") --default util.PrecacheSound("roundabout/roundabout.wav")
+    util.PrecacheSound("roundabout/explosion.wav")
+    util.PrecacheSound("roundabout/roundabout.wav")
 end
 
 
