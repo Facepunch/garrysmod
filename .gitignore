@@ -24,6 +24,8 @@
 !/garrysmod/detail.vbsp
 !/garrysmod/gameinfo.txt
 !/garrysmod/lights.rad
+# include mapvote config
+!/garrysmod/data
 
 # Don't add user config files
 /garrysmod/cfg/*

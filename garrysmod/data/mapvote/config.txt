@@ -1,0 +1,1 @@
+{"RTVPlayerCount":3,"MapLimit":8,"TimeLimit":28,"AllowCurrentMap":false,"MapPrefixes":{"1":"ttt_","2":"zm_","3":"dm","4":"de_thematrix","5":"de_dolls","6":"cs_office"},"MapsBeforeRevote":3,"EnableCooldown":true}
