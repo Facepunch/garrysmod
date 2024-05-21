@@ -12,21 +12,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	RootScope = $rootScope;
 	Scope = $scope;
 
-<<<<<<< HEAD
-	Scope.SVFilterHasPly = false;
-	Scope.SVFilterNotFull = false;
-	Scope.SVFilterHidePass = false;
-	Scope.SVFilterMaxPing = 2000;
-	Scope.SVFilterPlyMin = 0;
-	Scope.SVFilterPlyMax = 128;
-	Scope.GMSort = '-(order)';
-	Scope.GMFilterTags = {};
-	Scope.GMHasFilterTags = false;
-	Scope.ServersPerPage = 128;
-=======
 	RootScope.ShowTab = 'internet';
 	RootScope.GMCats = [ 'rp', 'pvp', 'pve', 'other', 'none' ];
->>>>>>> upstream/master
 
 	$scope.SVFilterHasPly = false;
 	$scope.SVFilterNotFull = false;
@@ -136,17 +123,10 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.SelectGamemode = function( gm )
 	{
-<<<<<<< HEAD
-		Scope.CurrentGamemode = gm;
-		
-		if ( gm ) gm.server_offset = 0;
-		UpdateDigest( Scope, 50 );
-=======
 		RootScope.CurrentGamemode = gm;
 
 		if ( gm ) gm.server_offset = 0;
 		UpdateDigest( RootScope, 50 );
->>>>>>> upstream/master
 	}
 
 	$scope.ServerClass = function( sv )
@@ -399,11 +379,7 @@ function FormatVersion( ver )
 	var y = Math.floor( ver / 10000 );
 	var m = Math.floor( ( ver - y * 10000 ) / 100 );
 	var d = ver - y * 10000 - m * 100;
-<<<<<<< HEAD
-	return ( y > 99 ? pad( y ) : ( "20" + pad( y ) ) ) + "." + pad( m ) + "." + pad( d )
-=======
 	return ( y > 99 ? pad( y ) : ( "20" + pad( y ) ) ) + "." + pad( m ) + "." + pad( d );
->>>>>>> upstream/master
 }
 
 // Calculates the default server ranking
@@ -444,13 +420,6 @@ function GenerateFlag( server )
 
 function UpdateInfiniteScroll( elem )
 {
-<<<<<<< HEAD
-	if ( !Scope.CurrentGamemode ) return;
-
-	Scope.CurrentGamemode.server_offset = Math.max( Math.floor( elem.scrollTop / 22 ) - ( Scope.ServersPerPage / 4 ), 0 );
-	Scope.CurrentGamemode.server_offset -= Scope.CurrentGamemode.server_offset % 2; // Keeps the style of every other line consistent.
-	UpdateDigest( Scope, 50 );
-=======
 	if ( !RootScope.CurrentGamemode ) return;
 
 	RootScope.CurrentGamemode.server_offset = Math.max( Math.floor( elem.scrollTop / 22 ) - ( RootScope.ServersPerPage / 4 ), 0 );
@@ -483,7 +452,6 @@ function UpdateServer( address, ping, name, map, players, maxplayers, botplayers
 	}
 
 	UpdateDigest( RootScope, 50 );
->>>>>>> upstream/master
 }
 
 function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid, isAnon, version, isFav, loc, gmcat )
@@ -568,15 +536,9 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	gm.order = gm.sort_players; // + Math.random();
 
-<<<<<<< HEAD
-	Scope.ServerCount[ type ] += 1;
-
-	UpdateDigest( Scope, 50 );
-=======
 	RootScope.ServerCount[ type ] += 1;
 
 	UpdateDigest( RootScope, 50 );
->>>>>>> upstream/master
 }
 
 function MissingGamemodeIcon( element )

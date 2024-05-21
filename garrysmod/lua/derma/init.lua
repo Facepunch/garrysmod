@@ -85,11 +85,7 @@ function Derma_Install_Convar_Functions( PANEL )
 
 	function PANEL:ConVarChanged( strNewValue )
 
-<<<<<<< HEAD
-		if ( !self.m_strConVar || self.m_strConVar:len() < 2 ) then return end
-=======
 		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
->>>>>>> upstream/master
 		RunConsoleCommand( self.m_strConVar, tostring( strNewValue ) )
 
 	end

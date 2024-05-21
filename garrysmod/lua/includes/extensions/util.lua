@@ -383,15 +383,6 @@ end
 	Name: IsBinaryModuleInstalled( name )
 	Desc: Returns whether a binary module with the given name is present on disk
 -----------------------------------------------------------]]
-<<<<<<< HEAD
-local suffix = ({"osx64","osx","linux64","linux","win64","win32"})[
-	( system.IsWindows() && 4 || 0 )
-	+ ( system.IsLinux() && 2 || 0 )
-	+ ( jit.arch == "x86" && 1 || 0 )
-	+ 1
-]
-local fmt = "lua/bin/gm" .. (CLIENT && "cl" || "sv") .. "_%s_%s.dll"
-=======
 local suffix = ( { "osx64", "osx", "linux64", "linux", "win64", "win32" } )[
 	( system.IsWindows() and 4 or 0 )
 	+ ( system.IsLinux() and 2 or 0 )
@@ -399,7 +390,6 @@ local suffix = ( { "osx64", "osx", "linux64", "linux", "win64", "win32" } )[
 	+ 1
 ]
 local fmt = "lua/bin/gm" .. ( ( CLIENT and !MENU_DLL ) and "cl" or "sv" ) .. "_%s_%s.dll"
->>>>>>> upstream/master
 function util.IsBinaryModuleInstalled( name )
 	if ( !isstring( name ) ) then
 		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")" )
@@ -407,22 +397,13 @@ function util.IsBinaryModuleInstalled( name )
 		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)" )
 	end
 
-<<<<<<< HEAD
-	if ( file.Exists( string.format( fmt, name, suffix ), "GAME" ) ) then
-=======
 	if ( file.Exists( string.format( fmt, name, suffix ), "MOD" ) ) then
->>>>>>> upstream/master
 		return true
 	end
 
 	-- Edge case - on Linux 32-bit x86-64 branch, linux32 is also supported as a suffix
-<<<<<<< HEAD
-	if ( jit.versionnum != 20004 && jit.arch == "x86" && system.IsLinux() ) then
-		return file.Exists( string.format( fmt, name, "linux32" ), "GAME" )
-=======
 	if ( jit.versionnum != 20004 and jit.arch == "x86" and system.IsLinux() ) then
 		return file.Exists( string.format( fmt, name, "linux32" ), "MOD" )
->>>>>>> upstream/master
 	end
 
 	return false

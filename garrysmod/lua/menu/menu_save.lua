@@ -39,8 +39,6 @@ function ws_save:DownloadAndLoad( id )
 
 		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download save from Steam Workshop!" ) return end
 
-		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download save from Steam Workshop!" ) return end
-
 		ws_save:Load( name )
 
 	end )

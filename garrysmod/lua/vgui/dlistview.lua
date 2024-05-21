@@ -66,11 +66,7 @@ function PANEL:AddColumn( strName, iPosition )
 			ErrorNoHaltWithStack( "Attempted to insert column at invalid position ", iPosition )
 			return
 		end
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> upstream/master
 		if ( IsValid( self.Columns[ iPosition ] ) ) then
 			ErrorNoHaltWithStack( "Attempted to insert duplicate column." )
 			return

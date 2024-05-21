@@ -96,11 +96,7 @@ function PANEL:Paint()
 		self.CanAddServerToFavorites = canAdd
 		self.IsCurrentServerFavorite = isFav
 
-<<<<<<< HEAD
-		self:Call( "SetShowFavButton( " .. tostring( self.CanAddServerToFavorites ) ..", " .. tostring( self.IsCurrentServerFavorite ) .. " )" )
-=======
 		self:Call( "SetShowFavButton( " .. tostring( self.CanAddServerToFavorites ) .. ", " .. tostring( self.IsCurrentServerFavorite ) .. " )" )
->>>>>>> upstream/master
 
 	end
 
@@ -405,24 +401,9 @@ function GetServers( category, id )
 			local blackListMatch = IsServerBlacklisted( address, name, desc, gm, map )
 			if ( blackListMatch == nil ) then
 
-<<<<<<< HEAD
-				name = string.JavascriptSafe( name )
-				desc = string.JavascriptSafe( desc )
-				map = string.JavascriptSafe( map )
-				address = string.JavascriptSafe( address )
-				gm = string.JavascriptSafe( gm )
-				workshopid = string.JavascriptSafe( workshopid )
-				netVersion = string.JavascriptSafe( tostring( netVersion ) )
-				loc = string.JavascriptSafe( loc )
-				gmcat = string.JavascriptSafe( gmcat )
-
-				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );',
-					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), netVersion, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
-=======
 				SendServer( pnlMainMenu, category, id,
 					ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid,
 					isAnon, netVersion, luaVersion, loc, gmcat )
->>>>>>> upstream/master
 
 			else
 
@@ -441,14 +422,9 @@ function GetServers( category, id )
 
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
-<<<<<<< HEAD
-			pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s", "%s" );',
-					category, id, 2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, 'false', 0, address, 'unkn', '0', 'true', version, tostring( serverlist.IsServerFavorite( address ) ), "", "" ) )
-=======
 			SendServer( pnlMainMenu, category, id,
 				2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
->>>>>>> upstream/master
 
 			return !ShouldStop[ category ]
 

@@ -188,14 +188,10 @@ end
 function FireProblemFromEngine( id, severity, params )
 	if ( id == "menu_cleanupgmas" ) then
 		local text = language.GetPhrase( "problem." .. id ) .. "\n\n" .. params:Replace( ";", "\n" )
-<<<<<<< HEAD
-		FireProblem( { id = id, text = text, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
-=======
 		FireProblem( { id = id, text = text, severity = severity, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
 	elseif ( id == "readonly_file" ) then
 		local text = params
 		FireProblem( { id = id .. params, text = text, severity = severity, type = "config" } )
->>>>>>> upstream/master
 	else
 		-- missing_addon_file
 		-- addon_download_failed = title;reason
@@ -306,11 +302,7 @@ hook.Add( "OnNotifyAddonConflict", "AddonConflictNotification", function( addon1
 
 	end
 
-<<<<<<< HEAD
-	table.insert( AddonConflicts[ id ].files, fileName )
-=======
 	AddonConflicts[ id ].files[ fileName ] = true
->>>>>>> upstream/master
 
 	RefreshAddonConflicts()
 
@@ -325,11 +317,7 @@ function FireAddonConflicts()
 	for id, tbl in pairs( AddonConflicts ) do
 
 		local files = ""
-<<<<<<< HEAD
-		for _, file in ipairs( tbl.files ) do
-=======
 		for file, _ in pairs( tbl.files ) do
->>>>>>> upstream/master
 			files = files .. file .. "\n"
 		end
 

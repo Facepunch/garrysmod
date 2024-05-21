@@ -277,11 +277,7 @@ local function LastWordsMsg(ply, words)
    local lastWordsStr = words .. (final and "" or "--") .. context
 
    net.Start("TTT_LastWordsMsg")
-<<<<<<< HEAD
-      net.WriteEntity(ply)
-=======
       net.WritePlayer(ply)
->>>>>>> upstream/master
       net.WriteString(lastWordsStr)
    net.Broadcast()
 

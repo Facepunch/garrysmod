@@ -161,12 +161,9 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 
 	if ( canvas:GetReadOnly() ) then return end
 
-	if ( canvas:GetReadOnly() ) then return end
-
 	local selected = canvas:GetSelectedChildren()
 
 	local menu = DermaMenu()
-
 	menu:AddOption( language.GetPhrase( "spawnmenu.menu.deletex" ):format( #selected ), function()
 
 		for k, v in pairs( selected ) do

@@ -321,24 +321,14 @@ function meta:__index( key )
 
 end
 
-<<<<<<< HEAD
-function string.StartsWith( String, Start )
-=======
 function string.StartsWith( str, start )
->>>>>>> upstream/master
 
 	return string.sub( str, 1, string.len( start ) ) == start
 
 end
 string.StartWith = string.StartsWith
 
-<<<<<<< HEAD
-string.StartWith = string.StartsWith
-
-function string.EndsWith( String, End )
-=======
 function string.EndsWith( str, endStr )
->>>>>>> upstream/master
 
 	return endStr == "" or string.sub( str, -string.len( endStr ) ) == endStr
 
@@ -366,8 +356,6 @@ end
 
 function string.Comma( number, str )
 
-<<<<<<< HEAD
-=======
 	if ( str ~= nil and not isstring( str ) ) then
 		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")" )
 	elseif ( str ~= nil and string.match( str, "%d" ) ~= nil ) then
@@ -376,7 +364,6 @@ function string.Comma( number, str )
 
 	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
 
->>>>>>> upstream/master
 	if ( isnumber( number ) ) then
 		number = string.format( "%f", number )
 		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros

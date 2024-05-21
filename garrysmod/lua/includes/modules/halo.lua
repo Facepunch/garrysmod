@@ -104,10 +104,7 @@ function Render( entry )
 	render.SetRenderTarget( rt_Scene )
 	mat_Copy:SetTexture( "$basetexture", rt_Store )
 	mat_Copy:SetString( "$color", "1 1 1" )
-<<<<<<< HEAD
-=======
 	mat_Copy:SetString( "$alpha", "1" )
->>>>>>> upstream/master
 	render.SetMaterial( mat_Copy )
 	render.DrawScreenQuad()
 

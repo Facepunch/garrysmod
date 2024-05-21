@@ -252,8 +252,6 @@ end
 function math.SnapTo( num, multiple )
 	return math.floor( num / multiple + 0.5 ) * multiple
 end
-<<<<<<< HEAD
-=======
 
 --[[---------------------------------------------------------
 	Name: CubicBezier( frac, p0, p1, p2, p3 )
@@ -300,4 +298,3 @@ function math.Factorial( num )
 	return res
 
 end
->>>>>>> upstream/master

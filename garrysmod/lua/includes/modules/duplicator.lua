@@ -835,11 +835,7 @@ function Paste( Player, entityList, constraintList )
 		ApplyBoneModifiers( Player, Ent )
 
 		if ( Ent.PostEntityPaste ) then
-<<<<<<< HEAD
-			Ent:PostEntityPaste( Player || NULL, Ent, CreatedEntities )
-=======
 			Ent:PostEntityPaste( Player or NULL, Ent, CreatedEntities )
->>>>>>> upstream/master
 		end
 
 	end

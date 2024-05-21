@@ -563,35 +563,6 @@ function meta:InstallDataTable()
 
 	end
 
-<<<<<<< HEAD
-	if ( SERVER ) then
-
-		util.AddNetworkString( "editvariable" )
-
-		net.Receive( "editvariable", function( len, client )
-
-			local iIndex = net.ReadUInt( 32 )
-			local ent = Entity( iIndex )
-
-			if ( !IsValid( ent ) ) then return end
-			if ( !isfunction( ent.GetEditingData ) ) then return end
-			if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
-
-			local key = net.ReadString()
-
-			-- Is this key in our edit table?
-			local editor = ent:GetEditingData()[ key ]
-			if ( !istable( editor ) ) then return end
-
-			local val = net.ReadString()
-			hook.Run( "VariableEdited", ent, client, key, val, editor )
-
-		end )
-
-	end
-
-=======
->>>>>>> upstream/master
 end
 
 if ( SERVER ) then

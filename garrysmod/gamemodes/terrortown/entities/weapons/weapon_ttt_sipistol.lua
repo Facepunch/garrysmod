@@ -21,8 +21,8 @@ end
 SWEP.Base                  = "weapon_tttbase"
 
 SWEP.Primary.Recoil        = 1.35
-SWEP.Primary.Damage        = 28 --default 28
-SWEP.Primary.Delay         = 0.15 --default 0.38
+SWEP.Primary.Damage        = 28    --default 28
+SWEP.Primary.Delay         = 0.15  --default 0.38
 SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 20
 SWEP.Primary.Automatic     = false --default true
@@ -31,7 +31,7 @@ SWEP.Primary.ClipMax       = 60
 SWEP.Primary.Ammo          = "Pistol"
 SWEP.Primary.Sound         = Sound( "Weapon_USP.SilencedShot" )
 SWEP.Primary.SoundLevel    = 50
---no headshot modifier in default; we handle similar to shotgun later
+--default does not have a headshot modifier; we handle similar to shotgun later
 
 
 SWEP.Kind                  = WEAPON_EQUIP

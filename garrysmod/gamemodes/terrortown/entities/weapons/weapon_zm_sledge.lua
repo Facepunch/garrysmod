@@ -21,7 +21,7 @@ SWEP.AutoSpawnable         = true
 SWEP.Kind                  = WEAPON_HEAVY
 SWEP.WeaponID              = AMMO_M249
 
-SWEP.Primary.Damage        = 14 --default 7
+SWEP.Primary.Damage        = 14   --default 7
 SWEP.Primary.Delay         = 0.08 --default 0.06
 SWEP.Primary.Cone          = 0.07 --default 0.08
 SWEP.Primary.ClipSize      = 150
@@ -29,9 +29,9 @@ SWEP.Primary.ClipMax       = 150
 SWEP.Primary.DefaultClip   = 150
 SWEP.Primary.Automatic     = true
 SWEP.Primary.Ammo          = "AirboatGun"
-SWEP.Primary.Recoil        = 1.3 --default 1.9
+SWEP.Primary.Recoil        = 1.3  --default 1.9
 SWEP.Primary.Sound         = Sound("Weapon_m249.Single")
-SWEP.HeadshotMultiplier    = 2 -- Not in stock
+SWEP.HeadshotMultiplier    = 2    --not in default
 
 
 SWEP.UseHands              = true

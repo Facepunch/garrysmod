@@ -213,11 +213,7 @@ local function UpdateMaps()
 
 		local name = addon.title or "Unnammed Addon"
 
-<<<<<<< HEAD
-		local files, folders = file.Find( "maps/*.bsp", name )
-=======
 		local files = file.Find( "maps/*.bsp", name )
->>>>>>> upstream/master
 		if ( #files > 0 ) then AddonMaps[ name ] = files end
 
 	end
@@ -230,15 +226,6 @@ local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
 	favmaps = favmaps or ( cookiestr and string.Explode( ";", cookiestr ) or {} )
-
-end
-
-function UpdateAddonMapList()
-
-	local json = util.TableToJSON( AddonMaps )
-	if ( !json ) then return end
-
-	pnlMainMenu:Call( "UpdateAddonMaps(" .. json .. ")" )
 
 end
 

@@ -91,15 +91,12 @@ function PANEL:OnDeactivate()
 	-- TODO: A convar for this?
 	system.FlashWindow()
 
-<<<<<<< HEAD
-=======
 end
 
 function PANEL:OnScreenSizeChanged( oldW, oldH, newW, newH )
 
 	self:InvalidateLayout( true )
 
->>>>>>> upstream/master
 end
 
 function PANEL:Think()

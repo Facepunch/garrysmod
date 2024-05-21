@@ -89,11 +89,7 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 
 	local groupedWeps = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-<<<<<<< HEAD
-		local cat = (v.category or ""):lower()
-=======
 		local cat = ( v.category or "" ):lower()
->>>>>>> upstream/master
 		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
 		groupedWeps[ cat ][ v.class ] = language.GetPhrase( v.title )
 	end
@@ -101,11 +97,7 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 	for group, items in SortedPairs( groupedWeps ) do
 		wpns:AddSpacer()
 		for class, title in SortedPairsByValue( items ) do
-<<<<<<< HEAD
-			wpns:AddCVar( title,"gmod_npcweapon", class )
-=======
 			wpns:AddCVar( title, "gmod_npcweapon", class )
->>>>>>> upstream/master
 		end
 	end
 

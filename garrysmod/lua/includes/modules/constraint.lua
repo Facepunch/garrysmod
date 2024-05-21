@@ -929,16 +929,6 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	end
 
 	-- Make Constraint
-<<<<<<< HEAD
-	local Constraint = ents.Create( "logic_collision_pair" )
-	Constraint:SetKeyValue( "startdisabled", 1 )
-	Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
-	Constraint:Spawn()
-	Constraint:Activate()
-	Constraint:Input( "DisableCollisions", nil, nil, nil )
-
-	AddConstraintTable( Ent1, Constraint, Ent2 )
-=======
 	local constr = ents.Create( "logic_collision_pair" )
 	if ( !IsValid( constr ) ) then return end
 
@@ -949,7 +939,6 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	constr:Input( "DisableCollisions", nil, nil, nil )
 
 	AddConstraintTable( Ent1, constr, Ent2 )
->>>>>>> upstream/master
 
 	local ctable = {
 		Type = "NoCollide",

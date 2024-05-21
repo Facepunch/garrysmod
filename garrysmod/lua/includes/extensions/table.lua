@@ -290,11 +290,7 @@ function table.Sanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-<<<<<<< HEAD
-		if ( istable( v ) and not IsColor( v ) and !done[ v ] ) then
-=======
 		if ( istable( v ) and !IsColor( v ) and !done[ v ] ) then
->>>>>>> upstream/master
 
 			done[ v ] = true
 			tbl[ k ] = table.Sanitise( v, done )
@@ -354,11 +350,7 @@ function table.DeSanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-<<<<<<< HEAD
-		if ( istable( v ) and not IsColor(v) and !done[ v ] ) then
-=======
 		if ( istable( v ) and !IsColor( v ) and !done[ v ] ) then
->>>>>>> upstream/master
 
 			done[ v ] = true
 

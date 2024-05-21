@@ -67,11 +67,6 @@ local tblRow = vgui.RegisterTable( {
 			self:SetEnabled( false )
 		end
 
-		-- If the field is read only, disable it
-		if ( vars && vars.readonly ) then
-			self:SetEnabled( false )
-		end
-
 	end,
 
 	SetValue = function( self, val )

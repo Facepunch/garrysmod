@@ -1,16 +1,10 @@
 
 local Category = ""
 
-<<<<<<< HEAD
-local function ADD_ITEM( name, class, offset )
-
-	list.Set( "SpawnableEntities", class, { PrintName = name, ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" } )
-=======
 local function ADD_ITEM( name, class, offset, extras, classOverride )
 
 	local base = { PrintName = name, ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" }
 	list.Set( "SpawnableEntities", classOverride or class, table.Merge( base, extras or {} ) )
->>>>>>> upstream/master
 	duplicator.Allow( class )
 
 end
@@ -129,8 +123,6 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1", category = Category } )
 	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1", category = Category } )
 	list.Add( "NPCUsableWeapons", { class = "weapon_shotgun_hl1", title = "#weapon_shotgun_hl1", category = Category } )
-<<<<<<< HEAD
-=======
 end
 
 if ( IsMounted( "portal" ) ) then
@@ -140,7 +132,6 @@ if ( IsMounted( "portal" ) ) then
 	ADD_ITEM( "Anger Core", "prop_glados_core", 32, { KeyValues = { CoreType = 1, DelayBetweenLines = 0.1 } }, "prop_glados_core_anger" )
 	ADD_ITEM( "Intelligence Core", "prop_glados_core", 32, { KeyValues = { CoreType = 2, DelayBetweenLines = 0.1 } }, "prop_glados_core_crazy" )
 	ADD_ITEM( "Morality Core", "prop_glados_core", 32, { KeyValues = { CoreType = 3 } }, "prop_glados_core_morality" )
->>>>>>> upstream/master
 end
 
 Category = "Other"

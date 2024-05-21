@@ -246,12 +246,6 @@ function UpdateAddonMaps( inmaps )
 	UpdateDigest( gScope, 50 );
 }
 
-function UpdateAddonMaps( inmaps )
-{
-	gScope.AddonMapList = inmaps;
-	UpdateDigest( gScope, 50 );
-}
-
 function UpdateMaps( inmaps )
 {
 	var mapList = []
