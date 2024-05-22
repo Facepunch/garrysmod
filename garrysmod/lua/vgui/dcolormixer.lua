@@ -137,6 +137,8 @@ function PANEL:Init()
 	self:SetSize( 256, 230 )
 	self:InvalidateLayout()
 
+	self.NextConVarCheck = 0
+
 end
 
 function PANEL:SetLabel( text )
@@ -180,19 +182,43 @@ end
 
 function PANEL:SetConVarR( cvar )
 	self.m_ConVarR = cvar
+	self:UpdateDefaultColor()
 end
 
 function PANEL:SetConVarG( cvar )
 	self.m_ConVarG = cvar
+	self:UpdateDefaultColor()
 end
 
 function PANEL:SetConVarB( cvar )
 	self.m_ConVarB = cvar
+	self:UpdateDefaultColor()
 end
 
 function PANEL:SetConVarA( cvar )
 	self.m_ConVarA = cvar
 	self:SetAlphaBar( cvar != nil )
+	self:UpdateDefaultColor()
+end
+
+function PANEL:UpdateDefaultColor()
+
+	local function GetConVarDefault( str )
+		if ( str and GetConVar( str ) ) then return tonumber( GetConVar( str ):GetDefault() ) end
+		return 255
+	end
+
+	local defRGB = Color(
+		GetConVarDefault( self.m_ConVarR ),
+		GetConVarDefault( self.m_ConVarG ),
+		GetConVarDefault( self.m_ConVarB ),
+		GetConVarDefault( self.m_ConVarA )
+	)
+
+	self.HSV:SetDefaultColor( defRGB )
+
+	-- Allow immediate read of convar values
+	self.NextConVarCheck = 0
 end
 
 function PANEL:PerformLayout( w, h )
