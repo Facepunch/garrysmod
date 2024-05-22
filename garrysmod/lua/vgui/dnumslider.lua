@@ -20,13 +20,6 @@ function PANEL:Init()
 	self.Slider:SetTrapInside( true )
 	self.Slider:Dock( FILL )
 	self.Slider:SetHeight( 16 )
-	self.Slider.Knob.OnMousePressed = function( panel, mcode )
-		if ( mcode == MOUSE_MIDDLE ) then
-			self:ResetToDefaultValue()
-			return
-		end
-		self.Slider:OnMousePressed( mcode )
-	end
 	Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
 
 	self.Label = vgui.Create ( "DLabel", self )

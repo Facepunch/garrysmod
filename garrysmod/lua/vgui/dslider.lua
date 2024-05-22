@@ -32,8 +32,7 @@ function PANEL:Init()
 
 	self.Knob.OnMousePressed = function( panel, mcode )
 		if ( mcode == MOUSE_MIDDLE ) then
-			self:SetSlideX( 0.5 )
-			self:SetSlideY( 0.5 )
+			self:ResetToDefaultValue()
 			return
 		end
 
@@ -51,6 +50,15 @@ end
 function PANEL:IsEditing()
 
 	return self.Dragging || self.Knob.Depressed
+
+end
+
+function PANEL:ResetToDefaultValue()
+
+	-- Override me
+	local x, y = self:TranslateValues( 0.5, 0.5 )
+	self:SetSlideX( x )
+	self:SetSlideY( y )
 
 end
 
