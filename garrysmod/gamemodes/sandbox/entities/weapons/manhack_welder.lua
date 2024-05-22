@@ -2,6 +2,7 @@
 -- Variables that are used on both client and server
 
 SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
+SWEP.Author			= "Facepunch"
 
 SWEP.Spawnable			= true
 SWEP.AdminOnly			= true

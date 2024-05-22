@@ -5,7 +5,7 @@ DEFINE_BASECLASS( "base_anim" )
 
 ENT.PrintName = "Bouncy Ball"
 ENT.Author = "Garry Newman"
-ENT.Information = "An edible bouncy ball"
+ENT.Information = "An edible bouncy ball. Press USE on the bouncy ball to eat it."
 ENT.Category = "Fun + Games"
 
 ENT.Editable = true

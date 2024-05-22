@@ -7,6 +7,7 @@ ENT.AdminOnly = true
 
 ENT.PrintName = "Sky Editor"
 ENT.Category = "Editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the sky."
 
 function ENT:Initialize()
 
