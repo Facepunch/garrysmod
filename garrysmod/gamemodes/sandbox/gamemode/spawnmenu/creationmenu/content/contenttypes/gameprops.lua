@@ -59,7 +59,7 @@ local function GamePropsRightClick( self )
 			name = name .. " - " .. self:GetFolder():sub( 8 )
 		end
 
-		GenerateSpawnlistFromPath( self:GetFolder(), self:GetPathID(), name, icon, parent.GameAppID )
+		GenerateSpawnlistFromPath( self:GetFolder(), self:GetPathID(), name, icon, parent.GamePathID )
 
 	end ):SetIcon( "icon16/page_add.png" )
 
@@ -72,7 +72,7 @@ local function InstallNodeRightclick( self, newNode )
 	newNode.OnNodeAdded = InstallNodeRightclick
 end
 
-local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlContent, appid )
+local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlContent )
 
 	local models = node:AddFolder( name, path .. "models", pathid, false )
 	models:SetIcon( icon )
@@ -80,7 +80,7 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 	models.BrowseExtension = "*.mdl"
 	models.ContentType = "model"
 	models.ViewPanel = ViewPanel
-	models.GameAppID = appid
+	models.GamePathID = pathid
 
 	-- If we click on a subnode of this tree, it gets reported upwards (to us)
 	models.OnNodeSelected = function( slf, node )
@@ -141,7 +141,7 @@ local function RefreshGames( MyNode )
 
 		if ( !game.mounted ) then continue end
 
-		AddBrowseContent( MyNode.ViewPanel, MyNode, game.title, "games/16/" .. ( game.icon or game.folder ) .. ".png", "", game.folder, MyNode.pnlContent, game.depot )
+		AddBrowseContent( MyNode.ViewPanel, MyNode, game.title, "games/16/" .. ( game.icon or game.folder ) .. ".png", "", game.folder, MyNode.pnlContent )
 
 	end
 
