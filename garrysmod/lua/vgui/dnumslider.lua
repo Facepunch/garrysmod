@@ -180,6 +180,13 @@ function PANEL:ValueChanged( val )
 	self.Slider:SetSlideX( self.Scratch:GetFraction() )
 
 	self:OnValueChanged( val )
+	self:SetCookie( "slider_val", val )
+
+end
+
+function PANEL:LoadCookies()
+
+	self:SetValue( self:GetCookie( "slider_val" ) )
 
 end
 
