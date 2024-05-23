@@ -9,8 +9,8 @@ Nick Cagematch contains balance changes to make more equipment and playstyles vi
 - Run the following commands to install / update Counter-Strike Source and Garry's Mod Dedicated Server:
   - `steamcmd`
   - `login anonymous`
-  - `app_update 232330 validate`
-  - `app_update 4020 validate`
+  - `app_update 232330 validate` (Counter-Strike Source Dedicated Server)
+  - `app_update 4020 validate` (GarrysModDS)
   - `exit`
 
 ### Configuring Garry's Mod

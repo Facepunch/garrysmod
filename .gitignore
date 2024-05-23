@@ -43,3 +43,5 @@ garrysmod/gamemodes/*
 !garrysmod/gamemodes/sandbox
 !garrysmod/gamemodes/terrortown
 
+# ignore packaged addons
+*.gma
