@@ -165,6 +165,81 @@ function util.NiceFloat( f )
 end
 
 
+--
+-- Coherent noise stuff
+--
+function util.Noise( n )
+
+	math.randomseed( math.Round( 100 * n ) )
+	
+	math.random()
+	math.random() -- scramble the LCG a bit
+	math.random()
+	
+	return math.random()
+	
+end
+
+function util.CoherentNoise( n )
+
+	local n1 = math.floor( n )
+	local n2 = n1 + 1
+	
+	local t = n - n1
+	local t2 = t * t
+	local t3 = t * t2
+	
+	local p0 = util.Noise( n1 ) * ( 2 * t3 - 3 * t2 + 1 )
+	local p1 = util.Noise( n2 ) * ( -2 * t3 + 3 * t2 )
+	
+	local m0 = util.Noise( n1 + 1337 ) * ( t3 - 2 * t2 + t )
+	local m1 = util.Noise( n2 + 1337 ) * ( t3 - t2 )
+	
+	return p0 + m0 + p1 + m1
+	
+end
+
+function util.NoiseVector( t )
+
+	return Vector(
+		util.CoherentNoise( t ),
+		util.CoherentNoise( t + 1492 ),
+		util.CoherentNoise( t + 9001 )
+	)
+
+end
+
+function util.NoiseAngle( t )
+
+	return Angle(
+		util.CoherentNoise( t ),
+		util.CoherentNoise( t + 1492 ),
+		util.CoherentNoise( t + 9001 )
+	)
+
+end
+
+-- the mirror functions are intended to be helper functions for viewmodel bones
+function util.NoiseVectorMirrorY( t )
+
+	return Vector(
+		util.CoherentNoise( t ),
+		-util.CoherentNoise( t + 1492 ),
+		util.CoherentNoise( t + 9001 )
+	)
+
+end
+
+function util.NoiseAngleMirrorY( t )
+
+	return Angle(
+		-util.CoherentNoise( t ),
+		util.CoherentNoise( t + 1492 ),
+		-util.CoherentNoise( t + 9001 )
+	)
+
+end
+
 
 --
 -- Timer
