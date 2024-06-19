@@ -54,16 +54,48 @@ function GM:GetDeathNoticeEntityName( ent )
 		if ( ent:GetName() == "sheckley" ) then return "Sheckley" end
 		if ( ent:GetName() == "tobias" ) then return "Laszlo" end
 		if ( ent:GetName() == "stanley" ) then return "Sandy" end
-
-		if ( ent:GetModel() == "models/odessa.mdl" ) then return "Odessa Cubbage" end
 	end
 
-	-- Custom vehicle and NPC names
+	-- Custom vehicle and NPC names from spawnmenu
 	if ( ent:IsVehicle() and ent.VehicleTable and ent.VehicleTable.Name ) then
 		return ent.VehicleTable.Name
 	end
 	if ( ent:IsNPC() and ent.NPCTable and ent.NPCTable.Name ) then
 		return ent.NPCTable.Name
+	end
+
+	-- Map spawned Odessa or Rebels, etc..
+	for unique_class, NPC in pairs( list.Get( "NPC" ) ) do
+		if ( unique_class == NPC.Class or ent:GetClass() != NPC.Class ) then continue end
+
+		local allGood = true
+		if ( NPC.Model and ent:GetModel() != NPC.Model ) then
+			allGood = false
+		end
+
+		-- For Rebels, etc.
+		if ( NPC.KeyValues ) then
+			for k, v in pairs( NPC.KeyValues ) do
+				if ( k != "SquadName" and ent:GetInternalVariable( k ) != v ) then
+					allGood = false
+					break
+				end
+			end
+
+			-- They get unset often :(
+			--if ( NPC.SpawnFlags and ent:HasSpawnFlags( NPC.SpawnFlags ) ) then allGood = false end
+		end
+
+		-- Medics, ew..
+		if ( unique_class == "Medic" and !ent:HasSpawnFlags( SF_CITIZEN_MEDIC ) ) then allGood = false end
+		if ( unique_class == "Rebel" and ent:HasSpawnFlags( SF_CITIZEN_MEDIC ) ) then allGood = false end
+
+		if ( allGood ) then return NPC.Name end
+	end
+
+	-- Unfortunately the code above still doesn't work for Antlion Workers, because they change their classname..
+	if ( ent:GetClass() == "npc_antlion" and ent:GetModel() == "models/antlion_worker.mdl" ) then
+		return list.Get( "NPC" )[ "npc_antlion_worker" ].Name
 	end
 
 	-- Fallback to old behavior
@@ -78,22 +110,22 @@ end
 function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	-- Don't spam the killfeed with scripted stuff
-	if ( ent:GetClass() == "npc_bullseye" || ent:GetClass() == "npc_launcher" ) then return end
+	if ( ent:GetClass() == "npc_bullseye" or ent:GetClass() == "npc_launcher" ) then return end
 
 	-- If killed by trigger_hurt, act as if NPC killed itself
-	if ( IsValid( attacker ) && attacker:GetClass() == "trigger_hurt" ) then attacker = ent end
+	if ( IsValid( attacker ) and attacker:GetClass() == "trigger_hurt" ) then attacker = ent end
 
 	-- NPC got run over..
-	if ( IsValid( attacker ) && attacker:IsVehicle() && IsValid( attacker:GetDriver() ) ) then
+	if ( IsValid( attacker ) and attacker:IsVehicle() and IsValid( attacker:GetDriver() ) ) then
 		attacker = attacker:GetDriver()
 	end
 
-	if ( !IsValid( inflictor ) && IsValid( attacker ) ) then
+	if ( !IsValid( inflictor ) and IsValid( attacker ) ) then
 		inflictor = attacker
 	end
 
 	-- Convert the inflictor to the weapon that they're holding if we can.
-	if ( IsValid( inflictor ) && attacker == inflictor && ( inflictor:IsPlayer() || inflictor:IsNPC() ) ) then
+	if ( IsValid( inflictor ) and attacker == inflictor and ( inflictor:IsPlayer() or inflictor:IsNPC() ) ) then
 
 		inflictor = inflictor:GetActiveWeapon()
 		if ( !IsValid( attacker ) ) then inflictor = attacker end
@@ -151,10 +183,10 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 	end
 
 	-- Less damage if we're shot in the arms or legs
-	if ( hitgroup == HITGROUP_LEFTARM ||
-		 hitgroup == HITGROUP_RIGHTARM ||
-		 hitgroup == HITGROUP_LEFTLEG ||
-		 hitgroup == HITGROUP_RIGHTLEG ||
+	if ( hitgroup == HITGROUP_LEFTARM or
+		 hitgroup == HITGROUP_RIGHTARM or
+		 hitgroup == HITGROUP_LEFTLEG or
+		 hitgroup == HITGROUP_RIGHTLEG or
 		 hitgroup == HITGROUP_GEAR ) then
 
 		dmginfo:ScaleDamage( 0.25 )
