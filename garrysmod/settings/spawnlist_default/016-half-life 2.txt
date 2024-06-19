@@ -185,11 +185,6 @@
 			"type"		"model"
 			"model"		"models/editor/spot_cone.mdl"
 		}
-		"37"
-		{
-			"type"		"header"
-			"text"		"models/props_mining"
-		}
 	}
 	"name"		"Half-Life 2"
 	"version"		"3"
