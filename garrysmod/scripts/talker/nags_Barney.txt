@@ -1,5 +1,6 @@
 // Barney nags for episodic
 criterion "IsWaitForPlayerToLeave" "concept" "LeaveBarneyRoom" "required"
+criterion "IsAPC05" "concept" "BarneyPlayerAPCKill05" "required"
 
 
 //============================================================================================================
@@ -15,3 +16,23 @@ rule Rule_LeaveBarneyRoom
 	criteria		IsWaitForPlayerToLeave
 	response		Response_LeaveBarneyRoom
 }
+
+
+//============================================================================================================
+// Nags to stop player from thinking citizens will come with them until apcs are gone.
+//============================================================================================================
+response "BarneyAPCNag"
+{	
+	sequential
+	norepeat
+	scene "scenes/episode_1/c17/ba_killapc03.vcd"
+	scene "scenes/episode_1/c17/ba_killapc02.vcd"
+	scene "scenes/episode_1/c17/ba_killapc01.vcd"
+}
+
+rule BarneyAPCNag
+{
+	criteria		IsAPC05
+	response		BarneyAPCNag
+}
+
