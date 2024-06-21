@@ -248,3 +248,43 @@ function net.ReadType( typeid )
 	error( "net.ReadType: Couldn't read type " .. typeid )
 
 end
+
+--
+-- Send & receive strings using compression
+-- Both text and binary are supported
+--
+do
+	local assert = assert
+	local isstring = isstring
+	local type = type
+	local util_Compress = util.Compress
+	local net_WriteUInt = net.WriteUInt
+	local net_WriteData = net.WriteData
+
+	function net.WriteCompressed( data )
+		assert( isstring( data ), "net.WriteCompressed: string expected, got " .. type( data ) )
+		if #data ~= 0 then
+			local compressed = util_Compress( data )
+			local length = #compressed
+			net_WriteUInt( length, 16 )
+			net_WriteData( compressed, length )
+			return length
+		else
+			net_WriteUInt( 0, 16 )
+			return 0
+		end
+	end
+
+	local net_ReadUInt = net.ReadUInt
+	local net_ReadData = net.ReadData
+	local util_Decompress = util.Decompress
+
+	function net.ReadCompressed()
+		local length = net_ReadUInt( 16 )
+		if length ~= 0 then
+			return util_Decompress( net_ReadData( length ) )
+		else
+			return ""
+		end
+	end
+end
