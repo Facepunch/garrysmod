@@ -105,7 +105,7 @@ function Register( t, name )
 		end
 
 		-- Update entity table of entities that are based on this entity
-		for _, e in ipairs( ents.GetAll() ) do
+		for _, e in ents.Iterator() do
 			if ( IsBasedOn( e:GetClass(), name ) ) then
 
 				table.Merge( e, Get( e:GetClass() ) )
