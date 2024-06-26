@@ -119,17 +119,13 @@ function PANEL:ApplySchemeSettings()
 
 end
 
-function PANEL:Think()
+function PANEL:PerformLayout()
+
+	self:ApplySchemeSettings()
 
 	if ( self:GetAutoStretchVertical() ) then
 		self:SizeToContentsY()
 	end
-
-end
-
-function PANEL:PerformLayout()
-
-	self:ApplySchemeSettings()
 
 end
 
