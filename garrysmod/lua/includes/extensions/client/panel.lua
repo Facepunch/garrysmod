@@ -330,10 +330,10 @@ end
 function meta:SizeToContentsY( addVal )
 
 	local w, h = self:GetContentSize()
-	if ( !w || !h ) then return end
+	if ( !w or !h ) then return end
 
 	local newSize = h + ( addVal or 0 )
-	if newSize == self.contentsSizeY then return end
+	if ( newSize == self.contentsSizeY ) then return end
 
 	self:SetTall( newSize )
 
@@ -347,10 +347,10 @@ end
 function meta:SizeToContentsX( addVal )
 
 	local w, h = self:GetContentSize()
-	if ( !w || !h ) then return end
+	if ( !w or !h ) then return end
 
 	local newSize = w + ( addVal or 0 )
-	if newSize == self.contentsSizeX then return end
+	if ( newSize == self.contentsSizeX ) then return end
 
 	self:SetWide( newSize )
 
