@@ -7,31 +7,48 @@ ENT.Spawnable = false
 if ( CLIENT ) then
 	ENT.MaxWorldTipDistance = 256
 
+	local FrameNumber = FrameNumber
+	local FrameLast = FrameNumber()
+
+	local GetViewEntity = GetViewEntity
+
+	local TraceLine = util.TraceLine
+	local TraceLineEndpos = Vector()
+	local TraceLineConfig = { endpos = TraceLineEndpos, output = {} }
+
+	local vec_meta = FindMetaTable( "Vector" )
+	local DistToSqr = vec_meta.DistToSqr
+	local Set, Mul, Add = vec_meta.Set, vec_meta.Mul, vec_meta.Add
+	
+	local CurrentLookedAt
+
 	function ENT:BeingLookedAtByLocalPlayer()
-		local ply = LocalPlayer()
-		if ( !IsValid( ply ) ) then return false end
+		local Frame = FrameNumber()
+		if Frame ~= FrameLast then
+			FrameLast = Frame
 
-		local view = ply:GetViewEntity()
-		local dist = self.MaxWorldTipDistance
-		dist = dist * dist
+			local view = GetViewEntity()
 
-		-- If we're spectating a player, perform an eye trace
-		if ( view:IsPlayer() ) then
-			return view:EyePos():DistToSqr( self:GetPos() ) <= dist && view:GetEyeTrace().Entity == self
+			local isPlayer = view:IsPlayer()
+			local start = isPlayer and view:EyePos() or view:GetPos()
+			local direction = isPlayer and view:GetAimVector() or view:GetForward()
+
+			TraceLineConfig.start = start
+
+			Set( TraceLineEndpos, direction )
+			Mul( TraceLineEndpos, 65536 )
+			Add( TraceLineEndpos, start )
+
+			TraceLineConfig.filter = view
+
+			CurrentLookedAt = TraceLine( TraceLineConfig ).Entity
+
+			if not CurrentLookedAt.BeingLookedAtByLocalPlayer or DistToSqr( CurrentLookedAt:GetPos(), start ) > CurrentLookedAt.MaxWorldTipDistance ^ 2 then
+				CurrentLookedAt = nil
+			end
 		end
 
-		-- If we're not spectating a player, perform a manual trace from the entity's position
-		local pos = view:GetPos()
-
-		if ( pos:DistToSqr( self:GetPos() ) <= dist ) then
-			return util.TraceLine( {
-				start = pos,
-				endpos = pos + ( view:GetAngles():Forward() * dist ),
-				filter = view
-			} ).Entity == self
-		end
-
-		return false
+		return self == CurrentLookedAt
 	end
 
 	function ENT:Think()
