@@ -17,8 +17,10 @@ DIV.page DIV.innerpage
 	top: 16px;
 	bottom: 16px;
 	right: 16px;
-	padding: 16px;
 	padding-top: 0;
+	width: 75%;
+	max-width: 1280px;
+	margin: auto;
 }
 
 div.options h2

@@ -492,6 +492,7 @@ SPAN.installgamemode:hover
 {
 	border: 5px solid white;
 	
+	max-width: 950px;
 	position: absolute;
 	top: 64px;
 	left: 0px;
@@ -548,16 +549,6 @@ SPAN.installgamemode:hover
 
 	height: 24px;
 	padding: 4px;
-}
-
-@media screen and (min-width: 1280px)
-{
-	.server_gamemodes
-	{
-		margin: 0 auto;
-		width: 80%;
-		max-width: 1000px;
-	}
 }
 
 .noplayers
