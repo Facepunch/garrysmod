@@ -62,6 +62,25 @@ end
 
 
 --[[---------------------------------------------------------
+    Name: Exists
+    Args: string hookName, identifier
+    Desc: Returns if the hook exists or not
+-----------------------------------------------------------]]
+function Exists( event_name, name )
+
+	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Exists' (string expected, got " .. type( event_name ) .. ")" ) return end
+
+	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
+	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Exists' (string expected, got " .. type( name ) .. ")" ) return end
+
+	if ( Hooks[ event_name ] and Hooks[ event_name ][ name ] ) then return true end	--Return true if the hook exists
+
+	return false	--Otherwise return false
+
+end
+
+
+--[[---------------------------------------------------------
     Name: Run
     Args: string hookName, vararg args
     Desc: Calls hooks associated with the hook name.
