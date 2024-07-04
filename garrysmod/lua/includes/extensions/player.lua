@@ -317,14 +317,14 @@ local function InvalidatePlayer( ent, fullUpdate )
 
 	if ( isPlayer ) then PlayerCache = nil end
 
-	if fullUpdate or !isPlayer then
+	if ( fullUpdate or not isPlayer ) then
 		return
 	end
 
 	local steamID = ent:SteamID64()
 
 	-- If fullUpdate isn't nil, this player was invalidated by EntityRemoved.
-	if fullUpdate == false then
+	if ( fullUpdate == false ) then
 		sIDCache[steamID] = nil
 	else
 		sIDCache[steamID] = ent
