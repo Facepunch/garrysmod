@@ -324,7 +324,7 @@ local function InvalidatePlayer( ent, fullUpdate )
 	local steamID = ent:SteamID64()
 
 	-- If fullUpdate isn't nil, this player was invalidated by EntityRemoved.
-	if fullUpdate != nil and !fullUpdate then
+	if fullUpdate == false then
 		sIDCache[steamID] = nil
 	else
 		sIDCache[steamID] = ent
@@ -332,5 +332,5 @@ local function InvalidatePlayer( ent, fullUpdate )
 
 end
 
-hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayer )
-hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayer )
+hook.Add( "OnEntityCreated", "player.Invalidation", InvalidatePlayer )
+hook.Add( "EntityRemoved", "player.Invalidation", InvalidatePlayer )
