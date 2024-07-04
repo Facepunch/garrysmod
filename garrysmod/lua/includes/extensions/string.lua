@@ -164,12 +164,17 @@ end
 	Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
-	for i = #path, 1, -1 do
-		local c = string.sub( path, i, i )
-		if ( c == "/" or c == "\\" ) then return string.sub( path, i + 1 ) end
+	local reversePath = string.reverse( path )
+
+	-- Way faster than fetching length and calling two C functions per character.
+	local slashPosition, _, _ = string.find( reversePath, "/", 1 ) or string.find( reversePath, "\\", 1 )
+
+	if !slashPosition then
+		return path
 	end
 
-	return path
+	-- If we've found a slash, subtract the other characters from the string.
+	return string.Right( path, slashPosition - 1 )
 end
 
 --[[-----------------------------------------------------------------
