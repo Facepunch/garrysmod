@@ -289,6 +289,10 @@ local sIDCache = {}
 function player.GetBySteamID( ID )
 	ID = string.upper( ID )
 
+	if ( ID == "BOT" ) then
+		return false
+	end
+
 	local cID = util.SteamIDFrom64( ID )
 
 	return sIDCache[cID] or false
