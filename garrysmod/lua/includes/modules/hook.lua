@@ -99,13 +99,13 @@ function Temporary( event_name, name, max_runs, func )
 		Hooks[ event_name ] = {}
 	end
 
-	Hooks[ event_name ][ name ] = function( ... ) 	--Utilize the Add function internally to create the one time use hook
+	Hooks[ event_name ][ name ] = function( ... )
 		runs = runs + 1
 		if runs >= maxRuns and Hooks[ event_name ] ~= nil then
 			Hooks[ event_name ][ name ] = nil
 		end
 
-		return RunFunction( ... ) 		--Run our original hook function and return it's values or nil
+		return RunFunction( ... ) 	--Run our original hook function and return it's values or nil
 	end
 end
 
