@@ -62,6 +62,36 @@ end
 
 
 --[[---------------------------------------------------------
+    Name: Temporary
+    Args: string hookName, any identifier, integer max_runs, function func
+    Desc: Add a temporary hook that removes itself after running.
+-----------------------------------------------------------]]
+function Temporary( event_name, name, max_runs, func )
+	local runs = 0		--Times the hook has been ran
+	local maxRuns		--Max number of runs before removing the hook
+	local RunFunction	--The function we run in the actual hook
+
+	--Verify that the hook was provided a function and a number of times to run
+	if func and isfunction( func ) then
+		maxRuns = max_runs	--Set the maxRuns variable
+		RunFunction = func	--Store the function to run
+	else
+		maxRuns = 1		--Assume this hook should only be ran once before removing itself
+		RunFunction = max_runs	--As a failsafe, assume the max_runs argument is the function
+	end
+
+	Add( event_name, name, function( ... ) 		--Utilize the Add function internally to create the one time use hook
+		runs = runs + 1
+		if runs >= maxRuns then
+			Remove( event_name, name )	--Utilize the Remove function internally to remove the hook after it has reached it's final run
+		end
+
+		return RunFunction( ... ) 		--Run our original hook function and return it's values or nil
+	end)
+end
+
+
+--[[---------------------------------------------------------
     Name: Exists
     Args: string hookName, identifier
     Desc: Returns if the hook exists or not
