@@ -1619,6 +1619,11 @@
 	[
 		0 : "Red (Human)"
 		1 : "Yellow (Alien)"
+		2 : "Green (Alien)"
+		3 : "Mech/Robotic"
+		4 : "Antlion"
+		5 : "Zombie"
+		6 : "Antlion Worker"
 	]
 	amount(string) : "Amount of blood (damage to simulate)" : "100"
 	spawnflags(flags) =
@@ -1628,9 +1633,9 @@
 		4: "On Player" : 0
 		8: "Spray decals" : 0
 		// dvs: support these flags
-		//16: "Cloud" : 0
-		//32: "Drops" : 0
-		//64: "Gore" : 0
+		16: "Cloud" : 0
+		32: "Drops" : 0
+		64: "Gore" : 0
 	]
 
 	// Inputs
