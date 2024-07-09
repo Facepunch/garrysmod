@@ -127,12 +127,14 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 	if ( !physgun_halo:GetBool() ) then 
 		
 		PhysgunHalos = nil
+		lastPhysgunDraw = nil
 		
 		return true 
 
 	end
 
 	PhysgunHalos = PhysgunHalos || {}
+	lastPhysgunDraw = lastPhysgunDraw || {}
 
 	local ent = IsValid( target ) && target || nil
 
