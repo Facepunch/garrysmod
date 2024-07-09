@@ -52,7 +52,7 @@ if ( CLIENT ) then
 	end
 
 	function ENT:Think()
-		if ( not self:BeingLookedAtByLocalPlayer() or not self:GetNoDraw() ) then
+		if ( not self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
 			return
 		end
 
