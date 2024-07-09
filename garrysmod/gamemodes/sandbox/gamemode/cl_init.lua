@@ -150,6 +150,7 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 	else
 
 		PhysgunHalos[ ply ] = nil
+		lastPhysgunDraw[ ply ] = nil
 
 	end
 
@@ -166,12 +167,13 @@ hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 		if ( !IsValid( k ) or CurTime() > lastPhysgunDraw[ k ] ) then
 
 			PhysgunHalos[ k ] = nil
+			lastPhysgunDraw[ k ] = nil
 
 			continue
 
 		end
 
-		if ( !v[1] ) then continue end
+		if ( !v[ 1 ] ) then continue end
 
 		local size = math.random( 1, 2 )
 		local colr = k:GetWeaponColor() + VectorRand() * 0.3
