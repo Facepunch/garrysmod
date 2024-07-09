@@ -704,7 +704,7 @@
 	_hardfalloff(integer) : "hard falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lightijng if not used carefully."
 
 	// GMOD: GOPORT
-	_castentityshadow(Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow." =
+	_castentityshadow(Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow. This option requires the accompanying setting in shadow_control entity to be enabled." =
 	[
 		0 : "Don't affect entity shadow angles"
 		1 : "Affect entity shadow angles"
@@ -3136,7 +3136,7 @@
 	]
 
 	// GMOD
-	enableshadowsfromlocallights(Choices) : "Enable Local Light Shadows" : 0 =
+	enableshadowsfromlocallights(Choices) : "Enable Local Light Shadows" : 0 : "Enabling this will allow marked lights to affect shadows of entities near it. Please note that each light entity needs to also invidually enable this option." =
 	[
 		0 : "No"
 		1 : "Yes"
