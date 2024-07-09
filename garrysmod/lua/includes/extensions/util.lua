@@ -114,11 +114,17 @@ function util.StringToType( str, typename )
 
 	if ( typename == "vector" )	then return Vector( str ) end
 	if ( typename == "angle" )	then return Angle( str ) end
-	if ( typename == "float" )	then return tonumber( str ) end
-	if ( typename == "int" )	then return math.Round( tonumber( str ) ) end
 	if ( typename == "bool" )	then return tobool( str ) end
+	if ( typename == "boolean" )	then return tobool( str ) end
 	if ( typename == "string" )	then return tostring( str ) end
 	if ( typename == "entity" )	then return Entity( str ) end
+	if ( typename == "float" )	then return tonumber( str ) end
+	if ( typename == "int" )	then
+	    local num = tonumber( str )
+	    if ( not num ) then return nil end
+
+	    return math.Round( num )
+    end
 
 	MsgN( "util.StringToType: unknown type \"", typename, "\"!" )
 
