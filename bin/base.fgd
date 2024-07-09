@@ -3453,7 +3453,7 @@
 	"A brush entity that's designed to be used for a player-useable button. When used by the player, it moves to a pressed position."
 [
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "Specifies the direction of motion to move when the button is used."
-	speed(integer) : "Speed" : 5 : "The speed that the button moves, in inches per second."
+	speed(float) : "Speed" : 200 : "The speed that the button moves, in inches per second."
 	health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
 	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
 	master(string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be pressed."
@@ -3504,7 +3504,7 @@
 		46: "combine click fizz (deny)"
 		47: "combine click talker"
 	]
-	wait(integer) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns."
+	wait(float) : "Delay Before Reset (-1 stay)" : "0.5" : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns."
 	spawnflags(flags) =
 	[
 		1: "Don't move" : 0
