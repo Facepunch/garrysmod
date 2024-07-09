@@ -13,12 +13,8 @@ if ( CLIENT ) then
 	local GetViewEntity = GetViewEntity
 
 	local TraceLine = util.TraceLine
-	local TraceLineEndpos = Vector()
-	local TraceLineConfig = { endpos = TraceLineEndpos, output = {} }
-
-	local vec_meta = FindMetaTable( "Vector" )
-	local DistToSqr = vec_meta.DistToSqr
-	local Set, Mul, Add = vec_meta.Set, vec_meta.Mul, vec_meta.Add
+	local TraceEndpos = Vector()
+	local TraceConfig = { endpos = TraceEndpos, output = {} }
 	
 	local CurrentLookedAt
 
@@ -28,22 +24,26 @@ if ( CLIENT ) then
 			FrameLast = Frame
 
 			local view = GetViewEntity()
+			local TraceResult
 
-			local isPlayer = view:IsPlayer()
-			local start = isPlayer and view:EyePos() or view:GetPos()
-			local direction = isPlayer and view:GetAimVector() or view:GetForward()
+			if view:IsPlayer() then
+				TraceResult = view:GetEyeTrace()
+			else
+				local startpos = view:GetPos()
+				TraceConfig.start = startpos
+				TraceConfig.filter = view
 
-			TraceLineConfig.start = start
+				TraceEndpos:Set( view:GetForward() )
+				TraceEndpos:Mul( 32768 )
+				TraceEndpos:Add( startpos )
 
-			Set( TraceLineEndpos, direction )
-			Mul( TraceLineEndpos, 65536 )
-			Add( TraceLineEndpos, start )
+				TraceResult = TraceLine( TraceConfig )
+			end
 
-			TraceLineConfig.filter = view
-
-			CurrentLookedAt = TraceLine( TraceLineConfig ).Entity
-
-			if not CurrentLookedAt.BeingLookedAtByLocalPlayer or DistToSqr( CurrentLookedAt:GetPos(), start ) > CurrentLookedAt.MaxWorldTipDistance ^ 2 then
+			CurrentLookedAt = TraceResult.Entity
+			
+			local MaxWorldTipDistance = CurrentLookedAt.MaxWorldTipDistance
+			if not MaxWorldTipDistance or ( TraceResult.Fraction or 0 ) * 32768 > MaxWorldTipDistance then
 				CurrentLookedAt = nil
 			end
 		end
