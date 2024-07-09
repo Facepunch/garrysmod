@@ -123,8 +123,13 @@ function PANEL:PerformLayout()
 
 	self:ApplySchemeSettings()
 
-	if ( self:GetAutoStretchVertical() ) then
+	local curHeight = self:GetTall()
+
+	if ( self:GetAutoStretchVertical() && self.lastAutoStretchSize != curHeight ) then
+
+		self.lastAutoStretchSize = curHeight
 		self:SizeToContentsY()
+
 	end
 
 end
