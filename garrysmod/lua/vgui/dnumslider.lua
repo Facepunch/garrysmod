@@ -20,6 +20,9 @@ function PANEL:Init()
 	self.Slider:SetTrapInside( true )
 	self.Slider:Dock( FILL )
 	self.Slider:SetHeight( 16 )
+	self.Slider.ResetToDefaultValue = function( s )
+		self:ResetToDefaultValue()
+	end
 	Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
 
 	self.Label = vgui.Create ( "DLabel", self )
