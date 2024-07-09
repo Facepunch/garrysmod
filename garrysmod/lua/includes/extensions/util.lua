@@ -119,7 +119,8 @@ function util.StringToType( str, typename )
 	if ( typename == "string" )	then return tostring( str ) end
 	if ( typename == "entity" )	then return Entity( str ) end
 	if ( typename == "float" )	then return tonumber( str ) end
-	if ( typename == "int" )	then
+	if ( typename == "int" )	or
+	   ( typename == "number" )	then
 	    local num = tonumber( str )
 	    if ( not num ) then return nil end
 
