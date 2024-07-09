@@ -116,6 +116,7 @@ function GM:PostRenderVGUI()
 end
 
 local PhysgunHalos = {}
+local lastPhysgunDraw = {}
 
 --[[---------------------------------------------------------
 	Name: gamemode:DrawPhysgunBeam()
@@ -133,10 +134,22 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
 	PhysgunHalos = PhysgunHalos || {}
 
-	local ent = PhysgunHalos[ ply ] || {}
-	ent[1] = IsValid( target ) && target || nil
+	local ent = IsValid( target ) && target || nil
 
-	PhysgunHalos[ ply ] = ent
+	if ( ent ) then
+
+		local tab = PhysgunHalos[ ply ] || {}
+
+		tab[ 1 ] = ent
+
+		lastPhysgunDraw[ ply ] = CurTime()
+		PhysgunHalos[ ply ] = tab
+
+	else
+
+		PhysgunHalos[ ply ] = nil
+
+	end
 
 	return true
 
@@ -148,7 +161,7 @@ hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
 	for k, v in pairs( PhysgunHalos ) do
 
-		if ( !IsValid( k ) ) then
+		if ( !IsValid( k ) or CurTime() > lastPhysgunDraw[ k ] ) then
 
 			PhysgunHalos[ k ] = nil
 
