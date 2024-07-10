@@ -63,8 +63,8 @@ if ( SERVER ) then
 
 		if ( !IsValid( client ) or size < 48 ) then return end
 
-		local res = hook.Run( "CanArmDupe", client )
-		if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
+		local res, msg = hook.Run( "CanArmDupe", client )
+		if ( res == false ) then client:ChatPrint( msg or "Server has blocked usage of the Duplicator tool!" ) return end
 
 		local part = net.ReadUInt( 8 )
 		local total = net.ReadUInt( 8 )
