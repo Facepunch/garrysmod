@@ -166,15 +166,12 @@ end
 function string.GetFileFromFilename( path )
 
 	local reversePath = string.reverse( path )
-
-	-- Way faster than fetching length and calling two C functions per character.
-	local slashPosition, _, _ = string.find( reversePath, "/", 1 ) or string.find( reversePath, "\\", 1 )
+	local slashPosition, _, _ = string.find( reversePath, "\\", 1, true ) or string.find( reversePath, "/", 1, true )
 
 	if ( not slashPosition ) then
 		return path
 	end
 
-	-- If we've found a slash, subtract the other characters from the string.
 	return string.Right( path, slashPosition - 1 )
 
 end
