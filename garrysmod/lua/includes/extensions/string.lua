@@ -163,16 +163,13 @@ end
 	Desc: Returns file with extension from path
 	Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
+local filename_pattern = ".*[\\/]([^\\/]*)$"
+
 function string.GetFileFromFilename( path )
 
-	local reversePath = string.reverse( path )
-	local slashPosition, _, _ = string.find( reversePath, "\\", 1, true ) or string.find( reversePath, "/", 1, true )
+	local _, _, foundpath = string.find( path, filename_pattern )
 
-	if ( not slashPosition ) then
-		return path
-	end
-
-	return string.Right( path, slashPosition - 1 )
+	return foundpath
 
 end
 
