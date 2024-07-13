@@ -91,6 +91,12 @@ function COLOR:Unpack()
 
 end
 
+function COLOR:Lerp( target_clr, frac )
+
+	return Color( Lerp( frac, self.r, target_clr.r ), Lerp( frac, self.g, target_clr.g ), Lerp( frac, self.b, target_clr.b ), Lerp( frac, self.a, target_clr.a ) )
+
+end
+
 function COLOR:SetUnpacked( r, g, b, a )
 
 	self.r = r or 255

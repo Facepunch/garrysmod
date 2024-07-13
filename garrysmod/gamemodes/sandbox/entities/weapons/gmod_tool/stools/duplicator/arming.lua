@@ -16,8 +16,8 @@ if ( CLIENT ) then
 		LastDupeArm = CurTime() + 1
 
 		-- Server doesn't allow us to do this, don't even try to send them data
-		local res = hook.Run( "CanArmDupe", ply )
-		if ( res == false ) then ply:ChatPrint( "Refusing to load dupe, server has blocked usage of the Duplicator tool!" ) return end
+		local res, msg = hook.Run( "CanArmDupe", ply )
+		if ( res == false ) then ply:ChatPrint( msg or "Refusing to load dupe, server has blocked usage of the Duplicator tool!" ) return end
 
 		-- Load the dupe (engine takes care of making sure it's a dupe)
 		local dupe = engine.OpenDupe( arg[ 1 ] )
@@ -63,8 +63,8 @@ if ( SERVER ) then
 
 		if ( !IsValid( client ) or size < 48 ) then return end
 
-		local res = hook.Run( "CanArmDupe", client )
-		if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
+		local res, msg = hook.Run( "CanArmDupe", client )
+		if ( res == false ) then client:ChatPrint( msg or "Server has blocked usage of the Duplicator tool!" ) return end
 
 		local part = net.ReadUInt( 8 )
 		local total = net.ReadUInt( 8 )

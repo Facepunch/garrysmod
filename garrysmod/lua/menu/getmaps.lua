@@ -67,16 +67,34 @@ local function UpdateMaps()
 	MapNames[ "sav_dojo6" ] = "Dystopia"
 	MapNames[ "varena" ] = "Dystopia"
 
-	MapNames[ "d1_" ] = "Half-Life 2"
-	MapNames[ "d2_" ] = "Half-Life 2"
-	MapNames[ "d3_" ] = "Half-Life 2"
+	-- Do these manually, so edits of these maps don't end up in the same category.
+	local HL2Maps = {
+		"d1_trainstation_01", "d1_trainstation_02", "d1_trainstation_03", "d1_trainstation_04", "d1_trainstation_05", "d1_trainstation_06",
+		"d1_canals_01", "d1_canals_01a", "d1_canals_02",  "d1_canals_03", "d1_canals_05", "d1_canals_06", "d1_canals_07", "d1_canals_08", "d1_canals_09",
+		"d1_canals_10", "d1_canals_11","d1_canals_12", "d1_canals_13", "d1_eli_01", "d1_eli_02",
+		"d1_town_01", "d1_town_01a", "d1_town_02", "d1_town_02a", "d1_town_03", "d1_town_04","d1_town_05",
+		"d2_coast_01", "d2_coast_03", "d2_coast_04", "d2_coast_05","d2_coast_07", "d2_coast_08", "d2_coast_09", "d2_coast_10", "d2_coast_11", "d2_coast_12",
+		"d2_prison_01", "d2_prison_02", "d2_prison_03", "d2_prison_04", "d2_prison_05", "d2_prison_06", "d2_prison_07", "d2_prison_08",
+		"d3_c17_01", "d3_c17_02", "d3_c17_03", "d3_c17_04", "d3_c17_05", "d3_c17_06a", "d3_c17_06b", "d3_c17_07", "d3_c17_08",
+		"d3_c17_09", "d3_c17_10a", "d3_c17_10b", "d3_c17_11", "d3_c17_12", "d3_c17_12b", "d3_c17_13",
+		"d3_citadel_01", "d3_citadel_02", "d3_citadel_03", "d3_citadel_04", "d3_citadel_05", "d3_breen_01"
+	}
+	for _, map in ipairs( HL2Maps ) do MapNames[ map ] = "Half-Life 2" end
+
+	local EP1Maps = {
+		"ep1_citadel_00", "ep1_citadel_01", "ep1_citadel_02", "ep1_citadel_02b", "ep1_citadel_03", "ep1_citadel_04", "ep1_c17_00",
+		"ep1_c17_00a", "ep1_c17_01", "ep1_c17_01a", "ep1_c17_02", "ep1_c17_02b", "ep1_c17_02a", "ep1_c17_05", "ep1_c17_06"
+	}
+	for _, map in ipairs( EP1Maps ) do MapNames[ map ] = "Half-Life 2: Episode 1" end
+
+	local EP2Maps = {
+		"ep2_outland_01", "ep2_outland_01a", "ep2_outland_02", "ep2_outland_03", "ep2_outland_04", "ep2_outland_05", "ep2_outland_06", "ep2_outland_06a", "ep2_outland_07",
+		"ep2_outland_08", "ep2_outland_09", "ep2_outland_10", "ep2_outland_10a", "ep2_outland_11", "ep2_outland_11a", "ep2_outland_11b", "ep2_outland_12", "ep2_outland_12a"
+	}
+	for _, map in ipairs( EP2Maps ) do MapNames[ map ] = "Half-Life 2: Episode 2" end
 
 	MapNames[ "dm_" ] = "Half-Life 2: Deathmatch"
 	MapNames[ "halls3" ] = "Half-Life 2: Deathmatch"
-
-	MapNames[ "ep1_" ] = "Half-Life 2: Episode 1"
-	MapNames[ "ep2_" ] = "Half-Life 2: Episode 2"
-	MapNames[ "ep3_" ] = "Half-Life 2: Episode 3"
 
 	MapNames[ "d2_lostcoast" ] = "Half-Life 2: Lost Coast"
 
