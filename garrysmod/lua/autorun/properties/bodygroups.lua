@@ -60,7 +60,7 @@ properties.Add( "bodygroups", {
 				local opposite = 1
 				if ( current == opposite ) then opposite = 0 end
 
-				local opt = submenu:AddOption( v.name )
+				local opt = submenu:AddOption( string.NiceName( v.name ) )
 				opt:SetChecked( current == 1 )
 				opt:SetIsCheckable( true )
 				opt.OnChecked = function( s, checked ) self:SetBodyGroup( ent, v.id, checked and 1 or 0 ) end
@@ -70,17 +70,18 @@ properties.Add( "bodygroups", {
 			--
 			else
 
-				local groups = submenu:AddSubMenu( v.name )
+				local groups = submenu:AddSubMenu( string.NiceName( v.name ) )
 
 				for i = 1, v.num do
-					local modelname = "model #" .. i
+					local modelname = "Model #" .. i
 					if ( v.submodels and v.submodels[ i - 1 ] != "" ) then modelname = v.submodels[ i - 1 ] end
 					modelname = string.Trim( modelname, "." )
 					modelname = string.Trim( modelname, "/" )
 					modelname = string.Trim( modelname, "\\" )
 					modelname = string.StripExtension( modelname )
-
-					local opt = groups:AddOption( modelname )
+					modelname = string.GetFileFromFilename( modelname )
+				
+					local opt = groups:AddOption( string.NiceName( modelname ) )
 					opt:SetRadio( true )
 					opt:SetChecked( target:GetBodygroup( v.id ) == i - 1 )
 					opt:SetIsCheckable( true )

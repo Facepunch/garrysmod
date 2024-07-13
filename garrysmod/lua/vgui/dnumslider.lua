@@ -20,6 +20,9 @@ function PANEL:Init()
 	self.Slider:SetTrapInside( true )
 	self.Slider:Dock( FILL )
 	self.Slider:SetHeight( 16 )
+	self.Slider.ResetToDefaultValue = function( s )
+		self:ResetToDefaultValue()
+	end
 	Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
 
 	self.Label = vgui.Create ( "DLabel", self )
@@ -227,6 +230,7 @@ function PANEL:SetEnabled( b )
 	self.TextArea:SetEnabled( b )
 	self.Slider:SetEnabled( b )
 	self.Scratch:SetEnabled( b )
+	self.Label:SetEnabled( b )
 	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
 end
 
