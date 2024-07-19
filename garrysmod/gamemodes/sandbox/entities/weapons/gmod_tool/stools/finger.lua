@@ -528,6 +528,7 @@ end
 
 local OldHand = nil
 local OldEntity = nil
+local OldEntityValid = false
 
 --[[
 	Updates the selected entity with the values from the convars
@@ -541,12 +542,13 @@ function TOOL:Think()
 
 	if ( self.NextUpdate && self.NextUpdate > CurTime() ) then return end
 
-	if ( CLIENT && ( OldHand != hand || OldEntity != selected ) ) then
+	if ( CLIENT && ( OldHand != hand || OldEntity != selected || IsValid( selected ) != OldEntityValid ) ) then
 
 		OldHand = hand
 		OldEntity = selected
+		OldEntityValid = IsValid( selected )
 
-		self:RebuildControlPanel( hand )
+		self:RebuildControlPanel( self:HandEntity(), self:HandNum() )
 
 	end
 
@@ -563,18 +565,6 @@ if ( SERVER ) then return end
 
 for i = 0, VarsOnHand do
 	TOOL.ClientConVar[ "" .. i ] = "0 0"
-end
-
--- Rebuilds the context menu based on the current selected entity/hand
-function TOOL:RebuildControlPanel( hand )
-
-	-- We've selected a new entity - rebuild the controls list
-	local CPanel = controlpanel.Get( "finger" )
-	if ( !CPanel ) then return end
-
-	CPanel:ClearControls()
-	self.BuildCPanel( CPanel, self:HandEntity(), self:HandNum() )
-
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()

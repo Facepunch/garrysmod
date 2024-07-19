@@ -166,14 +166,14 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !gm ) return "Unknown Gamemode";
 
 		if ( gm.info && gm.info.title )
-			return gm.info.title.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF]/g, "" );;
+			return gm.info.title.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
 
-		return gm.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF]/g, "" );;
+		return gm.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
 	}
 
 	$scope.ServerName = function( server )
 	{
-		return server.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF]/g, "" );
+		return server.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
 	}
 
 	$scope.JoinServer = function( srv )

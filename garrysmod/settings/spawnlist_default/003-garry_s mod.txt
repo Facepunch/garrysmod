@@ -218,27 +218,28 @@
 		"43"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/construct_sign.mdl"
+			"model"		"models/maxofs2d/cube_tool.mdl"
 		}
 		"44"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/cube_tool.mdl"
+			"model"		"models/maxofs2d/gm_painting.mdl"
 		}
 		"45"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/gm_painting.mdl"
+			"model"		"models/maxofs2d/logo_gmod_b.mdl"
 		}
 		"46"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/logo_gmod_b.mdl"
+			"model"		"models/maxofs2d/motion_sensor.mdl"
 		}
 		"47"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/motion_sensor.mdl"
+			"model"		"models/maxofs2d/construct_sign.mdl"
+			"wide"		"128"
 		}
 		"48"
 		{

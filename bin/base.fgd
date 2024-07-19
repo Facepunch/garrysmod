@@ -704,7 +704,7 @@
 	_hardfalloff(integer) : "hard falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lightijng if not used carefully."
 
 	// GMOD: GOPORT
-	_castentityshadow(Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow." =
+	_castentityshadow(Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow. This option requires the accompanying setting in shadow_control entity to be enabled." =
 	[
 		0 : "Don't affect entity shadow angles"
 		1 : "Affect entity shadow angles"
@@ -1619,6 +1619,11 @@
 	[
 		0 : "Red (Human)"
 		1 : "Yellow (Alien)"
+		2 : "Green (Alien)"
+		3 : "Mech/Robotic"
+		4 : "Antlion"
+		5 : "Zombie"
+		6 : "Antlion Worker"
 	]
 	amount(string) : "Amount of blood (damage to simulate)" : "100"
 	spawnflags(flags) =
@@ -1628,9 +1633,9 @@
 		4: "On Player" : 0
 		8: "Spray decals" : 0
 		// dvs: support these flags
-		//16: "Cloud" : 0
-		//32: "Drops" : 0
-		//64: "Gore" : 0
+		16: "Cloud" : 0
+		32: "Drops" : 0
+		64: "Gore" : 0
 	]
 
 	// Inputs
@@ -3131,7 +3136,7 @@
 	]
 
 	// GMOD
-	enableshadowsfromlocallights(Choices) : "Enable Local Light Shadows" : 0 =
+	enableshadowsfromlocallights(Choices) : "Enable Local Light Shadows" : 0 : "Enabling this will allow marked lights to affect shadows of entities near it. Please note that each light entity needs to also invidually enable this option." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3448,7 +3453,7 @@
 	"A brush entity that's designed to be used for a player-useable button. When used by the player, it moves to a pressed position."
 [
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "Specifies the direction of motion to move when the button is used."
-	speed(integer) : "Speed" : 5 : "The speed that the button moves, in inches per second."
+	speed(float) : "Speed" : 200 : "The speed that the button moves, in inches per second."
 	health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
 	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
 	master(string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be pressed."
@@ -3499,7 +3504,7 @@
 		46: "combine click fizz (deny)"
 		47: "combine click talker"
 	]
-	wait(integer) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns."
+	wait(float) : "Delay Before Reset (-1 stay)" : "0.5" : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns."
 	spawnflags(flags) =
 	[
 		1: "Don't move" : 0

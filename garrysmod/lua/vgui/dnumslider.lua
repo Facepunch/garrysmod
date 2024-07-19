@@ -20,12 +20,8 @@ function PANEL:Init()
 	self.Slider:SetTrapInside( true )
 	self.Slider:Dock( FILL )
 	self.Slider:SetHeight( 16 )
-	self.Slider.Knob.OnMousePressed = function( panel, mcode )
-		if ( mcode == MOUSE_MIDDLE ) then
-			self:ResetToDefaultValue()
-			return
-		end
-		self.Slider:OnMousePressed( mcode )
+	self.Slider.ResetToDefaultValue = function( s )
+		self:ResetToDefaultValue()
 	end
 	Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
 
@@ -187,6 +183,13 @@ function PANEL:ValueChanged( val )
 	self.Slider:SetSlideX( self.Scratch:GetFraction() )
 
 	self:OnValueChanged( val )
+	self:SetCookie( "slider_val", val )
+
+end
+
+function PANEL:LoadCookies()
+
+	self:SetValue( self:GetCookie( "slider_val" ) )
 
 end
 
@@ -227,6 +230,7 @@ function PANEL:SetEnabled( b )
 	self.TextArea:SetEnabled( b )
 	self.Slider:SetEnabled( b )
 	self.Scratch:SetEnabled( b )
+	self.Label:SetEnabled( b )
 	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
 end
 

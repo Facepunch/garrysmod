@@ -1,4 +1,15 @@
 //============================================================================================================
+// Alyx criteria
+criterion "IsAlyx" "classname" "npc_alyx" "required"
+criterion "ConceptAlyxStartCombat" "Concept" "TLK_STARTCOMBAT" required
+criterion "AlyxGunNotHolstered" "weapon" "weapon_alyxgun" required
+// alyx prank criteria
+criterion "AlyxNotPranked" "AlyxPranked" "!=1" "required" weight 0
+criterion "ContextAlyxPlayedDarknessPrank" "AlyxPlayedDarknessPrank" "1" "required" weight 10
+criterion "ContextNotAlyxPlayedDarknessPrankDone" "AlyxPlayedDarknessPrankDone" "!=1" "required" weight 10
+criterion "IsNotAlyxPrankLive" "AlyxPrankLive" "!=1" "required" weight 10
+criterion "Isal_hint_c17_Zombies" "al_hint_c17_Zombies" "1" "required" weight 1
+
 // Alyx Respond to Kleinercast
 criterion "ConceptAlyxRespondKleinerGetBusy" "Concept" "TLK_RESPOND_KLEINER_GETBUSY" required
 criterion "PlayerHearKCast" "playerkcaston" "1" required
@@ -50,33 +61,13 @@ criterion "ConceptTalkc1701SniperHint" "Concept" "TLK_C1701_SNIPER_HINT" require
 criterion "ConceptTalkc1701RollermineHint" "Concept" "TLK_C1701_ROLLERMINE_HINT" required 
 
 criterion "PlayerVeryWounded" "playerhealthfrac"	">0,<=.25" required
+criterion "PlayerWounded" "playerhealthfrac"	">0,<=.50" required
+criterion "AlyxWounded" "healthfrac"	">0,<=.99" required
 
 //Player Kills Alyx Praises
 criterion "AlyxNotPraised1Shot" "AlyxPraised1Shot" "!=1" "required" weight 0
 criterion "AlyxNotPraisedKillStreak" "AlyxPraisedKillStreak" "!=1" "required" weight 0
-
-
-//alyx response groups
-criterion "RGroupLess10"            "randomnum"               "<=10"   required
-criterion "RGroupLess20"            "randomnum"               "<=20"   required
-criterion "RGroupLess30"            "randomnum"               "<=30"   required
-criterion "RGroupLess40"            "randomnum"               "<=40"   required
-criterion "RGroupLess50"            "randomnum"               "<=50"   required
-criterion "RGroupLess60"            "randomnum"               "<=60"   required
-criterion "RGroupLess70"            "randomnum"               "<=70"   required
-criterion "RGroupLess80"            "randomnum"               "<=80"   required
-criterion "RGroupLess90"            "randomnum"               "<=90"   required
-criterion "RGroupLess100"           "randomnum"               "<=100"  required
-criterion "RGroupMore00"            "randomnum"               ">0"    required
-criterion "RGroupMore10"            "randomnum"               ">10"   required
-criterion "RGroupMore20"            "randomnum"               ">20"   required
-criterion "RGroupMore30"            "randomnum"               ">30"   required
-criterion "RGroupMore40"            "randomnum"               ">40"   required
-criterion "RGroupMore50"            "randomnum"               ">50"   required
-criterion "RGroupMore60"            "randomnum"               ">60"   required
-criterion "RGroupMore70"            "randomnum"               ">70"   required
-criterion "RGroupMore80"            "randomnum"               ">80"   required
-criterion "RGroupMore90"            "randomnum"               ">90"   required
+criterion "AlyxNotPraised" "AlyxPraised" "!=1" "required" weight 0
 
 
 //============================================================================================================
@@ -144,6 +135,7 @@ criterion "AlyxNotPraisedKilledMob" "AlyxPraisedKilledMob" "!=1" "required" weig
 response "AlyxMobbedThanks"
 {
 	scene "scenes/episode_1/al_mobbed_thanks.vcd" respeakdelay 60
+	scene "scenes/episode_1/al_mobbed_thatwasclose.vcd" respeakdelay 60
 	scene "scenes/episode_1/al_swamped07.vcd" respeakdelay 60
 	scene "scenes/episode_1/al_combat_thanks.vcd" respeakdelay 60
 	scene "scenes/episode_1/al_mobbed_thanks01.vcd" respeakdelay 60
@@ -470,7 +462,7 @@ response "AlyxFlashlightIlluminatedSpeech"
 
 rule AlyxFlashlightIlluminatedSpeech
 {
-	criteria		IsAlyx ConceptFlashlightIlluminated AlyxGunNotHolstered
+	criteria		IsAlyx ConceptFlashlightIlluminated AlyxGunNotHolstered IsNotAlyxPrankLive
 	response		AlyxFlashlightIlluminatedSpeech
 }
 
@@ -499,13 +491,13 @@ rule AlyxInjuredFollowTooFar
 // Pain sounds
 response AlyxInjuredPain
 {
-   scene "scenes/npc/Alyx/gasp02.vcd"
-   scene "scenes/npc/Alyx/gasp03.vcd"
-   scene "scenes/npc/Alyx/hurt04.vcd" 
-   scene "scenes/npc/Alyx/hurt05.vcd" 
-   scene "scenes/npc/Alyx/hurt06.vcd"
-   scene "scenes/npc/Alyx/hurt08.vcd"
-   scene "scenes/npc/Alyx/uggh01.vcd" 
+   scene "scenes/npc/Alyx/gasp02.vcd" respeakdelay 30
+   scene "scenes/npc/Alyx/gasp03.vcd" respeakdelay 30	
+   scene "scenes/npc/Alyx/hurt04.vcd" respeakdelay 30
+   scene "scenes/npc/Alyx/hurt05.vcd" respeakdelay 30
+   scene "scenes/npc/Alyx/hurt06.vcd" respeakdelay 30
+   scene "scenes/npc/Alyx/hurt08.vcd" respeakdelay 30
+   scene "scenes/npc/Alyx/uggh01.vcd" respeakdelay 30 
 }
 
 rule AlyxInjuredPain
@@ -586,12 +578,12 @@ rule AlyxStartCombat
 //begin combat when enemy far
 response AlyxStartCombatFar
  {
-    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_01.vcd" respeakdelay 120 odds 50
-    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_02.vcd" respeakdelay 120 odds 50
-    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_03.vcd" respeakdelay 120 odds 50
-    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_04.vcd" respeakdelay 120 odds 50
-    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_05.vcd" respeakdelay 120 odds 50
-    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_06.vcd" respeakdelay 120 odds 50	
+    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_01.vcd" respeakdelay 120 odds 50 weapondelay 3
+    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_02.vcd" respeakdelay 120 odds 50 weapondelay 3
+    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_03.vcd" respeakdelay 120 odds 50 weapondelay 3
+    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_04.vcd" respeakdelay 120 odds 50 weapondelay 3
+    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_05.vcd" respeakdelay 120 odds 50 weapondelay 3
+    	scene "scenes/npc/Alyx/al_combat_gradual_quiet_06.vcd" respeakdelay 120 odds 50	 weapondelay 3
 }
  
 rule AlyxStartCombatFar
@@ -603,7 +595,7 @@ rule AlyxStartCombatFar
 //begin combat when in car
 //should we not fire for enemy = 'grenade_helicopter'?
 response AlyxStartCombatInVehicle
- {
+{
    	scene "scenes/npc/Alyx/al_startcombat01.vcd" respeakdelay 120 odds 50
     	scene "scenes/npc/Alyx/al_startcombat03.vcd" respeakdelay 120 odds 50
     	scene "scenes/npc/Alyx/al_herewego.vcd" respeakdelay 120 odds 50
@@ -680,6 +672,19 @@ rule PlayerPuntedGrenade
         applycontext "AlyxPraisedPuntedGrenade:1:120,AlyxPraised:1:10"
 	response	PlayerPuntedGrenade
 }
+
+//begin combat when enemy is seen by alyx, not by player.
+response AlyxStartCombatAlone
+{
+	scene "scenes/episode_1/al_swamped05.vcd" respeakdelay 600  
+	scene "scenes/npc/alyx/al_dark_worriedest05.vcd" respeakdelay 600
+	
+}
+rule AlyxStartCombatAlone
+ {
+ 	criteria		IsAlyx ConceptAlyxStartCombat CombatTalk NotSeenByPlayer ConceptManyEnemies
+ 	response		AlyxStartCombatAlone
+ }
 
 
 //Alyx sees zombie waking up
@@ -766,6 +771,44 @@ rule PlayerKillStreak
 
 
 
+//////////////////////////////////////////////////////////////////
+//Flashlighth Turned Off - Alyx Messing With Gordon
+//////////////////////////////////////////////////////////////////
+
+response "DarknessAlyxPrank"
+{
+	scene "scenes/episode_1/c17/al_dark_fakegroan.vcd" 
+}
+rule DarknessAlyxPrank
+{
+	criteria 	IsAlyx ConceptDarknessFlashlightOff ContextInDarkness NoRecentCombatShort PlayerNear NotSeenByPlayer AlyxNotPranked Isal_hint_c17_Zombies
+        applycontext "AlyxPlayedDarknessPrank:1:10,AlyxPranked:1:120,AlyxPrankLive:1:120"
+	response	DarknessAlyxPrank
+}
+
+
+
+response "DarknessAlyxPrankCaught"
+{
+	scene "scenes/episode_1/c17/al_dark_gotcha.vcd" 
+}
+rule DarknessAlyxPrankCaught
+{
+	criteria 	IsAlyx ConceptDarknessFlashlightOn ContextAlyxPlayedDarknessPrank PlayerNear SeenByPlayer ContextNotAlyxPlayedDarknessPrankDone NotInCombat
+        applycontext "AlyxPlayedDarknessPrankDone:1:0,AlyxPranked:1:0,AlyxPrankLive:0:0"
+	response	DarknessAlyxPrankCaught
+}
+rule DarknessAlyxPrankCaughtLate
+{
+	criteria 	IsAlyx ConceptTalkLook ContextAlyxPlayedDarknessPrank ContextNotAlyxPlayedDarknessPrankDone SeenByPlayer NotInCombat
+        applycontext "AlyxPlayedDarknessPrankDone:1:0,AlyxPranked:1:0,AlyxPrankLive:0:0"
+	response	DarknessAlyxPrankCaught
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+
 //Flashlighth Expired - kleiner speech
 response "DarknessFlashlightExpired"
 {
@@ -827,6 +870,7 @@ rule PlayerBarrelsKill
 //==================================
 // Custom level start combat
 //==================================
+//Possibly unused
 response AlyxStartCombat_ep1_c17_01
 {
    	scene "scenes/episode_1/al_c17_01_antlionsupheretoo.vcd" respeakdelay 60
@@ -849,6 +893,80 @@ rule AlyxStartCombat_ep2_05
 	response		AlyxStartCombat_ep2_05
 }
 
+//Player explodes numerous barrels and kills alyx's enemy
+criterion "AlyxNotPraisedBarrelKilledEnemy" "AlyxPraisedBarrelKilledEnemy" "!=1" "required" weight 0
+response "EnemyKillWithBarrel"
+{
+	scene "scenes/npc/Alyx/al_combat_boom01.vcd" 
+	scene "scenes/npc/Alyx/al_combat_boom07.vcd" 
+}
+rule EnemyKillWithBarrel
+{
+	criteria 	ConceptPlayerKilledNPC ConceptPlayerKillsBarrels ContextPlayerKilledEnemy AlyxNotPraisedBarrelKilledEnemy  
+        applycontext "AlyxPraisedBarrelKilledEnemy:1:1200"
+	response	EnemyKillWithBarrel
+}
+
+//Player explodes barrels killing last known enemy
+response "PlayerBarrelsKillLast"
+{
+	scene "scenes/npc/Alyx/al_positive01.vcd" 
+	scene "scenes/npc/Alyx/al_positive02.vcd" 
+	scene "scenes/npc/Alyx/al_positive03.vcd" 
+}
+rule PlayerBarrelsKillLast
+{
+	criteria 	ConceptPlayerKilledNPC ConceptPlayerKillsBarrels ContextPlayerKilledEnemy ConceptOneorLessEnemy AlyxNotPraisedBarrelKilledEnemy  EnemyIsNotClose  
+        applycontext "AlyxPraisedBarrelKilledEnemy:1:1200"
+	response	PlayerBarrelsKillLast
+}
+
+
+
+//Alyx sees a poison headcrab
+criterion "AlyxDoesNotHatesPoisonHeadCrabs" "AlyxHatesPoisonHeadCrabs" "!=1" "required"
+
+response "AlyxSeesPoisonHeadcrab"
+{
+	scene "scenes/npc/Alyx/al_pzcrabs_hatethings01.vcd" 
+}
+rule AlyxSeesPoisonHeadcrab
+{
+	criteria 	IsAlyx EnemyIsPoisonHeadcrab PlayerNear ConceptAlyxEnemyDead AlyxDoesNotHatesPoisonHeadCrabs
+        applycontext "AlyxHatesPoisonHeadCrabs:1:1200"
+	response	AlyxSeesPoisonHeadcrab
+}
+
+
+//Alyx sees a poison zombie
+criterion "AlyxDoesNotHatesPoisonZombies" "AlyxHatesPoisonZombies" "!=1" "required"
+
+response "AlyxSeesPoisonZombies"
+{
+	scene "scenes/npc/Alyx/al_pzombie_ohno.vcd" 
+}
+rule AlyxSeesPoisonZombies
+{
+	criteria 	IsAlyx EnemyIsPoisonZombie PlayerNear ConceptStartCombat AlyxDoesNotHatesPoisonZombies
+        applycontext "AlyxHatesPoisonZombies:1:0"
+	response	AlyxSeesPoisonZombies
+}
+
+
+
+//Alyx reacting to a kill while manning a gun
+response "AlyxKillingWithFuncTank"
+{
+	scene "scenes/npc/Alyx/al_combat_ohsnap.vcd" respeakdelay 600
+	scene "scenes/npc/Alyx/al_positive03.vcd" respeakdelay 600
+
+	
+}
+rule AlyxKillingWithFuncTank
+{
+	criteria 	IsAlyx AlyxBehavoirisFuncTank PlayerNear ConceptAlyxEnemyDead AlyxNoWeapon
+	response	AlyxKillingWithFuncTank
+}
 
 
 
@@ -921,6 +1039,10 @@ response AlyxAttacking
 	scene "scenes/npc/Alyx/al_combat_angry02.vcd"
 	scene "scenes/npc/Alyx/al_combat_angry03.vcd"
 	scene "scenes/npc/Alyx/al_combat_angry04.vcd"
+	//scene "scenes/npc/Alyx/al_concerned01.vcd"
+	//scene "scenes/npc/Alyx/al_concerned02.vcd"
+	//scene "scenes/npc/Alyx/al_concerned03.vcd"
+	//scene "scenes/npc/Alyx/al_excited.vcd"
 }
 rule AlyxAttacking
 {
@@ -929,9 +1051,18 @@ rule AlyxAttacking
 }
 
 
+//trying here to have alyx respond to more intense combat -- looking at combat_length and num_enemies as criteria
+
+//(chet)you can play witht the combat length, it is one of the pieces of data passed back, so you can check the length each time she fires
+//ConceptManyEnemies is more than 4, ConceptSomeEnemies is more than 2 - some may work here if the time of combat is long enough.
+
 criterion "IsLongInCombat" "combat_length" ">10" required
 response AlyxAttackingMany
 {
+ 	//scene "scenes/npc/Alyx/al_concerned01.vcd"
+ 	//scene "scenes/npc/Alyx/al_concerned02.vcd"
+ 	//scene "scenes/npc/Alyx/al_concerned03.vcd"
+ 	//scene "scenes/npc/Alyx/al_excited.vcd"
 	scene "scenes/npc/Alyx/al_combat_angry05.vcd"
  
 }
@@ -942,9 +1073,28 @@ rule AlyxAttackingMany
 }
 
 
+
+//Alyx suggesting you flip over antlion
+criterion "AlyxNotSuggestedFlip" "AlyxSuggestsAntLionFlip" "!=1" "required"
+//alyx telling player to flip over ant-lion, used to check to see if the player is just killing them on their own
+criterion "ConceptNotInAntLionTraining" "AntlionTrainingHint" "!=1" required
+criterion "IsMapNOT_ep1_c17_02" "map" "!=ep1_c17_02" "required"
+response "AlyxAntLionDanger" 
+{
+	scene "scenes/episode_1/al_ant_flip.vcd"  respeakdelay 20
+ }
+
+rule AlyxAntLionDanger
+{
+	criteria		IsAlyx EnemyIsAntLion ConceptTalkAttacking PlayerNear AlyxNotSuggestedFlip PlayerUsingPhysCannon ConceptNotInAntLionTraining IsMapNOT_ep1_c17_02 EnemyIsNotFar
+        applycontext "AlyxSuggestsAntLionFlip:1:0"
+	response		AlyxAntLionDanger  
+}
+
 //==================================
 // Reloading
 //==================================
+// Basic Reloading line
 response AlyxEpisodicHideAndReload
 {
    	scene "scenes/episode_1/al_reload01.vcd" respeakdelay 5		// al_reload01.wav
@@ -993,9 +1143,266 @@ rule AlyxEnemyBurningZombie
 }
 
 
+///////////////////////////////////////////////////////////
+//  Alyx Plus Use Hints
+///////////////////////////////////////////////////////////
+criterion "IsCitPreCore" "al_hint_citPreCore" "1" required weight 8
+
+//Alyx plus use hint  pointing out you need to find the core
+criterion "NotUsedAlyxCitCoreSoon" "UsedAlyxCitCoreSoon" "!=1" "required" weight 0
+
+response AlyxCitCoreSoon
+{
+	scene "scenes/episode_1/citadel/al_gettocoresoon.vcd" 
+	scene "scenes/episode_1/citadel/al_gottogettocore.vcd" 
+	
+}
+
+rule AlyxCitCoreSoon
+{
+	criteria IsAlyx ConceptTalkUse IsCitPreCore NotUsedAlyxCitCoreSoon NotUsedAlyxResponse 
+        applycontext "UsedAlyxCitCoreSoon:1:300,UsedAlyxResponse:1:30"
+	response AlyxCitCoreSoon
+}
 
 
 
+
+//Alyx plus use hint glad we are doing this together
+criterion "NotUsedAlyxCitDoingTogether" "UsedAlyxCitDoingTogether" "!=1" "required" weight 0
+
+response AlyxCitDoingTogether
+{
+	scene "scenes/episode_1/citadel/al_citvista_glad.vcd" 
+}
+
+rule AlyxCitDoingTogether
+{
+	criteria IsAlyx ConceptTalkUse IsCitPreCore NotUsedAlyxCitDoingTogether NotUsedAlyxResponse
+        applycontext "UsedAlyxCitDoingTogether:1:0"
+	response AlyxCitDoingTogether
+}
+
+
+//====================================================
+//////General Alyx Plus Use
+//====================================================
+//Keeping the vocal response to one every 30 seconds so the user can't get her to be a sampler.
+//if player is below 50% health
+response AlyxUsePlayerWounded
+{
+	scene "scenes/npc/alyx/al_player_healthlow02.vcd"  
+	scene "scenes/npc/alyx/al_player_healthlow03.vcd"  
+	scene "scenes/npc/alyx/al_player_healthlow05.vcd"  
+}
+
+rule AlyxUsePlayerWounded
+{
+	criteria IsAlyx ConceptTalkUse PlayerWounded NotUsedAlyxResponse
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxUsePlayerWounded
+}
+
+//General coverage
+response AlyxUseEverywhere
+{
+	scene "scenes/npc/alyx/al_affirm01.vcd" 
+	scene "scenes/npc/alyx/al_affirm03.vcd" 
+	scene "scenes/npc/alyx/al_affirm05.vcd" 
+	scene "scenes/npc/alyx/al_playerstare01-vocal.vcd" 
+	scene "scenes/npc/alyx/al_playerstare02.vcd"
+	scene "scenes/npc/alyx/al_lead_start05.vcd" 
+	scene "scenes/npc/alyx/al_lead_start06.vcd" 
+}
+
+
+rule AlyxUseEverywhere
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse NotInCombat
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxUseEverywhere
+}
+
+
+
+response AlyxUseEverywhereZombies
+{
+	scene "scenes/npc/alyx/al_affirm01.vcd" 
+	scene "scenes/npc/alyx/al_affirm03.vcd" 
+	scene "scenes/npc/alyx/al_affirm05.vcd" 
+	scene "scenes/npc/alyx/al_playerstare01-vocal.vcd" 
+	scene "scenes/npc/alyx/al_playerstare02.vcd"
+	scene "scenes/npc/alyx/al_lead_start02.vcd" 
+	scene "scenes/npc/alyx/al_lead_start03.vcd" 
+	scene "scenes/npc/alyx/al_lead_start04.vcd" 
+	scene "scenes/npc/alyx/al_lead_start05.vcd" 
+	scene "scenes/npc/alyx/al_lead_start06.vcd" 
+	scene "scenes/npc/alyx/al_follow01.vcd" 
+	scene "scenes/npc/alyx/al_follow02.vcd" 
+	scene "scenes/npc/alyx/al_follow03.vcd" 
+	scene "scenes/npc/alyx/al_follow04.vcd" 
+	scene "scenes/npc/alyx/al_follow05.vcd" 
+	scene "scenes/npc/alyx/al_follow06.vcd" 
+}
+
+rule AlyxUseEverywhereZombies
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse NotInCombat Isal_hint_c17_Zombies
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxUseEverywhereZombies
+}
+
+
+
+response AlyxUsedEverywhere
+{
+	scene "scenes/npc/alyx/al_nomore.vcd" Respeakdelay 5
+	scene "scenes/npc/alyx/al_use_smile.vcd" Respeakdelay 5
+	scene "scenes/npc/alyx/al_use_smile2.vcd" Respeakdelay 5
+	scene "scenes/npc/alyx/al_use_what.vcd" Respeakdelay 5
+	
+}
+rule AlyxUsedEverywhere
+{
+	criteria IsAlyx ConceptTalkUse IsUsedAlyxResponse NotInCombat
+	response AlyxUsedEverywhere
+}
+
+
+//plus use hint while in darkness
+criterion "IsMapEp1_C17_01" "map" "ep1_c17_01" "required" weight 10
+response AlyxUseC1701
+{
+	scene "scenes/episode_1/c17/al_hiding03.vcd" // I wonder how things are outside the city
+ 	scene "scenes/episode_1/c17/al_evac_ontous02.vcd" //   better find barney and get moving	
+ 	scene "scenes/episode_1/c17/al_notellingtime.vcd" // there is no telling how much time we have, it can't be that much farther to the train station
+ 	scene "scenes/episode_1/c17/al_slugourway.vcd" //looks like we are going to have to slug our way through here... the longer we take to find the trainstation, the more dangerous it gets.
+
+}
+
+rule AlyxUseC1701
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse  IsMapEp1_C17_01 NotInCombat
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxUseC1701
+}
+
+
+//Plus use hint for first light bridge
+criterion "Isal_hint_citLightBridge" "al_hint_citLightBridge" "1" "required" weight 10
+criterion "NotUsedIsal_hint_citLightBridge" "UsedIsal_hint_citLightBridge" "!=1" "required" weight 0
+response AlyxUseLightBridge
+{
+    	scene "scenes/episode_1/citadel/al_ifonlybridgepower.vcd"  //   if there was only some way to power up this bridge
+}
+
+rule AlyxUseLightBridge
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse  Isal_hint_citLightBridge NotInCombat  NotUsedIsal_hint_citLightBridge
+        applycontext "UsedAlyxResponse:1:30,UsedIsal_hint_citLightBridge:1:0"
+	response AlyxUseLightBridge
+}
+
+response AlyxUseDarkness
+{
+	scene "scenes/npc/alyx/al_dark_near01.vcd" // I'm right here
+	scene "scenes/npc/alyx/al_dark_near02.vcd" // I'm with you
+	scene "scenes/npc/alyx/al_dark_stayclose01.vcd" //	stay close okay
+	scene "scenes/npc/alyx/al_dark_stayclose03.vcd" // lets stick together in here
+
+}
+
+rule AlyxUseDarkness
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse ContextInDarkness NotInCombat Isal_hint_c17_Zombies
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxUseDarkness
+}
+
+
+criterion "NotIsal_hint_c17_Zombies" "al_hint_c17_Zombies" "!=1" "required" weight 8
+criterion "IsMapEp1_c17_00" "map" "ep1_c17_00" "required"
+response AlyxUseZombies
+{
+	norepeat
+	scene "scenes/npc/alyx/al_alert_zombies06.vcd" // ugh, that smell can only mean zombies
+	scene "scenes/npc/alyx/al_alert_zombies07.vcd" // whats with that smell
+}
+
+rule AlyxUseZombies
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse NotInCombat NotIsal_hint_c17_Zombies IsMapEp1_c17_00
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxUseZombies
+}
+
+
+criterion "NotUsedAlyxUseExictedAboutData" "UsedAlyxUseExictedAboutData" "!=1" "required" weight 1
+criterion "IsMapEp1_c17_02" "map" "ep1_c17_02" "required"
+response AlyxUseExictedAboutData
+{
+	norepeat
+  	scene "scenes/episode_1/c17/al_cantwait.vcd" 
+}
+
+rule AlyxUseExictedAboutData
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse NotInCombat  IsMapEp1_c17_02 NotUsedAlyxUseExictedAboutData
+        applycontext "UsedAlyxResponse:1:30,UsedAlyxUseExictedAboutData:1:0"
+	response AlyxUseExictedAboutData
+}
+
+
+
+response AlyxUseRecentCombat
+{
+	scene "scenes/npc/alyx/al_post_combat02.vcd"
+	scene "scenes/npc/alyx/al_post_combat03.vcd"
+	scene "scenes/npc/alyx/al_post_combat04.vcd"
+	scene "scenes/npc/alyx/al_post_combat05.vcd"
+	scene "scenes/npc/alyx/al_post_combat06.vcd" 
+}
+
+rule AlyxUseRecentCombat
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse AlyxWounded NotInCombat
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxUseRecentCombat
+}
+
+
+criterion "ConceptTalkPlayerUse" "Concept" "TLK_PLAYERUSE" required
+ 
+//talk use commands
+criterion "HintLedgePlayerFirst" "al_hint_citLedgePlayerFirst" "1" required
+ 
+response "AlyxUseLedge"
+{
+	scene "scenes/npc/alyx/al_follow03.vcd" 
+	scene "scenes/npc/alyx/al_follow05.vcd"
+	scene "scenes/npc/alyx/al_follow06.vcd" 
+}
+rule AlyxUseLedge
+{
+	criteria IsAlyx ConceptTalkPlayerUse HintLedgePlayerFirst
+	applycontext "UsedAlyxResponse:1:30"
+	response AlyxUseLedge
+}
+
+criterion "IsMap_ep1_c17_06" "map" "ep1_c17_06" "required" weight 50
+response AlyxUsedEp1_06
+{
+	scene "scenes/npc/alyx/al_nomore.vcd" Respeakdelay 5
+	scene "scenes/npc/alyx/al_use_smile.vcd" Respeakdelay 5
+	scene "scenes/npc/alyx/al_use_smile2.vcd" Respeakdelay 5
+	scene "scenes/npc/alyx/al_use_what.vcd" Respeakdelay 5
+	
+}
+rule AlyxUsedEp1_06
+{
+	criteria IsAlyx ConceptTalkUse NotInCombat IsMap_ep1_c17_06
+	response AlyxUsedEp1_06
+}
 
 
 //============================================================================================================

@@ -7,6 +7,7 @@ ENT.AdminOnly = true
 
 ENT.PrintName = "Sun Editor"
 ENT.Category = "Editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the sun. Rotate the entity to move the sun."
 
 function ENT:Initialize()
 

@@ -207,3 +207,13 @@
 		1 : "Team 1"
 	]
 ]
+
+@PointClass base(Targetname) sphere(ball_size, 255, 255, 255, diameter) iconsprite("sprites/sent_ball_hammer.vmt") = sent_ball : 
+	"An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. "+
+	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests." +
+	"This spotlight is entirely client side, it is not sync'd across clients."
+[
+	ball_size(float) : "Ball Size" : 30 : "The size of the ball. Use the sphere helper for accurate in-world size."
+
+	rendercolor(color255) : "Ball Color (R G B)" : "255 255 255" : "The ball color"
+]

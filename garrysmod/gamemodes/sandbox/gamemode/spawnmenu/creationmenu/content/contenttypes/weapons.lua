@@ -10,7 +10,7 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, bro
 
 		if ( !weapon.Spawnable ) then continue end
 
-		local Category = weapon.Category or "Other2"
+		local Category = weapon.Category or "Other"
 		if ( !isstring( Category ) ) then Category = tostring( Category ) end
 
 		Categorised[ Category ] = Categorised[ Category ] or {}

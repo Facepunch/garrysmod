@@ -301,4 +301,4 @@ end
 function PANEL:GenerateExample( class, tabs, w, h )
 end
 
-derma.DefineControl( "DForm", "WHAT", PANEL, "DCollapsibleCategory" )
+derma.DefineControl( "DForm", "A panel with quick methods to create basic user inputs.", PANEL, "DCollapsibleCategory" )

@@ -2,7 +2,7 @@
 {
 	"parentid"		"0"
 	"icon"		"games/16/tf.png"
-	"id"		"23"
+	"id"		"31"
 	"needsapp"		"tf"
 	"name"		"Team Fortress 2"
 	"version"		"3"

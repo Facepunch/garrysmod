@@ -278,5 +278,12 @@ list.Set( "LampTextures", "effects/flashlight/camera", { Name = "#lamptexture.ca
 list.Set( "LampTextures", "effects/flashlight/view", { Name = "#lamptexture.view" } )
 
 list.Set( "LampModels", "models/lamps/torch.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", {} )
+list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight01_lamp.mdl", { Offset = Vector( 9, 0, 4 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight02_lamp.mdl", { Offset = Vector( 5.5, 0, 0 ), Skin = 1 } )
+list.Set( "LampModels", "models/props_c17/light_decklight01_off.mdl", { Offset = Vector( 3, 0, 0 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/prison_lamp001c.mdl", { Offset = Vector( 0, 0, -5 ), Angle = Angle( 90, 0, 0 ) } )
+
+-- This works, but the ghost entity is invisible due to $alphatest...
+--list.Set( "LampModels", "models/props_c17/lamp_standard_off01.mdl", { Offset = Vector( 5.20, 0.25, 8 ), Angle = Angle( 90, 0, 0 ), NearZ = 6 } )

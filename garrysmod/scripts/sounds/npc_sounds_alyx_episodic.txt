@@ -1539,7 +1539,7 @@
 
 "ep_01.al_dark_breathing01"
 {
-	"channel"		"CHAN_VOICE"
+	"channel"		"CHAN_BODY" // GMOD: Do not interrupt other voice lines. The game ramps the volume of this down when Alyx is speaking
 	"volume"		"0.100"
 	"pitch"			"PITCH_NORM"
 

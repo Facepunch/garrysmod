@@ -2,7 +2,7 @@
 -- Variables that are used on both client and server
 
 SWEP.PrintName		= "#GMOD_ToolGun"
-SWEP.Author			= ""
+SWEP.Author			= "Facepunch"
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
 SWEP.Instructions	= ""

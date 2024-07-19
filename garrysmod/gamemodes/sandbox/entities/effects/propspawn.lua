@@ -89,7 +89,7 @@ function EFFECT:RenderOverlay( entity )
 			-- Draw model with refraction texture
 			render.MaterialOverride( matRefract )
 				entity:DrawModel()
-			render.MaterialOverride( 0 )
+			render.MaterialOverride()
 
 		end
 

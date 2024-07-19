@@ -27,12 +27,17 @@ criterion "ConceptTalkQuestionCitizen" "Concept" "TLK_QUESTION_CIT" required
 criterion "ConceptTalkAnswerVort" "Concept" "TLK_ANSWER_VORT" required weight 1
 criterion "ConceptTalkQuestionVort" "Concept" "TLK_QUESTION_VORT" required 
 
+// Ep2
+criterion "ConceptTalkQuestionHello" "Concept" "TLK_HELLO_NPC" required
+criterion "ConceptTalkAnswerHello" "Concept" "TLK_ANSWER_HELLO" required
+
 // General concepts
 criterion "ConceptTalkLook" "Concept" "TLK_LOOK" required
 criterion "ConceptTalkIdle" "Concept" "TLK_IDLE" required
 criterion "ConceptTalkStare" "Concept" "TLK_STARE" required
 
 criterion "NotUsedAlyxResponse" "UsedAlyxResponse" "!=1" "required" weight 0
+criterion "IsUsedAlyxResponse" "UsedAlyxResponse" "1" "required" weight 0
 criterion "NotUsedCitizenResponse" "UsedCitizenResponse" "!=1" "required" weight 0
 criterion "ConceptTalkUse" "Concept" "TLK_USE" required
 criterion "ConceptTalkStartFollow" "Concept" "TLK_STARTFOLLOW" required
@@ -124,12 +129,16 @@ criterion "ContextPlayerPuntedGrenade" "punted_grenade" "1" "required"
 criterion "ConceptSpottedZombieWakeup" "Concept" "TLK_SPOTTED_ZOMBIE_WAKEUP" "required"
 criterion "ConceptPlayerHeadShot" "Concept" "TLK_PLAYER_HEADSHOT" "required"
 criterion "ConceptDarknessFlashlightExpired" "Concept" "TLK_DARKNESS_FLASHLIGHT_EXPIRED" "required"
+criterion "ConceptDarknessFlashlightOff" "Concept" "TLK_FLASHLIGHT_OFF" "required"
+criterion "ConceptDarknessFlashlightOn" "Concept" "TLK_FLASHLIGHT_ON" "required"
 criterion "ContextPlayer1Shot" "oneshot" "1" "required"
 criterion "ConceptDangerZombineGrenade" "Concept" "TLK_DANGER_ZOMBINE_GRENADE" "required"
 criterion "ConceptPlayerConsecutiveKill" "Concept" "TLK_PLAYER_CONSECUTIVE_KILL" "required"
 criterion "ConceptPlayerKillStreak" "consecutive_player_kills" ">4" "required"
 criterion "ConceptPlayerKilledBarrel" "Concept" "TLK_PLAYER_KILLED_BARREL" "required"
 criterion "ConceptPlayerKillsBarrels" "num_barrels" ">2" "required"
+criterion "AlyxBehavoirisFuncTank" "active_behavior" "FuncTank" "required"
+criterion "AlyxNoWeapon" "weapon" "none" "required"
 criterion "PlayerUsingPhysCannon" "playerweapon"  "weapon_physcannon" required
 criterion "PlayerNotUsingPhysCannon" "playerweapon"  "!=weapon_physcannon" required
 criterion "PlayerUsingMines" "playerweapon"  "weapon_frag" required
@@ -158,6 +167,7 @@ criterion "ConceptDarkHearSound" "Concept" "TLK_DARKNESS_HEARDSOUND" "required"	
 criterion "ConceptDarkLostEnemyByFlashlight" "Concept" "TLK_DARKNESS_LOSTENEMY_BY_FLASHLIGHT" "required"	// Spoken when Alyx loses sight of enemy if player turns off light
 criterion "ConceptDarkFoundEnemyByFlashlight" "Concept" "TLK_DARKNESS_FOUNDENEMY_BY_FLASHLIGHT" "required"	// Spoken when Alyx first spots enemy by flashlight
 criterion "ConceptDarkLostEnemyByFlashlightExpired" "Concept" "TLK_DARKNESS_LOSTENEMY_BY_FLASHLIGHT_EXPIRED" "required"	// Alyx loses sight of enemy by light turning off when battery is out or low
+criterion "ContextInDarkness" "darkness_mode" "1" "required"	// Alyx in Darkness - not if she can see or not.
 
 // Lead behavior
 criterion "ConceptLeadStart" "Concept" "TLK_LEAD_START" required			// Spoken once when the NPC first starts to lead the player
@@ -230,6 +240,7 @@ criterion "NotSeenByPlayer" "seenbyplayer" "!=1" required
 criterion "NoRecentCombat" "timesincecombat" ">25" required
 criterion "NoRecentCombatShort" "timesincecombat" ">8" required
 criterion "NotInCombat" "timesincecombat" ">1" required
+//criterion "InCombat" "combat_length" ">0" required // Used for Alyx in EP1?
 criterion "InCombat" "timesincecombat" "<0" required
 criterion "InCombatLong" "combat_length" ">60" required
 criterion "InCombatMedium" "combat_length" ">20" required
@@ -237,10 +248,11 @@ criterion "NoRecentSeenPlayerShort" "timesinceseenplayer" ">12, <=25" required
 criterion "NoRecentSeenPlayer" "timesinceseenplayer" ">25, <=120" required
 criterion "NoRecentSeenPlayerLong" "timesinceseenplayer" ">120" required
 criterion "EnemyIsFar" "distancetoenemy" ">600" required
-criterion "EnemyIsNotClose" "distancetoenemy" ">80" required
+criterion "EnemyIsNotClose" "distancetoenemy" ">80" required //  <100 in Ep1
+criterion "EnemyIsNotFar" "distancetoenemy" "<600" required
 criterion "EnemyIsClose" "distancetoenemy" "<80" required
 criterion "EnemyCouleBeDistant" "distancetoenemy" "<1500" required
-criterion "EnemyIsReallyClose" "distancetoenemy" "<20" required
+criterion "EnemyIsReallyClose" "distancetoenemy" "<20" required // <50 in Ep1
 criterion "RecentCombat" "timesincecombat" ">0, <3" required
 
 criterion "PlayerFallDeath" "Concept" "TLK_PLAYERFELL" required				//Fired by mapper when the player falls to his imminent death
@@ -286,6 +298,8 @@ criterion "IsGordonPreCriminal" "gordon_precriminal" "1" required
 criterion "IsPreDisaster" "disaster" "[disaster::pre]" required weight 2
 criterion "IsPostDisaster" "disaster" "[disaster::post]" required weight 2
 criterion "IsEpisodic" "episodic" "1" required
+
+criterion "IsMap_d3_c17_09" "map" "d3_c17_09" "required"
 
 // Q&A
 criterion "IsSpeechTargetACitizen" "speechtarget" "npc_citizen" required
