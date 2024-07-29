@@ -53,6 +53,19 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, stack, addonti
 
 end )
 
+hook.Add( "OnPauseMenuBlockedTooManyTimes", "TellAboutShiftEsc", function()
+
+	Errors[ "internal_shift+esc" ] = {
+		first	= SysTime(),
+		last	= SysTime(),
+		times	= 1,
+		title	= "",
+		x		= 32,
+		text	= "You can force open the main menu by holding Shift when pressing the Escape key."
+	}
+
+end )
+
 local matAlert = Material( "icon16/error.png" )
 
 local cl_drawhud = GetConVar( "cl_drawhud" )
