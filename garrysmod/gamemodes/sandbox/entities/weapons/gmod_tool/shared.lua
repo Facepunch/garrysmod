@@ -144,7 +144,8 @@ function SWEP:Think()
 			local lastmode_obj = self:GetToolObject( lastmode )
 
 			if ( lastmode_obj ) then
-				lastmode_obj:ReleaseGhostEntity()
+				lastmode_obj:ReleaseGhostEntity() -- In case tool overwrites the default Holster
+				lastmode_obj:Holster( true )
 			end
 		end
 
@@ -157,7 +158,11 @@ function SWEP:Think()
 		if ( lastmode_obj ) then
 			-- We want to release the ghost entity just in case
 			lastmode_obj:ReleaseGhostEntity()
+			lastmode_obj:Holster( true )
 		end
+
+		-- Deploy the new tool
+		tool:Deploy( true )
 	end
 
 	self.Primary.Automatic = tool.LeftClickAutomatic or false

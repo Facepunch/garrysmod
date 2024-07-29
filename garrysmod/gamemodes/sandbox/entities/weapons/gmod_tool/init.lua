@@ -31,24 +31,5 @@ local function CC_GMOD_Tool( ply, command, arguments )
 	-- Switch weapons
 	ply:SelectWeapon( "gmod_tool" )
 
-	-- Get the weapon and send a fake deploy command
-	local wep = ply:GetWeapon( "gmod_tool" )
-
-	if ( IsValid( wep ) ) then
-
-		-- Holster the old 'tool'
-		if ( wep.Holster ) then
-			wep:Holster()
-		end
-
-		wep.Mode = targetMode
-
-		-- Deploy the new
-		if ( wep.Deploy ) then
-			wep:Deploy()
-		end
-
-	end
-
 end
 concommand.Add( "gmod_tool", CC_GMOD_Tool, nil, nil, { FCVAR_SERVER_CAN_EXECUTE } )
