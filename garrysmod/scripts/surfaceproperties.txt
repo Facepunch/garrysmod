@@ -62,21 +62,10 @@
 	"scrapeRoughThreshold" "0.5"
 	"impactHardThreshold" "0.5"
 
-	//Occlusion properties reduce sound of that pitch level by a certain
-	//percentage for every game unit (inch) of the material the sound
-	//passes through.
-	"lowPitchOcclusion" "0.0"
-	"midPitchOcclusion" "15.0"
-	"highPitchOcclusion" "1.0"
-
 	"gamematerial"	"C"
-	
 	"jumpfactor" "1.0"
 	"maxspeedfactor" "1.0"
 	"climbable"	"0"
-	
-	"penetrationmodifier" "1.0"
-	"damagemodifier" "0.5"
 }
 
 // NOTE: Almost nothing is solid metal - so "metal" is sheet metal
