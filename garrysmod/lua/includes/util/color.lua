@@ -6,7 +6,7 @@ COLOR.__index = COLOR
 	Register our metatable to make it accessible using FindMetaTable
 -----------------------------------------------------------]]
 
-debug.getregistry().Color = COLOR
+RegisterMetaTable("Color", COLOR)
 
 --[[---------------------------------------------------------
 	To easily create a color table

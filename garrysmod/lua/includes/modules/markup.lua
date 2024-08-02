@@ -12,7 +12,7 @@ local _Color = Color
 
 local MarkupObject = {}
 MarkupObject.__index = MarkupObject
-debug.getregistry().MarkupObject = MarkupObject
+RegisterMetaTable("MarkupObject", MarkupObject)
 
 module("markup")
 
@@ -320,7 +320,7 @@ function Parse( ml, maxwidth )
 	for i, blk in ipairs( blocks ) do
 
 		surface.SetFont( blk.font )
-		
+
 		blk.text = string.gsub( blk.text, "(&.-;)", unescapeEntities )
 
 		local thisY = 0
@@ -386,7 +386,7 @@ function Parse( ml, maxwidth )
 						xMax = xOffset + x1
 					end
 				end
-				
+
 				curString = ""
 
 				local xOldSize = xSize
@@ -396,7 +396,7 @@ function Parse( ml, maxwidth )
 
 				if ( xOffset == xOldOffset ) then
 					xOffset = xOffset + 50
-					
+
 					if ( maxwidth and xOffset > maxwidth ) then
 						-- Needs a new line
 						if ( thisY == 0 ) then
