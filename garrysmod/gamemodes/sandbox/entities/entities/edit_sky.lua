@@ -95,7 +95,7 @@ hook.Add( "PlayerSpawnedSENT", "CopyOverEditSkySettings", function( ply, ent )
 	ent:SetStarTexture( skyPaint:GetStarTexture() )
 	ent:SetStarSpeed( skyPaint:GetStarSpeed() )
 	ent:SetStarFade( skyPaint:GetStarFade() )
-	ent:SetStarFade( skyPaint:GetStarFade() )
+	ent:SetStarScale( skyPaint:GetStarScale() )
 
 	ent:SetDuskIntensity( skyPaint:GetDuskIntensity() )
 	ent:SetDuskScale( skyPaint:GetDuskScale() )
