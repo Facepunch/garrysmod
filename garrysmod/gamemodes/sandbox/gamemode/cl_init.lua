@@ -116,6 +116,7 @@ function GM:PostRenderVGUI()
 end
 
 local PhysgunHalos = {}
+local lastPhysgunDraw = {}
 
 --[[---------------------------------------------------------
 	Name: gamemode:DrawPhysgunBeam()
@@ -123,10 +124,34 @@ local PhysgunHalos = {}
 -----------------------------------------------------------]]
 function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
-	if ( physgun_halo:GetInt() == 0 ) then return true end
+	if ( !physgun_halo:GetBool() ) then 
+		
+		PhysgunHalos = nil
+		lastPhysgunDraw = nil
+		
+		return true 
 
-	if ( IsValid( target ) ) then
-		PhysgunHalos[ ply ] = target
+	end
+
+	PhysgunHalos = PhysgunHalos || {}
+	lastPhysgunDraw = lastPhysgunDraw || {}
+
+	local ent = IsValid( target ) && target || nil
+
+	if ( ent ) then
+
+		local tab = PhysgunHalos[ ply ] || {}
+
+		tab[ 1 ] = ent
+
+		lastPhysgunDraw[ ply ] = CurTime()
+		PhysgunHalos[ ply ] = tab
+
+	else
+
+		PhysgunHalos[ ply ] = nil
+		lastPhysgunDraw[ ply ] = nil
+
 	end
 
 	return true
@@ -135,20 +160,27 @@ end
 
 hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
-	if ( !PhysgunHalos || table.IsEmpty( PhysgunHalos ) ) then return end
+	if ( !PhysgunHalos ) then return end
 
 	for k, v in pairs( PhysgunHalos ) do
 
-		if ( !IsValid( k ) ) then continue end
+		if ( !IsValid( k ) or CurTime() > lastPhysgunDraw[ k ] ) then
+
+			PhysgunHalos[ k ] = nil
+			lastPhysgunDraw[ k ] = nil
+
+			continue
+
+		end
+
+		if ( !v[ 1 ] ) then continue end
 
 		local size = math.random( 1, 2 )
 		local colr = k:GetWeaponColor() + VectorRand() * 0.3
 
-		halo.Add( PhysgunHalos, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
+		halo.Add( v, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
 
 	end
-
-	PhysgunHalos = {}
 
 end )
 
