@@ -408,3 +408,15 @@ function util.IsBinaryModuleInstalled( name )
 
 	return false
 end
+
+function util.In( thing, ... )
+    for i = 1, select( '#', ... ) do
+        local cur = select( i, ... )
+
+        if thing == cur then
+            return true
+        end
+    end
+
+    return false
+end
