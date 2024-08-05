@@ -1,3 +1,10 @@
+--[[---------------------------------------------------------
+	Include init_pre scripts
+-----------------------------------------------------------]]
+
+for k, v in ipairs( file.Find("init_pre/*.lua", "LUA") ) do
+	include("init_pre/"..v)
+end
 
 --[[---------------------------------------------------------
 	Non-Module includes
@@ -123,3 +130,10 @@ if ( CLIENT ) then
 
 end
 
+--[[---------------------------------------------------------
+	Include init_post scripts
+-----------------------------------------------------------]]
+
+for k, v in ipairs( file.Find("init_post/*.lua", "LUA") ) do
+	include("init_post/"..v)
+end
