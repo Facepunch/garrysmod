@@ -122,7 +122,7 @@ local function tablePrint( tbl, _lvl, _done )
 	end
 
 	if ( len == 0 ) then
-		return MsgC( red, "{}" )
+		return MsgC( red, "{}\n" )
 	end
 
 	local isSeq = len == #tbl
@@ -185,7 +185,7 @@ local function tablePrint( tbl, _lvl, _done )
 
 	MsgC( table_indent, red, "}" )
 
-	if ( lvl == 1 ) then Msg( "\n" ) end
+	if ( _lvl == 1 ) then Msg( "\n" ) end
 end
 
 function table.Print( tbl )
