@@ -131,8 +131,13 @@ local EntitySaver =
 		-- Merge the entities actual table with the table we're saving
 		-- this is terrible behaviour - but it's what we've always done.
 		--
-		if ( ent.PreEntityCopy ) then ent:PreEntityCopy() end
-		table.Merge( data, ent:GetTable() )
+		if ( ent.PreEntityCopy ) then
+			if not ent:PreEntityCopy() then
+				table.Merge( data, ent:GetTable() )
+			end
+		else
+			table.Merge( data, ent:GetTable() )
+		end
 		if ( ent.PostEntityCopy ) then ent:PostEntityCopy() end
 
 		--
