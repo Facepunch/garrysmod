@@ -170,7 +170,7 @@ function PANEL:Init()
 		self.AnimSearch:DockMargin( 0, 0, 0, 2 )
 		self.AnimSearch:SetPlaceholderText( "Search" )
 		self.AnimSearch.OnChange = function( p )
-			self:Refresh()
+			self:FillAnimations( ent, p:GetText() )
 		end
 
 		self.AnimList = anims:Add( "DListView" )
