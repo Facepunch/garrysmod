@@ -165,6 +165,14 @@ function PANEL:Init()
 	anims:DockPadding( 2, 0, 2, 2 )
 	right:AddSheet( "#smwidget.animations", anims, "icon16/monkey.png" )
 
+		self.AnimSearch = anims:Add( "DTextEntry" )
+		self.AnimSearch:Dock( TOP )
+		self.AnimSearch:DockMargin( 0, 0, 0, 2 )
+		self.AnimSearch:SetPlaceholderText( "Search" )
+		self.AnimSearch.OnChange = function( p )
+			self:Refresh()
+		end
+
 		self.AnimList = anims:Add( "DListView" )
 		self.AnimList:AddColumn( "name" )
 		self.AnimList:Dock( FILL )
@@ -530,16 +538,24 @@ function PANEL:Refresh()
 	ent:SetLOD( 0 )
 
 	self:BestGuessLayout()
-	self:FillAnimations( ent )
+	self:FillAnimations( ent, self.AnimSearch:GetText() )
 	self:SetDefaultLighting()
 
 end
 
-function PANEL:FillAnimations( ent )
+function PANEL:FillAnimations( ent, filter )
 
 	self.AnimList:Clear()
 
-	for k, v in SortedPairsByValue( ent:GetSequenceList() or {} ) do
+	local sequences = {}
+	for k, v in ipairs( ent:GetSequenceList() ) do
+		if ( filter && !string.find( string.lower( v ), filter ) ) then continue end
+		v = string.lower( v )
+
+		table.insert( sequences, v )
+	end
+
+	for k, v in SortedPairsByValue( sequences ) do
 
 		local line = self.AnimList:AddLine( string.lower( v ) )
 
