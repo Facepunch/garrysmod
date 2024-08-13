@@ -171,6 +171,27 @@ function PANEL:Init()
 		self.AnimList:SetMultiSelect( false )
 		self.AnimList:SetHideHeaders( true )
 
+		self.AnimList.OnRowSelected = function( _, _, line )
+			local ent = self.ModelPanel:GetEntity()
+			if ( !IsValid( ent ) ) then return end
+
+			local speed = ent:GetPlaybackRate()
+			ent:ResetSequence( line:GetColumnText( 1 ) )
+			ent:SetCycle( 0 )
+			ent:SetPlaybackRate( speed )
+			if ( speed < 0 ) then ent:SetCycle( 1 ) end
+		end
+
+		self.AnimList.OnRowRightClick = function( _, _, line )
+			local menu = DermaMenu( false, line )
+
+			menu:AddOption( "Copy", function()
+				SetClipboardText( line:GetColumnText( 1 ) )
+			end )
+
+			menu:Open()
+		end
+
 		self.AnimSearch = anims:Add( "DTextEntry" )
 		self.AnimSearch:Dock( TOP )
 		self.AnimSearch:DockMargin( 0, 0, 0, 2 )
@@ -528,6 +549,8 @@ end
 
 function PANEL:Refresh()
 
+	CloseDermaMenus()
+
 	if ( !self:GetModel() ) then return end
 
 	self.ModelPanel:SetModel( self:GetModel() )
@@ -552,25 +575,16 @@ function PANEL:FillAnimations( ent, filter )
 
 	local sequences = {}
 	for k, v in ipairs( ent:GetSequenceList() ) do
-		if ( filter && !string.find( string.lower( v ), filter ) ) then continue end
 		v = string.lower( v )
+
+		if ( filter && !string.find( v, string.lower( filter ) ) ) then continue end
 
 		table.insert( sequences, v )
 	end
 
 	for k, v in SortedPairsByValue( sequences ) do
 
-		local line = self.AnimList:AddLine( string.lower( v ) )
-
-		line.OnSelect = function()
-
-			local speed = ent:GetPlaybackRate()
-			ent:ResetSequence( v )
-			ent:SetCycle( 0 )
-			ent:SetPlaybackRate( speed )
-			if ( speed < 0 ) then ent:SetCycle( 1 ) end
-
-		end
+		self.AnimList:AddLine( v )
 
 	end
 
