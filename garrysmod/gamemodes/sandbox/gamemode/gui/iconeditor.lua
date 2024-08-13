@@ -165,19 +165,22 @@ function PANEL:Init()
 	anims:DockPadding( 2, 0, 2, 2 )
 	right:AddSheet( "#smwidget.animations", anims, "icon16/monkey.png" )
 
-		self.AnimSearch = anims:Add( "DTextEntry" )
-		self.AnimSearch:Dock( TOP )
-		self.AnimSearch:DockMargin( 0, 0, 0, 2 )
-		self.AnimSearch:SetPlaceholderText( "Search" )
-		self.AnimSearch.OnChange = function( p )
-			self:FillAnimations( ent, p:GetText() )
-		end
-
 		self.AnimList = anims:Add( "DListView" )
 		self.AnimList:AddColumn( "name" )
 		self.AnimList:Dock( FILL )
 		self.AnimList:SetMultiSelect( false )
 		self.AnimList:SetHideHeaders( true )
+
+		self.AnimSearch = anims:Add( "DTextEntry" )
+		self.AnimSearch:Dock( TOP )
+		self.AnimSearch:DockMargin( 0, 0, 0, 2 )
+		self.AnimSearch:SetPlaceholderText( "Search" )
+		self.AnimSearch.OnChange = function( p )
+			local ent = self.ModelPanel:GetEntity()
+			if ( !IsValid( ent ) ) then return end
+			
+			self:FillAnimations( ent, p:GetText() )
+		end
 
 	-- Bodygroups
 
