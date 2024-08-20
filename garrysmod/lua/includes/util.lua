@@ -318,14 +318,14 @@ end
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedSin( freq, min, max, offset )
-	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
+	return math.sin( freq * math.tau * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedCos( freq, min, max, offset )
-	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
+	return math.cos( freq * math.tau * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end
 
 --[[---------------------------------------------------------
