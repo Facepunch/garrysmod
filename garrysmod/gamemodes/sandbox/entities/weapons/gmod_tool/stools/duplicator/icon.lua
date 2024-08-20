@@ -107,7 +107,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 			entities[ k ]:SetSkin( v.Skin or 0 )
 			for bg_k, bg_v in pairs( v.BodyG or {} ) do entities[ k ]:SetBodygroup( bg_k, bg_v ) end
 
-			for j = 0, math.pi * 2, 0.2 do
+			for j = 0, math.tau, 0.2 do
 
 				view.origin = CamPos + Up * math.sin( j ) + Right * math.cos( j )
 				cam.Start( view )
@@ -137,7 +137,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		-- Render each entity in a circle
 		for k, v in pairs( Dupe.Entities ) do
 
-			for j = 0, math.pi * 2, 0.2 do
+			for j = 0, math.tau, 0.2 do
 
 				view.origin = CamPos + Up * math.sin( j ) + Right * math.cos( j )
 				cam.Start( view )
