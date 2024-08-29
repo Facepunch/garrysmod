@@ -232,6 +232,8 @@ vgui.Register( "SpawnIcon", PANEL, "DButton" )
 
 spawnmenu.AddContentType( "model", function( container, obj )
 
+	if ( !isstring( obj.model ) ) then obj.model = "" end
+
 	local icon = vgui.Create( "SpawnIcon", container )
 
 	if ( obj.body ) then
