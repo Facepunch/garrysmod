@@ -93,6 +93,21 @@ local function UpdateMaps()
 	}
 	for _, map in ipairs( EP2Maps ) do MapNames[ map ] = "Half-Life 2: Episode 2" end
 
+	local GStringMaps = {
+		"dragon_girl", "dragon_girl1", "dragon_girl2", "dragon_girl3", "free_mars1", "free_mars2",
+		"free_mars3", "hazardous_ai", "hazardous_ai_more",  "hazardous_ai0", "hazardous_ai01", "hazardous_ai2", "hazardous_ai3", "hazardous_ai3b", "hazardous_ai4",
+		"hazardous_ai5", "hazardous_ai6","hazardous_ai7", "human_waste_x1", "human_waste1", "human_waste2",
+		"human_waste3", "human_waste4", "human_waste5", "human_waste6", "human_waste7", "human_waste8","human_waste9",
+		"lab_rat", "lab_rat1", "money_is_dead", "money_is_dead_1","money_is_dead0", "money_is_dead2", "money_is_dead2_1", "money_is_dead2_2", "money_is_dead3", "money_is_dead3_2",
+		"money_is_dead4", "money_is_dead4_2", "money_is_dead4_3", "murdock_air_x1", "murdock_air_x2", "murdock_air_x3", "murdock_air_x4", "murdock_air_x5",
+		"murdock_air_x6", "murdock_air1", "murdock_air2", "murdock_air3", "murdock_air4", "murdock_air5", "murdock_air6", "murdock_air7", "murdock_air8",
+		"murdock_air9", "perp_org1", "perp_org2", "perp_org3", "perp_org4", "sabotage", "sabotage1",
+		"smog_storm", "smog_storm1", "smog_storm2", "smog_storm3", "space_race", "space_race1",
+		"space_race2", "space_race3", "space_race4", "space_race5", "terror_management_x1", "terror_management_x2",
+		"terror_management_x3", "the_call1"
+	}
+	for _, map in ipairs( GStringMaps ) do MapNames[ map ] = "G String" end
+
 	MapNames[ "dm_" ] = "Half-Life 2: Deathmatch"
 	MapNames[ "halls3" ] = "Half-Life 2: Deathmatch"
 
