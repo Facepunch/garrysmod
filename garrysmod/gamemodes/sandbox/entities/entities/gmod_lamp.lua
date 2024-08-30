@@ -59,10 +59,7 @@ local defaultOffset = Vector( 5, 0, 0 )
 local defaultAngle = Angle( 0, 0, 0 )
 function ENT:GetLightInfo()
 
-	local lightInfo = {}
-	if ( list.Get( "LampModels" )[ self:GetModel() ] ) then
-		lightInfo = list.Get( "LampModels" )[ self:GetModel() ]
-	end
+	local lightInfo = list.GetForEdit( "LampModels" )[ self:GetModel() ] or {}
 
 	lightInfo.Offset = lightInfo.Offset or defaultOffset
 	lightInfo.Angle = lightInfo.Angle or defaultAngle
@@ -76,16 +73,22 @@ end
 
 if ( SERVER ) then
 
+	local function EqualInColor( first, second )
+		local a, b, c, d = first:GetColor4Part()
+		local e, f, g, h = second:GetColor4Part()
+		return a == e and b == f and c == g and d == h
+	end
+
 	function ENT:Think()
 
 		self.BaseClass.Think( self )
 
-		if ( !IsValid( self.flashlight ) ) then return end
+		local flashlight = self.flashlight
+		if ( not IsValid( flashlight ) ) then return end
+		if ( EqualInColor( flashlight, self ) ) then return end
 
-		if ( string.FromColor( self.flashlight:GetColor() ) != string.FromColor( self:GetColor() ) ) then
-			self.flashlight:SetColor( self:GetColor() )
-			self:UpdateLight()
-		end
+		flashlight:SetColor( self:GetColor() )
+		self:UpdateLight()
 
 	end
 
@@ -200,16 +203,16 @@ function ENT:GetOverlayText()
 end
 
 local matLight = Material( "sprites/light_ignorez" )
+local colLight = Color( 255, 255, 255, 255 )
 --local matBeam = Material( "effects/lamp_beam" )
 function ENT:DrawEffects()
 
 	-- No glow if we're not switched on!
-	if ( !self:GetOn() ) then return end
+	if ( not self:GetOn() ) then return end
 
 	local lightInfo = self:GetLightInfo()
-
+	
 	local LightPos = self:LocalToWorld( lightInfo.Offset )
-	local LightNrm = self:LocalToWorldAngles( lightInfo.Angle ):Forward()
 
 	-- glow sprite
 	--[[
@@ -224,29 +227,32 @@ function ENT:DrawEffects()
 	render.EndBeam()
 	--]]
 
-	local ViewNormal = self:GetPos() - EyePos()
+	local Visibile = util.PixelVisible( LightPos, 16, self.PixVis )
+	if ( not Visibile ) then return end
+
+	local ViewNormal = EyePos()
+	ViewNormal:Negate()
+	ViewNormal:Add( LightPos )
+	
 	local Distance = ViewNormal:Length()
-	ViewNormal:Normalize()
-	local ViewDot = ViewNormal:Dot( LightNrm * -1 )
 
-	if ( ViewDot >= 0 ) then
+	local LightNrm = self:LocalToWorldAngles( lightInfo.Angle ):Forward()
+	local ViewDot = -ViewNormal:Dot( LightNrm ) / Distance
+	if ( ViewDot < 0 ) then return end
 
-		render.SetMaterial( matLight )
-		local Visibile = util.PixelVisible( LightPos, 16, self.PixVis )
+	local Size = math.Clamp( Distance * Visibile * ViewDot * lightInfo.Scale, 64, 512 )
+	Distance = math.Clamp( Distance, 32, 800 )
+	local Alpha = math.Clamp( ( 1000 - Distance ) * Visibile * ViewDot, 0, 100 )
 
-		if ( !Visibile ) then return end
+	render.SetMaterial( matLight )
 
-		local Size = math.Clamp( Distance * Visibile * ViewDot * lightInfo.Scale, 64, 512 )
+	local r, g, b = self:GetColor4Part()
+	colLight:SetUnpacked( r, g, b, Alpha )
 
-		Distance = math.Clamp( Distance, 32, 800 )
-		local Alpha = math.Clamp( ( 1000 - Distance ) * Visibile * ViewDot, 0, 100 )
-		local Col = self:GetColor()
-		Col.a = Alpha
+	render.DrawSprite( LightPos, Size, Size, colLight )
 
-		render.DrawSprite( LightPos, Size, Size, Col )
-		render.DrawSprite( LightPos, Size * 0.4, Size * 0.4, Color( 255, 255, 255, Alpha ) )
-
-	end
+	colLight:SetUnpacked( 255, 255, 255, Alpha )
+	render.DrawSprite( LightPos, Size * 0.4, Size * 0.4, colLight )
 
 end
 

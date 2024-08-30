@@ -7,41 +7,55 @@ ENT.Spawnable = false
 if ( CLIENT ) then
 	ENT.MaxWorldTipDistance = 256
 
+	local FrameLast = FrameNumber()
+	local TraceEndpos = Vector()
+	local TraceConfig = { endpos = TraceEndpos, output = {} }
+
+	local TraceResult, CurrentLookedAt
 	function ENT:BeingLookedAtByLocalPlayer()
-		local ply = LocalPlayer()
-		if ( !IsValid( ply ) ) then return false end
+		local Frame = FrameNumber()
+		if ( Frame ~= FrameLast ) then
+			FrameLast = Frame
 
-		local view = ply:GetViewEntity()
-		local dist = self.MaxWorldTipDistance
-		dist = dist * dist
+			local viewer = GetViewEntity()
+			if ( viewer:IsPlayer() ) then
+				TraceResult = viewer:GetEyeTrace()
+			else
+				local startpos = viewer:GetPos()
+				TraceConfig.start = startpos
+				TraceConfig.filter = viewer
 
-		-- If we're spectating a player, perform an eye trace
-		if ( view:IsPlayer() ) then
-			return view:EyePos():DistToSqr( self:GetPos() ) <= dist && view:GetEyeTrace().Entity == self
+				TraceEndpos:Set( viewer:GetForward() )
+				TraceEndpos:Mul( 32768 )
+				TraceEndpos:Add( startpos )
+
+				TraceResult = util.TraceLine( TraceConfig )
+			end
+
+			CurrentLookedAt = TraceResult.Entity
+
+			local MaxWorldTipDistance = CurrentLookedAt.MaxWorldTipDistance
+			if ( not MaxWorldTipDistance or TraceResult.Fraction * 32768 > MaxWorldTipDistance ) then
+				CurrentLookedAt = nil
+			end
 		end
 
-		-- If we're not spectating a player, perform a manual trace from the entity's position
-		local pos = view:GetPos()
-
-		if ( pos:DistToSqr( self:GetPos() ) <= dist ) then
-			return util.TraceLine( {
-				start = pos,
-				endpos = pos + ( view:GetAngles():Forward() * dist ),
-				filter = view
-			} ).Entity == self
-		end
-
-		return false
+		return self == CurrentLookedAt
 	end
 
 	function ENT:Think()
-		local text = self:GetOverlayText()
-
-		if ( text != "" && self:BeingLookedAtByLocalPlayer() && !self:GetNoDraw() ) then
-			AddWorldTip( self:EntIndex(), text, 0.5, self:GetPos(), self )
-
-			halo.Add( { self }, color_white, 1, 1, 1, true, true )
+		if ( not self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
+			return
 		end
+
+		local text = self:GetOverlayText()
+		if ( not text or text == "" ) then
+			return
+		end
+
+		AddWorldTip( self:EntIndex(), text, 0.5, self:GetPos(), self )
+
+		halo.Add( { self }, color_white, 1, 1, 1, true, true )
 	end
 end
 
