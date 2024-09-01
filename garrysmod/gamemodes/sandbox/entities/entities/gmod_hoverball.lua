@@ -74,22 +74,25 @@ end
 local matGlow = Material( "sprites/light_glow02_add" )
 local colGlow, vecGlow = Color( 255, 255, 255, 255 ), Vector( 0, 0, 0 )
 function ENT:DrawEffects()
+
 	if ( not self:GetEnabled() ) then return end
 
 	local vOffset = self:GetPos()
-	local vDiff = vOffset - EyePos()
-	vDiff:Normalize()
+	local vNormal = EyePos()
+	vNormal:Negate()
+	vNormal:Add( vOffset )
+	vNormal:Normalize()
 
 	render.SetMaterial( matGlow )
 
-	vecGlow:Set( vDiff )
+	vecGlow:Set( vNormal )
 	vecGlow:Mul( -2 )
 	vecGlow:Add( vOffset )
 
 	colGlow:SetUnpacked( 70, 180, 255, 255 )
 	render.DrawSprite( vecGlow, 22, 22, colGlow )
 
-	vecGlow:Set( vDiff )
+	vecGlow:Set( vNormal )
 	vecGlow:Mul( 4 )
 	vecGlow:Add( vOffset )
 
@@ -98,6 +101,7 @@ function ENT:DrawEffects()
 
 	render.DrawSprite( vecGlow, 48, 48, colGlow )
 	render.DrawSprite( vecGlow, 52, 52, colGlow )
+
 end
 
 ENT.WantsTranslucency = true -- If model is opaque, still call DrawTranslucent
