@@ -177,6 +177,7 @@ local T =
 	--
 	Reset = function( self )
 
+		self.m_timestamp = -1.0
 		self.endtime = nil
 
 	end,
@@ -185,7 +186,9 @@ local T =
 	-- Starts the timer, call with end time
 	--
 	Start = function( self, time )
+		time = time or 0
 
+		self.m_timestamp = CurTime()
 		self.endtime = CurTime() + time
 
 	end,
@@ -195,7 +198,7 @@ local T =
 	--
 	Started = function( self )
 
-		return self.endtime != nil
+		return self.endtime != nil and self.m_timestamp > 0
 
 	end,
 
@@ -207,72 +210,13 @@ local T =
 		return self.endtime == nil or self.endtime <= CurTime()
 
 	end
-}
-
-T.__index = T
-
---
--- Create a new timer object
---
-function util.Timer( startdelay )
-
-	startdelay = startdelay or 0
-
-	local t = {}
-	setmetatable( t, T )
-	t.endtime = CurTime() + startdelay
-	return t
-
-end
-
---
--- Interval Timer
---
---
-local IT = 
-{
-	--
-	-- Restarts the Timer
-	--
-	Reset = function( self )
-
-		self.m_timestamp = CurTime()
-
-	end
-
-	--
-	-- Starts the Timer
-	--
-	Start = function( self )
-
-		self.m_timestamp = CurTime()
-
-	end
-
-	--
-	-- Invalidates the Timer
-	--
-	Invalidate = function( self )
-
-		self.m_timestamp = -1.0
-
-	end
-
-	--
-	-- Returns true if the Timer was started
-	--
-	HasStarted = function( self )
-
-		return self.m_timestamp > 0
-
-	end
 
 	--
 	-- Returns the amount of time that has passed since the Timer was started
 	--
 	GetElaspedTime = function( self )
 
-		return Either( self:HasStarted(), CurTime() - self.m_timestamp, 99999.9 )
+		return self:Started() and CurTime() - self.m_timestamp or 99999.9
 
 	end
 
@@ -293,18 +237,22 @@ local IT =
 		return CurTime() - self.m_timestamp > duration
 
 	end
-
 }
 
-IT.__index = IT
+T.__index = T
 
--- Create a new Interval Timer object
-function util.IntervalTimer()
+--
+-- Create a new timer object
+--
+function util.Timer( startdelay )
 
-	local it = {}
-	setmetatable( it, IT )
-	it:Invalidate()
-	return it
+	startdelay = startdelay or 0
+
+	local t = {}
+	setmetatable( t, T )
+	t.m_timestamp = -1.0
+	t.endtime = CurTime() + startdelay
+	return t
 
 end
 
