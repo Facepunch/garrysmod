@@ -209,7 +209,7 @@ local T =
 
 		return self.endtime == nil or self.endtime <= CurTime()
 
-	end
+	end,
 
 	--
 	-- Returns the amount of time that has passed since the Timer was started
