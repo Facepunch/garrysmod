@@ -219,24 +219,6 @@ local T =
 		return self:Started() and CurTime() - self.m_timestamp or 99999.9
 
 	end
-
-	--
-	-- Returns true if the amount of time that has elapsed is less than the entered duration
-	--
-	IsLessThan = function( self, duration )
-
-		return CurTime() - self.m_timestamp < duration
-
-	end
-
-	--
-	-- Returns true if the amount of time that has elapsed is greater than the entered duration
-	--
-	IsGreaterThan = function( self, duration )
-
-		return CurTime() - self.m_timestamp > duration
-
-	end
 }
 
 T.__index = T
