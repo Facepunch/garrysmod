@@ -74,15 +74,38 @@ function ENT:Initialize()
 
 end
 
+local EffectTable_Cache = {}
+function ENT:GetEffectTable()
+
+	local Effect = self:GetEffect()
+	if ( Effect == "" or Effect == "none" ) then return end
+
+	local EffectTables = list.GetForEdit( "ThrusterEffects" )
+	local EffectTable = EffectTables[ Effect ] 
+	if ( EffectTable ~= nil ) then return EffectTable end
+
+	EffectTable = EffectTables[ EffectTable_Cache[ Effect ] ] 
+	if ( EffectTable ~= nil ) then return EffectTable end
+
+	for k, v in pairs( EffectTables ) do
+
+		if v.thruster_effect == Effect then
+			EffectTable_Cache[ Effect ] = k
+			return v
+		end
+
+	end
+
+end
+
 if ( CLIENT ) then
 	function ENT:DrawEffects()
 
 		if ( not self:IsOn() ) then return end
 		if ( self.ShouldDraw == false ) then return end
 
-		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
-
-		local EffectTable = list.GetForEdit( "ThrusterEffects" )[ self:GetEffect() ]
+		local EffectTable = self:GetEffectTable()
+		if ( EffectTable == nil ) then return end
 
 		local effectDraw = EffectTable.effectDraw
 		if effectDraw then effectDraw( self ) end
@@ -110,15 +133,14 @@ function ENT:Think()
 
 	if ( CLIENT ) then
 
-		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) ~= 0
-
 		if ( not self:IsOn() ) then self.OnStart = nil return end
 		self.OnStart = self.OnStart or CurTime()
 
+		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) ~= 0
 		if ( self.ShouldDraw == false ) then return end
-		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
 
-		local EffectTable = list.GetForEdit( "ThrusterEffects" )[ self:GetEffect() ]
+		local EffectTable = self:GetEffectTable()
+		if ( EffectTable == nil ) then return end
 
 		local effectThink = EffectTable.effectThink
 		if effectThink then effectThink( self ) end
@@ -358,7 +380,7 @@ end
 	Register the effects
 -----------------------------------------------------------]]
 
-list.Set( "ThrusterEffects", "none", { print = "#thrustereffect.none" } )
+list.Set( "ThrusterEffects", "#thrustereffect.none", { thruster_effect = "none" } )
 
 local matHeatWave = Material( "sprites/heatwave" )
 local matFire = Material( "effects/fire_cloud1" )
@@ -369,8 +391,8 @@ local colFire = {
 	Color( 255, 255, 255, 0 ),
 	Color( 0, 0, 0, 0 ),
 }
-list.Set( "ThrusterEffects", "fire", {
-	print = "#thrustereffect.flames",
+list.Set( "ThrusterEffects", "#thrustereffect.flames", {
+	thruster_effect = "fire",
 	effectDraw = function( self )
 
 		local vOffset = self:LocalToWorld( self:GetOffset() )
@@ -453,8 +475,8 @@ local colPlasma = {
 	Color( 0, 255, 255, 255 ),
 	Color( 0, 255, 255, 0 ),
 }
-list.Set( "ThrusterEffects", "plasma", {
-	print = "#thrustereffect.plasma",
+list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
+	thruster_effect = "plasma",
 	effectDraw = function( self )
 
 		local vOffset = self:LocalToWorld( self:GetOffset() )
@@ -508,8 +530,8 @@ list.Set( "ThrusterEffects", "plasma", {
 } )
 
 local vecMagic = Vector()
-list.Set( "ThrusterEffects", "magic", {
-	print = "#thrustereffect.magic",
+list.Set( "ThrusterEffects", "#thrustereffect.magic", {
+	thruster_effect = "magic",
 	effectThink = function( self )
 
 		local tbl = self:GetTable()
@@ -551,8 +573,8 @@ list.Set( "ThrusterEffects", "magic", {
 	end
 } )
 
-list.Set( "ThrusterEffects", "rings", {
-	print = "#thrustereffect.rings",
+list.Set( "ThrusterEffects", "#thrustereffect.rings", {
+	thruster_effect = "rings",
 	effectThink = function( self )
 
 		local tbl = self:GetTable()
@@ -597,8 +619,8 @@ list.Set( "ThrusterEffects", "rings", {
 } )
 
 local gravSmoke = Vector( 0, 0, 32 )
-list.Set( "ThrusterEffects", "smoke", {
-	print = "#thrustereffect.smoke",
+list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
+	thruster_effect = "smoke",
 	effectThink = function( self )
 
 		local tbl = self:GetTable()

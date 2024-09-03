@@ -232,7 +232,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	local combo = CPanel:AddControl( "ListBox", { Label = "#tool.thruster.effect" } )
 	for k, v in pairs( list.Get( "ThrusterEffects" ) ) do
-		combo:AddOption( v.print, { thruster_effect = k } )
+		combo:AddOption( k, { thruster_effect = v.thruster_effect } )
 	end
 
 	CPanel:AddControl( "ListBox", { Label = "#tool.thruster.sound", Options = list.Get( "ThrusterSounds" ) } )
