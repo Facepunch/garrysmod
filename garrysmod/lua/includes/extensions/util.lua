@@ -216,7 +216,7 @@ local T =
 	--
 	GetElaspedTime = function( self )
 
-		return self:Started() and CurTime() - self.m_timestamp or 99999.9
+		return self:Started() and CurTime() - self.m_timestamp or -1.0
 
 	end
 }
@@ -232,8 +232,7 @@ function util.Timer( startdelay )
 
 	local t = {}
 	setmetatable( t, T )
-	t.m_timestamp = -1.0
-	t.endtime = CurTime() + startdelay
+	t:Start( startdelay )
 	return t
 
 end
