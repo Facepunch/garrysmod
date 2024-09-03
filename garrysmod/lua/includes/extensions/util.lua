@@ -177,7 +177,7 @@ local T =
 	--
 	Reset = function( self )
 
-		self.m_timestamp = -1.0
+		self.starttime = CurTime() - self.starttime
 		self.endtime = nil
 
 	end,
@@ -186,10 +186,9 @@ local T =
 	-- Starts the timer, call with end time
 	--
 	Start = function( self, time )
-		time = time or 0
 
-		self.m_timestamp = CurTime()
-		self.endtime = CurTime() + time
+		self.starttime = CurTime()
+		self.endtime = CurTime() + ( time or 0 )
 
 	end,
 
@@ -216,7 +215,7 @@ local T =
 	--
 	GetElaspedTime = function( self )
 
-		return self:Started() and CurTime() - self.m_timestamp or -1.0
+		return self:Started() and CurTime() - self.starttime or self.starttime
 
 	end
 }
@@ -228,11 +227,9 @@ T.__index = T
 --
 function util.Timer( startdelay )
 
-	startdelay = startdelay or 0
-
 	local t = {}
 	setmetatable( t, T )
-	t:Start( startdelay )
+	t:Start( startdelay or 0 )
 	return t
 
 end
