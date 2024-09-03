@@ -198,7 +198,7 @@ local T =
 	--
 	Started = function( self )
 
-		return self.endtime != nil and self.m_timestamp > 0
+		return self.endtime != nil
 
 	end,
 
