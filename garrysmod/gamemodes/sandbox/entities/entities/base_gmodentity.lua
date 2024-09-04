@@ -44,12 +44,13 @@ if ( CLIENT ) then
 	end
 
 	function ENT:Think()
-		if ( not self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
-			return
-		end
 
 		local text = self:GetOverlayText()
 		if ( not text or text == "" ) then
+			return
+		end
+
+		if ( not self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
 			return
 		end
 

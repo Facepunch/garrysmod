@@ -17,6 +17,12 @@ end
 
 function ENT:Initialize()
 
+	if ( CLIENT ) then
+
+		self.Glow = Material( "sprites/light_glow02_add" )
+
+	end
+
 	if ( SERVER ) then
 
 		self:PhysicsInit( SOLID_VPHYSICS )
@@ -71,7 +77,6 @@ function ENT:UpdateLabel()
 
 end
 
-local matGlow = Material( "sprites/light_glow02_add" )
 local colGlow, vecGlow = Color( 255, 255, 255, 255 ), Vector( 0, 0, 0 )
 function ENT:DrawEffects()
 
@@ -83,7 +88,7 @@ function ENT:DrawEffects()
 	vNormal:Add( vOffset )
 	vNormal:Normalize()
 
-	render.SetMaterial( matGlow )
+	render.SetMaterial( self.Glow )
 
 	vecGlow:Set( vNormal )
 	vecGlow:Mul( -2 )

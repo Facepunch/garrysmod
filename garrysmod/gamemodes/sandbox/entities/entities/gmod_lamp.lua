@@ -73,19 +73,13 @@ end
 
 if ( SERVER ) then
 
-	local function EqualInColor( first, second )
-		local a, b, c, d = first:GetColor4Part()
-		local e, f, g, h = second:GetColor4Part()
-		return a == e and b == f and c == g and d == h
-	end
-
 	function ENT:Think()
 
 		self.BaseClass.Think( self )
 
 		local flashlight = self.flashlight
 		if ( not IsValid( flashlight ) ) then return end
-		if ( EqualInColor( flashlight, self ) ) then return end
+		if ( flashlight:GetColor() == self:GetColor() ) then return end
 
 		flashlight:SetColor( self:GetColor() )
 		self:UpdateLight()
