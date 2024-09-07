@@ -185,9 +185,9 @@ function PANEL:Init()
 		self.AnimList.OnRowRightClick = function( _, _, line )
 			local menu = DermaMenu( false, line )
 
-			menu:AddOption( "Copy", function()
+			menu:AddOption( "#spawnmenu.menu.copy", function()
 				SetClipboardText( line:GetColumnText( 1 ) )
-			end )
+			end ):SetIcon("icon16/page_copy.png")
 
 			menu:Open()
 		end
@@ -199,7 +199,7 @@ function PANEL:Init()
 		self.AnimSearch.OnChange = function( p )
 			local ent = self.ModelPanel:GetEntity()
 			if ( !IsValid( ent ) ) then return end
-			
+
 			self:FillAnimations( ent, p:GetText() )
 		end
 
@@ -574,12 +574,15 @@ function PANEL:FillAnimations( ent, filter )
 	self.AnimList:Clear()
 
 	local sequences = {}
-	for k, v in ipairs( ent:GetSequenceList() ) do
-		v = string.lower( v )
+	for i = 0, ent:GetSequenceCount() - 1 do
+		local seq = ent:GetSequenceName( i )
+		if ( !seq ) then continue end
 
-		if ( filter && !string.find( v, string.lower( filter ) ) ) then continue end
+		seq = string.lower( seq )
 
-		table.insert( sequences, v )
+		if ( filter && !string.find( seq, filter, 1, true ) ) then continue end
+
+		table.insert( sequences, seq )
 	end
 
 	for k, v in SortedPairsByValue( sequences ) do
