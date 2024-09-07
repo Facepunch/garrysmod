@@ -54,6 +54,7 @@ function PANEL:SetMinMax( min, max )
 	self.Scratch:SetMin( tonumber( min ) )
 	self.Scratch:SetMax( tonumber( max ) )
 	self:UpdateNotches()
+	self:ValueChanged( self:GetValue() ) -- Update slider positon for the new range
 end
 
 function PANEL:ApplySchemeSettings()
@@ -100,6 +101,7 @@ function PANEL:SetMin( min )
 
 	self.Scratch:SetMin( tonumber( min ) )
 	self:UpdateNotches()
+	self:ValueChanged( self:GetValue() ) -- Update slider positon for the new range
 
 end
 
@@ -109,6 +111,7 @@ function PANEL:SetMax( max )
 
 	self.Scratch:SetMax( tonumber( max ) )
 	self:UpdateNotches()
+	self:ValueChanged( self:GetValue() ) -- Update slider positon for the new range
 
 end
 

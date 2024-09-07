@@ -177,6 +177,7 @@ local T =
 	--
 	Reset = function( self )
 
+		self.starttime = CurTime() - self.starttime
 		self.endtime = nil
 
 	end,
@@ -186,7 +187,8 @@ local T =
 	--
 	Start = function( self, time )
 
-		self.endtime = CurTime() + time
+		self.starttime = CurTime()
+		self.endtime = CurTime() + ( time or 0 )
 
 	end,
 
@@ -206,6 +208,15 @@ local T =
 
 		return self.endtime == nil or self.endtime <= CurTime()
 
+	end,
+
+	--
+	-- Returns the amount of time that has passed since the Timer was started
+	--
+	GetElaspedTime = function( self )
+
+		return self:Started() and CurTime() - self.starttime or self.starttime
+
 	end
 }
 
@@ -216,15 +227,12 @@ T.__index = T
 --
 function util.Timer( startdelay )
 
-	startdelay = startdelay or 0
-
 	local t = {}
 	setmetatable( t, T )
-	t.endtime = CurTime() + startdelay
+	t:Start( startdelay or 0 )
 	return t
 
 end
-
 
 local function PopStack( self, num )
 

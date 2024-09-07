@@ -101,8 +101,8 @@
 		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/>
 		<img src='img/notowned.png' ng-show="!game.owned" width="16" height="16">
 		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width="16" height="16">
-
-		<span>{{game.title}}</span>
+		<img ng-src='../materials/games/16/{{game.folder}}.png' style="margin-left: 20px;">
+		<span style="margin-left: 16px;">{{game.title}}</span>
 	</li>
 
 </ul>
