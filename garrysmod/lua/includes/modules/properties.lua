@@ -35,6 +35,14 @@ function Add( name, tab )
 
 end
 
+function Remove( name )
+
+	name = name:lower()
+
+	List[ name ] = nil
+
+end
+
 local function AddToggleOption( data, menu, ent, ply, tr )
 
 	if ( !menu.ToggleSpacer ) then
@@ -184,7 +192,7 @@ if ( CLIENT ) then
 		-- So we cache the value when we know it is the correct value for the frame
 		lastEyePos = EyePos()
 	end
-	
+
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
 		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
