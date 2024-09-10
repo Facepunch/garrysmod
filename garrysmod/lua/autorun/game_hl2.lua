@@ -4,7 +4,11 @@ local Category = ""
 local function ADD_ITEM( name, class, offset, extras, classOverride )
 
 	local base = { PrintName = name, ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" }
-	list.Set( "SpawnableEntities", classOverride or class, table.Merge( base, extras or {} ) )
+	if type(base) ~= "table" then
+    base = {}
+end
+list.Set( "SpawnableEntities", classOverride or class, table.Merge( base, extras or {} ) )
+
 	duplicator.Allow( class )
 
 end
