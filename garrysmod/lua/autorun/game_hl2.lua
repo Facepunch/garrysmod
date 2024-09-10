@@ -108,6 +108,19 @@ ADD_WEAPON( "weapon_357", "#HL2_357Handgun", Category, true )
 ADD_WEAPON( "weapon_alyxgun", "#HL2_AlyxGun", Category, true, false )
 ADD_WEAPON( "weapon_annabelle", "#HL2_Annabelle", Category, true, false )
 
+-- NPC Weapons
+list.Add( "NPCUsableWeapons", { class = "weapon_pistol", title = "#weapon_pistol", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_357", title = "#weapon_357", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_smg1", title = "#weapon_smg1", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_shotgun", title = "#weapon_shotgun", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_ar2", title = "#weapon_ar2", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_rpg", title = "#weapon_rpg", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_alyxgun", title = "#weapon_alyxgun", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_annabelle", title = "#weapon_annabelle", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_crossbow", title = "#weapon_crossbow", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_stunstick", title = "#weapon_stunstick", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_crowbar", title = "#weapon_crowbar", category = Category } )
+
 if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	category = "Half-Life: Source"
 
@@ -126,6 +139,19 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	ADD_WEAPON( "weapon_gauss", "#HL1_TauCannon", Category )
 	ADD_WEAPON( "weapon_egon", "#HL1_GluonGun", Category )
 	ADD_WEAPON( "weapon_crowbar_hl1", "#HL1_Crowbar", Category )
+
+list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1", category = Category } )
+	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1", category = Category } )
+	list.Add( "NPCUsableWeapons", { class = "weapon_shotgun_hl1", title = "#weapon_shotgun_hl1", category = Category } )
+end
+
+if ( IsMounted( "portal" ) ) then
+	Category = "Portal"
+
+	ADD_ITEM( "Curiosity Core", "prop_glados_core", 32, { KeyValues = { CoreType = 0, DelayBetweenLines = 0.4 } }, "prop_glados_core" )
+	ADD_ITEM( "Anger Core", "prop_glados_core", 32, { KeyValues = { CoreType = 1, DelayBetweenLines = 0.1 } }, "prop_glados_core_anger" )
+	ADD_ITEM( "Intelligence Core", "prop_glados_core", 32, { KeyValues = { CoreType = 2, DelayBetweenLines = 0.1 } }, "prop_glados_core_crazy" )
+	ADD_ITEM( "Morality Core", "prop_glados_core", 32, { KeyValues = { CoreType = 3 } }, "prop_glados_core_morality" )
 
 	-- Half-Life: Source (Ammo)
 	ADD_ITEM( "ammo_crossbow", "#XBowBoltHL1_ammo", Category, 0 )
