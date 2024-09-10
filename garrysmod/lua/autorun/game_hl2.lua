@@ -137,4 +137,5 @@ if ( IsMounted( "portal" ) ) then
 	-- ADD_ITEM( "#Uranium_ammo", "ammo_egonclip",  0 )
 end
 
-ADD_WEAPON( "#GMOD_Physgun", "weapon_physgun", "Other", false, true, "Facepunch" )
+Category = "Other"
+ADD_WEAPON( "#GMOD_Physgun", "weapon_physgun" )
