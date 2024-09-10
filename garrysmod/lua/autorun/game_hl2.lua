@@ -3,7 +3,7 @@ local npcWeapons = list.GetForEdit( "NPCUsableWeapons" )
 local playerWeapons = list.GetForEdit( "Weapon" )
 local Allow = duplicator.Allow
 
-local function ADD_WEAPON( className, title, category, npcAllowed, spawnable, author )
+local function ADD_ITEM( className, title, category, npcAllowed, spawnable, author )
 	local weapon = playerWeapons[ className ]
 	if ( weapon == nil ) then
 		weapon = { ClassName = className }
@@ -46,6 +46,7 @@ local function ADD_WEAPON( className, title, category, offset, author )
 	entity.Category = category
 	entity.PrintName = title
 	Allow( className )
+end
 
 Category = "Half-Life 2"
 -- Half-Life 2 (Ammo)
