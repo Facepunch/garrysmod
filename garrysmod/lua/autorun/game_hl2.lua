@@ -90,7 +90,7 @@ list.Add( "NPCUsableWeapons", { class = "weapon_stunstick", title = "#weapon_stu
 list.Add( "NPCUsableWeapons", { class = "weapon_crowbar", title = "#weapon_crowbar", category = Category } )
 
 if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
-	category = "Half-Life: Source"
+	Category = "Half-Life: Source"
 
 	-- Half-Life: Source (Weapons)
 	ADD_WEAPON( "#HL1_Snarks", "weapon_snark", Category )
