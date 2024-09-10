@@ -1,24 +1,51 @@
+local spawnableEntities = list.GetForEdit( "SpawnableEntities" )
+local npcWeapons = list.GetForEdit( "NPCUsableWeapons" )
+local playerWeapons = list.GetForEdit( "Weapon" )
+local Allow = duplicator.Allow
 
-local Category = ""
+local function ADD_WEAPON( className, title, category, npcAllowed, spawnable, author )
+	local weapon = playerWeapons[ className ]
+	if ( weapon == nil ) then
+		weapon = { ClassName = className }
+		playerWeapons[ className ] = weapon
+	end
 
-local function ADD_ITEM( name, class, offset, extras, classOverride )
+	weapon.Spawnable = spawnable ~= false
+	weapon.Author = author or "VALVe"
+	weapon.Category = category
+	weapon.PrintName = title
+	Allow( className )
 
-	local base = { PrintName = name, ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" }
-	if type(base) ~= "table" then
-    base = {}
+	if npcAllowed then
+		for index = 1, #npcWeapons do
+			local data = npcWeapons[ index ]
+			if ( data and data.class == className ) then
+				data.category = category
+				data.title = title
+				return
+			end
+		end
+
+		npcWeapons[ #npcWeapons + 1 ] = {
+			class = className,
+			category = category,
+			title = title
+		}
+	end
 end
-list.Set( "SpawnableEntities", classOverride or class, table.Merge( base, extras or {} ) )
 
-	duplicator.Allow( class )
+local function ADD_WEAPON( className, title, category, offset, author )
+	local entity = spawnableEntities[ className ]
+	if ( entity == nil ) then
+		entity = { ClassName = className, DropToFloor = true }
+		spawnableEntities[ className ] = entity
+	end
 
-end
-
-local function ADD_WEAPON( name, class )
-
-	list.Set( "Weapon", class, { ClassName = class, PrintName = name, Category = Category, Author = "VALVe", Spawnable = true } )
-	duplicator.Allow( class )
-
-end
+	entity.NormalOffset = offset or 32
+	entity.Author = author or "VALVe"
+	entity.Category = category
+	entity.PrintName = title
+	Allow( className )
 
 Category = "Half-Life 2"
 -- Half-Life 2 (Ammo)
