@@ -37,7 +37,11 @@ end
 
 function Remove( name )
 
+	if ( !name || name == "" ) then return end
+
 	name = name:lower()
+
+	if ( !List[ name ] ) then return end
 
 	List[ name ] = nil
 
