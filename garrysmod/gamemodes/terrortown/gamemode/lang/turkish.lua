@@ -213,7 +213,7 @@ L.sb_mia = "Eylem Eksik"
 L.sb_confirmed = "Onaylanmış Ölü"
 
 L.sb_ping = "Gecikme"
-L.sb_deaths = "Ölümler"
+L.sb_deaths = "Ölüm"
 L.sb_score = "Puan"
 L.sb_karma = "Karma"
 
