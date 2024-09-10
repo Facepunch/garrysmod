@@ -18,23 +18,23 @@ end
 
 Category = "Half-Life 2"
 -- Half-Life 2 (Ammo)
-ADD_ITEM( "item_ammo_ar2", "#AR2_ammo", -8 )
-ADD_ITEM( "item_ammo_ar2_large", "#AR2_ammo_large", -8 )
+ADD_ITEM( "#AR2_ammo", "item_ammo_ar2", -8 )
+ADD_ITEM( "#AR2_ammo_large", "item_ammo_ar2_large", -8 )
 
-ADD_ITEM( "item_ammo_pistol", "#Pistol_ammo", -4 )
-ADD_ITEM( "item_ammo_pistol_large", "#Pistol_ammo_large", -4 )
+ADD_ITEM( "#Pistol_ammo", "item_ammo_pistol", -4 )
+ADD_ITEM( "#Pistol_ammo_large", "item_ammo_pistol_large", -4 )
 
-ADD_ITEM( "item_ammo_357", "#357_ammo", -4 )
-ADD_ITEM( "item_ammo_357_large", "#357_ammo_large", -4 )
+ADD_ITEM( "#357_ammo", "item_ammo_357", -4 )
+ADD_ITEM( "#357_ammo_large", "item_ammo_357_large", -4 )
 
-ADD_ITEM( "item_ammo_smg1", "#SMG1_ammo", -2 )
-ADD_ITEM( "item_ammo_smg1_large", "#SMG1_ammo_large", -2 )
+ADD_ITEM( "#SMG1_ammo", "item_ammo_smg1", -2 )
+ADD_ITEM( "#SMG1_ammo_large", "item_ammo_smg1_large", -2 )
 
-ADD_ITEM( "item_ammo_smg1_grenade", "#SMG1_Grenade_ammo", -10 )
-ADD_ITEM( "item_ammo_crossbow", "#XBowBolt_ammo", -10 )
-ADD_ITEM( "item_box_buckshot", "#Buckshot_ammo", -10 )
-ADD_ITEM( "item_ammo_ar2_altfire", "#AR2AltFire_ammo", -2 )
-ADD_ITEM( "item_rpg_round", "#RPG_Round_ammo", -10 )
+ADD_ITEM( "#SMG1_Grenade_ammo", "item_ammo_smg1_grenade", -10 )
+ADD_ITEM( "#XBowBolt_ammo", "item_ammo_crossbow", -10 )
+ADD_ITEM( "#Buckshot_ammo", "item_box_buckshot", -10 )
+ADD_ITEM( "#AR2AltFire_ammo", "item_ammo_ar2_altfire", -2 )
+ADD_ITEM( "#RPG_Round_ammo", "item_rpg_round", -10 )
 
 -- Dynamic materials; gives player what he needs most ( health, shotgun ammo, suit energy, etc )
 -- ADD_ITEM( "item_dynamic_resupply", "Dynamic Supplies", "Other" )
@@ -137,4 +137,4 @@ if ( IsMounted( "portal" ) ) then
 	-- ADD_ITEM( "ammo_egonclip", "#Uranium_ammo",  0 )
 end
 
-ADD_WEAPON( "weapon_physgun", "#GMOD_Physgun", "Other", false, true, "Facepunch" )
+ADD_WEAPON( "#GMOD_Physgun", "weapon_physgun", "Other", false, true, "Facepunch" )
