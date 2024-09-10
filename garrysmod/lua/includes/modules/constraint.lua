@@ -465,7 +465,7 @@ duplicator.RegisterConstraint( "Weld", Weld, "Ent1", "Ent2", "Bone1", "Bone2", "
 	Rope( ... )
 	Creates a rope constraint - with rope!
 ------------------------------------------------------------------------]]
-function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, color )
+function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addLength, forcelimit, width, material, rigid, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -474,7 +474,8 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
-	local addlength = math.Clamp( addlength or 0, -56756, 56756 )
+	addLength = math.Clamp( addLength or 0, -56756, 56756 )
+
 	local Constraint = nil
 
 	-- Make Constraint
@@ -488,7 +489,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
 			Constraint:SetKeyValue( "minlength", "0.0" )
-			Constraint:SetKeyValue( "length", length + addlength )
+			Constraint:SetKeyValue( "length", length + addLength )
 			if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
 			if ( rigid ) then Constraint:SetKeyValue( "spawnflags", 2 ) end
 			Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
@@ -501,7 +502,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 
 	-- Make Rope
 	local kv = {
-		Length = length + addlength,
+		Length = length + addLength,
 		Collide = 1
 	}
 	if ( rigid ) then kv.Type = 2 end
@@ -521,7 +522,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 		LPos1 = LPos1,
 		LPos2 = LPos2,
 		length = length,
-		addlength = addlength,
+		addlength = addLength,
 		forcelimit = forcelimit,
 		width = width,
 		material = material,
@@ -1336,7 +1337,7 @@ duplicator.RegisterConstraint( "Winch", Winch, "pl", "Ent1", "Ent2", "Bone1", "B
 	Hydraulic( ... )
 	Creates a Hydraulic constraint
 ------------------------------------------------------------------------]]
-function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material, toggle, color )
+function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, lengthMin, LengthMax, width, key, fixed, speed, material, toggle, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -1361,8 +1362,8 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 		Bone2 = Bone2,
 		LPos1 = LPos1,
 		LPos2 = LPos2,
-		Length1 = Length1,
-		Length2 = Length2,
+		Length1 = lengthMin,
+		Length2 = LengthMax,
 		width = width,
 		key = key,
 		fixed = fixed,
@@ -1385,12 +1386,12 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 		end
 
 		local controller = ents.Create( "gmod_winch_controller" )
-		if ( Length2 > Length1 ) then
-			controller:SetKeyValue( "minlength", Length1 )
-			controller:SetKeyValue( "maxlength", Length2 )
+		if ( LengthMax > lengthMin ) then
+			controller:SetKeyValue( "minlength", lengthMin )
+			controller:SetKeyValue( "maxlength", LengthMax )
 		else
-			controller:SetKeyValue( "minlength", Length2 )
-			controller:SetKeyValue( "maxlength", Length1 )
+			controller:SetKeyValue( "minlength", LengthMax )
+			controller:SetKeyValue( "maxlength", lengthMin )
 		end
 
 		controller:SetConstraint( Constraint )

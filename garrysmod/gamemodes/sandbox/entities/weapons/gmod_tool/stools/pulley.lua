@@ -35,6 +35,12 @@ function TOOL:LeftClick( trace )
 
 		if ( CLIENT ) then return true end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
+		end
+
 		local width = self:GetClientNumber( "width" )
 		local forcelimit = self:GetClientNumber( "forcelimit" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
@@ -53,20 +59,21 @@ function TOOL:LeftClick( trace )
 		local WPos2 = self:GetPos( 2 )
 		local WPos3 = self:GetPos( 3 )
 
-		local constr, rope1, rope2, rope3 = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope1, rope2, rope3 = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, Color( colorR, colorG, colorB ) )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Pulley" )
 				undo.AddEntity( constr )
 				if ( IsValid( rope1 ) ) then undo.AddEntity( rope1 ) end
 				if ( IsValid( rope2 ) ) then undo.AddEntity( rope2 ) end
 				if ( IsValid( rope3 ) ) then undo.AddEntity( rope3 ) end
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "ropeconstraints", constr )
-			if ( IsValid( rope1 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope1 ) end
-			if ( IsValid( rope2 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope2 ) end
-			if ( IsValid( rope3 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope3 ) end
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope1 ) ) then ply:AddCleanup( "ropeconstraints", rope1 ) end
+			if ( IsValid( rope2 ) ) then ply:AddCleanup( "ropeconstraints", rope2 ) end
+			if ( IsValid( rope3 ) ) then ply:AddCleanup( "ropeconstraints", rope3 ) end
 		end
 
 		self:ClearObjects()

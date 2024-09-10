@@ -33,10 +33,14 @@ function TOOL:LeftClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -57,17 +61,18 @@ function TOOL:LeftClick( trace )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local length = ( WPos1 - WPos2 ):Length()
 
-		local constr, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, Color( colorR, colorG, colorB ) )
 		if ( IsValid( constr ) ) then
 			-- Add the constraint to the players undo table
 			undo.Create( "Rope" )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "ropeconstraints", constr )
-			if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -95,10 +100,14 @@ function TOOL:RightClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -119,17 +128,18 @@ function TOOL:RightClick( trace )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local length = ( WPos1 - WPos2 ):Length()
 
-		local constr, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, Color( colorR, colorG, colorB ) )
 		if ( IsValid( constr ) ) then
 			-- Add the constraint to the players undo table
 			undo.Create( "Rope" )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "ropeconstraints", constr )
-			if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
 		end
 
 		-- Clear the objects and set the last object as object 1

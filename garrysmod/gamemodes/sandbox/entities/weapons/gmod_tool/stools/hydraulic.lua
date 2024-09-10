@@ -41,16 +41,20 @@ function TOOL:LeftClick( trace )
 		end
 
 		if ( ( !IsValid( self:GetEnt( 1 ) ) && !IsValid( self:GetEnt( 2 ) ) ) || iNum > 1 ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
 		local width = self:GetClientNumber( "width", 3 )
 		local bind = self:GetClientNumber( "group", 1 )
-		local AddLength = self:GetClientNumber( "addlength", 0 )
+		local addLength = self:GetClientNumber( "addlength", 0 )
 		local fixed = self:GetClientNumber( "fixed", 1 )
 		local speed = self:GetClientNumber( "speed", 64 )
 		local material = self:GetClientInfo( "material" )
@@ -65,23 +69,24 @@ function TOOL:LeftClick( trace )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local WPos1, WPos2 = self:GetPos( 1 ), self:GetPos( 2 )
 
-		local Length1 = ( WPos1 - WPos2 ):Length()
-		local Length2 = Length1 + AddLength
+		local lengthMin = ( WPos1 - WPos2 ):Length()
+		local lengthMax = lengthMin + addLength
 
-		local constr, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material, toggle, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope, controller, slider = constraint.Hydraulic( ply, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, lengthMin, lengthMax, width, bind, fixed, speed, material, toggle, Color( colorR, colorG, colorB ) )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Hydraulic" )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 				if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 				if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "ropeconstraints", constr )
-			if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
-			if ( IsValid( slider ) ) then self:GetOwner():AddCleanup( "ropeconstraints", slider ) end
-			if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
+			if ( IsValid( slider ) ) then ply:AddCleanup( "ropeconstraints", slider ) end
+			if ( IsValid( controller ) ) then ply:AddCleanup( "ropeconstraints", controller ) end
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -107,10 +112,12 @@ function TOOL:RightClick( trace )
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 
+	local ply = self:GetOwner()
+
 	local tr_new = {}
 	tr_new.start = trace.HitPos
 	tr_new.endpos = trace.HitPos + ( trace.HitNormal * 16384 )
-	tr_new.filter = { self:GetOwner() }
+	tr_new.filter = { ply }
 	if ( IsValid( trace.Entity ) ) then
 		table.insert( tr_new.filter, trace.Entity )
 	end
@@ -138,7 +145,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Check to see if the player can create a hydraulic constraint with the entity in the trace
-	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "hydraulic", self, 2 ) ) then
+	if ( !hook.Run( "CanTool", ply, tr, "hydraulic", self, 2 ) ) then
 		self:ClearObjects()
 		return
 	end
@@ -149,6 +156,11 @@ function TOOL:RightClick( trace )
 	if ( CLIENT ) then
 		self:ClearObjects()
 		return true
+	end
+
+	if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+		self:ClearObjects()
+		return false
 	end
 
 	-- Get client's CVars
@@ -172,20 +184,21 @@ function TOOL:RightClick( trace )
 	local Length1 = ( WPos1 - WPos2 ):Length()
 	local Length2 = Length1 + AddLength
 
-	local constr, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material, toggle, Color( colorR, colorG, colorB, 255 ) )
+	local constr, rope, controller, slider = constraint.Hydraulic( ply, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material, toggle, Color( colorR, colorG, colorB ) )
 	if ( IsValid( constr ) ) then
 		undo.Create( "Hydraulic" )
 			undo.AddEntity( constr )
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 			if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-			undo.SetPlayer( self:GetOwner() )
+			undo.SetPlayer( ply )
 		undo.Finish()
 
-		self:GetOwner():AddCleanup( "ropeconstraints", constr )
-		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
-		if ( IsValid( slider ) ) then self:GetOwner():AddCleanup( "ropeconstraints", slider ) end
-		if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+		ply:AddCount( "ropeconstraints", constr )
+		ply:AddCleanup( "ropeconstraints", constr )
+		if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
+		if ( IsValid( slider ) ) then ply:AddCleanup( "ropeconstraints", slider ) end
+		if ( IsValid( controller ) ) then ply:AddCleanup( "ropeconstraints", controller ) end
 	end
 
 	-- Clear the objects so we're ready to go again
