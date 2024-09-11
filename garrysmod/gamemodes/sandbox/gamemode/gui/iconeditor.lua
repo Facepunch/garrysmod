@@ -171,6 +171,38 @@ function PANEL:Init()
 		self.AnimList:SetMultiSelect( false )
 		self.AnimList:SetHideHeaders( true )
 
+		self.AnimList.OnRowSelected = function( _, _, line )
+			local ent = self.ModelPanel:GetEntity()
+			if ( !IsValid( ent ) ) then return end
+
+			local speed = ent:GetPlaybackRate()
+			ent:ResetSequence( line:GetColumnText( 1 ) )
+			ent:SetCycle( 0 )
+			ent:SetPlaybackRate( speed )
+			if ( speed < 0 ) then ent:SetCycle( 1 ) end
+		end
+
+		self.AnimList.OnRowRightClick = function( _, _, line )
+			local menu = DermaMenu( false, line )
+
+			menu:AddOption( "#spawnmenu.menu.copy", function()
+				SetClipboardText( line:GetColumnText( 1 ) )
+			end ):SetIcon("icon16/page_copy.png")
+
+			menu:Open()
+		end
+
+		self.AnimSearch = anims:Add( "DTextEntry" )
+		self.AnimSearch:Dock( TOP )
+		self.AnimSearch:DockMargin( 0, 0, 0, 2 )
+		self.AnimSearch:SetPlaceholderText( "#spawnmenu.filter" )
+		self.AnimSearch.OnChange = function( p )
+			local ent = self.ModelPanel:GetEntity()
+			if ( !IsValid( ent ) ) then return end
+
+			self:FillAnimations( ent, p:GetText() )
+		end
+
 	-- Bodygroups
 
 	local pnl = right:Add( "Panel" )
@@ -517,6 +549,8 @@ end
 
 function PANEL:Refresh()
 
+	CloseDermaMenus()
+
 	if ( !self:GetModel() ) then return end
 
 	self.ModelPanel:SetModel( self:GetModel() )
@@ -530,28 +564,30 @@ function PANEL:Refresh()
 	ent:SetLOD( 0 )
 
 	self:BestGuessLayout()
-	self:FillAnimations( ent )
+	self:FillAnimations( ent, self.AnimSearch:GetText() )
 	self:SetDefaultLighting()
 
 end
 
-function PANEL:FillAnimations( ent )
+function PANEL:FillAnimations( ent, filter )
 
 	self.AnimList:Clear()
 
-	for k, v in SortedPairsByValue( ent:GetSequenceList() or {} ) do
+	local sequences = {}
+	for i = 0, ent:GetSequenceCount() - 1 do
+		local seq = ent:GetSequenceName( i )
+		if ( !seq ) then continue end
 
-		local line = self.AnimList:AddLine( string.lower( v ) )
+		seq = string.lower( seq )
 
-		line.OnSelect = function()
+		if ( filter && !string.find( seq, filter, 1, true ) ) then continue end
 
-			local speed = ent:GetPlaybackRate()
-			ent:ResetSequence( v )
-			ent:SetCycle( 0 )
-			ent:SetPlaybackRate( speed )
-			if ( speed < 0 ) then ent:SetCycle( 1 ) end
+		table.insert( sequences, seq )
+	end
 
-		end
+	for k, v in SortedPairsByValue( sequences ) do
+
+		self.AnimList:AddLine( v )
 
 	end
 
