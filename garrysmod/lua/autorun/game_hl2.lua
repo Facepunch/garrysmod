@@ -107,6 +107,20 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	ADD_WEAPON( "#HL1_TauCannon", "weapon_gauss", Category )
 	ADD_WEAPON( "#HL1_GluonGun", "weapon_egon", Category )
 	ADD_WEAPON( "#HL1_Crowbar", "weapon_crowbar_hl1", Category )
+	-- Half-Life: Source (Ammo)
+	ADD_ITEM( "#XBowBoltHL1_ammo", "ammo_crossbow", Category  )
+	ADD_ITEM( "#Uranium_ammo", "ammo_gaussclip", Category  )
+	ADD_ITEM( "#ammo_glockclip", "ammo_glockclip", Category  )
+	ADD_ITEM( "#ammo_mp5clip", "ammo_mp5clip", Category  )
+	ADD_ITEM( "#ammo_9mmbox", "ammo_9mmbox", Category  )
+	ADD_ITEM( "#MP5_Grenade_ammo", "ammo_mp5grenades", Category  )
+	ADD_ITEM( "#357Round_ammo", "ammo_357", Category  )
+	ADD_ITEM( "#RPG_Rocket_ammo", "ammo_rpgclip", Category  )
+	ADD_ITEM( "#ammo_buckshot", "ammo_buckshot", Category  )
+	-- ADD_ITEM( "#MP5_Grenade_ammo", "ammo_argrenades", Category  )
+	-- ADD_ITEM( "#ammo_mp5clip", "ammo_9mmclip", Category  )
+	-- ADD_ITEM( "#ammo_mp5clip", "ammo_9mmar", Category  )
+	-- ADD_ITEM( "#Uranium_ammo", "ammo_egonclip", Category  )
 
 list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1", category = Category } )
 	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1", category = Category } )
@@ -121,20 +135,7 @@ if ( IsMounted( "portal" ) ) then
 	ADD_ITEM( "Intelligence Core", "prop_glados_core", 32, { KeyValues = { CoreType = 2, DelayBetweenLines = 0.1 } }, "prop_glados_core_crazy" )
 	ADD_ITEM( "Morality Core", "prop_glados_core", 32, { KeyValues = { CoreType = 3 } }, "prop_glados_core_morality" )
 
-	-- Half-Life: Source (Ammo)
-	ADD_ITEM( "#XBowBoltHL1_ammo", "ammo_crossbow",  0 )
-	ADD_ITEM( "#Uranium_ammo", "ammo_gaussclip",  0 )
-	ADD_ITEM( "#ammo_glockclip", "ammo_glockclip",  0 )
-	ADD_ITEM( "#ammo_mp5clip", "ammo_mp5clip",  0 )
-	ADD_ITEM( "#ammo_9mmbox", "ammo_9mmbox",  0 )
-	ADD_ITEM( "#MP5_Grenade_ammo", "ammo_mp5grenades",  0 )
-	ADD_ITEM( "#357Round_ammo", "ammo_357",  0 )
-	ADD_ITEM( "#RPG_Rocket_ammo", "ammo_rpgclip",  0 )
-	ADD_ITEM( "#ammo_buckshot", "ammo_buckshot",  0 )
-	-- ADD_ITEM( "#MP5_Grenade_ammo", "ammo_argrenades",  0 )
-	-- ADD_ITEM( "#ammo_mp5clip", "ammo_9mmclip",  0 )
-	-- ADD_ITEM( "#ammo_mp5clip", "ammo_9mmar",  0 )
-	-- ADD_ITEM( "#Uranium_ammo", "ammo_egonclip",  0 )
+
 end
 
 Category = "Other"
