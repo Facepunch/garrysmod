@@ -122,8 +122,7 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	-- ADD_ITEM( "#ammo_mp5clip", "ammo_9mmclip", 0 )
 	-- ADD_ITEM( "#ammo_mp5clip", "ammo_9mmar", 0 )
 	-- ADD_ITEM( "#Uranium_ammo", "ammo_egonclip", 0 )
-
-list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1", category = Category } )
+	list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1", category = Category } )
 	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1", category = Category } )
 	list.Add( "NPCUsableWeapons", { class = "weapon_shotgun_hl1", title = "#weapon_shotgun_hl1", category = Category } )
 end
@@ -135,7 +134,6 @@ if ( IsMounted( "portal" ) ) then
 	ADD_ITEM( "Anger Core", "prop_glados_core", 32, { KeyValues = { CoreType = 1, DelayBetweenLines = 0.1 } }, "prop_glados_core_anger" )
 	ADD_ITEM( "Intelligence Core", "prop_glados_core", 32, { KeyValues = { CoreType = 2, DelayBetweenLines = 0.1 } }, "prop_glados_core_crazy" )
 	ADD_ITEM( "Morality Core", "prop_glados_core", 32, { KeyValues = { CoreType = 3 } }, "prop_glados_core_morality" )
-
 
 end
 
