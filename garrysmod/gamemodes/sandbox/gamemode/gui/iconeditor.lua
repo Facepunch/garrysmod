@@ -195,7 +195,7 @@ function PANEL:Init()
 		self.AnimSearch = anims:Add( "DTextEntry" )
 		self.AnimSearch:Dock( TOP )
 		self.AnimSearch:DockMargin( 0, 0, 0, 2 )
-		self.AnimSearch:SetPlaceholderText( "Search" )
+		self.AnimSearch:SetPlaceholderText( "#spawnmenu.filter" )
 		self.AnimSearch.OnChange = function( p )
 			local ent = self.ModelPanel:GetEntity()
 			if ( !IsValid( ent ) ) then return end
