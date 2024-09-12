@@ -1,6 +1,6 @@
 ---- Turkish language strings
 
-local L = LANG.CreateLanguage("Turkish")
+local L = LANG.CreateLanguage("Türkçe")
 
 -- General text used in various places
 L.traitor    = "Hain"
@@ -213,7 +213,7 @@ L.sb_mia = "Eylem Eksik"
 L.sb_confirmed = "Onaylanmış Ölü"
 
 L.sb_ping = "Gecikme"
-L.sb_deaths = "Ölümler"
+L.sb_deaths = "Ölüm"
 L.sb_score = "Puan"
 L.sb_karma = "Karma"
 
