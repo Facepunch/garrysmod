@@ -283,7 +283,7 @@ function GM:MouthMoveAnimation( ply )
 		ply:GetFlexIDByName( "right_mouth_drop" )
 	}
 
-	local weight = ply:IsSpeaking() && math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) || 0
+	local weight = ply:IsSpeaking() && ( ply == LocalPlayer() and 1 or math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) ) || 0
 
 	for k, v in ipairs( flexes ) do
 
