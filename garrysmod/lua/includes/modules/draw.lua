@@ -5,6 +5,12 @@ local math = math
 local Color = Color
 local tostring = tostring
 local color_white = color_white
+local Material = Material
+local CreateMaterial = CreateMaterial
+local GetRenderTargetEx = GetRenderTargetEx
+local render = render
+local print = print
+local cam = cam
 
 module( "draw" )
 
@@ -21,11 +27,34 @@ TEXT_ALIGN_BOTTOM	= 4
 --[[---------------------------------------------------------
 	Textures we use to get shit done
 -----------------------------------------------------------]]
-local tex_corner8	= surface.GetTextureID( "gui/corner8" )
-local tex_corner16	= surface.GetTextureID( "gui/corner16" )
-local tex_corner32	= surface.GetTextureID( "gui/corner32" )
-local tex_corner64	= surface.GetTextureID( "gui/corner64" )
-local tex_corner512	= surface.GetTextureID( "gui/corner512" )
+
+local function getClampedTexture(name, size)
+	local material = Material(name)
+	local rt = GetRenderTargetEx(name .. "_clamped", size, size, 1, 2, 270, 0, 12)
+
+	render.PushRenderTarget(rt)
+		render.Clear(0, 0, 0, 0, true, true)
+		cam.Start2D()
+			surface.SetMaterial(material)
+			surface.SetDrawColor(255, 0, 255)
+			surface.DrawTexturedRect(0, 0, size, size)
+		cam.End2D()
+	render.PopRenderTarget()
+
+	return CreateMaterial(name .. "_clamped", "UnlitGeneric", {
+		["$basetexture"] = name .. "_clamped",
+		["$translucent"] = "1",
+		["$model"] = "1",
+		["$vertexalpha"] = "1",
+		["$vertexcolor"] = "1" 
+	})
+end
+
+local tex_corner8	= getClampedTexture( "gui/corner8", 8 )
+local tex_corner16	= getClampedTexture( "gui/corner16", 16 )
+local tex_corner32	= getClampedTexture( "gui/corner32", 32 )
+local tex_corner64	= getClampedTexture( "gui/corner64", 64 )
+local tex_corner512	= getClampedTexture( "gui/corner512", 512 )
 local tex_white		= surface.GetTextureID( "vgui/white" )
 
 local CachedFontHeights = {}
@@ -159,6 +188,72 @@ function DrawText( text, font, x, y, colour, xalign )
 	end
 end
 
+local SetDrawColor = surface.SetDrawColor
+local SetMaterial = surface.SetMaterial
+local DrawRect = surface.DrawRect
+local DrawTexturedRectUV = surface.DrawTexturedRectUV
+local Round = math.Round
+local min = math.min
+local floor = math.floor
+--[[---------------------------------------------------------
+	Name: RoundedBox( bordersize, x, y, w, h, color )
+	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
+	Usage: color is a table with r/g/b/a elements
+-----------------------------------------------------------]]
+function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
+
+	SetDrawColor( color.r, color.g, color.b, color.a )
+
+	-- Do not waste performance if they don't want rounded corners
+	if ( bordersize <= 0 ) then
+		DrawRect( x, y, w, h )
+		return
+	end
+
+	x = Round( x )
+	y = Round( y )
+	w = Round( w )
+	h = Round( h )
+	bordersize = min( Round( bordersize ), floor( w / 2 ), floor( h / 2 ) )
+
+	local tex = tex_corner8
+	if ( bordersize > 8 ) then tex = tex_corner16 end
+	if ( bordersize > 16 ) then tex = tex_corner32 end
+	if ( bordersize > 32 ) then tex = tex_corner64 end
+	if ( bordersize > 64 ) then tex = tex_corner512 end
+
+	SetMaterial( tex )
+
+	local halfW = w / 2
+	local halfH = h / 2
+
+	if ( tl ) then
+		DrawTexturedRectUV( x, y, halfW, halfH, 0, 0, halfW / bordersize, halfH / bordersize)
+	else
+		DrawRect( x, y, halfW, halfH )
+	end
+
+	if ( tr ) then
+		DrawTexturedRectUV( x + halfW, y, halfW, halfH, halfW / bordersize, 0, 0, halfH / bordersize )
+	else
+		DrawRect( x + halfW, y, halfW, halfH )
+	end
+
+	if ( bl ) then
+		DrawTexturedRectUV( x, y + halfH, halfW, halfH, 0, halfH / bordersize, halfW / bordersize, 0 )
+	else
+		DrawRect( x, y + halfH, halfW, halfH )
+	end
+
+	if ( br ) then
+		DrawTexturedRectUV( x + halfW, y + halfH, halfW, halfH, halfW / bordersize, halfH / bordersize, 0, 0 )
+	else
+		DrawRect( x + halfW, y + halfH, halfW, halfH )
+	end
+
+end
+
+local RoundedBoxEx = RoundedBoxEx -- Making that local so RoundedBox function wont lookup into _G
 --[[---------------------------------------------------------
 	Name: RoundedBox( bordersize, x, y, w, h, color )
 	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
@@ -167,66 +262,6 @@ end
 function RoundedBox( bordersize, x, y, w, h, color )
 
 	return RoundedBoxEx( bordersize, x, y, w, h, color, true, true, true, true )
-
-end
-
---[[---------------------------------------------------------
-	Name: RoundedBox( bordersize, x, y, w, h, color )
-	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
-	Usage: color is a table with r/g/b/a elements
------------------------------------------------------------]]
-function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
-
-	surface.SetDrawColor( color.r, color.g, color.b, color.a )
-
-	-- Do not waste performance if they don't want rounded corners
-	if ( bordersize <= 0 ) then
-		surface.DrawRect( x, y, w, h )
-		return
-	end
-
-	x = math.Round( x )
-	y = math.Round( y )
-	w = math.Round( w )
-	h = math.Round( h )
-	bordersize = math.min( math.Round( bordersize ), math.floor( w / 2 ), math.floor( h / 2 ) )
-
-	-- Draw as much of the rect as we can without textures
-	surface.DrawRect( x + bordersize, y, w - bordersize * 2, h )
-	surface.DrawRect( x, y + bordersize, bordersize, h - bordersize * 2 )
-	surface.DrawRect( x + w - bordersize, y + bordersize, bordersize, h - bordersize * 2 )
-
-	local tex = tex_corner8
-	if ( bordersize > 8 ) then tex = tex_corner16 end
-	if ( bordersize > 16 ) then tex = tex_corner32 end
-	if ( bordersize > 32 ) then tex = tex_corner64 end
-	if ( bordersize > 64 ) then tex = tex_corner512 end
-
-	surface.SetTexture( tex )
-
-	if ( tl ) then
-		surface.DrawTexturedRectUV( x, y, bordersize, bordersize, 0, 0, 1, 1 )
-	else
-		surface.DrawRect( x, y, bordersize, bordersize )
-	end
-
-	if ( tr ) then
-		surface.DrawTexturedRectUV( x + w - bordersize, y, bordersize, bordersize, 1, 0, 0, 1 )
-	else
-		surface.DrawRect( x + w - bordersize, y, bordersize, bordersize )
-	end
-
-	if ( bl ) then
-		surface.DrawTexturedRectUV( x, y + h -bordersize, bordersize, bordersize, 0, 1, 1, 0 )
-	else
-		surface.DrawRect( x, y + h - bordersize, bordersize, bordersize )
-	end
-
-	if ( br ) then
-		surface.DrawTexturedRectUV( x + w - bordersize, y + h - bordersize, bordersize, bordersize, 1, 1, 0, 0 )
-	else
-		surface.DrawRect( x + w - bordersize, y + h - bordersize, bordersize, bordersize )
-	end
 
 end
 
