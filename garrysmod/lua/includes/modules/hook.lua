@@ -3,7 +3,6 @@ local pairs = pairs
 local isfunction = isfunction
 local isstring = isstring
 local isnumber = isnumber
-local isbool = isbool
 local IsValid = IsValid
 local type = type
 local ErrorNoHaltWithStack = ErrorNoHaltWithStack
@@ -12,7 +11,7 @@ local error = error
 module( "hook" )
 
 local Hooks = {}
-local Listeners = {}
+local ListenersPre = {}
 local ListenersPost = {}
 
 --[[---------------------------------------------------------
@@ -24,11 +23,11 @@ function GetTable()
 end
 
 --[[---------------------------------------------------------
-    Name: GetListeners
-    Desc: Returns the listeners and post listeners hook tables.
+    Name: GetListenTable
+    Desc: Returns the pre-listeners and post-listeners hook tables.
 -----------------------------------------------------------]]
-function GetListeners()
-	return Listeners, ListenersPost
+function GetListenTable()
+	return ListenersPre, ListenersPost
 end
 
 --[[---------------------------------------------------------
@@ -41,8 +40,8 @@ function Add( event_name, name, func )
 	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")") return end
 	if ( !isfunction( func ) ) then ErrorNoHaltWithStack( "bad argument #3 to 'Add' (function expected, got " .. type( func ) .. ")") return end
 
-	local notValid = !name or name == true or isnumber( name ) or isfunction( name ) or !IsValid( name )
-	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Add' (string expected, got " .. type( name ) .. ")") return end
+	local notValid = !name or name == true or ( !isstring( name ) and ( isnumber( name ) or isfunction( name ) or !IsValid( name ) ) )
+	if ( notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Add' (string expected, got " .. type( name ) .. ")") return end
 
 	if ( Hooks[ event_name ] == nil ) then
 		Hooks[ event_name ] = {}
@@ -54,18 +53,18 @@ end
 
 --[[---------------------------------------------------------
     Name: Listen
-    Args: string eventName, any name, bool isPost, function func
+    Args: string eventName, any name, bool isPostHook, function func
     Desc: Add a listen only hook to the specified event.
 -----------------------------------------------------------]]
-function Listen( eventName, name, isPost, func )
+function Listen( eventName, name, isPostHook, func )
 
 	if ( !isstring(eventName) ) then error( "bad argument #1 to 'Listen' (string expected, got " .. type( eventName ) .. ")", 2 ) return end
 	if ( !isfunction(func) ) then error( "bad argument #3 to 'Listen' (function expected, got " .. type( func ) .. ")", 2 ) return end
 
-	local notValid = !name or name == true or isnumber( name ) or isfunction( name ) or !IsValid( name )
-	if ( !isstring( name ) and notValid ) then error( "bad argument #2 to 'Listen' (string expected, got " .. type( name ) .. ")", 2 ) return end
+	local notValid = !name or name == true or ( !isstring( name ) and ( isnumber( name ) or isfunction( name ) or !IsValid( name ) ) )
+	if ( notValid ) then error( "bad argument #2 to 'Listen' (string expected, got " .. type( name ) .. ")", 2 ) return end
 
-	local tbl = isPost and ListenersPost or Listeners
+	local tbl = isPostHook and ListenersPost or ListenersPre
 	local tab = tbl[ eventName ]
 
 	if ( !tab ) then
@@ -86,8 +85,8 @@ function Remove( event_name, name )
 
 	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Remove' (string expected, got " .. type( event_name ) .. ")" ) return end
 
-	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
-	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Remove' (string expected, got " .. type( name ) .. ")" ) return end
+	local notValid = !name or name == true or ( !isstring( name ) and ( isnumber( name ) or isfunction( name ) or !IsValid( name ) ) )
+	if ( notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Remove' (string expected, got " .. type( name ) .. ")" ) return end
 
 	if ( !Hooks[ event_name ] ) then return end
 
@@ -97,15 +96,15 @@ end
 
 --[[---------------------------------------------------------
     Name: Forget
-    Args: string eventName, any name, bool isPost
+    Args: string eventName, any name, bool isPostHook
     Desc: Removes the listen-only hook with the given indentifier.
 -----------------------------------------------------------]]
-function Forget( eventName, name, isPost )
+function Forget( eventName, name, isPostHook )
 
 	if ( !isstring( eventName ) ) then error( "bad argument #1 to 'Forget' (string expected, got " .. type( eventName ) .. ")", 2 ) return end
 	if ( name == nil ) then error( "bad argument #2 to 'Forget' (any value expected, got nil)", 2 ) return end
 
-	local tbl = isPost and ListenersPost or Listeners
+	local tbl = isPostHook and ListenersPost or ListenersPre
 	local tab = tbl[ eventName ]
 
 	if ( tab ) then
@@ -129,7 +128,7 @@ end
     Args: string hookName, table gamemodeTable, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
-local function callHooks( tbl, name, ... )
+local function callHooksNoReturn( tbl, name, ... )
 
 	local tab = tbl[ name ]
 	if ( !tab ) then return end
@@ -158,7 +157,7 @@ end
 
 function Call( name, gm, ... )
 
-	callHooks( Listeners, name, ... )
+	callHooksNoReturn( ListenersPre, name, ... )
 
 	--
 	-- Run hooks
@@ -206,7 +205,7 @@ function Call( name, gm, ... )
 		end
 	end
 
-	callHooks( ListenersPost, name, ... )
+	callHooksNoReturn( ListenersPost, name, ... )
 
 	--
 	-- Call the gamemode function
