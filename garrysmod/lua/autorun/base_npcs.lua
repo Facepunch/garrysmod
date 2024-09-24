@@ -81,7 +81,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Rebel",
+	Name = "#Rebel",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
@@ -99,7 +99,7 @@ AddNPC( {
 }, "npc_odessa" )
 
 AddNPC( {
-	Name = "Rebel Medic",
+	Name = "#Medic",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
