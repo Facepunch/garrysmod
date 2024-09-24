@@ -100,10 +100,10 @@ if ( SERVER ) then
 
 	function MakeEmitter( ply, key, delay, toggle, effect, starton, nocollide, scale, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "emitters" ) ) then return nil end
+		if ( IsValid( ply ) && !ply:CheckLimit( "emitters" ) ) then return NULL end
 
 		local emitter = ents.Create( "gmod_emitter" )
-		if ( !IsValid( emitter ) ) then return false end
+		if ( !IsValid( emitter ) ) then return NULL end
 
 		duplicator.DoGeneric( emitter, Data )
 		emitter:SetEffect( effect )

@@ -118,12 +118,12 @@ end
 
 if ( SERVER ) then
 
-	function MakeLight( ply, r, g, b, brght, size, toggle, on, KeyDown, Data )
+	function MakeLight( ply, r, g, b, brght, size, toggle, on, keyDown, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "lights" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "lights" ) ) then return NULL end
 
 		local light = ents.Create( "gmod_light" )
-		if ( !IsValid( light ) ) then return end
+		if ( !IsValid( light ) ) then return NULL end
 
 		duplicator.DoGeneric( light, Data )
 
@@ -146,11 +146,11 @@ if ( SERVER ) then
 		light.lightb = b
 		light.Brightness = brght
 		light.Size = size
-		light.KeyDown = KeyDown
+		light.KeyDown = keyDown
 		light.on = on
 
-		light.NumDown = numpad.OnDown( ply, KeyDown, "LightToggle", light, 1 )
-		light.NumUp = numpad.OnUp( ply, KeyDown, "LightToggle", light, 0 )
+		light.NumDown = numpad.OnDown( ply, keyDown, "LightToggle", light, 1 )
+		light.NumUp = numpad.OnUp( ply, keyDown, "LightToggle", light, 0 )
 
 		if ( IsValid( ply ) ) then
 			ply:AddCount( "lights", light )

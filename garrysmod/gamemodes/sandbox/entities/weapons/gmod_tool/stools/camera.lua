@@ -35,10 +35,10 @@ local function CheckLimit( ply, key )
 end
 
 local function MakeCamera( ply, key, locked, toggle, Data )
-	if ( IsValid( ply ) && !CheckLimit( ply, key ) ) then return false end
+	if ( IsValid( ply ) && !CheckLimit( ply, key ) ) then return NULL end
 
 	local ent = ents.Create( "gmod_cameraprop" )
-	if ( !IsValid( ent ) ) then return false end
+	if ( !IsValid( ent ) ) then return NULL end
 
 	duplicator.DoGeneric( ent, Data )
 

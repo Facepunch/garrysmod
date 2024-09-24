@@ -32,9 +32,13 @@ function PANEL:Init()
 	self.HorizontalDivider:SetLeftWidth( 192 )
 	self.HorizontalDivider:SetLeftMin( 100 )
 	self.HorizontalDivider:SetRightMin( 100 )
-	if ( ScrW() >= 1024 ) then self.HorizontalDivider:SetLeftMin( 192 ) self.HorizontalDivider:SetRightMin( 400 ) end
 	self.HorizontalDivider:SetDividerWidth( 6 )
 	self.HorizontalDivider:SetCookieName( "SpawnMenuCreationMenuDiv" )
+
+	if ( ScrW() >= 1024 ) then
+		self.HorizontalDivider:SetLeftMin( 192 )
+		self.HorizontalDivider:SetRightMin( 400 )
+	end
 
 	self.ContentNavBar = vgui.Create( "ContentSidebar", self.HorizontalDivider )
 	self.HorizontalDivider:SetLeft( self.ContentNavBar )

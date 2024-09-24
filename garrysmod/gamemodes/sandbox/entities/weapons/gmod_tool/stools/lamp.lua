@@ -130,13 +130,13 @@ end
 
 if ( SERVER ) then
 
-	function MakeLamp( ply, r, g, b, KeyDown, toggle, texture, model, fov, distance, brightness, on, Data )
+	function MakeLamp( ply, r, g, b, keyDown, toggle, texture, model, fov, distance, brightness, on, Data )
 
-		if ( IsValid( ply ) and !ply:CheckLimit( "lamps" ) ) then return false end
-		if ( !IsValidLampModel( model ) ) then return false end
+		if ( IsValid( ply ) and !ply:CheckLimit( "lamps" ) ) then return NULL end
+		if ( !IsValidLampModel( model ) ) then return NULL end
 
 		local lamp = ents.Create( "gmod_lamp" )
-		if ( !IsValid( lamp ) ) then return false end
+		if ( !IsValid( lamp ) ) then return NULL end
 
 		duplicator.DoGeneric( lamp, Data )
 		lamp:SetModel( model ) -- Backwards compatible for addons directly calling this function
@@ -162,7 +162,7 @@ if ( SERVER ) then
 		end
 
 		lamp.Texture = texture
-		lamp.KeyDown = KeyDown
+		lamp.KeyDown = keyDown
 		lamp.fov = fov
 		lamp.distance = distance
 		lamp.r = r
@@ -170,8 +170,8 @@ if ( SERVER ) then
 		lamp.b = b
 		lamp.brightness = brightness
 
-		lamp.NumDown = numpad.OnDown( ply, KeyDown, "LampToggle", lamp, 1 )
-		lamp.NumUp = numpad.OnUp( ply, KeyDown, "LampToggle", lamp, 0 )
+		lamp.NumDown = numpad.OnDown( ply, keyDown, "LampToggle", lamp, 1 )
+		lamp.NumUp = numpad.OnUp( ply, keyDown, "LampToggle", lamp, 0 )
 
 		return lamp
 
