@@ -370,6 +370,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_cscanner",
+	Name = "#npc_cscanner",
 	Category = Category,
 	Offset = 20,
 	KeyValues = { SquadName = "overwatch" },
