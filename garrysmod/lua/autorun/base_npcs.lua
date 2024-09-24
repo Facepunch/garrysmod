@@ -171,6 +171,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_antlionguard",
+	Name = "#npc_antlionguard",
 	Category = Category,
 	KeyValues = { SquadName = "antlions" }
 } )
@@ -184,6 +185,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_fastzombie",
+	Name = "#npc_fastzombie",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
@@ -196,18 +198,21 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_headcrab_black",
+	Name = "#npc_headcrab_black",
 	Category = Category,
 	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
 	Class = "npc_headcrab_fast",
+	Name = "#npc_headcrab_fast",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_fastzombie_torso",
+	Name = "#npc_fastzombie_torso",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
@@ -226,7 +231,7 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	AddNPC( {
-		Name = "Antlion Guardian",
+		Name = "#npc_antlionguard",
 		Class = "npc_antlionguard",
 		Category = Category,
 		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
@@ -235,6 +240,7 @@ if ( IsMounted( "ep2" ) ) then
 
 	AddNPC( {
 		Class = "npc_antlion_grub",
+		Name = "#npc_antlion_grub",
 		Category = Category,
 		NoDrop = true,
 		Offset = 1
@@ -242,6 +248,7 @@ if ( IsMounted( "ep2" ) ) then
 
 	AddNPC( {
 		Class = "npc_antlion_worker",
+		Name = "#npc_antlion_worker",
 		Category = Category,
 		KeyValues = { SquadName = "antlions" }
 	} )
@@ -301,6 +308,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_turret_floor",
+	Name = "#npc_turret_floor",
 	Category = Category,
 	OnFloor = true,
 	TotalSpawnFlags = 0,
@@ -311,6 +319,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_combine_s",
+	Name = "#npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
 	Skin = 0,
@@ -319,7 +328,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Shotgun Soldier",
+	Name = "#ShotgunSoldier",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
@@ -329,7 +338,7 @@ AddNPC( {
 }, "ShotgunSoldier" )
 
 AddNPC( {
-	Name = "Prison Guard",
+	Name = "#CombinePrison",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
@@ -339,7 +348,7 @@ AddNPC( {
 }, "CombinePrison" )
 
 AddNPC( {
-	Name = "Prison Shotgun Guard",
+	Name = "#PrisonShotgunner",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
@@ -349,7 +358,7 @@ AddNPC( {
 }, "PrisonShotgunner" )
 
 AddNPC( {
-	Name = "Combine Elite",
+	Name = "#CombineElite",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_super_soldier.mdl",
