@@ -71,8 +71,8 @@ if ( SERVER ) then
 
 	function MakeDynamite( ply, pos, ang, key, damage, model, remove, delay, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "dynamite" ) ) then return nil end
-		if ( !IsValidDynamiteModel( model ) ) then return nil end
+		if ( IsValid( ply ) && !ply:CheckLimit( "dynamite" ) ) then return NULL end
+		if ( !IsValidDynamiteModel( model ) ) then return NULL end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
 

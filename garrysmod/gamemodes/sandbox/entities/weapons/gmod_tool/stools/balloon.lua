@@ -134,10 +134,10 @@ if ( SERVER ) then
 
 	function MakeBalloon( ply, r, g, b, force, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return end
+		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return NULL end
 
 		local balloon = ents.Create( "gmod_balloon" )
-		if ( !IsValid( balloon ) ) then return end
+		if ( !IsValid( balloon ) ) then return NULL end
 
 		duplicator.DoGeneric( balloon, Data )
 
