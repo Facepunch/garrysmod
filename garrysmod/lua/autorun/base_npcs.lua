@@ -32,8 +32,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_dog",
 	Name = "#npc_dog",
+	Class = "npc_dog",
 	Category = Category
 } )
 
