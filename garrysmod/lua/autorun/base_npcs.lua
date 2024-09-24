@@ -73,8 +73,8 @@ AddNPC( {
 }, "VortigauntSlave" )
 
 AddNPC( {
-	Class = "npc_citizen",
 	Name = "#npc_citizen",
+	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" },
 	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons
@@ -143,22 +143,22 @@ end
 Category = "Zombies + Enemy Aliens"
 
 AddNPC( {
-	Class = "npc_zombie",
 	Name = "#npc_zombie",
+	Class = "npc_zombie",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
-	Class = "npc_zombie_torso",
 	Name = "#npc_zombie_torso",
+	Class = "npc_zombie_torso",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
-	Class = "npc_poisonzombie",
 	Name = "#npc_poisonzombie",
+	Class = "npc_poisonzombie",
 	Category = Category,
 	KeyValues = { SquadName = "poison" }
 } )
@@ -170,8 +170,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_antlionguard",
 	Name = "#npc_antlionguard",
+	Class = "npc_antlionguard",
 	Category = Category,
 	KeyValues = { SquadName = "antlions" }
 } )
@@ -184,8 +184,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_fastzombie",
 	Name = "#npc_fastzombie",
+	Class = "npc_fastzombie",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
@@ -197,22 +197,22 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_headcrab_black",
 	Name = "#npc_headcrab_black",
+	Class = "npc_headcrab_black",
 	Category = Category,
 	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
-	Class = "npc_headcrab_fast",
 	Name = "#npc_headcrab_fast",
+	Class = "npc_headcrab_fast",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
-	Class = "npc_fastzombie_torso",
 	Name = "#npc_fastzombie_torso",
+	Class = "npc_fastzombie_torso",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
@@ -239,16 +239,16 @@ if ( IsMounted( "ep2" ) ) then
 	}, "npc_antlionguardian" )
 
 	AddNPC( {
-		Class = "npc_antlion_grub",
 		Name = "#npc_antlion_grub",
+		Class = "npc_antlion_grub",
 		Category = Category,
 		NoDrop = true,
 		Offset = 1
 	} )
 
 	AddNPC( {
-		Class = "npc_antlion_worker",
 		Name = "#npc_antlion_worker",
+		Class = "npc_antlion_worker",
 		Category = Category,
 		KeyValues = { SquadName = "antlions" }
 	} )
@@ -259,29 +259,29 @@ end
 Category = "Animals"
 
 AddNPC( {
-	Class = "npc_monk",
 	Name = "#npc_monk",
+	Class = "npc_monk",
 	Category = Category,
 	Weapons = { "weapon_annabelle" }
 } )
 
 AddNPC( {
-	Class = "npc_crow",
 	Name = "#npc_crow",
+	Class = "npc_crow",
 	Category = Category,
 	NoDrop = true
 } )
 
 AddNPC( {
-	Class = "npc_pigeon",
 	Name = "#npc_pigeon",
+	Class = "npc_pigeon",
 	Category = Category,
 	NoDrop = true
 } )
 
 AddNPC( {
-	Class = "npc_seagull",
 	Name = "#npc_seagull",
+	Class = "npc_seagull",
 	Category = Category,
 	NoDrop = true
 } )
@@ -307,8 +307,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_turret_floor",
 	Name = "#npc_turret_floor",
+	Class = "npc_turret_floor",
 	Category = Category,
 	OnFloor = true,
 	TotalSpawnFlags = 0,
@@ -318,8 +318,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_combine_s",
 	Name = "#npc_combine_s",
+	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
 	Skin = 0,
@@ -369,8 +369,8 @@ AddNPC( {
 }, "CombineElite" )
 
 AddNPC( {
-	Class = "npc_cscanner",
 	Name = "#npc_cscanner",
+	Class = "npc_cscanner",
 	Category = Category,
 	Offset = 20,
 	KeyValues = { SquadName = "overwatch" },
@@ -402,8 +402,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_helicopter",
 	Name = "#npc_helicopter",
+	Class = "npc_helicopter",
 	Category = Category,
 	Offset = 300,
 	Health = 600,
@@ -412,8 +412,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_combine_camera",
 	Name = "#npc_combine_camera",
+	Class = "npc_combine_camera",
 	Category = Category,
 	OnCeiling = true,
 	Offset = 2,
@@ -422,8 +422,8 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Class = "npc_turret_ceiling",
 	Name = "#npc_turret_ceiling",
+	Class = "npc_turret_ceiling",
 	Category = Category,
 	SpawnFlags = 32, -- SF_NPC_TURRET_AUTOACTIVATE
 	OnCeiling = true,
