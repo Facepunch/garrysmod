@@ -108,7 +108,7 @@ AddNPC( {
 }, "Medic" )
 
 AddNPC( {
-	Name = "Refugee",
+	Name = "#Refugee",
 	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
@@ -413,6 +413,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_combine_camera",
+	Name = "#npc_combine_camera",
 	Category = Category,
 	OnCeiling = true,
 	Offset = 2,
@@ -422,6 +423,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_turret_ceiling",
+	Name = "#npc_turret_ceiling",
 	Category = Category,
 	SpawnFlags = 32, -- SF_NPC_TURRET_AUTOACTIVATE
 	OnCeiling = true,
