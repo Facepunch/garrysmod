@@ -197,7 +197,7 @@ local ban_functions = {
                end
             end,
    
-   sam = sam.player.ban,
+   sam = sam and sam.player and sam.player.ban,
 
    gmod   = StandardBan
 };
