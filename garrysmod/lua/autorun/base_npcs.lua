@@ -231,7 +231,7 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	AddNPC( {
-		Name = "#npc_antlionguard",
+		Name = "#npc_antlionguardian",
 		Class = "npc_antlionguard",
 		Category = Category,
 		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
