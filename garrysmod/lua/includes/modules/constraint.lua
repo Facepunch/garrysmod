@@ -913,7 +913,7 @@ duplicator.RegisterConstraint( "AdvBallsocket", AdvBallsocket, "Ent1", "Ent2", "
 	NoCollide( ... )
 	Creates an nocollide `constraint'
 ------------------------------------------------------------------------]]
-function NoCollide( Ent1, Ent2, Bone1, Bone2 )
+function NoCollide( Ent1, Ent2, Bone1, Bone2, disableOnRemove )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -930,6 +930,7 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	if ( !IsValid( constr ) ) then return end
 
 	constr:SetKeyValue( "startdisabled", 1 )
+	if ( disableOnRemove ) then constr:SetKeyValue( "disable_on_remove", 1 ) end
 	constr:SetPhysConstraintObjects( Phys1, Phys2 )
 	constr:Spawn()
 	constr:Activate()
@@ -943,6 +944,7 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 		Ent2 = Ent2,
 		Bone1 = Bone1,
 		Bone2 = Bone2,
+		disableOnRemove = disableOnRemove
 	}
 
 	constr:SetTable( ctable )
@@ -950,7 +952,7 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	return constr
 
 end
-duplicator.RegisterConstraint( "NoCollide", NoCollide, "Ent1", "Ent2", "Bone1", "Bone2" )
+duplicator.RegisterConstraint( "NoCollide", NoCollide, "Ent1", "Ent2", "Bone1", "Bone2", "disableOnRemove" )
 
 
 --[[----------------------------------------------------------------------

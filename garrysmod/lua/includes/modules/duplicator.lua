@@ -776,11 +776,14 @@ function CreateConstraintFromTable( Constraint, EntityList, ply )
 	
 	-- If in Sandbox, keep track of this.
 	if ( ply and ply.AddCleanup ) then
+		ply:AddCount( constraintType, const1 )
+
+		-- Hack: special case for nocollide
+		if ( const1 and const1:GetClass() == "logic_collision_pair" ) then constraintType = "nocollide" end
 		ply:AddCleanup( constraintType, const1 )
 		ply:AddCleanup( constraintType, const2 )
 		ply:AddCleanup( constraintType, const3 )
 		ply:AddCleanup( constraintType, const4 )
-		ply:AddCount( constraintType, const1 )
 	end
 
 	return const1, const2, const3, const4
