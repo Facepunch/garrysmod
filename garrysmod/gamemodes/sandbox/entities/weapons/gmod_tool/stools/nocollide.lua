@@ -42,7 +42,7 @@ function TOOL:LeftClick( trace )
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 
-		local constr = constraint.NoCollide( Ent1, Ent2, Bone1, Bone2 )
+		local constr = constraint.NoCollide( Ent1, Ent2, Bone1, Bone2, true )
 		if ( IsValid( constr ) ) then
 			undo.Create( "NoCollide" )
 				undo.AddEntity( constr )
@@ -100,13 +100,6 @@ function TOOL:Holster()
 	self:ClearObjects()
 
 end
-
--- This is unreliable
-hook.Add( "EntityRemoved", "nocollide_fix", function( ent )
-	if ( ent:GetClass() == "logic_collision_pair" ) then
-		ent:Fire( "EnableCollisions" )
-	end
-end )
 
 function TOOL.BuildCPanel( CPanel )
 
