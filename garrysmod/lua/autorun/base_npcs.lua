@@ -2,7 +2,7 @@
 -- Don't try to edit this file if you're trying to add new NPCs.
 -- Just make a new file and copy the format below.
 
-local function AddNPC( t, class )
+local function AddNPC( t, class, name )
 	if ( !t.Name ) then t.Name = "#" .. ( class or t.Class ) end
 
 	list.Set( "NPC", class or t.Class, t )
@@ -33,6 +33,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_dog",
+	Name = "#npc_dog",
 	Category = Category
 } )
 
@@ -65,7 +66,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Vortigaunt Slave",
+	Name = "#npc_vortigaunt_slave",
 	Class = "npc_vortigaunt",
 	Category = Category,
 	Model = "models/vortigaunt_slave.mdl"
@@ -73,6 +74,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_citizen",
+	Name = "#npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" },
 	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons
@@ -142,18 +144,21 @@ Category = "Zombies + Enemy Aliens"
 
 AddNPC( {
 	Class = "npc_zombie",
+	Name = "#npc_zombie",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_zombie_torso",
+	Name = "#npc_zombie_torso",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_poisonzombie",
+	Name = "#npc_poisonzombie",
 	Category = Category,
 	KeyValues = { SquadName = "poison" }
 } )
@@ -248,24 +253,28 @@ Category = "Animals"
 
 AddNPC( {
 	Class = "npc_monk",
+	Name = "#npc_monk",
 	Category = Category,
 	Weapons = { "weapon_annabelle" }
 } )
 
 AddNPC( {
 	Class = "npc_crow",
+	Name = "#npc_crow",
 	Category = Category,
 	NoDrop = true
 } )
 
 AddNPC( {
 	Class = "npc_pigeon",
+	Name = "#npc_pigeon",
 	Category = Category,
 	NoDrop = true
 } )
 
 AddNPC( {
 	Class = "npc_seagull",
+	Name = "#npc_seagull",
 	Category = Category,
 	NoDrop = true
 } )
@@ -384,6 +393,7 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_helicopter",
+	Name = "#npc_helicopter",
 	Category = Category,
 	Offset = 300,
 	Health = 600,
