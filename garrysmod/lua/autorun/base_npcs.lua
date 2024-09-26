@@ -521,6 +521,7 @@ if ( IsMounted( "portal" ) ) then
 	Category = "Portal"
 
 	AddNPC( {
+		Name = "#npc_portal_turret_floor",
 		Class = "npc_portal_turret_floor",
 		Category = Category,
 		OnFloor = true,
@@ -530,6 +531,7 @@ if ( IsMounted( "portal" ) ) then
 	} )
 
 	AddNPC( {
+		Name = "#npc_rocket_turret",
 		Class = "npc_rocket_turret",
 		Category = Category,
 		OnFloor = true,
@@ -539,6 +541,7 @@ if ( IsMounted( "portal" ) ) then
 	} )
 
 	AddNPC( {
+		Name = "#npc_security_camera",
 		Class = "npc_security_camera",
 		Category = Category,
 		Offset = -1,
