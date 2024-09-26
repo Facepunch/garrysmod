@@ -13,6 +13,7 @@ end
 local Category = "Humans + Resistance"
 
 AddNPC( {
+	Name = "#npc_alyx",
 	Class = "npc_alyx",
 	Category = Category,
 	Weapons = { "weapon_alyxgun", "weapon_smg1", "weapon_shotgun" },
@@ -20,6 +21,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_barney",
 	Class = "npc_barney",
 	Category = Category,
 	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" },
@@ -27,6 +29,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_breen",
 	Class = "npc_breen",
 	Category = Category
 } )
@@ -38,35 +41,40 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_eli",
 	Class = "npc_eli",
 	Category = Category
 } )
 
 AddNPC( {
+	Name = "#npc_gman",
 	Class = "npc_gman",
 	Category = Category
 } )
 
 -- Did you know that this MAN can shoot annabelle like he's been doing it his whole life?
 AddNPC( {
+	Name = "#npc_kleiner",
 	Class = "npc_kleiner",
 	Category = Category
 } )
 
 AddNPC( {
+	Name = "#npc_mossman",
 	Class = "npc_mossman",
 	Category = Category
 } )
 
 -- I don't trust these Vorts, but I'll let em stay in this category until they mess up
 AddNPC( {
+	Name = "#npc_vortigaunt",
 	Class = "npc_vortigaunt",
 	Category = Category,
 	KeyValues = { SquadName = "resistance" }
 } )
 
 AddNPC( {
-	Name = "#npc_vortigaunt_slave",
+	Name = "#VortigauntSlave",
 	Class = "npc_vortigaunt",
 	Category = Category,
 	Model = "models/vortigaunt_slave.mdl"
@@ -90,7 +98,7 @@ AddNPC( {
 }, "Rebel" )
 
 AddNPC( {
-	Name = "Odessa Cubbage",
+	Name = "#npc_odessa",
 	Class = "npc_citizen",
 	Category = Category,
 	Model = "models/odessa.mdl",
@@ -117,7 +125,7 @@ AddNPC( {
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
-		Name = "Uriah",
+		Name = "#VortigauntUriah",
 		Class = "npc_vortigaunt",
 		Category = Category,
 		Model = "models/vortigaunt_doctor.mdl",
@@ -125,6 +133,7 @@ if ( IsMounted( "ep2" ) ) then
 	}, "VortigauntUriah" )
 
 	AddNPC( {
+		Name = "#npc_magnusson",
 		Class = "npc_magnusson",
 		Category = Category
 	} )
@@ -132,6 +141,7 @@ end
 
 if ( IsMounted( "lostcoast" ) ) then
 	AddNPC( {
+		Name = "#npc_fisherman",
 		Class = "npc_fisherman",
 		Category = Category,
 		Weapons = { "weapon_oldmanharpoon" }
@@ -164,6 +174,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_antlion",
 	Class = "npc_antlion",
 	Category = Category,
 	KeyValues = { SquadName = "antlions" }
@@ -177,6 +188,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_barnacle",
 	Class = "npc_barnacle",
 	Category = Category,
 	OnCeiling = true,
@@ -191,6 +203,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_headcrab",
 	Class = "npc_headcrab",
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
@@ -219,6 +232,7 @@ AddNPC( {
 
 if ( IsMounted( "episodic" ) or IsMounted( "ep2" ) ) then
 	AddNPC( {
+		Name = "#npc_zombine",
 		Class = "npc_zombine",
 		Category = Category,
 		KeyValues = { SquadName = "zombies" }
@@ -291,6 +305,7 @@ AddNPC( {
 Category = "Combine"
 
 AddNPC( {
+	Name = "#npc_metropolice",
 	Class = "npc_metropolice",
 	Category = Category,
 	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
@@ -299,6 +314,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_rollermine",
 	Class = "npc_rollermine",
 	Category = Category,
 	Offset = 20,
@@ -378,6 +394,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_clawscanner",
 	Class = "npc_clawscanner",
 	Category = Category,
 	Offset = 20,
@@ -386,6 +403,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_combinegunship",
 	Class = "npc_combinegunship",
 	Category = Category,
 	Offset = 300,
@@ -394,6 +412,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_combinedropship",
 	Class = "npc_combinedropship",
 	Category = Category,
 	Offset = 300,
@@ -432,6 +451,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_strider",
 	Class = "npc_strider",
 	Category = Category,
 	Offset = 100,
@@ -439,6 +459,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_stalker",
 	Class = "npc_stalker",
 	Category = Category,
 	KeyValues = { squadname = "npc_stalker_squad" },
@@ -446,6 +467,7 @@ AddNPC( {
 } )
 
 AddNPC( {
+	Name = "#npc_manhack",
 	Class = "npc_manhack",
 	Category = Category,
 	KeyValues = { SquadName = "overwatch" },
@@ -454,6 +476,7 @@ AddNPC( {
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
+		Name = "#npc_hunter",
 		Class = "npc_hunter",
 		Category = Category,
 		KeyValues = { SquadName = "overwatch" }
