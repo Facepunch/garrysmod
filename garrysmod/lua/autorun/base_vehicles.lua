@@ -10,7 +10,7 @@ local Category = "Half-Life 2"
 
 AddVehicle( {
 	-- Required information
-	Name = "Jeep",
+	Name = "#HL2_Jeep",
 	Model = "models/buggy.mdl",
 	Class = "prop_vehicle_jeep_old",
 	Category = Category,
@@ -25,7 +25,7 @@ AddVehicle( {
 }, "Jeep" )
 
 AddVehicle( {
-	Name = "Airboat",
+	Name = "#HL2_Airboat",
 	Model = "models/airboat.mdl",
 	Class = "prop_vehicle_airboat",
 	Category = Category,
@@ -39,7 +39,7 @@ AddVehicle( {
 }, "Airboat" )
 
 AddVehicle( {
-	Name = "Pod",
+	Name = "#HL2_Pod",
 	Model = "models/vehicles/prisoner_pod_inner.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -55,7 +55,7 @@ AddVehicle( {
 
 if ( IsMounted( "ep2" ) ) then
 	AddVehicle( {
-		Name = "Jalopy",
+		Name = "#Jalopy",
 		Model = "models/vehicle.mdl",
 		Class = "prop_vehicle_jeep",
 		Category = Category,
@@ -76,7 +76,7 @@ local function HandleRollercoasterAnimation( vehicle, player )
 end
 
 AddVehicle( {
-	Name = "Wooden Chair",
+	Name = "#WoodenChair",
 	Model = "models/nova/chair_wood01.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -94,7 +94,7 @@ AddVehicle( {
 }, "Chair_Wood" )
 
 AddVehicle( {
-	Name = "Chair",
+	Name = "#Chair",
 	Model = "models/nova/chair_plastic01.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -112,7 +112,7 @@ AddVehicle( {
 }, "Chair_Plastic" )
 
 AddVehicle( {
-	Name = "Jeep Seat",
+	Name = "#JeepSeat",
 	Model = "models/nova/jeep_seat.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -130,7 +130,7 @@ AddVehicle( {
 }, "Seat_Jeep" )
 
 AddVehicle( {
-	Name = "Airboat Seat",
+	Name = "#Seat_Airboat",
 	Model = "models/nova/airboat_seat.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -148,7 +148,7 @@ AddVehicle( {
 }, "Seat_Airboat" )
 
 AddVehicle( {
-	Name = "Office Chair",
+	Name = "#Chair_Office1",
 	Model = "models/nova/chair_office01.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -166,7 +166,7 @@ AddVehicle( {
 }, "Chair_Office1" )
 
 AddVehicle( {
-	Name = "Big Office Chair",
+	Name = "#Chair_Office2",
 	Model = "models/nova/chair_office02.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -185,7 +185,7 @@ AddVehicle( {
 
 if ( IsMounted( "ep2" ) ) then
 	AddVehicle( {
-		Name = "Jalopy Seat",
+		Name = "#Seat_Jalopy",
 		Model = "models/nova/jalopy_seat.mdl",
 		Class = "prop_vehicle_prisoner_pod",
 		Category = Category,
@@ -217,7 +217,7 @@ local function HandlePHXAirboatAnimation( vehicle, ply )
 end
 
 AddVehicle( {
-	Name = "Car Seat",
+	Name = "#CarSeat",
 	Model = "models/props_phx/carseat2.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -236,7 +236,7 @@ AddVehicle( {
 }, "phx_seat" )
 
 AddVehicle( {
-	Name = "Car Seat 2",
+	Name = "#CarSeat2",
 	Model = "models/props_phx/carseat3.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
@@ -255,7 +255,7 @@ AddVehicle( {
 }, "phx_seat2" )
 
 AddVehicle( {
-	Name = "Car Seat 3",
+	Name = "#CarSeat3",
 	Model = "models/props_phx/carseat2.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
