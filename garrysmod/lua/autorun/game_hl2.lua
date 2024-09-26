@@ -130,10 +130,10 @@ end
 if ( IsMounted( "portal" ) ) then
 	Category = "Portal"
 
-	ADD_ITEM( "Curiosity Core", "prop_glados_core", 32, { KeyValues = { CoreType = 0, DelayBetweenLines = 0.4 } }, "prop_glados_core" )
-	ADD_ITEM( "Anger Core", "prop_glados_core", 32, { KeyValues = { CoreType = 1, DelayBetweenLines = 0.1 } }, "prop_glados_core_anger" )
-	ADD_ITEM( "Intelligence Core", "prop_glados_core", 32, { KeyValues = { CoreType = 2, DelayBetweenLines = 0.1 } }, "prop_glados_core_crazy" )
-	ADD_ITEM( "Morality Core", "prop_glados_core", 32, { KeyValues = { CoreType = 3 } }, "prop_glados_core_morality" )
+	ADD_ITEM( "#prop_glados_core", "prop_glados_core", 32, { KeyValues = { CoreType = 0, DelayBetweenLines = 0.4 } }, "prop_glados_core" )
+	ADD_ITEM( "#prop_glados_core_anger", "prop_glados_core", 32, { KeyValues = { CoreType = 1, DelayBetweenLines = 0.1 } }, "prop_glados_core_anger" )
+	ADD_ITEM( "#prop_glados_core_crazy", "prop_glados_core", 32, { KeyValues = { CoreType = 2, DelayBetweenLines = 0.1 } }, "prop_glados_core_crazy" )
+	ADD_ITEM( "#prop_glados_core_morality", "prop_glados_core", 32, { KeyValues = { CoreType = 3 } }, "prop_glados_core_morality" )
 
 end
 
