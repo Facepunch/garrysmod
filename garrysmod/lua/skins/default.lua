@@ -511,7 +511,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuSpacer( panel, w, h )
 
-	surface.SetDrawColor(0, 0, 0, 100)
+	surface.SetDrawColor( 0, 0, 0, 100 )
 	surface.DrawRect( 0, 0, w, h )
 
 end
@@ -522,7 +522,7 @@ end
 function SKIN:PaintMenuOption( panel, w, h )
 
 	if ( panel.m_bBackground && !panel:IsEnabled() ) then
-		surface.SetDrawColor(0, 0, 0, 50)
+		surface.SetDrawColor( 0, 0, 0, 50 )
 		surface.DrawRect( 0, 0, w, h )
 	end
 
