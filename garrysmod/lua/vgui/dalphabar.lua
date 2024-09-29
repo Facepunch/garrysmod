@@ -54,7 +54,7 @@ function PANEL:Paint( w, h )
 		surface.DrawTexturedRect( w / 2 - size / 2, i * size, size, size )
 	end
 
-	surface.SetDrawColor( self.m_BarColor )
+	surface.SetDrawColor( self.m_BarColor.r, self.m_BarColor.g, self.m_BarColor.b, self.m_BarColor.a )
 	surface.SetMaterial( matGradient )
 	surface.DrawTexturedRect( 0, 0, w, h )
 	surface.DrawTexturedRect( 0, 0, w, h )

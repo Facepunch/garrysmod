@@ -114,7 +114,8 @@ concommand.Add( "crosshair_setup", function()
 			surface.SetTextPos( w / 2 - width / 2, h / 2 - height / 2 )
 			surface.DrawText( "Q" )
 		elseif ( GetConVarNumber( "cl_crosshairstyle" ) == 1 ) then
-			surface.SetDrawColor( GetCrosshairColor() )
+			local crosshairColor = GetCrosshairColor()
+			surface.SetDrawColor( crosshairColor.r, crosshairColor.g, crosshairColor.b, crosshairColor.a )
 			surface.SetMaterial( crosshairMat )
 			surface.DrawTexturedRect( w / 2 - 32, h / 2 - 32, 64, 64 )
 		elseif ( GetConVarNumber( "cl_crosshairstyle" ) >= 2 ) then

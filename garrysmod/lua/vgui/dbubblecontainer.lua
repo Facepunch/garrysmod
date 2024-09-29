@@ -40,7 +40,7 @@ function PANEL:Paint( w, h )
 	if ( tipx < 8 ) then tipx = 8 end
 	if ( tipx > w - 64 - 8 ) then tipx = w - 64 - 8 end
 
-	surface.SetDrawColor( self.m_bgColor )
+	surface.SetDrawColor( self.m_bgColor.r, self.m_bgColor.g, self.m_bgColor.b, self.m_bgColor.a )
 	surface.SetMaterial( self.matPoint )
 	surface.DrawTexturedRect( self.Center - 32, top, 64, 32 )
 
