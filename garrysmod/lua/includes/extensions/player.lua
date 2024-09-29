@@ -261,24 +261,27 @@ function meta:HasGodMode()
 
 end
 
+
 -- These are totally in the wrong place.
+local cache={}
+cache.AccountID={}
+cache.UniqueID={}
+cache.SteamID64={}
+cache.SteamID={}
+cache.bots={}
 function player.GetByAccountID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:AccountID() == ID ) then
-			return players[i]
-		end
+	local ret=cache.AccountID[ID]
+	if ( ret and ret:IsValid() ) then
+		return ret
 	end
 
 	return false
 end
 
 function player.GetByUniqueID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:UniqueID() == ID ) then
-			return players[i]
-		end
+	local ret=cache.UniqueID[ID]
+	if ( ret and ret:IsValid() ) then
+		return ret
 	end
 
 	return false
@@ -286,10 +289,21 @@ end
 
 function player.GetBySteamID( ID )
 	ID = string.upper( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID() == ID ) then
-			return players[i]
+	local ret=cache.SteamID[ID]--ret could be nil if there was never an entry, or NULL if the player DCed
+	if ( ret and ret:IsValid() ) then
+		return ret
+	end
+	if ( ret and ID=="BOT" ) then--if we are using BOT and the original 
+		while ( ret ) do
+			ret=cache.bots[1]--get the first bot on the list
+			if ( not ret ) then--cache.bots is now empty, we failed
+				return false
+			end
+			if ( ret:IsValid() ) then--is it a valid entity?
+				cache.SteamID[ID]=ret--entry for BOT so that hopefully we don't have to do this again
+				return ret--return the bot
+			end
+			table.remove(cache.bots,1)--remove a null entity from the list
 		end
 	end
 
@@ -298,11 +312,9 @@ end
 
 function player.GetBySteamID64( ID )
 	ID = tostring( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID64() == ID ) then
-			return players[i]
-		end
+	local ret=cache.SteamID64[ID]
+	if ( ret and ret:IsValid() ) then
+		return ret
 	end
 
 	return false
@@ -321,7 +333,27 @@ end
 
 local function InvalidatePlayerCache( ent )
 
-	if ( ent:IsPlayer() ) then PlayerCache = nil end
+	if ( ent:IsPlayer() ) then 
+		PlayerCache = nil
+		timer.Create("player.Iterator",0,1,function()
+			PlayerCache = player.GetAll()
+			cache.AccountID={}
+			cache.UniqueID={}
+			cache.SteamID64={}
+			cache.SteamID={}
+			cache.bots={}
+			for i = 1, #PlayerCache do
+				local p=PlayerCache[i]
+				cache.AccountID[p:AccountID()]=p
+				cache.UniqueID[p:UniqueID()]=p
+				cache.SteamID64[p:SteamID64()]=p
+				cache.SteamID[p:SteamID()]=p
+				if ( p:SteamID() == "BOT" ) then
+					table.insert(cache.bots,p)
+				end
+			end
+		end)
+	end
 
 end
 
