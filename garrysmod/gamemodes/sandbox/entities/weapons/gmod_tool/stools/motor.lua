@@ -39,12 +39,17 @@ function TOOL:LeftClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			self:ReleaseGhostEntity()
 
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			self:ReleaseGhostEntity()
+			return false
 		end
 
 		-- Get client's CVars
@@ -82,16 +87,17 @@ function TOOL:LeftClick( trace )
 		-- Set the hinge Axis perpendicular to the trace hit surface
 		LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 * 64 )
 
-		local constr, axis = constraint.Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, time, nocollide, toggle, self:GetOwner(), limit, forekey, backkey, 1 )
+		local constr, axis = constraint.Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, time, nocollide, toggle, ply, limit, forekey, backkey, 1 )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Motor" )
 				undo.AddEntity( constr )
 				if ( IsValid( axis ) ) then undo.AddEntity( axis ) end
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "constraints", constr )
-			if ( IsValid( axis ) ) then self:GetOwner():AddCleanup( "constraints", axis ) end
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
+			if ( IsValid( axis ) ) then ply:AddCleanup( "constraints", axis ) end
 		end
 
 		-- Clear the objects so we're ready to go again

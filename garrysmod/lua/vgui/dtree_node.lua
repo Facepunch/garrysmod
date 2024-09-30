@@ -152,6 +152,12 @@ function PANEL:SetText( strName )
 
 end
 
+function PANEL:GetText()
+
+	return self.Label:GetText()
+
+end
+
 function PANEL:ExpandRecurse( bExpand )
 
 	self:SetExpanded( bExpand, true )

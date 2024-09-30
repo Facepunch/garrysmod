@@ -59,14 +59,14 @@ function PANEL:AddMaterial( label, value )
 		-- Select the material
 		self:SelectMaterial( button )
 
+		self:OnSelect( button.Value, button )
+
 		-- Update the convar
-		RunConsoleCommand( self:ConVar(), value )
+		if ( self:ConVar() ) then RunConsoleCommand( self:ConVar(), value ) end
 	end
 
 	Mat.DoRightClick = function( button )
-		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( value ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:Open()
+		self:OnRightClick( button )
 	end
 
 	-- Add the icon to ourselves
@@ -93,14 +93,14 @@ function PANEL:AddMaterialEx( label, material, value, convars )
 		-- Can't do this due to faceposer
 		-- self:SelectMaterial( button )
 
+		self:OnSelect( button.Value, button )
+
 		-- Update the convars
 		for cvar, val in pairs( convars ) do RunConsoleCommand( cvar, val ) end
 	end
 
 	Mat.DoRightClick = function( button )
-		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( material ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:Open()
+		self:OnRightClick( button )
 	end
 
 	-- Add the icon to ourselves
@@ -253,5 +253,22 @@ function PANEL:TestForChanges()
 	self:FindAndSelectMaterial( value )
 
 end
+
+function PANEL:OnSelect( material, pnl )
+
+	-- For override
+
+end
+
+function PANEL:OnRightClick( button )
+
+	-- For override
+
+	local menu = DermaMenu()
+	menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( button.Value ) end ):SetIcon( "icon16/page_copy.png" )
+	menu:Open()
+
+end
+
 
 vgui.Register( "MatSelect", PANEL, "ContextBase" )

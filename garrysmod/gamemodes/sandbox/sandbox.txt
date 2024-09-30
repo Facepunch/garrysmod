@@ -195,6 +195,24 @@
 
 		21
 		{
+			"name"		"sbox_maxconstraints"
+			"text"		"max_constraints"
+			"help"		"Maximum non rope-based constraints a single player can create"
+			"type"		"Numeric"
+			"default"	"1000"
+		}
+
+		22
+		{
+			"name"		"sbox_maxropeconstraints"
+			"text"		"max_ropeconstraints"
+			"help"		"Maximum rope-based constraints a single player can create"
+			"type"		"Numeric"
+			"default"	"1000"
+		}
+
+		23
+		{
 			"name"		"gmod_maxammo"
 			"text"		"gmod_maxammo"
 			"help"		"Forces amount of maximum ammo reserves for all weapons of each player. Values 0 and below mean use weapon's ammo type maximum ammo setting instead."
@@ -204,7 +222,7 @@
 			"dontcreate"	"1"
 		}
 
-		22
+		24
 		{
 			"name"		"gmod_suit"
 			"text"		"gmod_suit"
@@ -215,7 +233,7 @@
 			"dontcreate"	"1"
 		}
 
-		23
+		25
 		{
 			"name"		"sbox_noclip"
 			"text"		"allow_noclip"
@@ -224,7 +242,7 @@
 			"default"	"1"
 		}
 
-		24
+		26
 		{
 			"name"		"mp_falldamage"
 			"text"		"realistic_falldamage"
@@ -235,7 +253,7 @@
 			"dontcreate"	"1"
 		}
 
-		25
+		27
 		{
 			"name"		"sbox_bonemanip_npc"
 			"text"		"bone_manipulate_npcs"
@@ -244,7 +262,7 @@
 			"default"	"1"
 		}
 
-		26
+		28
 		{
 			"name"		"sbox_bonemanip_player"
 			"text"		"bone_manipulate_players"
@@ -253,7 +271,7 @@
 			"default"	"0"
 		}
 
-		27
+		29
 		{
 			"name"		"sbox_bonemanip_misc"
 			"text"		"bone_manipulate_others"
@@ -262,7 +280,7 @@
 			"default"	"0"
 		}
 
-		28
+		30
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode_menu"
