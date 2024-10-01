@@ -161,7 +161,7 @@ L.quick_check = "Kimse hayatta mı?"
 L.quick_nobody = "hiç kimse"
 L.quick_disg = "kılık değiştirmiş"
 L.quick_corpse = "kimliği belirsiz bir ceset"
-L.quick_corpse_id = "{player} oyuncusunun cesedi"
+L.quick_corpse_id = "{player} adlı cesedin"
 
 
 -- Body search window
