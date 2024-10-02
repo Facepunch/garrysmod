@@ -65,7 +65,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Vortigaunt Slave",
+	Name = "#npc_vortigaunt_slave",
 	Class = "npc_vortigaunt",
 	Category = Category,
 	Model = "models/vortigaunt_slave.mdl"
@@ -79,7 +79,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Rebel",
+	Name = "#npc_citizen_rebel",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
@@ -88,7 +88,6 @@ AddNPC( {
 }, "Rebel" )
 
 AddNPC( {
-	Name = "Odessa Cubbage",
 	Class = "npc_citizen",
 	Category = Category,
 	Model = "models/odessa.mdl",
@@ -97,7 +96,7 @@ AddNPC( {
 }, "npc_odessa" )
 
 AddNPC( {
-	Name = "Rebel Medic",
+	Name = "#npc_citizen_medic",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
@@ -106,7 +105,7 @@ AddNPC( {
 }, "Medic" )
 
 AddNPC( {
-	Name = "Refugee",
+	Name = "#npc_citizen_refugee",
 	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
@@ -115,7 +114,7 @@ AddNPC( {
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
-		Name = "Uriah",
+		Name = "#npc_vortigaunt_uriah",
 		Class = "npc_vortigaunt",
 		Category = Category,
 		Model = "models/vortigaunt_doctor.mdl",
@@ -221,7 +220,6 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	AddNPC( {
-		Name = "Antlion Guardian",
 		Class = "npc_antlionguard",
 		Category = Category,
 		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
@@ -310,7 +308,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Shotgun Soldier",
+	Name = "#npc_combine_s_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
@@ -320,7 +318,7 @@ AddNPC( {
 }, "ShotgunSoldier" )
 
 AddNPC( {
-	Name = "Prison Guard",
+	Name = "#npc_combine_s_prison",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
@@ -330,7 +328,7 @@ AddNPC( {
 }, "CombinePrison" )
 
 AddNPC( {
-	Name = "Prison Shotgun Guard",
+	Name = "#npc_combine_s_prison_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
@@ -340,7 +338,7 @@ AddNPC( {
 }, "PrisonShotgunner" )
 
 AddNPC( {
-	Name = "Combine Elite",
+	Name = "#npc_combine_s_elite",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_super_soldier.mdl",
@@ -437,7 +435,6 @@ if ( IsMounted( "ep2" ) ) then
 		KeyValues = { SquadName = "overwatch" }
 	} )
 end
-
 
 if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 
