@@ -533,6 +533,8 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 		end
 	end
 
+	NPC:SetLagCompensated( true )
+
 	return NPC
 
 end
@@ -565,7 +567,6 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	-- Create the NPC if you can.
 	local SpawnedNPC = InternalSpawnNPC( NPCData, ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
 	if ( !IsValid( SpawnedNPC ) ) then return end
-	SpawnedNPC:SetLagCompensated( true )
 
 	TryFixPropPosition( ply, SpawnedNPC, tr.HitPos )
 
