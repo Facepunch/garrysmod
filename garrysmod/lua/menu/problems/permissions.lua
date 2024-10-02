@@ -98,7 +98,7 @@ function PANEL:Paint( w, h )
 	draw.SimpleText( self.Title, "DermaLarge", 4, 2, white, draw.TEXT_ALIGN_LEFT, draw.TEXT_ALIGN_TOP )
 
 	surface.SetMaterial( arrowMat )
-	surface.SetDrawColor( white )
+	surface.SetDrawColor( 255, 255, 255, white.a )
 	surface.DrawTexturedRectRotated( w - 20, 20, 20, 20, self.Collapsed and 180 or 0 )
 
 end

@@ -52,8 +52,10 @@ function PANEL:Paint( w, h )
 		surface.DrawTexturedRect( x, y , size, size )
 
 	end
-
-	surface.SetDrawColor( self:GetColor() )
+	
+	local panelColor = self:GetColor()
+	
+	surface.SetDrawColor( panelColor.r, panelColor.g, panelColor.b, panelColor.a )
 	self:DrawFilledRect()
 
 	surface.SetDrawColor( 0, 0, 0, 200 )

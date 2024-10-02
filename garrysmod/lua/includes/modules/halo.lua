@@ -84,7 +84,8 @@ function Render( entry )
 				-- render.SetStencilZFailOperation( STENCIL_KEEP )
 
 					cam.Start2D()
-						surface.SetDrawColor( entry.Color )
+						local entryColor = entry.Color
+						surface.SetDrawColor( entryColor.r, entryColor.g, entryColor.b, entryColor.a )
 						surface.DrawRect( 0, 0, ScrW(), ScrH() )
 					cam.End2D()
 
