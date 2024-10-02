@@ -135,7 +135,18 @@ if ( IsMounted( "lostcoast" ) ) then
 	} ) -- Has no death sequence
 end
 
+if ( IsMounted( "ep2" ) ) then
+	AddNPC( {
+		Class = "npc_turret_floor",
+		Category = Category,
+		OnFloor = true,
+		TotalSpawnFlags = 0,
+		Rotate = Angle( 0, 180, 0 ),
+		Offset = 2,
+		KeyValues = { SquadName = "overwatch", SpawnFlags = SF_FLOOR_TURRET_CITIZEN }
+	}, "npc_turret_floor_resistance" )
 
+end
 
 Category = "Zombies + Enemy Aliens"
 
