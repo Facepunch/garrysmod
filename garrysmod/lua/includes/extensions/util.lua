@@ -94,15 +94,31 @@ function util.LocalToWorld( ent, lpos, bone )
 
 end
 
+--[[---------------------------------------------------------
+   Name: Date( vD )
+   Desc: Returns year, month and day as a formatted string.
+         You can also provide an argument to be conveted.
+-----------------------------------------------------------]]
+function util.Date( vD )
+	return os.date( "%Y-%m-%d", vD )
+end
 
 --[[---------------------------------------------------------
-	Returns year, month, day and hour, minute, second in a formatted string.
+   Name: Time( vT )
+   Desc: Returns hour, minutes and seconds as a formatted string.
+         You can also provide an argument to be conveted.
 -----------------------------------------------------------]]
-function util.DateStamp()
+function util.Time( vT )
+	return os.date( "%H:%M:%S", vT )
+end
 
-	local t = os.date( '*t' )
-	return t.year .. "-" .. t.month .. "-" .. t.day .. " " .. Format( "%02i-%02i-%02i", t.hour, t.min, t.sec )
-
+--[[---------------------------------------------------------
+   Name: DateStamp( vS )
+   Desc: Returns year, month, day, hour, minutes and seconds as a formatted string.
+         You can also provide an argument to be conveted.
+-----------------------------------------------------------]]
+function util.DateStamp( vS )
+	return os.date( "%Y-%m-%d %H:%M:%S", vS )
 end
 
 --[[---------------------------------------------------------
