@@ -110,7 +110,6 @@ vgui.Register( "GenericProblem", PANEL, "Panel" )
 local PANEL = {}
 
 local arrowMat = Material( "gui/point.png" )
-local collapsedCache = {}
 
 function PANEL:Init()
 
@@ -146,8 +145,6 @@ function PANEL:OnMousePressed()
 
 	self.Collapsed = !self.Collapsed
 	self:InvalidateLayout()
-
-	collapsedCache[ self.Title ] = self.Collapsed
 
 end
 
