@@ -262,13 +262,13 @@ function meta:HasGodMode()
 end
 
 -- These are totally in the wrong place.
-local AccountID={}
-local UniqueID={}
-local SteamID64={}
-local SteamID={}
+local accountID={}
+local uniqueID={}
+local steamID64={}
+local steamID={}
 local bots={}
 function player.GetByAccountID( ID )
-	local ret=AccountID[ID]
+	local ret = accountID[ID]
 	if ( ret and ret:IsValid() ) then
 		return ret
 	end
@@ -277,21 +277,16 @@ function player.GetByAccountID( ID )
 end
 
 function player.GetByUniqueID( ID )
-	local ret = UniqueID[ID]
+	local ret = uniqueID[ID]
 	if ( ret and ret:IsValid() ) then
 		return ret
 	end
-	PrintTable{
-		ID=ID,
-		ret=ret,
-		UniqueID=UniqueID,
-	}
 	return false
 end
 
 function player.GetBySteamID( ID )
 	ID = string.upper( ID )
-	local ret = SteamID[ID]--ret could be nil if there was never an entry, or NULL if the player DCed
+	local ret = steamID[ID]--ret could be nil if there was never an entry, or NULL if the player DCed
 	if ( ret and ret:IsValid() ) then
 		return ret
 	end
@@ -299,11 +294,11 @@ function player.GetBySteamID( ID )
 		while ( ret ) do
 			ret = bots[1]--get the first bot on the list
 			if ( not ret ) then--bots is now empty, we failed
-				SteamID.BOT = nil
+				steamID.BOT = nil
 				return false
 			end
 			if ( ret:IsValid() ) then--is it a valid entity?
-				SteamID.BOT = ret--update entry for BOT so that hopefully we don't have to do this again
+				steamID.BOT = ret--update entry for BOT so that hopefully we don't have to do this again
 				return ret--return the bot
 			end
 			table.remove(bots,1)--remove a null entity from the list
@@ -315,7 +310,7 @@ end
 
 function player.GetBySteamID64( ID )
 	ID = tostring( ID )
-	local ret = SteamID64[ID]
+	local ret = steamID64[ID]
 	if ( ret and ret:IsValid() ) then
 		return ret
 	end
@@ -337,17 +332,17 @@ end
 hook.Add( "OnEntityCreated", "PlayerCache", function( ent )
 	if ( ent:IsPlayer() ) then 
 		PlayerCache = player.GetAll()
-		AccountID[ent:AccountID()] = ent
+		accountID[ent:AccountID()] = ent
 		if ( CLIENT ) then--workaround to https://github.com/Facepunch/garrysmod-issues/issues/6012
-			UniqueID[ ent:UniqueID() ] = ent
+			uniqueID[ ent:UniqueID() ] = ent
 		else
 			timer.Simple(0, function()
 				if ent:IsValid()then
-					UniqueID[ ent:UniqueID() ] = ent
+					uniqueID[ ent:UniqueID() ] = ent
 				end
 			end)
 		end
-		SteamID64[ent:SteamID64()] = ent
+		steamID64[ent:SteamID64()] = ent
 		local ID=ent:SteamID()
 		if ( ID == "BOT" ) then--if a bot joined, we got a bit more work to do
 			bots = {}--lets rebuild the bot cache
@@ -355,11 +350,11 @@ hook.Add( "OnEntityCreated", "PlayerCache", function( ent )
 				local p = PlayerCache[i]
 				if ( p:SteamID() == "BOT" ) then--this is more reliable than Player:IsBot() which checks entity flags that may be added or removed
 					table.insert(bots, p)
-					SteamID.BOT = SteamID.BOT or p
+					steamID.BOT = steamID.BOT or p
 				end
 			end
 		else
-			SteamID[ID] = ent
+			steamID[ID] = ent
 		end
 	end
 end )
