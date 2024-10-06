@@ -73,7 +73,7 @@ function PrintTable( t, indent, done )
 	for i = 1, #keys do
 		local key = keys[ i ]
 		local value = t[ key ]
-		key = ( type( key ) == "string" ) and "[\"" .. key .. "\"]" || "[" .. tostring( key ) .. "]"
+		key = ( type( key ) == "string" ) and "[\"" .. key .. "\"]" or "[" .. tostring( key ) .. "]"
 		Msg( string.rep( "\t", indent ) )
 
 		if  ( istable( value ) and !done[ value ] ) then
@@ -97,8 +97,8 @@ end
 	Returns a random vector
 -----------------------------------------------------------]]
 function VectorRand( min, max )
-	min = min || -1
-	max = max || 1
+	min = min or -1
+	max = max or 1
 	return Vector( math.Rand( min, max ), math.Rand( min, max ), math.Rand( min, max ) )
 end
 
@@ -106,7 +106,7 @@ end
 	Returns a random angle
 -----------------------------------------------------------]]
 function AngleRand( min, max )
-	return Angle( math.Rand( min || -90, max || 90 ), math.Rand( min || -180, max || 180 ), math.Rand( min || -180, max || 180 ) )
+	return Angle( math.Rand( min or -90, max or 90 ), math.Rand( min or -180, max or 180 ), math.Rand( min or -180, max or 180 ) )
 end
 
 --[[---------------------------------------------------------
@@ -238,7 +238,7 @@ end
 -----------------------------------------------------------]]
 function SafeRemoveEntity( ent )
 
-	if ( !IsValid( ent ) || ent:IsPlayer() ) then return end
+	if ( !IsValid( ent ) or ent:IsPlayer() ) then return end
 
 	ent:Remove()
 
@@ -249,7 +249,7 @@ end
 -----------------------------------------------------------]]
 function SafeRemoveEntityDelayed( ent, timedelay )
 
-	if ( !IsValid( ent ) || ent:IsPlayer() ) then return end
+	if ( !IsValid( ent ) or ent:IsPlayer() ) then return end
 
 	timer.Simple( timedelay, function() SafeRemoveEntity( ent ) end )
 
@@ -271,7 +271,7 @@ end
 	Convert Var to Bool
 -----------------------------------------------------------]]
 function tobool( val )
-	if ( val == nil || val == false || val == 0 || val == "0" || val == "false" ) then return false end
+	if ( val == nil or val == false or val == 0 or val == "0" or val == "false" ) then return false end
 	return true
 end
 
@@ -437,7 +437,7 @@ if ( CLIENT ) then
 
 	function RestoreCursorPosition()
 
-		if ( !StoredCursorPos.x || !StoredCursorPos.y ) then return end
+		if ( !StoredCursorPos.x or !StoredCursorPos.y ) then return end
 		input.SetCursorPos( StoredCursorPos.x, StoredCursorPos.y )
 
 	end
@@ -451,7 +451,7 @@ function CreateClientConVar( name, default, shouldsave, userdata, helptext, min,
 
 	local iFlags = 0
 
-	if ( shouldsave || shouldsave == nil ) then
+	if ( shouldsave or shouldsave == nil ) then
 		iFlags = bit.bor( iFlags, FCVAR_ARCHIVE )
 	end
 
