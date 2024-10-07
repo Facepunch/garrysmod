@@ -86,12 +86,12 @@ end
 
 function gmsave.SaveMap( ply )
 
-	local Ents = ents.GetAll()
+	local Ents = {}
 
-	for k, v in ipairs( Ents ) do
+	for _, v in ents.Iterator() do
 
-		if ( !gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) || v:IsConstraint() ) then
-			Ents[ k ] = nil
+		if ( gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) && !v:IsConstraint() ) then
+			table.insert( Ents, v )
 		end
 
 	end
