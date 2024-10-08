@@ -136,17 +136,26 @@ function PANEL:ApplySchemeSettings()
 
 end
 
-function PANEL:Think()
-
-	if ( self:GetAutoStretchVertical() ) then
-		self:SizeToContentsY()
-	end
-
-end
-
 function PANEL:PerformLayout()
 
 	self:ApplySchemeSettings()
+
+	if ( self:GetAutoStretchVertical() ) then
+
+		local dockType = self:GetDock()
+
+		-- Auto stretch will layout infinitely with these dock types, so we'll undo them
+		if ( dockType != FILL && dockType != LEFT && dockType != RIGHT ) then
+
+			self:SizeToContentsY()
+
+		else
+
+			self:Dock( NODOCK )
+
+		end
+
+	end
 
 end
 
