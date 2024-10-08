@@ -1,4 +1,4 @@
-local gmod = gmod
+local _G = _G
 local pairs = pairs
 local isfunction = isfunction
 local isstring = isstring
@@ -67,7 +67,7 @@ end
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
 function Run( name, ... )
-	return Call( name, gmod and gmod.GetGamemode() or nil, ... )
+	return Call( name, _G.GAMEMODE or _G.GM, ... )
 end
 
 
