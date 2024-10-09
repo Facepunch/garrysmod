@@ -533,7 +533,9 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 		end
 	end
 
-	NPC:SetLagCompensated( true )
+	if ( not game.SinglePlayer() ) then
+		NPC:SetLagCompensated( true )
+	end
 
 	return NPC
 
