@@ -125,6 +125,13 @@ H1 small
 	font-size: 13px;
 }
 
+.serverlist name lastvisited
+{
+	font-weight: normal; 
+	position: absolute;
+	right: 0;
+}
+
 /*Fix HTML being awful to work with*/
 .serverlist name span
 {
