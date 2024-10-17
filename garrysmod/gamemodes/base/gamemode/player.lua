@@ -438,7 +438,7 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_attacker" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_defender" ) )
 
-		-- Fortress Forever
+		-- Fortress Forever Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_ff_teamspawn" ) )
 	
 	end
