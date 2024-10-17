@@ -62,7 +62,7 @@ hook.Add( "OnPauseMenuBlockedTooManyTimes", "TellAboutShiftEsc", function()
 		times	= 1,
 		title	= "",
 		x		= 32,
-		text	= "You can force open the main menu by holding Shift when pressing the Escape key.",
+		text	= "#permission.main_menu_blocked",
 		iserr   = false
 	}
 
