@@ -175,12 +175,13 @@ local function UpdateMaps()
 	MapNames[ "rd_" ] = "Team Fortress 2"
 	MapNames[ "pd_" ] = "Team Fortress 2"
 	MapNames[ "sd_" ] = "Team Fortress 2"
-	MapNames[ "tc_" ] = "Team Fortress 2"
-	MapNames[ "tr_" ] = "Team Fortress 2"
+	MapNames[ "tc_" ] = "Team Fortress 2" // Territory Control
+	MapNames[ "tr_" ] = "Team Fortress 2" // Training
 	MapNames[ "trade_" ] = "Team Fortress 2"
-	MapNames[ "pass_" ] = "Team Fortress 2"
-	MapNames[ "vsh_" ] = "Team Fortress 2"
-	MapNames[ "zi_" ] = "Team Fortress 2"
+	MapNames[ "pass_" ] = "Team Fortress 2" // PASS time
+	MapNames[ "vsh_" ] = "Team Fortress 2" // Versus Saxton Hale
+	MapNames[ "zi_" ] = "Team Fortress 2" // Zombie Invasion
+	MapNames[ "tow_" ] = "Team Fortress 2" // Tug of War
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"

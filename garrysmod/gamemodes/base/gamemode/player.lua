@@ -31,7 +31,7 @@ end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerAuthed()
-	Desc: Player's STEAMID has been authed
+	Desc: Player's UniqueID was set
 -----------------------------------------------------------]]
 function GM:PlayerAuthed( ply, SteamID, UniqueID )
 end
