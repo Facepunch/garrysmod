@@ -352,6 +352,12 @@ controls control.disabled
 	min-width: 500px;
 	margin-bottom: 5px;
 }
+.preset_content input[type=text]
+{
+	padding: 2px 4px;
+	box-sizing: border-box;
+	margin-bottom: 8px;
+}
 .preset_list
 {
 	background: #eee;
