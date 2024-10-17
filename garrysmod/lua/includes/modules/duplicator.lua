@@ -773,13 +773,13 @@ function CreateConstraintFromTable( Constraint, EntityList, ply )
 	local function IsRopeConstraint( ent ) return ent and ent:GetClass() == "keyframe_rope" end
 	local isRope = IsRopeConstraint( const1 ) || IsRopeConstraint( const2 ) || IsRopeConstraint( const3 ) || IsRopeConstraint( const4 )
 	local constraintType = isRope and "ropeconstraints" or "constraints"
-	
+
 	-- If in Sandbox, keep track of this.
-	if ( ply and ply.AddCleanup ) then
+	if ( ply and ply.AddCleanup and IsValid( const1 ) ) then
 		ply:AddCount( constraintType, const1 )
 
 		-- Hack: special case for nocollide
-		if ( const1 and const1:GetClass() == "logic_collision_pair" ) then constraintType = "nocollide" end
+		if ( const1:GetClass() == "logic_collision_pair" ) then constraintType = "nocollide" end
 		ply:AddCleanup( constraintType, const1 )
 		ply:AddCleanup( constraintType, const2 )
 		ply:AddCleanup( constraintType, const3 )
