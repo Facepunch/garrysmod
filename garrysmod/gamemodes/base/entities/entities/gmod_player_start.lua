@@ -79,3 +79,54 @@ function ENT:KeyValue( key, value )
 	end
 
 end
+
+-- Maybe gamemodes want to use this list, maybe base gamemode should
+ENT.SpawnPointClasses = {
+	-- Generic
+	"info_player_blue",
+	"info_player_red",
+	"info_player_coop", -- Synergy?
+	"info_player_deathmatch",
+	"info_player_zombiemaster", -- ZM
+	"info_spawnpoint",
+
+	"info_player_counterterrorist", -- CSS
+	"info_player_terrorist",
+
+	"info_player_allies", -- DODS
+	"info_player_axis",
+
+	"info_player_knight", -- PVKII
+	"info_player_pirate",
+	"info_player_viking",
+
+	"info_survivor_position", -- L4D
+	"info_survivor_rescue",
+
+	"info_player_human", -- ZPS
+	"info_player_zombie",
+
+	"diprip_start_team_red", -- DIPRIP
+	"diprip_start_team_blue",
+
+	"info_player_fof", -- Firstful of Frags
+	"info_player_desperado",
+	"info_player_vigilante",
+
+	"info_player_attacker", -- NEOTOKYO
+	"info_player_defender",
+
+	"ins_spawnpoint", -- Insurgency
+	"dys_spawn_point", -- Dystopia
+	"aoc_spawnpoint", -- Age of Chivalry
+	"info_ff_teamspawn", -- Fortress Forever
+}
+
+for _, className in pairs( ENT.SpawnPointClasses ) do
+	local ent_cpy = table.Copy( ENT )
+	ent_cpy.Base = "gmod_player_start"
+	ent_cpy.Folder = "entities/" .. className
+	ent_cpy.SpawnPointClasses = nil
+
+	scripted_ents.Register( ent_cpy, className )
+end
