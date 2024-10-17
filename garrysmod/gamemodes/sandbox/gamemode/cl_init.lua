@@ -21,7 +21,7 @@ include( "gui/IconEditor.lua" )
 DEFINE_BASECLASS( "gamemode_base" )
 
 
-local physgun_halo = CreateConVar( "physgun_halo", "1", { FCVAR_ARCHIVE }, "Draw the physics gun halo?" )
+local physgun_halo = CreateConVar( "physgun_halo", "1", { FCVAR_ARCHIVE }, "Draw the Physics Gun grab effect?" )
 
 function GM:Initialize()
 

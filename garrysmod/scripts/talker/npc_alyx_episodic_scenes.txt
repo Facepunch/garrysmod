@@ -972,6 +972,7 @@ response "AlyxEvacCitizen"
 rule AlyxEvacCitizen
 {
 	criteria IsAlyx ConceptTalkAlyxEVacCitizen
+        applycontext "Evac05CitizenThanks:1:60"
 	response AlyxEvacCitizen
 }
 
@@ -980,8 +981,12 @@ rule AlyxEvacCitizen
 // Alyx Evac Next group - spoken when the player needs to get another group of citizens.
 //============================================================================================================
 
+criterion "IsWaitForPlayerEvacNextGroup" "concept" "ConceptEvacNextGroup" "required"
+
 response "AlyxEvacNextGroup"
 {
+
+	scene "scenes/episode_1/c17/al_evac_takestand.vcd"  displayfirst
 	scene "scenes/episode_1/al_c17_05_evac_nextgroup01.vcd"
 	scene "scenes/episode_1/al_c17_05_evac_nextgroup02.vcd"
 	scene "scenes/episode_1/al_c17_05_evac_nextgroup03.vcd"
@@ -1107,3 +1112,85 @@ rule AntLionTrainingCongrats
 	response AntLionTrainingCongrats
 }
 
+//============================================================================================================
+//Alyx plus use and nags while player should follow power line to powerbox for elevator.
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "NotUsedNagLookForPower" "UsedNagLookForPower" "!=1" "required" weight 0
+criterion "IsLookForPower" "al_hint_c1700_LookForPower" "1" "required" weight 10
+criterion "HintLookForPowerNag" "concept" "TLK_FollowWireNag" "required" weight 10
+
+response AlyxC1700aUseLookForPower
+{
+	sequential
+	scene "scenes/episode_1/c17/al_elev_power_nag05.vcd"  
+	scene "scenes/episode_1/c17/al_elev_power_nag03.vcd"  
+	scene "scenes/npc/Alyx/al_nomore.vcd"  
+}
+
+rule AlyxC1700aUseLookForPower
+{
+	criteria IsAlyx ConceptTalkUse IsLookForPower  NotUsedNagLookForPower
+        applycontext "UsedNagLookForPower:1:30,UsedAlyxResponse:1:30"
+	response AlyxC1700aUseLookForPower
+}
+
+
+
+response AlyxC1700aLookForPower
+{	
+	norepeat
+	sequential
+	scene "scenes/episode_1/c17/al_elev_power_nag04.vcd"
+	scene "scenes/episode_1/c17/al_elev_power_nag01.vcd"
+	scene "scenes/episode_1/c17/al_elev_power_nag02.vcd"
+
+}
+
+rule AlyxC1700aLookForPower
+{
+	criteria IsAlyx  HintLookForPowerNag NotUsedNagLookForPower NotInCombat PlayerNear
+        applycontext "UsedNagLookForPower:1:30,UsedAlyxResponse:1:30"
+	response AlyxC1700aLookForPower
+}
+
+
+//============================================================================================================
+//Alyx plus use while waiting for elevator
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "IsWaitingForElevator" "al_hint_c1700_WaitForElevator" "1" "required" weight 10
+response AlyxC1700aUseWaitForElevator
+{
+	sequential
+	norepeat
+	scene "scenes/episode_1/c17/al_elev_almosthere.vcd"  
+	scene "scenes/npc/Alyx/al_nomore.vcd"  
+}
+
+rule AlyxC1700aUseWaitForElevator
+{
+	criteria IsAlyx ConceptTalkUse IsWaitingForElevator NotInCombat NotUsedAlyxResponse
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxC1700aUseWaitForElevator
+}
+
+
+
+response AlyxC1700aUseWaitForElevatorCombat
+{
+	sequential
+	norepeat
+	scene "scenes/episode_1/c17/al_elev_anytime_loud.vcd"  
+	scene "scenes/episode_1/c17/al_elev_anyminute_loud.vcd"  
+}
+
+
+rule AlyxC1700aUseWaitForElevatorCombat
+{
+	criteria IsAlyx ConceptTalkUse IsWaitingForElevator InCombat NotUsedAlyxResponse
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxC1700aUseWaitForElevatorCombat
+}
+
+ 

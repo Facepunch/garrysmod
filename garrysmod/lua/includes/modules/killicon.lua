@@ -84,7 +84,7 @@ function GetSize( name, dontEqualizeHeight )
 		return t.size.w, t.size.h
 	end
 
-	local w, h = 0
+	local w, h = 0, 0
 
 	if ( t.type == TYPE_FONT ) then
 

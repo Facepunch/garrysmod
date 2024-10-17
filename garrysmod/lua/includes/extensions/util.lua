@@ -22,7 +22,7 @@ function util.IsValidPhysicsObject( ent, num )
 	-- anyway - so we're not really losing anything.
 
 	local MoveType = ent:GetMoveType()
-	if ( !ent:IsWorld() and MoveType != MOVETYPE_VPHYSICS and !( ent:GetModel() and ent:GetModel():StartWith( "*" ) ) ) then return false end
+	if ( !ent:IsWorld() and MoveType != MOVETYPE_VPHYSICS and !( ent:GetModel() and ent:GetModel():StartsWith( "*" ) ) ) then return false end
 
 	local Phys = ent:GetPhysicsObjectNum( num )
 	return IsValid( Phys )
@@ -114,9 +114,9 @@ function util.StringToType( str, typename )
 
 	if ( typename == "vector" )	then return Vector( str ) end
 	if ( typename == "angle" )	then return Angle( str ) end
-	if ( typename == "float" )	then return tonumber( str ) end
-	if ( typename == "int" )	then return math.Round( tonumber( str ) ) end
-	if ( typename == "bool" )	then return tobool( str ) end
+	if ( typename == "float" || typename == "number" )	then return tonumber( str ) end
+	if ( typename == "int" )	then local v = tonumber( str ) return v and math.Round( v ) or nil end
+	if ( typename == "bool" || typename == "boolean" )	then return tobool( str ) end
 	if ( typename == "string" )	then return tostring( str ) end
 	if ( typename == "entity" )	then return Entity( str ) end
 
@@ -177,6 +177,7 @@ local T =
 	--
 	Reset = function( self )
 
+		self.starttime = CurTime() - self.starttime
 		self.endtime = nil
 
 	end,
@@ -186,7 +187,8 @@ local T =
 	--
 	Start = function( self, time )
 
-		self.endtime = CurTime() + time
+		self.starttime = CurTime()
+		self.endtime = CurTime() + ( time or 0 )
 
 	end,
 
@@ -206,6 +208,15 @@ local T =
 
 		return self.endtime == nil or self.endtime <= CurTime()
 
+	end,
+
+	--
+	-- Returns the amount of time that has passed since the Timer was started
+	--
+	GetElaspedTime = function( self )
+
+		return self:Started() and CurTime() - self.starttime or self.starttime
+
 	end
 }
 
@@ -216,15 +227,12 @@ T.__index = T
 --
 function util.Timer( startdelay )
 
-	startdelay = startdelay or 0
-
 	local t = {}
 	setmetatable( t, T )
-	t.endtime = CurTime() + startdelay
+	t:Start( startdelay or 0 )
 	return t
 
 end
-
 
 local function PopStack( self, num )
 
@@ -397,13 +405,13 @@ function util.IsBinaryModuleInstalled( name )
 		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)" )
 	end
 
-	if ( file.Exists( string.format( fmt, name, suffix ), "GAME" ) ) then
+	if ( file.Exists( string.format( fmt, name, suffix ), "MOD" ) ) then
 		return true
 	end
 
 	-- Edge case - on Linux 32-bit x86-64 branch, linux32 is also supported as a suffix
 	if ( jit.versionnum != 20004 and jit.arch == "x86" and system.IsLinux() ) then
-		return file.Exists( string.format( fmt, name, "linux32" ), "GAME" )
+		return file.Exists( string.format( fmt, name, "linux32" ), "MOD" )
 	end
 
 	return false

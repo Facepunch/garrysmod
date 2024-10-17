@@ -26,10 +26,14 @@ function TOOL:LeftClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -48,10 +52,11 @@ function TOOL:LeftClick( trace )
 		if ( IsValid( constr ) ) then
 			undo.Create( "BallSocket" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 		end
 
 		-- Clear the objects so we're ready to go again

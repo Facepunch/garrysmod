@@ -52,13 +52,13 @@ function plymeta:SubtractCredits(amt) self:AddCredits(-amt) end
 
 function plymeta:SetDefaultCredits()
    if self:GetTraitor() then
-      local c = GetConVarNumber("ttt_credits_starting")
+      local c = GetConVar("ttt_credits_starting"):GetInt()
       if CountTraitors() == 1 then
-         c = c + GetConVarNumber("ttt_credits_alonebonus")
+         c = c + GetConVar("ttt_credits_alonebonus"):GetInt()
       end
-      self:SetCredits(math.ceil(c))
+      self:SetCredits(c)
    elseif self:GetDetective() then
-      self:SetCredits(math.ceil(GetConVarNumber("ttt_det_credits_starting")))
+      self:SetCredits(GetConVar("ttt_det_credits_starting"):GetInt())
    else
       self:SetCredits(0)
    end

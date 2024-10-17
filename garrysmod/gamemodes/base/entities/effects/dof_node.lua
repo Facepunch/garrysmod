@@ -3,7 +3,7 @@ EFFECT.Mat = Material( "pp/dof" )
 
 function EFFECT:Init( data )
 
-	table.insert( DOF_Ents, self.Entity )
+	table.insert( DOF_Ents, self )
 	self.Scale = data:GetScale()
 
 	local size = 32

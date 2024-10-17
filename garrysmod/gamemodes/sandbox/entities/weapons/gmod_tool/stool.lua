@@ -34,20 +34,20 @@ function ToolObj:CreateConVars()
 
 	local mode = self:GetMode()
 
-	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, { FCVAR_NOTIFY, FCVAR_REPLICATED } )
+	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, "1", { FCVAR_NOTIFY, FCVAR_REPLICATED }, "Set to 0 to disallow players being able to use the \"" .. mode .. "\" tool." )
 	self.ClientConVars = {}
 	self.ServerConVars = {}
 
 	if ( CLIENT ) then
 
 		for cvar, default in pairs( self.ClientConVar ) do
-			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true )
+			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true, "Tool specific client setting (" .. mode .. ")" )
 		end
 
 	else
 
 		for cvar, default in pairs( self.ServerConVar ) do
-			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
+			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE, "Tool specific server setting (" .. mode .. ")" )
 		end
 
 	end
@@ -116,9 +116,9 @@ end
 function ToolObj:Init() end
 
 function ToolObj:GetMode()		return self.Mode end
-function ToolObj:GetSWEP()		return self.SWEP end
-function ToolObj:GetOwner()		return self:GetSWEP().Owner or self.Owner end
-function ToolObj:GetWeapon()	return self:GetSWEP().Weapon or self.Weapon end
+function ToolObj:GetWeapon()	return self.SWEP end
+function ToolObj:GetOwner()		return self:GetWeapon():GetOwner() or self.Owner end
+function ToolObj:GetSWEP()		return self:GetWeapon() end
 
 function ToolObj:LeftClick()	return false end
 function ToolObj:RightClick()	return false end
@@ -181,8 +181,8 @@ hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 				tool.Tab or "Main",
 				tool.Category or "New Category",
 				ToolName,
-				tool.Name or "#" .. ToolName,
-				tool.Command or "gmod_tool " .. ToolName,
+				tool.Name or ( "#" .. ToolName ),
+				tool.Command or ( "gmod_tool " .. ToolName ),
 				tool.ConfigName or ToolName,
 				tool.BuildCPanel
 			)
@@ -202,8 +202,8 @@ search.AddProvider( function( str )
 
 	for k, v in pairs( TOOLS_LIST ) do
 
-		local niceName = v.Name or "#" .. k
-		if ( niceName:StartWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
+		local niceName = v.Name or ( "#" .. k )
+		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
 		if ( !k:lower():find( str, nil, true ) and !niceName:lower():find( str, nil, true ) ) then continue end
 
@@ -211,7 +211,7 @@ search.AddProvider( function( str )
 			text = niceName,
 			icon = spawnmenu.CreateContentIcon( "tool", nil, {
 				spawnname = k,
-				nicename = v.Name or "#" .. k
+				nicename = v.Name or ( "#" .. k )
 			} ),
 			words = { k }
 		}

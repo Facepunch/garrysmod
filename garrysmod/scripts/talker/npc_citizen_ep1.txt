@@ -15,6 +15,9 @@ criterion "ConceptCitizenPlayerDenyTrain" "Concept" "TLK_CITIZEN_PLAYER_DENYTRAI
 criterion "ConceptCitizenNotDoorMan" "c17_05_doorman" "0"
 criterion "c17_01_StreetMedics"	"c17_01_streetmedics" "1" required
 criterion "ConceptBoredCitizens" "ConceptBoredCitizens" "1" required
+criterion "IsTrainBlockerTalk" "Concept" "ConceptTrainBlocker" required
+criterion "ConceptCitizenPlayerDenyTrain" "Concept" "TLK_CITIZEN_PLAYER_DENYTRAIN" required
+criterion "NotCitizenBlocker" "name" "!=citizen_blocker" required
 
 
 //============================================================================================================
@@ -75,7 +78,7 @@ response CitizenEvacThanks
 
 rule CitizenEvacThanks
 {
-	criteria		IsCitizen ConceptCitizenEvacThanks ConceptCitizenNotDoorMan
+	criteria		IsCitizen ConceptCitizenEvacThanks ConceptCitizenNotDoorMan NotCitizenBlocker
 	response		CitizenEvacThanks
 }
 
@@ -90,7 +93,7 @@ response CitizenEvacReachTrainLast
 
 rule CitizenEvacReachTrainLast
 {
-	criteria		IsCitizen ConceptCitizenEvacReachTrainLast ConceptCitizenNotDoorMan
+	criteria		IsCitizen ConceptCitizenEvacReachTrainLast ConceptCitizenNotDoorMan NotCitizenBlocker
 	response		CitizenEvacReachTrainLast
 }
 
@@ -200,3 +203,58 @@ rule CitizensKillingTime
 }
 
 
+
+response TrainBlockerDenyTrain
+{
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain03.vcd"
+}
+
+rule TrainBlockerDenyTrain
+{
+	criteria		IsCitizen ConceptCitizenPlayerDenyTrain
+	response		TrainBlockerDenyTrain
+}
+
+
+
+
+response TrainBlockerTalkTrain
+{
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain04.vcd"
+}
+
+rule TrainBlockerTalkTrain
+{
+	criteria		IsCitizen IsTrainBlockerTalk 
+	response		TrainBlockerTalkTrain
+}
+
+//IsTrainBlockerTalk
+//scene "scenes/episode_1/npc/$gender01/cit_denytrain04.vcd"
+
+//criterion "IsTrainBlockerTalk" "ConceptTrainBlocker" "1" required
+//criterion "IsTrainBlockerDeny" "TLK_CITIZEN_PLAYER_DENYTRAIN" "1" required
+
+
+
+// Citizen response lines for citizens sitting in safe room in 05
+criterion "NotUsedCitizenResponse" "UsedCitizenResponse" "!=1" "required" weight 0
+criterion "IsCitizens_Safe_Ep1_05" "Citizens_Safe_Ep1_05" "1" "required"
+response CitizenSafeUseEp1_c17_05
+{
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain03.vcd"
+}
+
+rule CitizenSafeUseEp1_c17_05
+{
+	criteria IsCitizen ConceptTalkUse IsCitizens_Safe_Ep1_05 NotUsedCitizenResponse
+        applycontext "UsedCitizenResponse:1:10"
+	response CitizenSafeUseEp1_c17_05
+}
+
+
+//  

@@ -44,7 +44,7 @@ function TOOL:RightClick( trace, worldweld )
 
 	-- Check the model's validity
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidButtonModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "buttons" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "buttons" ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
@@ -87,11 +87,11 @@ if ( SERVER ) then
 
 	function MakeButton( ply, model, ang, pos, key, description, toggle, nocollide, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "buttons" ) ) then return false end
-		if ( !IsValidButtonModel( model ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "buttons" ) ) then return NULL end
+		if ( !IsValidButtonModel( model ) ) then return NULL end
 
 		local button = ents.Create( "gmod_button" )
-		if ( !IsValid( button ) ) then return false end
+		if ( !IsValid( button ) ) then return NULL end
 
 		duplicator.DoGeneric( button, Data )
 		button:SetModel( model ) -- Backwards compatible for addons directly calling this function

@@ -226,7 +226,7 @@
 		"fieldName" "HudMessage"
 		"visible" "1"
 		"enabled" "1"
-		"wide"	 "640"
+		"wide"	 "f0" // GMOD
 		"tall"	 "480"
 	}
 

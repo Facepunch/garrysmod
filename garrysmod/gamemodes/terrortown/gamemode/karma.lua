@@ -202,7 +202,7 @@ function KARMA.RoundIncrement()
    local healbonus = config.roundheal:GetFloat()
    local cleanbonus = config.clean:GetFloat()
 
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if ply:IsDeadTerror() and ply.death_type ~= KILL_SUICIDE or not ply:IsSpec() then
          local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
          KARMA.GiveReward(ply, bonus)
@@ -218,7 +218,7 @@ end
 
 -- When a new round starts, Live karma becomes Base karma
 function KARMA.Rebase()
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if IsDebug() then
          print(ply, "rebased from", ply:GetBaseKarma(), "to", ply:GetLiveKarma())
       end
@@ -229,7 +229,7 @@ end
 
 -- Apply karma to damage factor for all players
 function KARMA.ApplyKarmaAll()
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       KARMA.ApplyKarma(ply)
    end
 end
@@ -268,7 +268,7 @@ function KARMA.RoundBegin()
    KARMA.InitState()
 
    if KARMA.IsEnabled() then
-      for _, ply in ipairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          KARMA.ApplyKarma(ply)
 
          KARMA.NotifyPlayer(ply)
@@ -326,7 +326,7 @@ function KARMA.LateRecallAndSet(ply)
 end
 
 function KARMA.RememberAll()
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       KARMA.Remember(ply)
    end
 end
@@ -358,13 +358,13 @@ function KARMA.CheckAutoKick(ply)
 end
 
 function KARMA.CheckAutoKickAll()
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       KARMA.CheckAutoKick(ply)
    end
 end
 
 function KARMA.PrintAll(printfn)
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       printfn(Format("%s : Live = %f -- Base = %f -- Dmg = %f\n",
                      ply:Nick(),
                      ply:GetLiveKarma(), ply:GetBaseKarma(),

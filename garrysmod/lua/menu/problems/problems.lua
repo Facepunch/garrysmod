@@ -4,6 +4,8 @@ include( "problems_pnl.lua" )
 local ProblemsPanel
 local ProblemsCount = 0
 local ProblemSeverity = 0
+local MenuUpdated = false
+
 Problems = Problems or {}
 ErrorLog = ErrorLog or {}
 
@@ -35,7 +37,8 @@ local function CountProblem( severity )
 	ProblemSeverity = math.max( ProblemSeverity, severity or 0 )
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
+		pnlMainMenu:SetProblemCount( ProblemsCount, ProblemSeverity )
+		MenuUpdated = true
 	end
 
 end
@@ -56,10 +59,16 @@ local function RecountProblems()
 	end
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
+		pnlMainMenu:SetProblemCount( ProblemsCount, ProblemSeverity )
+		MenuUpdated = true
 	end
-
 end
+
+timer.Create( "menu_problem_counter", 1, 0, function()
+	if ( MenuUpdated ) then timer.Remove( "menu_problem_counter" ) return end
+
+	RecountProblems()
+end )
 
 function ClearLuaErrorGroup( group_id )
 
@@ -179,7 +188,10 @@ end
 function FireProblemFromEngine( id, severity, params )
 	if ( id == "menu_cleanupgmas" ) then
 		local text = language.GetPhrase( "problem." .. id ) .. "\n\n" .. params:Replace( ";", "\n" )
-		FireProblem( { id = id, text = text, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
+		FireProblem( { id = id, text = text, severity = severity, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
+	elseif ( id == "readonly_file" ) then
+		local text = params
+		FireProblem( { id = id .. params, text = text, severity = severity, type = "config" } )
 	else
 		-- missing_addon_file
 		-- addon_download_failed = title;reason
@@ -193,7 +205,7 @@ end
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
 	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
-		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
+		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end, severity = 1 } )
 	else
 		ClearProblem( "mat_hdr_level" )
 	end
@@ -217,9 +229,15 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	if ( math.abs( GetConVarNumber( "voice_fadeouttime" ) - 0.1 ) > 0.001 ) then
-		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) end } )
+		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) ClearProblem( "voice_fadeouttime" ) end } )
 	else
 		ClearProblem( "voice_fadeouttime" )
+	end
+
+	if ( GetConVarNumber( "mat_viewportscale" ) < 0.1 ) then
+		FireProblem( { id = "mat_viewportscale", text = "#problem.mat_viewportscale", type = "config", fix = function() RunConsoleCommand( "mat_viewportscale", "1" ) ClearProblem( "mat_viewportscale" ) end } )
+	else
+		ClearProblem( "mat_viewportscale" )
 	end
 
 	if ( ScrW() < 1000 or ScrH() < 700 ) then

@@ -29,6 +29,47 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 end
 
+local function recurseAddFilesSpawnlist( folder, pathid, list )
+
+	local addedLabel = false
+
+	local files, folders = file.Find( folder .. "/*", pathid )
+	for id, file in pairs( files or {} ) do
+		if ( file:EndsWith( ".mdl" ) ) then
+			if ( !addedLabel ) then
+				table.insert( list, { type = "header", text = folder } )
+				addedLabel = true
+			end
+
+			table.insert( list, { type = "model", model = folder .. "/" .. file } )
+		end
+	end
+
+	for id, fold in pairs( folders or {} ) do
+		recurseAddFilesSpawnlist( folder .. "/" .. fold, pathid, list )
+	end
+
+end
+
+
+local function GenerateSpawnlistFromAddon( folder, path, name )
+
+	local contents = {}
+	recurseAddFilesSpawnlist( folder, path, contents )
+
+	AddPropsOfParent( g_SpawnMenu.CustomizableSpawnlistNode.SMContentPanel, g_SpawnMenu.CustomizableSpawnlistNode, 0, { [ folder ] = {
+		icon = "icon16/page.png",
+		id = math.random( 0, 999999 ), -- Eeehhhh
+		name = name or folder,
+		parentid = 0,
+		contents = contents
+	} } )
+
+	-- We added a new spawnlist, show the save changes button
+	hook.Run( "SpawnlistContentChanged" )
+
+end
+
 local function AddonsRightClick( self )
 
 	if ( !IsValid( self ) || !self.wsid || self.wsid == "0" ) then return end
@@ -38,6 +79,11 @@ local function AddonsRightClick( self )
 		steamworks.ViewFile( self.wsid )
 	end ):SetIcon( "icon16/link_go.png" )
 
+	menu:AddOption( "#spawnmenu.createautospawnlist", function()
+
+		GenerateSpawnlistFromAddon( "models", self.searchPath, self.searchPath )
+
+	end ):SetIcon( "icon16/page_add.png" )
 	menu:Open()
 
 end
@@ -55,7 +101,7 @@ local function RefreshAddons( MyNode )
 		local models = MyNode:AddNode( addon.title .. " (" .. addon.models .. ")", "icon16/bricks.png" )
 		models.DoClick = function()
 
-			ViewPanel:Clear( true )
+			ViewPanel:Clear()
 
 			local anyAdded = AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
 			if ( !anyAdded ) then
@@ -82,6 +128,7 @@ local function RefreshAddons( MyNode )
 		end
 		models.DoRightClick = AddonsRightClick
 		models.wsid = addon.wsid
+		models.searchPath = addon.title
 
 	end
 
@@ -108,7 +155,7 @@ hook.Add( "GameContentChanged", "RefreshSpawnmenuAddons", function()
 
 	-- TODO: Maybe be more advaced and do not delete => recreate all the nodes, only delete nodes for addons that were removed, add only the new ones?
 	myAddonsNode:Clear()
-	myAddonsNode.ViewPanel:Clear( true )
+	myAddonsNode.ViewPanel:Clear()
 
 	RefreshAddons( myAddonsNode )
 

@@ -424,6 +424,10 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 
 	NPC:SetAngles( Angles )
 
+	if ( NPCData.SnapToNormal ) then
+		NPC:SetAngles( Normal:Angle() )
+	end
+
 	--
 	-- Does this NPC have a specified model? If so, use it.
 	--
@@ -503,11 +507,14 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 	NPC.NPCTable = NPCData
 	NPC._wasSpawnedOnCeiling = wasSpawnedOnCeiling
 
-	-- For those NPCs that set their model in Spawn function
+	-- For those NPCs that set their model/skin in Spawn function
 	-- We have to keep the call above for NPCs that want a model set by Spawn() time
 	-- BAD: They may adversly affect entity collision bounds
 	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
+	end
+	if ( NPCData.Skin ) then
+		NPC:SetSkin( NPCData.Skin )
 	end
 
 	if ( bDropToFloor ) then
@@ -615,7 +622,6 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 
 		if ( NPCData && !NPCData.OnCeiling && !NPCData.NoDrop ) then
 			ent:SetPos( pos )
-			ent:DropToFloor()
 		end
 
 		if ( IsValid( ply ) ) then
@@ -623,10 +629,10 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 			ply:AddCleanup( "npcs", ent )
 		end
 
-		if ( data.Health ) then ent:SetHealth( data.Health ) end
+		if ( data.CurHealth ) then ent:SetHealth( data.CurHealth ) end
 		if ( data.MaxHealth ) then ent:SetMaxHealth( data.MaxHealth ) end
 
-		table.Add( ent:GetTable(), data )
+		table.Merge( ent:GetTable(), data )
 
 	end
 
@@ -714,6 +720,7 @@ AddNPCToDuplicator( "monster_sentry" )
 -- Portal
 AddNPCToDuplicator( "npc_portal_turret_floor" )
 AddNPCToDuplicator( "npc_rocket_turret" )
+AddNPCToDuplicator( "npc_security_camera" )
 
 --[[---------------------------------------------------------
 	Name: CanPlayerSpawnSENT

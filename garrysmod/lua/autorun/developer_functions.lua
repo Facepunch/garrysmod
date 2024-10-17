@@ -80,7 +80,7 @@ local function Find( ply, command, arguments )
 
 	if ( !arguments[1] ) then
 
-		if ( command:StartWith( "lua_findhooks" ) ) then
+		if ( command:StartsWith( "lua_findhooks" ) ) then
 			MsgN( "Usage: lua_findhooks <event name> [hook identifier]" )
 			return
 		end
@@ -89,7 +89,7 @@ local function Find( ply, command, arguments )
 		return
 	end
 
-	if ( command:StartWith( "lua_findhooks" ) ) then
+	if ( command:StartsWith( "lua_findhooks" ) ) then
 
 		Msg( "Finding '", arguments[1], "' hooks ",
 			( arguments[2] and "with name '" .. arguments[2] .. "' " or "" ),
@@ -101,7 +101,7 @@ local function Find( ply, command, arguments )
 
 		Msg( "Finding '", arguments[1], "' ", ( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n\n" )
 		FindInTable( _G, arguments[1] )
-		FindInTable( debug.getregistry(), arguments[1] )
+		--FindInTable( debug.getregistry(), arguments[1] )
 
 	end
 
@@ -119,4 +119,29 @@ if ( SERVER ) then
 else
 	concommand.Add( "lua_find_cl", Find, nil, "Find any variable by name on the client.", FCVAR_DONTRECORD )
 	concommand.Add( "lua_findhooks_cl", Find, nil, "Find hooks by event name and hook identifier on the client.", FCVAR_DONTRECORD )
+end
+
+if ( SERVER ) then
+
+--[[---------------------------------------------------------
+	What am I looking at?
+-----------------------------------------------------------]]
+concommand.Add( "trace", function( ply )
+	if ( !IsValid( ply ) || ( !game.SinglePlayer() && !ply:IsListenServerHost() ) ) then return end
+
+	local tr = util.TraceLine( {
+		start = ply:EyePos(),
+		endpos = ply:EyePos() + ply:GetAimVector() * 30000,
+		filter = ply,
+		//mask = MASK_OPAQUE_AND_NPCS,
+	} )
+
+	PrintTable( tr )
+	print( "Dist: ", ( tr.HitPos - tr.StartPos ):Length() )
+	if ( IsValid( tr.Entity ) ) then print( "Model: " .. tr.Entity:GetModel() ) end
+
+	-- Print out the clientside class name
+	ply:SendLua( [[print(Entity(]] .. ply:EntIndex() .. [[):GetEyeTrace().Entity)]] )
+end )
+
 end

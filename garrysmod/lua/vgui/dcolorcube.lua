@@ -4,6 +4,7 @@ local PANEL = {}
 AccessorFunc( PANEL, "m_Hue", "Hue" )
 AccessorFunc( PANEL, "m_BaseRGB", "BaseRGB" )
 AccessorFunc( PANEL, "m_OutRGB", "RGB" )
+AccessorFunc( PANEL, "m_DefaultColor", "DefaultColor" )
 
 function PANEL:Init()
 
@@ -23,6 +24,7 @@ function PANEL:Init()
 
 	self:SetLockX( nil )
 	self:SetLockY( nil )
+	self:SetDefaultColor( color_white )
 
 end
 
@@ -30,13 +32,21 @@ function PANEL:PerformLayout( w, h )
 
 	DSlider.PerformLayout( self, w, h )
 
-	self.BGSaturation:StretchToParent( 0,0,0,0 )
+	self.BGSaturation:StretchToParent( 0, 0, 0, 0 )
 	self.BGSaturation:SetZPos( -9 )
 
-	self.BGValue:StretchToParent( 0,0,0,0 )
+	self.BGValue:StretchToParent( 0, 0, 0, 0 )
 	self.BGValue:SetZPos( -8 )
 
 end
+
+function PANEL:ResetToDefaultValue()
+
+	self:SetColor( self:GetDefaultColor() )
+	self:OnUserChanged( self.m_OutRGB )
+
+end
+
 
 function PANEL:Paint()
 
@@ -76,7 +86,7 @@ function PANEL:UpdateColor( x, y )
 
 end
 
-function PANEL:OnUserChanged()
+function PANEL:OnUserChanged( color )
 
 	-- Override me
 

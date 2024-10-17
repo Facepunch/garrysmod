@@ -80,7 +80,7 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( mdl ) or !util.IsValidProp( mdl ) or !IsValidLampModel( mdl ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "lamps" ) ) then return false end
 
 	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = angle_zero } )
 	if ( !IsValid( lamp ) ) then return false end
@@ -130,13 +130,13 @@ end
 
 if ( SERVER ) then
 
-	function MakeLamp( ply, r, g, b, KeyDown, toggle, texture, model, fov, distance, brightness, on, Data )
+	function MakeLamp( ply, r, g, b, keyDown, toggle, texture, model, fov, distance, brightness, on, Data )
 
-		if ( IsValid( ply ) and !ply:CheckLimit( "lamps" ) ) then return false end
-		if ( !IsValidLampModel( model ) ) then return false end
+		if ( IsValid( ply ) and !ply:CheckLimit( "lamps" ) ) then return NULL end
+		if ( !IsValidLampModel( model ) ) then return NULL end
 
 		local lamp = ents.Create( "gmod_lamp" )
-		if ( !IsValid( lamp ) ) then return false end
+		if ( !IsValid( lamp ) ) then return NULL end
 
 		duplicator.DoGeneric( lamp, Data )
 		lamp:SetModel( model ) -- Backwards compatible for addons directly calling this function
@@ -162,7 +162,7 @@ if ( SERVER ) then
 		end
 
 		lamp.Texture = texture
-		lamp.KeyDown = KeyDown
+		lamp.KeyDown = keyDown
 		lamp.fov = fov
 		lamp.distance = distance
 		lamp.r = r
@@ -170,8 +170,8 @@ if ( SERVER ) then
 		lamp.b = b
 		lamp.brightness = brightness
 
-		lamp.NumDown = numpad.OnDown( ply, KeyDown, "LampToggle", lamp, 1 )
-		lamp.NumUp = numpad.OnUp( ply, KeyDown, "LampToggle", lamp, 0 )
+		lamp.NumDown = numpad.OnDown( ply, keyDown, "LampToggle", lamp, 1 )
+		lamp.NumUp = numpad.OnUp( ply, keyDown, "LampToggle", lamp, 0 )
 
 		return lamp
 
@@ -278,5 +278,12 @@ list.Set( "LampTextures", "effects/flashlight/camera", { Name = "#lamptexture.ca
 list.Set( "LampTextures", "effects/flashlight/view", { Name = "#lamptexture.view" } )
 
 list.Set( "LampModels", "models/lamps/torch.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", {} )
+list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight01_lamp.mdl", { Offset = Vector( 9, 0, 4 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight02_lamp.mdl", { Offset = Vector( 5.5, 0, 0 ), Skin = 1 } )
+list.Set( "LampModels", "models/props_c17/light_decklight01_off.mdl", { Offset = Vector( 3, 0, 0 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/prison_lamp001c.mdl", { Offset = Vector( 0, 0, -5 ), Angle = Angle( 90, 0, 0 ) } )
+
+-- This works, but the ghost entity is invisible due to $alphatest...
+--list.Set( "LampModels", "models/props_c17/lamp_standard_off01.mdl", { Offset = Vector( 5.20, 0.25, 8 ), Angle = Angle( 90, 0, 0 ), NearZ = 6 } )

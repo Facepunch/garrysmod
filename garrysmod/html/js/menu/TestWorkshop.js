@@ -8,7 +8,7 @@ function WorkshopTestData( type, namespace, perpage )
 	}
 
 	var items = { totalresults: perpage * 90, results: [ 1234, 12345, 123, 1337 ] };
-	
+
 	for ( var i = items.results.length; i < perpage; i++ )
 	{
 		items.results.push( Math.floor( Math.random() * 100000000 ) )

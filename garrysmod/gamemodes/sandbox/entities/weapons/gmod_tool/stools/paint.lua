@@ -69,7 +69,7 @@ end
 
 function TOOL:RightClick( trace, bNoDelay )
 
-	self:GetSWEP():EmitSound( "SprayCan.Paint" )
+	self:GetWeapon():EmitSound( "SprayCan.Paint" )
 	local decal = self:GetClientInfo( "decal" )
 
 	local Pos1 = trace.HitPos + trace.HitNormal
@@ -150,7 +150,7 @@ function TOOL.BuildCPanel( CPanel )
 	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )
 	for k, decal in ipairs( Options ) do
 		local line = listbox:AddLine( decal )
-		line.data = { paint_decal = decal }
+		line.data = { paint_decal = decal, gmod_tool = "paint" }
 
 		if ( GetConVarString( "paint_decal" ) == tostring( decal ) ) then line:SetSelected( true ) end
 	end

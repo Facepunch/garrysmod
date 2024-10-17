@@ -17,30 +17,31 @@
 				<li ng-hide="CurrentGamemode != null || Refreshing[ ServerType ] == 'true'"><a ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
 				<li ng-hide="Refreshing[ ServerType ] == 'false'"><a ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
 				<li>&nbsp;</li>
-				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-Tranny="'legacy_browser'"></a></li>
+				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-tranny="'legacy_browser'"></a></li>
 				<li>&nbsp;</li>
+				<li class="sb_filter_sep"></li>
 				<li class="sb_filters" ng-hide="CurrentGamemode != null">
-					<span ng-Tranny="'addons.sort_by'"></span><br/>
-					<input type="radio" name="gmsort" value="-(order)" ng-model="GMSort"/><label ng-Tranny="'gmsort_players'"></label><br>
-					<input type="radio" name="gmsort" value="-(num_servers)" ng-model="GMSort"/><label ng-Tranny="'gmsort_servers'"></label><br>
-					<input type="radio" name="gmsort" value="info.title" ng-model="GMSort"/><label ng-Tranny="'gmsort_name'"></label><br>
-					<span ng-Tranny="'addons.filter_by'"></span><br/>
+					<span ng-tranny="'addons.sort_by'"></span><br/>
+					<input id="gms_players" type="radio" name="gmsort" value="-(order)" ng-model="GMSort"/><label for="gms_players" ng-tranny="'gmsort_players'"></label><br>
+					<input id="gms_servers" type="radio" name="gmsort" value="-(num_servers)" ng-model="GMSort"/><label for="gms_servers" ng-tranny="'gmsort_servers'"></label><br>
+					<input id="gms_name" type="radio" name="gmsort" value="info.title" ng-model="GMSort"/><label for="gms_name" ng-tranny="'gmsort_name'"></label><br>
+					<span ng-tranny="'addons.filter_by'"></span><br/>
 					<div ng-repeat="cat in GMCats">
-						<input type="checkbox" id="gmfltr_hide_{{cat}}" onclick="SwitchFilter( '{{cat}}', this )"/><label ng-Tranny="'gmfltr_hide_' + cat"></label>
+						<input type="checkbox" id="gmfltr_hide_{{cat}}" onclick="SwitchFilter( '{{cat}}', this )"/><label for="gmfltr_hide_{{cat}}" ng-tranny="'gmfltr_hide_' + cat"></label>
 						<img class="gmfilter_rev" src="img/remove.png" onclick="ReverseFilter( '{{cat}}', this )" /><br>
 					</div>
-					<input type="text" ng-model="GMSearch" class="gm_search" ng-Tranny="'gmsearch_placeholder'" /><br/>
+					<input type="text" ng-model="GMSearch" class="gm_search" ng-tranny="'gmsearch_placeholder'" /><br/>
 				</li>
 				<li class="sb_filters" ng-show="CurrentGamemode != null">
-					<label ng-Tranny="'svfltr_ply_limit'"></label><br/>
+					<label ng-tranny="'svfltr_ply_limit'"></label><br/>
 					<input ng-model="SVFilterPlyMin" type="number" class="smalltextbox" placeholder="0`"/>
 					&nbsp;-&nbsp;
 					<input ng-model="SVFilterPlyMax" type="number" class="smalltextbox" placeholder="128"/><br/>
-					<label ng-Tranny="'svfltr_ping_limit'"></label><br/>
+					<label ng-tranny="'svfltr_ping_limit'"></label><br/>
 					<input ng-model="SVFilterMaxPing" type="number" class="smalltextbox" placeholder="2000"/><br/>
-					<input type="checkbox" ng-model="SVFilterNotFull"/><label ng-Tranny="'svfltr_not_full'"></label><br>
-					<input type="checkbox" ng-model="SVFilterHasPly"/><label ng-Tranny="'svfltr_has_players'"></label><br>
-					<input type="checkbox" ng-model="SVFilterHidePass"/><label ng-Tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/>
+					<input type="checkbox" id="sv_notfull" ng-model="SVFilterNotFull"/><label for="sv_notfull" ng-tranny="'svfltr_not_full'"></label><br>
+					<input type="checkbox" id="sv_notempty" ng-model="SVFilterHasPly"/><label for="sv_notempty" ng-tranny="'svfltr_has_players'"></label><br>
+					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass" ng-tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/>
 
 					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">
 						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )"/>
@@ -53,25 +54,47 @@
 		<div class="innerpage" ng-hide="CurrentGamemode != null">
 
 			<h1 class="menuheader">
-				<span ng-Tranny="'servers_gamemodes'"></span>
-				<small ng-Tranny="'servers_gamemodes.subtitle'"></small>
+				<span ng-tranny="'servers_gamemodes'"></span>
+				<small ng-tranny="'servers_gamemodes.subtitle'"></small>
 			</h1>
 
-			<div class='server_gamemodes whiterounded scrollable'>
+			<div class='server_gamemodes whiterounded'>
 
-				<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList | filter: gamemodeFilter | orderBy:[GMSort, '-(num_players)', 'name' ]" ng-click="SelectGamemode( gamemode )">
+				<div class="server_gamemodes_inner scrollable">
+					<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList | filter: gamemodeFilter | orderBy:[GMSort, '-(num_players)', 'name' ]" ng-click="SelectGamemode( gamemode )">
 
-					<img src='../gamemodes/{{gamemode.name}}/icon24.png' onerror="MissingGamemodeIcon( this )"/>
+						<img src='../gamemodes/{{gamemode.name}}/icon24.png' onerror="MissingGamemodeIcon( this )"/>
 
-					<div class='stats'>{{gamemode.num_players}} <span ng-tranny="gamemode.num_players == 1 && 'servers_player_on' || 'servers_players_on'"></span> {{gamemode.num_servers}} <span ng-tranny="gamemode.num_servers == 1 && 'servers_server' || 'servers_servers'"></span></div>
-					<div class='name'>
-						{{GamemodeName(gamemode)}}<tag ng-show="gamemode.info && gamemode.info.tag" ng-Tranny="'gmfltr_hide_' + gamemode.info.tag">{{gamemode.info.tag}}</tag>
+						<div class='stats'>{{gamemode.num_players}} <span ng-tranny="gamemode.num_players == 1 && 'servers_player_on' || 'servers_players_on'"></span> {{gamemode.num_servers}} <span ng-tranny="gamemode.num_servers == 1 && 'servers_server' || 'servers_servers'"></span></div>
+						<div class='name'>
+							{{GamemodeName(gamemode)}}<tag ng-show="gamemode.info && gamemode.info.tag" ng-tranny="'gmfltr_hide_' + gamemode.info.tag">{{gamemode.info.tag}}</tag>
+						</div>
+
+						<span class='installgamemode' ng-show="ShouldShowInstall( gamemode )" ng-click="InstallGamemode( gamemode );$event.stopPropagation()">&nbsp;</span>
+
 					</div>
-
-					<span class='installgamemode' ng-show="ShouldShowInstall( gamemode )" ng-click="InstallGamemode( gamemode );$event.stopPropagation()">&nbsp;</span>
-
 				</div>
 
+				<div class='add_fav_server' ng-show="ServerType == 'favorite'">
+					Add a server to favorites
+					<input type="text" ng-model="FindServerString" placeholder="127.0.0.1"/>
+					<button ng-click="FindServersAtAddress();">Find servers at given address</button>
+
+					<div class="found_servers serverlist" ng-show="FoundServers.length > 0">
+						<div ng-repeat="server in FoundServers" class="server">
+							<name>
+								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );Refresh();$event.stopPropagation();"></a>
+								<!--<img class="flag" src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/> -->
+								<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
+								<span>{{ServerName(server)}}</span>
+							</name>
+							<ping>{{server.ping}}</ping>
+							<players>{{server.players}} / {{server.maxplayers}}</players>
+							<map>{{server.map}}</map>
+							<!--<rank class=''>&nbsp;</rank>-->
+						</div>
+					</div>
+				</div>
 			</div>
 
 		</div>
@@ -86,7 +109,7 @@
 			<div class='installgamemode' ng-show="ShouldShowInstall( CurrentGamemode )" ng-click="InstallGamemode( CurrentGamemode );$event.stopPropagation()" ng-tranny="'servers_install_gamemode'"></div>
 
 			<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
-				<input type="text" ng-model="CurrentGamemode.Search" class="searchbox" ng-Tranny="'svsearch_placeholder'" />
+				<input type="text" ng-model="CurrentGamemode.Search" class="searchbox" ng-tranny="'svsearch_placeholder'" />
 				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
 			</div>
 
@@ -111,7 +134,7 @@
 							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
 							<img class="flag" src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/>
 							<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
-							<span>{{server.name}}
+							<span>{{ServerName(server)}}
 								<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
 							</span>
 						</name>
@@ -158,6 +181,11 @@
 					<footer>
 						<div class="cell" style="padding-top: 5px;">
 							<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ui-keypress="{'enter':'JoinServer( CurrentGamemode.Selected )'}" placeholder="Password" />
+
+							<div ng-show="CurrentGamemode.Selected.players >= CurrentGamemode.Selected.maxplayers">
+								<input type="checkbox" ng-model="JoinIfHasSlot" id="join_if_not_full" />
+								<label for="join_if_not_full" ng-tranny="'sv_join_if_not_full'"></label>
+							</div>
 
 							<button class="{{IfElse( CurrentGamemode.Selected.players < CurrentGamemode.Selected.maxplayers, 'btn-primary', 'btn-primary-disabled' )}}"
 								ng-click="JoinServer( CurrentGamemode.Selected )"

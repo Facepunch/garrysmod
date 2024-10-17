@@ -124,7 +124,7 @@ body.dark
 {
 	display: inline-block;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	background-image: -webkit-gradient( linear, 0 0, 90% 0, 100% 0, from(  ), to( rgba( 0, 0, 0, 0 ) ), to( rgba( 0, 0, 0, 0 ) ) );
+	background-image: -webkit-gradient( linear, 0 0, 90% 0, 100% 0, from( ), to( rgba( 0, 0, 0, 0 ) ), to( rgba( 0, 0, 0, 0 ) ) );
 	background-image: -webkit-linear-gradient( left, rgba( 0, 0, 0, 0.4 ) 0%, rgba( 0, 0, 0, 0.03 ) 75%, rgba( 0, 0, 0, 0 ) 100% );
 	padding: 20px;
 	padding-right: 180px;

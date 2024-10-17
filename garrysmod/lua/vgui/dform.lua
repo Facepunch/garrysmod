@@ -276,8 +276,9 @@ end
 
 function PANEL:ListBox( strLabel )
 
+	local left = nil
 	if ( strLabel ) then
-		local left = vgui.Create( "DLabel", self )
+		left = vgui.Create( "DLabel", self )
 		left:SetText( strLabel )
 		self:AddItem( left )
 		left:SetDark( true )
@@ -300,4 +301,4 @@ end
 function PANEL:GenerateExample( class, tabs, w, h )
 end
 
-derma.DefineControl( "DForm", "WHAT", PANEL, "DCollapsibleCategory" )
+derma.DefineControl( "DForm", "A panel with quick methods to create basic user inputs.", PANEL, "DCollapsibleCategory" )

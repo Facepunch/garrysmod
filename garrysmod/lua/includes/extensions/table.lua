@@ -114,6 +114,8 @@ end
 	Desc: Unlike merge this adds the two tables together and discards keys.
 -----------------------------------------------------------]]
 function table.Add( dest, source )
+	-- The tables should be different otherwise this will just freeze the whole game
+	if ( dest == source ) then return dest end
 
 	-- At least one of them needs to be a table or this whole thing will fall on its ass
 	if ( !istable( source ) ) then return dest end
@@ -536,10 +538,11 @@ end
 
 local function getKeys( tbl )
 
-	local keys = {}
+	local keys, i = {}, 0
 
 	for k in pairs( tbl ) do
-		table.insert( keys, k )
+		i = i + 1
+		keys[ i ] = k
 	end
 
 	return keys
@@ -564,10 +567,10 @@ function SortedPairs( pTable, Desc )
 		end )
 	end
 
-	local i, key
+	local i, key = 1
 	return function()
-		i, key = next( keys, i )
-		return key, pTable[key]
+		key, i = keys[ i ], i + 1
+		return key, pTable[ key ]
 	end
 
 end

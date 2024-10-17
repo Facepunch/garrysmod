@@ -44,6 +44,8 @@ end
 
 ----------------------------------------------
 
+local RememberedDenials = {}
+
 local PANEL = {}
 
 PANEL.Base = "DFrame"
@@ -60,7 +62,7 @@ function PANEL:Init()
 	self.Garble:Dock( TOP )
 
 	self.URL = vgui.Create( "DTextEntry", self )
-	self.URL:SetDisabled( true )
+	self.URL:SetEnabled( false )
 	self.URL:Dock( TOP )
 
 	self.CustomPanel = vgui.Create( "DLabel", self )
@@ -87,18 +89,18 @@ function PANEL:Init()
 	self.Nope = vgui.Create( "DButton", self.Buttons )
 	self.Nope:SetText( "#openurl.nope" )
 	self.Nope.DoClick = function() self:DoNope() end
-	self.Nope:DockMargin( 0, 0, 5, 0 )
+	self.Nope:DockMargin( 0, 0, 0, 0 )
 	self.Nope:Dock( RIGHT )
 
 	self.Yes = vgui.Create( "DButton", self.Buttons )
 	self.Yes:SetText( "#openurl.yes" )
 	self.Yes.DoClick = function() self:DoYes() end
-	self.Yes:DockMargin( 0, 0, 5, 0 )
+	self.Yes:DockMargin( 0, 0, 20, 0 )
 	self.Yes:Dock( RIGHT )
 
 	self.YesPerma = vgui.Create( "DCheckBoxLabel", self.Buttons )
 	self.YesPerma:SetText( "#openurl.yes_remember" )
-	self.YesPerma:DockMargin( 0, 0, 5, 0 )
+	self.YesPerma:DockMargin( 0, 0, 20, 0 )
 	self.YesPerma:Dock( RIGHT )
 	self.YesPerma:SetVisible( false )
 
@@ -146,7 +148,7 @@ end
 function PANEL:AlwaysThink()
 
 	-- Ping the server for details
-	if ( SysTime() - self.StartTime > 0.1 && self.Type == "askconnect" && !self.CustomPanel:IsVisible() ) then
+	if ( SysTime() - self.StartTime > 0.1 and self.Type == "askconnect" and !self.CustomPanel:IsVisible() ) then
 		self:LoadServerInfo()
 	end
 
@@ -199,6 +201,11 @@ function PANEL:DoNope()
 	self:Remove()
 	gui.HideGameUI()
 
+	-- Keep track of what the player wants to ignore, but only for this session. 
+	local remember = self.YesPerma:GetChecked()
+	if ( remember ) then
+		RememberedDenials[ self.uniquePermID ] = true
+	end
 end
 
 function PANEL:DoYes()
@@ -236,7 +243,7 @@ function PANEL:SetType( t )
 	self:SetTitle( "#" .. t .. ".title" )
 	self.Garble:SetText( "#" .. t .. ".text" )
 
-	if ( self.Type == "permission" || self.Type == "askconnect" ) then
+	if ( self.Type == "permission" or self.Type == "askconnect" ) then
 		self.YesPerma:SetVisible( true )
 	end
 
@@ -245,9 +252,16 @@ end
 local PanelInst = nil
 local function OpenConfirmationDialog( address, confirm_type )
 
-	if ( IsValid( PanelInst ) && PanelInst:GetURL() == address ) then return end
+	local permID = tostring( confirm_type ) .. "|" .. tostring( address ) .. "|" .. tostring( engine.CurrentServerAddress() )
+	if ( RememberedDenials[ permID ] ) then
+		print( "Ignoring request for denied permission " .. tostring( confirm_type ) .. " to " .. tostring( address ) ) -- Debug
+		return
+	end
+
+	if ( IsValid( PanelInst ) and PanelInst:GetURL() == address ) then return end
 	if ( !IsValid( PanelInst ) ) then PanelInst = vgui.CreateFromTable( PANEL ) end
 
+	PanelInst.uniquePermID = permID
 	PanelInst:SetType( confirm_type )
 	PanelInst:SetURL( address )
 

@@ -835,7 +835,8 @@ function GM:HandlePlayerArmorReduction( ply, dmginfo )
 	local flArmor = (dmginfo:GetDamage() - flNew) * flBonus
 
 	if ( !GetConVar( "player_old_armor" ):GetBool() ) then
-		if ( flArmor < 1.0 ) then flArmor = 1.0 end
+		if ( flArmor < 0.1 ) then flArmor = 0 end -- Let's not have tiny amounts of damage reduce a lot of our armor
+		else if ( flArmor < 1.0 ) then flArmor = 1.0 end
 	end
 
 	-- Does this use more armor than we have?

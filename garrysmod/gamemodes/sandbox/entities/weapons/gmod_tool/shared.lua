@@ -2,7 +2,7 @@
 -- Variables that are used on both client and server
 
 SWEP.PrintName		= "#GMOD_ToolGun"
-SWEP.Author			= ""
+SWEP.Author			= "Facepunch"
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
 SWEP.Instructions	= ""
@@ -40,8 +40,10 @@ function SWEP:InitializeTools()
 	local owner = self:GetOwner()
 
 	local temp = {}
-
 	for k, v in pairs( self.Tool ) do
+
+		-- This is from saverestore.LoadEntity..
+		if ( !v.Init ) then continue end
 
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self
@@ -144,7 +146,8 @@ function SWEP:Think()
 			local lastmode_obj = self:GetToolObject( lastmode )
 
 			if ( lastmode_obj ) then
-				lastmode_obj:ReleaseGhostEntity()
+				lastmode_obj:ReleaseGhostEntity() -- In case tool overwrites the default Holster
+				lastmode_obj:Holster( true )
 			end
 		end
 
@@ -157,7 +160,11 @@ function SWEP:Think()
 		if ( lastmode_obj ) then
 			-- We want to release the ghost entity just in case
 			lastmode_obj:ReleaseGhostEntity()
+			lastmode_obj:Holster( true )
 		end
+
+		-- Deploy the new tool
+		tool:Deploy( true )
 	end
 
 	self.Primary.Automatic = tool.LeftClickAutomatic or false
@@ -210,7 +217,8 @@ function SWEP:PrimaryAttack()
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -239,7 +247,8 @@ function SWEP:SecondaryAttack()
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
-	local trace = util.TraceHull( tr )
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -269,7 +278,10 @@ function SWEP:Reload()
 
 	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
 	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()

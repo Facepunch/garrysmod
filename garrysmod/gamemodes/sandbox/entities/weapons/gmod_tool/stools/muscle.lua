@@ -65,6 +65,12 @@ function TOOL:LeftClick( trace )
 			return true
 		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
+		end
+
 		if ( period <= 0 ) then period = 0.1 end
 
 		AddLength = math.Clamp( AddLength, -1000, 1000 )
@@ -80,20 +86,21 @@ function TOOL:LeftClick( trace )
 
 		local amp = Length2 - Length1
 
-		local constr, rope, controller, slider = constraint.Muscle( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope, controller, slider = constraint.Muscle( ply, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material, Color( colorR, colorG, colorB, 255 ) )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Muscle" )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 				if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 				if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "ropeconstraints", constr )
-			if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
-			if ( IsValid( slider ) ) then self:GetOwner():AddCleanup( "ropeconstraints", slider ) end
-			if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
+			if ( IsValid( slider ) ) then ply:AddCleanup( "ropeconstraints", slider ) end
+			if ( IsValid( controller ) ) then ply:AddCleanup( "ropeconstraints", controller ) end
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -116,10 +123,12 @@ function TOOL:RightClick( trace )
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 
+	local ply = self:GetOwner()
+
 	local tr_new = {}
 	tr_new.start = trace.HitPos
 	tr_new.endpos = trace.HitPos + ( trace.HitNormal * 16384 )
-	tr_new.filter = { self:GetOwner() }
+	tr_new.filter = { ply }
 	if ( IsValid( trace.Entity ) ) then
 		table.insert( tr_new.filter, trace.Entity )
 	end
@@ -146,7 +155,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Check to see if the player can create a muscle constraint with the entity in the trace
-	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "muscle", self, 2 ) ) then
+	if ( !hook.Run( "CanTool", ply, tr, "muscle", self, 2 ) ) then
 		self:ClearObjects()
 		return false
 	end
@@ -159,13 +168,18 @@ function TOOL:RightClick( trace )
 		return true
 	end
 
+	if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+		self:ClearObjects()
+		return false
+	end
+
 	-- Get client's CVars
 	local width = self:GetClientNumber( "width", 3 )
 	local bind = self:GetClientNumber( "group", 1 )
 	local AddLength = self:GetClientNumber( "addlength", 0 )
 	local fixed = self:GetClientNumber( "fixed", 1 )
 	local period = self:GetClientNumber( "period", 64 )
-	local starton = self:GetClientNumber( "starton" )
+	local starton = self:GetClientNumber( "starton" ) > 0
 	local material = self:GetClientInfo( "material" )
 	local colorR = self:GetClientNumber( "color_r" )
 	local colorG = self:GetClientNumber( "color_g" )
@@ -182,20 +196,21 @@ function TOOL:RightClick( trace )
 
 	local amp = Length2 - Length1
 
-	local constr, rope, controller, slider = constraint.Muscle( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material, Color( colorR, colorG, colorB, 255 ) )
+	local constr, rope, controller, slider = constraint.Muscle( ply, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material, Color( colorR, colorG, colorB, 255 ) )
 	if ( IsValid( constr ) ) then
 		undo.Create( "Muscle" )
 			undo.AddEntity( constr )
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 			if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-			undo.SetPlayer( self:GetOwner() )
+			undo.SetPlayer( ply )
 		undo.Finish()
 
-		self:GetOwner():AddCleanup( "ropeconstraints", constr )
-		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
-		if ( IsValid( slider ) ) then self:GetOwner():AddCleanup( "ropeconstraints", slider ) end
-		if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+		ply:AddCount( "ropeconstraints", constr )
+		ply:AddCleanup( "ropeconstraints", constr )
+		if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
+		if ( IsValid( slider ) ) then ply:AddCleanup( "ropeconstraints", slider ) end
+		if ( IsValid( controller ) ) then ply:AddCleanup( "ropeconstraints", controller ) end
 	end
 
 	-- Clear the objects so we're ready to go again

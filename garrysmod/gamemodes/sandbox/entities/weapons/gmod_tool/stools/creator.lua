@@ -9,8 +9,8 @@ TOOL.Information = { { name = "left" } }
 function TOOL:LeftClick( trace, attach )
 
 	local type = self:GetClientNumber( "type", 0 )
-	local name = self:GetClientInfo( "name", 0 )
-	local arg = self:GetClientInfo( "arg", 0 )
+	local name = self:GetClientInfo( "name" )
+	local arg = self:GetClientInfo( "arg" )
 
 	if ( CLIENT ) then return true end
 

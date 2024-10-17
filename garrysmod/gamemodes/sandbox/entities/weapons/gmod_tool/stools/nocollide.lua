@@ -33,17 +33,24 @@ function TOOL:LeftClick( trace )
 
 	if ( iNum > 0 ) then
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			return false
+		end
+
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 
-		local constr = constraint.NoCollide( Ent1, Ent2, Bone1, Bone2 )
+		local constr = constraint.NoCollide( Ent1, Ent2, Bone1, Bone2, true )
 		if ( IsValid( constr ) ) then
 			undo.Create( "NoCollide" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "nocollide", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "nocollide", constr )
 		end
 
 		self:ClearObjects()
@@ -93,13 +100,6 @@ function TOOL:Holster()
 	self:ClearObjects()
 
 end
-
--- This is unreliable
-hook.Add( "EntityRemoved", "nocollide_fix", function( ent )
-	if ( ent:GetClass() == "logic_collision_pair" ) then
-		ent:Fire( "EnableCollisions" )
-	end
-end )
 
 function TOOL.BuildCPanel( CPanel )
 

@@ -2,12 +2,14 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bFirstPerson", "FirstPerson" )
+AccessorFunc( PANEL, "m_iMoveScale", "MovementScale" )
 
 function PANEL:Init()
 
 	self.mx = 0
 	self.my = 0
 	self.aLookAngle = angle_zero
+	self:SetMovementScale( 1 )
 
 end
 
@@ -21,6 +23,12 @@ function PANEL:OnMousePressed( mousecode )
 	self:SetFirstPerson( true )
 
 	self:CaptureMouse()
+
+	if ( !IsValid( self.Entity ) ) then
+		self.OrbitPoint = vector_origin
+		self.OrbitDistance = ( self.OrbitPoint - self.vCamPos ):Length()
+		return
+	end
 
 	-- Helpers for the orbit movement
 	local mins, maxs = self.Entity:GetModelBounds()
@@ -133,7 +141,7 @@ function PANEL:FirstPersonControls()
 	local speed = 0.5
 	if ( input.IsShiftDown() ) then speed = 4.0 end
 
-	self.vCamPos = self.vCamPos + Movement * speed
+	self.vCamPos = self.vCamPos + Movement * speed * self:GetMovementScale()
 
 end
 

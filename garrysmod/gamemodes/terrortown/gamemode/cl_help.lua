@@ -48,7 +48,7 @@ function HELPSCRN:Show()
 
    local dsettings = vgui.Create("DPanelList", dtabs)
    dsettings:StretchToParent(0,0,padding,0)
-   dsettings:EnableVerticalScrollbar(true)
+   dsettings:EnableVerticalScrollbar()
    dsettings:SetPadding(10)
    dsettings:SetSpacing(10)
 

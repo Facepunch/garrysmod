@@ -5,8 +5,9 @@ DEFINE_BASECLASS( "base_edit" )
 ENT.Spawnable = true
 ENT.AdminOnly = true
 
-ENT.PrintName = "Fog Editor"
+ENT.PrintName = "#edit_fog"
 ENT.Category = "Editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the fog."
 
 function ENT:Initialize()
 
@@ -83,3 +84,19 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 
 end
+
+-- Player just spawned this entity from the spawnmenu - not from a duplication.
+-- Copy over the settings of the map
+hook.Add( "PlayerSpawnedSENT", "CopyOverEditFogSettings", function( ply, ent )
+
+	if ( ent:GetClass() != "edit_fog" ) then return end
+
+	local fogCntrl = ents.FindByClass( "env_fog_controller" )[ 1 ];
+	if ( !IsValid( fogCntrl ) ) then return end
+
+	ent:SetFogStart( fogCntrl:GetInternalVariable( "fogstart" ) )
+	ent:SetFogEnd( fogCntrl:GetInternalVariable( "fogend" ) )
+	ent:SetDensity( fogCntrl:GetInternalVariable( "fogmaxdensity" ) )
+	ent:SetFogColor( Vector( fogCntrl:GetInternalVariable( "fogcolor" ) ) / 255 )
+
+end )

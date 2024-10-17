@@ -46,12 +46,12 @@ end
    Name: concommand.Run( )
    Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
-function Run( player, command, arguments, args )
+function Run( player, command, arguments, argumentsStr )
 
 	local LowerCommand = string.lower( command )
 
 	if ( CommandList[ LowerCommand ] != nil ) then
-		CommandList[ LowerCommand ]( player, command, arguments, args )
+		CommandList[ LowerCommand ]( player, command, arguments, argumentsStr )
 		return true
 	end
 
@@ -64,12 +64,12 @@ end
    Name: concommand.AutoComplete( )
    Desc: Returns a table for the autocompletion
 -----------------------------------------------------------]]
-function AutoComplete( command, arguments )
+function AutoComplete( command, argumentsStr, arguments )
 
 	local LowerCommand = string.lower( command )
 
 	if ( CompleteList[ LowerCommand ] != nil ) then
-		return CompleteList[ LowerCommand ]( command, arguments )
+		return CompleteList[ LowerCommand ]( command, argumentsStr, arguments )
 	end
 
 end

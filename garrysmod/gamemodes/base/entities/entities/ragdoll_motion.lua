@@ -155,9 +155,8 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 		-- (already rotated)
 		fixedbonepos[i] = fixedbonepos[i] + center
 
-
-		debugoverlay.Box( realbonepos[i], min, max, StayTime, col_point, true )
-		debugoverlay.Box( fixedbonepos[i], min, max, StayTime, col_tran_bn, true )
+		debugoverlay.Box( realbonepos[i], min, max, StayTime, col_point )
+		debugoverlay.Box( fixedbonepos[i], min, max, StayTime, col_tran_bn )
 
 	end
 
@@ -188,7 +187,7 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 
 		local position = phys:GetPos()
 		local angle = phys:GetAngles()
-		local txt = i
+		local txt = tostring( i )
 
 		if ( ang[i] == nil ) then
 			txt = i .. " (UNSET)"

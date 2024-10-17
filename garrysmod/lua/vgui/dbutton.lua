@@ -104,9 +104,10 @@ function PANEL:PerformLayout( w, h )
 
 		local targetSize = math.min( self:GetWide() - 4, self:GetTall() - 4 )
 
-		local zoom = math.min( targetSize / self.m_Image:GetWide(), targetSize / self.m_Image:GetTall(), 1 )
-		local newSizeX = math.ceil( self.m_Image:GetWide() * zoom )
-		local newSizeY = math.ceil( self.m_Image:GetTall() * zoom )
+		local imgW, imgH = self.m_Image.ActualWidth, self.m_Image.ActualHeight
+		local zoom = math.min( targetSize / imgW, targetSize / imgH, 1 )
+		local newSizeX = math.ceil( imgW * zoom )
+		local newSizeY = math.ceil( imgH * zoom )
 
 		self.m_Image:SetWide( newSizeX )
 		self.m_Image:SetTall( newSizeY )

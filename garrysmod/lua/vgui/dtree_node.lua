@@ -152,6 +152,12 @@ function PANEL:SetText( strName )
 
 end
 
+function PANEL:GetText()
+
+	return self.Label:GetText()
+
+end
+
 function PANEL:ExpandRecurse( bExpand )
 
 	self:SetExpanded( bExpand, true )
@@ -392,7 +398,7 @@ function PANEL:InstallDraggable( pNode )
 	pNode:Droppable( DragName )
 
 	-- Allow item dropping onto us
-	self.ChildNodes:MakeDroppable( DragName, true, true )
+	self.ChildNodes:MakeDroppable( DragName, true )
 
 end
 

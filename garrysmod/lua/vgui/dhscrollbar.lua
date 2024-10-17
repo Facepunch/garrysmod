@@ -236,7 +236,7 @@ function PANEL:PerformLayout()
 	self.btnGrip:SetSize( BarSize, Tall )
 
 	if ( BtnWidth > 0 ) then
-		self.btnLeft:SetPos( 0, 0, Tall, Tall )
+		self.btnLeft:SetPos( 0, 0 )
 		self.btnLeft:SetSize( BtnWidth, Tall )
 
 		self.btnRight:SetPos( self:GetWide() - BtnWidth, 0 )

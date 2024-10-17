@@ -39,7 +39,7 @@ function TOOL:LeftClick( trace )
 
 	if ( CLIENT ) then return true end
 
-	if ( !self:GetSWEP():CheckLimit( "wheels" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "wheels" ) ) then return false end
 
 	-- Check the model's validity
 	local model = self:GetClientInfo( "model" )
@@ -153,11 +153,11 @@ if ( SERVER ) then
 	-- For duplicator, creates the wheel.
 	function MakeWheel( ply, pos, ang, model, key_f, key_r, axis, direction, toggle, baseTorque, Data )
 
-		if ( IsValid( ply ) and !ply:CheckLimit( "wheels" ) ) then return false end
-		if ( !IsValidWheelModel( model ) ) then return false end
+		if ( IsValid( ply ) and !ply:CheckLimit( "wheels" ) ) then return NULL end
+		if ( !IsValidWheelModel( model ) ) then return NULL end
 
 		local wheel = ents.Create( "gmod_wheel" )
-		if ( !IsValid( wheel ) ) then return end
+		if ( !IsValid( wheel ) ) then return NULL end
 
 		duplicator.DoGeneric( wheel, Data )
 		wheel:SetModel( model ) -- Backwards compatible for addons directly calling this function

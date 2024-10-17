@@ -201,7 +201,7 @@ function PANEL:SizeToContents()
 
 	if ( self:GetDecimals() && self:GetDecimals() > 0 ) then
 
-		chars = chars + 1 -- .
+		chars = chars + 1
 		chars = chars + self:GetDecimals()
 
 	end
@@ -223,7 +223,7 @@ end
 
 function PANEL:SetFraction( val )
 
-	local Fraction = self.m_numMin + ( (self.m_numMax - self.m_numMin) * val )
+	local Fraction = self.m_numMin + ( ( self.m_numMax - self.m_numMin ) * val )
 	self:SetValue( Fraction )
 
 end

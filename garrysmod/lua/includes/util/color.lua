@@ -5,8 +5,7 @@ COLOR.__index = COLOR
 --[[---------------------------------------------------------
 	Register our metatable to make it accessible using FindMetaTable
 -----------------------------------------------------------]]
-
-debug.getregistry().Color = COLOR
+RegisterMetaTable( "Color", COLOR )
 
 --[[---------------------------------------------------------
 	To easily create a color table
@@ -88,6 +87,12 @@ end
 function COLOR:Unpack()
 
 	return self.r, self.g, self.b, self.a
+
+end
+
+function COLOR:Lerp( target_clr, frac )
+
+	return Color( Lerp( frac, self.r, target_clr.r ), Lerp( frac, self.g, target_clr.g ), Lerp( frac, self.b, target_clr.b ), Lerp( frac, self.a, target_clr.a ) )
 
 end
 

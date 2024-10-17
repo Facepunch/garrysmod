@@ -286,7 +286,12 @@ function AddContentType( name, func )
 	cp[ name ] = func
 end
 
-function GetContentType( name, func )
+function GetContentType( name )
+
+	if ( !name ) then
+		ErrorNoHaltWithStack( "spawnmenu.GetContentType got an invalid value\n" )
+		return
+	end
 
 	if ( !cp[ name ] ) then
 

@@ -3,9 +3,9 @@ AddCSLuaFile()
 
 DEFINE_BASECLASS( "base_anim" )
 
-ENT.PrintName = "Bouncy Ball"
+ENT.PrintName = "#sent_ball"
 ENT.Author = "Garry Newman"
-ENT.Information = "An edible bouncy ball"
+ENT.Information = "An edible bouncy ball. Press USE on the bouncy ball to eat it."
 ENT.Category = "Fun + Games"
 
 ENT.Editable = true
@@ -72,7 +72,12 @@ function ENT:Initialize()
 	-- We will put this here just in case, even though it should be called from OnBallSizeChanged in any case
 	self:RebuildPhysics()
 
-	-- Select a random color for the ball
+	-- Set the size if it wasn't set already..
+	if ( self:GetBallSize() == 0 ) then self:SetBallSize( 32 ) end
+
+	-- Select a random color for the ball, if one wasn't set.
+	if ( !self:GetBallColor():IsZero() ) then return end
+
 	self:SetBallColor( table.Random( {
 		Vector( 1, 0.3, 0.3 ),
 		Vector( 0.3, 1, 0.3 ),
@@ -97,6 +102,7 @@ function ENT:RebuildPhysics( value )
 end
 
 if ( SERVER ) then
+
 	function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
 
 		-- Do not rebuild if the size wasn't changed
@@ -105,6 +111,12 @@ if ( SERVER ) then
 		self:RebuildPhysics( newvalue )
 
 	end
+
+	function ENT:KeyValue( key, val )
+		if ( key == "ball_size" ) then self:SetBallSize( val ) end
+		if ( key == "rendercolor" ) then self:SetBallColor( Vector( val ) / 255 ) end
+	end
+
 end
 
 local BounceSound = Sound( "garrysmod/balloon_pop_cute.wav" )

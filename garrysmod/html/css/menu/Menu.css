@@ -34,7 +34,7 @@ INPUT.searchbox
 }
 INPUT.gm_search
 {
-	width: 80%;
+	width: 100%;
 	margin-bottom: 5px;
 }
 INPUT[type="text"], INPUT[type="number"]
@@ -256,17 +256,20 @@ loading
 	z-index: 1000;
 }
 
-.news {
+.news
+{
 	position: absolute;
 	right: 50px;
 	top: 75px;
 }
 
-.news_buttons {
+.news_buttons
+{
 	margin-top: 3px;
 	display: block;
 }
-.news_buttons div {
+.news_buttons div
+{
 	display: block;
 	float: right;
 	width: 16px;
@@ -276,17 +279,21 @@ loading
 	box-shadow: 0 0 10px 1px rgba( 0, 0, 0, 0.4 );
 	cursor: hand;
 }
-.news_buttons div.new {
+.news_buttons div.new
+{
 	background: #f55;
 }
-.news_buttons div.selected.new {
+.news_buttons div.selected.new
+{
 	background: #fcc;
 }
-.news_buttons div.selected {
+.news_buttons div.selected
+{
 	background: #eee;
 }
 
-.news_item {
+.news_item
+{
 	background: #333;
 	background-size: cover;
 	margin-right: 0px;
@@ -296,17 +303,20 @@ loading
 	width: 512px;
 	position: relative;
 }
-.news_item div font {
+.news_item div font
+{
 	font-weight: normal;
 	font-size: small;
 	text-shadow: none;
 	display: block;
 }
-.news_item div span:hover {
+.news_item div span:hover
+{
 	color: #ffa;
 	cursor: hand;
 }
-.news_item div {
+.news_item div
+{
 	background: rgba( 0, 0, 0, 0.4 );
 	display: block;
 	color: #fff;

@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 if ( CLIENT ) then
-	CreateConVar( "cl_draweffectrings", "1", 0, "Should the effect green rings be visible?" )
+	CreateConVar( "cl_draweffectrings", "1", 0, "Should the green effect rings be visible?" )
 end
 
 ENT.Type = "anim"

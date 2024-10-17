@@ -95,7 +95,7 @@
 	{
 		"wheel"
 		{
-			"radius"	"22"
+			"radius"	"19.5"
 			"mass"		"100"
 			"damping"	"0"
 			"rotdamping"	"0.0"

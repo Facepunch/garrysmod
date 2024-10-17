@@ -21,7 +21,7 @@ function CheckPropSolid( e, solidtype, nonsolidtype, SolidCallback )
 
 		-- Check later and later every time.
 		--timerlast = timerlast + 0.1
-		timer.Simple( 0.5, CheckPropSolid, e, solidtype, nonsolidtype, SolidCallback )
+		timer.Simple( 0.5, function() CheckPropSolid( e, solidtype, nonsolidtype, SolidCallback ) end )
 
 	else
 

@@ -479,6 +479,7 @@ local function CC_UndoNum( ply, command, args )
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
+	if ( !UndoNum ) then return end
 
 	local TheUndo = PlayerUndo[ index ][ UndoNum ]
 	if ( !TheUndo ) then return end

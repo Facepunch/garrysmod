@@ -110,28 +110,12 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
 
 		local bdcontrolspanel = bdcontrols:Add( "DPanelList" )
-		bdcontrolspanel:EnableVerticalScrollbar( true )
+		bdcontrolspanel:EnableVerticalScrollbar()
 		bdcontrolspanel:Dock( FILL )
 
 		local bgtab = sheet:AddSheet( "#smwidget.bodygroups", bdcontrols, "icon16/cog.png" )
 
 		-- Helper functions
-
-		local function MakeNiceName( str )
-			local nicename = {}
-
-			for i, word in ipairs( string.Explode( "_", str ) ) do
-				if ( #word == 1 ) then
-					nicename[i] = string.upper( string.sub( word, 1, 1 ) )
-					continue
-				end
-
-				nicename[i] = string.upper( string.sub( word, 1, 1 ) ) .. string.sub( word, 2 )
-			end
-
-			return table.concat( nicename, " " )
-		end
-
 		local function PlayPreviewAnimation( panel, playermodel )
 
 			if ( !panel or !IsValid( panel.Entity ) ) then return end
@@ -199,7 +183,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				local bgroup = vgui.Create( "DNumSlider" )
 				bgroup:Dock( TOP )
-				bgroup:SetText( MakeNiceName( mdl.Entity:GetBodygroupName( k ) ) )
+				bgroup:SetText( string.NiceName( mdl.Entity:GetBodygroupName( k ) ) )
 				bgroup:SetDark( true )
 				bgroup:SetTall( 50 )
 				bgroup:SetDecimals( 0 )

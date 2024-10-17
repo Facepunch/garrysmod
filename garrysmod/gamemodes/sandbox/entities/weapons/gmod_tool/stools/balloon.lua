@@ -75,7 +75,7 @@ function TOOL:LeftClick( trace, attach )
 	--
 	-- Hit the balloon limit, bail
 	--
-	if ( !self:GetSWEP():CheckLimit( "balloons" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "balloons" ) ) then return false end
 
 	local balloon = MakeBalloon( ply, r, g, b, force, { Pos = trace.HitPos, Model = modeltable.model, Skin = modeltable.skin } )
 	if ( !IsValid( balloon ) ) then return false end
@@ -104,7 +104,7 @@ function TOOL:LeftClick( trace, attach )
 
 			end
 
-			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material, nil )
+			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material )
 			if ( IsValid( constr ) ) then
 				undo.AddEntity( constr )
 				ply:AddCleanup( "balloons", constr )
@@ -134,10 +134,10 @@ if ( SERVER ) then
 
 	function MakeBalloon( ply, r, g, b, force, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return end
+		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return NULL end
 
 		local balloon = ents.Create( "gmod_balloon" )
-		if ( !IsValid( balloon ) ) then return end
+		if ( !IsValid( balloon ) ) then return NULL end
 
 		duplicator.DoGeneric( balloon, Data )
 

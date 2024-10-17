@@ -13,7 +13,7 @@ function TOOL:LeftClick( trace )
 
 	if ( !trace.Hit ) then return false end
 
-	self.Weapon:SetTargetEntity1( trace.Entity )
+	self:GetWeapon():SetTargetEntity1( trace.Entity )
 
 	return true
 
@@ -27,7 +27,7 @@ end
 
 function TOOL:Think()
 
-	local CurrentEditing = self.Weapon:GetTargetEntity1()
+	local CurrentEditing = self:GetWeapon():GetTargetEntity1()
 
 	if ( CLIENT && self.LastEditing != CurrentEditing ) then
 

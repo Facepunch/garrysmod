@@ -414,7 +414,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.ImportPresetOpen = false;
 
 		// Try extracting workshop ID
-		if ( $scope.ImportPresetSource.indexOf( "http" ) == 0 || /([0-9]+)/.test( $scope.ImportPresetSource ) )
+		if ( $scope.ImportPresetSource.indexOf( "http" ) === 0 || /^([0-9]+)$/.test( $scope.ImportPresetSource ) )
 		{
 			$scope.ImportPresetLoading = true;
 			var re = /https?:\/\/steamcommunity\.com\/sharedfiles\/filedetails\/\?(?:.*)id=([0-9]+)(?:.*)/;

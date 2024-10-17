@@ -65,7 +65,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Vortigaunt Slave",
+	Name = "#npc_vortigaunt_slave",
 	Class = "npc_vortigaunt",
 	Category = Category,
 	Model = "models/vortigaunt_slave.mdl"
@@ -79,7 +79,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Rebel",
+	Name = "#npc_citizen_rebel",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
@@ -88,7 +88,6 @@ AddNPC( {
 }, "Rebel" )
 
 AddNPC( {
-	Name = "Odessa Cubbage",
 	Class = "npc_citizen",
 	Category = Category,
 	Model = "models/odessa.mdl",
@@ -97,7 +96,7 @@ AddNPC( {
 }, "npc_odessa" )
 
 AddNPC( {
-	Name = "Rebel Medic",
+	Name = "#npc_citizen_medic",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
@@ -106,7 +105,7 @@ AddNPC( {
 }, "Medic" )
 
 AddNPC( {
-	Name = "Refugee",
+	Name = "#npc_citizen_refugee",
 	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
@@ -115,7 +114,7 @@ AddNPC( {
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
-		Name = "Uriah",
+		Name = "#npc_vortigaunt_uriah",
 		Class = "npc_vortigaunt",
 		Category = Category,
 		Model = "models/vortigaunt_doctor.mdl",
@@ -136,7 +135,18 @@ if ( IsMounted( "lostcoast" ) ) then
 	} ) -- Has no death sequence
 end
 
+if ( IsMounted( "ep2" ) ) then
+	AddNPC( {
+		Class = "npc_turret_floor",
+		Category = Category,
+		OnFloor = true,
+		TotalSpawnFlags = 0,
+		Rotate = Angle( 0, 180, 0 ),
+		Offset = 2,
+		KeyValues = { SquadName = "overwatch", SpawnFlags = SF_FLOOR_TURRET_CITIZEN }
+	}, "npc_turret_floor_resistance" )
 
+end
 
 Category = "Zombies + Enemy Aliens"
 
@@ -221,7 +231,6 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	AddNPC( {
-		Name = "Antlion Guardian",
 		Class = "npc_antlionguard",
 		Category = Category,
 		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
@@ -304,12 +313,13 @@ AddNPC( {
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
+	Skin = 0,
 	Weapons = { "weapon_smg1", "weapon_ar2" },
 	KeyValues = { SquadName = "overwatch", Numgrenades = 5 }
 } )
 
 AddNPC( {
-	Name = "Shotgun Soldier",
+	Name = "#npc_combine_s_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
@@ -319,16 +329,17 @@ AddNPC( {
 }, "ShotgunSoldier" )
 
 AddNPC( {
-	Name = "Prison Guard",
+	Name = "#npc_combine_s_prison",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
+	Skin = 0,
 	Weapons = { "weapon_smg1", "weapon_ar2" },
 	KeyValues = { SquadName = "novaprospekt", Numgrenades = 5 }
 }, "CombinePrison" )
 
 AddNPC( {
-	Name = "Prison Shotgun Guard",
+	Name = "#npc_combine_s_prison_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
@@ -338,10 +349,11 @@ AddNPC( {
 }, "PrisonShotgunner" )
 
 AddNPC( {
-	Name = "Combine Elite",
+	Name = "#npc_combine_s_elite",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_super_soldier.mdl",
+	Skin = 0,
 	Weapons = { "weapon_ar2" },
 	KeyValues = { Numgrenades = 10, SquadName = "overwatch" },
 	SpawnFlags = SF_NPC_NO_PLAYER_PUSHAWAY
@@ -435,7 +447,6 @@ if ( IsMounted( "ep2" ) ) then
 	} )
 end
 
-
 if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 
 	Category = "Half-Life: Source"
@@ -485,8 +496,18 @@ if ( IsMounted( "portal" ) ) then
 		Class = "npc_rocket_turret",
 		Category = Category,
 		OnFloor = true,
+		SpawnFlags = 2, --SF_ROCKET_TURRET_SPAWNMENU, makes it target NPCs
 		Offset = 0,
 		Rotate = Angle( 0, 180, 0 ),
+	} )
+
+	AddNPC( {
+		Class = "npc_security_camera",
+		Category = Category,
+		Offset = -1,
+		SpawnFlags = 32, --SF_SECURITY_CAMERA_AUTOACTIVATE
+		SnapToNormal = true,
+		NoDrop = true
 	} )
 
 end

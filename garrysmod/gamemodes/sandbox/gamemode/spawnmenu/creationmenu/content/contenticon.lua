@@ -231,6 +231,20 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	icon:SetMaterial( obj.material )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 205, 92, 92, 255 ) )
+
+	-- Generate a nice tooltip with extra info.
+	local ENTinfo = scripted_ents.Get( obj.spawnname )
+	local toolTip = language.GetPhrase( obj.nicename )
+	if ( !ENTinfo ) then ENTinfo = list.Get( "SpawnableEntities" )[ obj.spawnname ] end
+	if ( ENTinfo ) then
+		local extraInfo = ""
+		if ( ENTinfo.Information and ENTinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. ENTinfo.Information end
+		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\nAuthor: " .. ENTinfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
+	end
+
+	icon:SetTooltip( toolTip )
+
 	icon.DoClick = function()
 		RunConsoleCommand( "gm_spawnsent", obj.spawnname )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
@@ -261,6 +275,18 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	icon:SetMaterial( obj.material )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 0, 0, 0, 255 ) )
+
+	-- Generate a nice tooltip with extra info
+	local VehicleInfo = list.Get( "Vehicles" )[ obj.spawnname ]
+	if ( VehicleInfo ) then
+		local toolTip = language.GetPhrase( VehicleInfo.Name ) .. "\n"
+		if ( VehicleInfo.Information and VehicleInfo.Information != "" ) then toolTip = toolTip .. "\n" .. VehicleInfo.Information end
+
+		if ( VehicleInfo.Author and VehicleInfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. VehicleInfo.Author end
+
+		icon:SetTooltip( toolTip )
+	end
+
 	icon.DoClick = function()
 		RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
@@ -278,7 +304,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 
 end )
 
-local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE } )
+local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE }, "Overrides the weapon all spawnmenu NPCs will spawn with. Set to \"\" to not override." )
 
 spawnmenu.AddContentType( "npc", function( container, obj )
 
@@ -370,6 +396,24 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	icon:SetMaterial( obj.material )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 135, 206, 250, 255 ) )
+
+	-- Generate a nice tooltip with extra info.
+	local SWEPinfo = weapons.Get( obj.spawnname )
+	local toolTip = language.GetPhrase( obj.nicename )
+	if ( !SWEPinfo ) then SWEPinfo = list.Get( "Weapon" )[ obj.spawnname ] end
+	if ( SWEPinfo ) then
+		toolTip = toolTip .. "\n"
+		-- These 2 really should be one
+		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Purpose end
+		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Instructions end
+
+		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. SWEPinfo.Author end
+	end
+
+	toolTip = toolTip .. "\n\n" .. language.GetPhrase( "spawnmenu.mmb_weapons" )
+
+	icon:SetTooltip( toolTip )
+
 	icon.DoClick = function()
 
 		RunConsoleCommand( "gm_giveswep", obj.spawnname )

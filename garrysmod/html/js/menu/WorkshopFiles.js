@@ -157,7 +157,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		else 		lua.PlaySound( "buttons/button10.wav" );
 
 	}
-	
+
 	this.Scope.Favorite = function( entry, b )
 	{
 		if ( !entry.id ) return;
@@ -239,7 +239,7 @@ WorkshopFiles.prototype.ReceiveIndex = function( data )
 	}
 
 	this.Scope.FilesOther = [];
-	if ( data.otherresults ) 
+	if ( data.otherresults )
 	{
 		for ( var j in data.otherresults )
 		{

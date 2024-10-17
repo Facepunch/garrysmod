@@ -363,13 +363,14 @@ function meta:InstallDataTable()
 
 		local t = ent.DTVar( ent, typename, index, name )
 
+		-- Some addons call these on the entity table, and that used to work, so we keep that
 		ent[ "Set" .. name ] = function( selfent, value )
-			CallProxies( ent, t.Notify, name, t.GetFunc( selfent, index ), value )
-			t.SetFunc( selfent, index, value )
+			CallProxies( ent, t.Notify, name, t.GetFunc( ent, index ), value )
+			t.SetFunc( ent, index, value )
 		end
 
 		ent[ "Get" .. name ] = function( selfent )
-			return t.GetFunc( selfent, index )
+			return t.GetFunc( ent, index )
 		end
 
 		if ( !other_data ) then return end

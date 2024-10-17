@@ -1,5 +1,5 @@
 
-local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE } )
+local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE }, "Amount of empty space around the Sandbox spawn menu." )
 
 include( "toolmenu.lua" )
 include( "contextmenu.lua" )
@@ -30,7 +30,7 @@ function PANEL:Init()
 	self:SetMouseInputEnabled( true )
 
 	self.ToolToggle = vgui.Create( "DImageButton", self )
-	self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+	self.ToolToggle:SetImage( "gui/spawnmenu_toggle" )
 	self.ToolToggle:SetSize( 16, 16 )
 	self.ToolToggle.DoClick = function()
 
@@ -38,12 +38,12 @@ function PANEL:Init()
 		self:InvalidateLayout()
 
 		if ( self.ToolMenu:IsVisible() ) then
-			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+			self.ToolToggle:SetImage( "gui/spawnmenu_toggle" )
 			self.CreateMenu:Dock( NODOCK ) -- What an ugly hack
 			self.HorizontalDivider:SetRight( self.ToolMenu )
 			self.HorizontalDivider:SetLeft( self.CreateMenu )
 		else
-			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle_back" )
+			self.ToolToggle:SetImage( "gui/spawnmenu_toggle_back" )
 			self.HorizontalDivider:SetRight( nil ) -- What an ugly hack
 			self.HorizontalDivider:SetLeft( nil )
 			self.CreateMenu:SetParent( self.HorizontalDivider )

@@ -46,7 +46,8 @@ UL.category LI.mapicon
 	vertical-align: top;
 }
 
-UL.category LI.mapicon span {
+UL.category LI.mapicon span
+{
 	word-break: break-all;
 }
 

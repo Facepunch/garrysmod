@@ -240,7 +240,7 @@ local dummify = {
 };
 
 for k, cls in pairs(dummify) do
-   scripted_ents.Register({Type="point", IsWeaponDummy=true}, cls, false)
+   scripted_ents.Register({Type="point", IsWeaponDummy=true}, cls)
 end
 
 -- Cache this, every ttt_random_weapon uses it in its Init

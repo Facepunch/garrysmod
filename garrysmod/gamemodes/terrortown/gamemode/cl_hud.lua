@@ -47,7 +47,7 @@ local ammo_colors = {
 -- Modified RoundedBox
 local Tex_Corner8 = surface.GetTextureID( "gui/corner8" )
 local function RoundedMeter( bs, x, y, w, h, color)
-   surface.SetDrawColor(clr(color))
+   surface.SetDrawColor( color.r, color.g, color.b, color.a )
 
    surface.DrawRect( x+bs, y, w-bs*2, h )
    surface.DrawRect( x, y+bs, bs, h-bs*2 )

@@ -5,15 +5,16 @@ local surface = surface
 local tostring = tostring
 local ipairs = ipairs
 local setmetatable = setmetatable
+local tonumber = tonumber
 local math = math
 local utf8 = utf8
 local _Color = Color
 
 local MarkupObject = {}
 MarkupObject.__index = MarkupObject
-debug.getregistry().MarkupObject = MarkupObject
+RegisterMetaTable( "MarkupObject", MarkupObject )
 
-module("markup")
+module( "markup" )
 
 --[[---------------------------------------------------------
 	Name: Constants used for text alignment.
@@ -26,15 +27,15 @@ TEXT_ALIGN_TOP		= 3
 TEXT_ALIGN_BOTTOM	= 4
 
 --[[---------------------------------------------------------
-	Name: Color(Color(r, g, b, a))
+	Name: Color( Color( r, g, b, a ) )
 	Desc: Convenience function which converts a Color object into a string
-	      which can be used in the <color=r,g,b,a></color> tag
+		  which can be used in the <color=r,g,b,a></color> tag
 
-	      e.g. Color(255, 0, 0, 150) -> 255,0,0,150
-	           Color(255, 0, 0)      -> 255,0,0
-	           Color(255, 0, 0, 255) -> 255,0,0
+		  e.g. Color( 255, 0, 0, 150 ) -> 255,0,0,150
+			   Color( 255, 0, 0 )      -> 255,0,0
+			   Color( 255, 0, 0, 255 ) -> 255,0,0
 
-	Usage: markup.Color(Color(r, g, b, a))
+	Usage: markup.Color( Color( r, g, b, a ) )
 -----------------------------------------------------------]]
 function Color( col )
 	return
@@ -56,21 +57,21 @@ local blocks = {}
 
 local colourmap = {
 
--- it's all black and white
+	-- it's all black and white
 	["black"] =		Color( 0, 0, 0 ),
 	["white"] =		Color( 255, 255, 255 ),
 
--- it's greys
+	-- it's greys
 	["dkgrey"] =	Color( 64, 64, 64 ),
 	["grey"] =		Color( 128, 128, 128 ),
 	["ltgrey"] =	Color( 192, 192, 192 ),
 
--- account for speeling mistakes
+	-- account for speeling mistakes
 	["dkgray"] =	Color( 64, 64, 64 ),
 	["gray"] =		Color( 128, 128, 128 ),
 	["ltgray"] =	Color( 192, 192, 192 ),
 
--- normal colours
+	-- normal colours
 	["red"] =		Color( 255, 0, 0 ),
 	["green"] =		Color( 0, 255, 0 ),
 	["blue"] =		Color( 0, 0, 255 ),
@@ -79,7 +80,7 @@ local colourmap = {
 	["cyan"] =		Color( 0, 255, 255 ),
 	["turq"] =		Color( 0, 255, 255 ),
 
--- dark variations
+	-- dark variations
 	["dkred"] =		Color( 128, 0, 0 ),
 	["dkgreen"] =	Color( 0, 128, 0 ),
 	["dkblue"] =	Color( 0, 0, 128 ),
@@ -88,7 +89,7 @@ local colourmap = {
 	["dkcyan"] =	Color( 0, 128, 128 ),
 	["dkturq"] =	Color( 0, 128, 128 ),
 
--- light variations
+	-- light variations
 	["ltred"] =		Color( 255, 128, 128 ),
 	["ltgreen"] =	Color( 128, 255, 128 ),
 	["ltblue"] =	Color( 128, 128, 255 ),
@@ -96,11 +97,10 @@ local colourmap = {
 	["ltpurple"] =	Color( 255, 128, 255 ),
 	["ltcyan"] =	Color( 128, 255, 255 ),
 	["ltturq"] =	Color( 128, 255, 255 ),
-
 }
 
 --[[---------------------------------------------------------
-	Name: colourMatch(c)
+	Name: colourMatch( c )
 	Desc: Match a colour name to an rgb value.
 	Usage: ** INTERNAL ** Do not use!
 -----------------------------------------------------------]]
@@ -132,11 +132,11 @@ local function ExtractParams( p1, p2, p3 )
 			local rgba = colourMatch( p2 )
 
 			if ( rgba == nil ) then
-				rgba = {}
+				rgba = Color( 255, 255, 255, 255 )
 				local x = { "r", "g", "b", "a" }
 				local n = 1
 				for k, v in string.gmatch( p2, "(%d+),?" ) do
-					rgba[ x[ n ] ] = k
+					rgba[ x[ n ] ] = tonumber( k )
 					n = n + 1
 				end
 			end
@@ -153,7 +153,7 @@ local function ExtractParams( p1, p2, p3 )
 end
 
 --[[---------------------------------------------------------
-	Name: CheckTextOrTag(p)
+	Name: CheckTextOrTag( p )
 	Desc: This function places data in the "blocks" table
 		  depending of if p is a tag, or some text
 	Usage: ** INTERNAL ** Do not use!
@@ -265,7 +265,7 @@ end
 --[[---------------------------------------------------------
 	Name: Escape(str)
 	Desc: Converts a string to its escaped, markup-safe equivalent
-	Usage: markup.Escape("<font=Default>The font will remain unchanged & these < > & symbols will also appear normally</font>")
+	Usage: markup.Escape( "<font=Default>The font will remain unchanged & these < > & symbols will also appear normally</font>" )
 -----------------------------------------------------------]]
 local escapeEntities, unescapeEntities = {
 	["&"] = "&amp;",
@@ -290,7 +290,7 @@ end
 		  Maxwidth can be used to make the text wrap to a specific
 		  width and allows for text alignment (e.g. centering) inside
 		  the bounds.
-	Usage: markup.Parse("<font=Default>changed font</font>\n<colour=255,0,255,255>changed colour</colour>")
+	Usage: markup.Parse( "<font=Default>changed font</font>\n<colour=255,0,255,255>changed colour</colour>" )
 -----------------------------------------------------------]]
 function Parse( ml, maxwidth )
 
@@ -319,7 +319,7 @@ function Parse( ml, maxwidth )
 	for i, blk in ipairs( blocks ) do
 
 		surface.SetFont( blk.font )
-		
+
 		blk.text = string.gsub( blk.text, "(&.-;)", unescapeEntities )
 
 		local thisY = 0
@@ -385,7 +385,7 @@ function Parse( ml, maxwidth )
 						xMax = xOffset + x1
 					end
 				end
-				
+
 				curString = ""
 
 				local xOldSize = xSize
@@ -395,7 +395,7 @@ function Parse( ml, maxwidth )
 
 				if ( xOffset == xOldOffset ) then
 					xOffset = xOffset + 50
-					
+
 					if ( maxwidth and xOffset > maxwidth ) then
 						-- Needs a new line
 						if ( thisY == 0 ) then
@@ -432,9 +432,9 @@ function Parse( ml, maxwidth )
 
 						local previous_block = new_block_list[ #new_block_list ]
 						local wrap = lastSpacePos == string.len( curString ) && lastSpacePos > 0
-						if ( previous_block and previous_block.text:match(" $") and wrap and surface.GetTextSize( blk.text ) < maxwidth ) then
+						if ( previous_block and previous_block.text:match( " $" ) and wrap and surface.GetTextSize( blk.text ) < maxwidth ) then
 							-- If the block was preceded by a space, wrap the block onto the next line first, as we can probably fit it there
-							local trimmed, trimCharNum = previous_block.text:gsub(" +$", "")
+							local trimmed, trimCharNum = previous_block.text:gsub( " +$", "" )
 							if ( trimCharNum > 0 ) then
 								previous_block.text = trimmed
 								previous_block.thisX = surface.GetTextSize( previous_block.text )
@@ -454,12 +454,12 @@ function Parse( ml, maxwidth )
 							end
 
 							local m = 1
-							while string.sub( ch, m, m ) == " " do
+							while ( string.sub( ch, m, m ) == " " ) do
 								m = m + 1
 							end
 							ch = string.sub( ch, m )
 
-							local x1,y1 = surface.GetTextSize( curString )
+							local x1, y1 = surface.GetTextSize( curString )
 
 							if ( y1 > thisMaxY ) then
 								thisMaxY = y1

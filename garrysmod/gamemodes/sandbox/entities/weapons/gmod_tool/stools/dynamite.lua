@@ -48,7 +48,7 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidDynamiteModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "dynamite" ) ) then return false end
 
 	local dynamite = MakeDynamite( ply, trace.HitPos, angle_zero, group, damage, model, remove, delay )
 	if ( !IsValid( dynamite ) ) then return false end
@@ -71,8 +71,8 @@ if ( SERVER ) then
 
 	function MakeDynamite( ply, pos, ang, key, damage, model, remove, delay, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "dynamite" ) ) then return nil end
-		if ( !IsValidDynamiteModel( model ) ) then return nil end
+		if ( IsValid( ply ) && !ply:CheckLimit( "dynamite" ) ) then return NULL end
+		if ( !IsValidDynamiteModel( model ) ) then return NULL end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
 
@@ -96,8 +96,6 @@ if ( SERVER ) then
 		table.Merge( dynamite:GetTable(), {
 			key = key,
 			pl = ply,
-			nocollide = nocollide,
-			description = description,
 			Damage = damage,
 			model = model,
 			remove = remove,

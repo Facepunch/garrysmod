@@ -80,7 +80,7 @@ UL.category LI.icon
 
 .btn-primary:hover
 {
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
 }
 
 .btn-back
@@ -99,7 +99,7 @@ UL.category LI.icon
 
 .btn-back:hover
 {
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
 }
 
 DIV.gridicon
@@ -111,7 +111,7 @@ DIV.gridicon
 	float: left;
 	margin: 3px;
 	/*border-radius: 2px;*/
-	background-position:center; 
+	background-position:center;
 }
 
 DIV.gridicon name
@@ -173,7 +173,7 @@ right
 	float: right;
 }
 
-loading 
+loading
 {
 	font-size: 48px;
 	font-weight: bolder;
@@ -320,7 +320,8 @@ workshopmessage
 }
 
 /* 1152x864 and lower */
-@media (max-width: 700px) {
+@media (max-width: 700px)
+{
 	workshopicon
 	{
 		margin: 0px;
@@ -330,12 +331,15 @@ workshopmessage
 }
 
 /* 1024x768 and lower */
-@media (max-width: 670px) {
-	.options {
+@media (max-width: 670px)
+{
+	.options
+	{
 		width: 150px !important;
 	}
 
-	.clickable {
+	.clickable
+	{
 		padding-left: 5px !important;
 	}
 
@@ -355,12 +359,15 @@ workshopmessage
 }
 
 /* 800x600 and lower */
-@media (max-width: 530px) {
-	.options {
+@media (max-width: 530px)
+{
+	.options
+	{
 		width: 130px !important;
 	}
 
-	.clickable {
+	.clickable
+	{
 		padding-left: 5px !important;
 	}
 
@@ -368,7 +375,8 @@ workshopmessage
 	{
 		left: 130px !important;
 	}
-	.options UL {
+	.options UL
+	{
 		margin: 0px;
 	}
 	workshopicon

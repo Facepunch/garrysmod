@@ -85,7 +85,7 @@ function TOOL:LeftClick( trace )
 	local length = self:GetClientNumber( "length", 5 )
 	local endsize = self:GetClientNumber( "endsize", 0 )
 	local startsize = self:GetClientNumber( "startsize", 32 )
-	local mat = self:GetClientInfo( "material", "sprites/obsolete" )
+	local mat = self:GetClientInfo( "material" )
 
 	local trail = SetTrails( self:GetOwner(), trace.Entity, {
 		Color = Color( r, g, b, a ),

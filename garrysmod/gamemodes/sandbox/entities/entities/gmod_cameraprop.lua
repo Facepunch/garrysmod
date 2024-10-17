@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 if ( CLIENT ) then
-	CreateConVar( "cl_drawcameras", "1", 0, "Should the cameras be visible?" )
+	CreateConVar( "cl_drawcameras", "1", 0, "Should Sandbox cameras be visible?" )
 end
 
 ENT.Type = "anim"
