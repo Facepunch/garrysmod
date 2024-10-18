@@ -1,6 +1,6 @@
-local NPC = FindMetaTable("NPC")
+local entityMeta = FindMetaTable("Entity")
 
-function NPC:AddSpawnFlag( flag )
+function entityMeta:AddSpawnFlag( flag )
     local spawnFlags = self:GetSpawnFlags()
     if bit.band( spawnFlags, flag ) == flag then return end
 
@@ -8,7 +8,7 @@ function NPC:AddSpawnFlag( flag )
     self:SetKeyValue( "spawnflags", newSpawnFlags )
 end
 
-function NPC:RemoveSpawnFlag( flag )
+function entityMeta:RemoveSpawnFlag( flag )
     local spawnFlags = self:GetSpawnFlags()
     if bit.band( spawnFlags, flag ) == 0 then return end
 
