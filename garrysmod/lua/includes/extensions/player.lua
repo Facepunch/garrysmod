@@ -284,28 +284,24 @@ function player.GetByUniqueID( ID )
 	return false
 end
 
+local sIDCache = {}
+
 function player.GetBySteamID( ID )
 	ID = string.upper( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID() == ID ) then
-			return players[i]
-		end
+
+	if ( ID == "BOT" ) then
+		return false
 	end
 
-	return false
+	local cID = util.SteamIDFrom64( ID )
+
+	return sIDCache[cID] or false
 end
 
 function player.GetBySteamID64( ID )
 	ID = tostring( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID64() == ID ) then
-			return players[i]
-		end
-	end
 
-	return false
+	return sIDCache[ID] or false
 end
 
 local inext = ipairs( {} )
@@ -319,11 +315,26 @@ function player.Iterator()
 
 end
 
-local function InvalidatePlayerCache( ent )
+local function InvalidatePlayer( ent, fullUpdate )
 
-	if ( ent:IsPlayer() ) then PlayerCache = nil end
+	local isPlayer = ent:IsPlayer()
+
+	if ( isPlayer ) then PlayerCache = nil end
+
+	if ( fullUpdate or not isPlayer ) then
+		return
+	end
+
+	local steamID = ent:SteamID64()
+
+	-- If fullUpdate isn't nil, this player was invalidated by EntityRemoved.
+	if ( fullUpdate == false ) then
+		sIDCache[steamID] = nil
+	else
+		sIDCache[steamID] = ent
+	end
 
 end
 
-hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
-hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )
+hook.Add( "OnEntityCreated", "player.Invalidation", InvalidatePlayer )
+hook.Add( "EntityRemoved", "player.Invalidation", InvalidatePlayer )
