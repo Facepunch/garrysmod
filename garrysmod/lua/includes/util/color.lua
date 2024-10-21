@@ -110,3 +110,178 @@ function COLOR:ToTable()
 	return { self.r, self.g, self.b, self.a }
 
 end
+
+local function ColorCopy( dest, origin )
+
+	dest.r = origin.r
+	dest.g = origin.g
+	dest.b = origin.b
+
+end
+
+-- hsb hue
+function COLOR:GetHue()
+
+	local hue = self:ToHSV()
+	return hue
+
+end
+
+function COLOR:SetHue( hue )
+
+	local _, saturation, brightness = self:ToHSV()
+	hue = hue % 360
+	ColorCopy( self, HSVToColor( hue, saturation, brightness ) )
+
+end
+
+function COLOR:AddHue( hueAdd )
+
+	local hue, saturation, brightness = self:ToHSV()
+	hue = ( hue + hueAdd ) % 360
+	ColorCopy( self, HSVToColor( hue, saturation, brightness ) )
+
+end
+
+-- hsb saturation
+function COLOR:GetSaturation()
+
+	local _, saturation = self:ToHSV()
+	return saturation
+
+end
+
+function COLOR:SetSaturation( saturation )
+
+	local hue, _, brightness = self:ToHSV()
+	saturation = math.Clamp( saturation, 0, 1 )
+	ColorCopy( self, HSVToColor( hue, saturation, brightness ) )
+
+end
+
+function COLOR:AddSaturation( saturationAdd )
+
+	local hue, saturation, brightness = self:ToHSV()
+	saturation = math.Clamp( saturation + saturationAdd, 0, 1 )
+	ColorCopy( self, HSVToColor( hue, saturation, brightness ) )
+
+end
+
+-- hsb brightness
+function COLOR:GetBrightness()
+
+	local _, _, brightness = self:ToHSV()
+	return brightness
+
+end
+
+function COLOR:SetBrightness( brightness )
+
+	local hue, saturation = self:ToHSV()
+	brightness = math.Clamp( brightness, 0, 1 )
+	ColorCopy( self, HSVToColor( hue, saturation, brightness ) )
+
+end
+
+function COLOR:AddBrightness( brightnessAdd )
+
+	local hue, saturation, brightness = self:ToHSV()
+	brightness = math.Clamp( brightness + brightnessAdd, 0, 1 )
+	ColorCopy( self, HSVToColor( hue, saturation, brightness ) )
+
+end
+
+-- hsv value == hsb brightness
+COLOR.GetValue = COLOR.GetBrightness
+
+-- hsl lightness
+function COLOR:GetLightness()
+
+	local _, _, lightness = self:ToHSL()
+	return lightness
+
+end
+
+function COLOR:SetLightness( lightness )
+
+	local hue, saturation = self:ToHSL()
+	lightness = math.Clamp( lightness, 0, 1 )
+	ColorCopy( self, HSLToColor( hue, saturation, lightness ) )
+
+end
+
+function COLOR:AddLightness( lightnessAdd )
+
+	local hue, saturation, lightness = self:ToHSL()
+	lightness = math.Clamp( lightness + lightnessAdd, 0, 1 )
+	ColorCopy( self, HSLToColor( hue, saturation, lightness ) )
+
+end
+
+-- hwb whiteness
+function COLOR:GetWhiteness()
+
+	local _, whiteness = self:ToHWB()
+	return whiteness
+
+end
+
+function COLOR:SetWhiteness( whiteness )
+
+	local hue, _, blackness = self:ToHWB()
+	whiteness = math.Clamp( whiteness, 0, 1 )
+	ColorCopy( self, HWBToColor( hue, whiteness, blackness ) )
+
+end
+
+function COLOR:AddWhiteness( whitenessAdd )
+
+	local hue, whiteness, blackness = self:ToHWB()
+	whiteness = math.Clamp( whiteness + whitenessAdd, 0, 1 )
+	ColorCopy( self, HWBToColor( hue, whiteness, blackness ) )
+
+end
+
+-- hwb blackness
+function COLOR:GetBlackness()
+
+	local _, _, blackness = self:ToHWB()
+	return blackness
+
+end
+
+function COLOR:SetBlackness( blackness )
+
+	local hue, whiteness = self:ToHWB()
+	blackness = math.Clamp( blackness, 0, 1 )
+	ColorCopy( self, HWBToColor( hue, whiteness, blackness ) )
+
+end
+
+function COLOR:AddBlackness( blacknessAdd )
+
+	local hue, whiteness, blackness = self:ToHWB()
+	blackness = math.Clamp( blackness + blacknessAdd, 0, 1 )
+	ColorCopy( self, HWBToColor( hue, whiteness, blackness ) )
+
+end
+
+-- hwb implementation
+function COLOR:ToHWB()
+
+	local h, s, v = self:ToHSV()
+	return h, ( 1 - s ) * v, 1 - v
+
+end
+
+function HWBToColor( h, w, b )
+
+	local v = 1 - b
+	local s = 0
+	if ( v > 0 ) then
+		s = 1 - w / v
+	end
+
+	return HSVToColor( h, s, v )
+
+end
