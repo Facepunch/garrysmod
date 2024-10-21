@@ -440,7 +440,7 @@ function GM:PlayerSelectSpawn( pl, transiton )
 
 		-- Fortress Forever Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_ff_teamspawn" ) )
-	
+
 	end
 
 	local Count = table.Count( self.SpawnPoints )
@@ -825,7 +825,7 @@ concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerReques
 -----------------------------------------------------------]]
 function GM:HandlePlayerArmorReduction( ply, dmginfo )
 
-	-- If no armor, or special damage types, bypass armor 
+	-- If no armor, or special damage types, bypass armor
 	if ( ply:Armor() <= 0 || bit.band( dmginfo:GetDamageType(), DMG_FALL + DMG_DROWN + DMG_POISON + DMG_RADIATION ) != 0 ) then return end
 
 	local flBonus = 1.0 -- Each Point of Armor is worth 1/x points of health
