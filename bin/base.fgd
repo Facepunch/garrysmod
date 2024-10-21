@@ -154,7 +154,7 @@
 	input Disable(void) : "Disable this entity."
 ]
 
-@BaseClass base(GMODSandbox) = RenderFxChoices
+@BaseClass = RenderFxChoices
 [
 	renderfx(choices) :"Render FX" : 0 =
 	[
@@ -1345,7 +1345,7 @@
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. See filter_activator_name for more explanation. Allow means 'Allow to Block' for this entity."
 ]
 
-@SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow) = func_brush :
+@SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow, GMODSandbox) = func_brush :
 	"An brush built entity with various features."
 [
 	spawnflags(flags) =
@@ -3254,6 +3254,10 @@
 	stopsound(sound) : "Sound played when the water brush stops moving."
 	WaveHeight(string) : "Wave Height" : "3.0"
 
+	// GMOD: These work
+	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
+	input Color(color255) : "Set the sprite's color (R G B)."
+
 	// Inputs
 	input Open(void) : "Move the water brush to the end position (starting position + (move direction * move distance))."
 	input Close(void) : "Move the water brush to the starting position."
@@ -3602,7 +3606,7 @@
 	_minlight(string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
 ]
 
-@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields) = momentary_rot_button :
+@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, GMODSandbox) = momentary_rot_button :
 	"A brush entity that's designed to be used for rotating wheels, where the player can rotate them to arbitrary positions before stopping."
 [
 	speed(integer) : "Speed (deg/sec)" : 50 : "The amount, in degrees, that the wheel turns per second."
@@ -4393,6 +4397,12 @@
 	attach2(target_destination) : "Attachment 2" : "" : "The second entity."
 
 	startdisabled(choices) : "Start with collisions disabled" : 1 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	disable_on_remove(choices) : "Restore collisions on self-removal" : 1 : "Re-enable collisions between the 2 entities if this logic_collision_pair is removed by any means." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5924,7 +5934,7 @@
 	speed(integer) : "Move/Rotate Speed" : 0				// NEEDHELP
 ]
 
-@BaseClass base(Targetname, Parentname, Origin, RenderFields, Global, Shadow) = BaseTrain
+@BaseClass base(Targetname, Parentname, Origin, RenderFields, Global, Shadow, GMODSandbox) = BaseTrain
 [
 	spawnflags(flags) =
 	[
@@ -6572,10 +6582,10 @@
 @PointClass base(Parentname, Targetname) size(-8 -8 -8, 8 8 8 ) = env_spritetrail :
 	"A magical trail you can parent to anything you heart desires."
 [
-	lifetime(float) : "Lifetime" : "0.5"
+	lifetime(float) : "Lifetime" : "0.5" : "How long it will take, in seconds, for the trail's width to reach from Start Width to End Width. Also defines trail length."
 	startwidth(float) : "Start Width" : "8.0"
 	endwidth(float) : "End Width" : "1.0"
-	spritename(*string) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(*sprite) : "Sprite Name" : "sprites/bluelaser1.vmt" : "Material of the sprite trail to be used."
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
@@ -6588,14 +6598,25 @@
 	]
 ]
 
-// lightprop("models/editor/spot.mdl") <---- use this once the orientation is unfucked
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/cone_helper.mdl") frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture :
+@PointClass base(Targetname, Parentname, Angles) studioprop( "models/editor/spot.mdl" ) frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture :
 	"Projected texture entity."
 [
 	spawnflags(flags) =
 	[
-		1  : "Enabled"				: 1
+		1  : "Start Enabled (Does nothing, ignore)"		: 1
+		//2  : "Always Update (Does nothing)"		: 0
+		4  : "Start Disabled"			: 0
 	]
+
+	texturename(material) 		: "Texture Name" : "effects/flashlight001" : "The name of the texture to project"
+	textureframe(integer) 		: "Texture Frame" : 0 : "The frame of the texture, for animated textures"
+
+	lightcolor(color255)		: "Light Color" : "255 255 255" : "Light Color RGB-Intensity"
+	lightstrength(float)		: "Light Strength" : "1" : "How bright the light appears"
+
+	lightfov(float)				: "FOV" : "90" : "Field of view of the projected texture. Larger numbers will make the texture larger at closer distances, but will also negatively impact shadow quality. Should be below 179."
+	nearz(float)				: "NearZ" : "4" : "Near Z for projected texture. This only affects shadows"
+	farz(float)					: "FarZ" : "750" : "Far Z for projected texture. This affects shadows AND the light's range"
 
 	style(Choices) : "Appearance" : 0 =
 	[
@@ -6615,11 +6636,8 @@
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 
 	target(target_destination)	: "Aim Target" : : "If set, the projected texture will automatically aim at the given entity"
-	lightfov(float)				: "FOV" : "90.0" : "FOV"
-	nearz(float)				: "NearZ" : "4.0" : "Near Z for projected texture. This only affects shadows"
-	farz(float)					: "FarZ" : "750.0" : "Far Z for projected texture. This affects shadows AND the light's range"
 
-	enableshadows(Choices) : "Enable Shadows" : 0 : "Enables/disables shadows from this projected texture." =
+	enableshadows(Choices) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -6639,13 +6657,15 @@
 		0 : "No"
 		1 : "Yes"
 	]
-	lightcolor(color255)		: "Light Color" : "255 255 255 200" : "Light Color RGB-Intensity"
+
 	cameraspace(integer)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
 
 	// Inputs
 	input TurnOn(void)		: "Turn on the texture"
 	input TurnOff(void)		: "Turn off the texture"
+	input Toggle(void)		: "Toggle the texture between being off and on"
 	input SetFOV(float)		: "Set FOV"
+	//input Ambient(float)			: "Set Spotlight ambient (does nothing)"
 	input SpotlightTexture(string)	: "Set the spotlight texture"
 	input EnableShadows(bool)		: "Set the if shadows are enabled"
 	input SetLightStyle(integer)	: "Change the lightstyle (see Appearance field for possible values)."
@@ -6657,7 +6677,6 @@
 	input LightOnlyTarget(bool)		: "Sets whether this projected texture should only apply light to the target entity. This will still light the world"
 	input LightColor(string)		: "Sets the color of the projected texture"
 ]
-
 
 @SolidClass base(func_brush) = func_reflective_glass :
 	"Used to produce perfectly reflective glass that renders world + entities. " +
