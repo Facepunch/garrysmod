@@ -153,4 +153,10 @@
 		"name"		"string"	// player name
 		"networkid"	"string"	// player network (i.e steam) id
 	}
+
+	"nav_blocked"
+	{
+		"area"		"long"
+		"blocked"	"bool"
+	}
 }
