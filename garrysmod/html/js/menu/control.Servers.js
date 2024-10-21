@@ -514,9 +514,14 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
 	data.hasmap = DoWeHaveMap( data.map );
+	
+	if ( !IN_ENGINE ) data.lastplayed = Date.now() - Math.random() * 1000000000;
 
+	// Generate a user-friendly date that is also as short as possible
 	var actualDate = new Date( data.lastplayed );
-	data.lastplayedStr = ( "0" + actualDate.getDate() ).slice( -2 ) + "." + ( "0" + actualDate.getMonth() ).slice( -2 ) + "." + actualDate.getFullYear() + " " + actualDate.toLocaleTimeString();
+	var pad = function( num ) { return  ( "0" + num ).slice( -2 ); }
+	data.lastplayedStr = pad( actualDate.getDate() ) + "." + pad( actualDate.getMonth() + 1 ) + "." + actualDate.getFullYear();
+	data.lastplayedStr += " " + pad( actualDate.getHours() ) + ":" + pad( actualDate.getMinutes() ); // + ":" + pad( actualDate.getSeconds() );
 
 	data.recommended = CalculateRank( data );
 
