@@ -55,23 +55,27 @@ function ENT:Think()
 
 	BaseClass.Think( self )
 
-	if ( !self:GetOn() ) then return end
+	if ( not self:GetOn() ) then return end
 
-	self.Delay = self.Delay or 0
+	local tbl = self:GetTable()
+	tbl.Delay = tbl.Delay or 0
 
-	if ( self.Delay > CurTime() ) then return end
-	self.Delay = CurTime() + self:GetDelay()
+	local curtime = CurTime()
+	if ( tbl.Delay > curtime ) then return end
+	tbl.Delay = curtime + self:GetDelay()
 
 	--
 	-- Find our effect table
 	--
-	local Effect = self:GetEffect()
-
-	local EffectTable = list.Get( "EffectType" )[ Effect ]
-	if ( !EffectTable ) then return end
+	local EffectTable = list.GetForEdit( "EffectType" )[ self:GetEffect() ]
+	if ( not EffectTable ) then return end
 
 	local Angle = self:GetAngles()
-	EffectTable.func( self, self:GetPos() + Angle:Forward() * 12, Angle, self:GetScale() )
+	local Pos = Angle:Forward()
+	Pos:Mul( 12 )
+	Pos:Add( self:GetPos() )
+
+	EffectTable.func( self, Pos, Angle, self:GetScale() )
 
 end
 
@@ -127,9 +131,12 @@ list.Set( "EffectType", "sparks", {
 	material	= "gui/effects/sparks.png",
 	func		= function( ent, pos, angle, scale )
 
+		local normal = angle:Forward()
+		normal:Mul( scale )
+
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
-		effectdata:SetNormal( angle:Forward() * scale )
+		effectdata:SetNormal( normal )
 		effectdata:SetMagnitude( scale / 2 )
 		effectdata:SetRadius( 8 - scale )
 		util.Effect( "Sparks", effectdata, true, true )
@@ -155,9 +162,12 @@ list.Set( "EffectType", "manhacksparks", {
 	material	= "gui/effects/manhacksparks.png",
 	func		= function( ent, pos, angle, scale )
 
+		local normal = angle:Forward()
+		normal:Mul( scale )
+
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
-		effectdata:SetNormal( angle:Forward() * scale )
+		effectdata:SetNormal( normal )
 		util.Effect( "manhacksparks", effectdata, true, true )
 
 	end
@@ -168,9 +178,12 @@ list.Set( "EffectType", "bloodspray", {
 	material	= "gui/effects/bloodspray.png",
 	func		= function( ent, pos, angle, scale )
 
+		local normal = angle:Forward()
+		normal:Mul( math.max( 3, scale ) / 3 )
+
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
-		effectdata:SetNormal( angle:Forward() * math.max( 3, scale ) / 3 )
+		effectdata:SetNormal( normal )
 		effectdata:SetMagnitude( 1 )
 		effectdata:SetScale( scale + 9 )
 		effectdata:SetColor( 0 )
@@ -185,9 +198,12 @@ list.Set( "EffectType", "striderblood", {
 	material	= "gui/effects/striderblood.png",
 	func		= function( ent, pos, angle, scale )
 
+		local normal = angle:Forward()
+		normal:Mul( ( 6 - scale ) / 2 )
+
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
-		effectdata:SetNormal( angle:Forward() * ( 6 - scale ) / 2 )
+		effectdata:SetNormal( normal )
 		effectdata:SetScale( scale / 2 )
 		util.Effect( "StriderBlood", effectdata, true, true )
 
@@ -250,9 +266,12 @@ list.Set( "EffectType", "cball_bounce", {
 	material	= "gui/effects/cball_bounce.png",
 	func		= function( ent, pos, angle, scale )
 
+		local normal = angle:Forward()
+		normal:Mul( scale / 4 )
+
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
-		effectdata:SetNormal( angle:Forward() * scale / 4 )
+		effectdata:SetNormal( normal )
 		effectdata:SetRadius( scale * 2 )
 		util.Effect( "cball_bounce", effectdata, true, true )
 
@@ -393,8 +412,12 @@ list.Set( "EffectType", "muzzleeffect", {
 	material	= "gui/effects/muzzleeffect.png",
 	func		= function( ent, pos, angle, scale )
 
+		local origin = angle:Forward()
+		origin:Mul( 4 )
+		origin:Add( pos )
+
 		local effectdata = EffectData()
-		effectdata:SetOrigin( pos + angle:Forward() * 4 )
+		effectdata:SetOrigin( origin )
 		effectdata:SetAngles( angle )
 		effectdata:SetScale( scale )
 		util.Effect( "MuzzleEffect", effectdata, true, true )
