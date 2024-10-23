@@ -127,14 +127,10 @@ function PANEL:PerformLayout()
 
 		local dockType = self:GetDock()
 
-		-- Auto stretch will layout infinitely with these dock types, so we'll undo them
+		-- Auto stretch will layout infinitely with these dock types, so we'll ignore them
 		if ( dockType != FILL && dockType != LEFT && dockType != RIGHT ) then
 
 			self:SizeToContentsY()
-
-		else
-
-			self:Dock( NODOCK )
 
 		end
 
