@@ -315,7 +315,7 @@ end
 -----------------------------------------------------------]]
 function Circle( x, y, radius, color )
 
-	RoundedBox( radius, x - radius, y - radius, radius * 2, radius * 2, color or color_white )
+	RoundedBox( radius, x - radius, y - radius, radius * 2, radius * 2, color )
 
 end
 
@@ -325,7 +325,7 @@ end
 -----------------------------------------------------------]]
 function CircleOutlined( x, y, radius, color, outlinewidth, outlinecolor )
 
-	Circle( x, y, radius + outlinewidth, outlinecolor)
+	Circle( x, y, radius + outlinewidth, outlinecolor )
 	Circle( x, y, radius, color)
 
 end
