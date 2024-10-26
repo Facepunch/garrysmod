@@ -314,6 +314,7 @@ end
 	Desc: Generates a circle structure for use with draw.Circle
 -----------------------------------------------------------]]
 function GenerateCircle( x, y, radius, segments )
+	
     local circle = {}
 
     local angle_step = -360 / segments
@@ -332,6 +333,7 @@ function GenerateCircle( x, y, radius, segments )
 	end
 
     return circle
+
 end
 
 --[[---------------------------------------------------------
@@ -339,9 +341,11 @@ end
 	Desc: Draws a circle
 -----------------------------------------------------------]]
 function Circle(circle, color)
+
     NoTexture()
     surface.SetDrawColor( color.r, color.g, color.b, color.a )
 	surface.DrawPoly( circle )
+
 end
 
 --[[---------------------------------------------------------
@@ -349,12 +353,14 @@ end
 	Desc: Draws a outlined circle
 -----------------------------------------------------------]]
 function CircleOutlined( circle, color, outlinecircle, outlinecolor )
+
 	NoTexture()
 	surface.SetDrawColor( outlinecolor.r, outlinecolor.g, outlinecolor.b, outlinecolor.a )
 	surface.DrawPoly( outlinecircle )
 
     surface.SetDrawColor( color.r, color.g, color.b, color.a )
 	surface.DrawPoly( circle )
+
 end
 
 function NoTexture()
