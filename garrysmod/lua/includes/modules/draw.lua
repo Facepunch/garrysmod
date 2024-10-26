@@ -320,7 +320,7 @@ function Circle( x, y, radius, color )
 end
 
 --[[---------------------------------------------------------
-	Name: CircleOutlined( circle, color, outlinecircle, outlinecolor )
+	Name: CircleOutlined( x, y, radius, color, outlinewidth, outlinecolor )
 	Desc: Draws a outlined circle
 -----------------------------------------------------------]]
 function CircleOutlined( x, y, radius, color, outlinewidth, outlinecolor )
