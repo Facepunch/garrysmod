@@ -310,41 +310,12 @@ function TexturedQuad( tab )
 end
 
 --[[---------------------------------------------------------
-	Name: GenerateCircle( x, y, radius, segments )
-	Desc: Generates a circle structure for use with draw.Circle
------------------------------------------------------------]]
-function GenerateCircle( x, y, radius, segments )
-	
-    local circle = {}
-
-    local angle_step = -360 / segments
-
-	for i = 0, segments do
-		local a = math.rad( i * angle_step )
-
-        local sin_a = math.sin( a )
-        local cos_a = math.cos( a )
-
-		circle[i] = {
-			x = x + sin_a * radius, 
-			y = y + cos_a * radius, 
-			u = sin_a / 2 + 0.5, v = cos_a / 2 + 0.5
-		}
-	end
-
-    return circle
-
-end
-
---[[---------------------------------------------------------
-	Name: Circle( circle, color )
+	Name: Circle( x, y, radius, color )
 	Desc: Draws a circle
 -----------------------------------------------------------]]
-function Circle(circle, color)
+function Circle( x, y, radius, color )
 
-    NoTexture()
-    surface.SetDrawColor( color.r, color.g, color.b, color.a )
-	surface.DrawPoly( circle )
+	RoundedBox( radius, x - radius, y - radius, radius * 2, radius * 2, color or color_white )
 
 end
 
@@ -352,14 +323,10 @@ end
 	Name: CircleOutlined( circle, color, outlinecircle, outlinecolor )
 	Desc: Draws a outlined circle
 -----------------------------------------------------------]]
-function CircleOutlined( circle, color, outlinecircle, outlinecolor )
+function CircleOutlined( x, y, radius, color, outlinewidth, outlinecolor )
 
-	NoTexture()
-	surface.SetDrawColor( outlinecolor.r, outlinecolor.g, outlinecolor.b, outlinecolor.a )
-	surface.DrawPoly( outlinecircle )
-
-    surface.SetDrawColor( color.r, color.g, color.b, color.a )
-	surface.DrawPoly( circle )
+	Circle( x, y, radius + outlinewidth, outlinecolor)
+	Circle( x, y, radius, color)
 
 end
 
