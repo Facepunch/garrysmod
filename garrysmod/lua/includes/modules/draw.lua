@@ -309,6 +309,54 @@ function TexturedQuad( tab )
 
 end
 
+--[[---------------------------------------------------------
+	Name: GenerateCircle( x, y, radius, segments )
+	Desc: Generates a circle structure for use with draw.Circle
+-----------------------------------------------------------]]
+function GenerateCircle( x, y, radius, segments )
+    local circle = {}
+
+    local angle_step = -360 / segments
+
+	for i = 0, segments do
+		local a = math.rad( i * angle_step )
+
+        local sin_a = math.sin( a )
+        local cos_a = math.cos( a )
+
+		circle[i] = {
+			x = x + sin_a * radius, 
+			y = y + cos_a * radius, 
+			u = sin_a / 2 + 0.5, v = cos_a / 2 + 0.5
+		}
+	end
+
+    return circle
+end
+
+--[[---------------------------------------------------------
+	Name: Circle( circle, color )
+	Desc: Draws a circle
+-----------------------------------------------------------]]
+function Circle(circle, color)
+    NoTexture()
+    surface.SetDrawColor( color.r, color.g, color.b, color.a )
+	surface.DrawPoly( circle )
+end
+
+--[[---------------------------------------------------------
+	Name: CircleOutlined( circle, color, outlinecircle, outlinecolor )
+	Desc: Draws a outlined circle
+-----------------------------------------------------------]]
+function CircleOutlined( circle, color, outlinecircle, outlinecolor )
+	NoTexture()
+	surface.SetDrawColor( outlinecolor.r, outlinecolor.g, outlinecolor.b, outlinecolor.a )
+	surface.DrawPoly( outlinecircle )
+
+    surface.SetDrawColor( color.r, color.g, color.b, color.a )
+	surface.DrawPoly( circle )
+end
+
 function NoTexture()
 	surface.SetTexture( tex_white )
 end
