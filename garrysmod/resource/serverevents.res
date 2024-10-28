@@ -113,6 +113,7 @@
 	{
 		"userid"	"short"		// user ID on server
 		"text"		"string"	// the say text
+		"teamonly"	"bool"		// is it teamonly
 	}
 	
 	"client_disconnect"			// client side disconnect message
