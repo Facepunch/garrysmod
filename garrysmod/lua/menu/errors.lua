@@ -1,3 +1,5 @@
+local cl_show_shiftesc_hint = CreateClientConVar( "cl_show_shiftesc_hint", "1", true, false, "Show notification about Shift+ESC" )
+local cl_show_error_duration = CreateClientConVar( "cl_show_error_duration", "10", true, false, "For how many seconds error banner will be displayed", 1, 30 )
 
 --
 -- Here we get a callback from the game/client code on Lua errors, and display a nice notification.
@@ -56,6 +58,8 @@ end )
 
 hook.Add( "OnPauseMenuBlockedTooManyTimes", "TellAboutShiftEsc", function()
 
+	if not cl_show_shiftesc_hint:GetBool() then return end
+
 	Errors[ "internal_shift+esc" ] = {
 		first	= SysTime(),
 		last	= SysTime(),
@@ -80,7 +84,7 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 	local idealy = 32
 	local height = 30
-	local EndTime = SysTime() - 10
+	local EndTime = SysTime() - cl_show_error_duration:GetFloat()
 	local Recent = SysTime() - 0.5
 
 	for k, v in SortedPairsByMemberValue( Errors, "last" ) do
