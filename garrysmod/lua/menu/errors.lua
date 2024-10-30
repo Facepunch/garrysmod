@@ -1,5 +1,5 @@
-local cl_show_shiftesc_hint = CreateClientConVar( "cl_show_shiftesc_hint", "1", true, false, "Show notification about Shift+ESC" )
-local cl_show_error_duration = CreateClientConVar( "cl_show_error_duration", "10", true, false, "For how many seconds error banner will be displayed", 1, 30 )
+local cl_show_shiftesc_hint = CreateClientConVar( "cl_show_shiftesc_hint", "1", true, false, "Show notification about Shift+ESC after pressing ESC too many times" )
+local cl_show_error_duration = CreateClientConVar( "cl_show_error_duration", "10", true, false, "For how many seconds the error banner will be displayed", 1, 30 )
 
 --
 -- Here we get a callback from the game/client code on Lua errors, and display a nice notification.
