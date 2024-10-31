@@ -94,7 +94,21 @@ function PANEL:DoRightClick()
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
+	local openedMenus = GetOpenDermaMenus()
+	local menuCount = #openedMenus
+
 	self:OpenMenu()
+
+	local menu = openedMenus[ menuCount + 1 ]
+
+	--
+	-- Allow addons to easily add their own options to the opened menu
+	--
+	if ( IsValid( menu ) ) then
+
+		hook.Run( "OnContentIconOpenMenu", self, menu )
+
+	end
 
 end
 

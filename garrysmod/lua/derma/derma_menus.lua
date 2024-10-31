@@ -1,6 +1,26 @@
 
 local tblOpenMenus = {}
 
+function GetOpenDermaMenus()
+
+	--
+	-- Clear the table of any removed derma menus
+	-- Each option in a derma menu is another derma menu itself
+	--
+	for k, menu in ipairs( tblOpenMenus ) do
+
+		if ( !IsValid( menu ) ) then
+
+			table.remove( tblOpenMenus, k )
+
+		end
+		
+	end
+
+	return tblOpenMenus
+
+end
+
 function RegisterDermaMenuForClose( dmenu )
 
 	table.insert( tblOpenMenus, dmenu )
@@ -30,9 +50,10 @@ function CloseDermaMenus()
 
 		end
 
+		tblOpenMenus[ k ] = nil
+
 	end
 
-	tblOpenMenus = {}
 	hook.Run( "CloseDermaMenus" )
 
 end
