@@ -127,6 +127,7 @@ function Register( t, name )
 		Category		= t.Category,
 
 		-- Optional information
+		SpawnListOrder = t.SpawnListOrder,
 		SubCategory 	= t.SubCategory,
 		NormalOffset	= t.NormalOffset,
 		DropToFloor		= t.DropToFloor,
