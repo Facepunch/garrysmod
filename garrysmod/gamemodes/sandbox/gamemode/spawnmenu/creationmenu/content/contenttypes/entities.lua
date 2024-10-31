@@ -9,24 +9,33 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 
 	-- Add this list into the tormoil
 	local SpawnableEntities = list.Get( "SpawnableEntities" )
+
 	if ( SpawnableEntities ) then
+		
 		for k, v in pairs( SpawnableEntities ) do
 
 			local Category = v.Category or "Other"
-			if ( !isstring( Category ) ) then Category = tostring( Category ) end
-			Categorised[ Category ] = Categorised[ Category ] or {}
+			Category = tostring( Category )
+	
+			local SubCategory = v.SubCategory or "Other"
+			SubCategory = tostring( SubCategory )
 
 			v.SpawnName = k
-			table.insert( Categorised[ Category ], v )
+	
+			Categorised[ Category ] = Categorised[ Category ] or {}
+			Categorised[ Category ][ SubCategory ] = Categorised[ Category ][ SubCategory ] or {}
+	
+			table.insert( Categorised[ Category ][ SubCategory ], v )
 
 		end
+
 	end
 
 	--
 	-- Add a tree node for each category
 	--
 	local CustomIcons = list.Get( "ContentCategoryIcons" )
-	for CategoryName, v in SortedPairs( Categorised ) do
+	for CategoryName, subCategories in SortedPairs( Categorised ) do
 
 		-- Add a node to the tree
 		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/bricks.png" )
@@ -42,14 +51,55 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( false )
 
-			for k, ent in SortedPairsByMemberValue( v, "PrintName" ) do
+			local createOtherHeader = false
 
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
-					nicename	= ent.PrintName or ent.ClassName,
-					spawnname	= ent.SpawnName,
-					material	= ent.IconOverride or ( "entities/" .. ent.SpawnName .. ".png" ),
-					admin		= ent.AdminOnly
-				} )
+			for subCategoryName, tab in SortedPairs( subCategories ) do
+
+				if ( subCategoryName == "Other" ) then continue end
+
+				local label = vgui.Create( "ContentHeader" )
+
+				label:SetText( subCategoryName )
+
+				self.PropPanel:Add( label )
+
+				for k, ent in SortedPairsByMemberValue( tab, "PrintName" ) do
+
+					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
+						nicename	= ent.PrintName or ent.ClassName,
+						spawnname	= ent.SpawnName,
+						material	= ent.IconOverride or ( "entities/" .. ent.SpawnName .. ".png" ),
+						admin		= ent.AdminOnly
+					} )
+	
+				end
+
+				createOtherHeader = true
+
+			end
+
+			if ( subCategories.Other ) then
+
+				if ( createOtherHeader ) then
+
+					local label = vgui.Create( "ContentHeader" )
+
+					label:SetText( "Other" )
+
+					self.PropPanel:Add( label )
+
+				end
+
+				for k, ent in SortedPairsByMemberValue( subCategories.Other, "PrintName" ) do
+
+					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
+						nicename	= ent.PrintName or ent.ClassName,
+						spawnname	= ent.SpawnName,
+						material	= ent.IconOverride or ( "entities/" .. ent.SpawnName .. ".png" ),
+						admin		= ent.AdminOnly
+					} )
+	
+				end
 
 			end
 

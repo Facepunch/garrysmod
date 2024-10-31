@@ -6,20 +6,28 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 
 	-- Categorize them
 	local Categories = {}
+
 	for k, v in pairs( NPCList ) do
 
 		local Category = v.Category or "Other"
-		if ( !isstring( Category ) ) then Category = tostring( Category ) end
+		Category = tostring( Category )
+
+		local SubCategory = v.SubCategory or "Other"
+		SubCategory = tostring( SubCategory )
 
 		local Tab = Categories[ Category ] or {}
-		Tab[ k ] = v
+		local subCategoryTab = Tab[ SubCategory ] or {}
+
+		subCategoryTab[ k ] = v
+
+		Tab[ SubCategory ] = subCategoryTab
 		Categories[ Category ] = Tab
 
 	end
 
 	-- Create an icon for each one and put them on the panel
 	local CustomIcons = list.Get( "ContentCategoryIcons" )
-	for CategoryName, v in SortedPairs( Categories ) do
+	for CategoryName, subCategories in SortedPairs( Categories ) do
 
 		-- Add a node to the tree
 		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/monkey.png" )
@@ -35,15 +43,57 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( false )
 
-			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
+			local createOtherHeader = false
 
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
-					nicename	= ent.Name or name,
-					spawnname	= name,
-					material	= ent.IconOverride or "entities/" .. name .. ".png",
-					weapon		= ent.Weapons,
-					admin		= ent.AdminOnly
-				} )
+			for subCategoryName, tab in SortedPairs( subCategories ) do
+
+				if ( subCategoryName == "Other" ) then continue end
+
+				local label = vgui.Create( "ContentHeader" )
+
+				label:SetText( subCategoryName )
+
+				self.PropPanel:Add( label )
+
+				for name, ent in SortedPairsByMemberValue( tab, "Name" ) do
+
+					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
+						nicename	= ent.Name or name,
+						spawnname	= name,
+						material	= ent.IconOverride or "entities/" .. name .. ".png",
+						weapon		= ent.Weapons,
+						admin		= ent.AdminOnly
+					} )
+
+				end
+
+				createOtherHeader = true
+
+			end
+
+			if ( subCategories.Other ) then
+
+				if ( createOtherHeader ) then
+
+					local label = vgui.Create( "ContentHeader" )
+
+					label:SetText( "Other" )
+
+					self.PropPanel:Add( label )
+
+				end
+
+				for name, ent in SortedPairsByMemberValue( subCategories.Other, "Name" ) do
+
+					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
+						nicename	= ent.Name or name,
+						spawnname	= name,
+						material	= ent.IconOverride or "entities/" .. name .. ".png",
+						weapon		= ent.Weapons,
+						admin		= ent.AdminOnly
+					} )
+
+				end
 
 			end
 

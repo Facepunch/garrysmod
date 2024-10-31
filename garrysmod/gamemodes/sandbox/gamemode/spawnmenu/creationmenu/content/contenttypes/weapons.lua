@@ -9,10 +9,15 @@ local function BuildWeaponCategories()
 		if ( !weapon.Spawnable ) then continue end
 
 		local Category = weapon.Category or "Other"
-		if ( !isstring( Category ) ) then Category = tostring( Category ) end
+		Category = tostring( Category )
+
+		local SubCategory = weapon.SubCategory or "Other"
+		SubCategory = tostring( SubCategory )
 
 		Categorised[ Category ] = Categorised[ Category ] or {}
-		table.insert( Categorised[ Category ], weapon )
+		Categorised[ Category ][ SubCategory ] = Categorised[ Category ][ SubCategory ] or {}
+
+		table.insert( Categorised[ Category ][ SubCategory ], weapon )
 
 	end
 
@@ -37,15 +42,56 @@ local function AddCategory( tree, cat )
 		self.PropPanel:SetVisible( false )
 		self.PropPanel:SetTriggerSpawnlistChange( false )
 
-		local weps = BuildWeaponCategories()[ cat ]
-		for k, ent in SortedPairsByMemberValue( weps, "PrintName" ) do
+		local subCategories = BuildWeaponCategories()[ cat ]
+		local createOtherHeader = false
 
-			spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
-				nicename	= ent.PrintName or ent.ClassName,
-				spawnname	= ent.ClassName,
-				material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
-				admin		= ent.AdminOnly
-			} )
+		for subCategoryName, weps in SortedPairs( subCategories ) do
+
+			if ( subCategoryName == "Other" ) then continue end
+
+			local label = vgui.Create( "ContentHeader" )
+
+			label:SetText( subCategoryName )
+
+			self.PropPanel:Add( label )
+
+			for k, ent in SortedPairsByMemberValue( weps, "PrintName" ) do
+
+				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
+					nicename	= ent.PrintName or ent.ClassName,
+					spawnname	= ent.ClassName,
+					material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
+					admin		= ent.AdminOnly
+				} )
+	
+			end
+
+			createOtherHeader = true
+
+		end
+
+		if ( subCategories.Other ) then
+
+			if ( createOtherHeader ) then
+
+				local label = vgui.Create( "ContentHeader" )
+
+				label:SetText( "Other" )
+
+				self.PropPanel:Add( label )
+
+			end
+
+			for name, ent in SortedPairsByMemberValue( subCategories.Other, "Name" ) do
+
+				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
+					nicename	= ent.PrintName or ent.ClassName,
+					spawnname	= ent.ClassName,
+					material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
+					admin		= ent.AdminOnly
+				} )
+
+			end
 
 		end
 
