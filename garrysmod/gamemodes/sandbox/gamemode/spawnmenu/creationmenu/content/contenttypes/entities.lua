@@ -3,6 +3,39 @@ list.Set( "ContentCategoryIcons", "Half-Life: Source", "games/16/hl1.png" )
 list.Set( "ContentCategoryIcons", "Half-Life 2", "games/16/hl2.png" )
 list.Set( "ContentCategoryIcons", "Portal", "games/16/portal.png" )
 
+local function BuildContentList( tab, propPanel )
+
+	local orderedList = {}
+
+	for k, ent in SortedPairsByMemberValue( tab, "PrintName" ) do
+
+		local order = isnumber( ent.SpawnListOrder ) and ent.SpawnListOrder
+
+		if ( order ) then
+
+			table.insert( orderedList, order, ent )
+
+		else
+			
+			table.insert( orderedList, ent )
+
+		end
+
+	end
+
+	for k, ent in SortedPairs( orderedList ) do
+
+		spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", propPanel, {
+			nicename	= ent.PrintName or ent.ClassName,
+			spawnname	= ent.SpawnName,
+			material	= ent.IconOverride or ( "entities/" .. ent.SpawnName .. ".png" ),
+			admin		= ent.AdminOnly
+		} )
+		
+	end
+
+end
+
 hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, browseNode )
 
 	local Categorised = {}
@@ -11,7 +44,6 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 	local SpawnableEntities = list.Get( "SpawnableEntities" )
 
 	if ( SpawnableEntities ) then
-		
 		for k, v in pairs( SpawnableEntities ) do
 
 			local Category = v.Category or "Other"
@@ -28,7 +60,6 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 			table.insert( Categorised[ Category ][ SubCategory ], v )
 
 		end
-
 	end
 
 	--
@@ -63,16 +94,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 
 				self.PropPanel:Add( label )
 
-				for k, ent in SortedPairsByMemberValue( tab, "PrintName" ) do
-
-					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
-						nicename	= ent.PrintName or ent.ClassName,
-						spawnname	= ent.SpawnName,
-						material	= ent.IconOverride or ( "entities/" .. ent.SpawnName .. ".png" ),
-						admin		= ent.AdminOnly
-					} )
-	
-				end
+				BuildContentList( tab, self.PropPanel )
 
 				createOtherHeader = true
 
@@ -90,16 +112,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 
 				end
 
-				for k, ent in SortedPairsByMemberValue( subCategories.Other, "PrintName" ) do
-
-					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
-						nicename	= ent.PrintName or ent.ClassName,
-						spawnname	= ent.SpawnName,
-						material	= ent.IconOverride or ( "entities/" .. ent.SpawnName .. ".png" ),
-						admin		= ent.AdminOnly
-					} )
-	
-				end
+				BuildContentList( subCategories.Other, self.PropPanel )
 
 			end
 

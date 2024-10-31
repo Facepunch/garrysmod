@@ -1,4 +1,37 @@
 
+local function BuildContentList( tab, propPanel )
+
+	local orderedList = {}
+
+	for k, ent in SortedPairsByMemberValue( tab, "PrintName" ) do
+
+		local order = isnumber( ent.SpawnListOrder ) and ent.SpawnListOrder
+
+		if ( order ) then
+
+			table.insert( orderedList, order, ent )
+
+		else
+			
+			table.insert( orderedList, ent )
+
+		end
+
+	end
+
+	for k, ent in SortedPairs( orderedList ) do
+
+		spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", propPanel, {
+			nicename	= ent.PrintName or ent.ClassName,
+			spawnname	= ent.ClassName,
+			material	= ent.IconOverride or "entities/" .. ent.ClassName .. ".png",
+			admin		= ent.AdminOnly
+		} )
+
+	end
+
+end
+
 hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, browseNode )
 
 	-- Add this list into the tormoil
@@ -61,16 +94,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 
 				self.PropPanel:Add( label )
 
-				for k, ent in SortedPairsByMemberValue( tab, "PrintName" ) do
-
-					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
-						nicename	= ent.PrintName or ent.ClassName,
-						spawnname	= ent.ClassName,
-						material	= ent.IconOverride or "entities/" .. ent.ClassName .. ".png",
-						admin		= ent.AdminOnly
-					} )
-	
-				end
+				BuildContentList( tab, self.PropPanel )
 
 				createOtherHeader = true
 
@@ -88,16 +112,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 
 				end
 
-				for k, ent in SortedPairsByMemberValue( subCategories.Other, "PrintName" ) do
-
-					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
-						nicename	= ent.PrintName or ent.ClassName,
-						spawnname	= ent.ClassName,
-						material	= ent.IconOverride or "entities/" .. ent.ClassName .. ".png",
-						admin		= ent.AdminOnly
-					} )
-					
-				end
+				BuildContentList( subCategories.Other, self.PropPanel )
 
 			end
 

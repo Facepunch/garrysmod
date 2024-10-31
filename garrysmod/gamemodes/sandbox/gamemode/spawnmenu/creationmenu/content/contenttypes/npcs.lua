@@ -1,4 +1,42 @@
 
+local function BuildContentList( tab, propPanel )
+
+	local orderedList = {}
+
+	for name, ent in SortedPairsByMemberValue( tab, "Name" ) do
+
+		local order = isnumber( ent.SpawnListOrder ) and ent.SpawnListOrder
+		local data = { name = name, ent = ent }
+
+		if ( order ) then
+
+			table.insert( orderedList, order, data )
+
+		else
+			
+			table.insert( orderedList, data )
+
+		end
+
+	end
+
+	for k, data in SortedPairs( orderedList ) do
+
+		local ent = data.ent
+		local name = data.name
+
+		spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", propPanel, {
+			nicename	= ent.Name or name,
+			spawnname	= name,
+			material	= ent.IconOverride or "entities/" .. name .. ".png",
+			weapon		= ent.Weapons,
+			admin		= ent.AdminOnly
+		} )
+
+	end
+
+end
+
 hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNode )
 
 	-- Get a list of available NPCs
@@ -55,17 +93,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 
 				self.PropPanel:Add( label )
 
-				for name, ent in SortedPairsByMemberValue( tab, "Name" ) do
-
-					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
-						nicename	= ent.Name or name,
-						spawnname	= name,
-						material	= ent.IconOverride or "entities/" .. name .. ".png",
-						weapon		= ent.Weapons,
-						admin		= ent.AdminOnly
-					} )
-
-				end
+				BuildContentList( tab, self.PropPanel )
 
 				createOtherHeader = true
 
@@ -83,17 +111,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 
 				end
 
-				for name, ent in SortedPairsByMemberValue( subCategories.Other, "Name" ) do
-
-					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
-						nicename	= ent.Name or name,
-						spawnname	= name,
-						material	= ent.IconOverride or "entities/" .. name .. ".png",
-						weapon		= ent.Weapons,
-						admin		= ent.AdminOnly
-					} )
-
-				end
+				BuildContentList( subCategories.Other, self.PropPanel )
 
 			end
 

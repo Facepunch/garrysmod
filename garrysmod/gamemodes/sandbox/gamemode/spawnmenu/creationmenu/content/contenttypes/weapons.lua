@@ -24,6 +24,39 @@ local function BuildWeaponCategories()
 	return Categorised
 end
 
+local function BuildContentList( tab, propPanel )
+
+	local orderedList = {}
+
+	for k, ent in SortedPairsByMemberValue( tab, "PrintName" ) do
+
+		local order = isnumber( ent.SpawnListOrder ) and ent.SpawnListOrder
+
+		if ( order ) then
+
+			table.insert( orderedList, order, ent )
+
+		else
+			
+			table.insert( orderedList, ent )
+
+		end
+
+	end
+
+	for k, ent in SortedPairs( orderedList ) do
+
+		spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", propPanel, {
+			nicename	= ent.PrintName or ent.ClassName,
+			spawnname	= ent.ClassName,
+			material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
+			admin		= ent.AdminOnly
+		} )
+
+	end
+
+end
+
 local function AddCategory( tree, cat )
 	local CustomIcons = list.Get( "ContentCategoryIcons" )
 
@@ -55,16 +88,7 @@ local function AddCategory( tree, cat )
 
 			self.PropPanel:Add( label )
 
-			for k, ent in SortedPairsByMemberValue( weps, "PrintName" ) do
-
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
-					nicename	= ent.PrintName or ent.ClassName,
-					spawnname	= ent.ClassName,
-					material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
-					admin		= ent.AdminOnly
-				} )
-	
-			end
+			BuildContentList( weps, self.PropPanel )
 
 			createOtherHeader = true
 
@@ -82,16 +106,7 @@ local function AddCategory( tree, cat )
 
 			end
 
-			for name, ent in SortedPairsByMemberValue( subCategories.Other, "Name" ) do
-
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
-					nicename	= ent.PrintName or ent.ClassName,
-					spawnname	= ent.ClassName,
-					material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
-					admin		= ent.AdminOnly
-				} )
-
-			end
+			BuildContentList( subCategories.Other, self.PropPanel )
 
 		end
 
