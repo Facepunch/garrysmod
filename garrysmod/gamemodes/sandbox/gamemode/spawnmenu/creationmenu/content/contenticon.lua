@@ -100,29 +100,21 @@ function PANEL:DoRightClick()
 	self:OpenMenu()
 
 	local openedMenus = GetOpenDermaMenus()
-	local newMenuCount = #openedMenus
 
-	local menuIndex = newMenuCount == oldMenuCount and oldMenuCount or oldMenuCount + 1
+	local menuIndex = #openedMenus == oldMenuCount and oldMenuCount or oldMenuCount + 1
 	local menu = openedMenus[ menuIndex ]
 
 	if ( !IsValid( menu ) ) then return end
 
-	--
-	-- Get the correct derma menu
-	-- Each option in a derma menu is a derma menu itself
-	--
-	while ( IsValid( menu.ParentMenu ) ) do
-		
-		menuIndex = menuIndex - 1
-		menu = openedMenus[ menuIndex ]
+	local parent = menu.ParentMenu
+
+	if ( IsValid( parent ) ) then
+
+		menu = parent
 
 	end
 
-	if ( IsValid( menu ) ) then
-
-		hook.Run( "OnContentIconOpenMenu", self, menu )
-
-	end
+	hook.Run( "OnContentIconOpenMenu", self, menu )
 
 end
 
