@@ -1,4 +1,5 @@
 local _G = _G
+local gmod = gmod
 local pairs = pairs
 local isfunction = isfunction
 local isstring = isstring
@@ -66,8 +67,14 @@ end
     Args: string hookName, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
+local GamemodeCache
+
 function Run( name, ... )
-	return Call( name, _G.GAMEMODE or _G.GM, ... )
+	if not GamemodeCache then
+		GamemodeCache = gmod and gmod.GetGamemode() or nil
+	end
+
+	return Call( name, GamemodeCache, ... )
 end
 
 
