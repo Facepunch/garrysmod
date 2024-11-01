@@ -3,21 +3,19 @@ local tblOpenMenus = {}
 
 function GetOpenDermaMenus()
 
-	--
-	-- Clear the table of any removed derma menus
-	-- Each option in a derma menu is another derma menu itself
-	--
+	local fixedCopy = {}
+
 	for k, menu in ipairs( tblOpenMenus ) do
 
-		if ( !IsValid( menu ) ) then
+		if ( IsValid( menu ) ) then
 
-			table.remove( tblOpenMenus, k )
+			table.insert( fixedCopy, menu )
 
 		end
 		
 	end
 
-	return tblOpenMenus
+	return fixedCopy
 
 end
 

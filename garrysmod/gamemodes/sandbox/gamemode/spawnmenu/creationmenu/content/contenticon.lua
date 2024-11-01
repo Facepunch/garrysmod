@@ -90,20 +90,34 @@ end
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
+
 	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
-	local openedMenus = GetOpenDermaMenus()
-	local menuCount = #openedMenus
+	local oldMenuCount = #GetOpenDermaMenus()
 
 	self:OpenMenu()
 
-	local menu = openedMenus[ menuCount + 1 ]
+	local openedMenus = GetOpenDermaMenus()
+	local newMenuCount = #openedMenus
+
+	local menuIndex = newMenuCount == oldMenuCount and oldMenuCount or oldMenuCount + 1
+	local menu = openedMenus[ menuIndex ]
+
+	if ( !IsValid( menu ) ) then return end
 
 	--
-	-- Allow addons to easily add their own options to the opened menu
+	-- Get the correct derma menu
+	-- Each option in a derma menu is a derma menu itself
 	--
+	while ( IsValid( menu.ParentMenu ) ) do
+		
+		menuIndex = menuIndex - 1
+		menu = openedMenus[ menuIndex ]
+
+	end
+
 	if ( IsValid( menu ) ) then
 
 		hook.Run( "OnContentIconOpenMenu", self, menu )
