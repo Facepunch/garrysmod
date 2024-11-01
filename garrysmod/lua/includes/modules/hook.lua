@@ -1,4 +1,3 @@
-local _G = _G
 local gmod = gmod
 local pairs = pairs
 local isfunction = isfunction
