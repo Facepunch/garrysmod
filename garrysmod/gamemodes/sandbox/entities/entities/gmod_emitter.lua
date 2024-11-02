@@ -68,7 +68,7 @@ function ENT:Think()
 	-- Find our effect table
 	--
 	local EffectTable = list.GetForEdit( "EffectType" )[ self:GetEffect() ]
-	if ( not EffectTable ) then return end
+	if ( EffectTable == nil ) then return end
 
 	local Angle = self:GetAngles()
 	local Pos = Angle:Forward()

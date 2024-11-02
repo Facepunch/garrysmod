@@ -143,7 +143,7 @@ function ENT:Think()
 		if ( EffectTable == nil ) then return end
 
 		local effectThink = EffectTable.effectThink
-		if effectThink then effectThink( self ) end
+		if ( effectThink ~= nil ) then effectThink( self ) end
 
 	end
 
@@ -384,7 +384,6 @@ list.Set( "ThrusterEffects", "#thrustereffect.none", { thruster_effect = "none" 
 
 local matHeatWave = Material( "sprites/heatwave" )
 local matFire = Material( "effects/fire_cloud1" )
-local vecFire = Vector( 0, 0, 0 )
 local colFire = {
 	Color( 0, 0, 255, 128 ),
 	Color( 255, 255, 255, 128 ),
@@ -403,28 +402,27 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 
 		local scroll = self.Seed + ( CurTime() * -10 )
 
-		local size = self:OBBMaxs()
-		size:Sub( self:OBBMins() )
-		size = math.min( size.x, size.y, 50 )
+		local vFire = self:OBBMaxs()
+		vFire:Sub( self:OBBMins() )
 
-		local Scale = math.Clamp( ( CurTime() - self.OnStart ) * 5, 0, 1 )
+		local size = math.min( vFire.x, vFire.y, 50 )
+		local scale = math.Clamp( ( CurTime() - self.OnStart ) * 5, 0, 1 )
 
 		render.SetMaterial( matFire )
-
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size * Scale, scroll, colFire[1] )
+			render.AddBeam( vOffset, size * scale, scroll, colFire[1] )
 
-			vecFire:Set( vNormal )
-			vecFire:Mul( 60 * Scale )
-			vecFire:Add( vOffset )
+			vFire:Set( vNormal )
+			vFire:Mul( 60 * scale )
+			vFire:Add( vOffset )
 
-			render.AddBeam( vecFire, 32 * Scale, scroll + 1, colFire[2] )
+			render.AddBeam( vFire, 32 * scale, scroll + 1, colFire[2] )
 
-			vecFire:Set( vNormal )
-			vecFire:Mul( 148 * Scale )
-			vecFire:Add( vOffset )
+			vFire:Set( vNormal )
+			vFire:Mul( 148 * scale )
+			vFire:Add( vOffset )
 
-			render.AddBeam( vecFire, 32 * Scale, scroll + 3, colFire[3] )
+			render.AddBeam( vFire, 32 * scale, scroll + 3, colFire[3] )
 		render.EndBeam()
 
 		scroll = scroll * 0.5
@@ -432,45 +430,44 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		render.UpdateRefractTexture()
 		render.SetMaterial( matHeatWave )
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size * Scale, scroll, colFire[1] )
+			render.AddBeam( vOffset, size * scale, scroll, colFire[1] )
 
-			vecFire:Set( vNormal )
-			vecFire:Mul( 32 * Scale )
-			vecFire:Add( vOffset )
+			vFire:Set( vNormal )
+			vFire:Mul( 32 * scale )
+			vFire:Add( vOffset )
 
-			render.AddBeam( vecFire, 32 * Scale, scroll + 2, color_white )
+			render.AddBeam( vFire, 32 * scale, scroll + 2, color_white )
 
-			vecFire:Set( vNormal )
-			vecFire:Mul( 128 * Scale )
-			vecFire:Add( vOffset )
+			vFire:Set( vNormal )
+			vFire:Mul( 128 * scale )
+			vFire:Add( vOffset )
 
-			render.AddBeam( vecFire, 48 * Scale, scroll + 5, colFire[4] )
+			render.AddBeam( vFire, 48 * scale, scroll + 5, colFire[4] )
 		render.EndBeam()
 
-
 		scroll = scroll * 1.3
+
 		render.SetMaterial( matFire )
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size * Scale, scroll, colFire[1] )
+			render.AddBeam( vOffset, size * scale, scroll, colFire[1] )
 
-			vecFire:Set( vNormal )
-			vecFire:Mul( 60 * Scale )
-			vecFire:Add( vOffset )
+			vFire:Set( vNormal )
+			vFire:Mul( 60 * scale )
+			vFire:Add( vOffset )
 
-			render.AddBeam( vecFire, 16 * Scale, scroll + 1, colFire[2] )
+			render.AddBeam( vFire, 16 * scale, scroll + 1, colFire[2] )
 
-			vecFire:Set( vNormal )
-			vecFire:Mul( 148 * Scale )
-			vecFire:Add( vOffset )
+			vFire:Set( vNormal )
+			vFire:Mul( 148 * scale )
+			vFire:Add( vOffset )
 
-			render.AddBeam( vecFire, 16 * Scale, scroll + 3, colFire[3] )
+			render.AddBeam( vFire, 16 * scale, scroll + 3, colFire[3] )
 		render.EndBeam()
 
 	end
 } )
 
 local matPlasma = Material( "effects/strider_muzzle" )
-local vecPlasma = Vector( 0, 0, 0 )
 local colPlasma = {
 	Color( 0, 255, 255, 255 ),
 	Color( 0, 255, 255, 0 ),
@@ -487,73 +484,58 @@ list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 
 		local scroll = self.Seed + ( CurTime() * -20 )
 
-		local size = self:OBBMaxs()
-		size:Sub( self:OBBMins() )
-		size = math.min( size.x, size.y ) * 1.5
+		local vFire = self:OBBMaxs()
+		local vPlasma = self:OBBMins()
+		vFire:Sub( vPlasma )
+
+		local size = math.min( vFire.x, vFire.y ) * 1.5
+
+		vFire:Set( vNormal )
+		vFire:Mul( 8 )
+		vFire:Add( vOffset )
+
+		vPlasma:Set( vNormal )
+		vPlasma:Mul( 64 )
+		vPlasma:Add( vOffset )
 
 		render.SetMaterial( matPlasma )
 
-		-- First vector
-		vecFire:Set( vNormal )
-		vecFire:Mul( 8 )
-		vecFire:Add( vOffset )
+		for i = 1, 3 do
+			scroll = scroll * 0.9
 
-		-- Second vector
-		vecPlasma:Set( vNormal )
-		vecPlasma:Mul( 64 )
-		vecPlasma:Add( vOffset )
+			render.StartBeam( 3 )
+				render.AddBeam( vOffset, size, scroll, colPlasma[1] )
+				render.AddBeam( vFire, size, scroll + 0.01, color_white )
+				render.AddBeam( vPlasma, size, scroll + 0.02, colPlasma[2] )
+			render.EndBeam()
+		end
 
-		scroll = scroll * 0.9
-
-		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size, scroll, colPlasma[1] )
-			render.AddBeam( vecFire, size, scroll + 0.01, color_white )
-			render.AddBeam( vecPlasma, size, scroll + 0.02, colPlasma[2] )
-		render.EndBeam()
-
-		scroll = scroll * 0.9
-
-		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size, scroll, colPlasma[1] )
-			render.AddBeam( vecFire, size, scroll + 0.01, color_white )
-			render.AddBeam( vecPlasma, size, scroll + 0.02, colPlasma[2] )
-		render.EndBeam()
-
-		scroll = scroll * 0.9
-
-		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size, scroll, colPlasma[1] )
-			render.AddBeam( vecFire, size, scroll + 0.01, color_white )
-			render.AddBeam( vecPlasma, size, scroll + 0.02, colPlasma[2] )
-		render.EndBeam()
 	end
 } )
 
-local vecMagic = Vector()
 list.Set( "ThrusterEffects", "#thrustereffect.magic", {
 	thruster_effect = "magic",
 	effectThink = function( self )
 
-		local tbl = self:GetTable()
-		tbl.SmokeTimer = tbl.SmokeTimer or 0
-
+		self.SmokeTimer = self.SmokeTimer or 0
 		local curtime = CurTime()
-		if ( tbl.SmokeTimer > curtime ) then return end
-		tbl.SmokeTimer = curtime + 0.01
+
+		if ( self.SmokeTimer > curtime ) then return end
+		self.SmokeTimer = curtime + 0.01
 
 		local vOffset = self:LocalToWorld( self:GetOffset() )
 
-		local size = self:OBBMaxs()
-		size:Sub( self:OBBMins() )
+		local vRand = self:OBBMaxs()
+		vRand:Sub( self:OBBMins() )
+		local size = math.min( vRand.x, vRand.y ) / 3
 
-		vecMagic:SetUnpacked( math.Rand( -1, 1 ), math.Rand( -1, 1 ), math.Rand( -1, 1 ) )
-		vecMagic:Mul( math.min( size.x, size.y ) / 3 )
-		vecMagic:Add( vOffset )
+		vRand:SetUnpacked( math.Rand( -size, size ), math.Rand( -size, size ), math.Rand( -size, size ) )
+		vRand:Add( vOffset )
 
-		local emitter = self:GetEmitter( vecMagic, false )
+		local emitter = self:GetEmitter( vRand, false )
 		if ( not IsValid( emitter ) ) then return end
 
-		local particle = emitter:Add( "sprites/gmdm_pickups/light", vecMagic )
+		local particle = emitter:Add( "sprites/gmdm_pickups/light", vRand )
 		if ( not particle ) then return end
 
 		local vNormal = self:GetPos()
@@ -577,12 +559,11 @@ list.Set( "ThrusterEffects", "#thrustereffect.rings", {
 	thruster_effect = "rings",
 	effectThink = function( self )
 
-		local tbl = self:GetTable()
-		tbl.RingTimer = tbl.RingTimer or 0
-
 		local curtime = CurTime()
-		if ( tbl.RingTimer > curtime ) then return end
-		tbl.RingTimer = curtime + 0.01
+		self.RingTimer = self.RingTimer or 0
+
+		if ( self.RingTimer > curtime ) then return end
+		self.RingTimer = curtime + 0.01
 
 		local vOffset = self:LocalToWorld( self:GetOffset() )
 		local vNormal = self:GetPos()
@@ -590,12 +571,8 @@ list.Set( "ThrusterEffects", "#thrustereffect.rings", {
 		vNormal:Add( vOffset )
 		vNormal:Normalize()
 
-		local size = self:OBBMaxs()
-		size:Sub( self:OBBMins() )
-
-		vecMagic:Set( vNormal )
-		vecMagic:Mul( 5 )
-		vOffset:Add( vecMagic )
+		vNormal:Mul( 5 )
+		vOffset:Add( vNormal )
 
 		local emitter = self:GetEmitter( vOffset, true )
 		if ( not IsValid( emitter ) ) then return end
@@ -603,8 +580,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.rings", {
 		local particle = emitter:Add( "effects/select_ring", vOffset )
 		if ( not particle ) then return end
 
-		vNormal:Mul( 300 )
+		local size = self:OBBMaxs()
+		size:Sub( self:OBBMins() )
 
+		vNormal:Mul( 60 )
 		particle:SetVelocity( vNormal )
 		particle:SetLifeTime( 0 )
 		particle:SetDieTime( 0.2 )
@@ -623,36 +602,34 @@ list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
 	thruster_effect = "smoke",
 	effectThink = function( self )
 
-		local tbl = self:GetTable()
-		tbl.SmokeTimer = tbl.SmokeTimer or 0
-
+		self.SmokeTimer = self.SmokeTimer or 0
 		local curtime = CurTime()
-		if ( tbl.SmokeTimer > curtime ) then return end
-		tbl.SmokeTimer = curtime + 0.015
 
-		local size = self:OBBMaxs()
-		size:Sub( self:OBBMins() )
-		size = math.min( size.x, size.y ) / 2
+		if ( self.SmokeTimer > curtime ) then return end
+		self.SmokeTimer = curtime + 0.015
 
-		local vPos = self:GetPos()
 		local vOffset = self:LocalToWorld( self:GetOffset() )
-		local vNormal = vOffset - vPos
-		vNormal:Normalize()
-		vNormal:Mul( 32 )
+		local vNormal = self:GetPos()
+		vNormal:Negate()
 		vNormal:Add( vOffset )
-
-		vecMagic:SetUnpacked( math.Rand( -3, 3 ), math.Rand( -3, 3 ), math.Rand( -3, 3 ) )
-		vNormal:Add( vecMagic )
-
-		vNormal:Sub( vPos )
 		vNormal:Normalize()
+
+		local vRand = self:OBBMaxs()
+		vRand:Sub( self:OBBMins() )
+		local size = math.min( vRand.x, vRand.y ) / 2
+
+		vRand:SetUnpacked( math.Rand( -3, 3 ), math.Rand( -3, 3 ), math.Rand( -3, 3 ) )
+		vOffset:Add( vRand )
 
 		local emitter = self:GetEmitter( vOffset, false )
 		if ( not IsValid( emitter ) ) then return end
 
-		vOffset:Add( vecMagic )
 		local particle = emitter:Add( "particles/smokey", vOffset )
 		if ( not particle ) then return end
+
+		vNormal:Mul( 32 )
+		vNormal:Add( vRand )
+		vNormal:Normalize()
 
 		local vel_scale = math.Rand( 10, 30 ) * 10 / math.Clamp( self:GetVelocity():Length() / 200, 1, 10 )
 		vNormal:Mul( vel_scale )

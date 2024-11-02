@@ -11,13 +11,14 @@ if ( CLIENT ) then
 	local TraceEndpos = Vector()
 	local TraceConfig = { endpos = TraceEndpos, output = {} }
 
-	local TraceResult, CurrentLookedAt
+	local CurrentLookedAt
 	function ENT:BeingLookedAtByLocalPlayer()
+
 		local Frame = FrameNumber()
 		if ( Frame ~= FrameLast ) then
 			FrameLast = Frame
 
-			local viewer = GetViewEntity()
+			local viewer, TraceResult = GetViewEntity()
 			if ( viewer:IsPlayer() ) then
 				TraceResult = viewer:GetEyeTrace()
 			else
@@ -41,48 +42,50 @@ if ( CLIENT ) then
 		end
 
 		return self == CurrentLookedAt
+
 	end
 
 	function ENT:Think()
+
+        if ( not self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
+			return
+		end
 
 		local text = self:GetOverlayText()
 		if ( not text or text == "" ) then
 			return
 		end
 
-		if ( not self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
-			return
-		end
-
 		AddWorldTip( self:EntIndex(), text, 0.5, self:GetPos(), self )
 
 		halo.Add( { self }, color_white, 1, 1, 1, true, true )
+
 	end
 end
 
 function ENT:SetOverlayText( text )
+
 	self:SetNWString( "GModOverlayText", text )
+
 end
 
 function ENT:GetOverlayText()
 
 	local txt = self:GetNWString( "GModOverlayText" )
-
 	if ( txt == "" ) then
 		return ""
 	end
 
 	if ( game.SinglePlayer() ) then
-		return txt
-	end
+        return txt
+    end
 
 	local PlayerName = self:GetPlayerName()
+	if ( PlayerName == nil or PlayerName == "" ) then
+        return txt
+    end
 
-	if ( !PlayerName or PlayerName == "" ) then
-		return txt
-	end
-
-	return txt .. "\n(" .. PlayerName .. ")"
+	return string.format( "%s\n(%s)", txt, PlayerName )
 
 end
 

@@ -108,22 +108,19 @@ function ENT:DrawEffects()
 	colLight:SetUnpacked( 255, 255, 255, Alpha )
 
 	local up = self:GetUp()
-	for shift = -6, -2, 2 do
-		vecLight:Set( up )
-		vecLight:Mul( shift )
-		vecLight:Add( LightPos )
-		
-		render.DrawSprite( vecLight, 8, 8, colLight )
+	up:Mul( 2 )
+
+	for i = 1, 3 do
+		LightPos:Sub( up )
+		render.DrawSprite( LightPos, 8, 8, colLight )
 	end
 
 	local r, g, b = self:GetColor4Part()
 	colLight:SetUnpacked( r, g, b, 64 )
 
-	vecLight:Set( up )
-	vecLight:Mul( -5 )
-	vecLight:Add( LightPos )
-
-	render.DrawSprite( vecLight, 64, 64, colLight )
+	up:Mul( 0.5 )
+	LightPos:Add( up )
+	render.DrawSprite( LightPos, 64, 64, colLight )
 
 end
 
