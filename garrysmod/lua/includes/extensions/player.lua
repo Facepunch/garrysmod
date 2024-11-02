@@ -246,7 +246,7 @@ end
 	Returns true if the player is climbing a ladder
 -----------------------------------------------------------]]
 
-function meta:OnLadder()
+function meta:IsOnLadder()
 
 	return self:GetMoveType() == MOVETYPE_LADDER
 
