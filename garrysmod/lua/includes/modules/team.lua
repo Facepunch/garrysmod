@@ -105,11 +105,16 @@ end
 function TotalDeaths(index)
 
 	local score = 0
-	for id,pl in ipairs( player.GetAll() ) do
-		if (pl:Team() == index) then
-			score = score + pl:Deaths()
+	local players = player.GetAll()
+
+	for i = 1, #players do
+		local ply = players[i]
+
+		if ( ply:Team() == index ) then
+			score = score + ply:Deaths()
 		end
 	end
+
 	return score
 
 end
@@ -117,11 +122,16 @@ end
 function TotalFrags(index)
 
 	local score = 0
-	for id,pl in ipairs( player.GetAll() ) do
-		if (pl:Team() == index) then
-			score = score + pl:Frags()
+	local players = player.GetAll()
+
+	for i = 1, #players do
+		local ply = players[i]
+
+		if ( ply:Team() == index ) then
+			score = score + ply:Frags()
 		end
 	end
+
 	return score
 
 end
@@ -135,10 +145,13 @@ end
 function GetPlayers(index)
 
 	local TeamPlayers = {}
+	local players = player.GetAll()
 
-	for id,pl in ipairs( player.GetAll() ) do
-		if (IsValid(pl) and pl:Team() == index) then
-			table.insert(TeamPlayers, pl)
+	for i = 1, #players do
+		local ply = players[i]
+
+		if ( IsValid(ply) and ply:Team() == index ) then
+			table.insert(TeamPlayers, ply)
 		end
 	end
 
@@ -148,7 +161,7 @@ end
 
 function GetScore(index)
 
-	return GetGlobalInt( "Team."..tostring(index)..".Score", 0 )
+	return GetGlobalInt( "Team." .. tostring(index) .. ".Score", 0 )
 
 end
 
@@ -170,14 +183,18 @@ end
 
 function GetColor( index )
 
-	if (!TeamInfo[index]) then return DefaultColor end
-	return table.Copy( TeamInfo[index].Color )
+	if ( !TeamInfo[index] ) then return DefaultColor end
+
+	local color = TeamInfo[index].Color
+	if ( color == nil ) then return nil end
+
+	return setmetatable( { r = color.r, g = color.g, b = color.b, a = color.a }, getmetatable(color) )
 
 end
 
 function SetScore(index, score)
 
-	return SetGlobalInt( "Team."..tostring(index)..".Score", score )
+	return SetGlobalInt( "Team." .. tostring( index ) .. ".Score", score )
 
 end
 
@@ -187,6 +204,12 @@ function AddScore(index, score)
 
 end
 
+local blacklist = {
+	[TEAM_SPECTATOR] = true,
+	[TEAM_UNASSIGNED] = true,
+	[TEAM_CONNECTING] = true
+}
+
 function BestAutoJoinTeam()
 
 	local SmallestTeam = TEAM_UNASSIGNED
@@ -194,7 +217,7 @@ function BestAutoJoinTeam()
 
 	for id, tm in pairs( team.GetAllTeams() ) do
 
-		if ( id != TEAM_SPECTATOR && id != TEAM_UNASSIGNED && id != TEAM_CONNECTING && tm.Joinable ) then
+		if ( !blacklist[id] && tm.Joinable ) then
 
 			local PlayerCount = team.NumPlayers( id )
 			if ( PlayerCount < SmallestPlayers || (PlayerCount == SmallestPlayers && id < SmallestTeam ) ) then
