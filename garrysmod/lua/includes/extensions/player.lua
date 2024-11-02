@@ -274,10 +274,9 @@ end
 
 -- These are totally in the wrong place.
 function player.GetByAccountID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:AccountID() == ID ) then
-			return players[i]
+	for k, v in player.Iterator() do
+		if ( v:AccountID() == ID ) then
+			return v
 		end
 	end
 
@@ -285,10 +284,9 @@ function player.GetByAccountID( ID )
 end
 
 function player.GetByUniqueID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:UniqueID() == ID ) then
-			return players[i]
+	for k, v in player.Iterator() do
+		if ( v:UniqueID() == ID ) then
+			return v
 		end
 	end
 
@@ -297,10 +295,10 @@ end
 
 function player.GetBySteamID( ID )
 	ID = string.upper( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID() == ID ) then
-			return players[i]
+
+	for k, v in player.Iterator() do
+		if ( v:SteamID() == ID ) then
+			return v
 		end
 	end
 
@@ -309,10 +307,10 @@ end
 
 function player.GetBySteamID64( ID )
 	ID = tostring( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID64() == ID ) then
-			return players[i]
+
+	for k, v in player.Iterator() do
+		if ( v:SteamID64() == ID ) then
+			return v
 		end
 	end
 
