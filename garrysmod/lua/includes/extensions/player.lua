@@ -242,17 +242,6 @@ end
 end
 
 --[[---------------------------------------------------------
-	OnLadder
-	Returns true if the player is climbing a ladder
------------------------------------------------------------]]
-
-function meta:IsOnLadder()
-
-	return self:GetMoveType() == MOVETYPE_LADDER
-
-end
-
---[[---------------------------------------------------------
 	IsFrozen
 	Returns true if the player is frozen
 -----------------------------------------------------------]]
