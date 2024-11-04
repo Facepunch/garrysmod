@@ -235,14 +235,14 @@ end
 function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride, textAlign )
 	local yOffsetLast, wordOffset
 
-	if ( textAlign == true ) then
-		halign = TEXT_ALIGN_LEFT
-	end
-
 	for i, blk in ipairs( self.blocks ) do
 		if ( yOffsetLast != blk.offset.y ) then
 			yOffsetLast = blk.offset.y
 			wordOffset = xOffset + blk.offset.xNoTabs
+
+			if ( halign == TEXT_ALIGN_CENTER ) then		wordOffset = wordOffset - ( self.totalWidth / 2 )
+			elseif ( halign == TEXT_ALIGN_RIGHT ) then	wordOffset = wordOffset - self.totalWidth
+			end
 		end
 
 		local y = yOffset + ( blk.height - blk.thisY ) + blk.offset.y
