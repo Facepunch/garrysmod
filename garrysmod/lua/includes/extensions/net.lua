@@ -123,7 +123,7 @@ end
 --
 -- Write a whole table to the stream
 -- This is less optimal than writing each
--- item indivdually and in a specific order
+-- item individually and in a specific order
 -- because it adds type information before each var
 --
 function net.WriteTable( tab, seq )
