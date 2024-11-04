@@ -105,11 +105,8 @@ end
 function TotalDeaths(index)
 
 	local score = 0
-	local players = player.GetAll()
 
-	for i = 1, #players do
-		local ply = players[i]
-
+	for _, ply in player.Iterator() do
 		if ( ply:Team() == index ) then
 			score = score + ply:Deaths()
 		end
@@ -122,11 +119,8 @@ end
 function TotalFrags(index)
 
 	local score = 0
-	local players = player.GetAll()
 
-	for i = 1, #players do
-		local ply = players[i]
-
+	for _, ply in player.Iterator() do
 		if ( ply:Team() == index ) then
 			score = score + ply:Frags()
 		end
@@ -145,11 +139,8 @@ end
 function GetPlayers(index)
 
 	local TeamPlayers = {}
-	local players = player.GetAll()
 
-	for i = 1, #players do
-		local ply = players[i]
-
+	for _, ply in player.Iterator() do
 		if ( IsValid(ply) and ply:Team() == index ) then
 			table.insert(TeamPlayers, ply)
 		end
@@ -161,7 +152,7 @@ end
 
 function GetScore(index)
 
-	return GetGlobalInt( "Team." .. tostring(index) .. ".Score", 0 )
+	return GetGlobalInt( "Team."..tostring(index)..".Score", 0 )
 
 end
 
@@ -188,13 +179,13 @@ function GetColor( index )
 	local color = TeamInfo[index].Color
 	if ( color == nil ) then return nil end
 
-	return setmetatable( { r = color.r, g = color.g, b = color.b, a = color.a }, getmetatable(color) )
+	return Color( color.r, color.g, color.b, color.a )
 
 end
 
 function SetScore(index, score)
 
-	return SetGlobalInt( "Team." .. tostring( index ) .. ".Score", score )
+	return SetGlobalInt( "Team."..tostring(index)..".Score", score )
 
 end
 
@@ -204,12 +195,6 @@ function AddScore(index, score)
 
 end
 
-local blacklist = {
-	[TEAM_SPECTATOR] = true,
-	[TEAM_UNASSIGNED] = true,
-	[TEAM_CONNECTING] = true
-}
-
 function BestAutoJoinTeam()
 
 	local SmallestTeam = TEAM_UNASSIGNED
@@ -217,7 +202,7 @@ function BestAutoJoinTeam()
 
 	for id, tm in pairs( team.GetAllTeams() ) do
 
-		if ( !blacklist[id] && tm.Joinable ) then
+		if ( id != TEAM_SPECTATOR && id != TEAM_UNASSIGNED && id != TEAM_CONNECTING && tm.Joinable ) then
 
 			local PlayerCount = team.NumPlayers( id )
 			if ( PlayerCount < SmallestPlayers || (PlayerCount == SmallestPlayers && id < SmallestTeam ) ) then
