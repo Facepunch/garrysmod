@@ -8,10 +8,6 @@ function meta:SetSpawnFlags( flags )
 	self:SetKeyValue( "spawnflags", flags )
 end
 
-function meta:ClearSpawnFlags()
-	self:SetSpawnFlags( 0 )
-end
-
 function meta:AddSpawnFlag( flag )
     self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flag ) )
 end
