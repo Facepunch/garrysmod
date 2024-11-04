@@ -4,8 +4,8 @@ local meta = FindMetaTable( "Entity" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
-function meta:SetSpawnFlags( Flags )
-	self:SetKeyValue( "spawnflags", Flags )
+function meta:SetSpawnFlags( flags )
+	self:SetKeyValue( "spawnflags", flags )
 end
 
 function meta:ClearSpawnFlags()
