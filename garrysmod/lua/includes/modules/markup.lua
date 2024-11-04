@@ -4,6 +4,7 @@ local table = table
 local surface = surface
 local tostring = tostring
 local ipairs = ipairs
+local pairs = pairs
 local setmetatable = setmetatable
 local tonumber = tonumber
 local math = math
@@ -53,6 +54,7 @@ local Color = _Color
 -----------------------------------------------------------]]
 local colour_stack = { Color( 255, 255, 255 ) }
 local font_stack = { "DermaDefault" }
+local paragraph = 1
 local blocks = {}
 
 local colourmap = {
@@ -147,6 +149,10 @@ local function ExtractParams( p1, p2, p3 )
 
 			table.insert( font_stack, tostring( p2 ) )
 
+		elseif ( p1 == "par" ) then
+
+			paragraph = paragraph + 1
+
 		end
 
 	end
@@ -170,6 +176,7 @@ local function CheckTextOrTag( p )
 		text_block.text = p
 		text_block.colour = colour_stack[ #colour_stack ]
 		text_block.font = font_stack[ #font_stack ]
+		text_block.paragraph = paragraph
 		table.insert( blocks, text_block )
 
 	end
@@ -218,7 +225,7 @@ function MarkupObject:Size()
 end
 
 --[[---------------------------------------------------------
-	Name: MarkupObject:Draw(xOffset, yOffset, halign, valign, alphaoverride)
+	Name: MarkupObject:Draw(xOffset, yOffset, halign, valign, alphaoverride, textAlign)
 	Desc: Draw the markup text to the screen as position xOffset, yOffset.
 		  Halign and Valign can be used to align the text relative to its offset.
 		  Alphaoverride can be used to override the alpha value of the text-colour.
@@ -226,7 +233,18 @@ end
 	Usage: MarkupObject:Draw(100, 100)
 -----------------------------------------------------------]]
 function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride, textAlign )
+	local yOffsetLast, wordOffset
+
+	if ( textAlign == true ) then
+		halign = TEXT_ALIGN_LEFT
+	end
+
 	for i, blk in ipairs( self.blocks ) do
+		if ( yOffsetLast != blk.offset.y ) then
+			yOffsetLast = blk.offset.y
+			wordOffset = xOffset + blk.offset.xNoTabs
+		end
+
 		local y = yOffset + ( blk.height - blk.thisY ) + blk.offset.y
 		local x = xOffset
 
@@ -247,7 +265,17 @@ function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride, tex
 		surface.SetTextColor( blk.colour.r, blk.colour.g, blk.colour.b, alpha )
 
 		surface.SetTextPos( x, y )
-		if ( textAlign ~= TEXT_ALIGN_LEFT ) then
+
+		if ( textAlign == true and self.justificationOffsets[ blk.offset.y ] > 0 ) then
+			for j, word in ipairs( blk.words ) do
+				surface.SetTextPos( wordOffset, y )
+				surface.DrawText( word )
+
+				wordOffset = wordOffset + surface.GetTextSize( word ) + self.justificationOffsets[ blk.offset.y ]
+			end
+
+			continue
+		elseif ( textAlign ~= TEXT_ALIGN_LEFT ) then
 			local lineWidth = self.lineWidths[ blk.offset.y ]
 			if ( lineWidth ) then
 				if ( textAlign == TEXT_ALIGN_CENTER ) then
@@ -298,6 +326,7 @@ function Parse( ml, maxwidth )
 
 	colour_stack = { Color( 255, 255, 255 ) }
 	font_stack = { "DermaDefault" }
+	paragraph = 1
 	blocks = {}
 
 	if ( !string.find( ml, "<" ) ) then
@@ -307,6 +336,7 @@ function Parse( ml, maxwidth )
 	string.gsub( ml, "([^<>]*)(<[^>]+.)([^<>]*)", ProcessMatches )
 
 	local xOffset = 0
+	local xOffsetNoTabs = 0
 	local yOffset = 0
 	local xSize = 0
 	local xMax = 0
@@ -316,11 +346,25 @@ function Parse( ml, maxwidth )
 	local lineWidths = {}
 
 	local lineHeight = 0
+	local lastParagraph = 1
 	for i, blk in ipairs( blocks ) do
 
 		surface.SetFont( blk.font )
 
 		blk.text = string.gsub( blk.text, "(&.-;)", unescapeEntities )
+
+		if ( blk.paragraph > lastParagraph ) then
+			xOffset = 0
+			xOffsetNoTabs = 0
+			xSize = 0
+			yOffset = yOffset + thisMaxY * 1.5
+			thisMaxY = 0
+			lastParagraph = blk.paragraph
+
+			if ( #new_block_list > 0 ) then
+				new_block_list[ #new_block_list ].NoJustification = true
+			end
+		end
 
 		local thisY = 0
 		local curString = ""
@@ -348,7 +392,8 @@ function Parse( ml, maxwidth )
 						thisX = x1,
 						offset = {
 							x = xOffset,
-							y = yOffset
+							y = yOffset,
+							xNoTabs = xOffsetNoTabs
 						}
 					}
 					table.insert( new_block_list, new_block )
@@ -358,6 +403,7 @@ function Parse( ml, maxwidth )
 				end
 
 				xOffset = 0
+				xOffsetNoTabs = 0
 				xSize = 0
 				yOffset = yOffset + thisMaxY
 				thisY = 0
@@ -377,13 +423,16 @@ function Parse( ml, maxwidth )
 						thisX = x1,
 						offset = {
 							x = xOffset,
-							y = yOffset
+							y = yOffset,
+							xNoTabs = xOffsetNoTabs
 						}
 					}
 					table.insert( new_block_list, new_block )
 					if ( xOffset + x1 > xMax ) then
 						xMax = xOffset + x1
 					end
+
+					xOffsetNoTabs = xOffsetNoTabs + x1
 				end
 
 				curString = ""
@@ -395,6 +444,7 @@ function Parse( ml, maxwidth )
 
 				if ( xOffset == xOldOffset ) then
 					xOffset = xOffset + 50
+					xOffsetNoTabs = xOffsetNoTabs + 50
 
 					if ( maxwidth and xOffset > maxwidth ) then
 						-- Needs a new line
@@ -404,7 +454,9 @@ function Parse( ml, maxwidth )
 						else
 							lineHeight = thisY
 						end
+
 						xOffset = 0
+						xOffsetNoTabs = 0
 						yOffset = yOffset + thisMaxY
 						thisY = 0
 						thisMaxY = 0
@@ -423,7 +475,7 @@ function Parse( ml, maxwidth )
 						--          and insert as a new block, incrementing the y etc
 
 						local lastSpacePos = string.len( curString )
-						for k = 1,string.len( curString ) do
+						for k = 1, string.len( curString ) do
 							local chspace = string.sub( curString, k, k )
 							if ( chspace == " " ) then
 								lastSpacePos = k
@@ -475,7 +527,8 @@ function Parse( ml, maxwidth )
 								thisX = x1,
 								offset = {
 									x = xOffset,
-									y = yOffset
+									y = yOffset,
+									xNoTabs = xOffsetNoTabs
 								}
 							}
 							table.insert( new_block_list, new_block )
@@ -487,6 +540,7 @@ function Parse( ml, maxwidth )
 							curString = ""
 						end
 
+						xOffsetNoTabs = 0
 						xOffset = 0
 						xSize = 0
 						x, y = surface.GetTextSize( ch )
@@ -521,7 +575,8 @@ function Parse( ml, maxwidth )
 				thisX = x1,
 				offset = {
 					x = xOffset,
-					y = yOffset
+					y = yOffset,
+					xNoTabs = xOffsetNoTabs
 				}
 			}
 			table.insert( new_block_list, new_block )
@@ -532,11 +587,19 @@ function Parse( ml, maxwidth )
 				xMax = xOffset + x1
 			end
 			xOffset = xOffset + x1
+			xOffsetNoTabs = xOffsetNoTabs + x1
 		end
 		xSize = 0
 	end
 
+	if ( #new_block_list > 0 ) then
+		new_block_list[ #new_block_list ].NoJustification = true
+	end
+
 	local totalHeight = 0
+	local wordsInLine = {}
+	local lineWidthsNoTabs = {}
+	local lineNoJustification = {}
 	for i, blk in ipairs( new_block_list ) do
 		blk.height = ymaxes[ blk.offset.y ]
 
@@ -545,6 +608,25 @@ function Parse( ml, maxwidth )
 		end
 
 		lineWidths[ blk.offset.y ] = math.max( lineWidths[ blk.offset.y ] or 0, blk.offset.x + blk.thisX )
+		lineWidthsNoTabs[ blk.offset.y ] = math.max( lineWidthsNoTabs[ blk.offset.y ] or 0, blk.offset.xNoTabs + blk.thisX )
+
+		lineNoJustification[ blk.offset.y ] = lineNoJustification[ blk.offset.y ] or blk.NoJustification
+		blk.words = {}
+
+		for word in string.gmatch( blk.text, " ?[^ ]+ ?" ) do
+			table.insert( blk.words, word )
+		end
+
+		wordsInLine[ blk.offset.y ] = ( wordsInLine[ blk.offset.y ] or 0 ) + #blk.words
+	end
+
+	local justificationOffsets = {}
+	for y, width in pairs( lineWidthsNoTabs ) do
+		if ( !lineNoJustification[ y ] and wordsInLine[ y ] > 1 ) then
+			justificationOffsets[ y ] = ( xMax - width ) / ( wordsInLine[ y ] - 1 )
+		else
+			justificationOffsets[ y ] = 0
+		end
 	end
 
 	return setmetatable( {
@@ -552,6 +634,7 @@ function Parse( ml, maxwidth )
 		totalWidth = xMax,
 		maxWidth = maxwidth,
 		lineWidths = lineWidths,
+		justificationOffsets = justificationOffsets,
 		blocks = new_block_list
 	}, MarkupObject )
 end
