@@ -177,8 +177,6 @@ function GetColor( index )
 	if ( !TeamInfo[index] ) then return DefaultColor end
 
 	local color = TeamInfo[index].Color
-	if ( color == nil ) then return nil end
-
 	return Color( color.r, color.g, color.b, color.a )
 
 end
