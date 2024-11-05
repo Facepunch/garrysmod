@@ -8,12 +8,12 @@ function meta:SetSpawnFlags( flags )
 	self:SetKeyValue( "spawnflags", flags )
 end
 
-function meta:AddSpawnFlag( flag )
-    self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flag ) )
+function meta:AddSpawnFlags( flags )
+    self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
 end
 
-function meta:RemoveSpawnFlag( flag )
-    self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flag ) ) )
+function meta:RemoveSpawnFlags( flags )
+    self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
 end
 
 function meta:GetShouldPlayPickupSound()
