@@ -141,7 +141,7 @@ function GetPlayers(index)
 	local TeamPlayers = {}
 
 	for _, ply in player.Iterator() do
-		if ( IsValid(ply) and ply:Team() == index ) then
+		if ( ply:Team() == index ) then
 			table.insert(TeamPlayers, ply)
 		end
 	end
