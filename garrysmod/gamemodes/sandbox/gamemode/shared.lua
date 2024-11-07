@@ -321,3 +321,11 @@ function GM:PlayerDriveAnimate( ply )
 	ply:SetEyeTarget( driving:GetPos() )
 
 end
+
+function GM:ShouldToolgunEmitSound( ply, toolgun, entity )
+	return true
+end
+
+function GM:ShouldToolgunEmitEffects( ply, toolgun, entity )
+	return true
+end

@@ -180,7 +180,12 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 
 	local owner = self:GetOwner()
 
-	self:EmitSound( self.ShootSound )
+	local bShouldEmitSound =
+
+	if ( hook.Run("ShouldToolgunEmitSound", owner, self, entity) ) then
+		self:EmitSound( self.ShootSound )
+	end
+
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) -- View model animation
 
 	-- There's a bug with the model that's causing a muzzle to
@@ -188,7 +193,7 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 	owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
 
 	if ( !bFirstTimePredicted ) then return end
-	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 or !hook.Run("ShouldToolgunEmitEffects", owner, self, entity) ) then return end
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( hitpos )
