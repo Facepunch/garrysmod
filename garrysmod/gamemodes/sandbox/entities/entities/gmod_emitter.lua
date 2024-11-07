@@ -57,12 +57,11 @@ function ENT:Think()
 
 	if ( not self:GetOn() ) then return end
 
-	local tbl = self:GetTable()
-	tbl.Delay = tbl.Delay or 0
-
+	self.Delay = self.Delay or 0
 	local curtime = CurTime()
-	if ( tbl.Delay > curtime ) then return end
-	tbl.Delay = curtime + self:GetDelay()
+
+	if ( self.Delay > curtime ) then return end
+	self.Delay = curtime + self:GetDelay()
 
 	--
 	-- Find our effect table
