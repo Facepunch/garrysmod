@@ -570,22 +570,19 @@ local function CheckCreditAward(victim, attacker)
 end
 
 function GM:DoPlayerDeath(ply, attacker, dmginfo)
-   if ply:IsSpec() then return end
+   if ply:IsSpec() or IsValid(ply.dying_wep) then return end
 
    -- Experimental: Fire a last shot if ironsighting and not headshot
    if GetConVar("ttt_dyingshot"):GetBool() then
       local wep = ply:GetActiveWeapon()
       if IsValid(wep) and wep.DyingShot and not ply.was_headshot and dmginfo:IsBulletDamage() then
-         local fired = wep:DyingShot()
-         if fired then
-            return
-         end
+         wep:DyingShot()
       end
 
       -- Note that funny things can happen here because we fire a gun while the
-      -- player is dead. Specifically, this DoPlayerDeath is run twice for
-      -- him. This is ugly, and we have to return the first one to prevent crazy
-      -- shit.
+      -- player is dead. Specifically, this DoPlayerDeath can run twice for
+      -- him. This is ugly, and we have to return if ply.dying_wep is set
+      -- to prevent crazy shit.
    end
 
    -- Drop all weapons

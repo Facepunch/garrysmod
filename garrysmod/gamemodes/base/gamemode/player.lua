@@ -31,7 +31,7 @@ end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerAuthed()
-	Desc: Player's STEAMID has been authed
+	Desc: Player's UniqueID was set
 -----------------------------------------------------------]]
 function GM:PlayerAuthed( ply, SteamID, UniqueID )
 end
@@ -434,6 +434,13 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
 		--self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
 
+		-- NEOTOKYO Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_attacker" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_defender" ) )
+
+		-- Fortress Forever Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_ff_teamspawn" ) )
+
 	end
 
 	local Count = table.Count( self.SpawnPoints )
@@ -818,7 +825,7 @@ concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerReques
 -----------------------------------------------------------]]
 function GM:HandlePlayerArmorReduction( ply, dmginfo )
 
-	-- If no armor, or special damage types, bypass armor 
+	-- If no armor, or special damage types, bypass armor
 	if ( ply:Armor() <= 0 || bit.band( dmginfo:GetDamageType(), DMG_FALL + DMG_DROWN + DMG_POISON + DMG_RADIATION ) != 0 ) then return end
 
 	local flBonus = 1.0 -- Each Point of Armor is worth 1/x points of health

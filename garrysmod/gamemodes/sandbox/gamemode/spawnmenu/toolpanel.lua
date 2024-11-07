@@ -145,7 +145,7 @@ function PANEL:UpdateToolDisabledStatus()
 			if ( enabled ) then
 				item:SetTooltip()
 			else
-				item:SetTooltip( "This tool is disabled by the server!" )
+				item:SetTooltip( "#spawnmenu.tools.disabled" )
 			end
 		end
 

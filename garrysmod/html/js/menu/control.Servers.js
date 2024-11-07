@@ -495,7 +495,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		maxplayers:		parseInt( maxplayers ) - parseInt( botplayers ),
 		botplayers:		parseInt( botplayers ),
 		pass:			pass == "1",
-		lastplayed:		parseInt( lastplayed ),
+		lastplayed:		parseInt( lastplayed ) * 1000, // Steam gives us time in seconds
 		address:		address,
 		flag: 			loc.toLowerCase(),
 		category: 		gmcat || "",
@@ -514,6 +514,14 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
 	data.hasmap = DoWeHaveMap( data.map );
+	
+	if ( !IN_ENGINE ) data.lastplayed = Date.now() - Math.random() * 1000000000;
+
+	// Generate a user-friendly date that is also as short as possible
+	var actualDate = new Date( data.lastplayed );
+	var pad = function( num ) { return  ( "0" + num ).slice( -2 ); }
+	data.lastplayedStr = pad( actualDate.getDate() ) + "." + pad( actualDate.getMonth() + 1 ) + "." + actualDate.getFullYear();
+	data.lastplayedStr += " " + pad( actualDate.getHours() ) + ":" + pad( actualDate.getMinutes() ); // + ":" + pad( actualDate.getSeconds() );
 
 	data.recommended = CalculateRank( data );
 

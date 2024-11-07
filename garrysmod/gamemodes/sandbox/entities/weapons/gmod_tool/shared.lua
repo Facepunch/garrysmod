@@ -40,8 +40,10 @@ function SWEP:InitializeTools()
 	local owner = self:GetOwner()
 
 	local temp = {}
-
 	for k, v in pairs( self.Tool ) do
+
+		-- This is from saverestore.LoadEntity..
+		if ( !v.Init ) then continue end
 
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self

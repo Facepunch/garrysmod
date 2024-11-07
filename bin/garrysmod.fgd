@@ -26,49 +26,6 @@
 	input RunPassedCode(string) : "Run code that was passed as a variable"
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studioprop( "models/editor/spot.mdl" ) frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture : "Projected texture entity."
-[
-	spawnflags(flags) =
-	[
-		1  : "Enabled"			: 1
-	]
-
-	target(target_destination)	: "target" : : "target"
-	lightfov(float)				: "FOV" : "90.0" : "FOV"
-	nearz(float)				: "NearZ" : "4.0" : "Near Z for projected texture"
-	farz(float)					: "FarZ" : "750.0" : "Far Z for projected texture"
-
-	enableshadows(Choices) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	lightonlytarget(Choices) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	lightworld(Choices) : "Light World" : 1 : "Control whether flashlight effects static world geometry." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	lightcolor(color255)		: "Light Color" : "255 255 255" : "Light Color RGB-Intensity"
-	lightstrength(float)		: "Light Strength" : "1.0" : "How bright the light appears"
-	cameraspace(integer)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
-
-	texturename(*string) 		: "Texture Name" : "effects/flashlight001" : "The name of the texture to use"
-	textureframe(integer) 		: "Texture Frame" : 0 : "The frame of the texture"
-
-	// Inputs
-	input TurnOn(void)					: "Turn on the texture"
-	input TurnOff(void)					: "Turn off the texture"
-	input SetFOV(float)					: "Set FOV"
-	input SpotlightTexture(string)		: "Set Spotlight Texture"
-	input Ambient(float)				: "Set Spotlight Ambient"
-
-]
-
 @PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours"
 [
 	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The colour of the top of the sky"

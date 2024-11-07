@@ -723,46 +723,70 @@ end
 --[[---------------------------------------------------------
   Make a constraint from a constraint table
 -----------------------------------------------------------]]
-function CreateConstraintFromTable( Constraint, EntityList, Player )
+function CreateConstraintFromTable( Constraint, EntityList, ply )
 
 	local Factory = ConstraintType[ Constraint.Type ]
 	if ( !Factory ) then return end
 
-	local Args = {}
-	for k, Key in pairs( Factory.Args ) do
+	-- Unfortunately we cannot distinguish here if this is a ropeconstraint or not
+	if ( ply and !ply:CheckLimit( "constraints" ) ) then return end
+	if ( ply and !ply:CheckLimit( "ropeconstraints" ) ) then return end
 
-		local Val = Constraint[ Key ]
+	local args = {}
+	for k, key in pairs( Factory.Args ) do
+
+		local val = Constraint[ key ]
 
 		for i = 1, 6 do
 
 			if ( Constraint.Entity[ i ] ) then
 
-				if ( Key == "Ent" .. i ) then
-					Val = EntityList[ Constraint.Entity[ i ].Index ]
+				if ( key == "Ent" .. i ) then
+					val = EntityList[ Constraint.Entity[ i ].Index ]
 					if ( Constraint.Entity[ i ].World ) then
-						Val = game.GetWorld()
+						val = game.GetWorld()
 					end
 				end
 
-				if ( Key == "Bone" .. i ) then Val = Constraint.Entity[ i ].Bone or 0 end
-				if ( Key == "LPos" .. i ) then Val = Constraint.Entity[ i ].LPos end
-				if ( Key == "WPos" .. i ) then Val = Constraint.Entity[ i ].WPos end
-				if ( Key == "Length" .. i ) then Val = Constraint.Entity[ i ].Length or 0 end
+				if ( key == "Bone" .. i ) then val = Constraint.Entity[ i ].Bone or 0 end
+				if ( key == "LPos" .. i ) then val = Constraint.Entity[ i ].LPos end
+				if ( key == "WPos" .. i ) then val = Constraint.Entity[ i ].WPos end
+				if ( key == "Length" .. i ) then val = Constraint.Entity[ i ].Length or 0 end
 
 			end
 		end
 
 		-- A little hack to give the duped constraints the correct player object
-		if ( Key:lower() == "pl" or Key:lower() == "ply" or Key:lower() == "player" ) then Val = Player end
+		if ( key:lower() == "pl" or key:lower() == "ply" or key:lower() == "player" ) then val = ply end
 
 		-- If there's a missing argument then unpack will stop sending at that argument
-		if ( Val == nil ) then Val = false end
+		if ( val == nil ) then val = false end
 
-		table.insert( Args, Val )
+		table.insert( args, val )
 
 	end
 
-	return Factory.Func( unpack( Args ) )
+	-- Pulley, Hydraulic can return up to 4 ents
+	local const1, const2, const3, const4 = Factory.Func( unpack( args ) )
+
+	-- Hacky way to determine if the constraint is a rope one, since we have no better way
+	local function IsRopeConstraint( ent ) return ent and ent:GetClass() == "keyframe_rope" end
+	local isRope = IsRopeConstraint( const1 ) || IsRopeConstraint( const2 ) || IsRopeConstraint( const3 ) || IsRopeConstraint( const4 )
+	local constraintType = isRope and "ropeconstraints" or "constraints"
+
+	-- If in Sandbox, keep track of this.
+	if ( ply and ply.AddCleanup and IsValid( const1 ) ) then
+		ply:AddCount( constraintType, const1 )
+
+		-- Hack: special case for nocollide
+		if ( const1:GetClass() == "logic_collision_pair" ) then constraintType = "nocollide" end
+		ply:AddCleanup( constraintType, const1 )
+		ply:AddCleanup( constraintType, const2 )
+		ply:AddCleanup( constraintType, const3 )
+		ply:AddCleanup( constraintType, const4 )
+	end
+
+	return const1, const2, const3, const4
 
 end
 

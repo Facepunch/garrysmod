@@ -120,11 +120,11 @@ if ( SERVER ) then
 
 	function MakeThruster( ply, model, ang, pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "thrusters" ) ) then return false end
-		if ( !IsValidThrusterModel( model ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "thrusters" ) ) then return NULL end
+		if ( !IsValidThrusterModel( model ) ) then return NULL end
 
 		local thruster = ents.Create( "gmod_thruster" )
-		if ( !IsValid( thruster ) ) then return false end
+		if ( !IsValid( thruster ) ) then return NULL end
 
 		duplicator.DoGeneric( thruster, Data )
 		thruster:SetModel( model ) -- Backwards compatible for addons directly calling this function

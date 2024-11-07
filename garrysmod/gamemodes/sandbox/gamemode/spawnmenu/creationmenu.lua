@@ -48,6 +48,8 @@ function PANEL:Populate()
 			local childpnl = v.Function()
 			childpnl:SetParent( pnl )
 			childpnl:Dock( FILL )
+
+			self.CreationTabs[ k ].ContentPanel = childpnl
 		end )
 
 	end

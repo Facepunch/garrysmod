@@ -18,6 +18,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.ImportPresetSource = "";
 
 	$scope.PresetList = {}
+	$scope.PresetSearchText = "";
 	$scope.LoadPresetMenuOpen = false;
 	$scope.LoadPresetResub = false;
 	$scope.SelectedPreset = undefined;
@@ -30,7 +31,10 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	// For testing
 	if ( !IN_ENGINE )
 	{
-		$scope.PresetList = { test: { name: "test"}, test2: { name: "test2"}, test23: { name: "test23"}, test24: { name: "test24"}, test25: { name: "test25"}, test26: { name: "test26" } };
+		for ( var i = 0; i < 24; i++ )
+		{
+			$scope.PresetList[ "test" + i ] = { name: "test name " + i, enabled: ["1"], disabled: [], newAction: "" }
+		}
 	}
 
 	$scope.Categories =

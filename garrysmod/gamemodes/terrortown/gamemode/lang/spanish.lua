@@ -13,7 +13,7 @@ L.spectators = "Espectadores"
 
 --- Round status messages
 L.round_minplayers = "No hay suficientes jugadores para inciar una nueva ronda..."
-L.round_voting     = "Se ha iniciado una invitación, iniciando una nueva ronda en {num} segundos..."
+L.round_voting     = "Se ha iniciado una votación, iniciará una nueva ronda en {num} segundos..."
 L.round_begintime  = "Va a comenzar una ronda en {num} segundos. ¡Prepárate!"
 L.round_selected   = "Se ha elegido a los traidores."
 L.round_started    = "¡La ronda ha comenzado!"
@@ -22,7 +22,7 @@ L.round_restart    = "Un administrador ha reiniciado la ronda."
 L.round_traitors_one  = "Eres el traidor, estás solo."
 L.round_traitors_more = "Eres el traidor, tus aliados son: {names}"
 
-L.win_time         = "Se ha acabado el tiemp. Los traidores han perdido."
+L.win_time         = "Se ha acabado el tiempo. Los traidores han perdido."
 L.win_traitor      = "¡Han ganado los traidores!"
 L.win_innocent     = "¡Los traidores han sido derrotados!"
 L.win_showreport   = "¡Echa un vistazo al informe de la ronda durante {num} segundos."

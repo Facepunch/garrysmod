@@ -42,12 +42,17 @@ function TOOL:LeftClick( trace )
 
 		-- Clientside can bail out now
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			self:ReleaseGhostEntity()
 
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			self:ReleaseGhostEntity()
+			return false
 		end
 
 		-- Get client's CVars
@@ -86,10 +91,11 @@ function TOOL:LeftClick( trace )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -125,12 +131,16 @@ function TOOL:RightClick( trace )
 	if ( iNum > 0 ) then
 
 		-- Clientside can bail out now
+		local ply = self:GetOwner()
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 
 			return true
+		end
 
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -161,10 +171,11 @@ function TOOL:RightClick( trace )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
+				undo.SetPlayer( ply )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 		end
 
 		-- Clear the objects so we're ready to go again

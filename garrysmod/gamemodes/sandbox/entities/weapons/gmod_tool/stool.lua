@@ -181,8 +181,8 @@ hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 				tool.Tab or "Main",
 				tool.Category or "New Category",
 				ToolName,
-				tool.Name or "#" .. ToolName,
-				tool.Command or "gmod_tool " .. ToolName,
+				tool.Name or ( "#" .. ToolName ),
+				tool.Command or ( "gmod_tool " .. ToolName ),
 				tool.ConfigName or ToolName,
 				tool.BuildCPanel
 			)
@@ -202,7 +202,7 @@ search.AddProvider( function( str )
 
 	for k, v in pairs( TOOLS_LIST ) do
 
-		local niceName = v.Name or "#" .. k
+		local niceName = v.Name or ( "#" .. k )
 		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
 		if ( !k:lower():find( str, nil, true ) and !niceName:lower():find( str, nil, true ) ) then continue end
@@ -211,7 +211,7 @@ search.AddProvider( function( str )
 			text = niceName,
 			icon = spawnmenu.CreateContentIcon( "tool", nil, {
 				spawnname = k,
-				nicename = v.Name or "#" .. k
+				nicename = v.Name or ( "#" .. k )
 			} ),
 			words = { k }
 		}

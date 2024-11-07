@@ -511,7 +511,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuSpacer( panel, w, h )
 
-	surface.SetDrawColor( Color( 0, 0, 0, 100 ) )
+	surface.SetDrawColor( 0, 0, 0, 100 )
 	surface.DrawRect( 0, 0, w, h )
 
 end
@@ -522,7 +522,7 @@ end
 function SKIN:PaintMenuOption( panel, w, h )
 
 	if ( panel.m_bBackground && !panel:IsEnabled() ) then
-		surface.SetDrawColor( Color( 0, 0, 0, 50 ) )
+		surface.SetDrawColor( 0, 0, 0, 50 )
 		surface.DrawRect( 0, 0, w, h )
 	end
 
@@ -886,8 +886,10 @@ end
 function SKIN:PaintTreeNode( panel, w, h )
 
 	if ( !panel.m_bDrawLines ) then return end
-
-	surface.SetDrawColor( self.Colours.Tree.Lines )
+	
+	local skinColor = self.Colours.Tree.Lines
+	
+	surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 
 	if ( panel.m_bLastChild ) then
 
@@ -958,7 +960,9 @@ end
 function SKIN:PaintNumSlider( panel, w, h )
 
 	-- GetNotchColor() returns SKIN.colNumSliderNotch if custom override is not set
-	surface.SetDrawColor( panel:GetNotchColor() )
+	local notchColor = panel:GetNotchColor()
+	
+	surface.SetDrawColor( notchColor.r, notchColor.g, notchColor.b, notchColor.a )
 	surface.DrawRect( 8, h / 2 - 1, w - 15, 1 )
 
 	PaintNotches( 8, h / 2 - 1, w - 16, 1, panel:GetNotches() )
@@ -996,19 +1000,23 @@ end
 function SKIN:PaintCategoryButton( panel, w, h )
 
 	if ( panel.AltLine ) then
+		local skinColor
 
-		if ( !panel:IsEnabled() ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Disabled )
-		elseif ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Selected )
-		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Hover )
-		else surface.SetDrawColor( self.Colours.Category.LineAlt.Button ) end
-
+		if ( !panel:IsEnabled() ) then skinColor = self.Colours.Category.LineAlt.Button_Disabled
+		elseif ( panel.Depressed || panel.m_bSelected ) then skinColor = self.Colours.Category.LineAlt.Button_Selected
+		elseif ( panel.Hovered ) then skinColor = self.Colours.Category.LineAlt.Button_Hover
+		else skinColor = self.Colours.Category.LineAlt.Button end
+		
+		surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 	else
+		local skinColor
 
-		if ( !panel:IsEnabled() ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Disabled )
-		elseif ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Selected )
-		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Hover )
-		else surface.SetDrawColor( self.Colours.Category.Line.Button ) end
-
+		if ( !panel:IsEnabled() ) then skinColor = self.Colours.Category.Line.Button_Disabled
+		elseif ( panel.Depressed || panel.m_bSelected ) then skinColor = self.Colours.Category.Line.Button_Selected
+		elseif ( panel.Hovered ) then skinColor = self.Colours.Category.Line.Button_Hover
+		else skinColor = self.Colours.Category.Line.Button end
+	
+		surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 	end
 
 	surface.DrawRect( 0, 0, w, h )

@@ -39,10 +39,8 @@ function Render( entry )
 
 	local rt_Scene = render.GetRenderTarget()
 
-
 	-- Store a copy of the original scene
 	render.CopyRenderTargetToTexture( rt_Store )
-
 
 	-- Clear our scene so that additive/subtractive rendering with it will work later
 	if ( entry.Additive ) then
@@ -51,6 +49,9 @@ function Render( entry )
 		render.Clear( 255, 255, 255, 255, false, true )
 	end
 
+	-- For certain materials this is necessary to not have the entire screen go pitch black
+	-- For example the glass doors in Episode 2 GMan sequence
+	render.UpdateRefractTexture()
 
 	-- Render colored props to the scene and set their pixels high
 	cam.Start3D()
@@ -68,13 +69,11 @@ function Render( entry )
 				render.SetStencilZFailOperation( STENCIL_KEEP )
 
 					for k, v in pairs( entry.Ents ) do
-
 						if ( !IsValid( v ) or v:GetNoDraw() ) then continue end
 
 						RenderEnt = v
 
 						v:DrawModel()
-
 					end
 
 					RenderEnt = NULL
@@ -85,7 +84,8 @@ function Render( entry )
 				-- render.SetStencilZFailOperation( STENCIL_KEEP )
 
 					cam.Start2D()
-						surface.SetDrawColor( entry.Color )
+						local entryColor = entry.Color
+						surface.SetDrawColor( entryColor.r, entryColor.g, entryColor.b, entryColor.a )
 						surface.DrawRect( 0, 0, ScrW(), ScrH() )
 					cam.End2D()
 
@@ -94,11 +94,9 @@ function Render( entry )
 		render.SetStencilEnable( false )
 	cam.End3D()
 
-
 	-- Store a blurred version of the colored props in an RT
 	render.CopyRenderTargetToTexture( rt_Blur )
 	render.BlurRenderTarget( rt_Blur, entry.BlurX, entry.BlurY, 1 )
-
 
 	-- Restore the original scene
 	render.SetRenderTarget( rt_Scene )
@@ -108,7 +106,6 @@ function Render( entry )
 	render.SetMaterial( mat_Copy )
 	render.DrawScreenQuad()
 
-
 	-- Draw back our blured colored props additively/subtractively, ignoring the high bits
 	render.SetStencilEnable( true )
 
@@ -117,31 +114,25 @@ function Render( entry )
 		-- render.SetStencilFailOperation( STENCIL_KEEP )
 		-- render.SetStencilZFailOperation( STENCIL_KEEP )
 
-			if ( entry.Additive ) then
+		if ( entry.Additive ) then
+			mat_Add:SetTexture( "$basetexture", rt_Blur )
+			render.SetMaterial( mat_Add )
+		else
+			mat_Sub:SetTexture( "$basetexture", rt_Blur )
+			render.SetMaterial( mat_Sub )
+		end
 
-				mat_Add:SetTexture( "$basetexture", rt_Blur )
-				render.SetMaterial( mat_Add )
-
-			else
-
-				mat_Sub:SetTexture( "$basetexture", rt_Blur )
-				render.SetMaterial( mat_Sub )
-
-			end
-
-			for i = 0, entry.DrawPasses do
-
-				render.DrawScreenQuad()
-
-			end
+		for i = 0, entry.DrawPasses do
+			render.DrawScreenQuad()
+		end
 
 	render.SetStencilEnable( false )
-
 
 	-- Return original values
 	render.SetStencilTestMask( 0 )
 	render.SetStencilWriteMask( 0 )
 	render.SetStencilReferenceValue( 0 )
+
 end
 
 hook.Add( "PostDrawEffects", "RenderHalos", function()
