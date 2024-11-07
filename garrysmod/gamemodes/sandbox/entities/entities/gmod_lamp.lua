@@ -78,7 +78,7 @@ if ( SERVER ) then
 		self.BaseClass.Think( self )
 
 		local flashlight = self.flashlight
-		if ( not IsValid( flashlight ) ) then return end
+		if ( !IsValid( flashlight ) ) then return end
 		if ( flashlight:GetColor() == self:GetColor() ) then return end
 
 		flashlight:SetColor( self:GetColor() )
@@ -202,7 +202,7 @@ local colLight = Color( 255, 255, 255, 255 )
 function ENT:DrawEffects()
 
 	-- No glow if we're not switched on!
-	if ( not self:GetOn() ) then return end
+	if ( !self:GetOn() ) then return end
 
 	local lightInfo = self:GetLightInfo()
 	
@@ -222,7 +222,7 @@ function ENT:DrawEffects()
 	--]]
 
 	local Visibile = util.PixelVisible( LightPos, 16, self.PixVis )
-	if ( not Visibile ) then return end
+	if ( !Visibile ) then return end
 
 	local ViewNormal = EyePos()
 	ViewNormal:Negate()

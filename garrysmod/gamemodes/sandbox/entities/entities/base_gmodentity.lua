@@ -15,7 +15,7 @@ if ( CLIENT ) then
 	function ENT:BeingLookedAtByLocalPlayer()
 
 		local Frame = FrameNumber()
-		if ( Frame ~= FrameLast ) then
+		if ( Frame != FrameLast ) then
 			FrameLast = Frame
 
 			local viewer, TraceResult = GetViewEntity()
@@ -47,12 +47,12 @@ if ( CLIENT ) then
 
 	function ENT:Think()
 
-        if ( not self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
+        if ( !self:BeingLookedAtByLocalPlayer() or self:GetNoDraw() ) then
 			return
 		end
 
 		local text = self:GetOverlayText()
-		if ( not text or text == "" ) then
+		if ( !text or text == "" ) then
 			return
 		end
 
@@ -81,7 +81,7 @@ function ENT:GetOverlayText()
     end
 
 	local PlayerName = self:GetPlayerName()
-	if ( PlayerName == nil or PlayerName == "" ) then
+	if ( !PlayerName or PlayerName == "" ) then
         return txt
     end
 

@@ -80,7 +80,7 @@ end
 local colGlow, vecGlow = Color( 255, 255, 255, 255 ), Vector( 0, 0, 0 )
 function ENT:DrawEffects()
 
-	if ( not self:GetEnabled() ) then return end
+	if ( !self:GetEnabled() ) then return end
 
 	local vOffset = self:GetPos()
 	local vNormal = EyePos()

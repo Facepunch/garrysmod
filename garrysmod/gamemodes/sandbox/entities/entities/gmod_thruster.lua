@@ -82,10 +82,10 @@ function ENT:GetEffectTable()
 
 	local EffectTables = list.GetForEdit( "ThrusterEffects" )
 	local EffectTable = EffectTables[ Effect ] 
-	if ( EffectTable ~= nil ) then return EffectTable end
+	if ( EffectTable ) then return EffectTable end
 
 	EffectTable = EffectTables[ EffectTable_Cache[ Effect ] ] 
-	if ( EffectTable ~= nil ) then return EffectTable end
+	if ( EffectTable ) then return EffectTable end
 
 	for k, v in pairs( EffectTables ) do
 
@@ -101,11 +101,11 @@ end
 if ( CLIENT ) then
 	function ENT:DrawEffects()
 
-		if ( not self:IsOn() ) then return end
+		if ( !self:IsOn() ) then return end
 		if ( self.ShouldDraw == false ) then return end
 
 		local EffectTable = self:GetEffectTable()
-		if ( EffectTable == nil ) then return end
+		if ( !EffectTable ) then return end
 
 		local effectDraw = EffectTable.effectDraw
 		if effectDraw then effectDraw( self ) end
@@ -133,17 +133,17 @@ function ENT:Think()
 
 	if ( CLIENT ) then
 
-		if ( not self:IsOn() ) then self.OnStart = nil return end
+		if ( !self:IsOn() ) then self.OnStart = nil return end
 		self.OnStart = self.OnStart or CurTime()
 
-		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) ~= 0
+		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) != 0
 		if ( self.ShouldDraw == false ) then return end
 
 		local EffectTable = self:GetEffectTable()
-		if ( EffectTable == nil ) then return end
+		if ( !EffectTable ) then return end
 
 		local effectThink = EffectTable.effectThink
-		if ( effectThink ~= nil ) then effectThink( self ) end
+		if ( effectThink ) then effectThink( self ) end
 
 	end
 
@@ -533,10 +533,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.magic", {
 		vRand:Add( vOffset )
 
 		local emitter = self:GetEmitter( vRand, false )
-		if ( not IsValid( emitter ) ) then return end
+		if ( !IsValid( emitter ) ) then return end
 
 		local particle = emitter:Add( "sprites/gmdm_pickups/light", vRand )
-		if ( not particle ) then return end
+		if ( !particle ) then return end
 
 		local vNormal = self:GetPos()
 		vNormal:Negate()
@@ -575,10 +575,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.rings", {
 		vOffset:Add( vNormal )
 
 		local emitter = self:GetEmitter( vOffset, true )
-		if ( not IsValid( emitter ) ) then return end
+		if ( !IsValid( emitter ) ) then return end
 
 		local particle = emitter:Add( "effects/select_ring", vOffset )
-		if ( not particle ) then return end
+		if ( !particle ) then return end
 
 		local size = self:OBBMaxs()
 		size:Sub( self:OBBMins() )
@@ -622,10 +622,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
 		vOffset:Add( vRand )
 
 		local emitter = self:GetEmitter( vOffset, false )
-		if ( not IsValid( emitter ) ) then return end
+		if ( !IsValid( emitter ) ) then return end
 
 		local particle = emitter:Add( "particles/smokey", vOffset )
-		if ( not particle ) then return end
+		if ( !particle ) then return end
 
 		vNormal:Mul( 32 )
 		vNormal:Add( vRand )

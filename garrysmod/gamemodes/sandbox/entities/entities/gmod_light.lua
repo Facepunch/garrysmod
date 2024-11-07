@@ -59,10 +59,10 @@ function ENT:Think()
 
 	if ( CLIENT ) then
 
-		if ( not self:GetOn() ) then return end
+		if ( !self:GetOn() ) then return end
 
 		local dlight = self.dlight
-		if ( not dlight ) then return end
+		if ( !dlight ) then return end
 
 		dlight.pos = self:GetPos()
 		dlight.r, dlight.g, dlight.b = self:GetColor4Part()
@@ -71,7 +71,7 @@ function ENT:Think()
 		local brght = self:GetBrightness()
 
 		-- Clamp for multiplayer
-		if ( not game.SinglePlayer() ) then
+		if ( !game.SinglePlayer() ) then
 			size = math.Clamp( size, 0, 1024 )
 			brght = math.Clamp( brght, 0, 6 )
 		end
@@ -95,12 +95,12 @@ local matLight = Material( "sprites/light_ignorez" )
 local colLight, vecLight = Color( 255, 255, 255, 255 ), Vector( 0, 0, 0 )
 function ENT:DrawEffects()
 
-	if ( not self:GetOn() ) then return end
+	if ( !self:GetOn() ) then return end
 
 	local LightPos = self:GetPos()
 
 	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )
-	if ( not Visibile or Visibile < 0.1 ) then return end
+	if ( !Visibile or Visibile < 0.1 ) then return end
 
 	render.SetMaterial( matLight )
 

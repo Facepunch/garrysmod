@@ -55,7 +55,7 @@ function ENT:Think()
 
 	BaseClass.Think( self )
 
-	if ( not self:GetOn() ) then return end
+	if ( !self:GetOn() ) then return end
 
 	self.Delay = self.Delay or 0
 	local curtime = CurTime()
@@ -67,7 +67,7 @@ function ENT:Think()
 	-- Find our effect table
 	--
 	local EffectTable = list.GetForEdit( "EffectType" )[ self:GetEffect() ]
-	if ( EffectTable == nil ) then return end
+	if ( !EffectTable ) then return end
 
 	local Angle = self:GetAngles()
 	local Pos = Angle:Forward()
