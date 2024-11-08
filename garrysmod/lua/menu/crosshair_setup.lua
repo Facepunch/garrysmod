@@ -1,15 +1,15 @@
 
 local crosshair_sliders = {
-	{ title = "Style", cvar = "cl_crosshairstyle", values = { ["0"] = "#Option_Crosshair.Style_HL2", ["1"] = "#Option_Crosshair.Style_Dot", ["2"] = "#Option_Crosshair.Style_Classic" } },
-	{ title = "#Option_Crosshair.Gap", cvar = "cl_crosshairgap", min = 0, max = 200 },
-	{ title = "#Option_Crosshair.Size", cvar = "cl_crosshairsize", min = 0, max = 200 },
-	{ title = "#Option_Crosshair.Thickness", cvar = "cl_crosshairthickness", min = 0, max = 200 },
-	{ title = "#Option_Crosshair.Dot", cvar = "cl_crosshairdot" },
-	{ title = "#Option_Crosshair.T_Style", cvar = "cl_crosshair_t" },
-	{ title = "#Option_Crosshair.Alpha", cvar = "cl_crosshairusealpha" },
-	{ title = "#Option_Crosshair.Quick_Info", cvar = "hud_quickinfo" },
-	{ title = "#Option_Crosshair.Outline", cvar = "cl_crosshair_drawoutline" },
-	{ title = "#Option_Crosshair.Outline_Thickness", cvar = "cl_crosshair_outlinethickness", min = 0.1, max = 3 },
+	{ title = "Style", cvar = "cl_crosshairstyle", values = { ["0"] = "#option_crosshair.style_hl2", ["1"] = "#option_crosshair.style_dot", ["2"] = "#option_crosshair.style_classic" } },
+	{ title = "#option_crosshair.gap", cvar = "cl_crosshairgap", min = 0, max = 200 },
+	{ title = "#option_crosshair.size", cvar = "cl_crosshairsize", min = 0, max = 200 },
+	{ title = "#option_crosshair.thickness", cvar = "cl_crosshairthickness", min = 0, max = 200 },
+	{ title = "#option_crosshair.dot", cvar = "cl_crosshairdot" },
+	{ title = "#option_crosshair.t_style", cvar = "cl_crosshair_t" },
+	{ title = "#option_crosshair.alpha", cvar = "cl_crosshairusealpha" },
+	{ title = "#option_crosshair.quick_info", cvar = "hud_quickinfo" },
+	{ title = "#option_crosshair.outline", cvar = "cl_crosshair_drawoutline" },
+	{ title = "#option_crosshair.outline_thickness", cvar = "cl_crosshair_outlinethickness", min = 0.1, max = 3 },
 }
 
 local function GetCrosshairColor()
@@ -95,7 +95,7 @@ concommand.Add( "crosshair_setup", function()
 	local frame = vgui.Create( "DFrame" )
 	frame:SetSize( 600, 480 )
 	frame:Center()
-	frame:SetTitle( "#Option_Crosshair.Title" )
+	frame:SetTitle( "#option_crosshair.title" )
 	frame:MakePopup()
 
 	local crosshairMat = Material( "gui/crosshair.png" )
@@ -137,10 +137,10 @@ concommand.Add( "crosshair_setup", function()
 	local img1btn = vgui.Create( "DButton", previewBtns )
 	img1btn:Dock( LEFT )
 	img1btn:SetWide( 320 / 2 )
-	img1btn:SetText( "#Option_Crosshair.Preview_1" )
+	img1btn:SetText( "#option_crosshair.preview_1" )
 	img1btn.DoClick = function() preview:SetImage( "gui/crosshair_bg.png" ) end
 	local img2btn = vgui.Create( "DButton", previewBtns )
-	img2btn:SetText( "#Option_Crosshair.Preview_2" )
+	img2btn:SetText( "#option_crosshair.preview_2" )
 	img2btn.DoClick = function() preview:SetImage( "gui/crosshair_bg2.png" ) end
 	img2btn:Dock( FILL )
 
@@ -204,7 +204,7 @@ concommand.Add( "crosshair_setup", function()
 		mixer:SetColor( color_white ) -- hack
 		HideUselessStuff()
 	end
-	resetCrosshair:SetText( "#Option_Crosshair.Reset_Crosshair" )
+	resetCrosshair:SetText( "#option_crosshair.reset_crosshair" )
 	resetCrosshair:Dock( BOTTOM )
 
 end )
