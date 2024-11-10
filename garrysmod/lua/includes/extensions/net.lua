@@ -6,7 +6,9 @@ local MAX_EDICT_BITS = 13
 
 TYPE_COLOR = 255
 
+
 net.Receivers = {}
+net.SafeReceivers = {}
 
 --
 -- Set up a function to receive network messages
@@ -15,6 +17,22 @@ function net.Receive( name, func )
 
 	net.Receivers[ name:lower() ] = func
 
+end
+
+-- WORKAROUND: net.BytesLeft is offset by an unknown amount, but relative offset is fine
+local bitsLeftStart, messgeLen = 0, 0
+net.BytesLeftInternal = net.BytesLeftInternal or net.BytesLeft
+
+--
+-- Returns the amount of data left to read in the current message. 
+-- Does nothing when sending data.
+--
+function net.BytesLeft()
+	local bytesLeft,bitsLeft = net.BytesLeft()
+	if ( !bytesLeft ) then return end
+	
+	local bits = messgeLen - (bitsLeftStart - bitsLeft)
+	return math.ceil(bits / 8), bits
 end
 
 --
@@ -26,8 +44,9 @@ function net.Incoming( len, client )
 	local strName = util.NetworkIDToString( i )
 
 	if ( !strName ) then return end
-
-	local func = net.Receivers[ strName:lower() ]
+	
+	local strLowerName = strName:lower()
+	local func = net.Receivers[ strLowerName ]
 	if ( !func ) then return end
 
 	--
@@ -35,9 +54,72 @@ function net.Incoming( len, client )
 	--
 	len = len - 16
 
-	func( len, client )
+	-- WORKAROUND: Store relative offset of BytesLeft to patch it later
+	local _, bytesLeft = net.BytesLeft()
+	messgeLen = len
+	bitsLeftStart = bytesLeft
+
+	if ( !func ) then return end
+	
+	local safeReceiverMode = net.SafeReceivers[ strLowerName ]
+	if ( safeReceiverMode != nil ) then
+		net.IncomingSafeInternal(strLowerName, func, len, client, safeReceiverMode)
+	else
+		func( len, client )
+	end
+	
+end
+
+--
+-- Handle executing Incoming handlers safely
+--
+function net.IncomingSafeInternal(name, func, len, ply, keepOnError)
+	
+	local ok, errorMessage = xpcall(func, debug.traceback)
+	if ( !ok ) then
+		if ( keepOnError == true ) then
+			net.Receivers[ name ] = nil
+		end
+		
+		if ( CLIENT ) then
+			ErrorNoHalt(("Net message '%s' ERROR: %s\n"):format(name, errorMessage))
+		else
+			ErrorNoHalt(("Net message '%s' for %s ERROR: %s\n"):format(name, ply, errorMessage))
+		end
+		return
+	end
+	
+	if ( net.BytesLeft() > 0 ) then
+		if ( keepOnError == true ) then
+			net.Receivers[ name ] = nil
+		end
+		
+		if ( CLIENT ) then
+			local _, bitsLeft = net.BytesLeft()
+			ErrorNoHalt(("Net message '%s' not fully consumed: %d bits left\n"):format(name, bitsLeft))
+		else
+			local _, bitsLeft = net.BytesLeft()
+			ErrorNoHalt(("Net message '%s' not fully consumed for %s: %d bits left\n"):format(name, ply, bitsLeft))
+		end
+	end
+end
+
+--
+-- Set up a hardened function to receive network messages.
+-- Gives detailed on error on failure or if received data has not been fully read.
+-- Removes the failed receiver on error unless keepOnError is set to true.
+-- Setting keepOnError to false may allow a DoS attacks.
+--
+function net.ReceiveSafe( name, func, keepOnError )
+	
+	if ( keepOnError != true ) then
+		keepOnError = false
+	end
+	net.SafeReceivers[ name:lower() ] = keepOnError
+	net.Receive( name, func )
 
 end
+
 
 --
 -- Read/Write a boolean to the stream
