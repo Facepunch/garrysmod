@@ -55,7 +55,7 @@ function net.Incoming( len, client )
 	len = len - 16
 
 	-- WORKAROUND: Store relative offset of BytesLeft to patch it later
-	local _, bytesLeft = net.BytesLeft()
+	local _, bytesLeft = net.BytesLeftInternal()
 	messgeLen = len
 	bitsLeftStart = bytesLeft
 
