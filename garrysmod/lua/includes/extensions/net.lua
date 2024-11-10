@@ -28,7 +28,7 @@ net.BytesLeftInternal = net.BytesLeftInternal or net.BytesLeft
 -- Does nothing when sending data.
 --
 function net.BytesLeft()
-	local bytesLeft,bitsLeft = net.BytesLeft()
+	local bytesLeft,bitsLeft = net.BytesLeftInternal()
 	if ( !bytesLeft ) then return end
 	
 	local bits = messgeLen - ( bitsLeftStart - bitsLeft )
@@ -55,7 +55,7 @@ function net.Incoming( len, client )
 	len = len - 16
 
 	-- WORKAROUND: Store relative offset of BytesLeft to patch it later
-	local _, bytesLeft = net.BytesLeftInternal()
+	local _, bytesLeft = net.BytesLeft()
 	messgeLen = len
 	bitsLeftStart = bytesLeft
 
