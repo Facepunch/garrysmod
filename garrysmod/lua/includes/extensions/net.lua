@@ -31,8 +31,8 @@ function net.BytesLeft()
 	local bytesLeft,bitsLeft = net.BytesLeft()
 	if ( !bytesLeft ) then return end
 	
-	local bits = messgeLen - (bitsLeftStart - bitsLeft)
-	return math.ceil(bits / 8), bits
+	local bits = messgeLen - ( bitsLeftStart - bitsLeft )
+	return math.ceil( bits / 8 ), bits
 end
 
 --
@@ -63,7 +63,7 @@ function net.Incoming( len, client )
 	
 	local safeReceiverMode = net.SafeReceivers[ strLowerName ]
 	if ( safeReceiverMode != nil ) then
-		net.IncomingSafeInternal(strLowerName, func, len, client, safeReceiverMode)
+		net.IncomingSafeInternal( strLowerName, func, len, client, safeReceiverMode )
 	else
 		func( len, client )
 	end
@@ -75,40 +75,40 @@ end
 --
 function net.IncomingSafeInternal(name, func, len, ply, keepOnError)
 	
-	local ok, errorMessage = xpcall(func, debug.traceback)
+	local ok, errorMessage = xpcall( func, debug.traceback )
 	if ( !ok ) then
-		if ( keepOnError == true ) then
+		if ( !keepOnError ) then
 			net.Receivers[ name ] = nil
 		end
 		
 		if ( CLIENT ) then
-			ErrorNoHalt(("Net message '%s' ERROR: %s\n"):format(name, errorMessage))
+			ErrorNoHalt(("Net message '%s' ERROR: %s\n"):format( name, errorMessage ))
 		else
-			ErrorNoHalt(("Net message '%s' for %s ERROR: %s\n"):format(name, ply, errorMessage))
+			ErrorNoHalt(("Net message '%s' for %s ERROR: %s\n"):format( name, ply, errorMessage ))
 		end
 		return
 	end
 	
 	if ( net.BytesLeft() > 0 ) then
-		if ( keepOnError == true ) then
+		if ( !keepOnError ) then
 			net.Receivers[ name ] = nil
 		end
 		
 		if ( CLIENT ) then
 			local _, bitsLeft = net.BytesLeft()
-			ErrorNoHalt(("Net message '%s' not fully consumed: %d bits left\n"):format(name, bitsLeft))
+			ErrorNoHalt(("Net message '%s' not fully consumed: %d bits left\n"):format( name, bitsLeft ))
 		else
 			local _, bitsLeft = net.BytesLeft()
-			ErrorNoHalt(("Net message '%s' not fully consumed for %s: %d bits left\n"):format(name, ply, bitsLeft))
+			ErrorNoHalt(("Net message '%s' not fully consumed for %s: %d bits left\n"):format( name, ply, bitsLeft ))
 		end
 	end
 end
 
 --
 -- Set up a hardened function to receive network messages.
--- Gives detailed on error on failure or if received data has not been fully read.
+-- Errors on failure or if received data has not been fully read.
 -- Removes the failed receiver on error unless keepOnError is set to true.
--- Setting keepOnError to false may allow a DoS attacks.
+-- Setting keepOnError to false may allow DoS attacks.
 --
 function net.ReceiveSafe( name, func, keepOnError )
 	
