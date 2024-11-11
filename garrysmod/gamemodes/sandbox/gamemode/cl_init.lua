@@ -152,11 +152,7 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 				tab.color = color
 				tab.size = size
 
-				if ( val == true ) then
-
-					tab[ 1 ] = target
-
-				elseif ( isentity( val ) ) then
+				if ( isentity( val ) ) then
 
 					tab[ 1 ] = val
 
