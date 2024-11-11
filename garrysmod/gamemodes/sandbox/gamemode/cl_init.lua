@@ -123,11 +123,64 @@ local PhysgunHalos = {}
 -----------------------------------------------------------]]
 function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
-	if ( physgun_halo:GetInt() == 0 ) then return true end
+	if ( !physgun_halo:GetBool() ) then 
+		
+		PhysgunHalos = nil
+		
+		return true 
 
-	if ( IsValid( target ) ) then
-		PhysgunHalos[ ply ] = target
 	end
+
+	PhysgunHalos = PhysgunHalos || {}
+
+	local tab = PhysgunHalos[ ply ] || {}
+	
+	if ( IsValid( target ) ) then
+		
+		local DrawPhysgunHalo = target.DrawPhysgunHalo 
+
+		--
+		-- Allow entities to suppress the halo or to add the halo to other entities
+		-- e.g. adding the halo to entities parented to the entity
+		--
+		if ( DrawPhysgunHalo ) then
+
+			local val, color, size = DrawPhysgunHalo( target, ply, weapon, boneid, pos )
+
+			if ( val != nil ) then
+
+				tab.color = color
+				tab.size = size
+
+				if ( val == true ) then
+
+					tab[ 1 ] = target
+
+				elseif ( isentity( val ) ) then
+
+					tab[ 1 ] = val
+
+				elseif ( istable( val ) ) then
+
+					for k, ent in ipairs( val ) do
+
+						tab[ k ] = ent
+
+					end
+
+				end
+
+			end
+
+		else
+
+			tab[ 1 ] = target
+
+		end
+
+	end
+
+	PhysgunHalos[ ply ] = tab
 
 	return true
 
@@ -135,23 +188,44 @@ end
 
 hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
-	if ( !PhysgunHalos || table.IsEmpty( PhysgunHalos ) ) then return end
+	if ( !PhysgunHalos ) then return end
 
 	for k, v in pairs( PhysgunHalos ) do
 
-		if ( !IsValid( k ) ) then continue end
+		if ( !IsValid( k ) or !v[ 1 ] ) then continue end
 
-		local size = math.random( 1, 2 )
-		local colr = k:GetWeaponColor() + VectorRand() * 0.3
+		local size = v.size
+		local color = v.color
 
-		halo.Add( PhysgunHalos, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
+		if ( size ) then
+
+			v.size = nil
+
+		else
+
+			size = math.random( 1, 2 )
+
+		end
+
+		if ( color ) then
+
+			v.color = nil
+
+			halo.Add( v, color, size, size, 1, true, false )
+
+		else
+
+			color = k:GetWeaponColor() + VectorRand() * 0.3
+
+			halo.Add( v, Color( color.x * 255, color.y * 255, color.z * 255 ), size, size, 1, true, false )
+
+		end
 
 	end
 
 	PhysgunHalos = {}
 
 end )
-
 
 --[[---------------------------------------------------------
 	Name: gamemode:NetworkEntityCreated()
