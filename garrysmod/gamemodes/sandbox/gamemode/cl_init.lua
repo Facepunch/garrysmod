@@ -140,7 +140,7 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 		local DrawPhysgunHalo = target.DrawPhysgunHalo 
 
 		--
-		-- Allow entities to suppress the halo or to add the halo to other entities
+		-- Allow entities to modify how the halo is drawn, or to add the halo to other entities
 		-- e.g. adding the halo to entities parented to the entity
 		--
 		if ( DrawPhysgunHalo ) then
