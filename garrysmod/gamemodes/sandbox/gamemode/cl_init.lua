@@ -131,13 +131,9 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
 	end
 
+	if ( !IsValid( target ) ) then return true end
+
 	physgunHalos = physgunHalos || {}
-	
-	if ( !IsValid( target ) ) then
-
-		return true
-
-	end
 
 	local entsToHalo = {}
 
