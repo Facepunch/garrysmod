@@ -115,7 +115,7 @@ function GM:PostRenderVGUI()
 
 end
 
-local PhysgunHalos = {}
+local physgunHalos = {}
 
 --[[---------------------------------------------------------
 	Name: gamemode:DrawPhysgunBeam()
@@ -125,58 +125,65 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
 	if ( !physgun_halo:GetBool() ) then 
 		
-		PhysgunHalos = nil
+		physgunHalos = nil
 		
 		return true 
 
 	end
 
-	PhysgunHalos = PhysgunHalos || {}
-
-	local tab = PhysgunHalos[ ply ] || {}
+	physgunHalos = physgunHalos || {}
 	
-	if ( IsValid( target ) ) then
-		
-		local DrawPhysgunHalo = target.DrawPhysgunHalo 
+	if ( !IsValid( target ) ) then
 
-		--
-		-- Allow entities to modify how the halo is drawn, or to add the halo to other entities
-		-- e.g. adding the halo to entities parented to the entity
-		--
-		if ( DrawPhysgunHalo ) then
-
-			local val, color, size = DrawPhysgunHalo( target, ply, weapon, boneid, pos )
-
-			if ( val != nil ) then
-
-				tab.color = color
-				tab.size = size
-
-				if ( isentity( val ) ) then
-
-					tab[ 1 ] = val
-
-				elseif ( istable( val ) ) then
-
-					for k, ent in ipairs( val ) do
-
-						tab[ k ] = ent
-
-					end
-
-				end
-
-			end
-
-		else
-
-			tab[ 1 ] = target
-
-		end
+		return true
 
 	end
 
-	PhysgunHalos[ ply ] = tab
+	local entsToHalo = {}
+
+	local haloColor = ply:GetWeaponColor() + VectorRand() * 0.3
+	local haloSize = math.random( 1, 2 )
+
+	haloColor = Color( haloColor.r * 255, haloColor.g * 255, haloColor.b * 255 )
+
+	--
+	-- Allow entities to suppress the halo or to add the halo to other entities
+	-- e.g. adding the halo to entities parented to the entity
+	--
+	local DeterminePhysgunHalo = target.DeterminePhysgunHalo 
+	
+	if ( DeterminePhysgunHalo ) then
+
+		local val, color, size = DeterminePhysgunHalo( target, ply, haloColor, haloSize, weapon, boneid, pos )
+
+		if ( val != nil ) then
+
+			haloColor = color or haloColor
+			haloSize = size or haloSize
+
+			if ( isentity( val ) ) then
+
+				entsToHalo[ 1 ] = val
+
+			elseif ( istable( val ) ) then
+
+				entsToHalo = val
+
+			end
+
+		end
+
+	else
+
+		entsToHalo[ 1 ] = target
+
+	end
+
+	-- We put these in the table for convenience
+	entsToHalo.color = haloColor
+	entsToHalo.size = haloSize
+
+	physgunHalos[ ply ] = entsToHalo
 
 	return true
 
@@ -184,42 +191,24 @@ end
 
 hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
-	if ( !PhysgunHalos ) then return end
+	if ( !physgunHalos ) then return end
 
-	for k, v in pairs( PhysgunHalos ) do
+	for ply, entsToHalo in pairs( physgunHalos ) do
 
-		if ( !IsValid( k ) or !v[ 1 ] ) then continue end
+		if ( !IsValid( ply ) or !entsToHalo[ 1 ] ) then continue end
 
-		local size = v.size
-		local color = v.color
+		local size = entsToHalo.size
+		local color = entsToHalo.color
 
-		if ( size ) then
+		-- Remove these from the table, we got what we needed - halo.Add only accepts entities
+		entsToHalo.size = nil
+		entsToHalo.color = nil
 
-			v.size = nil
-
-		else
-
-			size = math.random( 1, 2 )
-
-		end
-
-		if ( color ) then
-
-			v.color = nil
-
-			halo.Add( v, color, size, size, 1, true, false )
-
-		else
-
-			color = k:GetWeaponColor() + VectorRand() * 0.3
-
-			halo.Add( v, Color( color.x * 255, color.y * 255, color.z * 255 ), size, size, 1, true, false )
-
-		end
+		halo.Add( entsToHalo, color, size, size, 1, true, false )
 
 	end
 
-	PhysgunHalos = {}
+	physgunHalos = {}
 
 end )
 
