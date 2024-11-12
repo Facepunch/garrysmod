@@ -97,7 +97,7 @@ local tblRow = vgui.RegisterTable( {
 			surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 			surface.DrawRect( w * 0.45, 0, w, h )
 		elseif ( editing ) then
-			local skinColor = Skin.Colours.Properties.Column_Disabled
+			local skinColor = Skin.Colours.Properties.Column_Selected
 			
 			surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 			surface.DrawRect( 0, 0, w * 0.45, h )
