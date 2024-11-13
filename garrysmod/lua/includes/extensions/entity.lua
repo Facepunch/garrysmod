@@ -12,7 +12,7 @@ function meta:AddSpawnFlags( ... )
     self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), ... ) )
 end
 
-function meta:RemoveSpawnFlag( ... )
+function meta:RemoveSpawnFlags( ... )
     self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( ... ) ) )
 end
 
