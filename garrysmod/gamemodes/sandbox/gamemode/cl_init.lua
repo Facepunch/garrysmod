@@ -140,12 +140,8 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 	local haloColor = ply:GetWeaponColor() + VectorRand() * 0.3
 	local haloSize = math.random( 1, 2 )
 
-	haloColor = Color( haloColor.r * 255, haloColor.g * 255, haloColor.b * 255 )
+	haloColor = Color( haloColor.r * 255, haloColor.g * 255, haloColor.b * 255, 255 )
 
-	--
-	-- Allow entities to suppress the halo or to add the halo to other entities
-	-- e.g. adding the halo to entities parented to the entity
-	--
 	local DeterminePhysgunHalo = target.DeterminePhysgunHalo 
 	
 	if ( DeterminePhysgunHalo ) then
