@@ -142,5 +142,5 @@ if ( IsMounted( "portal" ) ) then
 	ADD_ITEM( "prop_glados_core", 32, { KeyValues = { CoreType = 3 } }, "prop_glados_core_morality" )
 end
 
-Category = "#spawnmenu.altcategory.other"
+Category = "#general_other_noname"
 ADD_WEAPON( "weapon_physgun" )

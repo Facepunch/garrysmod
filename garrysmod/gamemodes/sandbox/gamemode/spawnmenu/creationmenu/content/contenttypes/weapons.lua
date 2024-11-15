@@ -8,7 +8,7 @@ local function BuildWeaponCategories()
 
 		if ( !weapon.Spawnable ) then continue end
 
-		local Category = weapon.Category or "Other"
+		local Category = weapon.Category or "#general_other_noname"
 		if ( !isstring( Category ) ) then Category = tostring( Category ) end
 
 		Categorised[ Category ] = Categorised[ Category ] or {}
@@ -116,7 +116,7 @@ local function AutorefreshWeaponToSpawnmenu( weapon, name )
 	end
 
 	-- Add to new category.. by rebuilding it
-	local category = weapon.Category or "Other"
+	local category = weapon.Category or "#general_other_noname"
 
 	if ( IsValid( tree.Categories[ category ] ) ) then
 		if ( IsValid( tree.Categories[ category ].PropPanel ) ) then

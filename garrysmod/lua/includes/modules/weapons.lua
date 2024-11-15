@@ -58,7 +58,7 @@ function Register( t, name )
 	list.Set( "Weapon", name, {
 		ClassName = name,
 		PrintName = t.PrintName or name,
-		Category = t.Category or "#spawnmenu.altcategory.other",
+		Category = t.Category or "#general_other_noname",
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
 		ScriptedEntityType = t.ScriptedEntityType,

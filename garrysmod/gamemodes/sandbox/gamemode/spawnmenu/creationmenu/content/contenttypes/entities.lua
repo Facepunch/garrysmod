@@ -12,7 +12,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 	if ( SpawnableEntities ) then
 		for k, v in pairs( SpawnableEntities ) do
 
-			local Category = v.Category or "Other"
+			local Category = v.Category or "#general_other_noname"
 			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 

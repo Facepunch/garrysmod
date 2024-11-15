@@ -66,7 +66,7 @@ end
 -- List the NPC as spawnable
 --
 list.Set( "NPC", "npc_tf2_ghost", {
-	Name = "Example NPC",
+	Name = "#npc_gmod_nextbot_example",
 	Class = "npc_tf2_ghost",
-	Category = "Nextbot"
+	Category = "#spawnmenu.npcs.category.nextbot"
 } )
