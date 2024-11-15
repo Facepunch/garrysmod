@@ -29,12 +29,12 @@ hook.Add( "RenderScreenspaceEffects", "RenderTexturize", function()
 
 end )
 
-list.Set( "TexturizeMaterials", "plain", { Material = "pp/texturize/plain.png", Icon = "pp/texturize/plain.png" } )
-list.Set( "TexturizeMaterials", "pattern1", { Material = "pp/texturize/pattern1.png", Icon = "pp/texturize/pattern1.png" } )
-list.Set( "TexturizeMaterials", "rainbow", { Material = "pp/texturize/rainbow.png", Icon = "pp/texturize/rainbow.png" } )
-list.Set( "TexturizeMaterials", "lines", { Material = "pp/texturize/lines.png", Icon = "pp/texturize/lines.png" } )
-list.Set( "TexturizeMaterials", "pinko", { Material = "pp/texturize/pinko.png", Icon = "pp/texturize/pinko.png" } )
-list.Set( "TexturizeMaterials", "squaredo", { Material = "pp/texturize/squaredo.png", Icon = "pp/texturize/squaredo.png" } )
+list.Set( "TexturizeMaterials", "#tm_plain", { Material = "pp/texturize/plain.png", Icon = "pp/texturize/plain.png" } )
+list.Set( "TexturizeMaterials", "#tm_pattern1", { Material = "pp/texturize/pattern1.png", Icon = "pp/texturize/pattern1.png" } )
+list.Set( "TexturizeMaterials", "#tm_rainbow", { Material = "pp/texturize/rainbow.png", Icon = "pp/texturize/rainbow.png" } )
+list.Set( "TexturizeMaterials", "#tm_lines", { Material = "pp/texturize/lines.png", Icon = "pp/texturize/lines.png" } )
+list.Set( "TexturizeMaterials", "#tm_pinko", { Material = "pp/texturize/pinko.png", Icon = "pp/texturize/pinko.png" } )
+list.Set( "TexturizeMaterials", "#tm_squaredo", { Material = "pp/texturize/squaredo.png", Icon = "pp/texturize/squaredo.png" } )
 
 list.Set( "PostProcess", "#texturize_pp", {
 
