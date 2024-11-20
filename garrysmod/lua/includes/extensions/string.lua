@@ -449,3 +449,11 @@ function string.NiceName( name )
 	return ret
 
 end
+
+function string.IsNullOrEmpty(value)
+	return value == nil or #value == 0
+end
+
+function string.IsNullOrWhitespace(value)
+	return value == nil or value:match("^%s*$") ~= nil
+end
