@@ -242,7 +242,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\nAuthor: " .. ENTinfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
-	
+
 	icon:SetTooltip( toolTip )
 
 	icon.DoClick = function()
@@ -275,6 +275,18 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	icon:SetMaterial( obj.material )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 0, 0, 0, 255 ) )
+
+	-- Generate a nice tooltip with extra info
+	local VehicleInfo = list.Get( "Vehicles" )[ obj.spawnname ]
+	if ( VehicleInfo ) then
+		local toolTip = language.GetPhrase( VehicleInfo.Name ) .. "\n"
+		if ( VehicleInfo.Information and VehicleInfo.Information != "" ) then toolTip = toolTip .. "\n" .. VehicleInfo.Information end
+
+		if ( VehicleInfo.Author and VehicleInfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. VehicleInfo.Author end
+
+		icon:SetTooltip( toolTip )
+	end
+
 	icon.DoClick = function()
 		RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )

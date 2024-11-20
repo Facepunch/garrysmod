@@ -48,20 +48,32 @@ end
 
 function ENT:ViewModelChanged( vm, old, new )
 
-	-- Ignore other peoples viewmodel changes!
+	-- Ignore other people's viewmodel changes!
 	if ( vm:GetOwner() != self:GetOwner() ) then return end
+
+	-- Don't try to attach again if we're already attached
+	if ( self:GetParent() == vm ) then return end
 
 	self:AttachToViewmodel( vm )
 
 end
 
+function ENT:OnRemove( fullUpdate )
+
+	if ( fullUpdate ) then return end
+
+	-- Resolve engine complaints when unparenting from the viewmodel
+	self:SetPos( vector_origin )
+
+end
+
 function ENT:AttachToViewmodel( vm )
+
+	self:SetPos( self:GetOwner():GetPos() )
+	self:SetAngles( angle_zero )
 
 	self:AddEffects( EF_BONEMERGE )
 	self:SetParent( vm )
 	self:SetMoveType( MOVETYPE_NONE )
-
-	self:SetPos( vector_origin )
-	self:SetAngles( angle_zero )
 
 end

@@ -105,6 +105,8 @@ local function AutorefreshWeaponToSpawnmenu( weapon, name )
 		if ( !IsValid( catPnl.PropPanel ) ) then continue end
 
 		for _, icon in pairs( catPnl.PropPanel.IconList:GetChildren() ) do
+			if ( icon:GetName() != "ContentIcon" ) then continue end
+
 			if ( icon:GetSpawnName() == name ) then
 				icon:Remove()
 			end

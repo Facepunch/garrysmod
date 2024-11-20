@@ -1,5 +1,5 @@
 
-	<div class="page" ng-controller="ControllerServers">
+	<div class="page server_browser" ng-controller="ControllerServers">
 
 		<div class="options">
 
@@ -137,6 +137,8 @@
 							<span>{{ServerName(server)}}
 								<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
 							</span>
+								
+							<lastvisited ng-hide="server.lastplayed == 0"><lbl ng-tranny="'server_lastvisit'"></lbl> {{server.lastplayedStr}}</lastvisited>
 						</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>

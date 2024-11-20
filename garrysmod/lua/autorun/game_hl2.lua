@@ -62,6 +62,9 @@ ADD_ITEM( "grenade_helicopter", 4 )
 if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/striderbuster.pcf" )
 	ADD_ITEM( "weapon_striderbuster" )
+
+	-- Needs duplicator support
+	--ADD_ITEM( "combine_mine", -8, { KeyValues = { Modification = 1 } }, "combine_mine_resistance" )
 end
 
 -- Weapons
@@ -121,6 +124,9 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	ADD_ITEM( "ammo_357", 0 )
 	ADD_ITEM( "ammo_rpgclip", 0 )
 	ADD_ITEM( "ammo_buckshot", 0 )
+
+	-- Can't be physgunned
+	--ADD_ITEM( "xen_plantlight", -16 )
 
 	ADD_NPC_WEAPON( "weapon_357_hl1" )
 	ADD_NPC_WEAPON( "weapon_glock_hl1" )

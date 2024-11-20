@@ -76,24 +76,14 @@ end
 --
 -- Read/Write a player to the stream
 --
+local maxplayers_bits = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
+
 function net.WritePlayer( ply )
-
-	if ( !IsValid( ply ) || !ply:IsPlayer() ) then 
-		net.WriteUInt( 0, 8 )
-	else
-		net.WriteUInt( ply:EntIndex(), 8 )
-	end
-
+	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, maxplayers_bits )
 end
 
 function net.ReadPlayer()
-
-	local i = net.ReadUInt( 8 )
-	if ( !i ) then return end
-	
-	local ply = Entity( i )
-	return ply
-	
+	return Entity( net.ReadUInt( maxplayers_bits ) )
 end
 
 
@@ -133,7 +123,7 @@ end
 --
 -- Write a whole table to the stream
 -- This is less optimal than writing each
--- item indivdually and in a specific order
+-- item individually and in a specific order
 -- because it adds type information before each var
 --
 function net.WriteTable( tab, seq )
