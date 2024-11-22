@@ -71,10 +71,13 @@ end
 	Name: Call( name, args )
 	Desc: Calls a gamemode function
 -----------------------------------------------------------]]
+local CurrentGM
+
 function Call( name, ... )
-
-	local CurrentGM = gmod.GetGamemode()
-
+	if ( !CurrentGM ) then
+        CurrentGM = gmod.GetGamemode()
+    end
+	
 	-- If the gamemode function doesn't exist just return false
 	if ( CurrentGM && CurrentGM[name] == nil ) then return false end
 
