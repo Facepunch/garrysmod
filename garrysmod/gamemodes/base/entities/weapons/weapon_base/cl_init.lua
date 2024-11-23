@@ -141,9 +141,11 @@ end
 	Name: DrawWorldModel
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
+local Entity = FindMetaTable( "Entity" )
+
 function SWEP:DrawWorldModel()
 
-	self:DrawModel()
+	Entity.DrawModel( self )
 
 end
 
@@ -153,7 +155,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModelTranslucent()
 
-	self:DrawModel()
+	Entity.DrawModel( self )
 
 end
 

@@ -5,8 +5,10 @@ include( "shared.lua" )
 	Name: Draw
 	Desc: Draw it!
 -----------------------------------------------------------]]
+local Entity = FindMetaTable( "Entity" )
+
 function ENT:Draw()
-	self:DrawModel()
+	Entity.DrawModel( self )
 end
 
 --[[---------------------------------------------------------
