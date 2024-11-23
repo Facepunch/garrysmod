@@ -35,9 +35,11 @@ end
 
 if ( CLIENT ) then
 
+	local Entity = FindMetaTable( "Entity" )
+
 	function ENT:Draw( flags )
 
-		self:DrawModel( flags )
+		Entity.DrawModel( self, flags )
 
 	end
 
