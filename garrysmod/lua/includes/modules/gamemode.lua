@@ -74,6 +74,7 @@ end
 local CurrentGM
 
 function Call( name, ... )
+	
 	if ( !CurrentGM ) then
         CurrentGM = gmod.GetGamemode()
     end
