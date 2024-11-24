@@ -143,21 +143,13 @@ end
 -----------------------------------------------------------]]
 local Entity = FindMetaTable( "Entity" )
 
-function SWEP:DrawWorldModel()
-
-	Entity.DrawModel( self )
-
-end
+SWEP.DrawWorldModel = Entity.DrawModel
 
 --[[---------------------------------------------------------
 	Name: DrawWorldModelTranslucent
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
-function SWEP:DrawWorldModelTranslucent()
-
-	Entity.DrawModel( self )
-
-end
+SWEP.DrawWorldModelTranslucent = Entity.DrawModel
 
 --[[---------------------------------------------------------
 	Name: AdjustMouseSensitivity

@@ -37,11 +37,7 @@ if ( CLIENT ) then
 
 	local Entity = FindMetaTable( "Entity" )
 
-	function ENT:Draw( flags )
-
-		Entity.DrawModel( self, flags )
-
-	end
+	ENT.Draw = Entity.DrawModel
 
 	function ENT:DrawTranslucent( flags )
 
