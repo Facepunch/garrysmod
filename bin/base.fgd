@@ -1248,6 +1248,12 @@
 		78 : "Sand"
 	]
 
+	spawnflags(flags) =
+	[
+		1: "Trigger on player(s) leaving ground" : 0
+		2: "Set output activator to the player (Warning: may cause unexpected behavior change)" : 0
+	]
+
 	// Inputs
 	input Enable(void) : "Start watching the player's surface."
 	input Disable(void) : "Stop watching the player's surface."
@@ -2395,8 +2401,13 @@
 	spawnflags(flags) =
 	[
 		1: "Use Only" : 0
+		2: "Strip All Weapons First" : 0
+		//4: "Only Strip Same Weapon Type" : 0
 	]
 	master(string) : "Team Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+
+	input TriggerForAllPlayers(void) : "This will force all connected players to take the weapon(s) specified."
+	input TriggerForActivatedPlayer(string) : "This will force the player who activated to equip the specified weapon."
 ]
 
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = game_player_team :
@@ -2445,8 +2456,8 @@
 		1 : "Credits"
 		2 : "Scan Out"
 	]
-	color(color255) : "Color1" : "100 100 100"
-	color2(color255) : "Color2" : "240 110 0"
+	color(color255) : "Color1" : "100 100 100" : "The text color."
+	color2(color255) : "Color2 (Scan)" : "240 110 0" : "The color for the letter being scanned if the 'Text Effect' is set to 'Scan Out'."
 	fadein(string) : "Fade in Time (or character scan time)" : "1.5" : "The time it should take for the text to fully fade in."
 	fadeout(string) : "Fade Out Time" : "0.5" : "The time it should take for the text to fade out, after the hold time has expired."
 	holdtime(string) : "Hold Time" : "1.2" : "The time the text should stay onscreen, after fading in, before it begins to fade out."
@@ -2457,11 +2468,20 @@
 		2 : "Channel 2"
 		3 : "Channel 3"
 		4 : "Channel 4"
+		5 : "Channel 5"
+		6 : "Channel 6"
+		7 : "Channel 7"
+		8 : "Channel 8"
 	]
 	master(string) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 
 	// Inputs
 	input Display(void) : "Display the message text."
+	input SetText(string) : "Set the text to display."
+	input SetPosX(float) : "Set the text position on the screen (X Axis)."
+	input SetPosY(float) : "Set the text position on the screen (Y Axis)."
+	input SetTextColor(color255) : "Set the primary text color."
+	input SetTextColor2(color255) : "Set color of the transition text."
 ]
 
 @PointClass base(Parentname, Angles) size(-2 -2 -2, 2 2 2) = point_enable_motion_fixup :
@@ -3055,6 +3075,16 @@
 	SunSpreadAngle(float) : "Sun Spread Angle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
 
 	targetname(target_source) : "Name (Read notes)" : : "The name that other entities refer to this entity by. Setting this will allow scripts to control this entity, but will also substantially increase filesize of the map."
+]
+
+@PointClass base(Angles) iconsprite("editor/light_env.vmt") = light_directional : 
+	"A directional light with no falloff. Similar to sunlight in light_environment."
+[
+	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	_light(color255) : "Brightness" : "255 255 255 200"
+	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
+	_lightscaleHDR(float) : "BrightnessScaleHDR" : "0.7" : "Amount to scale the light by when compiling for HDR."
+	SunSpreadAngle(float) : "SpreadAngle" : 0 : "The angular extent of the light for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
 ]
 
 @PointClass base(Targetname, Angles, Light) lightprop("models/editor/spot.mdl") lightcone() sphere(_fifty_percent_distance) sphere(_zero_percent_distance) = light_spot :
@@ -5814,15 +5844,28 @@
 @SolidClass base(Targetname, Parentname) = func_precipitation :
 	"A brush entity that creates rain and snow inside its volume."
 [
-	renderamt(integer) : "Density (0-100%)" : 5
-	rendercolor(color255) : "Color (R G B)" : "100 100 100"
+	renderamt(integer) : "Density (0-100%)" : 5 : "Density of the particles for both normal and particle-based precipitation types. In range of 0 to 100."
+	//rendercolor(color255) : "Color (R G B)" : "100 100 100" : "Color for the non particle-based precipitation types." // Doesn't do anything?
 	preciptype(choices) : "Precipitation Type" : 0 =
 	[
 		0 : "Rain"
 		1 : "Snow"
 		2 : "Ash"
 		3 : "Snowfall"
+		4 : "Particle Rain"
+		5 : "Particle Ash"
+		6 : "Particle Rainstorm"
+		7 : "Particle Snow"
 	]
+	particle_name(string) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one. This is the closest particle system to the player.\n\n\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
+	particle_name_inner(string) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one. This is the middle particle system. Your map should contain the entered particle system by name in one of the PCF files in its manifest."
+	particle_name_outer(string) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one. This is the farthest particle system from the player. Your map should contain the entered particle system by name in one of the PCF files in its manifest."
+	particle_dist_inner(float) : "Particle System Distance (Inner)" : "180" : "If using custom particle systems, this will be the distance of the middle one from the player."
+]
+
+@SolidClass base(Targetname, Parentname) = func_precipitation_blocker : 
+	"A brush entity that prevents rain and snow inside its volume."
+[
 ]
 
 @SolidClass base(func_wall) = func_wall_toggle :
@@ -6779,4 +6822,12 @@
 @SolidClass = func_friction : "Surface with a change in friction. Does not apply to players." 
 [
 	modifier(integer) : "Percentage of standard (0 - 100)" : 15
+]
+
+// GMOD: From CS:GO
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
+	"An entity that precaches skybox materials and swaps them on trigger." 
+[
+	SkyboxName(string) : "Skybox Material Name" : "sky_dust"
+	input Trigger(void) : "Swap to this skybox."
 ]
