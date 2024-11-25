@@ -1,6 +1,24 @@
 
 local tblOpenMenus = {}
 
+function GetOpenDermaMenus()
+
+	local fixedCopy = {}
+
+	for k, menu in ipairs( tblOpenMenus ) do
+
+		if ( IsValid( menu ) ) then
+
+			table.insert( fixedCopy, menu )
+
+		end
+		
+	end
+
+	return fixedCopy
+
+end
+
 function RegisterDermaMenuForClose( dmenu )
 
 	table.insert( tblOpenMenus, dmenu )
@@ -30,9 +48,10 @@ function CloseDermaMenus()
 
 		end
 
+		tblOpenMenus[ k ] = nil
+
 	end
 
-	tblOpenMenus = {}
 	hook.Run( "CloseDermaMenus" )
 
 end

@@ -59,6 +59,8 @@ function Register( t, name )
 		ClassName = name,
 		PrintName = t.PrintName or name,
 		Category = t.Category or "Other",
+		SpawnListOrder = t.SpawnListOrder,
+		SubCategory = t.SubCategory,
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
 		ScriptedEntityType = t.ScriptedEntityType,

@@ -29,7 +29,27 @@ function PANEL:DoRightClick()
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
+	local oldMenuCount = #GetOpenDermaMenus()
+
 	self:OpenMenu()
+
+	local openedMenus = GetOpenDermaMenus()
+
+	local menuIndex = #openedMenus == oldMenuCount and oldMenuCount or oldMenuCount + 1
+	local menu = openedMenus[ menuIndex ]
+
+	if ( !IsValid( menu ) ) then return end
+
+	local parent = menu.ParentMenu
+
+	if ( IsValid( parent ) ) then
+
+		menu = parent
+
+	end
+
+	hook.Run( "OnSpawnIconOpenMenu", self, menu )
+	
 end
 
 function PANEL:DoClick()

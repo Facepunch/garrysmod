@@ -9,14 +9,52 @@ local function BuildWeaponCategories()
 		if ( !weapon.Spawnable ) then continue end
 
 		local Category = weapon.Category or "Other"
-		if ( !isstring( Category ) ) then Category = tostring( Category ) end
+		Category = tostring( Category )
+
+		local SubCategory = weapon.SubCategory or "Other"
+		SubCategory = tostring( SubCategory )
 
 		Categorised[ Category ] = Categorised[ Category ] or {}
-		table.insert( Categorised[ Category ], weapon )
+		Categorised[ Category ][ SubCategory ] = Categorised[ Category ][ SubCategory ] or {}
+
+		table.insert( Categorised[ Category ][ SubCategory ], weapon )
 
 	end
 
 	return Categorised
+end
+
+local function BuildContentList( tab, propPanel )
+
+	local orderedList = {}
+
+	for k, ent in SortedPairsByMemberValue( tab, "PrintName" ) do
+
+		local order = isnumber( ent.SpawnListOrder ) and ent.SpawnListOrder
+
+		if ( order ) then
+
+			table.insert( orderedList, order, ent )
+
+		else
+			
+			table.insert( orderedList, ent )
+
+		end
+
+	end
+
+	for k, ent in SortedPairs( orderedList ) do
+
+		spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", propPanel, {
+			nicename	= ent.PrintName or ent.ClassName,
+			spawnname	= ent.ClassName,
+			material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
+			admin		= ent.AdminOnly
+		} )
+
+	end
+
 end
 
 local function AddCategory( tree, cat )
@@ -37,15 +75,38 @@ local function AddCategory( tree, cat )
 		self.PropPanel:SetVisible( false )
 		self.PropPanel:SetTriggerSpawnlistChange( false )
 
-		local weps = BuildWeaponCategories()[ cat ]
-		for k, ent in SortedPairsByMemberValue( weps, "PrintName" ) do
+		local subCategories = BuildWeaponCategories()[ cat ]
+		local createOtherHeader = false
 
-			spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
-				nicename	= ent.PrintName or ent.ClassName,
-				spawnname	= ent.ClassName,
-				material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
-				admin		= ent.AdminOnly
-			} )
+		for subCategoryName, weps in SortedPairs( subCategories ) do
+
+			if ( subCategoryName == "Other" ) then continue end
+
+			local label = vgui.Create( "ContentHeader" )
+
+			label:SetText( subCategoryName )
+
+			self.PropPanel:Add( label )
+
+			BuildContentList( weps, self.PropPanel )
+
+			createOtherHeader = true
+
+		end
+
+		if ( subCategories.Other ) then
+
+			if ( createOtherHeader ) then
+
+				local label = vgui.Create( "ContentHeader" )
+
+				label:SetText( "Other" )
+
+				self.PropPanel:Add( label )
+
+			end
+
+			BuildContentList( subCategories.Other, self.PropPanel )
 
 		end
 

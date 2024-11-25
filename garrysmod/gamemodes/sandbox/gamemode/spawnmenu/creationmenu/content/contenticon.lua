@@ -90,11 +90,31 @@ end
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
+
 	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
+	local oldMenuCount = #GetOpenDermaMenus()
+
 	self:OpenMenu()
+
+	local openedMenus = GetOpenDermaMenus()
+
+	local menuIndex = #openedMenus == oldMenuCount and oldMenuCount or oldMenuCount + 1
+	local menu = openedMenus[ menuIndex ]
+
+	if ( !IsValid( menu ) ) then return end
+
+	local parent = menu.ParentMenu
+
+	if ( IsValid( parent ) ) then
+
+		menu = parent
+
+	end
+
+	hook.Run( "OnContentIconOpenMenu", self, menu )
 
 end
 
