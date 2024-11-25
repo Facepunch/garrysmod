@@ -4,7 +4,7 @@ local function BuildWeaponCategories()
 	local Categorised = {}
 
 	-- Build into categories
-	for k, weapon in pairs( weapons ) do
+	for _, weapon in pairs( weapons ) do
 
 		if ( !weapon.Spawnable ) then continue end
 
@@ -17,6 +17,15 @@ local function BuildWeaponCategories()
 	end
 
 	return Categorised
+end
+
+local function AddWeaponToCategory( propPanel, ent )
+	return spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", propPanel, {
+		nicename	= ent.PrintName or ent.ClassName,
+		spawnname	= ent.ClassName,
+		material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
+		admin		= ent.AdminOnly
+	} )
 end
 
 local function AddCategory( tree, cat )
@@ -38,15 +47,10 @@ local function AddCategory( tree, cat )
 		self.PropPanel:SetTriggerSpawnlistChange( false )
 
 		local weps = BuildWeaponCategories()[ cat ]
-		for k, ent in SortedPairsByMemberValue( weps, "PrintName" ) do
+		if ( !weps ) then return end -- May no longer have any weapons due to autorefresh
 
-			spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
-				nicename	= ent.PrintName or ent.ClassName,
-				spawnname	= ent.ClassName,
-				material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
-				admin		= ent.AdminOnly
-			} )
-
+		for _, ent in SortedPairsByMemberValue( weps, "PrintName" ) do
+			AddWeaponToCategory( self.PropPanel, ent )
 		end
 
 	end
@@ -79,9 +83,7 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, bro
 
 	-- Loop through each category
 	for cat, weps in SortedPairs( Categorised ) do
-
 		AddCategory( tree, cat )
-
 	end
 
 	-- Select the first node
@@ -91,14 +93,14 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, bro
 end )
 
 local function AutorefreshWeaponToSpawnmenu( weapon, name )
+
 	local swepTab = g_SpawnMenu.CreateMenu:GetCreationTab( "#spawnmenu.category.weapons" )
 	if ( !swepTab || !swepTab.ContentPanel || !IsValid( swepTab.Panel ) ) then return end
 
 	local tree = swepTab.ContentPanel.ContentNavBar.Tree
 	if ( !tree.Categories ) then return end
 
-	local selectedCat = ""
-	if ( IsValid( tree:GetSelectedItem() ) ) then selectedCat = tree:GetSelectedItem():GetText() end
+	local newCategory = weapon.Category or "Other"
 
 	-- Remove from previous category..
 	for cat, catPnl in pairs( tree.Categories ) do
@@ -108,48 +110,54 @@ local function AutorefreshWeaponToSpawnmenu( weapon, name )
 			if ( icon:GetName() != "ContentIcon" ) then continue end
 
 			if ( icon:GetSpawnName() == name ) then
+
+				local added = false
+				if ( cat == newCategory ) then
+					-- We already have the new category, just readd the icon here
+					local newIcon = AddWeaponToCategory( catPnl.PropPanel, weapon )
+					newIcon:MoveToBefore( icon )
+					added = true
+				end
+
 				icon:Remove()
+
+				if ( added ) then return end
 			end
 		end
 
 		-- Leave the empty categories, this only applies to devs anyway
 	end
 
-	-- Add to new category.. by rebuilding it
-	local category = weapon.Category or "Other"
-
-	if ( IsValid( tree.Categories[ category ] ) ) then
-		if ( IsValid( tree.Categories[ category ].PropPanel ) ) then
-			tree.Categories[ category ].PropPanel:Remove()
-		end
-		tree.Categories[ category ]:DoPopulate()
-
-		if ( selectedCat == category ) then
-			tree.Categories[ category ]:InternalDoClick()
+	-- Weapon changed category...
+	if ( IsValid( tree.Categories[ newCategory ] ) ) then
+		-- Only do this if it is already populated.
+		-- If not, the weapon will appear automatically when user clicks on the category
+		if ( IsValid( tree.Categories[ newCategory ].PropPanel ) ) then
+			-- Just append it to the end, heck with the order
+			AddWeaponToCategory( tree.Categories[ newCategory ].PropPanel, weapon )
 		end
 	else
-		local node = AddCategory( tree, category )
-
-		-- Reselect the category 
-		if ( selectedCat == category ) then
-			node:InternalDoClick()
-		end
+		AddCategory( tree, newCategory )
 	end
 
 end
 
-hook.Add( "PreRegisterSWEP", "spawnmenu_reload_swep", function( weapon, name )
-	if ( !weapon.Spawnable ) then return end
+local function OnPreRegisterSWEP( weapon, name )
+	if ( !weapon.Spawnable || !g_SpawnMenu ) then return end
 
 	-- Gotta wait for the next frame because this hook is called just before the weapon is registered
 	timer.Simple( 0, function() AutorefreshWeaponToSpawnmenu( weapon, name ) end )
-end )
+end
+
 
 spawnmenu.AddCreationTab( "#spawnmenu.category.weapons", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
 	ctrl:EnableSearch( "weapons", "PopulateWeapons" )
 	ctrl:CallPopulateHook( "PopulateWeapons" )
+
+	hook.Add( "PreRegisterSWEP", "spawnmenu_reload_swep", OnPreRegisterSWEP )
+
 	return ctrl
 
 end, "icon16/gun.png", 10 )
