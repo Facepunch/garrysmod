@@ -51,9 +51,6 @@ function ENT:ViewModelChanged( vm, old, new )
 	-- Ignore other people's viewmodel changes!
 	if ( vm:GetOwner() != self:GetOwner() ) then return end
 
-	-- Don't try to attach again if we're already attached
-	if ( self:GetParent() == vm ) then return end
-
 	self:AttachToViewmodel( vm )
 
 end
