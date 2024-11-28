@@ -381,19 +381,21 @@ local function RefreshMaps( skip )
 
 		table.insert( MapList[ Category ], name )
 
+		local fav_l10n = language.GetPhrase( "newgame_favorites" )
+
 		if ( fav ) then
-			if ( !MapList[ "Favourites" ] ) then
-				MapList[ "Favourites" ] = {}
+			if ( !MapList[ fav_l10n ] ) then
+				MapList[ fav_l10n ] = {}
 			end
 
-			table.insert( MapList[ "Favourites" ], name )
+			table.insert( MapList[ fav_l10n ], name )
 		end
 
 		if ( csgo ) then
 			if ( !MapList[ "Counter-Strike: GO" ] ) then
 				MapList[ "Counter-Strike: GO" ] = {}
 			end
-			-- HACK: We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
+			-- HACK: We have to make the CS:GO name different from the CS:S name to prevent Favorites conflicts
 			table.insert( MapList[ "Counter-Strike: GO" ], name .. " " )
 		end
 
