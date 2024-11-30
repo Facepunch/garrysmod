@@ -319,6 +319,20 @@ function player.Iterator()
 
 end
 
+function player.IteratorForEdit()
+
+	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
+
+	local players = {}
+	for k, v in ipairs( PlayerCache ) do
+		players[k] = v
+	end
+
+	return players
+
+end
+
+
 local function InvalidatePlayerCache( ent )
 
 	if ( ent:IsPlayer() ) then PlayerCache = nil end

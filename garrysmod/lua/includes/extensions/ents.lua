@@ -38,6 +38,19 @@ function ents.Iterator()
 
 end
 
+function ents.IteratorForEdit()
+
+	if ( EntityCache == nil ) then EntityCache = ents.GetAll() end
+
+	local entities = {}
+	for k, v in ipairs( EntityCache ) do
+		entities[k] = v
+	end
+
+	return entities
+
+end
+
 local function InvalidateEntityCache( ent )
 
 	EntityCache = nil
