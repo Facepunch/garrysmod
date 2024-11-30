@@ -38,7 +38,7 @@ function ents.Iterator()
 
 end
 
-function ents.IteratorForEdit()
+function ents.GetCached()
 
 	if ( EntityCache == nil ) then EntityCache = ents.GetAll() end
 

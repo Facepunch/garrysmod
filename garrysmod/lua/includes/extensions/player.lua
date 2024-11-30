@@ -319,7 +319,7 @@ function player.Iterator()
 
 end
 
-function player.IteratorForEdit()
+function player.GetCached()
 
 	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
 
