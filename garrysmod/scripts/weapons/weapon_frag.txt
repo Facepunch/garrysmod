@@ -1,7 +1,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"	"#HL2_Grenade"
+	"printname"	"#weapon_frag"
 	"viewmodel"				"models/weapons/c_grenade.mdl"
 	"playermodel"			"models/weapons/w_grenade.mdl"
 	"anim_prefix"			"Grenade"

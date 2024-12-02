@@ -3,7 +3,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"		"#HL1_357"
+	"printname"		"#weapon_357_hl1"
 	"viewmodel"		"models/v_357.mdl"
 	"playermodel"		"models/weapons/w_357_hls.mdl"
 	"anim_prefix"		"python"
