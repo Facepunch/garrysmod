@@ -20,8 +20,6 @@ function ents.FindByClassAndParent( classname, entity )
 
 end
 
-
-
 local inext = ipairs({})
 local EntityCache = nil
 
