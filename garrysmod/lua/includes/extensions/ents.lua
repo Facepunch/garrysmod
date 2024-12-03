@@ -4,9 +4,9 @@ function ents.FindByClassAndParent( classname, entity )
     local entslist = ents.FindByClass( classname )
 	local out = {}
 
-    for i = 1, #entslist do
+    for k, v in ipairs( entslist ) do
 
-        local p = entslist[i]:GetParent()
+        local p = v:GetParent()
 		if ( !IsValid(p) ) then continue end
 		if ( p != entity ) then continue end
 
