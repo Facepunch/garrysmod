@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName = "#GMOD_MedKit"
+SWEP.PrintName = "#weapon_medkit"
 SWEP.Author = "robotboy655, MaxOfS2D, code_gs"
 SWEP.Purpose = "Heal other people with primary attack, heal yourself with secondary attack."
 

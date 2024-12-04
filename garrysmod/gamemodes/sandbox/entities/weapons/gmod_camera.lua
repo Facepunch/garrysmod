@@ -14,7 +14,7 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
 
-SWEP.PrintName	= "#GMOD_Camera"
+SWEP.PrintName	= "#gmod_camera"
 SWEP.Author	= "Facepunch"
 
 SWEP.Slot		= 5
