@@ -66,14 +66,14 @@ end
     Args: string hookName, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
-local GamemodeCache
+local currentGM
 
 function Run( name, ... )
-	if not GamemodeCache then
-		GamemodeCache = gmod and gmod.GetGamemode() or nil
+	if ( !currentGM ) then
+		currentGM = gmod and gmod.GetGamemode() or nil
 	end
 
-	return Call( name, GamemodeCache, ... )
+	return Call( name, currentGM, ... )
 end
 
 
