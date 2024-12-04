@@ -327,24 +327,24 @@ end
 --[[---------------------------------------------------------
 	Name: SizeToContentsY (Only works on Labels)
 -----------------------------------------------------------]]
-function meta:SizeToContentsY( addVal )
+function meta:SizeToContentsY( addval )
 
 	local w, h = self:GetContentSize()
-	if ( !w or !h ) then return end
+	if ( !w || !h ) then return end
 
-	self:SetTall( h + ( addVal or 0 ) )
+	self:SetTall( h + ( addval or 0 ) )
 
 end
 
 --[[---------------------------------------------------------
 	Name: SizeToContentsX (Only works on Labels)
 -----------------------------------------------------------]]
-function meta:SizeToContentsX( addVal )
+function meta:SizeToContentsX( addval )
 
 	local w, h = self:GetContentSize()
-	if ( !w or !h ) then return end
+	if ( !w || !h ) then return end
 
-	self:SetWide( w + ( addVal or 0 ) )
+	self:SetWide( w + ( addval or 0 ) )
 
 end
 
