@@ -1,0 +1,93 @@
+﻿"lang"
+{
+
+	"Language" "English"
+
+	"Tokens"
+	{
+		"Options"		"Options"
+		"Default"		"Default"
+		"Delete"		"Delete"
+		"OnOff"			"On/Off"
+		"Save"			"Save"
+		"New"			"New"
+		"BrowseAll"		"Browse All"
+		"Toggle"		"Toggle"
+
+		"Enable_Disable"	"Enable/Disable"
+
+		"gmod_loading_title"	"Loading.."
+		"gmod_load_cancel"		"Cancel"
+		"file_progress"			"File Progress"
+		"total_progress"		"Total Progress"
+
+		"Category"			"Category"
+		"Filename"			"Filename"
+
+		"Playerid_sameteam"		"Friend: %s1 Health: %s2"
+		"Playerid_diffteam"		"Enemy: %s1"
+		"Playerid_noteam"		"%s1 Health:%s2"
+		"Team"					"Team %s1"
+
+		"Game_connected"		"%s1 connected"
+		"Game_disconnected"		"%s1 has left the game"
+
+		"Game"			"Game"
+		"MapName"		"Map Name"
+		"Name"			"Name"
+		"Score"			"Score"
+		"Deaths"		"Deaths"
+		"Ping"			"Ping"
+
+		"AuthorWebsite"		"Website:"
+		"AuthorEmail"		"Email:"
+		"AuthorName"		"Author:"
+		"Version"			"Version"
+		"Author"			"Author"
+
+		"filter_profanity"	"Filter Profanity (Steam settings apply)"
+
+		"HL2_AmmoFull"		"FULL"
+		"HL2_Saved"			"Game Saved"
+
+		// For Garry's Mod (or other games) weapon or ammo names look in garrysmod\resource\localization\<lang>\entities.properties
+
+		// Options - Game
+		"GameUI_Game" 						"Game"
+		"GameUI_DownloadFilter_NoWorkshop"	"Do not download Steam Workshop addons"
+		"GameUI_DownloadFilter_MapsOnly"	"Only allow map files"
+		"GameUI_HTMLLoadingScreen" 			"Enable custom HTML loading screens"
+		"GameUI_CrosshairCustomize" 		"Crosshair Customization"
+		"GameUI_All_ImagesNoBmp"			"All Images (*.jpg,*.tga,*.vtf)"
+
+		// Options - Video
+		"GameUI_WindowedNoBorder"		"Borderless Window"
+		"GameUI_FPS"					"Framerate Limit"
+		"GameUI_AspectAllAny"			"Any/All"
+
+		// Options - Audio
+		"GameUI_SoundFXVolume"			"Sound effect volume"
+
+		// Options - Keyboard
+		"GarrysMod_Keyboard_Title"			"GARRY'S MOD"
+		"GarrysMod_Keyboard_OpenSpawnmenu"	"Open spawn menu"
+		"GarrysMod_Keyboard_OpenContextMenu"	"Open context menu"
+		"GarrysMod_Keyboard_Undo"			"Undo"
+		"GarrysMod_Keyboard_NoclipMode"		"Toggle no-clip mode"
+		"GarrysMod_Keyboard_RecordDemo"		"Start/stop recording a demo"
+		"GarrysMod_Keyboard_RecordVideo"	"Start/stop recording a video"
+		"GarrysMod_Keyboard_GameMode_Title"	"GAMEMODES"
+		"GarrysMod_Keyboard_ShowHelp"		"Open help"
+		"GarrysMod_Keyboard_ShowTeam"		"Open team menu"
+		"GarrysMod_Keyboard_ShowSpare" 		"Server customizable spare 1"
+		"GarrysMod_Keyboard_ShowSpare2"		"Server customizable spare 2"
+
+		// Options - Legal
+		"GameUI_Legal"						"Legal"
+		"GameUI_Legal_PrivacyPolicy"		"Privacy Policy"
+		"GameUI_Legal_TermsOfService"		"Terms Of Service"
+		"GameUI_Legal_ModdingGuidelines"	"Modding Guidelines"
+		"GameUI_Legal_ServerOperatorRules"	"Server Operator Rules"
+		"GameUI_Legal_CEFCredits"			"Chromium Embedded Framework Credits"
+	}
+}
