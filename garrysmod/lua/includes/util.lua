@@ -377,6 +377,10 @@ end
 -----------------------------------------------------------]]
 function IsMounted( name )
 
+	if ( name == "episodic" || name == "ep2" || name == "lostcoast" ) then
+		name = "hl2"
+	end
+
 	local games = engine.GetGames()
 
 	for k, v in pairs( games ) do

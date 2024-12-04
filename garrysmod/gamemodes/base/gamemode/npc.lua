@@ -55,6 +55,7 @@ function GM:GetDeathNoticeEntityName( ent )
 		if ( ent:GetName() == "tobias" ) then return "Laszlo" end
 		if ( ent:GetName() == "stanley" ) then return "Sandy" end
 	end
+	if ( ent:GetClass() == "npc_sniper" and ( ent:GetName() == "alyx_sniper" || ent:GetName() == "sniper_alyx" ) ) then return "#npc_alyx" end
 
 	-- Custom vehicle and NPC names from spawnmenu
 	if ( ent:IsVehicle() and ent.VehicleTable and ent.VehicleTable.Name ) then
@@ -64,41 +65,6 @@ function GM:GetDeathNoticeEntityName( ent )
 		return ent.NPCTable.Name
 	end
 
-	-- Map spawned Odessa or Rebels, etc..
-	for unique_class, NPC in pairs( list.Get( "NPC" ) ) do
-		if ( unique_class == NPC.Class or ent:GetClass() != NPC.Class ) then continue end
-
-		local allGood = true
-		if ( NPC.Model and ent:GetModel() != NPC.Model ) then
-			allGood = false
-		end
-
-		if ( NPC.Skin and ent:GetSkin() != NPC.Skin ) then
-			allGood = false
-		end
-
-		-- For Rebels, etc.
-		if ( NPC.KeyValues ) then
-			for k, v in pairs( NPC.KeyValues ) do
-				local kL = k:lower()
-				if ( kL != "squadname" and kL != "numgrenades" and ent:GetInternalVariable( k ) != v ) then
-					allGood = false
-					break
-				end
-			end
-
-			-- They get unset often :(
-			--if ( NPC.SpawnFlags and ent:HasSpawnFlags( NPC.SpawnFlags ) ) then allGood = false end
-		end
-
-		-- Medics, ew..
-		if ( unique_class == "Medic" and !ent:HasSpawnFlags( SF_CITIZEN_MEDIC ) ) then allGood = false end
-		if ( unique_class == "Rebel" and ent:HasSpawnFlags( SF_CITIZEN_MEDIC ) ) then allGood = false end
-
-		if ( allGood ) then return NPC.Name end
-	end
-
-	-- Unfortunately the code above still doesn't work for Antlion Workers, because they change their classname..
 	if ( ent:GetClass() == "npc_antlion" and ent:GetModel() == "models/antlion_worker.mdl" ) then
 		return list.Get( "NPC" )[ "npc_antlion_worker" ].Name
 	end

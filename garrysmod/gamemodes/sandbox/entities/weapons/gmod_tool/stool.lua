@@ -147,6 +147,11 @@ for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
 	local _, _, toolmode = string.find( val, "([%w_]*).lua" )
 
+	-- In multiplayer, the clientside filename is always lowercase (due to the Lua datapack)
+	-- So ensure that the toolmode matches between client and server,
+	-- when the serverside name is not all lowercase
+	toolmode = toolmode:lower()
+
 	TOOL = ToolObj:Create()
 	TOOL.Mode = toolmode
 

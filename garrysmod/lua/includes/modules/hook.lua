@@ -30,7 +30,7 @@ function Add( event_name, name, func )
 	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) return end
 	if ( !isfunction( func ) ) then ErrorNoHaltWithStack( "bad argument #3 to 'Add' (function expected, got " .. type( func ) .. ")" ) return end
 
-	local notValid = name == nil || isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
+	local notValid = name == nil || isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid
 	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Add' (string expected, got " .. type( name ) .. ")" ) return end
 
 	if ( Hooks[ event_name ] == nil ) then
@@ -51,7 +51,7 @@ function Remove( event_name, name )
 
 	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Remove' (string expected, got " .. type( event_name ) .. ")" ) return end
 
-	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
+	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid
 	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Remove' (string expected, got " .. type( name ) .. ")" ) return end
 
 	if ( !Hooks[ event_name ] ) then return end
@@ -66,8 +66,14 @@ end
     Args: string hookName, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
+local currentGM
+
 function Run( name, ... )
-	return Call( name, gmod and gmod.GetGamemode() or nil, ... )
+	if ( !currentGM ) then
+		currentGM = gmod and gmod.GetGamemode() or nil
+	end
+
+	return Call( name, currentGM, ... )
 end
 
 

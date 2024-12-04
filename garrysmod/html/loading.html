@@ -36,12 +36,10 @@
 				var today = new Date();
 
 				// Force it to dark on Spooktober or when it's late
-				var isHalloween = today.getMonth() == 10 && today.getDate() >= 15 || today.getMonth() == 11 && today.getDate() <= 5;
-
+				var isHalloween = today.getMonth() == 9 && today.getDate() >= 15 || today.getMonth() == 10 && today.getDate() <= 5;
 				var darkMode = today.getHours() >= 19 || today.getHours() <= 7;
 
 				var isSupportsSystemDarkMode = navigator.userAgent.match(/Chrome\/(\d+)/)[1] >= 76;
-
 				var systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 				if (isHalloween || (isSupportsSystemDarkMode ? systemDarkMode : darkMode)) {

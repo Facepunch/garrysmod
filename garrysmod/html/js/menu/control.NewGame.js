@@ -180,7 +180,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		if ( $rootScope.MaxPlayers > 0 )
 		{
 			lua.Run( 'RunConsoleCommand( "sv_cheats", "0" )' );
-			lua.Run( 'RunConsoleCommand( "commentary", "0" )' );
+			//lua.Run( 'RunConsoleCommand( "commentary", "0" )' );
 		}
 
 		// $scope.ServerSettings gets changed from Lua between this point and the timeout below
