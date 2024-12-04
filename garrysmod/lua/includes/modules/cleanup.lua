@@ -68,7 +68,7 @@ if ( SERVER ) then
 		cleanup_list[ id ][ type ] = cleanup_list[ id ][ type ] or {}
 
 		table.insert( cleanup_list[ id ][ type ], ent )
-	
+
 	end
 
 	function ReplaceEntity( from, to )
