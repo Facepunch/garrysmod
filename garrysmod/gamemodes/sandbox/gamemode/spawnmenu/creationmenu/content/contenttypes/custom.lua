@@ -206,7 +206,7 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 	node.DoRightClick = function( self )
 
 		local menu = DermaMenu()
-		menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", node ) node:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
+		menu:AddOption( "#spawnmenu.menu.new_category", function() AddCustomizableNode( pnlContent, "#spawnmenu.menu.new_category", "", node ) node:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
 		menu:Open()
 
 	end

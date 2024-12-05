@@ -10,7 +10,7 @@ end
 
 
 
-local Category = "Humans + Resistance"
+local Category = "#spawnmenu.npcs.category.humans_and_resistance"
 
 AddNPC( {
 	Class = "npc_alyx",
@@ -158,7 +158,7 @@ if ( IsMounted( "episodic" ) ) then
 	}, "npc_rollermine_hacked" )
 end
 
-Category = "Zombies + Enemy Aliens"
+Category = "#spawnmenu.npcs.category.zombie_and_enemy_aliens"
 
 AddNPC( {
 	Class = "npc_zombie",
@@ -263,7 +263,7 @@ end
 
 
 
-Category = "Animals"
+Category = "#spawnmenu.npcs.category.animals"
 
 AddNPC( {
 	Class = "npc_monk",
@@ -291,7 +291,7 @@ AddNPC( {
 
 
 
-Category = "Combine"
+Category = "#spawnmenu.npcs.category.combine"
 
 AddNPC( {
 	Class = "npc_metropolice",
