@@ -3,7 +3,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"		"#HL1_Satchel"
+	"printname"		"#weapon_satchel"
 	"viewmodel"		"models/v_satchel.mdl"
 	"playermodel"		"models/weapons/w_satchel_hls.mdl"
 	"anim_prefix"		"trip"
