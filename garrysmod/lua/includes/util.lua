@@ -175,47 +175,63 @@ FORCE_ANGLE		= 4
 FORCE_COLOR		= 5
 FORCE_VECTOR	= 6
 
+CASING_PASCAL = 1
+CASING_CAMEL = 2
+CASING_SNAKE = 3
+CASING_UPPER_SNAKE = 4
+
+local CasingStyles = {
+	[CASING_PASCAL] = {"Get", "Set"},
+	[CASING_CAMEL] = {"get", "set"},
+	[CASING_SNAKE] = {"get_", "set_"},
+	[CASING_UPPER_SNAKE] = {"GET_", "SET_"}
+}
+
 --[[---------------------------------------------------------
 	AccessorFunc
 	Quickly make Get/Set accessor fuctions on the specified table
 -----------------------------------------------------------]]
-function AccessorFunc( tab, varname, name, iForce )
+function AccessorFunc( tab, varname, name, iForce, iCasing )
+
+	iCasing = iCasing || CASING_PASCAL
+
+	local set = CasingStyles[iCasing][2]
 
 	if ( !tab ) then debug.Trace() end
 
-	tab[ "Get" .. name ] = function( self ) return self[ varname ] end
+	tab[ CasingStyles[iCasing][1] .. name ] = function( self ) return self[ varname ] end
 
 	if ( iForce == FORCE_STRING ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
+		tab[ set .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
 	return end
 
 	if ( iForce == FORCE_NUMBER ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
+		tab[ set .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
 	return end
 
 	if ( iForce == FORCE_BOOL ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
+		tab[ set .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
 	return end
 
 	if ( iForce == FORCE_ANGLE ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = Angle( v ) end
+		tab[ set .. name ] = function( self, v ) self[ varname ] = Angle( v ) end
 	return end
 
 	if ( iForce == FORCE_COLOR ) then
-		tab[ "Set" .. name ] = function( self, v )
+		tab[ set .. name ] = function( self, v )
 			if ( type( v ) == "Vector" ) then self[ varname ] = v:ToColor()
 			else self[ varname ] = string.ToColor( tostring( v ) ) end
 		end
 	return end
 
 	if ( iForce == FORCE_VECTOR ) then
-		tab[ "Set" .. name ] = function( self, v )
+		tab[ set .. name ] = function( self, v )
 			if ( IsColor( v ) ) then self[ varname ] = v:ToVector()
 			else self[ varname ] = Vector( v ) end
 		end
 	return end
 
-	tab[ "Set" .. name ] = function( self, v ) self[ varname ] = v end
+	tab[ set .. name ] = function( self, v ) self[ varname ] = v end
 
 end
 
