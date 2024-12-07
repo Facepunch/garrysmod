@@ -3,6 +3,7 @@
 -- as the entity at given index may have changed during transport.
 -- If this becomes a problem, inclusion of entity's serial will also be necessary
 local MAX_EDICT_BITS = 13
+net.MAX_EDICT_BITS = MAX_EDICT_BITS 
 
 TYPE_COLOR = 255
 
