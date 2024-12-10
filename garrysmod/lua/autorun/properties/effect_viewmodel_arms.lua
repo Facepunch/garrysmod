@@ -49,7 +49,9 @@ local armBones = {
 }
 
 -- All of the C Arm models that ship with Garry's Mod.
-local armModels = {
+-- Global so that Addons can add their own models to this list if they wish.
+-- It will be up to them to ensure it is added on both the Client and Server.
+C_ARMS = {
     "models/weapons/c_arms_citizen.mdl",
     "models/weapons/c_arms_chell.mdl",
     "models/weapons/c_arms_combine.mdl",
@@ -69,7 +71,7 @@ local function IsViewModelEffectWithArmBones( ent )
     if ( child:GetClass() ~= "prop_dynamic" ) then return false end
 
     -- Don't try to set C Arms on the C Arms models themselves
-    if ( table.HasValue( armModels, child:GetModel() ) ) then return false end
+    if ( table.HasValue( C_ARMS, child:GetModel() ) ) then return false end
 
     -- Check if the effect has all the required bones for C Arms.
     for _, boneName in ipairs( armBones ) do
@@ -86,11 +88,13 @@ properties.Add( "change_c_arms", {
     Order = 401,
 
 	Filter = function( _, ent, ply )
+
         if ( not IsValid( ent ) ) then return false end
         if ( not gamemode.Call( "CanProperty", ply, "change_c_arms", ent ) ) then return false end
         if ( not IsViewModelEffectWithArmBones( ent ) ) then return false end
 
         return true
+
 	end,
 
 	MenuOpen = function( self, option, ent, _ )
@@ -100,38 +104,44 @@ properties.Add( "change_c_arms", {
 
         local activeIndex = ent:GetNW2Int( "CArmsIndex", 0 )
 
-        -- Add a submenu to our automatically created menu option
+        -- Add a submenu to our automatically created menu option.
 		local submenu = option:AddSubMenu()
 
-        -- Add an option to remove the C Arms system
+        -- Add an option to remove the C Arms
         local removeOption = submenu:AddOption( "None" )
         removeOption:SetRadio( true )
         removeOption:SetChecked( activeIndex == 0 )
         removeOption:SetIsCheckable( true )
         removeOption.OnChecked = function( _, isChecked )
+
             if ( isChecked ) then
                 self:SetArmsModel( ent, 0 )
             end
+
         end
 
-        -- Add an option for each C Arms model
-        for modelIndex = 1, #armModels do
-            local model = armModels[ modelIndex ]
+        -- Add an option for each C Arms model.
+        for modelIndex = 1, #C_ARMS do
+            local model = C_ARMS[ modelIndex ]
             local menuOption = submenu:AddOption( model )
             menuOption:SetRadio( true )
-            menuOption:SetChecked( modelIndex == activeIndex )
+            menuOption:SetChecked( activeIndex == modelIndex )
             menuOption:SetIsCheckable( true )
             menuOption.OnChecked = function( _, isChecked )
+
                 if ( isChecked ) then
                     self:SetArmsModel( ent, modelIndex )
                 end
+
             end
         end
 
 	end,
 
 	Action = function( _, _ )
+
         -- Do nothing when clicked.  This is just a submenu header.
+
 	end,
 
     SetArmsModel = function( self, ent, index )
@@ -148,13 +158,9 @@ properties.Add( "change_c_arms", {
         local ent = net.ReadEntity()
         local index = net.ReadUInt( 8 )
 
-        if ( not IsValid( ent ) ) then return end
-        if ( index < 0 or index > #armModels ) then return end
-        if ( not properties.CanBeTargeted( ent, ply ) ) then return end
         if ( not self:Filter( ent, ply ) ) then return end
-
-        local child = ent:GetChildren()[1]
-        if not IsValid( child ) then return end
+        if ( index < 0 or index > #C_ARMS ) then return end
+        if ( not properties.CanBeTargeted( ent, ply ) ) then return end
 
         -- Add the arm index as a networked variable so players not within the Entity's PVS can initialize it later.
         ent:SetNW2Int( "CArmsIndex", index )
@@ -170,15 +176,14 @@ properties.Add( "change_c_arms", {
 
 if not CLIENT then return end
 
+-- Sets up, updates, or removes the C Arms ClientsideModel for an Entity based on an index in the C_ARMS table.
+-- An index of 0 or nil will remove the C Arms.
 local function SetCArms( ent, index )
+
     if ( not IsValid( ent ) ) then return end
-    if ( index < 0 or index > #armModels ) then return end
 
-    local child = ent:GetChildren()[1]
-    if ( not IsValid( child ) ) then return end
-
-    -- An index of 0 means the C Arms system should be removed.
-    if ( index == 0 ) then
+    -- An index of 0 or nil means the C Arms should be removed.
+    if ( index == nil or index == 0 ) then
         if ( IsValid( ent.CArms ) ) then
             ent.CArms:Remove()
             ent.CArms = nil
@@ -186,12 +191,18 @@ local function SetCArms( ent, index )
         return
     end
 
+    -- Ensure the index is one of the valid options
+    if ( index < 0 or index > #C_ARMS ) then return end
+
     -- If the entity doesn't have a C Arms ClientsideModel, create one.
     if ( not IsValid( ent.CArms ) ) then
-        ent.CArms = ClientsideModel( armModels[ index ] )
+        local child = ent:GetChildren()[1]
+        if ( not IsValid( child ) ) then return end
+
+        ent.CArms = ClientsideModel( C_ARMS[ index ] )
         ent.CArms:SetParent( child )
         ent.CArms:AddEffects( EF_BONEMERGE )
-        ent.CArms:SetModel( armModels[ index ] )
+        ent.CArms:SetModel( C_ARMS[ index ] )
 
         ent:CallOnRemove( "RemoveCArms", function()
             if ( not IsValid( ent.CArms ) ) then return end
@@ -203,14 +214,18 @@ local function SetCArms( ent, index )
     end
 
     -- If the entity already has a C Arms ClientsideModel set up, just change its model.
-    ent.CArms:SetModel( armModels[ index ] )
+    ent.CArms:SetModel( C_ARMS[ index ] )
 
 end
 
+-- When the server tells us to update an Entity's C Arms.
 net.Receive( "UpdateEffectCArms", function()
 
     local ent = net.ReadEntity()
     local index = net.ReadUInt( 8 )
+
+    if ( not IsValid( ent ) ) then return end
+    if ( not IsViewModelEffectWithArmBones( ent ) ) then return end
 
     SetCArms( ent, index )
 
