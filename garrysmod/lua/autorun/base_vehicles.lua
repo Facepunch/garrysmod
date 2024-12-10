@@ -69,7 +69,7 @@ if ( IsMounted( "ep2" ) ) then
 	}, "Jalopy" )
 end
 
-Category = "Chairs"
+Category = "#spawnmenu.category.chairs"
 
 local function HandleRollercoasterAnimation( vehicle, player )
 	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER )

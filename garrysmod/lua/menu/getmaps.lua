@@ -357,7 +357,7 @@ local function RefreshMaps( skip )
 		end
 
 		-- Throw all uncategorised maps into Other
-		Category = Category or "Other"
+		Category = Category or language.GetPhrase( "spawnmenu.category.other" )
 
 		local fav
 
@@ -381,12 +381,14 @@ local function RefreshMaps( skip )
 
 		table.insert( MapList[ Category ], name )
 
+		local fav_l10n = language.GetPhrase( "newgame_favorites" )
+
 		if ( fav ) then
-			if ( !MapList[ "Favourites" ] ) then
-				MapList[ "Favourites" ] = {}
+			if ( !MapList[ fav_l10n ] ) then
+				MapList[ fav_l10n ] = {}
 			end
 
-			table.insert( MapList[ "Favourites" ], name )
+			table.insert( MapList[ fav_l10n ], name )
 		end
 
 		if ( csgo ) then
