@@ -123,6 +123,13 @@ function PANEL:Open()
 	self:SetMouseInputEnabled( true )
 	self:SetAlpha( 255 )
 
+	if IsValid(g_IconLayout) then
+		g_IconLayout:SetParent(self)
+		g_IconLayout:SetWorldClicker(false)
+
+		g_IconLayout:Layout()
+	end
+
 	achievements.SpawnMenuOpen()
 
 	if ( IsValid( self.StartupTool ) && self.StartupTool.Name ) then
@@ -165,7 +172,21 @@ function PANEL:PerformLayout()
 	end
 
 	self:DockPadding( 0, 0, 0, 0 )
-	self.HorizontalDivider:DockMargin( MarginX, MarginY, MarginX, MarginY )
+
+	local MarginLeft = MarginX
+	local IconLayout = g_IconLayout
+
+	if IsValid(IconLayout) and IconLayout:IsVisible() then
+		local IconWidth = IconLayout:GetWide()
+
+		if MarginLeft < IconWidth then -- Don't let the spawn menu cover the icons
+			IconLayout:DockMargin(0, 0, IconLayout:GetBorder(), 0)
+
+			MarginLeft = 0
+		end
+	end
+
+	self.HorizontalDivider:DockMargin( MarginLeft, MarginY, MarginX, MarginY )
 	self.HorizontalDivider:SetLeftMin( self.HorizontalDivider:GetWide() / 3 )
 
 	self.ToolToggle:AlignRight( 6 )
