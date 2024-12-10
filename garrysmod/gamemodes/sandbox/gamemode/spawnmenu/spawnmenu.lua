@@ -180,8 +180,6 @@ function PANEL:PerformLayout()
 		local IconWidth = IconLayout:GetWide()
 
 		if MarginLeft < IconWidth then -- Don't let the spawn menu cover the icons
-			IconLayout:DockMargin(0, 0, IconLayout:GetBorder(), 0)
-
 			MarginLeft = 0
 		end
 	end

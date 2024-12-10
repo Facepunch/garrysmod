@@ -184,6 +184,7 @@ function CreateContextMenu()
 	IconLayout:SetStretchWidth( true )
 	IconLayout:SetStretchHeight( false ) -- No infinite re-layouts
 	IconLayout:Dock( LEFT )
+	IconLayout:DockMargin(0, 0, IconLayout:GetBorder(), 0)
 
 	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
 	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
