@@ -57,7 +57,6 @@ function GM:GetDeathNoticeEntityName( ent )
 	end
 	if ( ent:GetClass() == "npc_sniper" and ( ent:GetName() == "alyx_sniper" || ent:GetName() == "sniper_alyx" ) ) then return "#npc_alyx" end
 
-	if ( ent:GetClass() == "npc_sniper" and ( ent:GetName() == "alyx_sniper" || ent:GetName() == "sniper_alyx" ) ) then return "#npc_alyx" end
 	-- Custom vehicle and NPC names from spawnmenu
 	if ( ent:IsVehicle() and ent.VehicleTable and ent.VehicleTable.Name ) then
 		return ent.VehicleTable.Name
