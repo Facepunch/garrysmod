@@ -395,7 +395,7 @@ local function RefreshMaps( skip )
 			if ( !MapList[ "Counter-Strike: GO" ] ) then
 				MapList[ "Counter-Strike: GO" ] = {}
 			end
-			-- HACK: We have to make the CS:GO name different from the CS:S name to prevent Favorites conflicts
+			-- HACK: We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
 			table.insert( MapList[ "Counter-Strike: GO" ], name .. " " )
 		end
 
