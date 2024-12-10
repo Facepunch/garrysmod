@@ -36,6 +36,13 @@ function PANEL:Open()
 	self:SetKeyboardInputEnabled( false )
 	self:SetMouseInputEnabled( true )
 
+	if IsValid(g_IconLayout) then
+		g_IconLayout:SetParent(self)
+		g_IconLayout:SetWorldClicker(true)
+
+		g_IconLayout:Layout()
+	end
+
 	RestoreCursorPosition()
 
 	local bShouldShow = hook.Run( "ContextMenuShowTool" )
@@ -160,7 +167,15 @@ function CreateContextMenu()
 
 	hook.Run( "ContextMenuCreated", g_ContextMenu )
 
-	local IconLayout = g_ContextMenu:Add( "DIconLayout" )
+	if IsValid(g_IconLayout) then
+		g_IconLayout:Remove()
+		g_IconLayout = nil
+	end
+
+	g_IconLayout = g_ContextMenu:Add( "DIconLayout" )
+	if not IsValid(g_IconLayout) then return end
+
+	local IconLayout = g_IconLayout
 	IconLayout:SetBorder( 8 )
 	IconLayout:SetSpaceX( 8 )
 	IconLayout:SetSpaceY( 8 )
@@ -169,6 +184,7 @@ function CreateContextMenu()
 	IconLayout:SetStretchWidth( true )
 	IconLayout:SetStretchHeight( false ) -- No infinite re-layouts
 	IconLayout:Dock( LEFT )
+	IconLayout:DockMargin(0, 0, IconLayout:GetBorder(), 0)
 
 	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
 	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
@@ -202,14 +218,17 @@ function CreateContextMenu()
 
 			if ( v.onewindow and IsValid( icon.Window ) ) then
 				icon.Window:Center()
+				icon.Window:MakePopup()
+
 				return
 			end
 
 			-- Make the window
-			icon.Window = g_ContextMenu:Add( "DFrame" )
+			icon.Window = vgui.Create("DFrame")
 			icon.Window:SetSize( newv.width, newv.height )
 			icon.Window:SetTitle( newv.title )
 			icon.Window:Center()
+			icon.Window:MakePopup()
 
 			newv.init( icon, icon.Window )
 
