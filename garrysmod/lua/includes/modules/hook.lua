@@ -66,8 +66,14 @@ end
     Args: string hookName, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
+local currentGM
+
 function Run( name, ... )
-	return Call( name, gmod and gmod.GetGamemode() or nil, ... )
+	if ( !currentGM ) then
+		currentGM = gmod and gmod.GetGamemode() or nil
+	end
+
+	return Call( name, currentGM, ... )
 end
 
 

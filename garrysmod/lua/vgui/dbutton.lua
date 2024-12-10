@@ -118,7 +118,7 @@ function PANEL:PerformLayout( w, h )
 			self.m_Image:SetPos( 2 + ( targetSize - self.m_Image:GetWide() ) * 0.5, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
 		end
 
-		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
+		self:SetTextInset( self.m_Image:GetWide() + 8, 0 )
 
 	end
 
