@@ -255,3 +255,29 @@ function math.Factorial( num )
 
 	return res
 end
+
+local smallNumber = math.exp( -8 )
+
+--[[---------------------------------------------------------
+	Name: IsNearlyZero( num )
+	Desc: Checks if a floating point number is nearly zero
+-----------------------------------------------------------]]
+function math.IsNearlyZero( num, tolerance )
+	if tolerance == nil then
+		tolerance = smallNumber
+	end
+
+	return math.abs( num ) <= tolerance
+end
+
+--[[---------------------------------------------------------
+	Name: IsNearlyEqual( a, b )
+	Desc: Checks if two floating point numbers are nearly equal
+-----------------------------------------------------------]]
+function math.IsNearlyEqual( a, b, tolerance )
+	if tolerance == nil then
+		tolerance = smallNumber
+	end
+
+	return math.abs( a - b ) <= tolerance
+end
