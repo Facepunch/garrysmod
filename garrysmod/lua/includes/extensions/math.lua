@@ -256,7 +256,7 @@ function math.Factorial( num )
 	return res
 end
 
-local smallNumber = math.exp( -8 )
+local epsilon = math.exp( -8 )
 
 --[[---------------------------------------------------------
 	Name: IsNearlyZero( num )
@@ -264,7 +264,7 @@ local smallNumber = math.exp( -8 )
 -----------------------------------------------------------]]
 function math.IsNearlyZero( num, tolerance )
 	if tolerance == nil then
-		tolerance = smallNumber
+		tolerance = epsilon
 	end
 
 	return math.abs( num ) <= tolerance
@@ -276,7 +276,7 @@ end
 -----------------------------------------------------------]]
 function math.IsNearlyEqual( a, b, tolerance )
 	if tolerance == nil then
-		tolerance = smallNumber
+		tolerance = epsilon
 	end
 
 	return math.abs( a - b ) <= tolerance
