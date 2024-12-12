@@ -32,10 +32,7 @@ function DrawColorModify( tab )
 
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderColorModify", function()
-
-	if ( !pp_colormod:GetBool() ) then return end
-	if ( !GAMEMODE:PostProcessPermitted( "color mod" ) ) then return end
+local function RenderColorModify()
 
 	local tab = {}
 
@@ -51,6 +48,18 @@ hook.Add( "RenderScreenspaceEffects", "RenderColorModify", function()
 	tab[ "$pp_colour_inv" ] = pp_colormod_inv:GetFloat()
 
 	DrawColorModify( tab )
+
+end
+
+cvars.AddChangeCallback( "pp_colormod", function( _, _, newValue )
+
+	if ( !GAMEMODE:PostProcessPermitted( "color mod" ) ) then return end
+
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderColorModify", RenderColorModify )
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderColorModify" )
+	end
 
 end )
 

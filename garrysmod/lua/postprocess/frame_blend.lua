@@ -174,9 +174,9 @@ end
 --
 if ( engine.IsPlayingDemo() ) then return end
 
-hook.Add( "PostRender", "RenderFrameBlend", function()
+local function RenderFrameBlend()
 
-	if ( !frame_blend.IsActive() ) then return end
+	if ( !frame_blend.IsActive() ) then hook.Remove( "RenderFrameBlend", "RenderFrameBlend" ) return end
 
 	if ( !frame_blend.ShouldSkipFrame() ) then
 		render.CopyRenderTargetToTexture( texFB )
@@ -185,6 +185,18 @@ hook.Add( "PostRender", "RenderFrameBlend", function()
 	
 	frame_blend.AddFrame()
 	frame_blend.DrawPreview()
+
+end
+
+cvars.AddChangeCallback( "pp_fb", function( _, _, newValue )
+
+	if ( !GAMEMODE:PostProcessPermitted( "fb" ) ) then return end
+
+	if ( newValue != "0" ) then
+		hook.Add( "PostRender", "RenderFrameBlend", RenderFrameBlend )
+	else
+		hook.Remove( "RenderFrameBlend", "RenderFrameBlend" )
+	end
 
 end )
 

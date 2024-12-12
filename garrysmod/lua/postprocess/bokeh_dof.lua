@@ -28,21 +28,18 @@ local function OnChange( name, oldvalue, newvalue )
 
 	if ( newvalue != "0" ) then
 		DOFModeHack( true )
+		hook.Add( "RenderScreenspaceEffects", "RenderBokeh", function()
+
+			DrawBokehDOF( pp_bokeh_blur:GetFloat(), pp_bokeh_distance:GetFloat(), pp_bokeh_focus:GetFloat() )
+
+		end)
 	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderBokeh" )
 		DOFModeHack( false )
 	end
 
 end
 cvars.AddChangeCallback( "pp_bokeh", OnChange )
-
-hook.Add( "RenderScreenspaceEffects", "RenderBokeh", function()
-
-	if ( !pp_bokeh:GetBool() ) then return end
-	if ( !GAMEMODE:PostProcessPermitted( "bokeh" ) ) then return end
-
-	DrawBokehDOF( pp_bokeh_blur:GetFloat(), pp_bokeh_distance:GetFloat(), pp_bokeh_focus:GetFloat() )
-
-end )
 
 hook.Add( "NeedsDepthPass", "NeedsDepthPass_Bokeh", function()
 

@@ -58,21 +58,25 @@ function DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, c
 
 end
 
---[[---------------------------------------------------------
-	The function to draw the bloom (called from the hook)
------------------------------------------------------------]]
-hook.Add( "RenderScreenspaceEffects", "RenderBloom", function()
+cvars.AddChangeCallback( "pp_bloom", function( _, _, newValue )
 
 	-- No bloom for crappy gpus
 
 	if ( !render.SupportsPixelShaders_2_0() ) then return end
-	if ( !pp_bloom:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "bloom" ) ) then return end
 
-	DrawBloom( pp_bloom_darken:GetFloat(), pp_bloom_multiply:GetFloat(),
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderBloom", function()
+
+			DrawBloom( pp_bloom_darken:GetFloat(), pp_bloom_multiply:GetFloat(),
 				pp_bloom_sizex:GetFloat(), pp_bloom_sizey:GetFloat(),
 				pp_bloom_passes:GetFloat(), pp_bloom_color:GetFloat(),
 				pp_bloom_color_r:GetFloat() / 255, pp_bloom_color_g:GetFloat() / 255, pp_bloom_color_b:GetFloat() / 255 )
+
+		end)
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderBloom" )
+	end
 
 end )
 

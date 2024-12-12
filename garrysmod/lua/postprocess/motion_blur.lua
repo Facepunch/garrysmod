@@ -60,12 +60,19 @@ function DrawMotionBlur( addalpha, drawalpha, delay )
 
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderMotionBlur", function()
+cvars.AddChangeCallback( "pp_motionblur", function( _, _, newValue )
 
-	if ( !pp_motionblur:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "motion blur" ) ) then return end
 
-	DrawMotionBlur( pp_motionblur_addalpha:GetFloat(), pp_motionblur_drawalpha:GetFloat(), pp_motionblur_delay:GetFloat() )
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderMotionBlur", function()
+
+			DrawMotionBlur( pp_motionblur_addalpha:GetFloat(), pp_motionblur_drawalpha:GetFloat(), pp_motionblur_delay:GetFloat() )
+
+		end )
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderMotionBlur" )
+	end
 
 end )
 

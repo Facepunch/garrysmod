@@ -21,12 +21,19 @@ function DrawSharpen( contrast, distance )
 
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderSharpen", function()
+cvars.AddChangeCallback( "pp_sharpen", function( _, _, newValue )
 
-	if ( !pp_sharpen:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "sharpen" ) ) then return end
 
-	DrawSharpen( pp_sharpen_contrast:GetFloat(), pp_sharpen_distance:GetFloat() )
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderSharpen", function()
+
+			DrawSharpen( pp_sharpen_contrast:GetFloat(), pp_sharpen_distance:GetFloat() )
+
+		end )
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderSharpen" )
+	end
 
 end )
 

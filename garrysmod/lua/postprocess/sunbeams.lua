@@ -28,11 +28,7 @@ function DrawSunbeams( darken, multiply, sunsize, sunx, suny )
 
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderSunbeams", function()
-
-	if ( !pp_sunbeams:GetBool() ) then return end
-	if ( !GAMEMODE:PostProcessPermitted( "sunbeams" ) ) then return end
-	if ( !render.SupportsPixelShaders_2_0() ) then return end
+local function RenderSunbeams()
 
 	local sun = util.GetSunInfo()
 
@@ -46,6 +42,19 @@ hook.Add( "RenderScreenspaceEffects", "RenderSunbeams", function()
 	if ( dot <= 0 ) then return end
 
 	DrawSunbeams( pp_sunbeams_darken:GetFloat(), pp_sunbeams_multiply:GetFloat() * dot * sun.obstruction, pp_sunbeams_sunsize:GetFloat(), scrpos.x / ScrW(), scrpos.y / ScrH() )
+
+end
+
+cvars.AddChangeCallback( "pp_sunbeams", function( _, _, newValue )
+
+	if ( !render.SupportsPixelShaders_2_0() ) then return end
+	if ( !GAMEMODE:PostProcessPermitted( "sunbeams" ) ) then return end
+
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderSunbeams", RenderSunbeams )
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderSunbeams" )
+	end
 
 end )
 

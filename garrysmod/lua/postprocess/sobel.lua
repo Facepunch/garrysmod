@@ -17,12 +17,19 @@ function DrawSobel( threshold )
 
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderSobel", function()
+cvars.AddChangeCallback( "pp_sobel", function( _, _, newValue )
 
-	if ( !pp_sobel:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "sobel" ) ) then return end
 
-	DrawSobel( pp_sobel_threshold:GetFloat() )
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderSobel", function()
+
+			DrawSobel( pp_sobel_threshold:GetFloat() )
+
+		end )
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderSobel" )
+	end
 
 end )
 
