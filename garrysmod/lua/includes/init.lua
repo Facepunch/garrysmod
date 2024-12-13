@@ -36,6 +36,7 @@ require ( "properties" )
 require ( "widget" )
 require ( "cookie" )
 require ( "utf8" )
+require ( "utf8_case" )
 
 require ( "drive" )
 include ( "drive/drive_base.lua" )
