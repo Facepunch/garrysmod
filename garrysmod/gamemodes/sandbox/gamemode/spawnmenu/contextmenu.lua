@@ -172,6 +172,8 @@ function CreateContextMenu()
 	IconLayout:SetStretchHeight( false ) -- No infinite re-layouts
 	IconLayout:Dock( LEFT )
 
+	g_ContextMenu.DesktopWidgets = IconLayout
+
 	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
 	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
 
@@ -180,7 +182,8 @@ function CreateContextMenu()
 		local icon = IconLayout:Add( "DButton" )
 		icon:SetText( "" )
 		icon:SetSize( 80, 82 )
-		icon.Paint = function() end
+		icon.Paint = nil
+		icon.WidgetClass = k
 
 		local image = icon:Add( "DImage" )
 		image:SetImage( v.icon )
@@ -202,7 +205,12 @@ function CreateContextMenu()
 			--
 			local newv = list.Get( "DesktopWindows" )[ k ]
 
-			if ( v.onewindow and IsValid( icon.Window ) ) then
+			-- Changing parents causes loss of input and I don't have time to figure out why
+			if ( IsValid( icon.Window ) && icon.Window:GetParent() != g_ContextMenu ) then
+				icon.Window:Remove()
+			end
+
+			if ( newv.onewindow and IsValid( icon.Window ) ) then
 				icon.Window:Center()
 				return
 			end
