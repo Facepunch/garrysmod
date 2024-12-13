@@ -24,7 +24,7 @@ function PANEL:Open()
 
 	-- If the spawn menu is open, try to close it..
 	if ( IsValid( g_SpawnMenu ) && g_SpawnMenu:IsVisible() ) then
-		g_SpawnMenu:Close( true )
+		g_SpawnMenu:Close()
 	end
 
 	if ( self:IsVisible() ) then return end
@@ -46,7 +46,9 @@ function PANEL:Open()
 
 		self.OldParent = spawnmenu.ActiveControlPanel():GetParent()
 		self.OldPosX, self.OldPosY = spawnmenu.ActiveControlPanel():GetPos()
+
 		spawnmenu.ActiveControlPanel():SetParent( self )
+
 		self.Canvas:Clear()
 		self.Canvas:AddItem( spawnmenu.ActiveControlPanel() )
 		self.Canvas:Rebuild()
@@ -62,7 +64,7 @@ function PANEL:Open()
 
 end
 
-function PANEL:Close( bSkipAnim )
+function PANEL:Close()
 
 	if ( self:GetHangOpen() ) then
 		self:SetHangOpen( false )
