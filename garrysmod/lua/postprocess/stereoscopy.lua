@@ -36,17 +36,22 @@ function RenderStereoscopy( ViewOrigin, ViewAngles )
 
 end
 
---[[---------------------------------------------------------
-	The function to draw the bloom (called from the hook)
------------------------------------------------------------]]
-hook.Add( "RenderScene", "RenderStereoscopy", function( ViewOrigin, ViewAngles, ViewFOV )
+cvars.AddChangeCallback( "pp_stereoscopy", function( _, _, newValue )
 
-	if ( !pp_stereoscopy:GetBool() ) then return end
+	if ( !GAMEMODE:PostProcessPermitted( "stereoscopy" ) ) then return end
 
-	RenderStereoscopy( ViewOrigin, ViewAngles )
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScene", "RenderStereoscopy", function(ViewOrigin, ViewAngles)
 
-	-- Return true to override drawing the scene
-	return true
+			RenderStereoscopy( ViewOrigin, ViewAngles )
+
+			-- Return true to override drawing the scene
+			return true
+
+		end)
+	else
+		hook.Remove( "RenderScene", "RenderStereoscopy" )
+	end
 
 end )
 

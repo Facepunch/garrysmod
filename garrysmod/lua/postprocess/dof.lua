@@ -27,6 +27,8 @@ function DOF_Kill()
 
 	DOFModeHack( false )
 
+	hook.Remove( "Think", "DOFThink" )
+
 end
 
 function DOF_Start()
@@ -43,14 +45,14 @@ function DOF_Start()
 
 	DOFModeHack( true )
 
+	hook.Add( "Think", "DOFThink", function()
+
+		DOF_SPACING = pp_dof_spacing:GetFloat()
+		DOF_OFFSET = pp_dof_initlength:GetFloat()
+
+	end)
+
 end
-
-hook.Add( "Think", "DOFThink", function()
-
-	DOF_SPACING = pp_dof_spacing:GetFloat()
-	DOF_OFFSET = pp_dof_initlength:GetFloat()
-
-end )
 
 cvars.AddChangeCallback( "pp_dof", function( name, oldvalue, newvalue )
 

@@ -18,14 +18,20 @@ function DrawTexturize( scale, pMaterial )
 
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderTexturize", function()
+cvars.AddChangeCallback( "pp_texturize", function( _, _, newValue )
 
-	local texturize = pp_texturize:GetString()
+	if ( !GAMEMODE:PostProcessPermitted( "texturize" ) ) then return end
 
-	if ( texturize == "" ) then return end
-	if ( !GAMEMODE:PostProcessPermitted( "texurize" ) ) then return end
+	if ( newValue != "" ) then
+		local material = Material( newValue )
+		hook.Add( "RenderScreenspaceEffects", "RenderTexturize", function()
 
-	DrawTexturize( pp_texturize_scale:GetFloat(), Material( texturize ) )
+			DrawTexturize( pp_texturize_scale:GetFloat(), material )
+
+		end)
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderTexturize" )
+	end
 
 end )
 
