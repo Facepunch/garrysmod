@@ -67,12 +67,14 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 	if ( self.InfoMarkup == nil ) then
 		local title_color = "<color=230,230,230,255>"
 		local text_color = "<color=150,150,150,255>"
+		local c_end1 = "</color>\t"
+		local c_end2 = "</color>\n"
 
 		local str = "<font=HudSelectionText>"
-		if ( self.Author != "" ) then str = str .. title_color .. "Author:</color>\t" .. text_color .. self.Author .. "</color>\n" end
-		if ( self.Contact != "" ) then str = str .. title_color .. "Contact:</color>\t" .. text_color .. self.Contact .. "</color>\n\n" end
-		if ( self.Purpose != "" ) then str = str .. title_color .. "Purpose:</color>\n" .. text_color .. self.Purpose .. "</color>\n\n" end
-		if ( self.Instructions != "" ) then str = str .. title_color .. "Instructions:</color>\n" .. text_color .. self.Instructions .. "</color>\n" end
+		if ( self.Author != "" ) then str = str .. title_color .. "#weaponselector_author" .. c_end1 .. text_color .. self.Author .. c_end2 end
+		if ( self.Contact != "" ) then str = str .. title_color .. "#weaponselector_contact" .. c_end1 .. text_color .. self.Contact .. c_end2 .. "\n" end
+		if ( self.Purpose != "" ) then str = str .. title_color .. "#weaponselector_purpose" .. c_end2 .. text_color .. self.Purpose .. c_end2 .. "\n" end
+		if ( self.Instructions != "" ) then str = str .. title_color .. "#weaponselector_instructions" .. c_end2 .. text_color .. self.Instructions .. c_end2 end
 		str = str .. "</font>"
 
 		self.InfoMarkup = markup.Parse( str, 250 )

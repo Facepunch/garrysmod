@@ -6,7 +6,7 @@ ENT.Spawnable = true
 ENT.AdminOnly = true
 
 ENT.PrintName = "#edit_sun"
-ENT.Category = "Editors"
+ENT.Category = "#spawnmenu.category.editors"
 ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the sun. Rotate the entity to move the sun."
 
 function ENT:Initialize()
