@@ -76,6 +76,26 @@ function string.PatternSafe( str )
 end
 
 --[[---------------------------------------------------------
+	Name: string.EscapeSpecialChars( string )
+	Desc: Takes a string and escapes special characters (\0, \n, \t, etc)
+	Usage: string.EscapeSpecialChars( "Hello\nWorld\0" )
+-----------------------------------------------------------]]
+local escape_sequences = {
+	["\0"] = "\\0",
+	["\b"] = "\\b",
+	["\f"] = "\\f",
+	["\n"] = "\\n",
+	["\r"] = "\\r",
+	["\t"] = "\\t",
+	["\v"] = "\\v",
+	["\\"] = "\\\\"
+}
+
+function string.EscapeSpecialChars( str )
+	return ( string.gsub( str, "[%z\b\f\n\r\t\v\\]", escape_sequences ) )
+end
+
+--[[---------------------------------------------------------
 	Name: explode(seperator ,string)
 	Desc: Takes a string and turns it into a table
 	Usage: string.explode( " ", "Seperate this string")
