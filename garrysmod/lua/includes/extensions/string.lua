@@ -88,11 +88,12 @@ local escape_sequences = {
 	["\r"] = "\\r",
 	["\t"] = "\\t",
 	["\v"] = "\\v",
-	["\\"] = "\\\\"
+	["\\"] = "\\\\",
+	["\a"] = "\\a"
 }
 
 function string.EscapeSpecialChars( str )
-	return ( string.gsub( str, "[%z\b\f\n\r\t\v\\]", escape_sequences ) )
+	return ( string.gsub( str, "[%z\b\f\n\r\t\v\\\a]", escape_sequences ) )
 end
 
 --[[---------------------------------------------------------
