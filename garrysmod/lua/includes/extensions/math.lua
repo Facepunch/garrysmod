@@ -256,7 +256,7 @@ function math.Factorial( num )
 	return res
 end
 
-local epsilon = math.exp( -8 )
+local epsilon = 1e-8
 
 --[[---------------------------------------------------------
 	Name: IsNearlyZero( num )
