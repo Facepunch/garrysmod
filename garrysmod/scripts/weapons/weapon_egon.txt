@@ -3,7 +3,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"		"#HL1_GluonGun"
+	"printname"		"#weapon_egon"
 	"viewmodel"		"models/v_egon.mdl"
 	"playermodel"		"models/weapons/w_egon_hls.mdl"
 	"anim_prefix"		"egon"

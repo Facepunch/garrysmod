@@ -3,7 +3,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"		"#HL1_RPGLauncher"
+	"printname"		"#weapon_rpg_hl1"
 	"viewmodel"		"models/v_rpg.mdl"
 	"playermodel"		"models/weapons/w_rpg_hls.mdl"
 	"anim_prefix"		"rpg"

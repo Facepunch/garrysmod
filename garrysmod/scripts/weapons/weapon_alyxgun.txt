@@ -3,7 +3,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"	"#HL2_AlyxGun"
+	"printname"	"#weapon_alyxgun"
 	"viewmodel"				"models/weapons/c_pistol.mdl"
 	"playermodel"			"models/weapons/w_alyx_gun.mdl"	//FIXME: 
 	"anim_prefix"			"alyxgun"
