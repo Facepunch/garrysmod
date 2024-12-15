@@ -59,16 +59,13 @@ if ( SERVER ) then
 
 	function Add( pl, type, ent )
 
-		if ( !ent ) then return end
-
+		if ( !IsValid( ent ) ) then return end
 		if ( !IsType( type ) ) then return end
 
 		local id = pl:UniqueID()
 
 		cleanup_list[ id ] = cleanup_list[ id ] or {}
 		cleanup_list[ id ][ type ] = cleanup_list[ id ][ type ] or {}
-
-		if ( !IsValid( ent ) ) then return end
 
 		table.insert( cleanup_list[ id ][ type ], ent )
 
@@ -158,7 +155,7 @@ if ( SERVER ) then
 
 					for __, ent in pairs( type ) do
 
-						if ( IsValid( ent ) ) then ent:Remove() end
+						if ( IsValid( ent ) and !ent:IsEFlagSet( EFL_KEEP_ON_RECREATE_ENTITIES ) ) then ent:Remove() end
 
 					end
 
