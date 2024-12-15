@@ -62,6 +62,74 @@ end
 
 
 --[[---------------------------------------------------------
+    Name: Temporary
+    Args: string hookName, any identifier, integer max_runs, function func
+    Desc: Add a temporary hook that removes itself after running.
+-----------------------------------------------------------]]
+function Temporary( event_name, name, max_runs, func )
+	--Validate first arg to be a string
+	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Temporary' (string expected, got " .. type( event_name ) .. ")" ) return end
+
+	--Validate second arg to be a string
+	local notValid = name == nil || isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
+	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Temporary' (string expected, got " .. type( name ) .. ")" ) return end
+
+	
+	local runs = 0		--Times the hook has been ran
+	local maxRuns		--Max number of runs before removing the hook
+	local RunFunction	--The function we run in the actual hook
+
+	--Verify that the hook was provided a function and a number of times to run
+	if func and isfunction( func ) then	--Validate that the fourth arg is a function
+		--validate the third arg to be a number
+		if !isnumber( max_runs ) then ErrorNoHaltWithStack( "bad argument #3 to 'Temporary' (number expected, got " .. type( event_name ) .. ")" ) return end
+
+		maxRuns = max_runs	--Set the maxRuns variable
+		RunFunction = func	--Store the function to run
+	else
+		--Validate the third arg to be a function
+		if !max_runs or !isfunction( max_runs ) then ErrorNoHaltWithStack( "bad argument #3 to 'Temporary' (function expected, got " .. type( name ) .. ")" ) return end
+
+		maxRuns = 1		--Assume this hook should only be ran once before removing itself
+		RunFunction = max_runs	--As a failsafe, assume the max_runs argument is the function
+	end
+
+	--Logic from hook.Add and hook.Remove migrated over to reduce overhead from double validation of arguments
+	if Hooks[ event_name ] == nil then
+		Hooks[ event_name ] = {}
+	end
+
+	Hooks[ event_name ][ name ] = function( ... )
+		runs = runs + 1
+		if runs >= maxRuns and Hooks[ event_name ] ~= nil then
+			Hooks[ event_name ][ name ] = nil
+		end
+
+		return RunFunction( ... ) 	--Run our original hook function and return it's values or nil
+	end
+end
+
+
+--[[---------------------------------------------------------
+    Name: Exists
+    Args: string hookName, identifier
+    Desc: Returns if the hook exists or not
+-----------------------------------------------------------]]
+function Exists( event_name, name )
+
+	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Exists' (string expected, got " .. type( event_name ) .. ")" ) return end
+
+	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
+	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Exists' (string expected, got " .. type( name ) .. ")" ) return end
+
+	if ( Hooks[ event_name ] and Hooks[ event_name ][ name ] ) then return true end	--Return true if the hook exists
+
+	return false	--Otherwise return false
+
+end
+
+
+--[[---------------------------------------------------------
     Name: Run
     Args: string hookName, vararg args
     Desc: Calls hooks associated with the hook name.
