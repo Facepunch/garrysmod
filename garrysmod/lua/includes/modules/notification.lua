@@ -232,7 +232,7 @@ end
 function PANEL:SetLegacyType( t )
 
 	self.Image = vgui.Create( "DImageButton", self )
-	self.Image:SetMaterial( NoticeMaterial[ t ] or 0 )
+	self.Image:SetMaterial( NoticeMaterial[ t ] or NoticeMaterial[ 0 ] )
 	self.Image:SetSize( 32, 32 )
 	self.Image:Dock( LEFT )
 	self.Image:DockMargin( 0, 0, 8, 0 )
