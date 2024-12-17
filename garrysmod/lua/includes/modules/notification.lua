@@ -84,27 +84,24 @@ function AddLegacy( text, type, length )
 
 end
 
-local matNotifyGeneric = NoticeMaterial[ NOTIFY_GENERIC ]
+-- Icon should typically be 16x16
+function AddNotifyType( typeName, materialName )
 
-function AddLegacyType( legacyName, materialName )
-	if ( !isstring( legacyName ) ) then error( "bad argument #1 to 'AddLegacyType' (string expected, got " .. type( legacyName ) .. ")", 2 ) return end
-	if ( !isstring( materialName ) ) then error( "bad argument #2 to 'AddLegacyType' (string expected, got " .. type( materialName ) .. ")", 2 ) return end
+	if ( !isstring( typeName ) ) then error( "bad argument #1 to 'AddNotifyType' (string expected, got " .. type( typeName ) .. ")" ) return end
+	if ( !isstring( materialName ) ) then error( "bad argument #2 to 'AddNotifyType' (string expected, got " .. type( materialName ) .. ")" ) return end
 
 	local mat = Material( materialName )
 
-	if ( !mat || mat:IsError() ) then
-		NoticeMaterial[ legacyName ] = matNotifyGeneric
+	if ( mat && !mat:IsError() ) then
 
-		return false
+		NoticeMaterial[ typeName ] = mat
+
+		return mat
+
 	end
 
-	NoticeMaterial[ legacyName ] = mat
+	return false
 
-	return mat
-end
-
-function GetLegacyTypes()
-	return NoticeMaterial
 end
 
 -- This is ugly because it's ripped straight from the old notice system
@@ -235,7 +232,7 @@ end
 function PANEL:SetLegacyType( t )
 
 	self.Image = vgui.Create( "DImageButton", self )
-	self.Image:SetMaterial( NoticeMaterial[ t ] )
+	self.Image:SetMaterial( NoticeMaterial[ t ] or 0 )
 	self.Image:SetSize( 32, 32 )
 	self.Image:Dock( LEFT )
 	self.Image:DockMargin( 0, 0, 8, 0 )
