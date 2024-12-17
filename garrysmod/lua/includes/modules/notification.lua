@@ -87,8 +87,8 @@ end
 -- Icon should typically be 32x32
 function AddNotifyType( typeName, materialName )
 
-	if ( !isstring( typeName ) ) then error( "bad argument #1 to 'AddNotifyType' (string expected, got " .. type( typeName ) .. ")" ) return end
-	if ( !isstring( materialName ) ) then error( "bad argument #2 to 'AddNotifyType' (string expected, got " .. type( materialName ) .. ")" ) return end
+	if ( !isstring( typeName ) ) then error( "bad argument #1 to 'AddNotifyType' (string expected, got " .. type( typeName ) .. ")", 2 ) return end
+	if ( !isstring( materialName ) ) then error( "bad argument #2 to 'AddNotifyType' (string expected, got " .. type( materialName ) .. ")", 2 ) return end
 
 	local mat = Material( materialName )
 
