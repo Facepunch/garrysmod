@@ -135,9 +135,13 @@ function Render( entry )
 
 end
 
+function GetTable()
+	return List	
+end
+
 hook.Add( "PostDrawEffects", "RenderHalos", function()
 
-	hook.Run( "PreDrawHalos" )
+	if ( hook.Run( "PreDrawHalos" ) == false ) then return end
 
 	if ( #List == 0 ) then return end
 
