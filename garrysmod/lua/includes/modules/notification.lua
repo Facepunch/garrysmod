@@ -84,7 +84,7 @@ function AddLegacy( text, type, length )
 
 end
 
--- Icon should typically be 16x16
+-- Icon should typically be 32x32
 function AddNotifyType( typeName, materialName )
 
 	if ( !isstring( typeName ) ) then error( "bad argument #1 to 'AddNotifyType' (string expected, got " .. type( typeName ) .. ")" ) return end
