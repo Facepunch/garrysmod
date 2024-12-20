@@ -20,7 +20,7 @@ function vgui.Exists( classname )
 	return PanelFactory[ classname ] != nil
 end
 
-function vgui.Create( classname, parent, name )
+function vgui.Create( classname, parent, name, ... )
 
 	-- Is this a user-created panel?
 	if ( PanelFactory[ classname ] ) then
@@ -38,7 +38,7 @@ function vgui.Create( classname, parent, name )
 
 		-- Call the Init function if we have it
 		if ( panel.Init ) then
-			panel:Init()
+			panel:Init( ... )
 		end
 
 		panel:Prepare()
