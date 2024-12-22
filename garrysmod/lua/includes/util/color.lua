@@ -110,3 +110,21 @@ function COLOR:ToTable()
 	return { self.r, self.g, self.b, self.a }
 
 end
+
+local imat = FindMetaTable( "IMaterial" )
+
+if ( imat.GetColor4Part ) then
+	function imat:GetColor( ... )
+		return Color( self:GetColor4Part( ... ) )
+	end
+
+else
+
+	-- For those clients that do not have the above function yet
+	-- TODO: Delete me
+	local oldGetColor = imat.GetColor
+	function imat:GetColor( ... )
+		local tbl = oldGetColor( self, ... )
+		return Color( tbl.r, tbl.g, tbl.b, tbl.a )
+	end
+end
