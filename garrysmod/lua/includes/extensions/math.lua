@@ -259,7 +259,7 @@ end
 local epsilon = 1e-8
 
 --[[---------------------------------------------------------
-	Name: IsNearlyZero( num )
+	Name: IsNearlyZero( num, tolerance )
 	Desc: Checks if a floating point number is nearly zero
 -----------------------------------------------------------]]
 function math.IsNearlyZero( num, tolerance )
@@ -271,7 +271,7 @@ function math.IsNearlyZero( num, tolerance )
 end
 
 --[[---------------------------------------------------------
-	Name: IsNearlyEqual( a, b )
+	Name: IsNearlyEqual( a, b, tolerance )
 	Desc: Checks if two floating point numbers are nearly equal
 -----------------------------------------------------------]]
 function math.IsNearlyEqual( a, b, tolerance )
