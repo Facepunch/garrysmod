@@ -31,10 +31,9 @@ STENCIL_DECR = STENCILOPERATION_DECR
 -----------------------------------------------------------]]
 function render.ClearRenderTarget( rt, color )
 
-	local OldRT = render.GetRenderTarget();
-		render.SetRenderTarget( rt )
+	render.PushRenderTarget( rt )
 		render.Clear( color.r, color.g, color.b, color.a )
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 
@@ -60,12 +59,9 @@ end
 -----------------------------------------------------------]]
 function render.CopyTexture( from, to )
 
-	local OldRT = render.GetRenderTarget();
-
-		render.SetRenderTarget( from )
+	render.PushRenderTarget( from )
 		render.CopyRenderTargetToTexture( to )
-
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 
