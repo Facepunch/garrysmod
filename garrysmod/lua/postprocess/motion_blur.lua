@@ -26,11 +26,10 @@ function DrawMotionBlur( addalpha, drawalpha, delay )
 
 		mat_Screen:SetFloat( "$alpha", 1 )
 
-		local OldRT = render.GetRenderTarget()
-		render.SetRenderTarget( tex_MotionBlur )
+		render.PushRenderTarget( tex_MotionBlur )
 			render.SetMaterial( mat_Screen )
 			render.DrawScreenQuad()
-		render.SetRenderTarget( OldRT )
+		render.PopRenderTarget()
 
 	end
 
@@ -43,13 +42,10 @@ function DrawMotionBlur( addalpha, drawalpha, delay )
 		NextDraw = CurTime() + delay
 
 		mat_Screen:SetFloat( "$alpha", addalpha )
-		local OldRT = render.GetRenderTarget()
-		render.SetRenderTarget( tex_MotionBlur )
-
-		render.SetMaterial( mat_Screen )
-		render.DrawScreenQuad()
-
-		render.SetRenderTarget( OldRT )
+		render.PushRenderTarget( tex_MotionBlur )
+			render.SetMaterial( mat_Screen )
+			render.DrawScreenQuad()
+		render.PopRenderTarget()
 
 	end
 
