@@ -7,9 +7,9 @@ function ents.FindByClassAndParent( classname, entity )
 
     for k, v in ipairs( ents.FindByClass( classname ) ) do
 
-		if ( v:GetParent() != entity ) then continue end
-
-		table.insert( out, v )
+		if ( v:GetParent() == entity ) then
+			table.insert( out, v )
+		end
 
     end
 
