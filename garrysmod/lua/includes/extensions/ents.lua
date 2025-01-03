@@ -1,13 +1,12 @@
 
 function ents.FindByClassAndParent( classname, entity )
 
-    local entslist = ents.FindByClass( classname )
 	local out = {}
 
-    for k, v in ipairs( entslist ) do
+    for k, v in ipairs( ents.FindByClass( classname ) ) do
 
         local p = v:GetParent()
-		if ( !IsValid(p) ) then continue end
+		if ( !IsValid( p ) ) then continue end
 		if ( p != entity ) then continue end
 
 		table.insert( out, v )
