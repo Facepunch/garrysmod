@@ -1,7 +1,7 @@
 
 function ents.FindByClassAndParent( classname, entity )
 
-	if !IsValid( entity ) then return end
+	if ( !IsValid( entity ) ) then return end
 
 	local out = {}
 
