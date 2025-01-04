@@ -68,5 +68,5 @@ end
 list.Set( "NPC", "npc_tf2_ghost", {
 	Name = "#npc_tf2_ghost",
 	Class = "npc_tf2_ghost",
-	Category = "#spawnmenu.category.nextbot"
+	Category = "#spawnmenu.category.other"
 } )
