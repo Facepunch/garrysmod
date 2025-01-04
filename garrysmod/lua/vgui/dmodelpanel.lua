@@ -41,6 +41,8 @@ end
 
 function PANEL:SetModel( strModelName )
 
+	if strModelName == self:GetModel() then return end
+
 	-- Note - there's no real need to delete the old
 	-- entity, it will get garbage collected, but this is nicer.
 	if ( IsValid( self.Entity ) ) then
