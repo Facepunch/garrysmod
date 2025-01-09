@@ -33,9 +33,11 @@ end
 function file.Append( filename, contents )
 
 	local f = file.Open( filename, "ab", "DATA" )
-	if ( !f ) then return end
+	if ( !f ) then return false end
 
 	f:Write( contents )
 	f:Close()
+
+	return true
 
 end
