@@ -115,3 +115,8 @@ function COLOR:ToTable()
 	return { self.r, self.g, self.b, self.a }
 
 end
+
+local imat = FindMetaTable( "IMaterial" )
+
+-- This is so that the return value has the color meta table
+function imat:GetColor( ... ) return Color( self:GetColor4Part( ... ) ) end

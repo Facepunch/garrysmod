@@ -1,5 +1,24 @@
 
 --
+-- Hack for debug.getregistry
+--
+local meta = {}
+function meta.__index( self, key )
+	return FindMetaTable( key )
+end
+function meta.__newindex( self, key, value )
+	rawset( self, key, value )
+
+	if ( isstring( key ) and istable( value ) ) then
+		RegisterMetaTable( key, value )
+	end
+end
+
+local tbl = {}
+setmetatable( tbl, meta )
+function debug.getregistry() return tbl end
+
+--
 -- Seed the rand!
 --
 math.randomseed( os.time() )
