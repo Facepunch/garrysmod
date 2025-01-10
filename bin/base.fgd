@@ -33,7 +33,7 @@
 // All CBaseAnimating entities
 @BaseClass = GMODLightOrigin
 [
-	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select a info_lighting entity to specify a location to sample lighting from, instead of using this entity's origin."
+	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_target entity to specify a location to sample lighting from, instead of using this entity's origin."
 	lightingoriginhack(target_destination) : "Lighting Origin (Relative)" : "" : "Select an info_lighting_relative to specify a location to sample lighting from, instead of using this entity's origin."
 
 	input SetLightingOrigin(target_destination) : "Sets the lighting origin entity. This will make this entity sample lighting from the given entity's position"
@@ -5494,6 +5494,11 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	enablelightbounce(choices) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop. Requires vrad.exe to be ran with -StaticPropBounce 3 parameter." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 	lightmapresolutionx(integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes)"
 	lightmapresolutiony(integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes)"
 ]
@@ -6121,12 +6126,16 @@
 ]
 
 @PointClass base(Targetname) iconsprite("editor/tanktrain_ai.vmt") = tanktrain_ai :
-	"Train chase AI"			// NEEDHELP
+	"Makes a func_tracktrain chase a specific entity along its path, by moving to the closest node on the path to the target entity."
 [
-	target(target_destination) : "Train Name"
-	startsound(sound) : "Start Moving Sound" : "vehicles/diesel_start1.wav"
-	enginesound(sound) : "Engine Loop Sound" : "vehicles/diesel_turbo_loop1.wav"
-	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/tank_treads_loop1.wav"
+	target(target_destination) : "Train Name" : "" : "The func_tanktrain to move."
+	chasetarget(target_destination) : "Chase Target" : "" : "The target to chase. !player and similar work. Leave empty for no target."
+
+	startsound(sound) : "Start Moving Sound" : "vehicles/crane/crane_magnet_switchon.wav" : "Sound to play when the train starts moving."
+	enginesound(sound) : "Engine Loop Sound" : "vehicles/crane/crane_idle_loop3.wav" : "Looping sound to play when the train is not moving."
+	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/crane/crane_turn_loop2.wav" : "Looping sound for when the train is moving."
+
+	input TargetEntity(string) : "Start chasing the entity with this name"
 ]
 
 @PointClass base(Targetname, Parentname, Angles) cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) color(255 192 0) size(16 16 16) = path_track :
