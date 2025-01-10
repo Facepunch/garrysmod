@@ -328,18 +328,6 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 
 end
 
-hook.Add( "RenderScene", "RenderSuperDoF", function( ViewOrigin, ViewAngles, ViewFOV )
-
-	if ( !IsValid( SuperDOFWindow ) ) then return end
-
-	-- Don't render it when the console is up
-	if ( FrameTime() == 0 ) then return end
-
-	RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
-	return true
-
-end )
-
 concommand.Add( "pp_superdof", function()
 
 	Status = "Preview"
@@ -354,23 +342,35 @@ concommand.Add( "pp_superdof", function()
 	SuperDOFWindow:MakePopup()
 	SuperDOFWindow:PositionMyself()
 
-end )
+	hook.Add( "RenderScene", "RenderSuperDoF", function( ViewOrigin, ViewAngles, ViewFOV )
 
-hook.Add( "GUIMousePressed", "SuperDOFMouseDown", function( mouse )
+		if ( !IsValid( SuperDOFWindow ) ) then hook.Remove( "RenderScene", "RenderSuperDoF" ) return end
 
-	if ( !IsValid( SuperDOFWindow ) ) then return end
+		-- Don't render it when the console is up
+		if ( FrameTime() == 0 ) then return end
 
-	vgui.GetWorldPanel():MouseCapture( true )
-	FocusGrabber = true
+		RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
+		return true
 
-end )
+	end )
 
-hook.Add( "GUIMouseReleased", "SuperDOFMouseUp", function( mouse )
+	hook.Add( "GUIMousePressed", "SuperDOFMouseDown", function( mouse )
 
-	if ( !IsValid( SuperDOFWindow ) ) then return end
+		if ( !IsValid( SuperDOFWindow ) ) then hook.Remove( "GUIMousePressed", "SuperDOFMouseDown" ) return end
 
-	vgui.GetWorldPanel():MouseCapture( false )
-	FocusGrabber = false
+		vgui.GetWorldPanel():MouseCapture( true )
+		FocusGrabber = true
+
+	end )
+
+	hook.Add( "GUIMouseReleased", "SuperDOFMouseUp", function( mouse )
+
+		if ( !IsValid( SuperDOFWindow ) ) then hook.Remove( "GUIMouseReleased", "SuperDOFMouseUp" ) return end
+
+		vgui.GetWorldPanel():MouseCapture( false )
+		FocusGrabber = false
+
+	end )
 
 end )
 

@@ -27,16 +27,25 @@ function DrawToyTown( NumPasses, H )
 	cam.End2D()
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderToyTown", function()
-
-	if ( !pp_toytown:GetBool() ) then return end
-	if ( !GAMEMODE:PostProcessPermitted( "toytown" ) ) then return end
-	if ( !render.SupportsPixelShaders_2_0() ) then return end
+local function RenderToyTown()
 
 	local NumPasses = pp_toytown_passes:GetInt()
 	local H = math.floor( ScrH() * pp_toytown_size:GetFloat() )
 
 	DrawToyTown( NumPasses, H )
+
+end
+
+cvars.AddChangeCallback( "pp_toytown", function( _, _, newValue )
+
+	if ( !render.SupportsPixelShaders_2_0() ) then return end
+	if ( !GAMEMODE:PostProcessPermitted( "toytown" ) ) then return end
+
+	if ( newValue != "0" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderToyTown", RenderToyTown )
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderToyTown" )
+	end
 
 end )
 
