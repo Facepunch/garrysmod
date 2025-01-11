@@ -57,7 +57,7 @@
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" ng-click="ToggleSelect( file, $event )" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{GetAddonClasses( file )}}">
 
 				<preview style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='../{{file.background || "img/downloading.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+					<img src='../{{file.background || "img/downloading.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
 					<disabled></disabled>
 				</preview>
 
@@ -73,10 +73,10 @@
 
 				<controls ng-show="!file.info.floating">
 					<left>
-						<control class="{{IfElse( file.info.voted_up, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
-						<control class="{{IfElse( file.info.voted_down, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
-						<control ng-hide="file.local || file.info.favorite" ng-click="Favorite( file, true )"><img src='img/favourite_addon.png' /></control>
-						<control ng-hide="file.local || !file.info.favorite" ng-click="Favorite( file, false )"><img src='img/favourite_addon_remove.png' /></control>
+						<control class="{{IfElse( file.info.voted_up, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, true )"><img src='img/thumb-up.png' loading="lazy"/></control>
+						<control class="{{IfElse( file.info.voted_down, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, false )"><img src='img/thumb-down.png' loading="lazy"/></control>
+						<control ng-hide="file.local || file.info.favorite" ng-click="Favorite( file, true )"><img src='img/favourite_addon.png' loading="lazy"/></control>
+						<control ng-hide="file.local || !file.info.favorite" ng-click="Favorite( file, false )"><img src='img/favourite_addon_remove.png' loading="lazy"/></control>
 						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'demos.publish'">..</control>
 						<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'demos.delete'">..</control>
 					</left>
@@ -245,8 +245,8 @@
 			<div style="margin-bottom: 5px;">
 				<div ng-repeat="fileid in PopupMessageFiles" class="button {{IfElse( IsSubscribedID( fileid ), 'subbed', '' )}}">
 					<wstitle ng-click="OpenWorkshopFile( fileid )" id="wsid{{fileid}}" class="wstitle">{{fileid}}</wstitle>
-					<wsbut ng-show="IsSubscribedID( fileid )" class="wssub"><img src="img/tick.png"/></wsbut>
-					<wsbut ng-hide="IsSubscribedID( fileid )" onclick="subscriptions.Subscribe( {{fileid}} );" class="wssub"><img src="img/plus.png"></img></wsbut>
+					<wsbut ng-show="IsSubscribedID( fileid )" class="wssub"><img src="img/tick.png" loading="lazy"/></wsbut>
+					<wsbut ng-hide="IsSubscribedID( fileid )" onclick="subscriptions.Subscribe( {{fileid}} );" class="wssub"><img src="img/plus.png" loading="lazy"></img></wsbut>
 				</div>
 			</div>
 
