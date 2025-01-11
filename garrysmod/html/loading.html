@@ -2,7 +2,6 @@
 	<head>
 		<title>Loading..</title>
 		<link rel="stylesheet" type="text/css" href="loading.css?3" />
-		<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
 	</head>
 	<body>
 
@@ -30,9 +29,11 @@
 			</div>
 
 		</div>
+
+		<script type="text/javascript" src="js/thirdparty/jquery.js" defer></script>
+
 		<script type="text/javascript">
-			window.onload = function()
-			{
+			document.addEventListener("DOMContentLoaded", function() {
 				var today = new Date();
 
 				// Force it to dark on Spooktober or when it's late
@@ -45,7 +46,7 @@
 				if (isHalloween || (isSupportsSystemDarkMode ? systemDarkMode : darkMode)) {
 					$("body").addClass("dark");
 				}
-			}
+			});
 
 			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
 			{
