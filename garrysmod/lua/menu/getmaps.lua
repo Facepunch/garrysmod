@@ -381,14 +381,12 @@ local function RefreshMaps( skip )
 
 		table.insert( MapList[ Category ], name )
 
-		local fav_l10n = language.GetPhrase( "newgame_favorites" )
-
 		if ( fav ) then
-			if ( !MapList[ fav_l10n ] ) then
-				MapList[ fav_l10n ] = {}
+			if ( !MapList[ "Favourites" ] ) then
+				MapList[ "Favourites" ] = {}
 			end
 
-			table.insert( MapList[ fav_l10n ], name )
+			table.insert( MapList[ "Favourites" ], name )
 		end
 
 		if ( csgo ) then
