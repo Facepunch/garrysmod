@@ -107,17 +107,63 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.elastic.help" } )
+	CPanel:Help( "#tool.elastic.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "elastic", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "elastic" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.constant", Command = "elastic_constant", Type = "Float", Min = 0, Max = 4000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.damping", Command = "elastic_damping", Type = "Float", Min = 0, Max = 50, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.rdamping", Command = "elastic_rdamping", Type = "Float", Min = 0, Max = 1, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.elastic.stretchonly", Command = "elastic_stretch_only", Help = true } )
+	-- Constant
+	local constant = CPanel:NumSlider( "#tool.elastic.constant", "elastic_constant", 0, 4000, 2 )
+	local constantDefault = GetConVar( "elastic_constant" )
+	CPanel:ControlHelp( "#tool.elastic.constant" .. ".help" )
+	if ( constantDefault ) then
+		constant:SetDefaultValue( constantDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.width", Command = "elastic_width", Type = "Float", Min = 0, Max = 20 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.elastic.material", ConVar = "elastic_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.elastic.color", Red = "elastic_color_r", Green = "elastic_color_g", Blue = "elastic_color_b" } )
+	-- Damping
+	local damping = CPanel:NumSlider( "#tool.elastic.damping", "elastic_damping", 0, 50, 2 )
+	local dampingDefault = GetConVar( "elastic_damping" )
+	CPanel:ControlHelp( "#tool.elastic.damping" .. ".help" )
+	if ( dampingDefault ) then
+		damping:SetDefaultValue( dampingDefault:GetDefault() )
+	end
+
+	-- RDamping
+	local rdamping = CPanel:NumSlider( "#tool.elastic.rdamping", "elastic_rdamping", 0, 1, 2 )
+	local rdampingDefault = GetConVar( "elastic_rdamping" )
+	CPanel:ControlHelp( "#tool.elastic.rdamping" .. ".help" )
+	if ( rdampingDefault ) then
+		rdamping:SetDefaultValue( rdampingDefault:GetDefault() )
+	end
+
+	-- Stretch only
+	CPanel:CheckBox( "#tool.elastic.stretchonly", "elastic_stretch_only" )
+	CPanel:ControlHelp( "#tool.elastic.stretchonly" .. ".help" )
+
+	-- Width
+	local width = CPanel:NumSlider( "#tool.elastic.width", "elastic_width", 0, 20, 2 )
+	local widthDefault = GetConVar( "elastic_width" )
+	if ( widthDefault ) then
+		width:SetDefaultValue( widthDefault:GetDefault() )
+	end
+
+	-- Material
+	local material = vgui.Create( "RopeMaterial", CPanel )
+	material:SetConVar( "elastic_material" )
+	CPanel:AddPanel( material )
+
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.elastic.color" )
+	color:SetConVarR( "elastic_color_r" )
+	color:SetConVarG( "elastic_color_g" )
+	color:SetConVarB( "elastic_color_b" )
+	CPanel:AddPanel( color )
 
 end

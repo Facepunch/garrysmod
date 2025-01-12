@@ -247,20 +247,56 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.wheel.desc" } )
+	CPanel:Help( "#tool.wheel.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "wheel", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "wheel" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.wheel.forward", Command = "wheel_fwd", Label2 = "#tool.wheel.reverse", Command2 = "wheel_bck" } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "wheel_fwd" )
+	numpad:SetConVar2( "wheel_bck" )
+	numpad:SetLabel1( "#tool.wheel.forward" )
+	numpad:SetLabel2( "#tool.wheel.reverse" )
+	CPanel:AddPanel( numpad )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.torque", Command = "wheel_torque", Type = "Float", Min = 10, Max = 10000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.forcelimit", Command = "wheel_forcelimit", Type = "Float", Min = 0, Max = 50000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.friction", Command = "wheel_friction", Type = "Float", Min = 0, Max = 100 } )
+	-- Torque
+	local torque = CPanel:NumSlider( "#tool.wheel.torque", "wheel_torque", 10, 10000, 2 )
+	local torqueDefault = GetConVar( "wheel_torque" )
+	if ( torqueDefault ) then
+		torque:SetDefaultValue( torqueDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.nocollide", Command = "wheel_nocollide" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.toggle", Command = "wheel_toggle" } )
+	-- Force limit
+	local forceLimit = CPanel:NumSlider( "#tool.wheel.forcelimit", "wheel_forcelimit", 0, 50000, 2 )
+	local forceLimitDefault = GetConVar( "wheel_forcelimit" )
+	if ( forceLimitDefault ) then
+		forceLimit:SetDefaultValue( forceLimitDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model", ConVar = "wheel_model", Height = 0, Models = list.Get( "WheelModels" ) } )
+	-- Friction
+	local friction = CPanel:NumSlider( "#tool.wheel.friction", "wheel_friction", 0, 100, 2 )
+	local frictionDefault = GetConVar( "wheel_friction" )
+	if ( frictionDefault ) then
+		friction:SetDefaultValue( frictionDefault:GetDefault() )
+	end
+
+	-- No collide
+	CPanel:CheckBox( "#tool.wheel.nocollide", "wheel_nocollide" )
+
+	-- Toggle
+	CPanel:CheckBox( "#tool.wheel.toggle", "wheel_toggle" )
+
+	-- Model
+	local model = vgui.Create( "PropSelect", CPanel )
+	model:ControlValues( { label = "#tool.wheel.model", convar = "wheel_model", height = 0, models = list.Get( "WheelModels" ) } )
+	CPanel:AddPanel( model )
 
 end
 

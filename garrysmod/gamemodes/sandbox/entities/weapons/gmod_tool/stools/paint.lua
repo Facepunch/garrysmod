@@ -147,12 +147,22 @@ function TOOL.BuildCPanel( CPanel )
 
 	table.sort( Options )
 
-	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )
+	local listbox = vgui.Create( "DListView" )
+	listbox:SetMultiSelect( false )
+	listbox:AddColumn( "#tool.paint.texture" )
+	listbox:SetTall( 17 + table.Count( Options ) * 17 )
+	listbox:SortByColumn( 1, false )
+	function listbox:OnRowSelected( LineID, Line )
+		for k, v in pairs( Line.data ) do
+			RunConsoleCommand( k, v )
+		end
+	end
 	for k, decal in ipairs( Options ) do
 		local line = listbox:AddLine( decal )
 		line.data = { paint_decal = decal, gmod_tool = "paint" }
 
 		if ( GetConVarString( "paint_decal" ) == tostring( decal ) ) then line:SetSelected( true ) end
 	end
+	CPanel:AddItem( listbox )
 
 end

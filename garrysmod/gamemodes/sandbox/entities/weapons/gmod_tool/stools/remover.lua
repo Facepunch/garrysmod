@@ -98,6 +98,6 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.remover.desc" } )
+	CPanel:Help( "#tool.remover.desc" )
 
 end

@@ -184,17 +184,43 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.emitter.desc" } )
+	CPanel:Help( "#tool.emitter.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "emitter", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "emitter" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.emitter.key", Command = "emitter_key" } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "emitter_key" )
+	numpad:SetLabel1( "#tool.emitter.key" )
+	CPanel:AddPanel( numpad )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.delay", Command = "emitter_delay", Type = "Float", Min = 0.01, Max = 2 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.scale", Command = "emitter_scale", Type = "Float", Min = 0, Max = 6, Help = true } )
+	-- Delay
+	local delay = CPanel:NumSlider( "#tool.emitter.delay", "emitter_delay", 0.01, 2, 2 )
+	local delayDefault = GetConVar( "emitter_delay" )
+	if ( delayDefault ) then
+		delay:SetDefaultValue( delayDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.toggle", Command = "emitter_toggle" } )
-	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.starton", Command = "emitter_starton" } )
+	-- Scale
+	local scale = CPanel:NumSlider( "#tool.emitter.scale", "emitter_scale", 0, 6, 2 )
+	local scaleDefault = GetConVar( "emitter_scale" )
+	CPanel:ControlHelp( "#tool.emitter.scale" .. ".help" )
+	if ( scaleDefault ) then
+		scale:SetDefaultValue( scaleDefault:GetDefault() )
+	end
+
+	-- Toggle
+	CPanel:CheckBox( "#tool.emitter.toggle", "emitter_toggle" )
+
+	-- Start on
+	CPanel:CheckBox( "#tool.emitter.starton", "emitter_starton" )
 
 	local matselect = CPanel:MatSelect( "emitter_effect", nil, true, 0.25, 0.25 )
 	for k, v in pairs( list.Get( "EffectType" ) ) do

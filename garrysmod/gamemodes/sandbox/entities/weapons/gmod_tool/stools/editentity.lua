@@ -36,7 +36,7 @@ function TOOL:Think()
 		local CPanel = controlpanel.Get( "editentity" )
 		if ( !CPanel ) then return end
 
-		CPanel:ClearControls()
+		CPanel:Clear()
 		self.BuildCPanel( CPanel, CurrentEditing )
 
 	end
@@ -49,6 +49,7 @@ function TOOL.BuildCPanel( CPanel, ent )
 	control:SetEntity( ent )
 	control:SetSize( 10, 500 )
 
-	CPanel:AddPanel( control )
+	CPanel:AddItem( control, nil )
+	self:InvalidateLayout()
 
 end

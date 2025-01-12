@@ -219,17 +219,59 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.hoverball.help" } )
+	CPanel:Help( "#tool.hoverball.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "hoverball", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "hoverball" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.hoverball.up", Command = "hoverball_keyup", Label2 = "#tool.hoverball.down", Command2 = "hoverball_keydn" } )
-	CPanel:AddControl( "Numpad", { Label = "#tool.toggle", Command = "hoverball_keyon" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.speed", Command = "hoverball_speed", Type = "Float", Min = 0, Max = 20, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.resistance", Command = "hoverball_resistance", Type = "Float", Min = 0, Max = 10, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.strength", Command = "hoverball_strength", Type = "Float", Min = 0.1, Max = 10, Help = true } )
+	-- Key up
+	local keyup = vgui.Create( "CtrlNumPad", CPanel )
+	keyup:SetConVar1( "hoverball_keyup" )
+	keyup:SetConVar2( "hoverball_keydn" )
+	keyup:SetLabel1( "#tool.hoverball.up" )
+	keyup:SetLabel2( "#tool.hoverball.down" )
+	CPanel:AddPanel( keyup )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 0 } )
+	-- Key toggle
+	local keytoggle = vgui.Create( "CtrlNumPad", CPanel )
+	keytoggle:SetConVar1( "hoverball_keyon" )
+	keytoggle:SetLabel1( "#tool.toggle" )
+	CPanel:AddPanel( keytoggle )
+
+	-- Speed
+	local speed = CPanel:NumSlider( "#tool.hoverball.speed", "hoverball_speed", 0, 20, 2 )
+	local speedDefault = GetConVar( "hoverball_speed" )
+	CPanel:ControlHelp( "#tool.hoverball.speed" .. ".help" )
+	if ( speedDefault ) then
+		speed:SetDefaultValue( speedDefault:GetDefault() )
+	end
+
+	-- Resistance
+	local resistance = CPanel:NumSlider( "#tool.hoverball.resistance", "hoverball_resistance", 0, 10, 2 )
+	local resistanceDefault = GetConVar( "hoverball_resistance" )
+	CPanel:ControlHelp( "#tool.hoverball.resistance" .. ".help" )
+	if ( resistanceDefault ) then
+		resistance:SetDefaultValue( resistanceDefault:GetDefault() )
+	end
+
+	-- Strength
+	local strength = CPanel:NumSlider( "#tool.hoverball.strength", "hoverball_strength", 0.1, 10, 2 )
+	local strengthDefault = GetConVar( "hoverball_strength" )
+	CPanel:ControlHelp( "#tool.hoverball.strength" .. ".help" )
+	if ( strengthDefault ) then
+		strength:SetDefaultValue( strengthDefault:GetDefault() )
+	end
+
+	-- Model
+	local model = vgui.Create( "PropSelect", CPanel )
+	model:ControlValues( { label = "#tool.hoverball.model", convar = "hoverball_model", models = list.Get( "HoverballModels" ), height = 0 } )
+	CPanel:AddPanel( model )
 
 end
 

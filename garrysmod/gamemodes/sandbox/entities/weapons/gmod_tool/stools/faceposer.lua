@@ -176,11 +176,18 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel, faceEntity )
 
-	CPanel:AddControl( "Header", { Description = "#tool.faceposer.desc" } )
+	CPanel:Help( "#tool.faceposer.desc" )
 
 	if ( !IsValid( faceEntity ) || faceEntity:GetFlexNum() == 0 ) then return end
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "face" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
 	local QuickFace = vgui.Create( "MatSelect", CPanel )
 	QuickFace:SetItemWidth( 64 )
@@ -335,10 +342,19 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 	CPanel:AddItem( QuickFace )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.faceposer.scale", Command = "faceposer_scale", Type = "Float", Min = -5, Max = 5, Help = true, Default = 1 } ):SetHeight( 16 )
-	CPanel:AddControl( "Button", { Text = "#tool.faceposer.randomize", Command = "faceposer_randomize" } )
+	-- Scale
+	local size = CPanel:NumSlider( "#tool.faceposer.scale", "faceposer_scale", -5, 5, 2 )
+	CPanel:ControlHelp( "#tool.faceposer.scale" .. ".help" )
+	size:SetDefaultValue( 1 )
+	size:SetHeight( 16 )
 
-	local filter = CPanel:AddControl( "TextBox", { Label = "#spawnmenu.quick_filter_tool" } )
+	-- Randomize
+	local randomize = vgui.Create( "DButton", CPanel )
+	function randomize:DoClick() LocalPlayer():ConCommand( "faceposer_randomize" ) end
+	randomize:SetText( "#tool.faceposer.randomize" )
+	CPanel:AddPanel( randomize )
+
+	local filter = CPanel:TextEntry( "#spawnmenu.quick_filter_tool", nil )
 	filter:SetUpdateOnType( true )
 
 	-- Group flex controllers by their type..

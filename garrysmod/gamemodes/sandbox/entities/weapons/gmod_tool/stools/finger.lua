@@ -571,11 +571,18 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel, ent, hand )
 
-	CPanel:AddControl( "Header", { Description = "#tool.finger.desc" } )
+	CPanel:Help( "#tool.finger.desc" )
 
 	if ( !IsValid( ent ) ) then return end
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "finger", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "finger" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
 	SetupFingers( ent )
 
@@ -584,9 +591,11 @@ function TOOL.BuildCPanel( CPanel, ent, hand )
 	-- Detect mitten hands
 	local NumVars = table.Count( ent.FingerIndex )
 
-	CPanel:AddControl( "fingerposer", { hand = hand, numvars = NumVars } )
+	local fingerPoser = vgui.Create( "fingerposer", CPanel )
+	fingerPoser:ControlValues( { hand = hand, numvars = NumVars } )
+	CPanel:AddPanel( fingerPoser )
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.finger.restrict_axis", Command = "finger_restrict" } )
+	CPanel:CheckBox( "#tool.finger.restrict_axis", "finger_restrict" )
 
 end
 

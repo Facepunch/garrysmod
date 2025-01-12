@@ -237,20 +237,56 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.lamp.desc" } )
+	CPanel:Help( "#tool.lamp.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "lamp", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "lamp" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.key", Command = "lamp_key" } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "lamp_key" )
+	numpad:SetLabel1( "#tool.lamp.key" )
+	CPanel:AddPanel( numpad )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.fov", Command = "lamp_fov", Type = "Float", Min = 10, Max = 170 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.distance", Command = "lamp_distance", Min = 64, Max = 2048 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.brightness", Command = "lamp_brightness", Type = "Float", Min = 0, Max = 8 } )
+	-- Field of view
+	local fov = CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170, 2 )
+	local fovDefault = GetConVar( "lamp_fov" )
+	if ( fovDefault ) then
+		fov:SetDefaultValue( fovDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
+	-- Distance
+	local distance = CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048, 2 )
+	local distanceDefault = GetConVar( "lamp_distance" )
+	if ( distanceDefault ) then
+		distance:SetDefaultValue( distanceDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
+	-- Brightness
+	local brightness = CPanel:NumSlider( "#tool.lamp.brightness", "lamp_brightness", 0, 8, 2 )
+	local brightnessDefault = GetConVar( "lamp_brightness" )
+	if ( brightnessDefault ) then
+		brightness:SetDefaultValue( brightnessDefault:GetDefault() )
+	end
 
+	-- Toggle
+	CPanel:CheckBox( "#tool.lamp.toggle", "lamp_toggle" )
+
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.lamp.color" )
+	color:SetConVarR( "lamp_r" )
+	color:SetConVarG( "lamp_g" )
+	color:SetConVarB( "lamp_b" )
+	CPanel:AddPanel( color )
+
+	-- Material
 	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, false, 0.33, 0.33 )
 	MatSelect.Height = 4
 
@@ -258,7 +294,10 @@ function TOOL.BuildCPanel( CPanel )
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 0, Models = list.Get( "LampModels" ) } )
+	-- Model
+	local model = vgui.Create( "PropSelect", CPanel )
+	model:ControlValues( { label = "#tool.lamp.model", convar = "lamp_model", height = 0, models = list.Get( "LampModels" ) } )
+	CPanel:AddPanel( model )
 
 end
 

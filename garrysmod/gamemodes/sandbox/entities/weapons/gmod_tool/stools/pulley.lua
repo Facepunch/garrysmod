@@ -107,15 +107,47 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.pulley.help" } )
+	CPanel:Help( "#tool.pulley.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "pulley", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "pulley" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "pulley_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.pulley.rigid", Command = "pulley_rigid", Help = true } )
+	-- Force limit
+	local forceLimit = CPanel:NumSlider( "#tool.forcelimit", "pulley_forcelimit", 0, 1000, 2 )
+	local forceLimitDefault = GetConVar( "pulley_forcelimit" )
+	CPanel:ControlHelp( "#tool.forcelimit" .. ".help" )
+	if ( forceLimitDefault ) then
+		forceLimit:SetDefaultValue( forceLimitDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Slider", { Label = "#tool.pulley.width", Command = "pulley_width", Type = "Float", Min = 0, Max = 10 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.pulley.material", ConVar = "pulley_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.pulley.color", Red = "pulley_color_r", Green = "pulley_color_g", Blue = "pulley_color_b" } )
+	-- No collide
+	CPanel:CheckBox( "#tool.pulley.rigid", "pulley_rigid" )
+	CPanel:ControlHelp( "#tool.pulley.rigid" .. ".help" )
+
+	-- Width
+	local width = CPanel:NumSlider( "#tool.pulley.width", "pulley_width", 0, 10, 2 )
+	local widthDefault = GetConVar( "pulley_width" )
+	if ( widthDefault ) then
+		width:SetDefaultValue( widthDefault:GetDefault() )
+	end
+
+	-- Rope material
+	local material = vgui.Create( "RopeMaterial", CPanel )
+	material:SetConVar( "pulley_material" )
+	CPanel:AddPanel( material )
+
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.pulley.color" )
+	color:SetConVarR( "pulley_color_r" )
+	color:SetConVarG( "pulley_color_g" )
+	color:SetConVarB( "pulley_color_b" )
+	CPanel:AddPanel( color )
 
 end

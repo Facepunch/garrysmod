@@ -239,18 +239,65 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.muscle.help" } )
+	CPanel:Help( "#tool.muscle.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "muscle", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "muscle" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.muscle.numpad", Command = "muscle_group" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.muscle.length", Command = "muscle_addlength", Type = "Float", Min = -1000, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.muscle.period", Command = "muscle_period", Type = "Float", Min = 0, Max = 10, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.muscle.fixed", Command = "muscle_fixed", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.muscle.starton", Command = "muscle_starton", Help = true } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "muscle_group" )
+	numpad:SetLabel1( "#tool.muscle.numpad" )
+	CPanel:AddPanel( numpad )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.muscle.width", Command = "muscle_width", Type = "Float", Min = 0, Max = 5 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.muscle.material", ConVar = "muscle_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.muscle.color", Red = "muscle_color_r", Green = "muscle_color_g", Blue = "muscle_color_b" } )
+	-- Length
+	local length = CPanel:NumSlider( "#tool.muscle.length", "muscle_addlength", -1000, 1000, 2 )
+	local lengthDefault = GetConVar( "muscle_addlength" )
+	CPanel:ControlHelp( "#tool.muscle.length" .. ".help" )
+	if ( lengthDefault ) then
+		length:SetDefaultValue( lengthDefault:GetDefault() )
+	end
+
+	-- Period
+	local period = CPanel:NumSlider( "#tool.muscle.period", "muscle_period", 0, 10, 2 )
+	local periodDefault = GetConVar( "muscle_period" )
+	CPanel:ControlHelp( "#tool.muscle.period" .. ".help" )
+	if ( periodDefault ) then
+		period:SetDefaultValue( periodDefault:GetDefault() )
+	end
+
+	-- Fixed
+	CPanel:CheckBox( "#tool.muscle.fixed", "muscle_fixed" )
+	CPanel:ControlHelp( "#tool.muscle.fixed" .. ".help" )
+
+	-- Start on
+	CPanel:CheckBox( "#tool.muscle.starton", "muscle_starton" )
+	CPanel:ControlHelp( "#tool.muscle.starton" .. ".help" )
+
+	-- Width
+	local width = CPanel:NumSlider( "#tool.muscle.width", "muscle_width", 0, 5, 2 )
+	local widthDefault = GetConVar( "muscle_width" )
+	if ( widthDefault ) then
+		width:SetDefaultValue( widthDefault:GetDefault() )
+	end
+
+	-- Rope material
+	local material = vgui.Create( "RopeMaterial", CPanel )
+	material:SetConVar( "muscle_material" )
+	CPanel:AddPanel( material )
+
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.muscle.color" )
+	color:SetConVarR( "muscle_color_r" )
+	color:SetConVarG( "muscle_color_g" )
+	color:SetConVarB( "muscle_color_b" )
+	CPanel:AddPanel( color )
 
 end

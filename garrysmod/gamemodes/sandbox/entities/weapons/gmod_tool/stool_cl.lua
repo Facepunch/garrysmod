@@ -14,7 +14,7 @@ function ToolObj:RebuildControlPanel( ... )
 	local cPanel = controlpanel.Get( self.Mode )
 	if ( !cPanel ) then ErrorNoHalt( "Couldn't find control panel to rebuild!" ) return end
 
-	cPanel:ClearControls()
+	cPanel:Clear()
 	self.BuildCPanel( cPanel, ... )
 
 end

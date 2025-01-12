@@ -62,21 +62,64 @@ list.Set( "PostProcess", "#colormod_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#colormod_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#colormod_pp.enable", Command = "pp_colormod" } )
+		CPanel:Help( "#colormod_pp.desc" )
+		CPanel:CheckBox( "#colormod_pp.enable", "pp_colormod" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "colormod" }
-		params.Options[ "#preset.default" ] = { pp_colormod_addr = "0", pp_colormod_addg = "0", pp_colormod_addb = "0", pp_colormod_brightness = "0", pp_colormod_contrast = "1", pp_colormod_color = "1", pp_colormod_mulr = "0", pp_colormod_mulg = "0", pp_colormod_mulb = "0", pp_colormod_inv = "0" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		local params = vgui.Create( "ControlPresets", CPanel )
+		local options = {}
+		options[ "#preset.default" ] = { 
+			pp_colormod_addr = "0",
+			pp_colormod_addg = "0",
+			pp_colormod_addb = "0",
+			pp_colormod_brightness = "0",
+			pp_colormod_contrast = "1",
+			pp_colormod_color = "1",
+			pp_colormod_mulr = "0",
+			pp_colormod_mulg = "0",
+			pp_colormod_mulb = "0",
+			pp_colormod_inv = "0"
+		}
+		params:SetPreset( "colormod" )
+		params:AddOption( "#preset.default", options[ "#preset.default" ] )
+		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
+			params:AddConVar( v )
+		end
+		CPanel:AddPanel( params )
 
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.brightness", Command = "pp_colormod_brightness", Type = "Float", Min = "-2", Max = "2" } )
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.contrast", Command = "pp_colormod_contrast", Type = "Float", Min = "0", Max = "10" } )
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.color", Command = "pp_colormod_color", Type = "Float", Min = "0", Max = "5" } )
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.invert", Command = "pp_colormod_inv", Type = "Float", Min = "0", Max = "1" } )
+		local brightness = CPanel:NumSlider( "#colormod_pp.brightness", "pp_colormod_brightness", -2, 2, 2 )
+		local brightnessDefault = GetConVar( "pp_colormod_brightness" )
+		if ( brightnessDefault ) then
+			brightness:SetDefaultValue( brightnessDefault:GetDefault() )
+		end
+		local contrast = CPanel:NumSlider( "#colormod_pp.contrast", "pp_colormod_contrast", 0, 10, 2 )
+		local contrastDefault = GetConVar( "pp_colormod_contrast" )
+		if ( contrastDefault ) then
+			contrast:SetDefaultValue( contrastDefault:GetDefault() )
+		end
+		local color = CPanel:NumSlider( "#colormod_pp.color", "pp_colormod_color", 0, 5, 2 )
+		local colorDefault = GetConVar( "pp_colormod_color" )
+		if ( colorDefault ) then
+			color:SetDefaultValue( colorDefault:GetDefault() )
+		end
+		local invert = CPanel:NumSlider( "#colormod_pp.invert", "pp_colormod_inv", 0, 1, 2 )
+		local invertDefault = GetConVar( "pp_colormod_inv" )
+		if ( invertDefault ) then
+			invert:SetDefaultValue( invertDefault:GetDefault() )
+		end
 
-		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_add", Red = "pp_colormod_addr", Green = "pp_colormod_addg", Blue = "pp_colormod_addb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )
-		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_multiply", Red = "pp_colormod_mulr", Green = "pp_colormod_mulg", Blue = "pp_colormod_mulb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )
+		local colorAdd = vgui.Create( "CtrlColor", CPanel )
+		colorAdd:SetLabel( "#colormod_pp.color_add" )
+		colorAdd:SetConVarR( "pp_colormod_addr" )
+		colorAdd:SetConVarG( "pp_colormod_addg" )
+		colorAdd:SetConVarB( "pp_colormod_addb" )
+		CPanel:AddPanel( colorAdd )
+
+		local colorMult = vgui.Create( "CtrlColor", CPanel )
+		colorMult:SetLabel( "#colormod_pp.color_multiply" )
+		colorMult:SetConVarR( "pp_colormod_mulr" )
+		colorMult:SetConVarG( "pp_colormod_mulg" )
+		colorMult:SetConVarB( "pp_colormod_mulb" )
+		CPanel:AddPanel( colorMult )
 
 	end
 
