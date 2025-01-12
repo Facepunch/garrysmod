@@ -219,13 +219,43 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.axis.help" } )
+	CPanel:Help( "#tool.axis.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "axis", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "axis" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "axis_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "axis_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "axis_hingefriction", Type = "Float", Min = 0, Max = 200, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide", Help = true } )
+	-- Force limit
+	local forceLimit = CPanel:NumSlider( "#tool.forcelimit", "axis_forcelimit", 0, 50000, 2 )
+	local forceLimitDefault = GetConVar( "axis_forcelimit" )
+	CPanel:ControlHelp( "#tool.forcelimit" .. ".help" )
+	if ( forceLimitDefault ) then
+		forceLimit:SetDefaultValue( forceLimitDefault:GetDefault() )
+	end
+
+	-- Torque limit
+	local torqueLimit = CPanel:NumSlider( "#tool.torquelimit", "axis_torquelimit", 0, 50000, 2 )
+	local torqueLimitDefault = GetConVar( "axis_torquelimit" )
+	CPanel:ControlHelp( "#tool.torquelimit" .. ".help" )
+	if ( torqueLimitDefault ) then
+		torqueLimit:SetDefaultValue( torqueLimitDefault:GetDefault() )
+	end
+
+	-- Hinge friction
+	local hingeFriction = CPanel:NumSlider( "#tool.hingefriction", "axis_hingefriction", 0, 200, 2 )
+	local hingeFrictionDefault = GetConVar( "axis_hingefriction" )
+	CPanel:ControlHelp( "#tool.hingefriction" .. ".help" )
+	if ( hingeFrictionDefault ) then
+		hingeFriction:SetDefaultValue( hingeFrictionDefault:GetDefault() )
+	end
+
+	-- No collide
+	CPanel:CheckBox( "#tool.nocollide", "axis_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide" .. ".help" )
 
 end

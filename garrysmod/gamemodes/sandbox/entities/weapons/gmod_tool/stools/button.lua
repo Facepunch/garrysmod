@@ -171,17 +171,34 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.button.desc" } )
+	CPanel:Help( "#tool.button.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "button", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "button" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.button.key", Command = "button_keygroup" } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "button_keygroup" )
+	numpad:SetLabel1( "#tool.button.key" )
+	CPanel:AddPanel( numpad )
 
-	CPanel:AddControl( "TextBox", { Label = "#tool.button.text", Command = "button_description", MaxLenth = "20" } )
+	-- Description
+	CPanel:TextEntry( "#tool.button.text", "button_description" )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.button.toggle", Command = "button_toggle", Help = true } )
+	-- Toggle
+	CPanel:CheckBox( "#tool.button.toggle", "button_toggle" )
+	CPanel:ControlHelp( "#tool.button.toggle" .. ".help" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 0, Models = list.Get( "ButtonModels" ) } )
+	-- Model
+	local model = vgui.Create( "PropSelect", CPanel )
+	model:ControlValues( { label = "#tool.button.model", convar = "button_model", height = 0, models = list.Get( "ButtonModels" ) } )
+	CPanel:AddPanel( model )
 
 end
 

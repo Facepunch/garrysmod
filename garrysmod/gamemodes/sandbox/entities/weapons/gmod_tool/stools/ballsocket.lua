@@ -91,12 +91,35 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.ballsocket.help" } )
+	CPanel:Help( "#tool.ballsocket.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "ballsocket", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "ballsocket" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "ballsocket_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	--CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "ballsocket_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "ballsocket_nocollide", Help = true } )
+	-- Force limit
+	local forceLimit = CPanel:NumSlider( "#tool.forcelimit", "ballsocket_forcelimit", 0, 50000, 2 )
+	local forceLimitDefault = GetConVar( "ballsocket_forcelimit" )
+	CPanel:ControlHelp( "#tool.forcelimit" .. ".help" )
+	if ( forceLimitDefault ) then
+		forceLimit:SetDefaultValue( forceLimitDefault:GetDefault() )
+	end
+
+	-- Torque limit
+	--[[local torqueLimit = CPanel:NumSlider( "#tool.torquelimit", "ballsocket_torquelimit", 0, 50000, 2 )
+	local torqueLimitDefault = GetConVar( "ballsocket_torquelimit" )
+	CPanel:ControlHelp( "#tool.torquelimit" .. ".help" )
+	if ( torqueLimitDefault ) then
+		torqueLimit:SetDefaultValue( torqueLimitDefault:GetDefault() )
+	end]]--
+
+	-- No collide
+	CPanel:CheckBox( "#tool.nocollide", "ballsocket_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide" .. ".help" )
 
 end

@@ -288,11 +288,26 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.weld.help" } )
+	CPanel:Help( "#tool.weld.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "weld", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "weld" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "weld_nocollide" } )
+	-- Force limit
+	local forceLimit = CPanel:NumSlider( "#tool.forcelimit", "weld_forcelimit", 0, 1000, 2 )
+	local forceLimitDefault = GetConVar( "weld_forcelimit" )
+	CPanel:ControlHelp( "#tool.forcelimit" .. ".help" )
+	if ( forceLimitDefault ) then
+		forceLimit:SetDefaultValue( forceLimitDefault:GetDefault() )
+	end
+
+	-- No collide
+	CPanel:CheckBox( "#tool.nocollide", "weld_nocollide" )
 
 end

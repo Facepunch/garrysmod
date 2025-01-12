@@ -216,18 +216,53 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.light.desc" } )
+	CPanel:Help( "#tool.light.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "light", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "light" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "light_key" )
+	numpad:SetLabel1( "#tool.light.key" )
+	CPanel:AddPanel( numpad )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.light.ropelength", Command = "light_ropelength", Type = "Float", Min = 0, Max = 256 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = -6, Max = 6 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.size", Command = "light_size", Type = "Float", Min = 0, Max = 1024 } )
+	-- Rope length
+	local length = CPanel:NumSlider( "#tool.light.ropelength", "light_ropelength", 0, 256, 2 )
+	local lengthDefault = GetConVar( "light_ropelength" )
+	if ( lengthDefault ) then
+		length:SetDefaultValue( lengthDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )
+	-- Brightness
+	local brightness = CPanel:NumSlider( "#tool.light.brightness", "light_brightness", -6, 6, 0 )
+	local brightnessDefault = GetConVar( "light_brightness" )
+	if ( brightnessDefault ) then
+		brightness:SetDefaultValue( brightnessDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Color", { Label = "#tool.light.color", Red = "light_r", Green = "light_g", Blue = "light_b" } )
+	-- Size
+	local size = CPanel:NumSlider( "#tool.light.size", "light_size", 0, 1024, 2 )
+	local sizeDefault = GetConVar( "light_size" )
+	if ( sizeDefault ) then
+		size:SetDefaultValue( sizeDefault:GetDefault() )
+	end
+
+	-- No collide
+	CPanel:CheckBox( "#tool.light.toggle", "light_toggle" )
+
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.light.color" )
+	color:SetConVarR( "light_r" )
+	color:SetConVarG( "light_g" )
+	color:SetConVarB( "light_b" )
+	CPanel:AddPanel( color )
 
 end

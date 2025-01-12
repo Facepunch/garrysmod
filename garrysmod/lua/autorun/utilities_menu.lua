@@ -19,7 +19,7 @@ end
 
 local function ServerSettings( pnl )
 
-	pnl:AddControl( "Header", { Description = "#utilities.serversettings" } )
+	pnl:Help( "#utilities.serversettings" )
 
 	local ConVarsDefault = {
 		hostname = "Garry's Mod",
@@ -40,36 +40,81 @@ local function ServerSettings( pnl )
 		g_ragdoll_maxcount = "32",
 		sv_timeout = "65"
 	}
-	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_server", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	pnl:AddControl( "TextBox", { Label = "#utilities.hostname", Command = "hostname", WaitForEnter = "1" } )
-	pnl:AddControl( "TextBox", { Label = "#utilities.password", Command = "sv_password", WaitForEnter = "1" } )
+	local presets = vgui.Create( "ControlPresets", pnl )
+	presets:SetPreset( "util_server" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	pnl:AddPanel( presets )
 
-	pnl:AddControl( "CheckBox", { Label = "#utilities.kickerrornum", Command = "sv_kickerrornum" } )
-	pnl:AddControl( "CheckBox", { Label = "#utilities.allowcslua", Command = "sv_allowcslua" } )
-	pnl:AddControl( "CheckBox", { Label = "#utilities.sticktoground", Command = "sv_sticktoground", Help = true } )
-	pnl:AddControl( "CheckBox", { Label = "#utilities.epickupallowed", Command = "sv_playerpickupallowed" } )
-	pnl:AddControl( "CheckBox", { Label = "#utilities.falldamage", Command = "mp_falldamage" } )
-	pnl:AddControl( "CheckBox", { Label = "#utilities.gmod_suit", Command = "gmod_suit" } )
+	pnl:TextEntry( "#utilities.hostname", "hostname" )
+	pnl:TextEntry( "#utilities.password", "sv_password" )
+
+	pnl:CheckBox( "#utilities.kickerrornum", "sv_kickerrornum" )
+	pnl:CheckBox( "#utilities.allowcslua", "sv_allowcslua" )
+	pnl:CheckBox( "#utilities.sticktoground", "sv_sticktoground" )
+	pnl:ControlHelp( "#utilities.sticktoground" .. ".help" )
+	pnl:CheckBox( "#utilities.epickupallowed", "sv_playerpickupallowed" )
+	pnl:CheckBox( "#utilities.falldamage", "mp_falldamage" )
+	pnl:CheckBox( "#utilities.gmod_suit", "gmod_suit" )
 
 	-- Fun convars
-	pnl:AddControl( "Slider", { Label = "#utilities.gravity", Type = "Integer", Command = "sv_gravity", Min = "-500", Max = "1000" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.friction", Type = "Integer", Command = "sv_friction", Min = "0", Max = "16" } ) -- Float
-	pnl:AddControl( "Slider", { Label = "#utilities.timescale", Type = "Float", Command = "phys_timescale", Min = "0", Max = "2" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.deployspeed", Type = "Float", Command = "sv_defaultdeployspeed", Min = "0.1", Max = "10" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.noclipspeed", Type = "Integer", Command = "sv_noclipspeed", Min = "1", Max = "10" } ) -- Switch this and friction back to Float once Sliders don't reset the convar from 8 to 8.00, etc
-	pnl:AddControl( "Slider", { Label = "#utilities.maxammo", Type = "Integer", Command = "gmod_maxammo", Min = "0", Max = "9999", Help = true } )
-	pnl:AddControl( "Slider", { Label = "#utilities.max_ragdolls", Type = "Integer", Command = "g_ragdoll_maxcount", Min = "0", Max = "128" } )
+	local gravity = pnl:NumSlider( "#utilities.gravity", "sv_gravity", -500, 1000, 0 )
+	local gravityDefault = GetConVar( "sv_gravity" )
+	if ( gravityDefault ) then
+		gravity:SetDefaultValue( gravityDefault:GetDefault() )
+	end
+	local friction = pnl:NumSlider( "#utilities.friction", "sv_friction", 0, 16, 2 )
+	local frictionDefault = GetConVar( "sv_friction" )
+	if ( frictionDefault ) then
+		friction:SetDefaultValue( frictionDefault:GetDefault() )
+	end
+	local timescale = pnl:NumSlider( "#utilities.timescale", "phys_timescale", 0, 2, 2 )
+	local timescaleDefault = GetConVar( "phys_timescale" )
+	if ( timescaleDefault ) then
+		timescale:SetDefaultValue( timescaleDefault:GetDefault() )
+	end
+	local deployspeed = pnl:NumSlider( "#utilities.deployspeed", "sv_defaultdeployspeed", 0.1, 10, 2 )
+	local deployspeedDefault = GetConVar( "sv_defaultdeployspeed" )
+	if ( deployspeedDefault ) then
+		deployspeed:SetDefaultValue( deployspeedDefault:GetDefault() )
+	end
+	local noclipspeed = pnl:NumSlider( "#utilities.noclipspeed", "sv_noclipspeed", 1, 10, 2 )
+	local noclipspeedDefault = GetConVar( "sv_noclipspeed" )
+	if ( noclipspeedDefault ) then
+		noclipspeed:SetDefaultValue( noclipspeedDefault:GetDefault() )
+	end
+	local maxammo = pnl:NumSlider( "#utilities.maxammo", "gmod_maxammo", 0, 9999, 0 )
+	local maxammoDefault = GetConVar( "gmod_maxammo" )
+	pnl:ControlHelp( "#utilities.maxammo" .. ".help" )
+	if ( maxammoDefault ) then
+		maxammo:SetDefaultValue( maxammoDefault:GetDefault() )
+	end
+	local maxRagdolls = pnl:NumSlider( "#utilities.max_ragdolls", "g_ragdoll_maxcount", 0, 128, 0 )
+	local maxRagdollsDefault = GetConVar( "g_ragdoll_maxcount" )
+	if ( maxRagdollsDefault ) then
+		maxRagdolls:SetDefaultValue( maxRagdollsDefault:GetDefault() )
+	end
 
 	-- Technical convars
-	pnl:AddControl( "Slider", { Label = "#utilities.iterations", Type = "Integer", Command = "gmod_physiterations", Min = "1", Max = "10" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.sv_timeout", Type = "Integer", Command = "sv_timeout", Min = "60", Max = "300" } )
+	local iterations = pnl:NumSlider( "#utilities.iterations", "gmod_physiterations", 1, 10, 0 )
+	local iterationsDefault = GetConVar( "gmod_physiterations" )
+	if ( iterationsDefault ) then
+		iterations:SetDefaultValue( iterationsDefault:GetDefault() )
+	end
+	local timeout = pnl:NumSlider( "#utilities.sv_timeout", "sv_timeout", 60, 300, 0 )
+	local timeoutDefault = GetConVar( "sv_timeout" )
+	if ( timeoutDefault ) then
+		timeout:SetDefaultValue( timeoutDefault:GetDefault() )
+	end
 
 end
 
 local function SandboxClientSettings( pnl )
 
-	pnl:AddControl( "Header", { Description = "#utilities.sandboxsettings_cl" } )
+	pnl:Help( "#utilities.sandboxsettings_cl" )
 
 	local ConVarsDefault = {
 		sbox_search_maxresults = "1024",
@@ -84,12 +129,23 @@ local function SandboxClientSettings( pnl )
 		cl_showhints = "1",
 	}
 
-	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_sandbox_cl", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	local presets = vgui.Create( "ControlPresets", pnl )
+	presets:SetPreset( "util_sandbox_cl" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	pnl:AddPanel( presets )
 
-	pnl:AddControl( "Slider", { Label = "#utilities.max_results", Type = "Integer", Command = "sbox_search_maxresults", Min = "1024", Max = "8192", Help = true } )
+	local maxresults = pnl:NumSlider( "#utilities.max_results", "sbox_search_maxresults", 1024, 8192, 0 )
+	local maxresultsDefault = GetConVar( "sbox_search_maxresults" )
+	pnl:ControlHelp( "#utilities.max_results" .. ".help" )
+	if ( maxresultsDefault ) then
+		maxresults:SetDefaultValue( maxresultsDefault:GetDefault() )
+	end
 
 	local function AddCheckbox( title, cvar )
-		pnl:AddControl( "CheckBox", { Label = title, Command = cvar } )
+		pnl:CheckBox( title, cvar )
 	end
 
 	AddCheckbox( "#menubar.drawing.hud", "cl_drawhud" )
@@ -106,7 +162,7 @@ end
 
 local function SandboxSettings( pnl )
 
-	pnl:AddControl( "Header", { Description = "#utilities.sandboxsettings" } )
+	pnl:Help( "#utilities.sandboxsettings" )
 
 	local ConVarsDefault = {
 		sbox_persist = "",
@@ -134,25 +190,35 @@ local function SandboxSettings( pnl )
 		} )
 	end
 
-	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_sandbox", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	local presets = vgui.Create( "ControlPresets", pnl )
+	presets:SetPreset( "util_sandbox" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	pnl:AddPanel( presets )
 
-	pnl:AddControl( "TextBox", { Label = "#persistent_mode", Command = "sbox_persist", WaitForEnter = "1" } )
+	pnl:TextEntry( "#persistent_mode", "sbox_persist" )
 	pnl:ControlHelp( "#persistent_mode.help" ):DockMargin( 16, 4, 16, 8 )
 
-	pnl:AddControl( "CheckBox", { Label = "#enable_weapons", Command = "sbox_weapons" } )
-	pnl:AddControl( "CheckBox", { Label = "#allow_god_mode", Command = "sbox_godmode" } )
+	pnl:CheckBox( "#enable_weapons", "sbox_weapons" )
+	pnl:CheckBox( "#allow_god_mode", "sbox_godmode" )
 
 	pnl:ControlHelp( "#utilities.mp_only" ):DockMargin( 16, 16, 16, 4 )
 
-	pnl:AddControl( "CheckBox", { Label = "#players_damage_players", Command = "sbox_playershurtplayers" } )
-	pnl:AddControl( "CheckBox", { Label = "#allow_noclip", Command = "sbox_noclip" } )
+	pnl:CheckBox( "#players_damage_players", "sbox_playershurtplayers" )
+	pnl:CheckBox( "#allow_noclip", "sbox_noclip" )
 
-	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_npcs", Command = "sbox_bonemanip_npc" } )
-	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_players", Command = "sbox_bonemanip_player" } )
-	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_others", Command = "sbox_bonemanip_misc" } )
+	pnl:CheckBox( "#bone_manipulate_npcs", "sbox_bonemanip_npc" )
+	pnl:CheckBox( "#bone_manipulate_players", "sbox_bonemanip_player" )
+	pnl:CheckBox( "#bone_manipulate_others", "sbox_bonemanip_misc" )
 
 	for id, t in SortedPairsByMemberValue( ConVarsLimits, "label" ) do
-		local ctrl = pnl:AddControl( "Slider", { Label = t.label, Command = t.command, Min = "0", Max = "200" } )
+		local ctrl = pnl:NumSlider( t.label, t.command, 0, 200, 0 )
+		local default = GetConVar( t.command )
+		if ( default ) then
+			ctrl:SetDefaultValue( default:GetDefault() )
+		end
 		ctrl:SetHeight( 16 ) -- This makes the controls all bunched up like how we want
 	end
 
@@ -160,7 +226,7 @@ end
 
 local function PhysgunSettings( pnl )
 
-	pnl:AddControl( "Header", { Description = "#utilities.physgunsettings" } )
+	pnl:Help( "#utilities.physgunsettings" )
 
 	local ConVarsDefault = {
 		physgun_halo = "1",
@@ -172,24 +238,46 @@ local function PhysgunSettings( pnl )
 		physgun_rotation_sensitivity = "0.05",
 		physgun_wheelspeed = "10"
 	}
-	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_physgun", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	local presets = vgui.Create( "ControlPresets", pnl )
+	presets:SetPreset( "util_physgun" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	pnl:AddPanel( presets )
 
-	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_halo", Command = "physgun_halo" } )
-	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_drawbeams", Command = "physgun_drawbeams" } )
-	pnl:AddControl( "CheckBox", { Label = "#menubar.drawing.freeze", Command = "effects_freeze" } )
-	pnl:AddControl( "CheckBox", { Label = "#menubar.drawing.unfreeze", Command = "effects_unfreeze" } )
+	pnl:CheckBox( "#utilities.physgun_halo", "physgun_halo" )
+	pnl:CheckBox( "#utilities.physgun_drawbeams", "physgun_drawbeams" )
+	pnl:CheckBox( "#menubar.drawing.freeze", "effects_freeze" )
+	pnl:CheckBox( "#menubar.drawing.unfreeze", "effects_unfreeze" )
 
-	pnl:AddControl( "Slider", { Label = "#utilities.gm_snapgrid", Type = "Integer", Command = "gm_snapgrid", Min = "0", Max = "128" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.gm_snapangles", Type = "Integer", Command = "gm_snapangles", Min = "5", Max = "90" } )
+	local snapgrid = pnl:NumSlider( "#utilities.gm_snapgrid", "gm_snapgrid", 0, 128, 0 )
+	local snapgridDefault = GetConVar( "gm_snapgrid" )
+	if ( snapgridDefault ) then
+		snapgrid:SetDefaultValue( snapgridDefault:GetDefault() )
+	end
+	local snapangles = pnl:NumSlider( "#utilities.gm_snapangles", "gm_snapangles", 5, 90, 0 )
+	local snapanglesDefault = GetConVar( "gm_snapangles" )
+	if ( snapanglesDefault ) then
+		snapangles:SetDefaultValue( snapanglesDefault:GetDefault() )
+	end
 
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_rotation_sensitivity", Type = "Float", Command = "physgun_rotation_sensitivity", Min = "0.01", Max = "1" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_wheelspeed", Type = "Integer", Command = "physgun_wheelspeed", Min = "0", Max = "50" } )
+	local sensitivity = pnl:NumSlider( "#utilities.physgun_rotation_sensitivity", "physgun_rotation_sensitivity", 0.01, 1, 2 )
+	local sensitivityDefault = GetConVar( "physgun_rotation_sensitivity" )
+	if ( sensitivityDefault ) then
+		sensitivity:SetDefaultValue( sensitivityDefault:GetDefault() )
+	end
+	local wheelspeed = pnl:NumSlider( "#utilities.physgun_wheelspeed", "physgun_wheelspeed", 0, 50, 0 )
+	local wheelspeedDefault = GetConVar( "physgun_wheelspeed" )
+	if ( wheelspeedDefault ) then
+		wheelspeed:SetDefaultValue( wheelspeedDefault:GetDefault() )
+	end
 
 end
 
 local function PhysgunSVSettings( pnl )
 
-	pnl:AddControl( "Header", { Description = "#utilities.physgunsvsettings" } )
+	pnl:Help( "#utilities.physgunsvsettings" )
 
 	local ConVarsDefault = {
 		physgun_limited = "0",
@@ -200,22 +288,54 @@ local function PhysgunSVSettings( pnl )
 		physgun_timeToArrive = "0.05",
 		physgun_timeToArriveRagdoll = "0.1"
 	}
-	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_physgun_sv", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	local presets = vgui.Create( "ControlPresets", pnl )
+	presets:SetPreset( "util_physgun_sv" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	pnl:AddPanel( presets )
 
-	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_limited", Command = "physgun_limited", Help = true } )
+	pnl:CheckBox( "#utilities.physgun_limited", "physgun_limited" )
+	pnl:ControlHelp( "#utilities.physgun_limited" .. ".help" )
 
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_maxrange", Type = "Integer", Command = "physgun_maxrange", Min = "128", Max = "8192" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_tpdist", Type = "Integer", Command = "physgun_teleportdistance", Min = "0", Max = "10000" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_maxspeed", Type = "Integer", Command = "physgun_maxspeed", Min = "0", Max = "10000" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_maxangular", Type = "Integer", Command = "physgun_maxangular", Min = "0", Max = "10000" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_timetoarrive", Type = "Float", Command = "physgun_timetoarrive", Min = "0", Max = "2" } )
-	pnl:AddControl( "Slider", { Label = "#utilities.physgun_timetoarriveragdoll", Type = "Float", Command = "physgun_timetoarriveragdoll", Min = "0", Max = "2", Help = true } )
+	local maxrange = pnl:NumSlider( "#utilities.physgun_maxrange", "physgun_maxrange", 128, 8192, 0 )
+	local maxrangeDefault = GetConVar( "physgun_maxrange" )
+	if ( maxrangeDefault ) then
+		maxrange:SetDefaultValue( maxrangeDefault:GetDefault() )
+	end
+	local tpdist = pnl:NumSlider( "#utilities.physgun_tpdist", "physgun_teleportdistance", 0, 10000, 0 )
+	local tpdistDefault = GetConVar( "physgun_teleportdistance" )
+	if ( tpdistDefault ) then
+		tpdist:SetDefaultValue( tpdistDefault:GetDefault() )
+	end
+	local maxspeed = pnl:NumSlider( "#utilities.physgun_maxspeed", "physgun_maxspeed", 0, 10000, 0 )
+	local maxspeedDefault = GetConVar( "physgun_maxspeed" )
+	if ( maxspeedDefault ) then
+		maxspeed:SetDefaultValue( maxspeedDefault:GetDefault() )
+	end
+	local maxangular = pnl:NumSlider( "#utilities.physgun_maxangular", "physgun_maxangular", 0, 10000, 0 )
+	local maxangularDefault = GetConVar( "physgun_maxangular" )
+	if ( maxangularDefault ) then
+		maxangular:SetDefaultValue( maxangularDefault:GetDefault() )
+	end
+	local timetoarrive = pnl:NumSlider( "#utilities.physgun_timetoarrive", "physgun_timetoarrive", 0, 2, 2 )
+	local timetoarriveDefault = GetConVar( "physgun_timetoarrive" )
+	if ( timetoarriveDefault ) then
+		timetoarrive:SetDefaultValue( timetoarriveDefault:GetDefault() )
+	end
+	local timetoarriveragdoll = pnl:NumSlider( "#utilities.physgun_timetoarriveragdoll", "physgun_timetoarriveragdoll", 0, 2, 2 )
+	local timetoarriveragdollDefault = GetConVar( "physgun_timetoarriveragdoll" )
+	pnl:ControlHelp( "#utilities.physgun_timetoarriveragdoll" .. ".help" )
+	if ( timetoarriveragdollDefault ) then
+		timetoarriveragdoll:SetDefaultValue( timetoarriveragdollDefault:GetDefault() )
+	end
 
 end
 
 local function PlayerOptions( pnl )
 
-	pnl:AddControl( "Header", { Description = "#smwidget.playermodel_title" } )
+	pnl:Help( "#smwidget.playermodel_title" )
 
 	pnl:Button( "#smwidget.playermodel_title", "open_playermodel_selector" )
 

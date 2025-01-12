@@ -218,15 +218,42 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.balloon.help" } )
+	CPanel:Help( "#tool.balloon.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "balloon", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "balloon" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.balloon.ropelength", Type = "Float", Command = "balloon_ropelength", Min = 5, Max = 1000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.balloon.force", Type = "Float", Command = "balloon_force", Min = -1000, Max = 2000, Help = true } )
-	CPanel:AddControl( "Color", { Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b" } )
+	-- Rope length
+	local ropeLength = CPanel:NumSlider( "#tool.balloon.ropelength", "balloon_ropelength", 5, 1000, 2 )
+	local ropeLengthDefault = GetConVar( "balloon_ropelength" )
+	if ( ropeLengthDefault ) then
+		ropeLength:SetDefaultValue( ropeLengthDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model", ConVar = "balloon_model", Height = 0, ModelsTable = list.Get( "BalloonModels" ) } )
+	-- Balloon force
+	local balloonForce = CPanel:NumSlider( "#tool.balloon.force", "balloon_force", -1000, 2000, 2 )
+	local balloonForceDefault = GetConVar( "balloon_force" )
+	CPanel:ControlHelp( "#tool.balloon.force" .. ".help" )
+	if ( balloonForceDefault ) then
+		balloonForce:SetDefaultValue( balloonForceDefault:GetDefault() )
+	end
+
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.balloon.color" )
+	color:SetConVarR( "balloon_r" )
+	color:SetConVarG( "balloon_g" )
+	color:SetConVarB( "balloon_b" )
+	CPanel:AddPanel( color )
+
+	local model = vgui.Create( "PropSelect", CPanel )
+	model:ControlValues( { label = "#tool.balloon.model", convar = "balloon_model", height = 0, modelstable = list.Get( "BalloonModels" ) } )
+	CPanel:AddPanel( model )
 
 end
 

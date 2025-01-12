@@ -142,16 +142,62 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.motor.help" } )
+	CPanel:Help( "#tool.motor.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "motor", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "motor" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.motor.numpad1", Command = "motor_fwd", Label2 = "#tool.motor.numpad2", Command2 = "motor_bwd" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.motor.torque", Command = "motor_torque", Type = "Float", Min = 0, Max = 10000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "motor_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "motor_friction", Type = "Float", Min = 0, Max = 100, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.motor.forcetime", Command = "motor_forcetime", Type = "Float", Min = 0, Max = 120, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "motor_nocollide", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "motor_toggle", Help = true } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "motor_fwd" )
+	numpad:SetConVar2( "motor_bwd" )
+	numpad:SetLabel1( "#tool.motor.numpad1" )
+	numpad:SetLabel2( "#tool.motor.numpad2" )
+	CPanel:AddPanel( numpad )
+
+	-- Torque
+	local torque = CPanel:NumSlider( "#tool.motor.torque", "motor_torque", 0, 10000, 2 )
+	local torqueDefault = GetConVar( "motor_torque" )
+	if ( torqueDefault ) then
+		torque:SetDefaultValue( torqueDefault:GetDefault() )
+	end
+
+	-- Force limit
+	local forceLimit = CPanel:NumSlider( "#tool.forcelimit", "motor_forcelimit", 0, 50000, 2 )
+	local forceLimitDefault = GetConVar( "motor_forcelimit" )
+	CPanel:ControlHelp( "#tool.forcelimit" .. ".help" )
+	if ( forceLimitDefault ) then
+		forceLimit:SetDefaultValue( forceLimitDefault:GetDefault() )
+	end
+
+	-- Hinge friction
+	local hingeFriction = CPanel:NumSlider( "#tool.hingefriction", "motor_friction", 0, 100, 2 )
+	local hingeFrictionDefault = GetConVar( "motor_friction" )
+	CPanel:ControlHelp( "#tool.hingefriction" .. ".help" )
+	if ( hingeFrictionDefault ) then
+		hingeFriction:SetDefaultValue( hingeFrictionDefault:GetDefault() )
+	end
+
+	-- Force time
+	local forceTime = CPanel:NumSlider( "#tool.motor.forcetime", "motor_forcetime", 0, 120, 2 )
+	local forceTimeDefault = GetConVar( "motor_forcetime" )
+	CPanel:ControlHelp( "#tool.motor.forcetime" .. ".help" )
+	if ( forceTimeDefault ) then
+		forceTime:SetDefaultValue( forceTimeDefault:GetDefault() )
+	end
+
+	-- No collide
+	CPanel:CheckBox( "#tool.nocollide", "motor_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide" .. ".help" )
+
+	-- Toggle
+	CPanel:CheckBox( "#tool.toggle", "motor_toggle" )
+	CPanel:ControlHelp( "#tool.toggle" .. ".help" )
 
 end

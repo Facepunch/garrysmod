@@ -146,11 +146,25 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.trails.desc" } )
+	CPanel:Help( "#tool.trails.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "trails", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "trails" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Color", { Label = "#tool.trails.color", Red = "trails_r", Green = "trails_g", Blue = "trails_b", Alpha = "trails_a" } )
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.trails.color" )
+	color:SetConVarR( "trails_r" )
+	color:SetConVarG( "trails_g" )
+	color:SetConVarB( "trails_b" )
+	color:SetConVarA( "trails_a" )
+	CPanel:AddPanel( color )
 
 	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10, 2 )
 	CPanel:NumSlider( "#tool.trails.startsize", "trails_startsize", 0, 128, 2 )

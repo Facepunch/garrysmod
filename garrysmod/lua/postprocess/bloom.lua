@@ -84,11 +84,12 @@ list.Set( "PostProcess", "#bloom_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#bloom_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#bloom_pp.enable", Command = "pp_bloom" } )
+		CPanel:Help( "#bloom_pp.desc" )
+		CPanel:CheckBox( "#bloom_pp.enable", "pp_bloom" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "bloom" }
-		params.Options[ "#preset.default" ] = {
+		local presets = vgui.Create( "ControlPresets", CPanel )
+		local options = {}
+		options[ "#preset.default" ] = {
 			pp_bloom_passes = "4",
 			pp_bloom_darken = "0.65",
 			pp_bloom_multiply = "1.0",
@@ -99,17 +100,50 @@ list.Set( "PostProcess", "#bloom_pp", {
 			pp_bloom_color_g = "255",
 			pp_bloom_color_b = "255"
 		}
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		presets:SetPreset( "bloom" )
+		presets:AddOption( "#preset.default", options[ "#preset.default" ] )
+		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
+			presets:AddConVar( v )
+		end
+		CPanel:AddPanel( presets )
 
-		CPanel:AddControl( "Slider", { Label = "#bloom_pp.passes", Command = "pp_bloom_passes", Type = "Integer", Min = "0", Max = "30" } )
-		CPanel:AddControl( "Slider", { Label = "#bloom_pp.darken", Command = "pp_bloom_darken", Type = "Float", Min = "0", Max = "1" } )
-		CPanel:AddControl( "Slider", { Label = "#bloom_pp.multiply", Command = "pp_bloom_multiply", Type = "Float", Min = "0", Max = "5" } )
-		CPanel:AddControl( "Slider", { Label = "#bloom_pp.blurx", Command = "pp_bloom_sizex", Type = "Float", Min = "0", Max = "50" } )
-		CPanel:AddControl( "Slider", { Label = "#bloom_pp.blury", Command = "pp_bloom_sizey", Type = "Float", Min = "0", Max = "50" } )
-		CPanel:AddControl( "Slider", { Label = "#bloom_pp.multiplier", Command = "pp_bloom_color", Type = "Float", Min = "0", Max = "20" } )
+		local passes = CPanel:NumSlider( "#bloom_pp.passes", "pp_bloom_passes", 0, 30, 0 )
+		local passesDefault = GetConVar( "pp_bloom_passes" )
+		if ( passesDefault ) then
+			passes:SetDefaultValue( passesDefault:GetDefault() )
+		end
+		local darken = CPanel:NumSlider( "#bloom_pp.darken", "pp_bloom_darken", 0, 1, 2 )
+		local darkenDefault = GetConVar( "pp_bloom_darken" )
+		if ( darkenDefault ) then
+			darken:SetDefaultValue( darkenDefault:GetDefault() )
+		end
+		local multiply = CPanel:NumSlider( "#bloom_pp.multiply", "pp_bloom_multiply", 0, 5, 2 )
+		local multiplyDefault = GetConVar( "pp_bloom_multiply" )
+		if ( multiplyDefault ) then
+			multiply:SetDefaultValue( multiplyDefault:GetDefault() )
+		end
+		local blurx = CPanel:NumSlider( "#bloom_pp.blurx", "pp_bloom_sizex", 0, 50, 2 )
+		local blurxDefault = GetConVar( "pp_bloom_sizex" )
+		if ( blurxDefault ) then
+			blurx:SetDefaultValue( blurxDefault:GetDefault() )
+		end
+		local blury = CPanel:NumSlider( "#bloom_pp.blury", "pp_bloom_sizey", 0, 50, 2 )
+		local bluryDefault = GetConVar( "pp_bloom_sizey" )
+		if ( bluryDefault ) then
+			blury:SetDefaultValue( bluryDefault:GetDefault() )
+		end
+		local multiplier = CPanel:NumSlider( "#bloom_pp.multiplier", "pp_bloom_color", 0, 20, 2 )
+		local multiplierDefault = GetConVar( "pp_bloom_color" )
+		if ( multiplierDefault ) then
+			multiplier:SetDefaultValue( multiplierDefault:GetDefault() )
+		end
 
-		CPanel:AddControl( "Color", { Label = "#bloom_pp.color", Red = "pp_bloom_color_r", Green = "pp_bloom_color_g", Blue = "pp_bloom_color_b", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )
+		local color = vgui.Create( "CtrlColor", CPanel )
+		color:SetLabel( "#bloom_pp.color" )
+		color:SetConVarR( "pp_bloom_color_r" )
+		color:SetConVarG( "pp_bloom_color_g" )
+		color:SetConVarB( "pp_bloom_color_b" )
+		CPanel:AddPanel( color )
 
 	end
 

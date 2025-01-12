@@ -141,10 +141,26 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "camera", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "camera" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.camera.key", Command = "camera_key" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "camera_toggle" } )
+	-- Key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "camera_key" )
+	numpad:SetLabel1( "#tool.camera.key" )
+	CPanel:AddPanel( numpad )
+
+	-- Static
+	CPanel:CheckBox( "#tool.camera.static", "camera_locked" )
+	CPanel:ControlHelp( "#tool.camera.static" .. ".help" )
+
+	-- Toggle
+	CPanel:CheckBox( "#tool.toggle", "camera_toggle" )
 
 end

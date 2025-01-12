@@ -178,18 +178,55 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.rope.help" } )
+	CPanel:Help( "#tool.rope.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "rope", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "rope" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "rope_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.rope.addlength", Command = "rope_addlength", Type = "Float", Min = -500, Max = 500, Help = true } )
+	-- Force limit
+	local forceLimit = CPanel:NumSlider( "#tool.forcelimit", "rope_forcelimit", 0, 1000, 2 )
+	local forceLimitDefault = GetConVar( "rope_forcelimit" )
+	CPanel:ControlHelp( "#tool.forcelimit" .. ".help" )
+	if ( forceLimitDefault ) then
+		forceLimit:SetDefaultValue( forceLimitDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.rope.rigid", Command = "rope_rigid", Help = true } )
+	-- Add length
+	local addLength = CPanel:NumSlider( "#tool.rope.addlength", "rope_addlength", -500, 500, 2 )
+	local addLengthDefault = GetConVar( "rope_addlength" )
+	CPanel:ControlHelp( "#tool.rope.addlength" .. ".help" )
+	if ( addLengthDefault ) then
+		addLength:SetDefaultValue( addLengthDefault:GetDefault() )
+	end
 
-	CPanel:AddControl( "Slider", { Label = "#tool.rope.width", Command = "rope_width", Type = "Float", Min = 0, Max = 10 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.rope.material", ConVar = "rope_material" } )
+	-- Rigid
+	CPanel:CheckBox( "#tool.rope.rigid", "rope_rigid" )
+	CPanel:ControlHelp( "#tool.rope.rigid" .. ".help" )
 
-	CPanel:AddControl( "Color", { Label = "#tool.rope.color", Red = "rope_color_r", Green = "rope_color_g", Blue = "rope_color_b" } )
+	-- Width
+	local width = CPanel:NumSlider( "#tool.rope.width", "rope_width", 0, 10, 2 )
+	local widthDefault = GetConVar( "rope_width" )
+	if ( widthDefault ) then
+		width:SetDefaultValue( widthDefault:GetDefault() )
+	end
+
+	-- Rope material
+	local material = vgui.Create( "RopeMaterial", CPanel )
+	material:SetConVar( "rope_material" )
+	CPanel:AddPanel( material )
+
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.rope.color" )
+	color:SetConVarR( "rope_color_r" )
+	color:SetConVarG( "rope_color_g" )
+	color:SetConVarB( "rope_color_b" )
+	CPanel:AddPanel( color )
 
 end

@@ -139,11 +139,14 @@ if ( CLIENT ) then
 	--
 	function TOOL.BuildCPanel( CPanel, tool )
 
-		CPanel:ClearControls()
+		CPanel:Clear()
 
-		CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
+		CPanel:Help( "#tool.duplicator.desc" )
 
-		CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
+		local dupeShow = vgui.Create( "DButton", CPanel )
+		function dupeShow:DoClick() LocalPlayer():ConCommand( "dupe_show" ) end
+		dupeShow:SetText( "#tool.duplicator.showsaves" )
+		CPanel:AddItem( dupeShow, nil )
 
 		if ( !tool && IsValid( LocalPlayer() ) ) then tool = LocalPlayer():GetTool( "duplicator" ) end
 		if ( !tool || !tool.CurrentDupeName ) then return end
@@ -151,15 +154,17 @@ if ( CLIENT ) then
 		local info = "Name: " .. tool.CurrentDupeName
 		info = info .. "\nEntities: " .. tool.CurrentDupeEntCount
 
-		CPanel:AddControl( "Label", { Text = info } )
+		CPanel:Help( info )
 
 		if ( tool.CurrentDupeWSIDs && #tool.CurrentDupeWSIDs > 0 ) then
-			CPanel:AddControl( "Label", { Text = "Required workshop content:" } )
+			CPanel:Help( "Required workshop content:" )
 			for _, wsid in pairs( tool.CurrentDupeWSIDs ) do
 				local subbed = ""
 				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " (Subscribed)" end
-				local b = CPanel:AddControl( "Button", { Text = wsid .. subbed } )
+				local b = vgui.Create( "DButton", CPanel )
+				b:SetText( wsid .. subbed )
 				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
+				CPanel:AddItem( b, nil )
 				steamworks.FileInfo( wsid, function( result )
 					if ( !IsValid( b ) ) then return end
 					b:SetText( result.title .. subbed )
@@ -168,9 +173,14 @@ if ( CLIENT ) then
 		end
 
 		if ( tool.CurrentDupeCanSave ) then
-			local b = CPanel:AddControl( "Button", { Text = "#dupes.savedupe", Command = "dupe_save" } )
+			local b = vgui.Create( "DButton", CPanel )
+			function b:DoClick() LocalPlayer():ConCommand( "dupe_save" ) end
+			b:SetText( "#dupes.savedupe" )
+			CPanel:AddItem( b, nil )
 			hook.Add( "DupeSaveUnavailable", b, function() b:Remove() end )
 		end
+
+		CPanel:InvalidateLayout()
 
 	end
 

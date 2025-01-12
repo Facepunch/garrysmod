@@ -162,16 +162,46 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.dynamite.help" } )
+	CPanel:Help( "#tool.dynamite.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "dynamite", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "dynamite" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.dynamite.explode", Command = "dynamite_group" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.dynamite.damage", Command = "dynamite_damage", Type = "Float", Min = 0, Max = 500, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.dynamite.delay", Command = "dynamite_delay", Type = "Float", Min = 0, Max = 10, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.dynamite.remove", Command = "dynamite_remove" } )
+	-- Explode key
+	local numpad = vgui.Create( "CtrlNumPad", CPanel )
+	numpad:SetConVar1( "dynamite_group" )
+	numpad:SetLabel1( "#tool.dynamite.explode" )
+	CPanel:AddPanel( numpad )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.dynamite.model", ConVar = "dynamite_model", Height = 0, Models = list.Get( "DynamiteModels" ) } )
+	-- Damage
+	local damage = CPanel:NumSlider( "#tool.dynamite.damage", "dynamite_damage", 0, 500, 2 )
+	local damageDefault = GetConVar( "dynamite_damage" )
+	CPanel:ControlHelp( "#tool.dynamite.damage" .. ".help" )
+	if ( damageDefault ) then
+		damage:SetDefaultValue( damageDefault:GetDefault() )
+	end
+
+	-- Delay
+	local delay = CPanel:NumSlider( "#tool.dynamite.delay", "dynamite_delay", 0, 10, 2 )
+	local delayDefault = GetConVar( "dynamite_delay" )
+	CPanel:ControlHelp( "#tool.dynamite.delay" .. ".help" )
+	if ( delayDefault ) then
+		delay:SetDefaultValue( delayDefault:GetDefault() )
+	end
+
+	-- Remove
+	CPanel:CheckBox( "#tool.dynamite.remove", "dynamite_remove" )
+
+	-- Model
+	local model = vgui.Create( "PropSelect", CPanel )
+	model:ControlValues( { label = "#tool.dynamite.model", convar = "dynamite_model", height = 0, models = list.Get( "DynamiteModels" ) } )
+	CPanel:AddPanel( model )
 
 end
 

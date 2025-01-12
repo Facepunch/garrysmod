@@ -227,18 +227,65 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.hydraulic.help" } )
+	CPanel:Help( "#tool.hydraulic.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "hydraulic", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	-- Presets
+	local presets = vgui.Create( "ControlPresets", CPanel )
+	presets:SetPreset( "hydraulic" )
+	presets:AddOption( "#preset.default", ConVarsDefault )
+	for k, v in pairs( table.GetKeys( ConVarsDefault ) ) do
+		presets:AddConVar( v )
+	end
+	CPanel:AddPanel( presets )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.hydraulic.controls", Command = "hydraulic_group" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.addlength", Command = "hydraulic_addlength", Type = "Float", Min = -1000, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.speed", Command = "hydraulic_speed", Type = "Float", Min = 0, Max = 50, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.hydraulic.fixed", Command = "hydraulic_fixed", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "hydraulic_toggle", Help = true } )
+	-- Control
+	local control = vgui.Create( "CtrlNumPad", CPanel )
+	control:SetConVar1( "hydraulic_group" )
+	control:SetLabel1( "#tool.hydraulic.controls" )
+	CPanel:AddPanel( control )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.width", Command = "hydraulic_width", Type = "Float", Min = 0, Max = 5 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.hydraulic.material", ConVar = "hydraulic_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.hydraulic.color", Red = "hydraulic_color_r", Green = "hydraulic_color_g", Blue = "hydraulic_color_b" } )
+	-- Add length
+	local addLength = CPanel:NumSlider( "#tool.hydraulic.addlength", "hydraulic_addlength", -1000, 1000, 2 )
+	local addLengthDefault = GetConVar( "hydraulic_addlength" )
+	CPanel:ControlHelp( "#tool.hydraulic.addlength" .. ".help" )
+	if ( addLengthDefault ) then
+		addLength:SetDefaultValue( addLengthDefault:GetDefault() )
+	end
+
+	-- Speed
+	local speed = CPanel:NumSlider( "#tool.hydraulic.speed", "hydraulic_speed", 0, 50, 2 )
+	local speedDefault = GetConVar( "hydraulic_speed" )
+	CPanel:ControlHelp( "#tool.hydraulic.speed" .. ".help" )
+	if ( speedDefault ) then
+		speed:SetDefaultValue( speedDefault:GetDefault() )
+	end
+
+	-- Fixed
+	CPanel:CheckBox( "#tool.hydraulic.fixed", "hydraulic_fixed" )
+	CPanel:ControlHelp( "#tool.hydraulic.fixed" .. ".help" )
+
+	-- Toggle
+	CPanel:CheckBox( "#tool.toggle", "hydraulic_toggle" )
+	CPanel:ControlHelp( "#tool.toggle" .. ".help" )
+
+	-- Width
+	local width = CPanel:NumSlider( "#tool.hydraulic.width", "hydraulic_width", 0, 5, 2 )
+	local widthDefault = GetConVar( "hydraulic_width" )
+	if ( widthDefault ) then
+		width:SetDefaultValue( widthDefault:GetDefault() )
+	end
+
+	-- Rope material
+	local material = vgui.Create( "RopeMaterial", CPanel )
+	material:SetConVar( "hydraulic_material" )
+	CPanel:AddPanel( material )
+
+	-- Color
+	local color = vgui.Create( "CtrlColor", CPanel )
+	color:SetLabel( "#tool.hydraulic.color" )
+	color:SetConVarR( "hydraulic_color_r" )
+	color:SetConVarG( "hydraulic_color_g" )
+	color:SetConVarB( "hydraulic_color_b" )
+	CPanel:AddPanel( color )
 
 end
