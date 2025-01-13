@@ -277,6 +277,7 @@ loading
 	background: #666;
 	margin-left: 3px;
 	box-shadow: 0 0 10px 1px rgba( 0, 0, 0, 0.4 );
+	border-radius: 3px;
 	cursor: hand;
 }
 .news_buttons div.new
@@ -296,6 +297,7 @@ loading
 {
 	background: #333;
 	background-size: cover;
+	border-radius: 8px;
 	margin-right: 0px;
 	margin-left: auto;
 	box-shadow: 0 0 10px 1px rgba( 0, 0, 0, 0.4 );
@@ -318,6 +320,7 @@ loading
 .news_item div
 {
 	background: rgba( 0, 0, 0, 0.4 );
+	border-radius: 0 0 8px 8px;
 	display: block;
 	color: #fff;
 	padding: 5px;
