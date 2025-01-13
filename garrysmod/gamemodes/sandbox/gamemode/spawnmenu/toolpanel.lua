@@ -202,6 +202,11 @@ function PANEL:AddCategory( name, catName, tItems )
 			spawnmenu.ActivateTool( button.Name )
 
 		end
+		item.DoRightClick = function( button )
+			local menu = DermaMenu()
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( button.Name ) end ):SetIcon( "icon16/page_copy.png" )
+			menu:Open()
+		end
 
 		item.ControlPanelBuildFunction	= v.CPanelFunction
 		item.Command					= v.Command
