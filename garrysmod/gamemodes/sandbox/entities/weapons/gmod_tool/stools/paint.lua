@@ -152,7 +152,7 @@ function TOOL.BuildCPanel( CPanel )
 		local line = listbox:AddLine( decal )
 		line.data = { paint_decal = decal, gmod_tool = "paint" }
 
-		if ( GetConVarString( "paint_decal" ) == tostring( decal ) ) then line:SetSelected( true ) end
+		if ( GetConVar( "paint_decal" ):GetString() == tostring( decal ) ) then line:SetSelected( true ) end
 	end
 
 end

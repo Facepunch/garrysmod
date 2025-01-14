@@ -13,16 +13,16 @@ local crosshair_sliders = {
 }
 
 local function GetCrosshairColor()
-	return Color( GetConVarNumber( "cl_crosshaircolor_r" ),
-		GetConVarNumber( "cl_crosshaircolor_g" ),
-		GetConVarNumber( "cl_crosshaircolor_b" ),
-		GetConVarNumber( "cl_crosshairalpha" )
+	return Color( GetConVar( "cl_crosshaircolor_r" ):GetInt(),
+		GetConVar( "cl_crosshaircolor_g" ):GetInt(),
+		GetConVar( "cl_crosshaircolor_b" ):GetInt(),
+		GetConVar( "cl_crosshairalpha" ):GetInt()
 	)
 end
 
 local function DrawCrosshairRect( color, x0, y0, x1, y1, bAdditive )
-	if ( GetConVarNumber( "cl_crosshair_drawoutline" ) != 0 ) then
-		local flThick = GetConVarNumber( "cl_crosshair_outlinethickness" )
+	if ( GetConVar( "cl_crosshair_drawoutline" ):GetInt() != 0 ) then
+		local flThick = GetConVar( "cl_crosshair_outlinethickness" ):GetFloat()
 		surface.SetDrawColor( 0, 0, 0, color.a )
 		surface.DrawRect( x0 - flThick, y0 - flThick, (x1 + flThick) - x0 + flThick, (y1 + flThick) - y0 + flThick )
 	end
@@ -40,15 +40,15 @@ local additiveTex = Material( "vgui/white_additive" )
 local function DrawSimpleCrosshairPreview( x, y )
 	local color = GetCrosshairColor()
 
-	local bAdditive = GetConVarNumber( "cl_crosshairusealpha" ) == 0
+	local bAdditive = GetConVar( "cl_crosshairusealpha" ):GetInt() == 0
 	if ( bAdditive ) then
 		surface.SetMaterial( additiveTex )
 		color.a = 200
 	end
 
-	local iBarSize = math.Round( ScreenScaleH( GetConVarNumber( "cl_crosshairsize" ) ))
-	local iBarThickness = math.max( 1, math.Round( ScreenScaleH( GetConVarNumber( "cl_crosshairthickness" ) ) ) )
-	local iInnerCrossDist = GetConVarNumber( "cl_crosshairgap" )
+	local iBarSize = math.Round( ScreenScaleH( GetConVar( "cl_crosshairsize" ):GetFloat() ))
+	local iBarThickness = math.max( 1, math.Round( ScreenScaleH( GetConVar( "cl_crosshairthickness" ):GetFloat() ) ) )
+	local iInnerCrossDist = GetConVar( "cl_crosshairgap" ):GetFloat()
 
 	-- draw horizontal crosshair lines
 	local iInnerLeft = x - iInnerCrossDist - iBarThickness / 2
@@ -67,13 +67,13 @@ local function DrawSimpleCrosshairPreview( x, y )
 	local iOuterBottom = iInnerBottom + iBarSize
 	local x0 = x - iBarThickness / 2
 	local x1 = x0 + iBarThickness
-	if ( GetConVarNumber( "cl_crosshair_t" ) == 0 ) then
+	if ( GetConVar( "cl_crosshair_t" ):GetInt() == 0 ) then
 		DrawCrosshairRect( color, x0, iOuterTop, x1, iInnerTop, bAdditive )
 	end
 	DrawCrosshairRect( color, x0, iInnerBottom, x1, iOuterBottom, bAdditive )
 
 	-- draw dot
-	if ( GetConVarNumber( "cl_crosshairdot" ) != 0 ) then
+	if ( GetConVar( "cl_crosshairdot" ):GetInt() != 0 ) then
 		x0 = x - iBarThickness / 2
 		x1 = x0 + iBarThickness
 		y0 = y - iBarThickness / 2
@@ -107,22 +107,22 @@ concommand.Add( "crosshair_setup", function()
 	preview:SetMouseInputEnabled( true )
 	preview:SetImage( "gui/crosshair_bg.png" )
 	preview.PaintOver = function( p, w, h )
-		if ( GetConVarNumber( "cl_crosshairstyle" ) == 0 ) then
+		if ( GetConVar( "cl_crosshairstyle" ):GetInt() == 0 ) then
 			surface.SetFont( "Crosshairs" )
 			surface.SetTextColor( 255, 208, 64, 255 )
 			local width, height = surface.GetTextSize( "Q" )
 			surface.SetTextPos( w / 2 - width / 2, h / 2 - height / 2 )
 			surface.DrawText( "Q" )
-		elseif ( GetConVarNumber( "cl_crosshairstyle" ) == 1 ) then
+		elseif ( GetConVar( "cl_crosshairstyle" ):GetInt() == 1 ) then
 			local crosshairColor = GetCrosshairColor()
 			surface.SetDrawColor( crosshairColor.r, crosshairColor.g, crosshairColor.b, crosshairColor.a )
 			surface.SetMaterial( crosshairMat )
 			surface.DrawTexturedRect( w / 2 - 32, h / 2 - 32, 64, 64 )
-		elseif ( GetConVarNumber( "cl_crosshairstyle" ) >= 2 ) then
+		elseif ( GetConVar( "cl_crosshairstyle" ):GetInt() >= 2 ) then
 			DrawSimpleCrosshairPreview( w / 2, h / 2 )
 		end
 
-		if ( GetConVarNumber( "hud_quickinfo" ) != 0 ) then
+		if ( GetConVar( "hud_quickinfo" ):GetInt() != 0 ) then
 			surface.SetFont( "QuickInfoLarge" )
 			surface.SetTextColor( 255, 208, 64, 200 )
 			local width, height = surface.GetTextSize( "{ ]" )
@@ -149,7 +149,7 @@ concommand.Add( "crosshair_setup", function()
 	settings:DockPadding( 5, 0, 0, 0 )
 
 	local function HideUselessStuff( style )
-		style = style or GetConVarNumber( "cl_crosshairstyle" )
+		style = style or GetConVar( "cl_crosshairstyle" ):GetInt()
 
 		for i, pnl in pairs( settings:GetChildren() ) do
 			if ( pnl.ClassName == "DColorMixer" and style == 0 ) then

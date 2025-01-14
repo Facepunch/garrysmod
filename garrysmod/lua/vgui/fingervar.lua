@@ -125,7 +125,7 @@ function PANEL:Think()
 	if ( self.UpdateTimer > CurTime() ) then return end
 	self.UpdateTimer = CurTime() + 0.1
 
-	local Value = string.Explode( " ", GetConVarString( self.VarName ) )
+	local Value = string.Explode( " ", GetConVar( self.VarName ):GetString() )
 
 	self.Value[1] = tonumber( Value[1] )
 	self.Value[2] = tonumber( Value[2] )

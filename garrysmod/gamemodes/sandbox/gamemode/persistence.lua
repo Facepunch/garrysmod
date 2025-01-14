@@ -5,7 +5,7 @@ local CurrentlyActivePersistencePage = ""
 
 hook.Add( "InitPostEntity", "PersistenceInit", function()
 
-	local PersistPage = GetConVarString( "sbox_persist" ):Trim()
+	local PersistPage = GetConVar( "sbox_persist" ):GetString():Trim()
 	if ( PersistPage == "" ) then return end
 
 	hook.Run( "PersistenceLoad", PersistPage )
@@ -16,7 +16,7 @@ hook.Add( "ShutDown", "SavePersistenceOnShutdown", function() hook.Run( "Persist
 
 hook.Add( "PersistenceSave", "PersistenceSave", function( name )
 
-	local PersistPage = ( name or GetConVarString( "sbox_persist" ) ):Trim()
+	local PersistPage = ( name or GetConVar( "sbox_persist" ):GetString() ):Trim()
 	if ( PersistPage == "" ) then return end
 
 	local Ents = ents.GetAll()

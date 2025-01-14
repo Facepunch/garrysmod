@@ -70,7 +70,7 @@ function ENT:Draw()
 		return
 	end
 
-	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
+	if ( GetConVar( "cl_draweffectrings" ):GetInt() == 0 ) then return end
 
 	-- Don't draw the grip if there's no chance of us picking it up
 	local ply = LocalPlayer()

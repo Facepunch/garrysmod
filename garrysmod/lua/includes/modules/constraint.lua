@@ -63,7 +63,7 @@ end
 ------------------------------------------------------------------------]]
 local function CreateConstraintSystem()
 
-	local iterations = GetConVarNumber( "gmod_physiterations" )
+	local iterations = GetConVar( "gmod_physiterations" ):GetInt()
 
 	local csystem = ents.Create( "phys_constraintsystem" )
 	if ( !IsValid( csystem ) ) then return end

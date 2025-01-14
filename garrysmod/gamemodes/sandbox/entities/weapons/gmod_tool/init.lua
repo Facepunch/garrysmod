@@ -24,7 +24,9 @@ local function CC_GMOD_Tool( ply, command, arguments )
 	local targetMode = arguments[1]
 
 	if ( targetMode == nil ) then return end
-	if ( GetConVarNumber( "toolmode_allow_" .. targetMode ) != 1 ) then return end
+
+	local convar = GetConVar( "toolmode_allow_" .. targetMode )
+	if ( not convar or convar:GetInt() != 1 ) then return end
 
 	ply:ConCommand( "gmod_toolmode " .. targetMode )
 

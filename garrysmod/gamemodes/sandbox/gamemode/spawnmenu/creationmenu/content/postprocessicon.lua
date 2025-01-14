@@ -87,7 +87,8 @@ function PANEL:Setup( name, icon, label )
 
 			for k, v in pairs( self.ConVars ) do
 
-				if ( GetConVarString( k ) != v.on ) then
+				local cvar = GetConVar( k )
+				if ( cvar and cvar:GetString() != v.on ) then
 					good = false
 				end
 

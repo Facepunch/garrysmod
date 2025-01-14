@@ -218,15 +218,15 @@ function PANEL:ConVarChanged( newValue, cvar )
 	GetConVar( cvar ):SetFloat( newValue )
 
 	-- Prevent extra convar loops
-	if ( cvar == self.m_strConVarX ) then self.m_strConVarXValue = GetConVarNumber( self.m_strConVarX ) end
-	if ( cvar == self.m_strConVarY ) then self.m_strConVarYValue = GetConVarNumber( self.m_strConVarY ) end
+	if ( cvar == self.m_strConVarX ) then self.m_strConVarXValue = GetConVar( self.m_strConVarX ):GetFloat() end
+	if ( cvar == self.m_strConVarY ) then self.m_strConVarYValue = GetConVar( self.m_strConVarY ):GetFloat() end
 
 end
 function PANEL:ConVarXNumberThink()
 
 	if ( !self.m_strConVarX || #self.m_strConVarX < 2 ) then return end
 
-	local numValue = GetConVarNumber( self.m_strConVarX )
+	local numValue = GetConVar( self.m_strConVarX ):GetFloat()
 
 	-- In case the convar is a "nan"
 	if ( numValue != numValue ) then return end
@@ -240,7 +240,7 @@ function PANEL:ConVarYNumberThink()
 
 	if ( !self.m_strConVarY || #self.m_strConVarY < 2 ) then return end
 
-	local numValue = GetConVarNumber( self.m_strConVarY )
+	local numValue = GetConVar( self.m_strConVarY ):GetFloat()
 
 	-- In case the convar is a "nan"
 	if ( numValue != numValue ) then return end

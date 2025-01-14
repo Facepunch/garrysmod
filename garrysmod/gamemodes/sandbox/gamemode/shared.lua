@@ -115,7 +115,7 @@ end
 function GM:PhysgunPickup( ply, ent )
 
 	-- Don't pick up persistent props
-	if ( ent:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
+	if ( ent:GetPersistent() && GetConVar( "sbox_persist" ):GetString():Trim() != "" ) then return false end
 
 	if ( ent:IsValid() && ent.PhysgunPickup ) then
 		return ent:PhysgunPickup( ply )
@@ -190,7 +190,7 @@ function GM:PlayerNoClip( pl, on )
 	-- Always allow to turn off noclip, and in single player
 	if ( !on || game.SinglePlayer() ) then return true end
 
-	return GetConVarNumber( "sbox_noclip" ) > 0
+	return GetConVar( "sbox_noclip" ):GetInt() > 0
 
 end
 
@@ -228,10 +228,10 @@ function GM:CanProperty( pl, property, ent )
 
 		if ( game.SinglePlayer() ) then return true end
 
-		if ( ent:IsNPC() ) then return GetConVarNumber( "sbox_bonemanip_npc" ) != 0 end
-		if ( ent:IsPlayer() ) then return GetConVarNumber( "sbox_bonemanip_player" ) != 0 end
+		if ( ent:IsNPC() ) then return GetConVar( "sbox_bonemanip_npc" ):GetInt() != 0 end
+		if ( ent:IsPlayer() ) then return GetConVar( "sbox_bonemanip_player" ):GetInt() != 0 end
 
-		return GetConVarNumber( "sbox_bonemanip_misc" ) != 0
+		return GetConVar( "sbox_bonemanip_misc" ):GetInt() != 0
 
 	end
 

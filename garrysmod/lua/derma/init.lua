@@ -95,7 +95,7 @@ function Derma_Install_Convar_Functions( PANEL )
 
 		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 
-		local strValue = GetConVarString( self.m_strConVar )
+		local strValue = GetConVar( self.m_strConVar ):GetString()
 		if ( self.m_strConVarValue == strValue ) then return end
 
 		self.m_strConVarValue = strValue
@@ -107,7 +107,7 @@ function Derma_Install_Convar_Functions( PANEL )
 
 		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 
-		local numValue = GetConVarNumber( self.m_strConVar )
+		local numValue = GetConVar( self.m_strConVar ):GetFloat()
 
 		-- In case the convar is a "nan"
 		if ( numValue != numValue ) then return end

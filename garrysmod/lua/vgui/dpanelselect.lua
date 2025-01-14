@@ -72,7 +72,8 @@ function PANEL:FindBestActive()
 		local ItemMatches = 0
 		if ( panel.tblConVars ) then
 			for key, value in pairs( panel.tblConVars ) do
-				if ( GetConVarString( key ) == tostring( value ) ) then ItemMatches = ItemMatches + 1 end
+				local cvar = GetConVar( key )
+				if ( cvar and cvar:GetString() == tostring( value ) ) then ItemMatches = ItemMatches + 1 end
 			end
 		end
 

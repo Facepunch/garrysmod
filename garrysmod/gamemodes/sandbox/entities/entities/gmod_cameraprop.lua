@@ -196,7 +196,7 @@ end
 
 function ENT:Draw( flags )
 
-	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
+	if ( GetConVar( "cl_drawcameras" ):GetInt() == 0 ) then return end
 
 	-- Don't draw the camera if we're taking pics
 	local wep = LocalPlayer():GetActiveWeapon()

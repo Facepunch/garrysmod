@@ -205,7 +205,7 @@ function PANEL:TestForChanges()
 	local cvar = self:ConVar()
 	if ( !cvar ) then return end
 
-	local value = GetConVarString( cvar )
+	local value = GetConVar( cvar ):GetString()
 	if ( value == self.CurrentValue ) then return end
 
 	self:FindAndSelectButton( value )

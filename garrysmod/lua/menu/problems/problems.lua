@@ -204,37 +204,37 @@ end
 
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
-	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
+	if ( math.floor( GetConVar( "mat_hdr_level" ):GetInt() ) != 2 ) then
 		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end, severity = 1 } )
 	else
 		ClearProblem( "mat_hdr_level" )
 	end
 
-	if ( math.floor( math.abs( GetConVarNumber( "mat_bumpmap" ) ) ) == 0 ) then
+	if ( math.floor( math.abs( GetConVar( "mat_bumpmap" ):GetInt() ) ) == 0 ) then
 		FireProblem( { id = "mat_bumpmap", text = "#problem.mat_bumpmap", type = "config", fix = function() RunConsoleCommand( "mat_bumpmap", "1" ) end } )
 	else
 		ClearProblem( "mat_bumpmap" )
 	end
 
-	if ( math.floor( math.abs( GetConVarNumber( "mat_specular" ) ) ) == 0 ) then
+	if ( math.floor( math.abs( GetConVar( "mat_specular" ):GetInt() ) ) == 0 ) then
 		FireProblem( { id = "mat_specular", text = "#problem.mat_specular", type = "config", fix = function() RunConsoleCommand( "mat_specular", "1" ) end } )
 	else
 		ClearProblem( "mat_specular" )
 	end
 
-	if ( math.floor( math.abs( GetConVarNumber( "gmod_mcore_test" ) ) ) != 0 ) then
+	if ( math.floor( math.abs( GetConVar( "gmod_mcore_test" ):GetInt() ) ) != 0 ) then
 		FireProblem( { id = "gmod_mcore_test", text = "#problem.gmod_mcore_test", type = "config" } )
 	else
 		ClearProblem( "gmod_mcore_test" )
 	end
 
-	if ( math.abs( GetConVarNumber( "voice_fadeouttime" ) - 0.1 ) > 0.001 ) then
+	if ( math.abs( GetConVar( "voice_fadeouttime" ):GetFloat() - 0.1 ) > 0.001 ) then
 		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) ClearProblem( "voice_fadeouttime" ) end } )
 	else
 		ClearProblem( "voice_fadeouttime" )
 	end
 
-	if ( GetConVarNumber( "mat_viewportscale" ) < 0.1 ) then
+	if ( GetConVar( "mat_viewportscale" ):GetFloat() < 0.1 ) then
 		FireProblem( { id = "mat_viewportscale", text = "#problem.mat_viewportscale", type = "config", fix = function() RunConsoleCommand( "mat_viewportscale", "1" ) ClearProblem( "mat_viewportscale" ) end } )
 	else
 		ClearProblem( "mat_viewportscale" )
@@ -247,7 +247,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	-- These are not saved, but still affect gameplay
-	if ( GetConVarNumber( "cl_forwardspeed" ) != 10000 or GetConVarNumber( "cl_sidespeed" ) != 10000 or GetConVarNumber( "cl_backspeed" ) != 10000 ) then
+	if ( GetConVar( "cl_forwardspeed" ):GetFloat() != 10000 or GetConVar( "cl_sidespeed" ):GetFloat() != 10000 or GetConVar( "cl_backspeed" ):GetFloat() != 10000 ) then
 		FireProblem( { id = "cl_speeds", text = "#problem.cl_speeds", type = "config", fix = function()
 			RunConsoleCommand( "cl_forwardspeed", "10000" )
 			RunConsoleCommand( "cl_sidespeed", "10000" )

@@ -188,7 +188,7 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 	owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
 
 	if ( !bFirstTimePredicted ) then return end
-	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+	if ( GetConVar( "gmod_drawtooleffects" ):GetInt() == 0 ) then return end
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( hitpos )

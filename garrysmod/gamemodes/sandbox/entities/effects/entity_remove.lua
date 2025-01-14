@@ -1,7 +1,7 @@
 
 function EFFECT:Init( data )
 
-	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+	if ( GetConVar( "gmod_drawtooleffects" ):GetInt() == 0 ) then return end
 
 	local TargetEntity = data:GetEntity()
 	if ( !IsValid( TargetEntity ) ) then return end

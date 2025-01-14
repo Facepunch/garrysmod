@@ -170,7 +170,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	end
 
 	local filter_context = TEXT_FILTER_GAME_CONTENT
-	if ( bit.band( GetConVarNumber( "cl_chatfilters" ), 64 ) != 0 ) then filter_context = TEXT_FILTER_CHAT end
+	if ( bit.band( GetConVar( "cl_chatfilters" ):GetInt(), 64 ) != 0 ) then filter_context = TEXT_FILTER_CHAT end
 
 	table.insert( tab, color_white )
 	table.insert( tab, ": " .. util.FilterText( strText, filter_context, IsValid( player ) and player or nil ) )

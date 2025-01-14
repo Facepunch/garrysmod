@@ -102,7 +102,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
 		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
-		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
+		wepcol:SetVector( Vector( GetConVar( "cl_weaponcolor" ):GetString() ) )
 
 		sheet:AddSheet( "#smwidget.colors", controls, "icon16/color_wheel.png" )
 
@@ -139,7 +139,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				mdl.Entity:SetBodygroup( pnl.typenum, math.Round( val ) )
 
-				local str = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+				local str = string.Explode( " ", GetConVar( "cl_playerbodygroups" ):GetString() )
 				if ( #str < pnl.typenum + 1 ) then for i = 1, pnl.typenum + 1 do str[ i ] = str[ i ] or 0 end end
 				str[ pnl.typenum + 1 ] = math.Round( val )
 				RunConsoleCommand( "cl_playerbodygroups", table.concat( str, " " ) )
@@ -166,18 +166,18 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				skins:SetTall( 50 )
 				skins:SetDecimals( 0 )
 				skins:SetMax( nskins )
-				skins:SetValue( GetConVarNumber( "cl_playerskin" ) )
+				skins:SetValue( GetConVar( "cl_playerskin" ):GetInt() )
 				skins.type = "skin"
 				skins.OnValueChanged = UpdateBodyGroups
 
 				bdcontrolspanel:AddItem( skins )
 
-				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
+				mdl.Entity:SetSkin( GetConVar( "cl_playerskin" ):GetInt() )
 
 				bgtab.Tab:SetVisible( true )
 			end
 
-			local groups = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+			local groups = string.Explode( " ", GetConVar( "cl_playerbodygroups" ):GetString() )
 			for k = 0, mdl.Entity:GetNumBodyGroups() - 1 do
 				if ( mdl.Entity:GetBodygroupCount( k ) <= 1 ) then continue end
 
@@ -209,11 +209,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			local modelname = player_manager.TranslatePlayerModel( model )
 			util.PrecacheModel( modelname )
 			mdl:SetModel( modelname )
-			mdl.Entity.GetPlayerColor = function() return Vector( GetConVarString( "cl_playercolor" ) ) end
+			mdl.Entity.GetPlayerColor = function() return Vector( GetConVar( "cl_playercolor" ):GetString() ) end
 			mdl.Entity:SetPos( Vector( -100, 0, -61 ) )
 
-			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) )
-			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
+			plycol:SetVector( Vector( GetConVar( "cl_playercolor" ):GetString() ) )
+			wepcol:SetVector( Vector( GetConVar( "cl_weaponcolor" ):GetString() ) )
 
 			PlayPreviewAnimation( mdl, model )
 			RebuildBodygroupTab()
