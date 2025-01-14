@@ -400,9 +400,9 @@ local suffix = ( { "osx64", "osx", "linux64", "linux", "win64", "win32" } )[
 local fmt = "lua/bin/gm" .. ( ( CLIENT and !MENU_DLL ) and "cl" or "sv" ) .. "_%s_%s.dll"
 function util.IsBinaryModuleInstalled( name )
 	if ( !isstring( name ) ) then
-		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")" )
+		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")", 2 )
 	elseif ( #name == 0 ) then
-		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)" )
+		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)", 2 )
 	end
 
 	if ( file.Exists( string.format( fmt, name, suffix ), "MOD" ) ) then

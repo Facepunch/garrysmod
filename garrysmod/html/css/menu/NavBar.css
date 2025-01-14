@@ -232,7 +232,7 @@ UL.gamemode_list LI
 	margin: 3px;
 	border-radius: 0;
 	background-color: #eee;
-	margin: 0 2px 2px 0;
+	margin: 0 0 2px 0;
 }
 
 UL.gamemode_list LI:hover
