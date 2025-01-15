@@ -56,6 +56,25 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 end
 
+function PANEL:PropSelect( label, strConVar, mdlList, height )
+
+	local PropSelect = vgui.Create( "PropSelect", self )
+
+	PropSelect:SetConVar( strConVar or "" )
+	PropSelect.Label:SetText( label or "" )
+	PropSelect.Height = height || 2
+
+	for k, v in SortedPairs( mdlList ) do
+		PropSelect:AddModel( k, v )
+	end
+
+	PropSelect:ControlValues( data ) -- Yack.
+
+	self:AddPanel( PropSelect )
+	return PropSelect
+
+end
+
 function PANEL:ToolPresets( group, cvarlist )
 
 	local preset = vgui.Create( "ControlPresets", self )
