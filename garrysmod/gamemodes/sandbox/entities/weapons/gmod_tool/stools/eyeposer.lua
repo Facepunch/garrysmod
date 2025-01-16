@@ -295,7 +295,7 @@ end
 
 function TOOL.BuildCPanel( CPanel, hasEntity )
 
-	CPanel:AddControl( "Header", { Description = "#tool.eyeposer.desc" } )
+	CPanel:Help( "#tool.eyeposer.desc" )
 
 	if ( hasEntity ) then
 
@@ -325,10 +325,11 @@ function TOOL.BuildCPanel( CPanel, hasEntity )
 			surface.DrawRect( w / 2 - 2, h / 2 - 2, 5, 5 )
 		end
 
-		CPanel:AddControl( "Slider", { Label = "#tool.eyeposer.strabismus", Command = "eyeposer_strabismus", Type = "Float", Min = -1, Max = 1, Default = 0 } )
+		CPanel:NumSlider( "#tool.eyeposer.strabismus", "eyeposer_strabismus", -1, 1, 2 ):SetDefaultValue( 0 )
 
 	end
 
-	CPanel:AddControl( "Slider", { Label = "#tool.eyeposer.size_eyes", Command = "r_eyesize", Type = "Float", Min = -0.5, Max = 2, Help = true, Default = 0 } )
+	CPanel:NumSlider( "#tool.eyeposer.size_eyes", "r_eyesize", -0.5, 2, 2 ):SetDefaultValue( 0 )
+	CPanel:ControlHelp( "#tool.eyeposer.size_eyes.help" )
 
 end

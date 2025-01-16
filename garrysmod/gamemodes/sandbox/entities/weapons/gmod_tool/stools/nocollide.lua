@@ -103,6 +103,6 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.nocollide.desc" } )
+	CPanel:Help( "#tool.nocollide.desc" )
 
 end

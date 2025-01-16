@@ -40,11 +40,22 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "physprop", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "physprop", ConVarsDefault )
 
-	CPanel:AddControl( "ListBox", { Label = "#tool.physprop.material", Options = list.Get( "PhysicsMaterials" ) } )
+	-- Property
+	local property = vgui.Create( "CtrlListBox", CPanel )
+	for k, v in pairs( list.Get( "PhysicsMaterials" ) ) do
+		property:AddOption( k, v )
+	end
+	local propertyLabel = vgui.Create( "DLabel", CPanel )
+	propertyLabel:SetText( "#tool.physprop.material" )
+	propertyLabel:SetDark( true )
+	property:SetHeight( 25 )
+	property:Dock( TOP )
+	CPanel:AddItem( propertyLabel, property )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.physprop.gravity", Command = "physprop_gravity_toggle" } )
+	-- Gravity
+	CPanel:CheckBox( "#tool.physprop.gravity", "physprop_gravity_toggle" )
 
 end
 

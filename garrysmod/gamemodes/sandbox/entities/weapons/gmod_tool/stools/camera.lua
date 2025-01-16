@@ -141,10 +141,12 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "camera", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "camera", ConVarsDefault )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.camera.key", Command = "camera_key" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "camera_toggle" } )
+	CPanel:KeyBinder( "#tool.camera.key", "camera_key" )
+
+	CPanel:CheckBox( "#tool.camera.static", "camera_locked" )
+	CPanel:ControlHelp( "#tool.camera.static" .. ".help" )
+	CPanel:CheckBox( "#tool.toggle", "camera_toggle" )
 
 end

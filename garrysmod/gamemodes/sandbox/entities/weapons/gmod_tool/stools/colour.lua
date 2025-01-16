@@ -94,14 +94,35 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.colour.desc" } )
+	CPanel:Help( "#tool.colour.desc" )
 
 	CPanel:ToolPresets( "colour", ConVarsDefault )
 
 	CPanel:ColorPicker( "#tool.colour.color", "colour_r", "colour_g", "colour_b", "colour_a" )
 
-	CPanel:AddControl( "ListBox", { Label = "#tool.colour.mode", Options = list.Get( "RenderModes" ) } )
-	CPanel:AddControl( "ListBox", { Label = "#tool.colour.fx", Options = list.Get( "RenderFX" ) } )
+	-- Render modes
+	local renderMode = vgui.Create( "CtrlListBox", CPanel )
+	for k, v in pairs( list.Get( "RenderModes" ) ) do
+		renderMode:AddOption( k, v )
+	end
+	local renderModeLabel = vgui.Create( "DLabel", CPanel )
+	renderModeLabel:SetText( "#tool.colour.mode" )
+	renderModeLabel:SetDark( true )
+	renderMode:SetHeight( 25 )
+	renderMode:Dock( TOP )
+	CPanel:AddItem( renderModeLabel, renderMode )
+
+	-- Render FX
+	local renderFX = vgui.Create( "CtrlListBox", CPanel )
+	for k, v in pairs( list.Get( "RenderFX" ) ) do
+		renderFX:AddOption( k, v )
+	end
+	local renderFXLabel = vgui.Create( "DLabel", CPanel )
+	renderFXLabel:SetText( "#tool.colour.fx" )
+	renderFXLabel:SetDark( true )
+	renderFX:SetHeight( 25 )
+	renderFX:Dock( TOP )
+	CPanel:AddItem( renderFXLabel, renderFX )
 
 end
 

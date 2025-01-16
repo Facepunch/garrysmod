@@ -107,15 +107,23 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.pulley.help" } )
+	CPanel:Help( "#tool.pulley.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "pulley", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "pulley", ConVarsDefault )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "pulley_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.pulley.rigid", Command = "pulley_rigid", Help = true } )
+	CPanel:NumSlider( "#tool.forcelimit", "pulley_forcelimit", 0, 1000, 2 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
+	CPanel:CheckBox( "#tool.pulley.rigid", "pulley_rigid" )
+	CPanel:ControlHelp( "#tool.pulley.rigid.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.pulley.width", Command = "pulley_width", Type = "Float", Min = 0, Max = 10 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.pulley.material", ConVar = "pulley_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.pulley.color", Red = "pulley_color_r", Green = "pulley_color_g", Blue = "pulley_color_b" } )
+	CPanel:NumSlider( "#tool.pulley.width", "pulley_width", 0, 10, 2 )
+
+	-- Rope material
+	local material = vgui.Create( "RopeMaterial", CPanel )
+	material:SetConVar( "pulley_material" )
+	CPanel:AddPanel( material )
+
+	-- Color
+	CPanel:ColorPicker( "#tool.pulley.color", "pulley_color_r", "pulley_color_g", "pulley_color_b" )
 
 end

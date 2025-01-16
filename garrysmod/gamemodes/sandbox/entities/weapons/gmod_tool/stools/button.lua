@@ -171,17 +171,18 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.button.desc" } )
+	CPanel:Help( "#tool.button.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "button", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "button", ConVarsDefault )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.button.key", Command = "button_keygroup" } )
+	CPanel:KeyBinder( "#tool.button.key", "button_keygroup" )
 
-	CPanel:AddControl( "TextBox", { Label = "#tool.button.text", Command = "button_description", MaxLenth = "20" } )
+	CPanel:TextEntry( "#tool.button.text", "button_description" )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.button.toggle", Command = "button_toggle", Help = true } )
+	CPanel:CheckBox( "#tool.button.toggle", "button_toggle" )
+	CPanel:ControlHelp( "#tool.button.toggle.help" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 0, Models = list.Get( "ButtonModels" ) } )
+	CPanel:PropSelect( "#tool.button.model", "button_model", list.Get( "ButtonModels" ), 0 )
 
 end
 

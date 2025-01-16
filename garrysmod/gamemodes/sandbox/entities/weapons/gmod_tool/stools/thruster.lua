@@ -222,26 +222,43 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.thruster.desc" } )
+	CPanel:Help( "#tool.thruster.desc" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "thruster", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "thruster", ConVarsDefault )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.thruster.forward", Command = "thruster_keygroup", Label2 = "#tool.thruster.back", Command2 = "thruster_keygroup_back" } )
+	CPanel:KeyBinder( "#tool.thruster.forward", "thruster_keygroup", "#tool.thruster.back", "thruster_keygroup_back" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.thruster.force", Command = "thruster_force", Type = "Float", Min = 1, Max = 10000 } )
+	CPanel:NumSlider( "#tool.thruster.force", "thruster_force", 1, 10000, 2 )
 
-	local combo = CPanel:AddControl( "ListBox", { Label = "#tool.thruster.effect" } )
+	-- Effect
+	local effect = vgui.Create( "CtrlListBox", CPanel )
+	local effectLabel = vgui.Create( "DLabel", CPanel )
 	for k, v in pairs( list.Get( "ThrusterEffects" ) ) do
-		combo:AddOption( k, { thruster_effect = v.thruster_effect } )
+		effect:AddOption( k, { thruster_effect = v.thruster_effect } )
 	end
+	effectLabel:SetText( "#tool.thruster.effect" )
+	effectLabel:SetDark( true )
+	effect:SetHeight( 25 )
+	effect:Dock( TOP )
+	CPanel:AddItem( effectLabel, effect )
 
-	CPanel:AddControl( "ListBox", { Label = "#tool.thruster.sound", Options = list.Get( "ThrusterSounds" ) } )
+	-- Sound
+	local sound = vgui.Create( "CtrlListBox", CPanel )
+	local soundLabel = vgui.Create( "DLabel", CPanel )
+	for k, v in pairs( list.Get( "ThrusterSounds" ) ) do
+		sound:AddOption( k, v )
+	end
+	soundLabel:SetText( "#tool.thruster.sound" )
+	soundLabel:SetDark( true )
+	sound:SetHeight( 25 )
+	sound:Dock( TOP )
+	CPanel:AddItem( soundLabel, sound )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.toggle", Command = "thruster_toggle" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.collision", Command = "thruster_collision" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.damagable", Command = "thruster_damageable" } )
+	CPanel:CheckBox( "#tool.thruster.toggle", "thruster_toggle" )
+	CPanel:CheckBox( "#tool.thruster.collision", "thruster_collision" )
+	CPanel:CheckBox( "#tool.thruster.damagable", "thruster_damageable" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.thruster.model", ConVar = "thruster_model", Height = 0, Models = list.Get( "ThrusterModels" ) } )
+	CPanel:PropSelect( "#tool.thruster.model", "thruster_model", list.Get( "ThrusterModels" ), 0 )
 
 end
 

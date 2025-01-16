@@ -218,15 +218,16 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.balloon.help" } )
+	CPanel:Help( "#tool.balloon.help" )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "balloon", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "balloon", ConVarsDefault )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.balloon.ropelength", Type = "Float", Command = "balloon_ropelength", Min = 5, Max = 1000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.balloon.force", Type = "Float", Command = "balloon_force", Min = -1000, Max = 2000, Help = true } )
-	CPanel:AddControl( "Color", { Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b" } )
+	CPanel:NumSlider( "#tool.balloon.ropelength", "balloon_ropelength", 5, 1000, 2 )
+	CPanel:NumSlider( "#tool.balloon.force", "balloon_force", -1000, 2000, 2 )
+	CPanel:ControlHelp( "#tool.balloon.force.help" )
+	CPanel:ColorPicker( "#tool.balloon.color", "balloon_r", "balloon_g", "balloon_b" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model", ConVar = "balloon_model", Height = 0, ModelsTable = list.Get( "BalloonModels" ) } )
+	CPanel:PropSelect( "#tool.balloon.model", "balloon_model", list.Get( "BalloonModels" ), 0 )
 
 end
 
