@@ -158,7 +158,7 @@ if ( IsMounted( "episodic" ) ) then
 	}, "npc_rollermine_hacked" )
 end
 
-Category = "#spawnmenu.category.zombie_aliens"
+Category = "#spawnmenu.category.zombies_aliens"
 
 AddNPC( {
 	Class = "npc_zombie",
