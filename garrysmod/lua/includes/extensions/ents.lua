@@ -1,5 +1,5 @@
 
-function ents.FindByClassAndParent(classname, entity)
+function ents.FindByClassAndParent( classname, entity )
 
     if ( !IsValid( entity ) ) then return end
 
