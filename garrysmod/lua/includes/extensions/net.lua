@@ -183,6 +183,62 @@ function net.ReadTable( seq )
 
 end
 
+local function bitsToChar( b1, b2, b3, b4, b5, b6, b7, b8 )
+
+	local asciiValue = bit.bor( bit.lshift(b1, 7), bit.lshift(b2, 6), bit.lshift(b3, 5), bit.lshift(b4, 4),
+								bit.lshift(b5, 3), bit.lshift(b6, 2), bit.lshift(b7, 1), b8 )
+
+	return string.char( asciiValue )
+
+end
+
+function net.Write65533String( str )
+
+	local inputLen = #str
+
+	if inputLen ~= 65533 then
+
+		error( string.format( "Trying to send a 65533 string that isn't actually 65533! (%s)", inputLen ) )
+
+	end
+
+	for i = 1, inputLen do
+
+		local asciiValue = string.byte( str, i )
+
+		for j = 7, 0, -1 do
+
+			net.WriteBit( bit.band( bit.rshift( asciiValue, j ), 1 ) )
+
+		end
+
+	end
+
+end
+
+function net.Read65533String()
+
+	local chars = {}
+
+	for i = 1, 65533 do
+
+		local bit1 = net.ReadBit()
+		local bit2 = net.ReadBit()
+		local bit3 = net.ReadBit()
+		local bit4 = net.ReadBit()
+		local bit5 = net.ReadBit()
+		local bit6 = net.ReadBit()
+		local bit7 = net.ReadBit()
+		local bit8 = net.ReadBit()
+
+		chars[i] = bitsToChar( bit1, bit2, bit3, bit4, bit5, bit6, bit7, bit8 )
+
+	end
+
+	return table.concat( chars )
+
+end
+
 net.WriteVars =
 {
 	[TYPE_NIL]			= function ( t, v )	net.WriteUInt( t, 8 )								end,
