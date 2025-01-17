@@ -92,14 +92,14 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	// This is just to fix the spawnmenu initial size being 512x512 for first few frames
 	$scope.ReloadView();
-	window.addEventListener('resize', function() {
+	window.addEventListener( 'resize', function() {
 		//if ( $scope.ResizeTimeout ) $timeout.cancel( $scope.ResizeTimeout );
 		//$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
 
 		if ( $scope.ReloadedView ) return;
 		$scope.ReloadedView = true;
 		$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
-	});
+	} );
 }
 
 function OnGameSaved()

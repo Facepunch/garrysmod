@@ -16,7 +16,7 @@ angular.module( 'tranny', [] )
 			
 			if ( !IN_ENGINE )
 			{
-				element.text(text);
+				element.text( text );
 				element.attr( "placeholder", text );
 				return;
 			}
@@ -25,7 +25,7 @@ angular.module( 'tranny', [] )
 			{
 				languageCache[ strName ] = outStr;
 				var updatedText = outStr + " " + strSuffix;
-				element.text(updatedText);
+				element.text( updatedText );
 				element.attr( "placeholder", updatedText );
 			} );
 
@@ -34,7 +34,7 @@ angular.module( 'tranny', [] )
 				// Compatibility with Awesomium
 				languageCache[ strName ] = outStr_old;
 				var updatedText = outStr_old + " " + strSuffix;
-				element.text(updatedText);
+				element.text( updatedText );
 				element.attr( "placeholder", updatedText );
 			}
 		};
