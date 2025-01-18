@@ -89,5 +89,13 @@
 		"GameUI_Legal_ModdingGuidelines"	"Modding Guidelines"
 		"GameUI_Legal_ServerOperatorRules"	"Server Operator Rules"
 		"GameUI_Legal_CEFCredits"			"Chromium Embedded Framework Credits"
+
+		// TODO: Delete me after an update past 5th Dec 2024
+		"GMOD_Camera"		"Camera"
+		"GMOD_Fists"		"Fists"
+		"GMOD_FlechetteGun"	"Flechette Gun"
+		"GMOD_ManhackGun"	"Manhack Gun"
+		"GMOD_MedKit"		"Medkit"
+		"GMOD_ToolGun"		"Tool Gun"
 	}
 }

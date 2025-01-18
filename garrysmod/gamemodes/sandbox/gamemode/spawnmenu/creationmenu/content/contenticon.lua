@@ -235,7 +235,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	-- Generate a nice tooltip with extra info.
 	local ENTinfo = scripted_ents.Get( obj.spawnname )
 	local toolTip = language.GetPhrase( obj.nicename )
-	local l10n_author = language.GetPhrase ( "spawnmenu.itemtooltip.author" )
+	local l10n_author = language.GetPhrase ( "entityinfo.author" )
 	if ( !ENTinfo ) then ENTinfo = list.Get( "SpawnableEntities" )[ obj.spawnname ] end
 	if ( ENTinfo ) then
 		local extraInfo = ""
@@ -279,7 +279,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 
 	-- Generate a nice tooltip with extra info
 	local VehicleInfo = list.Get( "Vehicles" )[ obj.spawnname ]
-	local l10n_author = language.GetPhrase ( "spawnmenu.itemtooltip.author" )
+	local l10n_author = language.GetPhrase ( "entityinfo.author" )
 	if ( VehicleInfo ) then
 		local toolTip = language.GetPhrase( VehicleInfo.Name ) .. "\n"
 		if ( VehicleInfo.Information and VehicleInfo.Information != "" ) then toolTip = toolTip .. "\n" .. VehicleInfo.Information end
@@ -402,7 +402,7 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	-- Generate a nice tooltip with extra info.
 	local SWEPinfo = weapons.Get( obj.spawnname )
 	local toolTip = language.GetPhrase( obj.nicename )
-	local l10n_author = language.GetPhrase ( "spawnmenu.itemtooltip.author" )
+	local l10n_author = language.GetPhrase ( "entityinfo.author" )
 	if ( !SWEPinfo ) then SWEPinfo = list.Get( "Weapon" )[ obj.spawnname ] end
 	if ( SWEPinfo ) then
 		toolTip = toolTip .. "\n"
