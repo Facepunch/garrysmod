@@ -168,8 +168,10 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.dynamite.explode", "dynamite_group" )
 	CPanel:NumSlider( "#tool.dynamite.damage", "dynamite_damage", 0, 500, 2 )
+
 	CPanel:ControlHelp( "#tool.dynamite.damage.help" )
 	CPanel:NumSlider( "#tool.dynamite.delay", "dynamite_delay", 0, 10, 2 )
+
 	CPanel:ControlHelp( "#tool.dynamite.delay.help" )
 	CPanel:CheckBox( "#tool.dynamite.remove", "dynamite_remove" )
 

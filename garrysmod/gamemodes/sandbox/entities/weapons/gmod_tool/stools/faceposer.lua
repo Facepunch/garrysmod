@@ -335,13 +335,9 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 	CPanel:AddItem( QuickFace )
 
-	-- Scale
-	local size = CPanel:NumSlider( "#tool.faceposer.scale", "faceposer_scale", -5, 5, 2 )
+	CPanel:NumSlider( "#tool.faceposer.scale", "faceposer_scale", -5, 5, 2 ):SetHeight( 16 )
 	CPanel:ControlHelp( "#tool.faceposer.scale.help" )
-	size:SetDefaultValue( 1 )
-	size:SetHeight( 16 )
 
-	-- Randomize
 	CPanel:Button( "#tool.faceposer.randomize", "faceposer_randomize" )
 
 	local filter = CPanel:TextEntry( "#spawnmenu.quick_filter_tool" )

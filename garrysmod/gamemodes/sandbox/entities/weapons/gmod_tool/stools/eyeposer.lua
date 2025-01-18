@@ -325,11 +325,11 @@ function TOOL.BuildCPanel( CPanel, hasEntity )
 			surface.DrawRect( w / 2 - 2, h / 2 - 2, 5, 5 )
 		end
 
-		CPanel:NumSlider( "#tool.eyeposer.strabismus", "eyeposer_strabismus", -1, 1, 2 ):SetDefaultValue( 0 )
+		CPanel:NumSlider( "#tool.eyeposer.strabismus", "eyeposer_strabismus", -1, 1, 2 )
 
 	end
 
-	CPanel:NumSlider( "#tool.eyeposer.size_eyes", "r_eyesize", -0.5, 2, 2 ):SetDefaultValue( 0 )
+	CPanel:NumSlider( "#tool.eyeposer.size_eyes", "r_eyesize", -0.5, 2, 2 )
 	CPanel:ControlHelp( "#tool.eyeposer.size_eyes.help" )
 
 end

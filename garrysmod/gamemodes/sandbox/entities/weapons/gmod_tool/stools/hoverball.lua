@@ -225,10 +225,13 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.hoverball.up", "hoverball_keyup", "#tool.hoverball.down", "hoverball_keydn" )
 	CPanel:KeyBinder( "#tool.toggle", "hoverball_keyon" )
+
 	CPanel:NumSlider( "#tool.hoverball.speed", "hoverball_speed", 0, 20, 2 )
 	CPanel:ControlHelp( "#tool.hoverball.speed.help" )
+
 	CPanel:NumSlider( "#tool.hoverball.resistance", "hoverball_resistance", 0, 10, 2 )
 	CPanel:ControlHelp( "#tool.hoverball.resistance.help" )
+
 	CPanel:NumSlider( "#tool.hoverball.strength", "hoverball_strength", 0.1, 10, 2 )
 	CPanel:ControlHelp( "#tool.hoverball.strength.help" )
 

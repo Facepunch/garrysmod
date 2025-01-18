@@ -193,12 +193,8 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.slider.width", "slider_width", 0, 10, 2 )
 
-	-- Material
-	local material = vgui.Create( "RopeMaterial", CPanel )
-	material:SetConVar( "slider_material" )
-	CPanel:AddPanel( material )
+	CPanel:RopeSelect( "slider_material" )
 
-	-- Color
 	CPanel:ColorPicker( "#tool.slider.color", "slider_color_r", "slider_color_g", "slider_color_b" )
 
 end

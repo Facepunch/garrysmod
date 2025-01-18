@@ -184,6 +184,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.forcelimit", "rope_forcelimit", 0, 1000, 2 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
+
 	CPanel:NumSlider( "#tool.rope.addlength", "rope_addlength", -500, 500, 2 )
 	CPanel:ControlHelp( "#tool.rope.addlength.help" )
 
@@ -192,12 +193,8 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.rope.width", "rope_width", 0, 10, 2 )
 
-	-- Rope material
-	local material = vgui.Create( "RopeMaterial", CPanel )
-	material:SetConVar( "rope_material" )
-	CPanel:AddPanel( material )
+	CPanel:RopeSelect( "rope_material" )
 
-	-- Color
 	CPanel:ColorPicker( "#tool.rope.color", "rope_color_r", "rope_color_g", "rope_color_b" )
 
 end

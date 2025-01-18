@@ -105,11 +105,11 @@ function TOOL.BuildCPanel( CPanel )
 	for k, v in pairs( list.Get( "RenderModes" ) ) do
 		renderMode:AddOption( k, v )
 	end
+	renderMode:SetHeight( 25 )
+	renderMode:Dock( TOP )
 	local renderModeLabel = vgui.Create( "DLabel", CPanel )
 	renderModeLabel:SetText( "#tool.colour.mode" )
 	renderModeLabel:SetDark( true )
-	renderMode:SetHeight( 25 )
-	renderMode:Dock( TOP )
 	CPanel:AddItem( renderModeLabel, renderMode )
 
 	-- Render FX
@@ -117,11 +117,11 @@ function TOOL.BuildCPanel( CPanel )
 	for k, v in pairs( list.Get( "RenderFX" ) ) do
 		renderFX:AddOption( k, v )
 	end
+	renderFX:SetHeight( 25 )
+	renderFX:Dock( TOP )
 	local renderFXLabel = vgui.Create( "DLabel", CPanel )
 	renderFXLabel:SetText( "#tool.colour.fx" )
 	renderFXLabel:SetDark( true )
-	renderFX:SetHeight( 25 )
-	renderFX:Dock( TOP )
 	CPanel:AddItem( renderFXLabel, renderFX )
 
 end

@@ -235,21 +235,20 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.hydraulic.addlength", "hydraulic_addlength", -1000, 1000, 2 )
 	CPanel:ControlHelp( "#tool.hydraulic.addlength.help" )
+
 	CPanel:NumSlider( "#tool.hydraulic.speed", "hydraulic_speed", 0, 50, 2 )
 	CPanel:ControlHelp( "#tool.hydraulic.speed.help" )
+
 	CPanel:CheckBox( "#tool.hydraulic.fixed", "hydraulic_fixed" )
 	CPanel:ControlHelp( "#tool.hydraulic.fixed.help" )
+
 	CPanel:CheckBox( "#tool.toggle", "hydraulic_toggle" )
 	CPanel:ControlHelp( "#tool.toggle.help" )
 
 	CPanel:NumSlider( "#tool.hydraulic.width", "hydraulic_width", 0, 5, 2 )
 
-	-- Rope material
-	local material = vgui.Create( "RopeMaterial", CPanel )
-	material:SetConVar( "hydraulic_material" )
-	CPanel:AddPanel( material )
+	CPanel:RopeSelect( "hydraulic_material" )
 
-	-- Color
 	CPanel:ColorPicker( "#tool.hydraulic.color", "hydraulic_color_r", "hydraulic_color_g", "hydraulic_color_b" )
 
 end

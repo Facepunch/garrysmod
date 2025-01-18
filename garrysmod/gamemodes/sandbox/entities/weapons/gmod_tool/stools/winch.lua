@@ -210,16 +210,14 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.winch.fspeed", "winch_fwd_speed", 0, 1000, 2 )
 	CPanel:ControlHelp( "#tool.winch.fspeed.help" )
+
 	CPanel:NumSlider( "#tool.winch.bspeed", "winch_bwd_speed", 0, 1000, 2 )
 	CPanel:ControlHelp( "#tool.winch.bspeed.help" )
+
 	CPanel:NumSlider( "#tool.winch.width", "winch_rope_width", 0, 10, 2 )
 
-	-- Material
-	local material = vgui.Create( "RopeMaterial", CPanel )
-	material:SetConVar( "winch_rope_material" )
-	CPanel:AddPanel( material )
+	CPanel:RopeSelect( "winch_rope_material" )
 
-	-- Color
 	CPanel:ColorPicker( "#tool.winch.color", "winch_color_r", "winch_color_g", "winch_color_b" )
 
 end

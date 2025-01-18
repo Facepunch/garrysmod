@@ -113,17 +113,14 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.forcelimit", "pulley_forcelimit", 0, 1000, 2 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
+
 	CPanel:CheckBox( "#tool.pulley.rigid", "pulley_rigid" )
 	CPanel:ControlHelp( "#tool.pulley.rigid.help" )
 
 	CPanel:NumSlider( "#tool.pulley.width", "pulley_width", 0, 10, 2 )
 
-	-- Rope material
-	local material = vgui.Create( "RopeMaterial", CPanel )
-	material:SetConVar( "pulley_material" )
-	CPanel:AddPanel( material )
+	CPanel:RopeSelect( "pulley_material" )
 
-	-- Color
 	CPanel:ColorPicker( "#tool.pulley.color", "pulley_color_r", "pulley_color_g", "pulley_color_b" )
 
 end

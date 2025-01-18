@@ -256,6 +256,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:NumSlider( "#tool.wheel.torque", "wheel_torque", 10, 10000, 2 )
 	CPanel:NumSlider( "#tool.wheel.forcelimit", "wheel_forcelimit", 0, 50000, 2 )
 	CPanel:NumSlider( "#tool.wheel.friction", "wheel_friction", 0, 100, 2 )
+
 	CPanel:CheckBox( "#tool.wheel.nocollide", "wheel_nocollide" )
 	CPanel:CheckBox( "#tool.wheel.toggle", "wheel_toggle" )
 

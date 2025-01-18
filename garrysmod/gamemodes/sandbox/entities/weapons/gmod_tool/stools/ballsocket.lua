@@ -97,8 +97,10 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.forcelimit", "ballsocket_forcelimit", 0, 50000, 2 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
+
 	--CPanel:NumSlider( "#tool.torquelimit", "ballsocket_torquelimit", 0, 50000, 2 )
 	--CPanel:ControlHelp( "#tool.torquelimit.help" )
+
 	CPanel:CheckBox( "#tool.nocollide", "ballsocket_nocollide" )
 	CPanel:ControlHelp( "#tool.nocollide.help" )
 

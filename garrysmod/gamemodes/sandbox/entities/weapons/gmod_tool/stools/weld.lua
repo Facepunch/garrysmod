@@ -294,6 +294,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.forcelimit", "weld_forcelimit", 0, 1000, 2 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
+
 	CPanel:CheckBox( "#tool.nocollide", "weld_nocollide" )
 
 end

@@ -146,7 +146,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:KeyBinder( "#tool.camera.key", "camera_key" )
 
 	CPanel:CheckBox( "#tool.camera.static", "camera_locked" )
-	CPanel:ControlHelp( "#tool.camera.static" .. ".help" )
+	CPanel:ControlHelp( "#tool.camera.static.help" )
 	CPanel:CheckBox( "#tool.toggle", "camera_toggle" )
 
 end

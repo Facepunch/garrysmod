@@ -54,7 +54,6 @@ function TOOL.BuildCPanel( CPanel )
 	property:Dock( TOP )
 	CPanel:AddItem( propertyLabel, property )
 
-	-- Gravity
 	CPanel:CheckBox( "#tool.physprop.gravity", "physprop_gravity_toggle" )
 
 end

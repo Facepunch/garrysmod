@@ -244,23 +244,23 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:ToolPresets( "muscle", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.muscle.numpad", "muscle_group" )
+
 	CPanel:NumSlider( "#tool.muscle.length", "muscle_addlength", -1000, 1000, 2 )
 	CPanel:ControlHelp( "#tool.muscle.length.help" )
+
 	CPanel:NumSlider( "#tool.muscle.period", "muscle_period", 0, 10, 2 )
 	CPanel:ControlHelp( "#tool.muscle.period.help" )
+
 	CPanel:CheckBox( "#tool.muscle.fixed", "muscle_fixed" )
 	CPanel:ControlHelp( "#tool.muscle.fixed.help" )
+
 	CPanel:CheckBox( "#tool.muscle.starton", "muscle_starton" )
 	CPanel:ControlHelp( "#tool.muscle.starton.help" )
 
 	CPanel:NumSlider( "#tool.muscle.width", "muscle_width", 0, 5, 2 )
 
-	-- Rope material
-	local material = vgui.Create( "RopeMaterial", CPanel )
-	material:SetConVar( "muscle_material" )
-	CPanel:AddPanel( material )
+	CPanel:RopeSelect( "muscle_material" )
 
-	-- Color
 	CPanel:ColorPicker( "#tool.muscle.color", "muscle_color_r", "muscle_color_g", "muscle_color_b" )
 
 end
