@@ -56,6 +56,16 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 end
 
+function PANEL:RopeSelect( strConVar )
+
+	local ctrl = vgui.Create( "RopeMaterial", self )
+	ctrl:SetConVar( strConVar )
+	self:AddPanel( ctrl )
+
+	return ctrl
+
+end
+
 function PANEL:PropSelect( label, strConVar, mdlList, height )
 
 	local PropSelect = vgui.Create( "PropSelect", self )
@@ -67,8 +77,6 @@ function PANEL:PropSelect( label, strConVar, mdlList, height )
 	for k, v in SortedPairs( mdlList ) do
 		PropSelect:AddModel( k, v )
 	end
-
-	PropSelect:ControlValues( data ) -- Yack.
 
 	self:AddPanel( PropSelect )
 	return PropSelect
