@@ -118,14 +118,7 @@ else
 			return
 		end
 
-		local MapAddon = nil
-		for id, addon in pairs( engine.GetAddons() ) do
-			if ( file.Exists( "maps/" .. game.GetMap() .. ".bsp", addon.title ) ) then
-				MapAddon = addon.wsid
-			end
-		end
-
-		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp(), CurTime(), game.GetMap(), MapAddon )
+		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp() )
 		buffer = ""
 
 		if ( showsave ) then

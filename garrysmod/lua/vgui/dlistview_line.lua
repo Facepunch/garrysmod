@@ -126,6 +126,9 @@ function PANEL:SetColumnText( i, strText )
 		self.Columns[ i ] = vgui.Create( "DListViewLabel", self )
 		self.Columns[ i ]:SetMouseInputEnabled( false )
 
+		-- Disable autostretch behavior since we are not using it anyway, it gets expensive fast
+		self.Columns[ i ].Think = nil
+
 	end
 
 	self.Columns[ i ]:SetText( tostring( strText ) )
@@ -181,5 +184,5 @@ function PANEL:DataLayout( ListView )
 
 end
 
-derma.DefineControl( "DListViewLine", "A line from the List View", PANEL, "Panel" )
+derma.DefineControl( "DListViewLine", "A line from the List View", PANEL, "Panel" ) -- Legacy
 derma.DefineControl( "DListView_Line", "A line from the List View", PANEL, "Panel" )

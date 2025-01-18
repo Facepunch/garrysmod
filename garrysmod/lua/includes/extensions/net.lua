@@ -1,10 +1,9 @@
 
--- This is just enough for the entity index. This however is not perfect
--- as the entity at given index may have changed during transport.
--- If this becomes a problem, inclusion of entity's serial will also be necessary
-local MAX_EDICT_BITS = 13
-
+-- TODO: Hack. Move to where color is defined?
 TYPE_COLOR = 255
+
+-- TODO: Temp hack, remove meta
+local MAX_EDICT_BITS = 13
 
 net.Receivers = {}
 

@@ -783,12 +783,12 @@ end
 if ( !table.move ) then
 	function table.move( sourceTbl, from, to, dest, destTbl )
 
-		if ( !istable( sourceTbl ) ) then error( "bad argument #1 to 'move' (table expected, got " .. type( sourceTbl ) .. ")" ) end
-		if ( !isnumber( from ) ) then error( "bad argument #2 to 'move' (number expected, got " .. type( from ) .. ")" ) end
-		if ( !isnumber( to ) ) then error( "bad argument #3 to 'move' (number expected, got " .. type( to ) .. ")" ) end
-		if ( !isnumber( dest ) ) then error( "bad argument #4 to 'move' (number expected, got " .. type( dest ) .. ")" ) end
+		if ( !istable( sourceTbl ) ) then error( "bad argument #1 to 'move' (table expected, got " .. type( sourceTbl ) .. ")", 2 ) end
+		if ( !isnumber( from ) ) then error( "bad argument #2 to 'move' (number expected, got " .. type( from ) .. ")", 2 ) end
+		if ( !isnumber( to ) ) then error( "bad argument #3 to 'move' (number expected, got " .. type( to ) .. ")", 2 ) end
+		if ( !isnumber( dest ) ) then error( "bad argument #4 to 'move' (number expected, got " .. type( dest ) .. ")", 2 ) end
 		if ( destTbl != nil ) then
-			if ( !istable( destTbl ) ) then error( "bad argument #5 to 'move' (table expected, got " .. type( destTbl ) .. ")" ) end
+			if ( !istable( destTbl ) ) then error( "bad argument #5 to 'move' (table expected, got " .. type( destTbl ) .. ")", 2 ) end
 		else
 			destTbl = sourceTbl
 		end

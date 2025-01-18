@@ -357,7 +357,7 @@ local function RefreshMaps( skip )
 		end
 
 		-- Throw all uncategorised maps into Other
-		Category = Category or "Other"
+		Category = Category or language.GetPhrase( "spawnmenu.category.other" )
 
 		local fav
 

@@ -1,5 +1,5 @@
 
-AddCSLuaFile()
+if ( SERVER ) then AddCSLuaFile() return end
 
 local default_animations = { "idle_all_01", "menu_walk" }
 
@@ -10,7 +10,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 	width		= 960,
 	height		= 700,
 	onewindow	= true,
-	init		= function( icon, window )
+	init		= function( widgetIcon, window )
 
 		window:SetTitle( "#smwidget.playermodel_title" )
 		window:SetSize( math.min( ScrW() - 16, window:GetWide() ), math.min( ScrH() - 16, window:GetTall() ) )
@@ -32,7 +32,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local sheet = window:Add( "DPropertySheet" )
 		sheet:Dock( RIGHT )
-		sheet:SetSize( 430, 0 )
+		sheet:SetWide( 430 )
 
 		local modelListPnl = window:Add( "DPanel" )
 		modelListPnl:DockPadding( 8, 8, 8, 8 )
@@ -267,6 +267,28 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 	end
 } )
+
+-- A bit hacky way to bring the widgets outside of the context menu
+concommand.Add( "open_playermodel_selector", function()
+
+	for id, icon in pairs( g_ContextMenu.DesktopWidgets:GetChildren() ) do
+		if ( !icon.WidgetClass or icon.WidgetClass != "PlayerEditor" ) then continue end
+
+		-- We gotta have this at the point of creation for some reason
+		g_ContextMenu:SetMouseInputEnabled( true )
+
+		-- Create the window
+		icon:DoClick()
+
+		-- Make it appear outside of the context menu
+		icon.Window:SetParent()
+		icon.Window:MakePopup()
+		icon.Window:Center()
+
+		break
+	end
+
+end )
 
 list.Set( "PlayerOptionsAnimations", "gman", { "menu_gman" } )
 
