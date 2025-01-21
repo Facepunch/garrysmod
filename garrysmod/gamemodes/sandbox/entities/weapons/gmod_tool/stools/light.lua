@@ -216,18 +216,17 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.light.desc" } )
+	CPanel:Help( "#tool.light.desc" )
+	CPanel:ToolPresets( "light", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "light", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.light.key", "light_key" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
+	CPanel:NumSlider( "#tool.light.ropelength", "light_ropelength", 0, 256, 2 )
+	CPanel:NumSlider( "#tool.light.brightness", "light_brightness", -6, 6, 0 )
+	CPanel:NumSlider( "#tool.light.size", "light_size", 0, 1024, 2 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.light.ropelength", Command = "light_ropelength", Type = "Float", Min = 0, Max = 256 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = -6, Max = 6 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.size", Command = "light_size", Type = "Float", Min = 0, Max = 1024 } )
+	CPanel:CheckBox( "#tool.light.toggle", "light_toggle" )
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )
-
-	CPanel:AddControl( "Color", { Label = "#tool.light.color", Red = "light_r", Green = "light_g", Blue = "light_b" } )
+	CPanel:ColorPicker( "#tool.light.color", "light_r", "light_g", "light_b" )
 
 end

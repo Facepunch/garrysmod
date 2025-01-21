@@ -202,17 +202,21 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.winch.help" } )
+	CPanel:Help( "#tool.winch.help" )
+	CPanel:ToolPresets( "winch", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "winch", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.winch.forward", "winch_fwd_group", "#tool.winch.backward", "winch_bwd_group" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.winch.forward", Command = "winch_fwd_group", Label2 = "#tool.winch.backward", Command2 = "winch_bwd_group" } )
+	CPanel:NumSlider( "#tool.winch.fspeed", "winch_fwd_speed", 0, 1000, 2 )
+	CPanel:ControlHelp( "#tool.winch.fspeed.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.winch.fspeed", Command = "winch_fwd_speed", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.winch.bspeed", Command = "winch_bwd_speed", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.winch.width", Command = "winch_rope_width", Type = "Float", Min = 0, Max = 10 } )
+	CPanel:NumSlider( "#tool.winch.bspeed", "winch_bwd_speed", 0, 1000, 2 )
+	CPanel:ControlHelp( "#tool.winch.bspeed.help" )
 
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.winch.material", ConVar = "winch_rope_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.winch.color", Red = "winch_color_r", Green = "winch_color_g", Blue = "winch_color_b" } )
+	CPanel:NumSlider( "#tool.winch.width", "winch_rope_width", 0, 10, 2 )
+
+	CPanel:RopeSelect( "winch_rope_material" )
+
+	CPanel:ColorPicker( "#tool.winch.color", "winch_color_r", "winch_color_g", "winch_color_b" )
 
 end

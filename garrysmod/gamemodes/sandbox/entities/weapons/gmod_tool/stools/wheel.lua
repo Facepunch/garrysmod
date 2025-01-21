@@ -247,20 +247,19 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.wheel.desc" } )
+	CPanel:Help( "#tool.wheel.desc" )
+	CPanel:ToolPresets( "wheel", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "wheel", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.wheel.forward", "wheel_fwd", "#tool.wheel.reverse", "wheel_bck" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.wheel.forward", Command = "wheel_fwd", Label2 = "#tool.wheel.reverse", Command2 = "wheel_bck" } )
+	CPanel:NumSlider( "#tool.wheel.torque", "wheel_torque", 10, 10000, 2 )
+	CPanel:NumSlider( "#tool.wheel.forcelimit", "wheel_forcelimit", 0, 50000, 2 )
+	CPanel:NumSlider( "#tool.wheel.friction", "wheel_friction", 0, 100, 2 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.torque", Command = "wheel_torque", Type = "Float", Min = 10, Max = 10000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.forcelimit", Command = "wheel_forcelimit", Type = "Float", Min = 0, Max = 50000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.friction", Command = "wheel_friction", Type = "Float", Min = 0, Max = 100 } )
+	CPanel:CheckBox( "#tool.wheel.nocollide", "wheel_nocollide" )
+	CPanel:CheckBox( "#tool.wheel.toggle", "wheel_toggle" )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.nocollide", Command = "wheel_nocollide" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.toggle", Command = "wheel_toggle" } )
-
-	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model", ConVar = "wheel_model", Height = 0, Models = list.Get( "WheelModels" ) } )
+	CPanel:PropSelect( "#tool.wheel.model", "wheel_model", list.Get( "WheelModels" ), 0 )
 
 end
 
