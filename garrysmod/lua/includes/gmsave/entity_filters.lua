@@ -71,6 +71,11 @@ function gmsave.ShouldSaveEntity( ent, t )
 		return false
 	end
 
+	-- Do not save entities that do not want to be saved
+	if ( ent.DoNotDuplicate ) then
+		return false
+	end
+
 	--
 	-- Default action is to save..
 	--
