@@ -153,6 +153,27 @@ function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
 
 end
 
+function PANEL:ComboBoxMulti( label, list )
+
+	local labelPnl = vgui.Create( "DLabel", self )
+	labelPnl:SetText( label )
+	labelPnl:SetDark( true )
+
+	local cbox = vgui.Create( "CtrlListBox", self )
+	cbox:SetHeight( 25 )
+	cbox:Dock( TOP )
+	if ( list ) then
+		for k, v in pairs( list ) do
+			cbox:AddOption( k, v )
+		end
+	end
+
+	self:AddItem( labelPnl, cbox )
+
+	return cbox, labelPnl
+
+end
+
 function PANEL:FillViaTable( Table )
 
 	self:SetInitialized( true )
@@ -398,19 +419,18 @@ function PANEL:AddControl( control, data )
 
 		else
 
-			local ctrl = vgui.Create( "CtrlListBox", self )
+			local left = vgui.Create( "DLabel", self )
+			left:SetText( data.label )
+			left:SetDark( true )
 
+			local ctrl = vgui.Create( "CtrlListBox", self )
+			ctrl:SetHeight( 25 )
+			ctrl:Dock( TOP )
 			if ( data.options ) then
 				for k, v in pairs( data.options ) do
 					ctrl:AddOption( k, v )
 				end
 			end
-
-			local left = vgui.Create( "DLabel", self )
-			left:SetText( data.label )
-			left:SetDark( true )
-			ctrl:SetHeight( 25 )
-			ctrl:Dock( TOP )
 
 			self:AddItem( left, ctrl )
 

@@ -229,29 +229,12 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:NumSlider( "#tool.thruster.force", "thruster_force", 1, 10000, 2 )
 
-	-- Effect
-	local effect = vgui.Create( "CtrlListBox", CPanel )
+	local combo = CPanel:ComboBoxMulti( "#tool.thruster.effect" )
 	for k, v in pairs( list.Get( "ThrusterEffects" ) ) do
-		effect:AddOption( k, { thruster_effect = v.thruster_effect } )
+		combo:AddOption( k, { thruster_effect = v.thruster_effect } )
 	end
-	effect:SetHeight( 25 )
-	effect:Dock( TOP )
-	local effectLabel = vgui.Create( "DLabel", CPanel )
-	effectLabel:SetText( "#tool.thruster.effect" )
-	effectLabel:SetDark( true )
-	CPanel:AddItem( effectLabel, effect )
 
-	-- Sound
-	local sound = vgui.Create( "CtrlListBox", CPanel )
-	for k, v in pairs( list.Get( "ThrusterSounds" ) ) do
-		sound:AddOption( k, v )
-	end
-	sound:SetHeight( 25 )
-	sound:Dock( TOP )
-	local soundLabel = vgui.Create( "DLabel", CPanel )
-	soundLabel:SetText( "#tool.thruster.sound" )
-	soundLabel:SetDark( true )
-	CPanel:AddItem( soundLabel, sound )
+	CPanel:ComboBoxMulti( "#tool.thruster.sound", list.Get( "ThrusterSounds" ) )
 
 	CPanel:CheckBox( "#tool.thruster.toggle", "thruster_toggle" )
 	CPanel:CheckBox( "#tool.thruster.collision", "thruster_collision" )

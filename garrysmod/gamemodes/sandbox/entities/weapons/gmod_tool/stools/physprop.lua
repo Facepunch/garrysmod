@@ -42,17 +42,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:ToolPresets( "physprop", ConVarsDefault )
 
-	-- Property
-	local property = vgui.Create( "CtrlListBox", CPanel )
-	for k, v in pairs( list.Get( "PhysicsMaterials" ) ) do
-		property:AddOption( k, v )
-	end
-	local propertyLabel = vgui.Create( "DLabel", CPanel )
-	propertyLabel:SetText( "#tool.physprop.material" )
-	propertyLabel:SetDark( true )
-	property:SetHeight( 25 )
-	property:Dock( TOP )
-	CPanel:AddItem( propertyLabel, property )
+	CPanel:ComboBoxMulti( "#tool.physprop.material", list.Get( "PhysicsMaterials" ) )
 
 	CPanel:CheckBox( "#tool.physprop.gravity", "physprop_gravity_toggle" )
 
