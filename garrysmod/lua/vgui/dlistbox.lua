@@ -18,7 +18,7 @@ function PANEL:OnMousePressed( mcode )
 		self:Select( true )
 	end
 
-	self:SetTextColor( Color( 0, 0, 0, 255 ) )
+	self:SetTextColor( color_black )
 end
 
 function PANEL:Paint( w, h )
@@ -71,10 +71,11 @@ function PANEL:Init()
 
 	self:SetMultiple( true )
 	self:EnableHorizontal( false )
-	self:EnableVerticalScrollbar( true )
+	self:EnableVerticalScrollbar()
 
 	self:SetPadding( 1 )
 
+	self.m_bSelectionCanvas = true
 	self.SelectedItems = {}
 
 end

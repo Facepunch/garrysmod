@@ -48,9 +48,10 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidDynamiteModel( model ) ) then return false end
-	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "dynamite" ) ) then return false end
 
-	local dynamite = MakeDynamite( ply, trace.HitPos, Angle( 0, 0, 0 ), group, damage, model, remove, delay )
+	local dynamite = MakeDynamite( ply, trace.HitPos, angle_zero, group, damage, model, remove, delay )
+	if ( !IsValid( dynamite ) ) then return false end
 
 	local CurPos = dynamite:GetPos()
 	local Offset = CurPos - dynamite:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -68,55 +69,56 @@ end
 
 if ( SERVER ) then
 
-	function MakeDynamite( pl, pos, ang, key, damage, model, remove, delay )
+	function MakeDynamite( ply, pos, ang, key, damage, model, remove, delay, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "dynamite" ) ) then return nil end
-		if ( !IsValidDynamiteModel( model ) ) then return nil end
+		if ( IsValid( ply ) && !ply:CheckLimit( "dynamite" ) ) then return NULL end
+		if ( !IsValidDynamiteModel( model ) ) then return NULL end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
-		dynamite:SetPos( pos )
+
+		duplicator.DoGeneric( dynamite, Data )
+		dynamite:SetPos( pos ) -- Backwards compatible for addons directly calling this function
 		dynamite:SetAngles( ang )
 		dynamite:SetModel( model )
+
 		dynamite:SetShouldRemove( remove )
 		dynamite:SetDamage( damage )
 		dynamite:SetDelay( delay )
 		dynamite:Spawn()
-		dynamite:Activate()
 
-		if ( IsValid( pl ) ) then
-			dynamite:SetPlayer( pl )
+		DoPropSpawnedEffect( dynamite )
+		duplicator.DoGenericPhysics( dynamite, ply, Data )
+
+		if ( IsValid( ply ) ) then
+			dynamite:SetPlayer( ply )
 		end
 
 		table.Merge( dynamite:GetTable(), {
 			key = key,
-			pl = pl,
-			nocollide = nocollide,
-			description = description,
+			pl = ply,
 			Damage = damage,
 			model = model,
 			remove = remove,
 			delay = delay
 		} )
 
-		dynamite.NumDown = numpad.OnDown( pl, key, "DynamiteBlow", dynamite )
+		dynamite.NumDown = numpad.OnDown( ply, key, "DynamiteBlow", dynamite )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "dynamite", dynamite )
-			pl:AddCleanup( "dynamite", dynamite )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "dynamite", dynamite )
+			ply:AddCleanup( "dynamite", dynamite )
 		end
-
-		DoPropSpawnedEffect( dynamite )
 
 		return dynamite
 
 	end
-	duplicator.RegisterEntityClass( "gmod_dynamite", MakeDynamite, "Pos", "Ang", "key", "Damage", "model", "remove", "delay" )
+	duplicator.RegisterEntityClass( "gmod_dynamite", MakeDynamite, "Pos", "Ang", "key", "Damage", "model", "remove", "delay", "Data" )
 
-	numpad.Register( "DynamiteBlow", function( pl, dynamite )
+	numpad.Register( "DynamiteBlow", function( ply, dynamite )
 
 		if ( !IsValid( dynamite ) ) then return end
 
-		dynamite:Explode( nil, pl )
+		dynamite:Explode( nil, ply )
 
 	end )
 
@@ -132,7 +134,7 @@ function TOOL:UpdateGhostDynamite( ent, ply )
 		return
 	end
 
-	ent:SetAngles( Angle( 0, 0, 0 ) )
+	ent:SetAngles( angle_zero )
 
 	local CurPos = ent:GetPos()
 	local Offset = CurPos - ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -149,7 +151,7 @@ function TOOL:Think()
 	if ( !IsValidDynamiteModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostDynamite( self.GhostEntity, self:GetOwner() )
@@ -160,16 +162,20 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.dynamite.help" } )
+	CPanel:Help( "#tool.dynamite.help" )
+	CPanel:ToolPresets( "dynamite", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "dynamite", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.dynamite.explode", "dynamite_group" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.dynamite.explode", Command = "dynamite_group" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.dynamite.damage", Command = "dynamite_damage", Type = "Float", Min = 0, Max = 500, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.dynamite.delay", Command = "dynamite_delay", Type = "Float", Min = 0, Max = 10, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.dynamite.remove", Command = "dynamite_remove" } )
+	CPanel:NumSlider( "#tool.dynamite.damage", "dynamite_damage", 0, 500, 2 )
+	CPanel:ControlHelp( "#tool.dynamite.damage.help" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.dynamite.model", ConVar = "dynamite_model", Height = 0, Models = list.Get( "DynamiteModels" ) } )
+	CPanel:NumSlider( "#tool.dynamite.delay", "dynamite_delay", 0, 10, 2 )
+	CPanel:ControlHelp( "#tool.dynamite.delay.help" )
+
+	CPanel:CheckBox( "#tool.dynamite.remove", "dynamite_remove" )
+
+	CPanel:PropSelect( "#tool.dynamite.model", "dynamite_model", list.Get( "DynamiteModels" ), 0 )
 
 end
 

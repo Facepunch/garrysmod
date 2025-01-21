@@ -20,7 +20,6 @@ if ( CLIENT ) then
 		return ClientUndos
 	end
 
-
 	--[[---------------------------------------------------------
 		UpdateUI
 		Actually updates the UI. Removes old controls and
@@ -55,7 +54,7 @@ if ( CLIENT ) then
 		AddUndo
 		Called from server. Adds a new undo to our UI
 	-----------------------------------------------------------]]
-	local function AddUndo()
+	net.Receive( "Undo_AddUndo", function()
 
 		local k	= net.ReadInt( 16 )
 		local v	= net.ReadString()
@@ -64,8 +63,21 @@ if ( CLIENT ) then
 
 		MakeUIDirty()
 
-	end
-	net.Receive( "Undo_AddUndo", AddUndo )
+	end )
+
+	-- Called from server, fires GM:OnUndo
+	net.Receive( "Undo_FireUndo", function()
+
+		local name = net.ReadString()
+		local hasCustomText = net.ReadBool()
+		local customtext
+		if ( hasCustomText ) then
+			customtext = net.ReadString()
+		end
+
+		hook.Run( "OnUndo", name, customtext )
+
+	end )
 
 
 	--[[---------------------------------------------------------
@@ -166,6 +178,7 @@ local Current_Undo = nil
 
 util.AddNetworkString( "Undo_Undone" )
 util.AddNetworkString( "Undo_AddUndo" )
+util.AddNetworkString( "Undo_FireUndo" )
 
 --[[---------------------------------------------------------
 	GetTable
@@ -300,6 +313,17 @@ local function SendUndoneMessage( ent, id, ply )
 end
 
 --[[---------------------------------------------------------
+	Checks whether an undo is allowed to be created
+-----------------------------------------------------------]]
+local function Can_CreateUndo( undo )
+
+	local call = hook.Run( "CanCreateUndo", undo.Owner, undo )
+
+	return call == true or call == nil
+
+end
+
+--[[---------------------------------------------------------
 	Finish
 -----------------------------------------------------------]]
 function Finish( NiceText )
@@ -307,21 +331,21 @@ function Finish( NiceText )
 	if ( !Current_Undo ) then return end
 
 	-- Do not add undos that have no owner or anything to undo
-	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then
+	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) or !Can_CreateUndo( Current_Undo ) ) then
 		Current_Undo = nil
-		return
+		return false
 	end
 
 	local index = Current_Undo.Owner:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
-	local id = table.insert( PlayerUndo[ index ], Current_Undo )
+	Current_Undo.NiceText = NiceText or Current_Undo.Name
 
-	NiceText = NiceText or Current_Undo.Name
+	local id = table.insert( PlayerUndo[ index ], Current_Undo )
 
 	net.Start( "Undo_AddUndo" )
 		net.WriteInt( id, 16 )
-		net.WriteString( NiceText )
+		net.WriteString( Current_Undo.NiceText )
 	net.Send( Current_Undo.Owner )
 
 	-- Have one of the entities in the undo tell us when it gets undone.
@@ -333,6 +357,8 @@ function Finish( NiceText )
 	end
 
 	Current_Undo = nil
+	
+	return true
 
 end
 
@@ -343,14 +369,18 @@ function Do_Undo( undo )
 
 	if ( !undo ) then return false end
 
+	if ( hook.Run( "PreUndo", undo ) == false ) then return end
+
 	local count = 0
 
 	-- Call each function
 	if ( undo.Functions ) then
 		for index, func in pairs( undo.Functions ) do
 
-			func[ 1 ]( undo, unpack( func[ 2 ] ) )
-			count = count + 1
+			local success = func[ 1 ]( undo, unpack( func[ 2 ] ) )
+			if ( success != false ) then
+				count = count + 1
+			end
 
 		end
 	end
@@ -368,12 +398,16 @@ function Do_Undo( undo )
 	end
 
 	if ( count > 0 ) then
-		if ( undo.CustomUndoText ) then
-			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '","' .. undo.CustomUndoText .. '")' )
-		else
-			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '")' )
-		end
+		net.Start( "Undo_FireUndo" )
+			net.WriteString( undo.Name )
+			net.WriteBool( undo.CustomUndoText != nil )
+			if ( undo.CustomUndoText != nil ) then
+				net.WriteString( undo.CustomUndoText )
+			end
+		net.Send( undo.Owner )
 	end
+
+	hook.Run( "PostUndo", undo, count )
 
 	return count
 
@@ -445,6 +479,7 @@ local function CC_UndoNum( ply, command, args )
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
+	if ( !UndoNum ) then return end
 
 	local TheUndo = PlayerUndo[ index ][ UndoNum ]
 	if ( !TheUndo ) then return end

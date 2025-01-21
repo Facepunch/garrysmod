@@ -36,8 +36,8 @@ if ( SERVER ) then
 		local send_size = 60000
 		local parts = math.ceil( len / send_size )
 
-		local ShowSave = 0
-		if ( args[ 1 ] == "spawnmenu" ) then ShowSave = 1 end
+		local ShowSave = false
+		if ( args[ 1 ] == "spawnmenu" ) then ShowSave = true end
 
 		local start = 0
 		for i = 1, parts do
@@ -58,6 +58,30 @@ if ( SERVER ) then
 
 	end, nil, "", { FCVAR_DONTRECORD } )
 
+	local function LoadGModSave( savedata )
+
+		-- If we loaded the save from main menu and the player entity is not ready yet
+		if ( game.SinglePlayer() && !IsValid( Entity( 1 ) ) ) then
+
+			timer.Create( "LoadGModSave_WaitForPlayer", 0.1, 0, function()
+				if ( !IsValid( Entity( 1 ) ) ) then return end
+
+				timer.Remove( "LoadGModSave_WaitForPlayer" )
+				LoadGModSave( savedata )
+			end )
+
+			return
+
+		end
+
+		local ply = nil
+		if ( IsValid( Entity( 1 ) ) && ( game.SinglePlayer() || Entity( 1 ):IsListenServerHost() ) ) then ply = Entity( 1 ) end
+		if ( !IsValid( ply ) && #player.GetHumans() == 1 ) then ply = player.GetHumans()[ 1 ] end
+
+		gmsave.LoadMap( savedata, ply )
+
+	end
+
 	hook.Add( "LoadGModSave", "LoadGModSave", function( savedata, mapname, maptime )
 
 		savedata = util.Decompress( savedata )
@@ -67,7 +91,7 @@ if ( SERVER ) then
 			return
 		end
 
-		gmsave.LoadMap( savedata, game.SinglePlayer() && Entity( 1 ) || nil )
+		LoadGModSave( savedata )
 
 	end )
 
@@ -88,14 +112,13 @@ else
 		MsgN( "Received save. Size: " .. buffer:len() )
 
 		local uncompressed = util.Decompress( buffer )
-
 		if ( !uncompressed ) then
 			MsgN( "Received save - but couldn't decompress!?" )
 			buffer = ""
 			return
 		end
 
-		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp(), CurTime(), game.GetMap() )
+		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp() )
 		buffer = ""
 
 		if ( showsave ) then

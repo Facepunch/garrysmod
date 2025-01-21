@@ -50,6 +50,12 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSCOLOR )
 	self.GhostEntity:SetColor( Color( 255, 255, 255, 150 ) )
 
+	-- Do not save this thing in saves/dupes
+	self.GhostEntity.DoNotDuplicate = true
+
+	-- Mark this entity as ghost prop for other code
+	self.GhostEntity.IsToolGhost = true
+
 end
 
 --[[---------------------------------------------------------
@@ -81,7 +87,7 @@ function ToolObj:ReleaseGhostEntity()
 	-- This is unused!
 	if ( self.GhostEntities ) then
 
-		for k,v in pairs( self.GhostEntities ) do
+		for k, v in pairs( self.GhostEntities ) do
 			if ( IsValid( v ) ) then v:Remove() end
 			self.GhostEntities[ k ] = nil
 		end
@@ -92,7 +98,7 @@ function ToolObj:ReleaseGhostEntity()
 	-- This is unused!
 	if ( self.GhostOffset ) then
 
-		for k,v in pairs( self.GhostOffset ) do
+		for k, v in pairs( self.GhostOffset ) do
 			self.GhostOffset[ k ] = nil
 		end
 

@@ -29,8 +29,8 @@
 	"faceposer_flex32"		"0.778000"
 	"faceposer_flex33"		"0.708000"
 	"faceposer_flex34"		"0.951000"
-	"faceposer_flex35"		"14.000000"
-	"faceposer_flex36"		"13.000000"
+	"faceposer_flex35"		"1.000000"
+	"faceposer_flex36"		"1.000000"
 	"faceposer_flex37"		"1.000000"
 	"faceposer_flex38"		"0.000000"
 	"faceposer_flex39"		"0.804000"
@@ -65,5 +65,5 @@
 	"faceposer_flex7"		"1.000000"
 	"faceposer_flex8"		"1.000000"
 	"faceposer_flex9"		"0.000000"
-	"Faceposer_scale"		"7.956000"
+	"Faceposer_scale"		"1"
 }

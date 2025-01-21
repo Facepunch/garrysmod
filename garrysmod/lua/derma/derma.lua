@@ -5,9 +5,7 @@ local Msg			= Msg
 local setmetatable	= setmetatable
 local _G			= _G
 local gamemode		= gamemode
-local debug			= debug
 local pairs			= pairs
-local ispanel		= ispanel
 local isfunction	= isfunction
 
 module( "derma" )
@@ -20,7 +18,9 @@ local SkinMetaTable = {}
 local iSkinChangeIndex = 1
 
 SkinMetaTable.__index = function ( self, key )
+
 	return DefaultSkin[ key ]
+
 end
 
 local function FindPanelsByClass( SeekingClass )
@@ -32,10 +32,10 @@ local function FindPanelsByClass( SeekingClass )
 	-- We're only doing it this way because it doesn't matter if it's a
 	-- bit slow - because this function is only used when reloading.
 	--
-	local tbl = debug.getregistry()
+	local tbl = vgui.GetAll()
 	for k, v in pairs( tbl ) do
 
-		if ( ispanel( v ) && v.ClassName && v.ClassName == SeekingClass ) then
+		if ( v.ClassName && v.ClassName == SeekingClass ) then
 
 			table.insert( outtbl, v )
 
@@ -131,7 +131,7 @@ function DefineSkin( strName, strDescription, strTable )
 
 	strTable.Name = strName
 	strTable.Description = strDescription
-	strTable.Base = strBase or "Default"
+	strTable.Base = strTable.Base or "Default"
 
 	if ( strName != "Default" ) then
 		setmetatable( strTable, SkinMetaTable )
@@ -140,6 +140,9 @@ function DefineSkin( strName, strDescription, strTable )
 	end
 
 	SkinList[ strName ] = strTable
+
+	-- Make all panels update their skin
+	RefreshSkins()
 
 end
 
@@ -169,13 +172,16 @@ function GetDefaultSkin()
 	if ( !skin ) then skin = DefaultSkin end
 
 	return skin
+
 end
 
 --[[---------------------------------------------------------
 	Returns 'Named' Skin
 -----------------------------------------------------------]]
 function GetNamedSkin( name )
+
 	return SkinList[ name ]
+
 end
 
 --[[---------------------------------------------------------
@@ -184,8 +190,8 @@ end
 function SkinHook( strType, strName, panel, w, h )
 
 	local Skin = panel:GetSkin()
-
 	if ( !Skin ) then return end
+
 	local func = Skin[ strType .. strName ]
 	if ( !func ) then return end
 
@@ -199,11 +205,9 @@ end
 function SkinTexture( strName, panel, default )
 
 	local Skin = panel:GetSkin()
-
 	if ( !Skin ) then return default end
 
 	local Textures = Skin.tex
-
 	if ( !Textures ) then return default end
 
 	return Textures[ strName ] or default
@@ -216,7 +220,6 @@ end
 function Color( strName, panel, default )
 
 	local Skin = panel:GetSkin()
-
 	if ( !Skin ) then return default end
 
 	return Skin[ strName ] or default
@@ -227,12 +230,16 @@ end
 	SkinChangeIndex
 -----------------------------------------------------------]]
 function SkinChangeIndex()
+
 	return iSkinChangeIndex
+
 end
 
 --[[---------------------------------------------------------
 	RefreshSkins - clears all cache'd panels (so they will reassess which skin they should be using)
 -----------------------------------------------------------]]
 function RefreshSkins()
+
 	iSkinChangeIndex = iSkinChangeIndex + 1
+
 end

@@ -121,15 +121,14 @@ frame_blend.CompleteFrame = function()
 	matFSB:SetFloat( "$alpha", 1.0 )
 	matFSB:SetTexture( "$basetexture", texMB0 )
 
-	local OldRT = render.GetRenderTarget()
-	render.SetRenderTarget( texMB1 )
+	render.PushRenderTarget( texMB1 )
 		render.SetMaterial( matFSB )
 		render.DrawScreenQuad()
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
-	render.SetRenderTarget( texMB0 )
+	render.PushRenderTarget( texMB0 )
 		render.Clear( 0, 0, 0, 255, true, true )
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 
@@ -153,7 +152,6 @@ frame_blend.BlendFrame = function()
 		render.UpdateScreenEffectTexture()
 	render.PopRenderTarget()
 
-	local delta = ( NumFramesTaken - padding ) / ( frames - padding * 2 )
 	local curve = FrameCurve( NumFramesTaken - padding, frames-padding * 2 )
 	if ( !curve ) then return end
 
@@ -161,11 +159,10 @@ frame_blend.BlendFrame = function()
 
 	matFB:SetFloat( "$alpha", curve )
 
-	local OldRT = render.GetRenderTarget()
-	render.SetRenderTarget( texMB0 )
+	render.PushRenderTarget( texMB0 )
 		render.SetMaterial( matFB )
 		render.DrawScreenQuad()
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 

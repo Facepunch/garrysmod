@@ -314,7 +314,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    self:GetOwner():FireBullets( bullet )
 
    -- Owner can die after firebullets
-   if (not IsValid(self:GetOwner())) or (not self:GetOwner():Alive()) or self:GetOwner():IsNPC() then return end
+   if (not IsValid(self:GetOwner())) or self:GetOwner():IsNPC() or (not self:GetOwner():Alive()) then return end
 
    if ((game.SinglePlayer() and SERVER) or
        ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
@@ -460,9 +460,9 @@ end
 --- Dummy functions that will be replaced when SetupDataTables runs. These are
 --- here for when that does not happen (due to e.g. stacking base classes)
 function SWEP:GetIronsightsTime() return -1 end
-function SWEP:SetIronsightsTime() end
+function SWEP:SetIronsightsTime( time ) end
 function SWEP:GetIronsightsPredicted() return false end
-function SWEP:SetIronsightsPredicted() end
+function SWEP:SetIronsightsPredicted( bool ) end
 
 -- Set up ironsights dt bool. Weapons using their own DT vars will have to make
 -- sure they call this.
@@ -489,7 +489,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:CalcViewModel()
-   if (not CLIENT) or (not IsFirstTimePredicted()) then return end
+   if (not CLIENT) or (not IsFirstTimePredicted() and not game.SinglePlayer()) then return end
    self.bIron = self:GetIronsights()
    self.fIronTime = self:GetIronsightsTime()
    self.fCurrentTime = CurTime()

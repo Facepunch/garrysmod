@@ -10,12 +10,12 @@
 
 -----------------------------------------------------------]]
 
-include( 'obj_player_extend.lua' )
+include( "obj_player_extend.lua" )
 
-include( 'gravitygun.lua' )
-include( 'player_shd.lua' )
-include( 'animations.lua' )
-include( 'player_class/player_default.lua' )
+include( "gravitygun.lua" )
+include( "player_shd.lua" )
+include( "animations.lua" )
+include( "player_class/player_default.lua" )
 
 GM.Name			= "Base Gamemode"
 GM.Author		= "Garry Newman"
@@ -262,4 +262,11 @@ end
 -----------------------------------------------------------]]
 function GM:CanProperty( pl, property, ent )
 	return false
+end
+
+--[[---------------------------------------------------------
+	Allow hooks to override bullet without ignoring all other hooks
+-----------------------------------------------------------]]
+function GM:EntityFireBullets( ent, bullets )
+	return true
 end

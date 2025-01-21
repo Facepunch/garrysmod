@@ -31,62 +31,85 @@ function PANEL:Init()
 end
 
 function PANEL:AddModel( model, ConVars )
+	if ( ConVars && !istable( ConVars ) ) then
+		ErrorNoHaltWithStack( "bad argument #2 to 'PropSelect.AddModel' (table expected, got " .. type( ConVars ) .. ")" )
+		ConVars = nil
+	end
 
 	-- Creeate a spawnicon and set the model
 	local Icon = vgui.Create( "SpawnIcon", self )
 	Icon:SetModel( model )
 	Icon:SetTooltip( model )
 	Icon.Model = model
+	Icon.Value = model
 	Icon.ConVars = ConVars || {}
 
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self )
+	Icon.DoClick = function( pnl )
+		self:SelectModel( pnl )
 
-		for k, v in pairs( self.ConVars ) do
+		self:OnSelect( pnl.Model, pnl )
+
+		for k, v in pairs( pnl.ConVars ) do
 			LocalPlayer():ConCommand( Format( "%s \"%s\"\n", k, v ) )
 		end
 
 		-- Note: We run this command after all the optional stuff
-		LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, model ) )
-
+		if ( ConVarName ) then LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, model ) ) end
 	end
 	Icon.OpenMenu = function( button )
-		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:Open()
+		self:OnRightClick( button )
 	end
 
 	-- Add the Icon us
 	self.List:AddItem( Icon )
 	table.insert( self.Controls, Icon )
 
+	return Icon
 end
 
-function PANEL:AddModelEx( name, model, skin )
-
+function PANEL:AddModelEx( value, model, skin )
 	-- Creeate a spawnicon and set the model
-	local Icon = vgui.Create( "SpawnIcon", self )
-	Icon:SetModel( model, skin )
-	Icon:SetTooltip( model )
-	Icon.Model = model
-	Icon.Value = name
-	Icon.ConVars = ConVars || {}
+	local icon = vgui.Create( "SpawnIcon", self )
+	icon:SetModel( model, skin )
+	icon:SetTooltip( model )
+	icon.Model = model
+	icon.Value = value
+	icon.ConVars = {}
 
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self ) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value ) ) end
-	Icon.OpenMenu = function( button )
-		local menu = DermaMenu()
-		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:Open()
+	icon.DoClick = function( pnl )
+		self:SelectModel( pnl )
+
+		self:OnSelect( pnl.Model, pnl )
+
+		if ( ConVarName ) then LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, icon.Value ) ) end
+	end
+	icon.OpenMenu = function( button )
+		self:OnRightClick( button )
 	end
 
 	-- Add the Icon us
-	self.List:AddItem( Icon )
-	table.insert( self.Controls, Icon )
+	self.List:AddItem( icon )
+	table.insert( self.Controls, icon )
+
+	return icon
+end
+
+function PANEL:Clear()
+
+	for k, icon in pairs( self.Controls ) do
+		icon:Remove()
+		self.Controls[k] = nil
+	end
+
+	self.List:CleanList()
+	self.SelectedIcon = nil
+	self.OldSelectedPaintOver = nil
 
 end
 
@@ -111,7 +134,7 @@ function PANEL:ControlValues( kv )
 	if ( kv.modelstable ) then
 		local tmp = {} -- HACK: Order by skin too.
 		for k, v in SortedPairsByMemberValue( kv.modelstable, "model" ) do
-			tmp[ k ] = v.model .. ( v.skin || 0 )
+			tmp[ k ] = v.model:lower() .. ( v.skin || 0 )
 		end
 
 		for k, v in SortedPairsByValue( tmp ) do
@@ -124,9 +147,9 @@ function PANEL:ControlValues( kv )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	local y = self.BaseClass.PerformLayout( self )
+	local y = self.BaseClass.PerformLayout( self, w, h )
 
 	if ( self.Height >= 1 ) then
 		local Height = ( 64 + self.List:GetSpacing() ) * math.max( self.Height, 1 ) + self.List:GetPadding() * 2 - self.List:GetSpacing()
@@ -145,37 +168,63 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:FindAndSelectButton( Value )
+function PANEL:FindModelByValue( value )
 
-	self.CurrentValue = Value
-
-	for k, Icon in pairs( self.Controls ) do
-
-		if ( Icon.Model == Value || Icon.Value == Value ) then
-
-			-- Remove the old overlay
-			if ( self.SelectedIcon ) then
-				self.SelectedIcon.PaintOver = self.OldSelectedPaintOver
-			end
-
-			-- Add the overlay to this button
-			self.OldSelectedPaintOver = Icon.PaintOver
-			Icon.PaintOver = HighlightedButtonPaint
-			self.SelectedIcon = Icon
-
-		end
-
+	for k, icon in pairs( self.Controls ) do
+		if ( icon.Model == value || icon.Value == value ) then return icon end
 	end
+
+end
+
+function PANEL:SelectModel( icon )
+
+	-- Remove the old overlay
+	if ( self.SelectedIcon ) then
+		self.SelectedIcon.PaintOver = self.OldSelectedPaintOver
+	end
+
+	-- Add the overlay to this button
+	self.OldSelectedPaintOver = icon.PaintOver
+	icon.PaintOver = HighlightedButtonPaint
+	self.SelectedIcon = icon
+	self.CurrentValue = icon.Value
+
+end
+
+function PANEL:FindAndSelectButton( value )
+
+	local icon = self:FindModelByValue( value )
+	if ( !icon ) then return end
+
+	self:SelectModel( icon )
 
 end
 
 function PANEL:TestForChanges()
 
-	local Value = GetConVarString( self:ConVar() )
+	local cvar = self:ConVar()
+	if ( !cvar ) then return end
 
-	if ( Value == self.CurrentValue ) then return end
+	local value = GetConVarString( cvar )
+	if ( value == self.CurrentValue ) then return end
 
-	self:FindAndSelectButton( Value )
+	self:FindAndSelectButton( value )
+
+end
+
+function PANEL:OnSelect( material, pnl )
+
+	-- For override
+
+end
+
+function PANEL:OnRightClick( button )
+
+	-- For override
+
+	local menu = DermaMenu()
+	menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( button.Model ) end ):SetIcon( "icon16/page_copy.png" )
+	menu:Open()
 
 end
 

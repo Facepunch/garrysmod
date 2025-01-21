@@ -14,7 +14,7 @@ function TOOL:LeftClick( trace )
 	util.PrecacheSound( "ambient/wind/wind_hit2.wav" )
 	self:GetOwner():EmitSound( "ambient/wind/wind_hit2.wav" )
 
-	if ( IsValid( trace.Entity ) && IsValid( trace.Entity:GetPhysicsObject() ) ) then
+	if ( IsValid( trace.Entity ) and IsValid( trace.Entity:GetPhysicsObject() ) ) then
 
 		local phys = trace.Entity:GetPhysicsObject()	-- The physics object
 		local direction = trace.StartPos - trace.HitPos	-- The direction of the force
@@ -23,7 +23,7 @@ function TOOL:LeftClick( trace )
 		local maxdistance = 512							-- The max distance the gun should reach
 
 		-- Lessen the force from a distance
-		local ratio = math.Clamp( ( 1 - ( distance / maxdistance ) ), 0, 1 )
+		local ratio = math.Clamp( 1 - ( distance / maxdistance ), 0, 1 )
 
 		-- Set up the 'real' force and the offset of the force
 		local vForce = -direction * ( force * ratio )

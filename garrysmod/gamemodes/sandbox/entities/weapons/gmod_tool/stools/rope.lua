@@ -7,6 +7,9 @@ TOOL.ClientConVar[ "addlength" ] = "0"
 TOOL.ClientConVar[ "material" ] = "cable/rope"
 TOOL.ClientConVar[ "width" ] = "2"
 TOOL.ClientConVar[ "rigid" ] = "0"
+TOOL.ClientConVar[ "color_r" ] = "255"
+TOOL.ClientConVar[ "color_g" ] = "255"
+TOOL.ClientConVar[ "color_b" ] = "255"
 
 TOOL.Information = {
 	{ name = "left", stage = 0 },
@@ -30,10 +33,14 @@ function TOOL:LeftClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -43,6 +50,10 @@ function TOOL:LeftClick( trace )
 		local width = self:GetClientNumber( "width" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
 
+		local colorR = self:GetClientNumber( "color_r" )
+		local colorG = self:GetClientNumber( "color_g" )
+		local colorB = self:GetClientNumber( "color_b" )
+
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
@@ -50,21 +61,22 @@ function TOOL:LeftClick( trace )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local length = ( WPos1 - WPos2 ):Length()
 
-		local constraint, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid )
+		local constr, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, Color( colorR, colorG, colorB ) )
+		if ( IsValid( constr ) ) then
+			-- Add the constraint to the players undo table
+			undo.Create( "Rope" )
+				undo.AddEntity( constr )
+				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+				undo.SetPlayer( ply )
+			undo.Finish()
+
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
-
-		-- Add The constraint to the players undo table
-
-		undo.Create( "Rope" )
-			undo.AddEntity( constraint )
-			undo.AddEntity( rope )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-		self:GetOwner():AddCleanup( "ropeconstraints", rope )
 
 	else
 
@@ -88,10 +100,14 @@ function TOOL:RightClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -101,6 +117,10 @@ function TOOL:RightClick( trace )
 		local width = self:GetClientNumber( "width" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
 
+		local colorR = self:GetClientNumber( "color_r" )
+		local colorG = self:GetClientNumber( "color_g" )
+		local colorB = self:GetClientNumber( "color_b" )
+
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
@@ -108,7 +128,19 @@ function TOOL:RightClick( trace )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local length = ( WPos1 - WPos2 ):Length()
 
-		local constraint, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid )
+		local constr, rope = constraint.Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, Color( colorR, colorG, colorB ) )
+		if ( IsValid( constr ) ) then
+			-- Add the constraint to the players undo table
+			undo.Create( "Rope" )
+				undo.AddEntity( constr )
+				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+				undo.SetPlayer( ply )
+			undo.Finish()
+
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
+		end
 
 		-- Clear the objects and set the last object as object 1
 		self:ClearObjects()
@@ -116,16 +148,6 @@ function TOOL:RightClick( trace )
 		iNum = self:NumObjects()
 		self:SetObject( iNum + 1, Ent2, trace.HitPos, Phys, Bone2, trace.HitNormal )
 		self:SetStage( iNum + 1 )
-
-		-- Add The constraint to the players undo table
-		undo.Create( "Rope" )
-			undo.AddEntity( constraint )
-			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-		self:GetOwner():AddCleanup( "ropeconstraints", rope )
 
 	else
 
@@ -156,16 +178,22 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.rope.help" } )
+	CPanel:Help( "#tool.rope.help" )
+	CPanel:ToolPresets( "rope", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "rope", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "rope_forcelimit", 0, 1000, 2 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "rope_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.rope.addlength", Command = "rope_addlength", Type = "Float", Min = -500, Max = 500, Help = true } )
+	CPanel:NumSlider( "#tool.rope.addlength", "rope_addlength", -500, 500, 2 )
+	CPanel:ControlHelp( "#tool.rope.addlength.help" )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.rope.rigid", Command = "rope_rigid", Help = true } )
+	CPanel:CheckBox( "#tool.rope.rigid", "rope_rigid" )
+	CPanel:ControlHelp( "#tool.rope.rigid.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.rope.width", Command = "rope_width", Type = "Float", Min = 0, Max = 10 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.rope.material", ConVar = "rope_material" } )
+	CPanel:NumSlider( "#tool.rope.width", "rope_width", 0, 10, 2 )
+
+	CPanel:RopeSelect( "rope_material" )
+
+	CPanel:ColorPicker( "#tool.rope.color", "rope_color_r", "rope_color_g", "rope_color_b" )
 
 end

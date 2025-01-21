@@ -1,5 +1,5 @@
 
-AddCSLuaFile()
+if ( SERVER ) then AddCSLuaFile() return end
 
 local default_animations = { "idle_all_01", "menu_walk" }
 
@@ -10,7 +10,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 	width		= 960,
 	height		= 700,
 	onewindow	= true,
-	init		= function( icon, window )
+	init		= function( widgetIcon, window )
 
 		window:SetTitle( "#smwidget.playermodel_title" )
 		window:SetSize( math.min( ScrW() - 16, window:GetWide() ), math.min( ScrH() - 16, window:GetTall() ) )
@@ -22,17 +22,17 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
 		mdl:SetFOV( 36 )
-		mdl:SetCamPos( Vector( 0, 0, 0 ) )
+		mdl:SetCamPos( vector_origin )
 		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
 		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
 		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
 		mdl:SetAnimated( true )
-		mdl.Angles = Angle( 0, 0, 0 )
+		mdl.Angles = angle_zero
 		mdl:SetLookAt( Vector( -100, 0, -22 ) )
 
 		local sheet = window:Add( "DPropertySheet" )
 		sheet:Dock( RIGHT )
-		sheet:SetSize( 430, 0 )
+		sheet:SetWide( 430 )
 
 		local modelListPnl = window:Add( "DPanel" )
 		modelListPnl:DockPadding( 8, 8, 8, 8 )
@@ -54,6 +54,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			icon:SetTooltip( name )
 			icon.playermodel = name
 			icon.model_path = model
+			icon.OpenMenu = function( button )
+				local menu = DermaMenu()
+				menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
+				menu:Open()
+			end
 
 			PanelSelect:AddPanel( icon, { cl_playermodel = name } )
 
@@ -97,7 +102,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
 		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
-		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
+		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
 
 		sheet:AddSheet( "#smwidget.colors", controls, "icon16/color_wheel.png" )
 
@@ -105,24 +110,12 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
 
 		local bdcontrolspanel = bdcontrols:Add( "DPanelList" )
-		bdcontrolspanel:EnableVerticalScrollbar( true )
+		bdcontrolspanel:EnableVerticalScrollbar()
 		bdcontrolspanel:Dock( FILL )
 
 		local bgtab = sheet:AddSheet( "#smwidget.bodygroups", bdcontrols, "icon16/cog.png" )
 
 		-- Helper functions
-
-		local function MakeNiceName( str )
-			local newname = {}
-
-			for _, s in pairs( string.Explode( "_", str ) ) do
-				if ( string.len( s ) == 1 ) then table.insert( newname, string.upper( s ) ) continue end
-				table.insert( newname, string.upper( string.Left( s, 1 ) ) .. string.Right( s, string.len( s ) - 1 ) ) -- Ugly way to capitalize first letters.
-			end
-
-			return string.Implode( " ", newname )
-		end
-
 		local function PlayPreviewAnimation( panel, playermodel )
 
 			if ( !panel or !IsValid( panel.Entity ) ) then return end
@@ -190,7 +183,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				local bgroup = vgui.Create( "DNumSlider" )
 				bgroup:Dock( TOP )
-				bgroup:SetText( MakeNiceName( mdl.Entity:GetBodygroupName( k ) ) )
+				bgroup:SetText( string.NiceName( mdl.Entity:GetBodygroupName( k ) ) )
 				bgroup:SetDark( true )
 				bgroup:SetTall( 50 )
 				bgroup:SetDecimals( 0 )
@@ -253,7 +246,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		-- Hold to rotate
 
 		function mdl:DragMousePress()
-			self.PressX, self.PressY = gui.MousePos()
+			self.PressX, self.PressY = input.GetCursorPos()
 			self.Pressed = true
 		end
 
@@ -263,10 +256,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
-				local mx = gui.MousePos()
+				local mx, my = input.GetCursorPos()
 				self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
 
-				self.PressX, self.PressY = gui.MousePos()
+				self.PressX, self.PressY = mx, my
 			end
 
 			ent:SetAngles( self.Angles )
@@ -274,6 +267,28 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 	end
 } )
+
+-- A bit hacky way to bring the widgets outside of the context menu
+concommand.Add( "open_playermodel_selector", function()
+
+	for id, icon in pairs( g_ContextMenu.DesktopWidgets:GetChildren() ) do
+		if ( !icon.WidgetClass or icon.WidgetClass != "PlayerEditor" ) then continue end
+
+		-- We gotta have this at the point of creation for some reason
+		g_ContextMenu:SetMouseInputEnabled( true )
+
+		-- Create the window
+		icon:DoClick()
+
+		-- Make it appear outside of the context menu
+		icon.Window:SetParent()
+		icon.Window:MakePopup()
+		icon.Window:Center()
+
+		break
+	end
+
+end )
 
 list.Set( "PlayerOptionsAnimations", "gman", { "menu_gman" } )
 

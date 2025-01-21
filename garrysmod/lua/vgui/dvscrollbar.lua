@@ -55,12 +55,12 @@ function PANEL:Init()
 
 	self.btnUp = vgui.Create( "DButton", self )
 	self.btnUp:SetText( "" )
-	self.btnUp.DoClick = function( self ) self:GetParent():AddScroll( -1 ) end
+	self.btnUp.DoClick = function( s ) s:GetParent():AddScroll( -1 ) end
 	self.btnUp.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonUp", panel, w, h ) end
 
 	self.btnDown = vgui.Create( "DButton", self )
 	self.btnDown:SetText( "" )
-	self.btnDown.DoClick = function( self ) self:GetParent():AddScroll( 1 ) end
+	self.btnDown.DoClick = function( s ) s:GetParent():AddScroll( 1 ) end
 	self.btnDown.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonDown", panel, w, h ) end
 
 	self.btnGrip = vgui.Create( "DScrollBarGrip", self )
@@ -96,12 +96,6 @@ function PANEL:SetEnabled( b )
 	end
 
 	self.Enabled = b
-
-end
-
-function PANEL:Value()
-
-	return self.Pos
 
 end
 
@@ -175,9 +169,9 @@ function PANEL:AnimateTo( scrll, length, delay, ease )
 	local anim = self:NewAnimation( length, delay, ease )
 	anim.StartPos = self.Scroll
 	anim.TargetPos = scrll
-	anim.Think = function( anim, pnl, fraction )
+	anim.Think = function( anm, pnl, fraction )
 
-		pnl:SetScroll( Lerp( fraction, anim.StartPos, anim.TargetPos ) )
+		pnl:SetScroll( Lerp( fraction, anm.StartPos, anm.TargetPos ) )
 
 	end
 
@@ -231,7 +225,7 @@ function PANEL:OnMouseReleased()
 
 end
 
-function PANEL:OnCursorMoved( x, y )
+function PANEL:OnCursorMoved( lx, ly )
 
 	if ( !self.Enabled ) then return end
 	if ( !self.Dragging ) then return end
@@ -284,12 +278,12 @@ function PANEL:PerformLayout()
 	self.btnGrip:SetSize( Wide, BarSize )
 
 	if ( BtnHeight > 0 ) then
-		self.btnUp:SetPos( 0, 0, Wide, Wide )
+		self.btnUp:SetPos( 0, 0 )
 		self.btnUp:SetSize( Wide, BtnHeight )
 
 		self.btnDown:SetPos( 0, self:GetTall() - BtnHeight )
 		self.btnDown:SetSize( Wide, BtnHeight )
-		
+
 		self.btnUp:SetVisible( true )
 		self.btnDown:SetVisible( true )
 	else

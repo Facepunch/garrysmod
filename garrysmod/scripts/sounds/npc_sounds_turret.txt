@@ -123,7 +123,7 @@
 
 "NPC_FloorTurret.Activate"
 {
-	"channel"		"CHAN_VOICE"
+	"channel"		"CHAN_BODY"
 	"volume"		"VOL_NORM"
 	"pitch"			"PITCH_NORM"
 
@@ -134,7 +134,7 @@
 
 "NPC_FloorTurret.Alert"
 {
-	"channel"		"CHAN_VOICE"
+	"channel"		"CHAN_BODY"
 	"volume"		"VOL_NORM"
 	"pitch"			"PITCH_NORM"
 
@@ -172,7 +172,7 @@
 
 "NPC_FloorTurret.Die"
 {
-	"channel"		"CHAN_VOICE"
+	"channel"		"CHAN_BODY"
 	"volume"		"0.750"
 	"pitch"			"PITCH_NORM"
 
@@ -194,7 +194,7 @@
 
 "NPC_FloorTurret.Alarm"
 {
-	"channel"		"CHAN_VOICE"
+	"channel"		"CHAN_BODY"
 	"volume"		"VOL_NORM"
 	"pitch"			"PITCH_NORM"
 
@@ -205,7 +205,7 @@
 
 "NPC_FloorTurret.Ping"
 {
-	"channel"		"CHAN_VOICE"
+	"channel"		"CHAN_BODY"
 	"volume"		"0.750"
 	"pitch"			"PITCH_NORM"
 
@@ -216,7 +216,7 @@
 
 "NPC_GroundTurret.Die"
 {
-	"channel"		"CHAN_VOICE"
+	"channel"		"CHAN_BODY"
 	"volume"		"VOL_NORM"
 	"pitch"			"PITCH_NORM"
 

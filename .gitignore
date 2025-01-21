@@ -4,5 +4,38 @@
 /garrysmod/resource/localization
 /garrysmod/resource/closecaption_*
 
-#Misc
-/garrysmod/resource/chromium
+# Root directory - ignore everything but garrysmod directory and repo files
+/*
+!/garrysmod
+!/.gitignore
+!/README.md
+!/CONTRIBUTING.md
+
+
+# garrysmod directory - Only allow repo files
+/garrysmod/*
+!/garrysmod/cfg
+!/garrysmod/gamemodes
+!/garrysmod/html
+!/garrysmod/lua
+!/garrysmod/resources
+!/garrysmod/scripts
+!/garrysmod/settings
+!/garrysmod/detail.vbsp
+!/garrysmod/gameinfo.txt
+!/garrysmod/lights.rad
+
+# Don't add user config files
+/garrysmod/cfg/*
+garrysmod/settings/addonpresets.txt
+garrysmod/settings/permissions.bin
+
+# Don't add spawnlists
+/garrysmod/settings/spawnlist/*
+
+# Only default gamemodes
+garrysmod/gamemodes/*
+!garrysmod/gamemodes/base
+!garrysmod/gamemodes/sandbox
+!garrysmod/gamemodes/terrortown
+

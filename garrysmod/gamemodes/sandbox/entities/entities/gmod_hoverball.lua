@@ -7,6 +7,8 @@ ENT.Editable = true
 
 function ENT:SetupDataTables()
 
+	self:NetworkVar( "Bool", 0, "Enabled" )
+
 	self:NetworkVar( "Float", 0, "TargetZ" )
 	self:NetworkVar( "Float", 1, "SpeedVar", { KeyName = "speed", Edit = { type = "Float", order = 1, min = 0, max = 20, title = "#tool.hoverball.speed" } } )
 	self:NetworkVar( "Float", 2, "AirResistanceVar", { KeyName = "resistance", Edit = { type = "Float", order = 2, min = 0, max = 10, title = "#tool.hoverball.resistance" } } )
@@ -17,23 +19,18 @@ function ENT:Initialize()
 
 	if ( CLIENT ) then
 
-		self.Refraction = Material( "sprites/heatwave" )
 		self.Glow = Material( "sprites/light_glow02_add" )
-
-		self.NextSmokeEffect = 0
 
 	end
 
 	if ( SERVER ) then
 
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 
 		-- Wake up our physics object so we don't start asleep
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys ) ) then
-			phys:EnableGravity( false )
+			phys:EnableGravity( !self:GetEnabled() )
 			phys:Wake()
 		end
 
@@ -44,6 +41,7 @@ function ENT:Initialize()
 		self.ZVelocity = 0
 		self:SetTargetZ( self:GetPos().z )
 		self:SetSpeed( 1 )
+		self:SetEnabled( true )
 
 	end
 
@@ -72,11 +70,15 @@ end
 
 function ENT:UpdateLabel()
 
-	self:SetOverlayText( string.format( "Speed: %i\nResistance: %.2f", self:GetSpeed(), self:GetAirResistance() ) )
+	local strength = 0
+	if ( self:GetPhysicsObject() ) then strength = self:GetPhysicsObject():GetMass() / 150 end
+
+	self:SetOverlayText( string.format( "Speed: %g\nResistance: %g\nStrength: %g", self:GetSpeed(), self:GetAirResistance(), strength ) )
 
 end
 
-function ENT:DrawTranslucent()
+function ENT:DrawEffects()
+	if ( !self:GetEnabled() ) then return end
 
 	local vOffset = self:GetPos()
 	local vPlayerEyes = LocalPlayer():EyePos()
@@ -93,12 +95,17 @@ function ENT:DrawTranslucent()
 
 	render.DrawSprite( vOffset + vDiff * 4, 48, 48, color )
 	render.DrawSprite( vOffset + vDiff * 4, 52, 52, color )
+end
 
-	BaseClass.DrawTranslucent( self )
-
+ENT.WantsTranslucency = true -- If model is opaque, still call DrawTranslucent
+function ENT:DrawTranslucent( flags )
+	self:DrawEffects()
+	BaseClass.DrawTranslucent( self, flags )
 end
 
 function ENT:PhysicsSimulate( phys, deltatime )
+
+	if ( !self:GetEnabled() ) then return end
 
 	if ( self.ZVelocity != 0 ) then
 
@@ -126,17 +133,14 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	local physVel = phys:GetVelocity()
 	local zVel = physVel.z
 
-	Exponent = Exponent - (zVel * deltatime * 600 * ( AirResistance + 1 ) )
+	Exponent = Exponent - ( zVel * deltatime * 600 * ( AirResistance + 1 ) )
 	-- The higher you make this 300 the less it will flop about
 	-- I'm thinking it should actually be relative to any objects we're connected to
 	-- Since it seems to flop more and more the heavier the object
 
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 
-	local Linear = Vector( 0, 0, 0 )
-	local Angular = Vector( 0, 0, 0 )
-
-	Linear.z = Exponent
+	local Linear = Vector( 0, 0, Exponent )
 
 	if ( AirResistance > 0 ) then
 
@@ -145,7 +149,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	end
 
-	return Angular, Linear, SIM_GLOBAL_ACCELERATION
+	return vector_origin, Linear, SIM_GLOBAL_ACCELERATION
 
 end
 
@@ -156,6 +160,31 @@ function ENT:SetZVelocity( z )
 	end
 
 	self.ZVelocity = z * FrameTime() * 5000
+
+end
+
+function ENT:Toggle()
+
+	self:SetEnabled( !self:GetEnabled() )
+
+	if ( self:GetEnabled() ) then
+		self:SetTargetZ( self:GetPos().z )
+	end
+
+	local phys = self:GetPhysicsObject()
+	if ( IsValid( phys ) ) then
+		phys:EnableGravity( !self:GetEnabled() )
+		phys:Wake()
+
+		-- Make the mass not insane when they are turned off
+		if ( self.Strength ) then
+			if ( self:GetEnabled() ) then
+				phys:SetMass( 150 * self.Strength )
+			else
+				phys:SetMass( 15 )
+			end
+		end
+	end
 
 end
 
@@ -170,10 +199,11 @@ end
 
 function ENT:SetStrength( strength )
 
-	local phys = self:GetPhysicsObject()
+	self.Strength = strength
 
+	local phys = self:GetPhysicsObject()
 	if ( IsValid( phys ) ) then
-		phys:SetMass( 150 * strength )
+		phys:SetMass( 150 * self.Strength )
 	end
 
 	self:UpdateLabel()
@@ -189,11 +219,16 @@ function ENT:OnDuplicated( v )
 
 	self:SetTargetZ( v.Pos.z )
 
+	local phys = self:GetPhysicsObject()
+	if ( IsValid( phys ) && !self:GetEnabled() ) then
+		phys:SetMass( 15 )
+	end
+
 end
 
 if ( SERVER ) then
 
-	numpad.Register( "Hoverball_Up", function( pl, ent, keydown, idx )
+	numpad.Register( "Hoverball_Up", function( ply, ent, keydown )
 
 		if ( !IsValid( ent ) ) then return false end
 
@@ -202,11 +237,20 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "Hoverball_Down", function( pl, ent, keydown )
+	numpad.Register( "Hoverball_Down", function( ply, ent, keydown )
 
 		if ( !IsValid( ent ) ) then return false end
 
 		if ( keydown ) then ent:SetZVelocity( -1 ) else ent:SetZVelocity( 0 ) end
+		return true
+
+	end )
+
+	numpad.Register( "Hoverball_Toggle", function( ply, ent )
+
+		if ( !IsValid( ent ) ) then return false end
+
+		ent:Toggle()
 		return true
 
 	end )

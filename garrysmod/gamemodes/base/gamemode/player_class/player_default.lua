@@ -1,12 +1,13 @@
 
 AddCSLuaFile()
 
-include( 'taunt_camera.lua' )
+include( "taunt_camera.lua" )
 
 local PLAYER = {}
 
 PLAYER.DisplayName			= "Default Class"
 
+PLAYER.SlowWalkSpeed		= 200		-- How fast to move when slow-walking (+WALK)
 PLAYER.WalkSpeed			= 400		-- How fast to move when not running
 PLAYER.RunSpeed				= 600		-- How fast to move when running
 PLAYER.CrouchedWalkSpeed	= 0.3		-- Multiply move speed by this when crouching
@@ -15,6 +16,7 @@ PLAYER.UnDuckSpeed			= 0.3		-- How fast to go from ducking, to not ducking
 PLAYER.JumpPower			= 200		-- How powerful our jump should be
 PLAYER.CanUseFlashlight		= true		-- Can we use the flashlight
 PLAYER.MaxHealth			= 100		-- Max health we can have
+PLAYER.MaxArmor				= 100		-- Max armor we can have
 PLAYER.StartHealth			= 100		-- How much health we start with
 PLAYER.StartArmor			= 0			-- How much armour we start with
 PLAYER.DropWeaponOnDie		= false		-- Do we drop our weapon when we die

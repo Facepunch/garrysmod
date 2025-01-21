@@ -37,6 +37,7 @@ local function ServerSettings( pnl )
 		gmod_physiterations = "4",
 		sv_defaultdeployspeed = "4.00",
 		sv_noclipspeed = "5",
+		g_ragdoll_maxcount = "32",
 		sv_timeout = "65"
 	}
 	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_server", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
@@ -58,6 +59,7 @@ local function ServerSettings( pnl )
 	pnl:AddControl( "Slider", { Label = "#utilities.deployspeed", Type = "Float", Command = "sv_defaultdeployspeed", Min = "0.1", Max = "10" } )
 	pnl:AddControl( "Slider", { Label = "#utilities.noclipspeed", Type = "Integer", Command = "sv_noclipspeed", Min = "1", Max = "10" } ) -- Switch this and friction back to Float once Sliders don't reset the convar from 8 to 8.00, etc
 	pnl:AddControl( "Slider", { Label = "#utilities.maxammo", Type = "Integer", Command = "gmod_maxammo", Min = "0", Max = "9999", Help = true } )
+	pnl:AddControl( "Slider", { Label = "#utilities.max_ragdolls", Type = "Integer", Command = "g_ragdoll_maxcount", Min = "0", Max = "128" } )
 
 	-- Technical convars
 	pnl:AddControl( "Slider", { Label = "#utilities.iterations", Type = "Integer", Command = "gmod_physiterations", Min = "1", Max = "10" } )
@@ -211,6 +213,14 @@ local function PhysgunSVSettings( pnl )
 
 end
 
+local function PlayerOptions( pnl )
+
+	pnl:AddControl( "Header", { Description = "#smwidget.playermodel_title" } )
+
+	pnl:Button( "#smwidget.playermodel_title", "open_playermodel_selector" )
+
+end
+
 -- Tool Menu
 hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", function()
 
@@ -218,6 +228,7 @@ hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", function()
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo", "#spawnmenu.utilities.undo", "", "", Undo )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "PhysgunSettings", "#spawnmenu.utilities.physgunsettings", "", "", PhysgunSettings )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "SandboxClientSettings", "#spawnmenu.utilities.sandbox_settings", "", "", SandboxClientSettings )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "PlayerModelSelector", "#smwidget.playermodel_title", "", "", PlayerOptions )
 
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "ServerSettings", "#spawnmenu.utilities.server_settings", "", "", ServerSettings )

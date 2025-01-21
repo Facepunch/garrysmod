@@ -5,8 +5,7 @@ COLOR.__index = COLOR
 --[[---------------------------------------------------------
 	Register our metatable to make it accessible using FindMetaTable
 -----------------------------------------------------------]]
-
-debug.getregistry().Color = COLOR
+RegisterMetaTable( "Color", COLOR )
 
 --[[---------------------------------------------------------
 	To easily create a color table
@@ -91,7 +90,18 @@ function COLOR:Unpack()
 
 end
 
+function COLOR:Lerp( target_clr, frac )
+
+	return Color( Lerp( frac, self.r, target_clr.r ), Lerp( frac, self.g, target_clr.g ), Lerp( frac, self.b, target_clr.b ), Lerp( frac, self.a, target_clr.a ) )
+
+end
+
 function COLOR:SetUnpacked( r, g, b, a )
+
+	if ( r != nil and !isnumber( r ) ) then error( "bad argument #1 to 'SetUnpacked' (number expected, got " .. type( r ) .. ")", 2 ) end
+	if ( g != nil and !isnumber( g ) ) then error( "bad argument #2 to 'SetUnpacked' (number expected, got " .. type( g ) .. ")", 2 ) end
+	if ( b != nil and !isnumber( b ) ) then error( "bad argument #3 to 'SetUnpacked' (number expected, got " .. type( b ) .. ")", 2 ) end
+	if ( a != nil and !isnumber( a ) ) then error( "bad argument #4 to 'SetUnpacked' (number expected, got " .. type( a ) .. ")", 2 ) end
 
 	self.r = r or 255
 	self.g = g or 255
@@ -105,3 +115,8 @@ function COLOR:ToTable()
 	return { self.r, self.g, self.b, self.a }
 
 end
+
+local imat = FindMetaTable( "IMaterial" )
+
+-- This is so that the return value has the color meta table
+function imat:GetColor( ... ) return Color( self:GetColor4Part( ... ) ) end

@@ -57,9 +57,9 @@ local function RadarScan(ply, cmd, args)
             for k, tgt in ipairs(targets) do
                net.WriteUInt(tgt.role, 2)
 
-               net.WriteInt(tgt.pos.x, 32)
-               net.WriteInt(tgt.pos.y, 32)
-               net.WriteInt(tgt.pos.z, 32)
+               net.WriteInt(tgt.pos.x, 15)
+               net.WriteInt(tgt.pos.y, 15)
+               net.WriteInt(tgt.pos.z, 15)
             end
          net.Send(ply)
 

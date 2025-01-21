@@ -85,7 +85,7 @@ function PANEL:ConsoleMessage( msg, file, line )
 	--
 	-- Handle Lua execution
 	--
-	if ( self.m_bAllowLua && msg:StartWith( "RUNLUA:" ) ) then
+	if ( self.m_bAllowLua && msg:StartsWith( "RUNLUA:" ) ) then
 
 		local strLua = msg:sub( 8 )
 

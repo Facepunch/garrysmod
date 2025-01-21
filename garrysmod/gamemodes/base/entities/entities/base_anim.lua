@@ -35,18 +35,18 @@ end
 
 if ( CLIENT ) then
 
-	function ENT:Draw()
+	function ENT:Draw( flags )
 
-		self:DrawModel()
+		self:DrawModel( flags )
 
 	end
 
-	function ENT:DrawTranslucent()
+	function ENT:DrawTranslucent( flags )
 
 		-- This is here just to make it backwards compatible.
 		-- You shouldn't really be drawing your model here unless it's translucent
 
-		self:Draw()
+		self:Draw( flags )
 
 	end
 

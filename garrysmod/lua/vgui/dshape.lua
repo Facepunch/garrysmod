@@ -8,13 +8,15 @@ AccessorFunc( PANEL, "m_Type", "Type" )
 local RenderTypes = {}
 
 function RenderTypes.Rect( pnl )
-	surface.SetDrawColor( pnl:GetColor() )
+	local pnlColor = pnl:GetColor()
+
+	surface.SetDrawColor( pnlColor.r, pnlColor.g, pnlColor.b, pnlColor.a )
 	surface.DrawRect( 0, 0, pnl:GetSize() )
 end
 
 function PANEL:Init()
 
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )

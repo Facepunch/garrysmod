@@ -1,4 +1,4 @@
---
+
 --
 --	Note: This is only really here as a layer between the spawnmenu
 --			and the DForm Derma control. You shouldn't ever really be
@@ -12,32 +12,20 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_bInitialized", "Initialized" )
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
 	self:SetInitialized( false )
 end
 
---[[---------------------------------------------------------
-	Name: ClearControls
------------------------------------------------------------]]
 function PANEL:ClearControls()
 	self:Clear()
 end
 
---[[---------------------------------------------------------
-	Name: GetEmbeddedPanel
------------------------------------------------------------]]
 function PANEL:GetEmbeddedPanel()
 
 	return self
 
 end
 
---[[---------------------------------------------------------
-	Name: AddPanel
------------------------------------------------------------]]
 function PANEL:AddPanel( pnl )
 
 	self:AddItem( pnl, nil )
@@ -45,9 +33,6 @@ function PANEL:AddPanel( pnl )
 
 end
 
---[[---------------------------------------------------------
-	Name: MatSelect
------------------------------------------------------------]]
 function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 	local MatSelect = vgui.Create( "MatSelect", self )
@@ -61,9 +46,8 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 	if ( tblOptions != nil ) then
 		for k, v in pairs( tblOptions ) do
-			local label = k
-			if ( isnumber( label ) ) then label = v end
-			MatSelect:AddMaterial( label, v )
+			local nam = isnumber( k ) and v or k
+			MatSelect:AddMaterial( nam, v )
 		end
 	end
 
@@ -72,9 +56,124 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 end
 
---[[---------------------------------------------------------
-	Name: FillViaTable
------------------------------------------------------------]]
+function PANEL:RopeSelect( strConVar )
+
+	local ctrl = vgui.Create( "RopeMaterial", self )
+	ctrl:SetConVar( strConVar )
+	self:AddPanel( ctrl )
+
+	return ctrl
+
+end
+
+function PANEL:PropSelect( label, strConVar, mdlList, height )
+
+	local PropSelect = vgui.Create( "PropSelect", self )
+
+	PropSelect:SetConVar( strConVar )
+	PropSelect.Label:SetText( label or "" )
+	PropSelect.Height = height or 2
+
+	local firstKey, firstVal = next( mdlList )
+	if ( istable( firstVal ) and isstring( firstVal.model ) ) then
+		-- Special case for Balloon tool
+		local tmp = {}
+		for k, v in SortedPairsByMemberValue( mdlList, "model" ) do
+			tmp[ k ] = v.model:lower() .. ( v.skin or 0 )
+		end
+
+		for k, v in SortedPairsByValue( tmp ) do
+			v = mdlList[ k ]
+			PropSelect:AddModelEx( k, v.model, v.skin or 0 )
+		end
+	else
+		for k, v in SortedPairs( mdlList ) do
+			PropSelect:AddModel( k, v )
+		end
+	end
+
+	self:AddPanel( PropSelect )
+	return PropSelect
+
+end
+
+function PANEL:ToolPresets( group, cvarlist )
+
+	local preset = vgui.Create( "ControlPresets", self )
+
+	preset:SetPreset( group )
+	preset:AddOption( "#preset.default", cvarlist )
+
+	for k, v in pairs( cvarlist ) do
+		preset:AddConVar( k )
+	end
+
+	self:AddItem( preset )
+
+	return preset
+
+end
+
+function PANEL:KeyBinder( label1, convar1, label2, convar2 )
+
+	local binder = vgui.Create( "CtrlNumPad", self )
+
+	binder:SetLabel1( label1 )
+	binder:SetConVar1( convar1 )
+
+	if ( label2 != nil and convar2 != nil ) then
+		binder:SetLabel2( label2 )
+		binder:SetConVar2( convar2 )
+	end
+
+	self:AddPanel( binder )
+
+	return binder
+
+end
+
+function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
+
+	local color = vgui.Create( "CtrlColor", self )
+
+	color:Dock( TOP )
+	color:SetLabel( label )
+
+	color:SetConVarR( convarR )
+	color:SetConVarG( convarG )
+	color:SetConVarB( convarB )
+
+	if ( convarA != nil ) then
+		color:SetConVarA( convarA )
+	end
+
+	self:AddPanel( color )
+
+	return color
+
+end
+
+function PANEL:ComboBoxMulti( label, list )
+
+	local labelPnl = vgui.Create( "DLabel", self )
+	labelPnl:SetText( label )
+	labelPnl:SetDark( true )
+
+	local cbox = vgui.Create( "CtrlListBox", self )
+	cbox:SetHeight( 25 )
+	cbox:Dock( TOP )
+	if ( list ) then
+		for k, v in pairs( list ) do
+			cbox:AddOption( k, v )
+		end
+	end
+
+	self:AddItem( labelPnl, cbox )
+
+	return cbox, labelPnl
+
+end
+
 function PANEL:FillViaTable( Table )
 
 	self:SetInitialized( true )
@@ -86,24 +185,18 @@ function PANEL:FillViaTable( Table )
 	--
 	if ( Table.ControlPanelBuildFunction ) then
 
-		self:FillViaFunction( Table.ControlPanelBuildFunction )
+		Table.ControlPanelBuildFunction( self )
 
 	end
 
 end
 
---[[---------------------------------------------------------
-	Name: FillViaFunction
------------------------------------------------------------]]
 function PANEL:FillViaFunction( func )
 
 	func( self )
 
 end
 
---[[---------------------------------------------------------
-	Name: ControlValues
------------------------------------------------------------]]
 function PANEL:ControlValues( data )
 	if ( data.label) then
 		self:SetLabel( data.label )
@@ -113,9 +206,7 @@ function PANEL:ControlValues( data )
 	end
 end
 
---[[---------------------------------------------------------
-	Name: AddControl
------------------------------------------------------------]]
+
 function PANEL:AddControl( control, data )
 
 	local data = table.LowerKeyNames( data )
@@ -162,7 +253,7 @@ function PANEL:AddControl( control, data )
 	if ( control == "slider" ) then
 
 		local Decimals = 0
-		if ( data.type && string.lower(data.type) == "float" ) then Decimals = 2 end
+		if ( data.type and string.lower(data.type) == "float" ) then Decimals = 2 end
 
 		local ctrl = self:NumSlider( data.label or "Untitled", data.command, data.min or 0, data.max or 100, Decimals )
 
@@ -328,19 +419,18 @@ function PANEL:AddControl( control, data )
 
 		else
 
-			local ctrl = vgui.Create( "CtrlListBox", self )
+			local left = vgui.Create( "DLabel", self )
+			left:SetText( data.label )
+			left:SetDark( true )
 
+			local ctrl = vgui.Create( "CtrlListBox", self )
+			ctrl:SetHeight( 25 )
+			ctrl:Dock( TOP )
 			if ( data.options ) then
 				for k, v in pairs( data.options ) do
 					ctrl:AddOption( k, v )
 				end
 			end
-
-			local left = vgui.Create( "DLabel", self )
-			left:SetText( data.label )
-			left:SetDark( true )
-			ctrl:SetHeight( 25 )
-			ctrl:Dock( TOP )
 
 			self:AddItem( left, ctrl )
 

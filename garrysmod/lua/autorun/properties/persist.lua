@@ -48,6 +48,7 @@ properties.Add( "persist_end", {
 	Filter = function( self, ent, ply )
 
 		if ( ent:IsPlayer() ) then return false end
+		if ( GetConVarString( "sbox_persist" ):Trim() == "" ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "persist", ent ) ) then return false end
 
 		return ent:GetPersistent()

@@ -60,20 +60,19 @@ end
 --
 function TOOL:RightClick( trace )
 
-	local Entity = trace.Entity
-
-	if ( !IsValid( Entity ) || Entity:IsPlayer() ) then return false end
+	local entity = trace.Entity
+	if ( !IsValid( entity ) || entity:IsPlayer() ) then return false end
 
 	-- Client can bail out now.
 	if ( CLIENT ) then return true end
 
-	local ConstrainedEntities = constraint.GetAllConstrainedEntities( trace.Entity )
+	local ConstrainedEntities = constraint.GetAllConstrainedEntities( entity )
 	local Count = 0
 
 	-- Loop through all the entities in the system
-	for _, Entity in pairs( ConstrainedEntities ) do
+	for _, ent in pairs( ConstrainedEntities ) do
 
-		if ( DoRemoveEntity( Entity ) ) then
+		if ( DoRemoveEntity( ent ) ) then
 			Count = Count + 1
 		end
 
@@ -99,6 +98,6 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.remover.desc" } )
+	CPanel:Help( "#tool.remover.desc" )
 
 end

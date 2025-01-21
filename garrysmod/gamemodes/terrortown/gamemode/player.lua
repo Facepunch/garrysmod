@@ -45,7 +45,7 @@ end
 
 function GM:NetworkIDValidated( name, steamid )
    -- edge case where player authed after initspawn
-   for _, p in ipairs(player.GetAll()) do
+   for _, p in player.Iterator() do
       if IsValid(p) and p:SteamID() == steamid and p.delay_karma_recall then
          KARMA.LateRecallAndSet(p)
          return
@@ -56,7 +56,7 @@ end
 function GM:PlayerSpawn(ply)
    -- stop bleeding
    util.StopBleeding(ply)
-  
+
    -- Some spawns may be tilted
    ply:ResetViewRoll()
 
@@ -343,7 +343,7 @@ function GM:KeyPress(ply, key)
          local ang = ply:EyeAngles()
 
          local target = ply:GetObserverTarget()
-         if IsValid(target) and target:IsPlayer() then
+         if IsValid(target) and target:IsPlayer() and ply:GetObserverMode() != OBS_MODE_ROAMING then -- Only set the spectator's position to the player they are spectating if they are in chase or eye mode. They can use the reload key if they want to return to the person they're spectating
             pos = target:EyePos()
             ang = target:EyeAngles()
          end
@@ -357,7 +357,7 @@ function GM:KeyPress(ply, key)
          return true
       elseif key == IN_JUMP then
          -- unfuck if you're on a ladder etc
-         if not (ply:GetMoveType() == MOVETYPE_NOCLIP) then
+         if (ply:GetMoveType() != MOVETYPE_NOCLIP) then
             ply:SetMoveType(MOVETYPE_NOCLIP)
          end
       elseif key == IN_RELOAD then
@@ -509,8 +509,8 @@ local function CheckCreditAward(victim, attacker)
 
    -- DETECTIVE AWARD
    if IsValid(attacker) and attacker:IsPlayer() and attacker:IsActiveDetective() and victim:IsTraitor() then
-      local amt = GetConVarNumber("ttt_det_credits_traitordead") or 1
-      for _, ply in ipairs(player.GetAll()) do
+      local amt = GetConVar("ttt_det_credits_traitordead"):GetInt()
+      for _, ply in player.Iterator() do
          if ply:IsActiveDetective() then
             ply:AddCredits(amt)
          end
@@ -526,7 +526,7 @@ local function CheckCreditAward(victim, attacker)
       local inno_dead = 0
       local inno_total = 0
 
-      for _, ply in ipairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          if not ply:GetTraitor() then
             if ply:IsTerror() then
                inno_alive = inno_alive + 1
@@ -548,15 +548,15 @@ local function CheckCreditAward(victim, attacker)
       end
 
       local pct = inno_dead / inno_total
-      if pct >= GetConVarNumber("ttt_credits_award_pct") then
+      if pct >= GetConVar("ttt_credits_award_pct"):GetFloat() then
          -- Traitors have killed sufficient people to get an award
-         local amt = GetConVarNumber("ttt_credits_award_size")
+         local amt = GetConVar("ttt_credits_award_size"):GetInt()
 
          -- If size is 0, awards are off
          if amt > 0 then
             LANG.Msg(GetTraitorFilter(true), "credit_tr_all", {num = amt})
 
-            for _, ply in ipairs(player.GetAll()) do
+            for _, ply in player.Iterator() do
                if ply:IsActiveTraitor() then
                   ply:AddCredits(amt)
                end
@@ -570,22 +570,19 @@ local function CheckCreditAward(victim, attacker)
 end
 
 function GM:DoPlayerDeath(ply, attacker, dmginfo)
-   if ply:IsSpec() then return end
+   if ply:IsSpec() or IsValid(ply.dying_wep) then return end
 
    -- Experimental: Fire a last shot if ironsighting and not headshot
    if GetConVar("ttt_dyingshot"):GetBool() then
       local wep = ply:GetActiveWeapon()
       if IsValid(wep) and wep.DyingShot and not ply.was_headshot and dmginfo:IsBulletDamage() then
-         local fired = wep:DyingShot()
-         if fired then
-            return
-         end
+         wep:DyingShot()
       end
 
       -- Note that funny things can happen here because we fire a gun while the
-      -- player is dead. Specifically, this DoPlayerDeath is run twice for
-      -- him. This is ugly, and we have to return the first one to prevent crazy
-      -- shit.
+      -- player is dead. Specifically, this DoPlayerDeath can run twice for
+      -- him. This is ugly, and we have to return if ply.dying_wep is set
+      -- to prevent crazy shit.
    end
 
    -- Drop all weapons
@@ -646,9 +643,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    if IsValid(attacker) and attacker:IsPlayer() then
       local reward = 0
       if attacker:IsActiveTraitor() and ply:GetDetective() then
-         reward = math.ceil(GetConVarNumber("ttt_credits_detectivekill"))
+         reward = GetConVar("ttt_credits_detectivekill"):GetInt()
       elseif attacker:IsActiveDetective() and ply:GetTraitor() then
-         reward = math.ceil(GetConVarNumber("ttt_det_credits_traitorkill"))
+         reward = GetConVar("ttt_det_credits_traitorkill"):GetInt()
       end
 
       if reward > 0 then
@@ -1058,13 +1055,9 @@ function GM:OnNPCKilled() end
 
 -- Drowning and such
 local tm = nil
-local ply = nil
-local plys = nil
 function GM:Tick()
    -- three cheers for micro-optimizations
-   plys = player.GetAll()
-   for i= 1, #plys do
-      ply = plys[i]
+   for _, ply in player.Iterator() do
       tm = ply:Team()
       if tm == TEAM_TERROR and ply:Alive() then
          -- Drowning

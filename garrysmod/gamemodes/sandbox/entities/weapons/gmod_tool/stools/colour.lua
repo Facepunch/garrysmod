@@ -34,7 +34,9 @@ local function SetColour( ply, ent, data )
 	end
 
 end
-duplicator.RegisterEntityModifier( "colour", SetColour )
+if ( SERVER ) then
+	duplicator.RegisterEntityModifier( "colour", SetColour )
+end
 
 function TOOL:LeftClick( trace )
 
@@ -92,14 +94,13 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.colour.desc" } )
+	CPanel:Help( "#tool.colour.desc" )
+	CPanel:ToolPresets( "colour", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "colour", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ColorPicker( "#tool.colour.color", "colour_r", "colour_g", "colour_b", "colour_a" )
 
-	CPanel:AddControl( "Color", { Label = "#tool.colour.color", Red = "colour_r", Green = "colour_g", Blue = "colour_b", Alpha = "colour_a" } )
-
-	CPanel:AddControl( "ListBox", { Label = "#tool.colour.mode", Options = list.Get( "RenderModes" ) } )
-	CPanel:AddControl( "ListBox", { Label = "#tool.colour.fx", Options = list.Get( "RenderFX" ) } )
+	CPanel:ComboBoxMulti( "#tool.colour.mode", list.Get( "RenderModes" ) )
+	CPanel:ComboBoxMulti( "#tool.colour.fx", list.Get( "RenderFX" ) )
 
 end
 

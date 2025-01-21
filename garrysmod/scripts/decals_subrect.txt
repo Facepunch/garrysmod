@@ -15,18 +15,20 @@
 	"B"			"Impact.BloodyFlesh"
 	"H"			"Impact.AlienFlesh"
 	"A"			"Impact.Antlion"
+	"E"			"Impact.Antlion"
 	"N"			"Impact.Sand"
 	"V"			"Impact.Metal"
 
-// These might be translated in the future
-	//CHAR_TEX_DIRT		'D'
-	//CHAR_TEX_GRATE		'G'
-	//CHAR_TEX_TILE		'T'
-	//CHAR_TEX_SLOSH		'S'
-	//CHAR_TEX_COMPUTER	'P'
-	//CHAR_TEX_CLIP		'I'
-	//CHAR_TEX_ANTLION	'A'
-	//CHAR_TEX_FOLIAGE	'O'
+//new subrects
+	"G"			"Impact.Metal"
+	"T"			"Impact.Concrete"
+	"I"			""
+	"O"			"Impact.Wood"
+	"P"			"Impact.Concrete"
+	"L"			"Impact.Concrete"
+	"D"			"Impact.Concrete"
+	"S"			""
+	"X"			""
 }
 
 "Impact.Concrete"
@@ -280,10 +282,22 @@
 	"decals/decal_paintsplatterpink001_subrect" "1"
 }
 
+// Mark left by energyballs
+"EnergyBall.Impact"
+{
+	"decals/smscorch1_subrect" "1"
+}
+
 // Currently a model version doesn't exist and it is not in a decal page.
 "Antlion.Splat"
 {
 	"decals/antlion/antlion_splat" "1"
+}
+
+// Wiring left in wall after a camera falls
+"SecurityCamera.Detachment"
+{
+	"decals/security_camera_detachment" "1"
 }
 
 "Models"
@@ -379,7 +393,9 @@
 	"decals/decal_paintsplatterblue_model" "1"
 	"decals/decal_paintsplattergreen_model" "1"
 	"decals/decal_paintsplatterpink_model" "1"
+	"decals/smscorch1_subrect" "1"
 	"decals/antlion/antlion_splat" "1"
+	"decals/security_camera_detachment" "1"
 
 	// Model specific decal precache.
 	"decals/beersplashmodel" "1"

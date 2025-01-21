@@ -1,7 +1,7 @@
 
 local PANEL = {}
-AccessorFunc( PANEL, "m_bSizeX", "SizeX" )
-AccessorFunc( PANEL, "m_bSizeY", "SizeY" )
+AccessorFunc( PANEL, "m_bSizeX", "SizeX", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bSizeY", "SizeY", FORCE_BOOL )
 
 function PANEL:Init()
 

@@ -7,41 +7,37 @@
 
 local Errors = {}
 
-hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, addonid )
+hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, stack, addontitle, addonid )
 
-	local text = language.GetPhrase( "errors.something" )
+	-- This error is caused by a specific workshop addon
+	--[[if ( isstring( addonid ) ) then
 
-	--
-	-- This error is caused by a specific addon
-	--
-	if ( isstring( addonid ) ) then
-
-		--
 		-- Down Vote
-		--
-		-- steamworks.Vote( addonid, false )
+		steamworks.Vote( addonid, false )
 
-		--
 		-- Disable Naughty Addon
-		--
-		--timer.Simple( 5, function()
-		--	MsgN( "Disabling addon '", addontitle, "' due to lua errors" )
-		--	steamworks.SetShouldMountAddon( addonid, false )
-		--	steamworks.ApplyAddons()
-		--end )
+		timer.Simple( 5, function()
+			MsgN( "Disabling addon '", addontitle, "' due to lua errors" )
+			steamworks.SetShouldMountAddon( addonid, false )
+			steamworks.ApplyAddons()
+		end )
 
-		text = string.format( language.GetPhrase( "errors.addon" ), addontitle )
-
-	end
+	end]]
 
 	if ( addonid == nil ) then addonid = 0 end
 
 	if ( Errors[ addonid ] ) then
-
 		Errors[ addonid ].times	= Errors[ addonid ].times + 1
 		Errors[ addonid ].last	= SysTime()
 
 		return
+	end
+
+	local text = language.GetPhrase( "errors.something_p" )
+
+	-- We know the name, display it to the user
+	if ( isstring( addontitle ) ) then
+		text = string.format( language.GetPhrase( "errors.addon_p" ), addontitle )
 	end
 
 	local error = {
@@ -50,18 +46,37 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 		times	= 1,
 		title	= addontitle,
 		x		= 32,
-		text	= text
+		text	= text,
+		iserr   = true
 	}
 
 	Errors[ addonid ] = error
 
 end )
 
+hook.Add( "OnPauseMenuBlockedTooManyTimes", "TellAboutShiftEsc", function()
+
+	Errors[ "internal_shift+esc" ] = {
+		first	= SysTime(),
+		last	= SysTime(),
+		times	= 1,
+		title	= "",
+		x		= 32,
+		text	= "#permission.main_menu_blocked",
+		iserr   = false
+	}
+
+end )
+
 local matAlert = Material( "icon16/error.png" )
+local matInfo = Material( "icon16/information.png" )
+
+local cl_drawhud = GetConVar( "cl_drawhud" )
 
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 	if ( table.IsEmpty( Errors ) ) then return end
+	if ( !cl_drawhud:GetBool() ) then return end
 
 	local idealy = 32
 	local height = 30
@@ -79,7 +94,11 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 		if ( v.last > Recent ) then
 
-			draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 255, 200, 0, ( v.last - Recent ) * 510 ) )
+			if v.iserr then
+				draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 255, 200, 0, ( v.last - Recent ) * 510 ) )
+			else
+				draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 0, 200, 255, ( v.last - Recent ) * 510 ) )
+			end
 
 		end
 
@@ -88,7 +107,11 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 		surface.DrawText( v.text )
 
 		surface.SetDrawColor( 255, 255, 255, 150 + math.sin( v.y + SysTime() * 30 ) * 100 )
-		surface.SetMaterial( matAlert )
+		if ( v.iserr ) then
+			surface.SetMaterial( matAlert )
+		else
+			surface.SetMaterial( matInfo )
+		end
 		surface.DrawTexturedRect( v.x + 6, v.y + 6, 16, 16 )
 
 		v.y = idealy

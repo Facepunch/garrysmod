@@ -1,7 +1,6 @@
 
 local PreviewCache = {}
 local InfoCache = {}
-local VoteCache = {}
 local ListCache = {}
 
 function WorkshopFileBase( namespace, requiredtags )
@@ -9,7 +8,7 @@ function WorkshopFileBase( namespace, requiredtags )
 	local ret = {}
 	ret.HTML = nil
 
-	function ret:Fetch( type, offset, perpage, extratags, searchText, filter )
+	function ret:Fetch( type, offset, perpage, extratags, searchText, filter, sort )
 
 		local tags = table.Copy( requiredtags )
 		for k, v in pairs( extratags ) do
@@ -21,30 +20,30 @@ function WorkshopFileBase( namespace, requiredtags )
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter, sort )
 		end
 		if ( type == "subscribed_ugc" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter, sort )
 		end
 
 		local userid = "0"
 		if ( type == "mine" ) then userid = "1" end
 
-		local cachename = type .. "-" .. string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
+		local cachename = type .. "-" .. table.concat( tags, "/" ) .. offset .. "-" .. perpage .. "-" .. userid
 
-		if ( ListCache[ cachename ] ) then
+		if ( type != "favorite" && ListCache[ cachename ] ) then
 			self:FillFileInfo( ListCache[ cachename ] )
 			return
 		end
 
 		steamworks.GetList( type, tags, offset, perpage, 0, userid, function( data )
-			ListCache[ cachename ] = data
+			if ( type != "favorite" ) then ListCache[ cachename ] = data end
 			self:FillFileInfo( data )
 		end )
 
 	end
 
-	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter )
+	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter, sort )
 
 		local subscriptions = {}
 		if ( isUGC ) then
@@ -56,9 +55,24 @@ function WorkshopFileBase( namespace, requiredtags )
 		for id, e in pairs( subscriptions ) do
 			if ( e.timeadded == 0 ) then e.timeadded = os.time() end
 		end
-		table.sort( subscriptions, function( a, b )
-			return a.timeadded > b.timeadded
-		end )
+
+		if ( sort == "title" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.title:lower() < b.title:lower()
+			end )
+		elseif ( sort == "size" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.size > b.size
+			end )
+		elseif ( sort == "updated" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.updated > b.updated
+			end )
+		else
+			table.sort( subscriptions, function( a, b )
+				return a.timeadded > b.timeadded
+			end )
+		end
 
 		-- First build a list of items that fit our search terms
 		local searchedItems = {}
@@ -73,21 +87,21 @@ function WorkshopFileBase( namespace, requiredtags )
 
 			-- Search for tags
 			local found = true
-			for id, tag in pairs( tags ) do
-				if ( !item.tags:lower():find( tag ) ) then found = false end
+			for _, tag in pairs( tags ) do
+				if ( !item.tags:lower():find( tag, 1, true ) ) then found = false end
 			end
 			if ( !found ) then continue end
 
 			-- Search for searchText
-			if ( searchText:Trim() != "" ) then
-				if ( !item.title:lower():find( searchText:lower() ) ) then continue end
+			if ( searchText:Trim() != "" && !item.title:lower():find( searchText:lower(), 1, true ) ) then
+				continue
 			end
 
-			if ( filter && filter == "enabledonly" ) then
-				if ( !steamworks.ShouldMountAddon( item.wsid ) ) then continue end
+			if ( filter && filter == "enabledonly" && !steamworks.ShouldMountAddon( item.wsid ) ) then
+				continue
 			end
-			if ( filter && filter == "disabledonly" ) then
-				if ( steamworks.ShouldMountAddon( item.wsid ) ) then continue end
+			if ( filter && filter == "disabledonly" && steamworks.ShouldMountAddon( item.wsid ) ) then
+				continue
 			end
 
 			searchedItems[ #searchedItems + 1 ] = item
@@ -97,21 +111,30 @@ function WorkshopFileBase( namespace, requiredtags )
 		-- Build the page!
 		local data = {
 			totalresults = #searchedItems,
-			extraresults = {},
+			extraresults = {}, -- The local info about the addon
+			otherresults = {}, -- The complete list of IDs that match the search query for the Addons menu UI
 			results = {}
 		}
 
+		-- Add the list of all items for "select all" in the UI
 		local i = 0
-		while ( i < perpage ) do
+		for id, item in ipairs( searchedItems ) do
+			data.otherresults[ i ] = item.wsid
+			i = i + 1
+		end
 
-			if ( searchedItems[ offset + i + 1 ] ) then
+		-- Add the actual results for the requested range
+		local p = 0
+		while ( p < perpage ) do
 
-				local res = table.insert( data.results, searchedItems[ offset + i + 1 ].wsid )
-				data.extraresults[ res ] = searchedItems[ offset + i + 1 ]
+			if ( searchedItems[ offset + p + 1 ] ) then
+
+				local res = table.insert( data.results, searchedItems[ offset + p + 1 ].wsid )
+				data.extraresults[ res ] = searchedItems[ offset + p + 1 ]
 
 			end
 
-			i = i + 1
+			p = p + 1
 
 		end
 
@@ -165,12 +188,12 @@ function WorkshopFileBase( namespace, requiredtags )
 				if ( !extra ) then extra = {} end
 
 				extra.ownername = "Local"
-				extra.description = "Non workshop local floating addon."
+				extra.description = "Non workshop .gma addon. (" .. extra.file .. ")"
 				extra.floating = true
 
-				local json = util.TableToJSON( extra, false )
+				local jsonExtra = util.TableToJSON( extra, false )
 
-				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. jsonExtra .. " )" )
 				self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"html/img/localaddon.png\" )" )
 
 				-- Do not try to get votes for this one
@@ -179,6 +202,16 @@ function WorkshopFileBase( namespace, requiredtags )
 			elseif ( InfoCache[ v ] ) then
 
 				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. InfoCache[ v ] .. " )" )
+
+				if ( MENU_DLL ) then
+					-- This could've changed..
+					steamworks.FileUserInfo( v, function( info )
+						if ( info.error ) then return end
+
+						local localUI = util.TableToJSON( info, false )
+						self.HTML:Call( namespace .. ".ReceiveFileUserInfo( \"" .. v .. "\", " .. localUI .. " )" )
+					end )
+				end
 
 			else
 
@@ -191,8 +224,8 @@ function WorkshopFileBase( namespace, requiredtags )
 							if ( tonumber( v ) == tonumber( t.wsid ) ) then title = t.title break end
 						end
 
-						local json = util.TableToJSON( { title = title, description = "Failed to get addon info, error code " .. ( result && result.error || "unknown" ) }, false )
-						self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+						local jsonErr = util.TableToJSON( { title = title, description = "Failed to get addon info, error code " .. ( result && result.error || "unknown" ) }, false )
+						self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. jsonErr .. " )" )
 						return
 					end
 
@@ -206,14 +239,14 @@ function WorkshopFileBase( namespace, requiredtags )
 						self:RetrieveUserName( result.owner, function( name )
 							result.ownername = name
 
-							local json = util.TableToJSON( result, false )
-							InfoCache[ v ] = json
+							local jsonUN = util.TableToJSON( result, false )
+							InfoCache[ v ] = jsonUN
 						end )
 					end
 
-					local json = util.TableToJSON( result, false )
-					InfoCache[ v ] = json
-					self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+					local jsonFI = util.TableToJSON( result, false )
+					InfoCache[ v ] = jsonFI
+					self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. jsonFI .. " )" )
 
 					--
 					-- Now we have the preview id - get the preview image!
@@ -230,6 +263,15 @@ function WorkshopFileBase( namespace, requiredtags )
 
 						end )
 
+					end
+
+					if ( MENU_DLL ) then
+						steamworks.FileUserInfo( v, function( info )
+							if ( info.error ) then return end
+
+							local localUI = util.TableToJSON( info, false )
+							self.HTML:Call( namespace .. ".ReceiveFileUserInfo( \"" .. v .. "\", " .. localUI .. " )" )
+						end )
 					end
 
 				end )

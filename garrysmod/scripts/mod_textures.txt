@@ -88,5 +88,13 @@
 				"width"		"32"
 				"height"	"32"
 		}
-	}	
+		"whiteAdditive"
+		{
+				"file"		"vgui/white_additive"
+				"x"			"0"
+				"y"			"0"
+				"width"		"1"
+				"height"	"1"
+		}
+	}
 }

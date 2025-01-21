@@ -17,8 +17,6 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 	end
 
 end
@@ -31,9 +29,8 @@ end
 
 function ENT:GetOverlayText()
 
-	local txt = "Damage: " .. math.floor( math.Clamp( self:GetDamage(), 0, 1500 ) )
+	local txt = string.format( "Damage: %g\nDelay: %g",  math.Clamp( self:GetDamage(), 0, 1500 ), self:GetDelay() )
 
-	if ( txt == "" ) then return "" end
 	if ( game.SinglePlayer() ) then return txt end
 
 	return txt .. "\n(" .. self:GetPlayerName() .. ")"
@@ -55,7 +52,7 @@ function ENT:Explode( delay, ply )
 
 	if ( !IsValid( self ) ) then return end
 
-	ply = ply or self
+	if ( !IsValid( ply ) ) then ply = self end
 
 	local _delay = delay or self:GetDelay()
 

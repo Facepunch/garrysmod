@@ -24,8 +24,8 @@ WeaponData
 	SoundData
 	{
 		"special1"		"WeaponFrag.Roll"
-		"double_shot"	"common/null.wav"
-		"single_shot"	"common/null.wav"
+		"double_shot"	""
+		"single_shot"	""
 	}
 
 	// Weapon Sprite data is loaded by the Client DLL.

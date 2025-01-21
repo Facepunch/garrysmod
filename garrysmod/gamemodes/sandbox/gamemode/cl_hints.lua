@@ -1,6 +1,6 @@
 
 
-CreateClientConVar( "cl_showhints", "1", true, false )
+CreateClientConVar( "cl_showhints", "1", true, false, "Whether to display popup hints." )
 
 -- A list of hints we've already done so we don't repeat ourselves`
 local ProcessedHints = {}
@@ -20,9 +20,9 @@ local function ThrowHint( name )
 	local s, e, group = string.find( text, "%%([^%%]+)%%" )
 	while ( s ) do
 		local key = input.LookupBinding( group )
-		if ( !key ) then key = "<NOT BOUND>" end
+		if ( !key ) then key = group:lower() .. " not bound" else key = key:upper() end
 
-		text = string.gsub( text, "%%([^%%]+)%%", "'" .. key:upper() .. "'" )
+		text = string.gsub( text, "%%([^%%]+)%%", "'" .. key .. "'" )
 		s, e, group = string.find( text, "%%([^%%]+)%%" )
 	end
 

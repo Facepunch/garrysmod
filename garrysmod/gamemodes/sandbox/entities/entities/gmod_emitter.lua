@@ -19,10 +19,8 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 
-		self:SetModel( "models/props_lab/tpplug.mdl" ) -- TODO: Find something better than this shitty shit.
+		self:SetModel( "models/props_lab/tpplug.mdl" ) -- TODO: Find something better than this
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 
 		self:DrawShadow( false )
 		self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
@@ -34,7 +32,7 @@ function ENT:Initialize()
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
 	-- Don't draw if the player is holding Camera SWEP in their hands
 	local ply = LocalPlayer()
@@ -47,7 +45,7 @@ function ENT:Draw()
 
 	end
 
-	BaseClass.Draw( self )
+	BaseClass.Draw( self, flags )
 
 end
 
@@ -88,7 +86,7 @@ end
 
 if ( SERVER ) then
 
-	numpad.Register( "Emitter_On", function ( pl, ent )
+	numpad.Register( "Emitter_On", function( ply, ent )
 
 		if ( !IsValid( ent ) ) then return end
 
@@ -100,7 +98,7 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "Emitter_Off", function ( pl, ent )
+	numpad.Register( "Emitter_Off", function( ply, ent )
 
 		if ( !IsValid( ent ) ) then return end
 		if ( ent:GetToggle() ) then return end

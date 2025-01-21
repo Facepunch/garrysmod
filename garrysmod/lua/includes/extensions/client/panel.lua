@@ -55,6 +55,25 @@ function meta:SetWidth( w )
 end
 meta.SetWide = meta.SetWidth
 
+
+--[[---------------------------------------------------------
+	Name: Set/GetX/Y
+-----------------------------------------------------------]]
+function meta:GetX()
+	local x, y = self:GetPos()
+	return x
+end
+function meta:GetY()
+	local x, y = self:GetPos()
+	return y
+end
+function meta:SetX( x )
+	self:SetPos( x, self:GetY() )
+end
+function meta:SetY( y )
+	self:SetPos( self:GetX(), y )
+end
+
 --[[---------------------------------------------------------
 	Name: StretchToParent (borders)
 -----------------------------------------------------------]]
@@ -130,14 +149,14 @@ function meta:StretchBottomTo( pnl, m ) self:SetTall( pnl.y - self.y - ( m or 0 
 	Name: CenterVertical
 -----------------------------------------------------------]]
 function meta:CenterVertical( fraction )
-	self:SetPos( self.x, self:GetParent():GetTall() * ( fraction or 0.5 ) - self:GetTall() * 0.5 )
+	self:SetY( self:GetParent():GetTall() * ( fraction or 0.5 ) - self:GetTall() * 0.5 )
 end
 
 --[[---------------------------------------------------------
 	Name: CenterHorizontal
 -----------------------------------------------------------]]
 function meta:CenterHorizontal( fraction )
-	self:SetPos( self:GetParent():GetWide() * ( fraction or 0.5 ) - self:GetWide() * 0.5, self.y )
+	self:SetX( self:GetParent():GetWide() * ( fraction or 0.5 ) - self:GetWide() * 0.5 )
 end
 
 --[[---------------------------------------------------------
@@ -270,6 +289,13 @@ function meta:GetTooltipPanel()
 end
 
 --[[---------------------------------------------------------
+	Name: GetTooltipDelay
+-----------------------------------------------------------]]
+function meta:GetTooltipDelay()
+	return self.numTooltipDelay
+end
+
+--[[---------------------------------------------------------
 	Name: SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltip( tooltip )
@@ -289,6 +315,13 @@ meta.SetToolTipPanel = meta.SetTooltipPanel
 -- Override which panel will be created instead of DTooltip
 function meta:SetTooltipPanelOverride( panel )
 	self.pnlTooltipPanelOverride = panel
+end
+
+--[[---------------------------------------------------------
+	Name: SetTooltipDelay
+-----------------------------------------------------------]]
+function meta:SetTooltipDelay( delay )
+	self.numTooltipDelay = delay
 end
 
 --[[---------------------------------------------------------
@@ -315,6 +348,16 @@ function meta:SizeToContentsX( addval )
 
 end
 
+-- Make sure all children update their skin, if SOMEHOW they cached their skin before the parent
+local function InvalidateSkinRecurse( self )
+
+	for id, pnl in pairs( self:GetChildren() ) do
+		InvalidateSkinRecurse( pnl )
+		pnl.m_iSkinIndex = nil
+	end
+
+end
+
 --[[---------------------------------------------------------
 	Name: SetSkin
 -----------------------------------------------------------]]
@@ -324,7 +367,8 @@ function meta:SetSkin( strSkin )
 
 	self.m_ForceSkinName = strSkin
 	self.m_iSkinIndex = nil
-	derma.RefreshSkins()
+
+	InvalidateSkinRecurse( self )
 
 end
 
@@ -428,8 +472,7 @@ end
 
 function meta:InvalidateChildren( bRecurse )
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
@@ -482,8 +525,7 @@ function meta:GetClosestChild( x, y )
 	local distance = 9999
 	local closest = nil
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 		local dist = v:DistanceFrom( x, y )
 		if ( dist < distance ) then
 			distance = dist
@@ -516,7 +558,7 @@ function meta:MoveToAfter( pnl )
 		return false
 	end
 
-	for k, v in pairs( children ) do
+	for k, v in ipairs( children ) do
 		v:SetZPos( k )
 	end
 
@@ -539,7 +581,7 @@ function meta:MoveToBefore( pnl )
 		return false
 	end
 
-	for k, v in pairs( children ) do
+	for k, v in ipairs( children ) do
 		v:SetZPos( k )
 	end
 
@@ -547,7 +589,7 @@ end
 
 function meta:Clear()
 
-	for k, panel in pairs( self:GetChildren() ) do
+	for k, panel in ipairs( self:GetChildren() ) do
 		panel:Remove()
 	end
 

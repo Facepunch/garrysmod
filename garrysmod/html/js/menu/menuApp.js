@@ -4,7 +4,7 @@ var IS_SPAWN_MENU = false
 
 var App = angular.module( 'MenuApp', [ 'tranny', 'ui' ] );
 
-App.config(function ( $routeProvider, $locationProvider )
+App.config( function( $routeProvider, $locationProvider )
 {
 	$routeProvider.when('/', { templateUrl: 'template/main.html' } );
 	$routeProvider.when('/addons/', { templateUrl: 'template/addon_list.html' } );
@@ -15,44 +15,27 @@ App.config(function ( $routeProvider, $locationProvider )
 	$routeProvider.when('/dupes/', { templateUrl: 'template/dupes.html' } );
 } );
 
-// This is a bit silly
-App.filter( 'gamemodeFilter', function() {
-	return function( inputs, searchText ) {
-		if ( !searchText ) return inputs;
-		searchText = searchText.toLowerCase();
-
-		var output = [];
-		angular.forEach( inputs, function( input ) {
-			var found = false;
-			
-			if ( input.name.toLowerCase().indexOf( searchText ) != -1 ) found = true;
-			if ( !found && input.info && input.info.title.toLowerCase().indexOf( searchText ) != -1 ) found = true;
-			
-			if ( found ) output.push( input ); 
-		} );
-		return output;
-	};
-} );
-
 function UpdateDigest( scope, timeout )
 {
 	if ( !scope ) return;
 	if ( scope.DigestUpdate ) return;
 
-	scope.DigestUpdate = setTimeout( function ()
+	scope.DigestUpdate = setTimeout( function()
 	{
 		scope.DigestUpdate = 0;
 		scope.$digest();
 
-	}, timeout )
+	}, timeout );
 }
 
 //We already have a limitTo filter built-in to angular,
 //let's make a startFrom filter
-App.filter( 'startFrom', function ()
+App.filter( 'startFrom', function()
 {
-	return function ( input, start )
+	return function( input, start )
 	{
+		if ( !input ) return input;
+
 		start = +start; //parse to int
 		return input.slice( start );
 	}

@@ -110,7 +110,7 @@ local function RoundStateChange(o, n)
       CLSCORE:ClearPanel()
 
       -- people may have died and been searched during prep
-      for _, p in ipairs(player.GetAll()) do
+      for _, p in player.Iterator() do
          p.search_result = nil
       end
 
@@ -135,7 +135,7 @@ local function RoundStateChange(o, n)
    end
 
    -- whatever round state we get, clear out the voice flags
-   for k,v in ipairs(player.GetAll()) do
+   for k,v in player.Iterator() do
       v.traitor_gvoice = false
    end
 end
@@ -227,7 +227,7 @@ function GM:ClearClientState()
 
    VOICE.InitBattery()
 
-   for _, p in ipairs(player.GetAll()) do
+   for _, p in player.Iterator() do
       if IsValid(p) then
          p.sb_tag = nil
          p:SetRole(ROLE_INNOCENT)

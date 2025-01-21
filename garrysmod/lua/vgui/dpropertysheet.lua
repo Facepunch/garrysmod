@@ -52,7 +52,7 @@ function PANEL:PerformLayout()
 	if ( !self:IsActive() ) then
 		self.Image:SetImageColor( Color( 255, 255, 255, 155 ) )
 	else
-		self.Image:SetImageColor( Color( 255, 255, 255, 255 ) )
+		self.Image:SetImageColor( color_white )
 	end
 
 end
@@ -270,7 +270,7 @@ function PANEL:CrossFade( anim, delta, data )
 		if ( IsValid( new ) ) then
 			new:SetAlpha( 255 )
 			new:SetZPos( 0 )
-			new:SetVisible( true ) // In case new == old
+			new:SetVisible( true ) -- In case new == old
 		end
 
 		return

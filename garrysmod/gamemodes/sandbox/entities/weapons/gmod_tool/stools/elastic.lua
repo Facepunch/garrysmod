@@ -8,6 +8,9 @@ TOOL.ClientConVar[ "rdamping" ] = "0.01"
 TOOL.ClientConVar[ "material" ] = "cable/cable"
 TOOL.ClientConVar[ "width" ] = "2"
 TOOL.ClientConVar[ "stretch_only" ] = "1"
+TOOL.ClientConVar[ "color_r" ] = "255"
+TOOL.ClientConVar[ "color_g" ] = "255"
+TOOL.ClientConVar[ "color_b" ] = "255"
 
 TOOL.Information = {
 	{ name = "left", stage = 0 },
@@ -30,10 +33,14 @@ function TOOL:LeftClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -43,23 +50,30 @@ function TOOL:LeftClick( trace )
 		local rdamping = self:GetClientNumber( "rdamping" )
 		local constant = self:GetClientNumber( "constant" )
 		local stretchonly = self:GetClientNumber( "stretch_only" )
+		local colorR = self:GetClientNumber( "color_r" )
+		local colorG = self:GetClientNumber( "color_g" )
+		local colorB = self:GetClientNumber( "color_b" )
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
-		local constraint, rope = constraint.Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly )
 
-		-- Add The constraint to the players undo table
+		-- Create the constraint
+		local constr, rope = constraint.Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly, Color( colorR, colorG, colorB ) )
 
-		undo.Create( "Elastic" )
-			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
+		-- Create an undo if the constraint was created
+		if ( IsValid( constr ) ) then
+			undo.Create( "Elastic" )
+				undo.AddEntity( constr )
+				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+				undo.SetPlayer( ply )
+			undo.Finish()
 
-		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
-		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then ply:AddCleanup( "ropeconstraints", rope ) end
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -93,16 +107,25 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.elastic.help" } )
+	CPanel:Help( "#tool.elastic.help" )
+	CPanel:ToolPresets( "elastic", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "elastic", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.elastic.constant", "elastic_constant", 0, 4000, 2 )
+	CPanel:ControlHelp( "#tool.elastic.constant.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.constant", Command = "elastic_constant", Type = "Float", Min = 0, Max = 4000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.damping", Command = "elastic_damping", Type = "Float", Min = 0, Max = 50, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.rdamping", Command = "elastic_rdamping", Type = "Float", Min = 0, Max = 1, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.elastic.stretchonly", Command = "elastic_stretch_only", Help = true } )
+	CPanel:NumSlider( "#tool.elastic.damping", "elastic_damping", 0, 50, 2 )
+	CPanel:ControlHelp( "#tool.elastic.damping.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.width", Command = "elastic_width", Type = "Float", Min = 0, Max = 20 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.elastic.material", ConVar = "elastic_material" } )
+	CPanel:NumSlider( "#tool.elastic.rdamping", "elastic_rdamping", 0, 1, 2 )
+	CPanel:ControlHelp( "#tool.elastic.rdamping.help" )
+
+	CPanel:CheckBox( "#tool.elastic.stretchonly", "elastic_stretch_only" )
+	CPanel:ControlHelp( "#tool.elastic.stretchonly.help" )
+
+	CPanel:NumSlider( "#tool.elastic.width", "elastic_width", 0, 20, 2 )
+
+	CPanel:RopeSelect( "elastic_material" )
+
+	CPanel:ColorPicker( "#tool.elastic.color", "elastic_color_r", "elastic_color_g", "elastic_color_b" )
 
 end

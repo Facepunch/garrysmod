@@ -9,7 +9,7 @@ TOOL.ClientConVar[ "g" ] = "255"
 TOOL.ClientConVar[ "b" ] = "255"
 TOOL.ClientConVar[ "brightness" ] = "2"
 TOOL.ClientConVar[ "size" ] = "256"
-TOOL.ClientConVar[ "key" ] = "-1"
+TOOL.ClientConVar[ "key" ] = "37"
 TOOL.ClientConVar[ "toggle" ] = "1"
 
 TOOL.Information = {
@@ -35,7 +35,7 @@ function TOOL:LeftClick( trace, attach )
 	local r = math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
 	local g = math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
 	local b = math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
-	local brght = math.Clamp( self:GetClientNumber( "brightness" ), 0, 20 )
+	local brght = math.Clamp( self:GetClientNumber( "brightness" ), -10, 20 )
 	local size = self:GetClientNumber( "size" )
 	local toggle = self:GetClientNumber( "toggle" ) != 1
 
@@ -66,19 +66,20 @@ function TOOL:LeftClick( trace, attach )
 
 	end
 
-	if ( !self:GetSWEP():CheckLimit( "lights" ) ) then return false end
+	if ( !self:GetWeapon():CheckLimit( "lights" ) ) then return false end
 
-	local lamp = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
+	local light = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
+	if ( !IsValid( light ) ) then return false end
 
 	undo.Create( "Light" )
-		undo.AddEntity( lamp )
+		undo.AddEntity( light )
 
 		if ( attach ) then
 
 			local length = math.Clamp( self:GetClientNumber( "ropelength" ), 4, 1024 )
 			local material = self:GetClientInfo( "ropematerial" )
 
-			local LPos1 = Vector( 0, 0, 5 )
+			local LPos1 = Vector( 0, 0, 6.5 )
 			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
 
 			if ( IsValid( trace.Entity ) ) then
@@ -90,12 +91,15 @@ function TOOL:LeftClick( trace, attach )
 
 			end
 
-			local constraint, rope = constraint.Rope( lamp, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 1, material )
-
-			undo.AddEntity( rope )
-			undo.AddEntity( constraint )
-			ply:AddCleanup( "lights", rope )
-			ply:AddCleanup( "lights", constraint )
+			local constr, rope = constraint.Rope( light, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 1, material )
+			if ( IsValid( constr ) ) then
+				undo.AddEntity( constr )
+				ply:AddCleanup( "lights", constr )
+			end
+			if ( IsValid( rope ) ) then
+				undo.AddEntity( rope )
+				ply:AddCleanup( "lights", rope )
+			end
 
 		end
 
@@ -114,51 +118,51 @@ end
 
 if ( SERVER ) then
 
-	function MakeLight( pl, r, g, b, brght, size, toggle, on, KeyDown, Data )
+	function MakeLight( ply, r, g, b, brght, size, toggle, on, keyDown, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "lights" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "lights" ) ) then return NULL end
 
-		local lamp = ents.Create( "gmod_light" )
-		if ( !IsValid( lamp ) ) then return end
+		local light = ents.Create( "gmod_light" )
+		if ( !IsValid( light ) ) then return NULL end
 
-		duplicator.DoGeneric( lamp, Data )
+		duplicator.DoGeneric( light, Data )
 
-		lamp:SetColor( Color( r, g, b, 255 ) )
-		lamp:SetBrightness( brght )
-		lamp:SetLightSize( size )
-		lamp:SetToggle( !toggle )
-		lamp:SetOn( on )
+		light:SetColor( Color( r, g, b, 255 ) )
+		light:SetBrightness( brght )
+		light:SetLightSize( size )
+		light:SetToggle( !toggle )
+		light:SetOn( on )
 
-		lamp:Spawn()
+		light:Spawn()
 
-		DoPropSpawnedEffect( lamp )
+		DoPropSpawnedEffect( light )
 
-		duplicator.DoGenericPhysics( lamp, pl, Data )
+		duplicator.DoGenericPhysics( light, ply, Data )
 
-		lamp:SetPlayer( pl )
+		light:SetPlayer( ply )
 
-		lamp.lightr = r
-		lamp.lightg = g
-		lamp.lightb = b
-		lamp.Brightness = brght
-		lamp.Size = size
-		lamp.KeyDown = KeyDown
-		lamp.on = on
+		light.lightr = r
+		light.lightg = g
+		light.lightb = b
+		light.Brightness = brght
+		light.Size = size
+		light.KeyDown = keyDown
+		light.on = on
 
-		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LightToggle", lamp, 1 )
-		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LightToggle", lamp, 0 )
+		light.NumDown = numpad.OnDown( ply, keyDown, "LightToggle", light, 1 )
+		light.NumUp = numpad.OnUp( ply, keyDown, "LightToggle", light, 0 )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "lights", lamp )
-			pl:AddCleanup( "lights", lamp )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "lights", light )
+			ply:AddCleanup( "lights", light )
 		end
 
-		return lamp
+		return light
 
 	end
 	duplicator.RegisterEntityClass( "gmod_light", MakeLight, "lightr", "lightg", "lightb", "Brightness", "Size", "Toggle", "on", "KeyDown", "Data" )
 
-	local function Toggle( pl, ent, onoff )
+	local function Toggle( ply, ent, onoff )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( !ent:GetToggle() ) then ent:SetOn( onoff == 1 ) return end
@@ -179,11 +183,11 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostLight( ent, pl )
+function TOOL:UpdateGhostLight( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local trace = pl:GetEyeTrace()
+	local trace = ply:GetEyeTrace()
 	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_light" ) ) then
 
 		ent:SetNoDraw( true )
@@ -201,7 +205,7 @@ end
 function TOOL:Think()
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/maxofs2d/light_tubular.mdl" ) then
-		self:MakeGhostEntity( "models/maxofs2d/light_tubular.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( "models/maxofs2d/light_tubular.mdl", vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostLight( self.GhostEntity, self:GetOwner() )
@@ -212,18 +216,17 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.light.desc" } )
+	CPanel:Help( "#tool.light.desc" )
+	CPanel:ToolPresets( "light", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "light", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.light.key", "light_key" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
+	CPanel:NumSlider( "#tool.light.ropelength", "light_ropelength", 0, 256, 2 )
+	CPanel:NumSlider( "#tool.light.brightness", "light_brightness", -6, 6, 0 )
+	CPanel:NumSlider( "#tool.light.size", "light_size", 0, 1024, 2 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.light.ropelength", Command = "light_ropelength", Type = "Float", Min = 0, Max = 256 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = 0, Max = 6 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.size", Command = "light_size", Type = "Float", Min = 0, Max = 1024 } )
+	CPanel:CheckBox( "#tool.light.toggle", "light_toggle" )
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )
-
-	CPanel:AddControl( "Color", { Label = "#tool.light.color", Red = "light_r", Green = "light_g", Blue = "light_b" } )
+	CPanel:ColorPicker( "#tool.light.color", "light_r", "light_g", "light_b" )
 
 end

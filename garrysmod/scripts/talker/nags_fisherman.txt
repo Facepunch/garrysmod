@@ -1,0 +1,62 @@
+// Lost coast fisherman
+criterion "IsWaitForPlayerPickupHookConcept" "concept" "PickUpHookNag" "required"
+criterion "IsWaitForPlayerPlaceHookConcept" "concept" "PlaceHookNag" "required"
+criterion "IsGoThruGateConcept" "concept" "GoThruGateNag" "required"
+
+
+//***============================================================================================================
+//***
+//*** ATI 2004 nags
+//***
+//***============================================================================================================
+
+//============================================================================================================
+// BoatPuzzle Pick Up Hook (Fisherman)
+//============================================================================================================
+response "FishyPickUpHookNag"
+{
+	scene "scenes/lostcoast/fisherman_pullpuzzle_nag01.vcd"
+	scene "scenes/lostcoast/fisherman_pullpuzzle_nag02.vcd"	
+}
+
+rule NagPickUpHook
+{
+	criteria		IsWaitForPlayerPickupHookConcept
+	response		FishyPickUpHookNag
+}
+
+//============================================================================================================
+// Boatpuzzle Place the Hook (Fisherman)
+//============================================================================================================
+response "FishyPlaceHookNag"
+{
+	scene "scenes/lostcoast/fisherman_pullpuzzle_keeppulling.vcd"
+	scene "scenes/lostcoast/fisherman_pullpuzzle_keepup.vcd"
+	scene "scenes/lostcoast/fisherman_pullpuzzle_slipover.vcd"
+}
+
+rule NagPlaceHook
+{
+	criteria		IsWaitForPlayerPlaceHookConcept
+	response		FishyPlaceHookNag
+}
+
+//============================================================================================================
+// Go thru the gate (Fisherman)
+//============================================================================================================
+response "FishyGoThruGateNag"
+{
+	scene "scenes/lostcoast/fisherman_gatenag01.vcd"
+	scene "scenes/lostcoast/fisherman_gatenag02.vcd"
+	scene "scenes/lostcoast/fisherman_gatenag03.vcd"
+	scene "scenes/lostcoast/fisherman_gatenag04.vcd"
+	scene "scenes/lostcoast/fisherman_gatenag05.vcd"
+	scene "scenes/lostcoast/fisherman_gatenag06.vcd"
+}
+
+rule NagGoThruGate
+{
+	criteria		IsGoThruGateConcept
+	response		FishyGoThruGateNag
+}
+

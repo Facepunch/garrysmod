@@ -3,17 +3,21 @@
 	game	"Garry's Mod"
 	title	""
 	title2	""
-	type 	multiplayer_only
+	type	multiplayer_only
 
 	"developer" 		"Facepunch Studios"
-	"developer_url" 	"http://www.garrysmod.com/"
+	"developer_url"		"http://www.garrysmod.com/"
 	"manual"			"http://wiki.garrysmod.com/"
+
+	// Just to shut up vbsp.exe
+	"GameData"		"garrysmod.fgd"
+	"InstancePath"	"maps/instances/"
 
 	FileSystem
 	{
 		SteamAppId				4000
 		ToolsAppId				211
-		
+
 		SearchPaths
 		{
 			// None of this matters really

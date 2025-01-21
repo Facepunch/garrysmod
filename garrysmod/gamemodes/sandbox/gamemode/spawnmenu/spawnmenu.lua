@@ -1,5 +1,5 @@
 
-local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE } )
+local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE }, "Amount of empty space around the Sandbox spawn menu." )
 
 include( "toolmenu.lua" )
 include( "contextmenu.lua" )
@@ -30,7 +30,7 @@ function PANEL:Init()
 	self:SetMouseInputEnabled( true )
 
 	self.ToolToggle = vgui.Create( "DImageButton", self )
-	self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+	self.ToolToggle:SetImage( "gui/spawnmenu_toggle" )
 	self.ToolToggle:SetSize( 16, 16 )
 	self.ToolToggle.DoClick = function()
 
@@ -38,12 +38,12 @@ function PANEL:Init()
 		self:InvalidateLayout()
 
 		if ( self.ToolMenu:IsVisible() ) then
-			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+			self.ToolToggle:SetImage( "gui/spawnmenu_toggle" )
 			self.CreateMenu:Dock( NODOCK ) -- What an ugly hack
 			self.HorizontalDivider:SetRight( self.ToolMenu )
 			self.HorizontalDivider:SetLeft( self.CreateMenu )
 		else
-			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle_back" )
+			self.ToolToggle:SetImage( "gui/spawnmenu_toggle_back" )
 			self.HorizontalDivider:SetRight( nil ) -- What an ugly hack
 			self.HorizontalDivider:SetLeft( nil )
 			self.CreateMenu:SetParent( self.HorizontalDivider )
@@ -61,7 +61,15 @@ function PANEL:OpenCreationMenuTab( name )
 end
 
 function PANEL:GetToolMenu()
+
 	return self.ToolMenu
+
+end
+
+function PANEL:GetCreationMenu()
+
+	return self.CreateMenu
+
 end
 
 --[[---------------------------------------------------------
@@ -77,14 +85,18 @@ end
 	Name: HangOpen
 -----------------------------------------------------------]]
 function PANEL:HangOpen( bHang )
+
 	self.m_bHangOpen = bHang
+
 end
 
 --[[---------------------------------------------------------
 	Name: HangingOpen
 -----------------------------------------------------------]]
 function PANEL:HangingOpen()
+
 	return self.m_bHangOpen
+
 end
 
 --[[---------------------------------------------------------
@@ -98,7 +110,7 @@ function PANEL:Open()
 
 	-- If the context menu is open, try to close it..
 	if ( IsValid( g_ContextMenu ) && g_ContextMenu:IsVisible() ) then
-		g_ContextMenu:Close( true )
+		g_ContextMenu:Close()
 	end
 
 	if ( self:IsVisible() ) then return end
@@ -124,14 +136,14 @@ end
 --[[---------------------------------------------------------
 	Name: Paint
 -----------------------------------------------------------]]
-function PANEL:Close( bSkipAnim )
+function PANEL:Close()
 
 	if ( self.m_bHangOpen ) then
 		self.m_bHangOpen = false
 		return
 	end
 
-	RememberCursorPosition()
+	if ( self:IsVisible() ) then RememberCursorPosition() end
 
 	CloseDermaMenus()
 
@@ -174,6 +186,18 @@ function PANEL:EndKeyFocus( pPanel )
 	if ( self.m_pKeyFocus != pPanel ) then return end
 	self:SetKeyboardInputEnabled( false )
 
+end
+
+function PANEL:OnSizeChanged( newW, newH )
+	local divW = self.HorizontalDivider:GetWide()
+	local divL = self.HorizontalDivider:GetLeftWidth()
+	self:InvalidateLayout( true )
+	local divWnew = self.HorizontalDivider:GetWide()
+
+	if ( divW > divL && divW < divWnew ) then
+		local ratio = divL / divW
+		self.HorizontalDivider:SetLeftWidth( ratio * divWnew )
+	end
 end
 
 vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
@@ -316,3 +340,57 @@ local function SpawnMenuOpenGUIMouseReleased()
 end
 
 hook.Add( "GUIMouseReleased", "SpawnMenuOpenGUIMouseReleased", SpawnMenuOpenGUIMouseReleased )
+
+--[[---------------------------------------------------------
+	Handle spawn menu language switching
+
+	- The spawn menu needs to be recreated ("refreshed") after a language switch
+
+	- We SHOULDN'T refresh it if the user has unsaved changes to their spawn list (these would be lost!)
+	- We SHOULDN'T refresh it if the user has the spawn menu open (that would be bad user experience)
+	- But, we SHOULD refresh it if the user saves or reverts any changes and closes the spawn menu
+
+	- What if the user switches BACK to the original language they were using? Surely, a refresh is not needed now?
+		- No, in this case we should still refresh the spawn menu because some text and labels do actually update during use of the spawn menu and might be left "dirty"
+-----------------------------------------------------------]]
+local function SpawnMenuLanguageChanged()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	if ( g_SpawnMenu.m_UnsavedModifications || g_SpawnMenu:IsVisible() ) then
+		-- If there are unsaved modifications, or the spawn menu is somehow open, mark the spawn menu for recreation when the opportunity arises
+		g_SpawnMenu.m_NeedsLanguageRefresh = true
+	else
+		-- If there are no unsaved modifications, and the spawn menu isn't open, we can go ahead and safely refresh the spawn menu
+		CreateSpawnMenu()
+	end
+end
+-- When gmod_language changes, call SpawnMenuLanguageChanged
+cvars.AddChangeCallback( "gmod_language", SpawnMenuLanguageChanged, "spawnmenu_reload" )
+
+local function ProtectSpawnMenuChanges()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	-- Mark the spawn menu as having unsaved modifications
+	g_SpawnMenu.m_UnsavedModifications = true
+end
+hook.Add( "SpawnlistContentChanged", "ProtectSpawnMenuChanges", ProtectSpawnMenuChanges )
+
+local function SpawnMenuChangesFinished()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	-- Mark the spawn menu as no longer having unsaved modifications
+	g_SpawnMenu.m_UnsavedModifications = nil
+end
+hook.Add( "OnRevertSpawnlist", "SpawnMenuChangesFinished", SpawnMenuChangesFinished )
+hook.Add( "OnSaveSpawnlist", "SpawnMenuChangesFinished", SpawnMenuChangesFinished )
+
+local function SpawnMenuLanguageRefresh()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	-- When the spawn menu is closed, check if it needs a language refresh. If it has no unsaved modifications, refresh it!
+	if ( !g_SpawnMenu.m_UnsavedModifications && g_SpawnMenu.m_NeedsLanguageRefresh ) then
+		g_SpawnMenu.m_NeedsLanguageRefresh = nil
+		CreateSpawnMenu()
+	end
+end
+hook.Add( "OnSpawnMenuClose", "SpawnMenuLanguageRefresh", SpawnMenuLanguageRefresh )

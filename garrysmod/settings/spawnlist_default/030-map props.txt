@@ -1,0 +1,1256 @@
+"TableToKeyValues"
+{
+	"parentid"		"28"
+	"icon"		"icon16/page.png"
+	"id"		"30"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"model"
+			"model"		"models/props_crates/static_crate_40.mdl"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props_crates/static_crate_48.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props_crates/static_crate_64.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_crates/supply_crate01.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props_crates/supply_crate02.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_crates/supply_crate03.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props_crates/tnt_dump.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props_debris/shellcasing_single1.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props_doors/anzio_church_doorway.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_doors/doorway16_stone_arched.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_doors/doorway16_wood.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props_doors/entarch2_pillar.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props_doors/entarch3.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props_doors/flash_arch1.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/blc_med.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/blc_small.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney1.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney2.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney3.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney4.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney5.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimneytop_64by24.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimneytop_64by48.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/storefront1.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/bush2.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/flower_barrel.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass3.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_128.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_128_128high.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_256.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_256_128high.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_medium.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_small.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/pot_big.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/potted_plant1.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/potted_plant1_p1.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/potted_plant2.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/potted_plant3.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02c.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02e.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02f.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02g.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02h.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_riverbed02c.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/shrub_small.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_01.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_02.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_03.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_02_skybox.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_02b_skybox.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_cluster_01.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/vine_wall1.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/vine_wall2.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/anzio_sandbags_destroyed.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/dragonsteeth_large.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/dragonsteeth_large_snow.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/dragonsteeth_small.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/dragonsteeth_small_snow.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/flak38.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/fueldrum.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/hedgehog_large1.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/hedgehog_large2.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/hedgehog_small1.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/hedgehog_small1_snow.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/pak40.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbag.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_corner1.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_corner1_tall.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_corner2.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_corner2_tall.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_line1.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_line1_tall.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_line2.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/sandbags_line2_tall.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bakery_counter1.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bakery_counter3.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bakery_oven.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bathtub1.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bedframe_single.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bookcase_large.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bookcase_small.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/cabinet_large.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/cafe_barstool1.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/ceiling_lantern1_off.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/ceiling_lantern1_on.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/chair1.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/chair2.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/chairantique.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/couch2.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/cupboard1.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/desk1.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/drawer1.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/drawer2.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/drawer3.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/drawer4.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/dresser1.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/fireplace2.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/heavy_table.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/inn_chandelier1.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/inn_mailbox1.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_cabinet1.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_chair.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_countertop1.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_oven1.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_shelf1.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_table.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/lamp1.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/nightstand_large.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/nightstand_small.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/piano.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/piano_bench.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame1.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame10.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame11.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame12.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame2.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame3.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame4.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame5.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame6.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame7.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame8.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame9.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/shelf1.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/sink1.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/table1.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/table2.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/toilet1.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/anzio_bell.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/anzio_church_window1_exterior.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/anzio_church_window1_interior.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/anzio_docks.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/anzio_fountain.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/anzio_market_table1.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/anzio_market_table2.mdl"
+		}
+		"136"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/ava_church_inner_entrance.mdl"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/ava_church_main_window.mdl"
+		}
+		"138"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/ava_church_outer_entrance.mdl"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/ava_stained_glass.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/boat_wooden03a.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/gramophone.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/mkt_container1.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/mkt_container3.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/mkt_table3.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/props_italian/winerack_small.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/antenna01.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/antenna02.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/antenna03.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/antenna04.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/basket-1.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/basket-1_gib1.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/bollard_snow.mdl"
+		}
+		"153"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/bread-1.mdl"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/bread-1b.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/bread-2.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/bread-3.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/bread-4.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/bread_spatula.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/cash_register.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/claypot01.mdl"
+		}
+		"161"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/claypot02.mdl"
+		}
+		"162"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/claypot03.mdl"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/clock-1.mdl"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/coffee_container-1.mdl"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/coffee_container-2.mdl"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/flour_sack-1.mdl"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/flour_sack-2.mdl"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/flour_sack-3.mdl"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/german_radio.mdl"
+		}
+		"170"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/grainbasket01b.mdl"
+		}
+		"171"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/grainbasket01c.mdl"
+		}
+		"172"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/hook_pulley.mdl"
+		}
+		"173"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/lamp-1.mdl"
+		}
+		"174"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/lamp-1_gib1.mdl"
+		}
+		"175"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/lamp-1_gib2.mdl"
+		}
+		"176"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/mill_sign.mdl"
+		}
+		"177"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/mirror-1.mdl"
+		}
+		"178"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/mixing_bowl.mdl"
+		}
+		"179"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/mixing_bowl_gib1.mdl"
+		}
+		"180"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pan-1.mdl"
+		}
+		"181"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pan-2.mdl"
+		}
+		"182"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pan-3.mdl"
+		}
+		"183"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pepper_grinder-1.mdl"
+		}
+		"184"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pepper_grinder-2.mdl"
+		}
+		"185"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pot-1.mdl"
+		}
+		"186"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pot-2.mdl"
+		}
+		"187"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/ration_box01.mdl"
+		}
+		"188"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/reins.mdl"
+		}
+		"189"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/rolling_pin-1.mdl"
+		}
+		"190"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/saddle-1.mdl"
+		}
+		"191"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/scale.mdl"
+		}
+		"192"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/shelf-1.mdl"
+		}
+		"193"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/shelf-2.mdl"
+		}
+		"194"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/stables-1.mdl"
+		}
+		"195"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/stack_gunbarrels.mdl"
+		}
+		"196"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/stack_tires.mdl"
+		}
+		"197"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/tea_pot-1.mdl"
+		}
+		"198"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/tea_pot-2.mdl"
+		}
+		"199"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/tobacco_box-1.mdl"
+		}
+		"200"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/tobacco_box-1_gib1.mdl"
+		}
+		"201"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/water_jug-1.mdl"
+		}
+		"202"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/well-1.mdl"
+		}
+		"203"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/haybale.mdl"
+		}
+		"204"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/logpile.mdl"
+		}
+		"205"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/logpile_snow.mdl"
+		}
+		"206"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/mill_grinder.mdl"
+		}
+		"207"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/mill_hanger.mdl"
+		}
+		"208"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/mill_spare_gear.mdl"
+		}
+		"209"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/mill_spare_stone.mdl"
+		}
+		"210"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/mill_water_wheel.mdl"
+		}
+		"211"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/bench_wood.mdl"
+		}
+		"212"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/donner_wall_post.mdl"
+		}
+		"213"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/flash_fence_post.mdl"
+		}
+		"214"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/italian_sign_pole1.mdl"
+		}
+		"215"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/italian_sign_roma.mdl"
+		}
+		"216"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/light_fixture.mdl"
+		}
+		"217"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/light_fixture01.mdl"
+		}
+		"218"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/light_fixture01_snow.mdl"
+		}
+		"219"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/light_streetlight.mdl"
+		}
+		"220"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/lights_streetlight01.mdl"
+		}
+		"221"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/lights_streetlight01_on.mdl"
+		}
+		"222"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/lights_streetlight01_snow.mdl"
+		}
+		"223"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/lights_streetlight01_snow_on.mdl"
+		}
+		"224"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_arrow.mdl"
+		}
+		"225"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_bayeux.mdl"
+		}
+		"226"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_carentan1.mdl"
+		}
+		"227"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_carentan2.mdl"
+		}
+		"228"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_coutances.mdl"
+		}
+		"229"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_isigny.mdl"
+		}
+		"230"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_pariscaen.mdl"
+		}
+		"231"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_periers.mdl"
+		}
+		"232"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_pole1.mdl"
+		}
+		"233"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_pole2.mdl"
+		}
+		"234"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_stlo1.mdl"
+		}
+		"235"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/normandy_sign_stlo2.mdl"
+		}
+		"236"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/patio_chair2.mdl"
+		}
+		"237"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/patio_table2.mdl"
+		}
+		"238"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/phonepole1.mdl"
+		}
+		"239"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/phonepole1_broken.mdl"
+		}
+		"240"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/phonepole_bracket1.mdl"
+		}
+		"241"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/railingspiked.mdl"
+		}
+		"242"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/signs_shops01.mdl"
+		}
+		"243"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/signs_shops02.mdl"
+		}
+		"244"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/signs_shops03.mdl"
+		}
+		"245"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/signs_shops_frame01.mdl"
+		}
+		"246"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/signs_shops_frame02.mdl"
+		}
+		"247"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/signs_shops_frame03.mdl"
+		}
+		"248"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/wall_lamp2.mdl"
+		}
+		"249"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/wood_fence_end.mdl"
+		}
+	}
+	"name"		"Map Props"
+	"version"		"3"
+}

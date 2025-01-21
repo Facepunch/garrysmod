@@ -1,0 +1,297 @@
+"TableToKeyValues"
+{
+	"parentid"		"16"
+	"icon"		"icon16/page.png"
+	"id"		"20"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Items & Pickups"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/items/ar2_grenade.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxBuckshot.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/Items/357ammo.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxMRounds.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxSRounds.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/Items/combine_rifle_ammo01.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/Items/combine_rifle_cartridge01.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/Items/CrossbowRounds.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/Items/grenadeAmmo.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxFlares.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/Items/hevsuit.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/Items/battery.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/Items/HealthKit.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/healthvial.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_missile_closed.mdl"
+		}
+		"17"
+		{
+			"type"		"header"
+			"text"		"Weapons"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_stunbaton.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_crowbar.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_physics.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_physics.mdl"
+			"skin"		"1"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_357.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_alyx_gun.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pistol.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_irifle.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg1.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_crossbow.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_shotgun.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_annabelle.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rocket_launcher.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_grenade.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_slam.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_bugbait.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/airboatgun.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/gibs/gunship_gibs_nosegun.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/gibs/strider_weapon.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/alyx_emptool_prop.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/mattpipe.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/bunker_gun01.mdl"
+		}
+		"40"
+		{
+			"type"		"header"
+			"text"		"Projectiles"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_bullet.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/Items/Flare.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/weapons/flare.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/weapons/rifleshell.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/weapons/shell.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/weapons/shotgun_shell.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_missile_launch.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_missile.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/weapons/ar2_grenade.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/crossbow_bolt.mdl"
+		}
+		"51"
+		{
+			"type"		"header"
+			"text"		"Misc"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammoCrate_Rockets.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammocrate_smg1.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammocrate_ar2.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammocrate_grenade.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_dynamic.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate.mdl"
+		}
+	}
+	"name"		"Items and Weapons"
+	"version"		"3"
+}

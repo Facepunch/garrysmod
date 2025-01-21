@@ -20,12 +20,8 @@ function PANEL:Init()
 	self.Slider:SetTrapInside( true )
 	self.Slider:Dock( FILL )
 	self.Slider:SetHeight( 16 )
-	self.Slider.Knob.OnMousePressed = function( panel, mcode )
-		if ( mcode == MOUSE_MIDDLE ) then
-			self:ResetToDefaultValue()
-			return
-		end
-		self.Slider:OnMousePressed( mcode )
+	self.Slider.ResetToDefaultValue = function( s )
+		self:ResetToDefaultValue()
 	end
 	Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
 
@@ -58,10 +54,28 @@ function PANEL:SetMinMax( min, max )
 	self.Scratch:SetMin( tonumber( min ) )
 	self.Scratch:SetMax( tonumber( max ) )
 	self:UpdateNotches()
+	self:ValueChanged( self:GetValue() ) -- Update slider positon for the new range
+end
+
+function PANEL:ApplySchemeSettings()
+
+	self.Label:ApplySchemeSettings()
+
+	-- Copy the color of the label to the slider notches and the text entry
+	local col = self.Label:GetTextStyleColor()
+	if ( self.Label:GetTextColor() ) then col = self.Label:GetTextColor() end
+
+	self.TextArea:SetTextColor( col )
+
+	local color = table.Copy( col )
+	color.a = 100 -- Fade it out a bit so it looks right
+	self.Slider:SetNotchColor( color )
+
 end
 
 function PANEL:SetDark( b )
 	self.Label:SetDark( b )
+	self:ApplySchemeSettings()
 end
 
 function PANEL:GetMin()
@@ -87,6 +101,7 @@ function PANEL:SetMin( min )
 
 	self.Scratch:SetMin( tonumber( min ) )
 	self:UpdateNotches()
+	self:ValueChanged( self:GetValue() ) -- Update slider positon for the new range
 
 end
 
@@ -96,6 +111,7 @@ function PANEL:SetMax( max )
 
 	self.Scratch:SetMax( tonumber( max ) )
 	self:UpdateNotches()
+	self:ValueChanged( self:GetValue() ) -- Update slider positon for the new range
 
 end
 
@@ -167,9 +183,16 @@ function PANEL:ValueChanged( val )
 		self.TextArea:SetValue( self.Scratch:GetTextValue() )
 	end
 
-	self.Slider:SetSlideX( self.Scratch:GetFraction( val ) )
+	self.Slider:SetSlideX( self.Scratch:GetFraction() )
 
 	self:OnValueChanged( val )
+	self:SetCookie( "slider_val", val )
+
+end
+
+function PANEL:LoadCookies()
+
+	self:SetValue( self:GetCookie( "slider_val" ) )
 
 end
 
@@ -210,6 +233,7 @@ function PANEL:SetEnabled( b )
 	self.TextArea:SetEnabled( b )
 	self.Slider:SetEnabled( b )
 	self.Scratch:SetEnabled( b )
+	self.Label:SetEnabled( b )
 	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
 end
 
@@ -267,7 +291,7 @@ end
 
 function PANEL:SetActionFunction( func )
 
-	self.OnValueChanged = function( self, val ) func( self, "SliderMoved", val, 0 ) end
+	self.OnValueChanged = function( pnl, val ) func( pnl, "SliderMoved", val, 0 ) end
 
 end
 

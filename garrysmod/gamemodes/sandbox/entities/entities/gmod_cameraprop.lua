@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 if ( CLIENT ) then
-	CreateConVar( "cl_drawcameras", "1", 0, "Should the cameras be visible?" )
+	CreateConVar( "cl_drawcameras", "1", 0, "Should Sandbox cameras be visible?" )
 end
 
 ENT.Type = "anim"
@@ -20,24 +20,26 @@ function ENT:SetupDataTables()
 
 end
 
+-- Custom drive mode
+function ENT:GetEntityDriveMode()
+
+	return "drive_noclip"
+
+end
+
 function ENT:Initialize()
 
 	if ( SERVER ) then
 
 		self:SetModel( CAMERA_MODEL )
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 		self:DrawShadow( false )
 
 		-- Don't collide with the player
 		self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
 		local phys = self:GetPhysicsObject()
-
-		if ( IsValid( phys ) ) then
-			phys:Sleep()
-		end
+		if ( IsValid( phys ) ) then phys:Sleep() end
 
 	end
 
@@ -86,8 +88,10 @@ function ENT:SetLocked( locked )
 end
 
 function ENT:OnTakeDamage( dmginfo )
+
 	if ( self.locked ) then return end
 	self:TakePhysicsDamage( dmginfo )
+
 end
 
 function ENT:OnRemove()
@@ -100,53 +104,73 @@ function ENT:OnRemove()
 
 end
 
+function ENT:ApplyKeybinds( ply )
+
+	if ( self.toggle == 1 ) then
+		numpad.OnDown( ply, self:GetKey(), "Camera_Toggle", self )
+	else
+		numpad.OnDown( ply, self:GetKey(), "Camera_On", self )
+		numpad.OnUp( ply, self:GetKey(), "Camera_Off", self )
+	end
+
+end
+
+function ENT:OnRestore()
+
+	-- HACK: Restore keybinds on level transitions, which can only happen in single player
+	self:ApplyKeybinds( nil )
+
+end
+
 if ( SERVER ) then
 
-	numpad.Register( "Camera_On", function ( pl, ent )
+	numpad.Register( "Camera_On", function( ply, ent )
 
 		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( ply ) ) then return false end
 
-		pl:SetViewEntity( ent )
-		pl.UsingCamera = ent
-		ent.UsingPlayer = pl
+		ply:SetViewEntity( ent )
+		ply.UsingCamera = ent
+		ent.UsingPlayer = ply
 
 	end )
 
-	numpad.Register( "Camera_Toggle", function ( pl, ent, idx, buttoned )
+	numpad.Register( "Camera_Toggle", function( ply, ent, idx, buttoned )
 
 		-- The camera was deleted or something - return false to remove this entry
 		if ( !IsValid( ent ) ) then return false end
-		if ( !IsValid( pl ) ) then return false end
+		if ( !IsValid( ply ) ) then return false end
 
 		-- Something else changed players view entity
-		if ( pl.UsingCamera && pl.UsingCamera == ent && pl:GetViewEntity() != ent ) then
-			pl.UsingCamera = nil
+		if ( ply.UsingCamera and ply.UsingCamera == ent and ply:GetViewEntity() != ent ) then
+			ply.UsingCamera = nil
 			ent.UsingPlayer = nil
 		end
 
-		if ( pl.UsingCamera && pl.UsingCamera == ent ) then
+		if ( ply.UsingCamera and ply.UsingCamera == ent ) then
 
-			pl:SetViewEntity( pl )
-			pl.UsingCamera = nil
+			ply:SetViewEntity( ply )
+			ply.UsingCamera = nil
 			ent.UsingPlayer = nil
 
 		else
 
-			pl:SetViewEntity( ent )
-			pl.UsingCamera = ent
-			ent.UsingPlayer = pl
+			ply:SetViewEntity( ent )
+			ply.UsingCamera = ent
+			ent.UsingPlayer = ply
 
 		end
 
 	end )
 
-	numpad.Register( "Camera_Off", function( pl, ent )
+	numpad.Register( "Camera_Off", function( ply, ent )
 
 		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( ply ) ) then return false end
 
-		if ( pl.UsingCamera && pl.UsingCamera == ent ) then
-			pl:SetViewEntity( pl )
-			pl.UsingCamera = nil
+		if ( ply.UsingCamera and ply.UsingCamera == ent ) then
+			ply:SetViewEntity( ply )
+			ply.UsingCamera = nil
 			ent.UsingPlayer = nil
 		end
 
@@ -174,15 +198,13 @@ function ENT:TrackEntity( ent, lpos )
 		WPos = WPos + ent:GetViewOffset() * 0.85
 	end
 
-	local CamPos = self:GetPos()
-	local Ang = WPos - CamPos
+	local ang = WPos - self:GetPos()
 
-	Ang = Ang:Angle()
-	self:SetAngles( Ang )
+	self:SetAngles( ang:Angle() )
 
 end
 
-function ENT:CanTool( ply, trace, mode )
+function ENT:CanTool( ply, trace, mode, tool, click )
 
 	if ( self:GetMoveType() == MOVETYPE_NONE ) then return false end
 
@@ -190,7 +212,7 @@ function ENT:CanTool( ply, trace, mode )
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
 	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
 
@@ -200,6 +222,6 @@ function ENT:Draw()
 		return
 	end
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end

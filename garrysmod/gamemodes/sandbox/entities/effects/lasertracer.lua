@@ -7,12 +7,12 @@ function EFFECT:Init( data )
 	self.EndPos = data:GetOrigin()
 
 	local ent = data:GetEntity()
-	local att = data:GetAttachment()
+	local attid = data:GetAttachment()
 
-	if ( IsValid( ent ) && att > 0 ) then
-		if ( ent.Owner == LocalPlayer() && !LocalPlayer():GetViewModel() != LocalPlayer() ) then ent = ent.Owner:GetViewModel() end
+	if ( IsValid( ent ) && attid > 0 ) then
+		if ( ent.Owner == LocalPlayer() && LocalPlayer():GetViewModel() == LocalPlayer() ) then ent = ent.Owner:GetViewModel() end
 
-		local att = ent:GetAttachment( att )
+		local att = ent:GetAttachment( attid )
 		if ( att ) then
 			self.StartPos = att.Pos
 		end

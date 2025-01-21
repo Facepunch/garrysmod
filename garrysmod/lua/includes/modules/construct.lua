@@ -98,15 +98,14 @@ if SERVER then
 		magnet:SetPos( pos )
 		magnet:SetAngles( angle )
 		magnet:SetModel( model )
-		magnet:SetMaterial( material )
+		if ( material ) then magnet:SetMaterial( material ) end
 
 		local spawnflags = 4
-		if ( nopull > 0 ) then spawnflags = spawnflags - 4 end		-- no pull required: remove the suck flag
-		if ( allowrot > 0 ) then spawnflags = spawnflags + 8 end
+		if ( nopull && nopull > 0 ) then spawnflags = spawnflags - 4 end		-- no pull required: remove the suck flag
+		if ( allowrot && allowrot > 0 ) then spawnflags = spawnflags + 8 end
 
-		magnet:SetKeyValue( "maxobjects", maxobjects )
-		magnet:SetKeyValue( "forcelimit", strength )
-		magnet:SetKeyValue( "spawnflags", spawnflags )
+		if ( maxobjects ) then magnet:SetKeyValue( "maxobjects", maxobjects ) end
+		if ( strength ) then magnet:SetKeyValue( "forcelimit", strength ) end
 		magnet:SetKeyValue( "overridescript", "surfaceprop,metal")
 		magnet:SetKeyValue( "massScale", 0 )
 
@@ -120,7 +119,7 @@ if SERVER then
 			Phys:EnableMotion( frozen != true )
 		end
 
-		if ( alwayson > 0 ) then
+		if ( alwayson && alwayson > 0 ) then
 			magnet:Input( "TurnOn", nil, nil, nil )
 		else
 			magnet:Input( "TurnOff", nil, nil, nil )
@@ -140,8 +139,10 @@ if SERVER then
 
 		magnet:SetTable( mtable )
 
-		numpad.OnDown( pl, key, "MagnetOn", magnet )
-		numpad.OnUp( pl, key, "MagnetOff", magnet )
+		if ( key ) then
+			numpad.OnDown( pl, key, "MagnetOn", magnet )
+			numpad.OnUp( pl, key, "MagnetOff", magnet )
+		end
 
 		return magnet
 

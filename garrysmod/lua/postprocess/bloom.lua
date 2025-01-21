@@ -28,24 +28,21 @@ function DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, c
 	if ( !render.SupportsPixelShaders_2_0() ) then return end
 
 	-- Copy the backbuffer to the screen effect texture
-	render.UpdateScreenEffectTexture()
-
-	-- Store the render target so we can swap back at the end
-	local OldRT = render.GetRenderTarget()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	-- The downsample material adjusts the contrast
 	mat_Downsample:SetFloat( "$darken", darken )
 	mat_Downsample:SetFloat( "$multiply", multiply )
 
 	-- Downsample to BloomTexture0
-	render.SetRenderTarget( tex_Bloom0 )
+	render.PushRenderTarget( tex_Bloom0 )
 
-	render.SetMaterial( mat_Downsample )
-	render.DrawScreenQuad()
+		render.SetMaterial( mat_Downsample )
+		render.DrawScreenQuad()
 
-	render.BlurRenderTarget( tex_Bloom0, sizex, sizey, passes )
+		render.BlurRenderTarget( tex_Bloom0, sizex, sizey, passes )
 
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 	mat_Bloom:SetFloat( "$levelr", colr )
 	mat_Bloom:SetFloat( "$levelg", colg )

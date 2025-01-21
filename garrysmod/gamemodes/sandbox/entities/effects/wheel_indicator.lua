@@ -6,7 +6,7 @@ function EFFECT:Init( data )
 	self.Wheel = data:GetEntity()
 	if ( !IsValid( self.Wheel ) ) then return end
 
-	self.Axis = data:GetOrigin()
+	self.Axis = data:GetOrigin() / 100 -- see gmod_wheel.lua
 	self.Direction = data:GetScale()
 
 	-- This 0.01 is a hack.. to prevent the angle being weird and messing up when we change it back to a normal

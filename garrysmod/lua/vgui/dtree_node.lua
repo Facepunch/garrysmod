@@ -21,6 +21,7 @@ AccessorFunc( PANEL, "m_bDoubleClickToOpen", "DoubleClickToOpen", FORCE_BOOL )
 
 AccessorFunc( PANEL, "m_bLastChild", "LastChild", FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDrawLines", "DrawLines", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bExpanded", "Expanded", FORCE_BOOL )
 AccessorFunc( PANEL, "m_strDraggableName", "DraggableName" )
 
 function PANEL:Init()
@@ -35,7 +36,7 @@ function PANEL:Init()
 	self.Label.DragHover = function( s, t ) self:DragHover( t ) end
 
 	self.Expander = vgui.Create( "DExpandButton", self )
-	self.Expander.DoClick = function() self:SetExpanded( !self.m_bExpanded ) end
+	self.Expander.DoClick = function() self:SetExpanded( !self:GetExpanded() ) end
 	self.Expander:SetVisible( false )
 
 	self.Icon = vgui.Create( "DImage", self )
@@ -63,7 +64,7 @@ function PANEL:InternalDoClick()
 	if ( self:GetRoot():DoClick( self ) ) then return end
 
 	if ( !self.m_bDoubleClickToOpen || ( SysTime() - self.fLastClick < 0.3 ) ) then
-		self:SetExpanded( !self.m_bExpanded )
+		self:SetExpanded( !self:GetExpanded() )
 	end
 
 	self.fLastClick = SysTime()
@@ -77,6 +78,10 @@ function PANEL:OnNodeSelected( node )
 		parent:OnNodeSelected( node )
 	end
 
+end
+
+function PANEL:OnNodeAdded( node )
+	-- Called when Panel.AddNode is called on this node
 end
 
 function PANEL:InternalDoRightClick()
@@ -147,13 +152,19 @@ function PANEL:SetText( strName )
 
 end
 
+function PANEL:GetText()
+
+	return self.Label:GetText()
+
+end
+
 function PANEL:ExpandRecurse( bExpand )
 
 	self:SetExpanded( bExpand, true )
 
 	if ( !IsValid( self.ChildNodes ) ) then return end
 
-	for k, Child in pairs( self.ChildNodes:GetItems() ) do
+	for k, Child in pairs( self.ChildNodes:GetChildren() ) do
 		if ( Child.ExpandRecurse ) then
 			Child:ExpandRecurse( bExpand )
 		end
@@ -225,10 +236,14 @@ function PANEL:DoChildrenOrder()
 
 	if ( !IsValid( self.ChildNodes ) ) then return end
 
-	local last = table.Count( self.ChildNodes:GetChildren() )
-	for k, Child in pairs( self.ChildNodes:GetChildren() ) do
-		Child:SetLastChild( k == last )
+	local children = self.ChildNodes:GetChildren()
+	local last = #children
+	if ( last <= 0 ) then return end
+
+	for i = 1, (last - 1) do
+		children[i]:SetLastChild( false )
 	end
+	children[last]:SetLastChild( true )
 
 end
 
@@ -304,7 +319,7 @@ function PANEL:CreateChildNodes()
 
 	self.ChildNodes = vgui.Create( "DListLayout", self )
 	self.ChildNodes:SetDropPos( "852" )
-	self.ChildNodes:SetVisible( self.m_bExpanded )
+	self.ChildNodes:SetVisible( self:GetExpanded() )
 	self.ChildNodes.OnChildRemoved = function()
 
 		self.ChildNodes:InvalidateLayout()
@@ -352,6 +367,9 @@ function PANEL:AddNode( strName, strIcon )
 	self.ChildNodes:Add( pNode )
 	self:InvalidateLayout()
 
+	-- Let addons do whatever they need
+	self:OnNodeAdded( pNode )
+
 	return pNode
 
 end
@@ -381,7 +399,7 @@ function PANEL:InstallDraggable( pNode )
 	pNode:Droppable( DragName )
 
 	-- Allow item dropping onto us
-	self.ChildNodes:MakeDroppable( DragName, true, true )
+	self.ChildNodes:MakeDroppable( DragName, true )
 
 end
 
@@ -414,6 +432,15 @@ function PANEL:MakeFolder( strFolder, strPath, bShowFiles, strWildCard, bDontFor
 
 	if ( !bDontForceExpandable ) then
 		self:SetForceShowExpander( true )
+	end
+
+	-- If the parent is already open, populate myself. Do not require the user to collapse and expand for this to happen
+	if ( self:GetParentNode():GetExpanded() ) then
+		-- Yuck! This is basically a hack for gameprops.lua
+		timer.Simple( 0, function()
+			if ( !IsValid( self ) ) then return end
+			self:PopulateChildrenAndSelf()
+		end )
 	end
 
 end
@@ -499,7 +526,9 @@ end
 
 function PANEL:PopulateChildren()
 
-	for k, v in pairs( self.ChildNodes:GetChildren() ) do
+	if ( !IsValid( self.ChildNodes ) ) then return end
+
+	for k, v in ipairs( self.ChildNodes:GetChildren() ) do
 		timer.Simple( k * 0.1, function()
 
 			if ( IsValid( v ) ) then
@@ -507,6 +536,7 @@ function PANEL:PopulateChildren()
 			end
 
 		end )
+
 	end
 
 end
@@ -538,7 +568,7 @@ end
 --
 function PANEL:DragHoverClick( HoverTime )
 
-	if ( !self.m_bExpanded ) then
+	if ( !self:GetExpanded() ) then
 		self:SetExpanded( true )
 	end
 
@@ -553,7 +583,7 @@ end
 function PANEL:MoveToTop()
 
 	local parent = self:GetParentNode()
-	if ( !IsValid(parent) ) then return end
+	if ( !IsValid( parent ) ) then return end
 
 	self:GetParentNode():MoveChildTo( self, 1 )
 
@@ -622,6 +652,20 @@ function PANEL:GetChildNode( iNum )
 
 end
 
+function PANEL:GetChildNodes()
+
+	if ( !IsValid( self.ChildNodes ) ) then return {} end
+	return self.ChildNodes:GetChildren()
+
+end
+
+function PANEL:GetChildNodeCount()
+
+	if ( !IsValid( self.ChildNodes ) ) then return 0 end
+	return self.ChildNodes:ChildCount()
+
+end
+
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "TreeNode", self, w, h )
@@ -638,7 +682,7 @@ function PANEL:Copy()
 
 	if ( self.ChildNodes ) then
 
-		for k, v in pairs( self.ChildNodes:GetChildren() ) do
+		for k, v in ipairs( self.ChildNodes:GetChildren() ) do
 
 			local childcopy = v:Copy()
 			copy:InsertNode( childcopy )

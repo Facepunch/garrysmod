@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 if ( CLIENT ) then
-	CreateConVar( "cl_draweffectrings", "1", 0, "Should the effect green rings be visible?" )
+	CreateConVar( "cl_draweffectrings", "1", 0, "Should the green effect rings be visible?" )
 end
 
 ENT.Type = "anim"
@@ -129,7 +129,7 @@ function ENT:PhysicsUpdate( physobj )
 	-- Don't do anything if the player isn't holding us
 	if ( !self:IsPlayerHolding() && !self:IsConstrained() ) then
 
-		physobj:SetVelocity( Vector( 0, 0, 0 ) )
+		physobj:SetVelocity( vector_origin )
 		physobj:Sleep()
 
 	end

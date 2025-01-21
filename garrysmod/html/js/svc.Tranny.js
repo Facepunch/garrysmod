@@ -1,4 +1,6 @@
 
+var languageCache = {};
+
 angular.module( 'tranny', [] )
 
 .directive( 'ngTranny', function ( $parse )
@@ -6,38 +8,46 @@ angular.module( 'tranny', [] )
 	return function( scope, element, attrs )
 	{
 		var strName = "";
+		var strSuffix = "";
 
 		var update = function()
 		{
-			if ( IN_ENGINE )
+			if ( !IN_ENGINE )
 			{
-				var outStr_old = language.Update( strName, function( outStr )
-				{
-					$(element).html( outStr );
-					$(element).attr( "placeholder", outStr );
-				} );
-
-				// Compatibility with Awesomium
-				$(element).html( outStr_old );
-				$(element).attr( "placeholder", outStr_old );
+				$(element).text( strName + " " + strSuffix );
+				$(element).attr( "placeholder", strName + " " + strSuffix );
+				return;
 			}
-			else
+
+			var outStr_old = languageCache[ strName ] || language.Update( strName, function( outStr )
 			{
-				$(element).html( strName );
-				$(element).attr( "placeholder", strName );
+				languageCache[ strName ] = outStr;
+				$(element).text( outStr + " " + strSuffix );
+				$(element).attr( "placeholder", outStr + " " + strSuffix );
+			} );
+
+			if ( outStr_old )
+			{
+				// Compatibility with Awesomium
+				languageCache[ strName ] = outStr_old;
+				$(element).text( outStr_old + " " + strSuffix );
+				$(element).attr( "placeholder", outStr_old + " " + strSuffix );
 			}
 		}
 
-		scope.$watch( attrs.ngTranny, function ( value )
+		scope.$watch( attrs.ngTranny, function( value )
 		{
-			strName = value;
+			var parts = value.split( " " );
+			strName = parts.shift();
+			strSuffix = parts.join( " " );
 			update();
-		});
+		} );
 
 		scope.$on( 'languagechanged', function()
 		{
+			languageCache = {};
 			update();
-		})
+		} );
 
 	}
 } )
@@ -51,15 +61,15 @@ angular.module( 'tranny', [] )
 		scope.$watch( attrs.ngSeconds, function ( value )
 		{
 			if ( value < 60 )
-				return $(element).html( Math.floor( value ) + " sec" );
+				return $(element).text( Math.floor( value ) + " sec" );
 
 			if ( value < 60 * 60 )
-				return $( element ).html( Math.floor( value / 60 ) + " min" );
+				return $( element ).text( Math.floor( value / 60 ) + " min" );
 
 			if ( value < 60 * 60 * 24 )
-				return $( element ).html( Math.floor( value / 60 / 60 ) + " hr" );
+				return $( element ).text( Math.floor( value / 60 / 60 ) + " hr" );
 
-			$( element ).html( "a long time" );
+			$( element ).text( "a long time" );
 
 		});
 

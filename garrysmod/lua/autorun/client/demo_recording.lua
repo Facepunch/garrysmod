@@ -23,11 +23,11 @@ hook.Add( "Initialize", "DemoRenderInit", function()
 
 end )
 
-hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, ViewFOV )
+hook.Add( "RenderScene", "RenderForDemo", function( ViewOrigin, ViewAngles, ViewFOV )
 
-	if ( gui.IsGameUIVisible() ) then return false end
+	if ( !engine.IsPlayingDemo() ) then return false end
 
-	render.Clear( 0, 0, 0, 255, true, true, true )
+	render.Clear( 0, 0, 0, 255, true, true )
 
 	local FramesPerFrame = 1
 

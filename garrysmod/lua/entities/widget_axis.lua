@@ -77,8 +77,8 @@ end
 function ENT:Setup( ent, boneid, rotate )
 
 	self:FollowBone( ent, boneid )
-	self:SetLocalPos( Vector( 0, 0, 0 ) )
-	self:SetLocalAngles( Angle( 0, 0, 0 ) )
+	self:SetLocalPos( vector_origin )
+	self:SetLocalAngles( angle_zero )
 
 	local EntName = "widget_axis_arrow"
 	if ( rotate ) then EntName = "widget_axis_disc" end
@@ -87,7 +87,7 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowX:SetParent( self )
 	self.ArrowX:SetColor( Color( 255, 0, 0, 255 ) )
 	self.ArrowX:Spawn()
-	self.ArrowX:SetLocalPos( Vector( 0, 0, 0 ) )
+	self.ArrowX:SetLocalPos( vector_origin )
 	self.ArrowX:SetLocalAngles( Vector( 1, 0, 0 ):Angle() )
 	self.ArrowX:SetAxisIndex( 1 )
 
@@ -95,7 +95,7 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowY:SetParent( self )
 	self.ArrowY:SetColor( Color( 0, 230, 50, 255 ) )
 	self.ArrowY:Spawn()
-	self.ArrowY:SetLocalPos( Vector( 0, 0, 0 ) )
+	self.ArrowY:SetLocalPos( vector_origin )
 	self.ArrowY:SetLocalAngles( Vector( 0, 1, 0 ):Angle() )
 	self.ArrowY:SetAxisIndex( 2 )
 
@@ -103,7 +103,7 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowZ:SetParent( self )
 	self.ArrowZ:SetColor( Color( 50, 100, 255, 255 ) )
 	self.ArrowZ:Spawn()
-	self.ArrowZ:SetLocalPos( Vector( 0, 0, 0 ) )
+	self.ArrowZ:SetLocalPos( vector_origin )
 	self.ArrowZ:SetLocalAngles( Vector( 0, 0, 1 ):Angle() )
 	self.ArrowZ:SetAxisIndex( 3 )
 
