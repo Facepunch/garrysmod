@@ -4,10 +4,10 @@
 			<li><h2 ng-tranny="'addons'"></h2></li>
 
 			<li>
-				<a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'"></a>
+				<a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'" href></a>
 				<ul ng-show="Category == 'subscribed'" class="submenu">
 					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}" href>{{subcat}}</a>
 					</li>
 					<li><input type="text" class="search_bar" ng-tranny="'addons.search'" ng-model="SubscriptionSearchText" ng-change="HandleOnSearch()"/></li>
 				</ul>
@@ -16,11 +16,11 @@
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 
 				<ul ng-show="Category == cat">
 					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}" href>{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
@@ -28,18 +28,18 @@
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.' + cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.' + cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 
 				<ul ng-show="Category == cat">
 					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}" href>{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li><a ng-click="OpenWorkshop()" ng-Tranny="'addons.openworkshop'"></a></li>
+			<li><a ng-click="OpenWorkshop()" ng-Tranny="'addons.openworkshop'" href></a></li>
 		</ul>
 	</div>
 
@@ -95,17 +95,17 @@
 
 		<center>
 			<pagination ng-hide="Loading || TotalResults == 0">
-				<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
-				<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+				<a class="back" ng-click="Go( PerPage * -1 )" href>&nbsp;</a>
+				<a class="next" ng-click="Go( PerPage * 1 )" href>&nbsp;</a>
 
 				<div class="pages">
-					<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+					<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )" href><img src='img/pagination_page.png?1' /></a></span><br>
 				</div>
 				<span class="pagenum">{{Page}}</span>
 			</pagination>
 		</center>
 
-		<a ng-show="Category == 'subscribed'" class="ugc_settings_button" ng-click="ToggleSettings()">
+		<a ng-show="Category == 'subscribed'" class="ugc_settings_button" ng-click="ToggleSettings()" href>
 			<img src="img/settings.png">
 		</a>
 
@@ -124,24 +124,24 @@
 			</div>
 			<div class="ugc_settings_cat"><!--<span>Selection:</span>-->
 				<div ng-show="!IsAnySelected()">
-					<a ng-click="SelectAll()" ng-Tranny="'addons.selectall'"></a>
-					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'"></a>
-					<a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'"></a>
-					<a ng-click="DisplayPopupMessage( 'addons.disableall.warning', DisableAllSubscribed )" ng-Tranny="'addons.disableall'"></a>
-					<a ng-click="DisplayPopupMessage( 'addons.uninstallall.warning', UninstallAllSubscribed )" ng-Tranny="'addons.uninstallall'"></a>
+					<a ng-click="SelectAll()" ng-Tranny="'addons.selectall'" href></a>
+					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'" href></a>
+					<a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'" href></a>
+					<a ng-click="DisplayPopupMessage( 'addons.disableall.warning', DisableAllSubscribed )" ng-Tranny="'addons.disableall'" href></a>
+					<a ng-click="DisplayPopupMessage( 'addons.uninstallall.warning', UninstallAllSubscribed )" ng-Tranny="'addons.uninstallall'" href></a>
 				</div>
 				<div ng-show="IsAnySelected()">
-					<a ng-click="UnselectAll()" ng-Tranny="'addons.unselectall'"></a>
-					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'"></a>
-					<a ng-click="EnableAllSelected();" ng-Tranny="'addons.enable_selected'"></a>
-					<a ng-click="DisableAllSelected();" ng-Tranny="'addons.disable_selected'"></a>
-					<a ng-click="DisplayPopupMessage( 'addons.uninstall_selected.warning', UninstallAllSelected )" ng-Tranny="'addons.uninstall_selected'"></a>
+					<a ng-click="UnselectAll()" ng-Tranny="'addons.unselectall'" href></a>
+					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'" href></a>
+					<a ng-click="EnableAllSelected();" ng-Tranny="'addons.enable_selected'" href></a>
+					<a ng-click="DisableAllSelected();" ng-Tranny="'addons.disable_selected'" href></a>
+					<a ng-click="DisplayPopupMessage( 'addons.uninstall_selected.warning', UninstallAllSelected )" ng-Tranny="'addons.uninstall_selected'" href></a>
 				</div>
 			</div>
 			<div class="ugc_settings_cat"><!--<span>Presets:</span>-->
-				<a ng-click="OpenCreatePresetMenu()" ng-Tranny="'addons.create_preset'"></a>
-				<a ng-click="OpenLoadPresetMenu()" ng-Tranny="'addons.load_preset'"></a>
-				<a ng-click="OpenImportPresetMenu()" ng-Tranny="'addons.import_preset'"></a>
+				<a ng-click="OpenCreatePresetMenu()" ng-Tranny="'addons.create_preset'" href></a>
+				<a ng-click="OpenLoadPresetMenu()" ng-Tranny="'addons.load_preset'" href></a>
+				<a ng-click="OpenImportPresetMenu()" ng-Tranny="'addons.import_preset'" href></a>
 			</div>
 
 			<div class="ugc_settings_cat"><!--<span>Stats:</span>-->
@@ -169,9 +169,9 @@
 			<input type="radio" name="createpreset_newitems" value="enable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_enable'"></label><br/>
 			<br/>
 
-			<a ng-click="CreateNewPreset()" ng-tranny="'addons.create_preset'" class="create big {{IfElse( CreatePresetName == '', 'disabled', '' )}}"></a>
+			<a ng-click="CreateNewPreset()" ng-tranny="'addons.create_preset'" class="create big {{IfElse( CreatePresetName == '', 'disabled', '' )}}" href></a>
 			<hr>
-			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
+			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'" href></a>
 		</div>
 	</div>
 
@@ -193,9 +193,9 @@
 			<input type="radio" name="importpreset_newitems" value="enable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_enable'"></label><br/>
 			<br/>
 
-			<a ng-click="ImportPreset()" ng-tranny="'addons.import_preset'" class="create {{IfElse( ImportPresetSource == '' || CreatePresetName == '', 'disabled', '' )}}"></a>
+			<a ng-click="ImportPreset()" ng-tranny="'addons.import_preset'" class="create {{IfElse( ImportPresetSource == '' || CreatePresetName == '', 'disabled', '' )}}" href></a>
 			<hr>
-			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
+			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'" href></a>
 		</div>
 	</div>
 
@@ -226,14 +226,14 @@
 					<input type="radio" name="loadpreset_newitems" value="enable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_enable'"></label><br/>
 
 					<br>
-					<a ng-click="LoadSelectedPreset()" ng-tranny="'addons.load_preset'" class="create"></a>
-					<a ng-click="CopySelectedPreset()" ng-tranny="'addons.copy_preset'"></a>
+					<a ng-click="LoadSelectedPreset()" ng-tranny="'addons.load_preset'" class="create" href></a>
+					<a ng-click="CopySelectedPreset()" ng-tranny="'addons.copy_preset'" href></a>
 					<br>
 					<br>
-					<a ng-click="DeletePreset( SelectedPreset )" ng-tranny="'addons.delete_preset'" class="warning"></a>
+					<a ng-click="DeletePreset( SelectedPreset )" ng-tranny="'addons.delete_preset'" class="warning" href></a>
 				</div>
 			</div><!--Space/newline here fucks with alignment, thanks HTML
-		 --><a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a></div>
+		 --><a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'" href></a></div>
 	</div>
 
 	<div class="modaldialog" ng-show="PopupMessageDisplayed">
@@ -250,8 +250,8 @@
 				</div>
 			</div>
 
-			<a ng-click="ExecutePopupFunction()" ng-tranny="'addons.confirm'" class="{{IfElse( PopupMessageFiles.length > 0, 'create', 'warning' )}} big"></a>
-			<a ng-click="ClosePopupMessage( true )" ng-tranny="'addons.cancel'" ng-show="PopupMessageDisplayedFunc != undefined"></a>
+			<a ng-click="ExecutePopupFunction()" ng-tranny="'addons.confirm'" class="{{IfElse( PopupMessageFiles.length > 0, 'create', 'warning' )}} big" href></a>
+			<a ng-click="ClosePopupMessage( true )" ng-tranny="'addons.cancel'" ng-show="PopupMessageDisplayedFunc != undefined" href></a>
 		</div>
 	</div>
 </div>

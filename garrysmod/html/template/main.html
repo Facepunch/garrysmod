@@ -7,7 +7,7 @@
 
 				<li><img ng-src='../gamemodes/{{Gamemode}}/logo.png' /></li>
 				<li>&nbsp;</li>
-				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Tranny="'resume_game'"></a></li>
+				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Tranny="'resume_game'" href></a></li>
 				<li ng-show="InGame">&nbsp;</li>
 				<li><a ng-href="#/newgame/" ng-Tranny="'new_game'"></a></li>
 
@@ -20,13 +20,13 @@
 				<li><a ng-href="#/demos/" ng-Tranny="'demos'"></a></li>
 
 				<li>&nbsp;</li>
-				<li><a ng-click="MenuOption( this, 'OpenOptionsDialog')" ng-Tranny="'options'"></a></li>
+				<li><a ng-click="MenuOption( this, 'OpenOptionsDialog')" ng-Tranny="'options'" href></a></li>
 
 				<li>&nbsp;</li>
 				<li ng-show="InGame">
-					<a ng-click="MenuOption( this, 'Disconnect');" ng-Tranny="'disconnect'"></a>
+					<a ng-click="MenuOption( this, 'Disconnect');" ng-Tranny="'disconnect'" href></a>
 				</li>
-				<li><a ng-click="MenuOption( this, 'Quit')" ng-Tranny="'quit'"></a></li>
+				<li><a ng-click="MenuOption( this, 'Quit')" ng-Tranny="'quit'" href></a></li>
 
 			</ul>
 

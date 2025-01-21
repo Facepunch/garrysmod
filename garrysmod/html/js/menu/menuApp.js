@@ -1,10 +1,9 @@
-
 var IN_ENGINE = navigator.userAgent.indexOf( "Valve Source Client" ) != -1;
-var IS_SPAWN_MENU = false
+var IS_SPAWN_MENU = false;
 
-var App = angular.module( 'MenuApp', [ 'tranny', 'ui' ] );
+var App = angular.module( 'MenuApp', [ 'ngRoute', 'tranny', 'ui' ] );
 
-App.config( function( $routeProvider, $locationProvider )
+App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
 	$routeProvider.when('/', { templateUrl: 'template/main.html' } );
 	$routeProvider.when('/addons/', { templateUrl: 'template/addon_list.html' } );
@@ -13,6 +12,25 @@ App.config( function( $routeProvider, $locationProvider )
 	$routeProvider.when('/demos/', { templateUrl: 'template/demos.html' } );
 	$routeProvider.when('/saves/', { templateUrl: 'template/saves.html' } );
 	$routeProvider.when('/dupes/', { templateUrl: 'template/dupes.html' } );
+
+	$controllerProvider.register( 'MenuController', MenuController );
+	$controllerProvider.register( 'ControllerMain', ControllerMain );
+	$controllerProvider.register( 'ControllerNewGame', ControllerNewGame );
+	$controllerProvider.register( 'ControllerServers', ControllerServers );
+	$controllerProvider.register( 'ControllerAddons', ControllerAddons );
+	$controllerProvider.register( 'ControllerDupes', ControllerDupes );
+	$controllerProvider.register( 'ControllerSaves', ControllerSaves );
+	$controllerProvider.register( 'ControllerDemos', ControllerDemos );
+
+	//Update trusted protocols to include asset://
+	$compileProvider.imgSrcSanitizationTrustedUrlList( /^\s*((https?|ftp|file|blob|asset):|data:image\/)/ ); //Default: /^\s*((https?|ftp|file|blob):|data:image\/)/
+	$compileProvider.aHrefSanitizationTrustedUrlList( /^\s*(https?|s?ftp|mailto|tel|file|asset):/ ); //Default: /^\s*(https?|s?ftp|mailto|tel|file):/
+
+	//Default prefix is '!'. Gmod doesn't use this.
+	$locationProvider.hashPrefix( '' );
+
+	//Disable debug info for "a significant performance boost" https://docs.angularjs.org/api/ng/provider/$compileProvider#debugInfoEnabled
+	$compileProvider.debugInfoEnabled( false ); //Comment out for debugging
 } );
 
 function UpdateDigest( scope, timeout )
