@@ -210,8 +210,9 @@
 			<b ng-tranny="'addons.load_preset'"></b>
 			<br/><br/>
 
-			<div class="preset_content"><div class="preset_list">
-					<font ng-repeat="file in PresetList" ng-click="SelectPreset( file.name, file.newAction );" class="{{IfElse( file.name == SelectedPreset, 'active', '' )}}">{{file.name}}</font>
+			<div class="preset_content">
+				<input type="text" ng-model="PresetSearchText" ng-tranny="'addons.filter_preset'"><br/><div class="preset_list">
+					<font ng-repeat="file in PresetList" ng-hide="file.name.toLowerCase().indexOf(PresetSearchText.toLowerCase()) == -1" ng-click="SelectPreset( file.name, file.newAction );" class="{{IfElse( file.name == SelectedPreset, 'active', '' )}}">{{file.name}}</font>
 				</div><!--Space/newline here fucks with alignment, thanks HTML
 			 --><div class="preset_data" ng-show="SelectedPreset">
 					<b ng-Tranny="'addons.preset_name'"></b> {{PresetList[ SelectedPreset ].name}}<br>

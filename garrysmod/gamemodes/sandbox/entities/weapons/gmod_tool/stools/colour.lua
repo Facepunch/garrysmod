@@ -94,14 +94,13 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.colour.desc" } )
-
+	CPanel:Help( "#tool.colour.desc" )
 	CPanel:ToolPresets( "colour", ConVarsDefault )
 
 	CPanel:ColorPicker( "#tool.colour.color", "colour_r", "colour_g", "colour_b", "colour_a" )
 
-	CPanel:AddControl( "ListBox", { Label = "#tool.colour.mode", Options = list.Get( "RenderModes" ) } )
-	CPanel:AddControl( "ListBox", { Label = "#tool.colour.fx", Options = list.Get( "RenderFX" ) } )
+	CPanel:ComboBoxMulti( "#tool.colour.mode", list.Get( "RenderModes" ) )
+	CPanel:ComboBoxMulti( "#tool.colour.fx", list.Get( "RenderFX" ) )
 
 end
 

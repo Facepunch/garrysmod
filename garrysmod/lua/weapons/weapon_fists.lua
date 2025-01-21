@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName = "#GMOD_Fists"
+SWEP.PrintName = "#weapon_fists"
 SWEP.Author = "Kilburn, robotboy655, MaxOfS2D & Tenrys"
 SWEP.Purpose = "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 

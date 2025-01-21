@@ -213,6 +213,14 @@ local function PhysgunSVSettings( pnl )
 
 end
 
+local function PlayerOptions( pnl )
+
+	pnl:AddControl( "Header", { Description = "#smwidget.playermodel_title" } )
+
+	pnl:Button( "#smwidget.playermodel_title", "open_playermodel_selector" )
+
+end
+
 -- Tool Menu
 hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", function()
 
@@ -220,6 +228,7 @@ hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", function()
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo", "#spawnmenu.utilities.undo", "", "", Undo )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "PhysgunSettings", "#spawnmenu.utilities.physgunsettings", "", "", PhysgunSettings )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "SandboxClientSettings", "#spawnmenu.utilities.sandbox_settings", "", "", SandboxClientSettings )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "PlayerModelSelector", "#smwidget.playermodel_title", "", "", PlayerOptions )
 
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "ServerSettings", "#spawnmenu.utilities.server_settings", "", "", ServerSettings )

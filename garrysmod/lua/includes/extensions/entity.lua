@@ -4,6 +4,18 @@ local meta = FindMetaTable( "Entity" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
+function meta:SetSpawnFlags( flags )
+    self:SetKeyValue( "spawnflags", flags )
+end
+
+function meta:AddSpawnFlags( flags )
+    self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
+end
+
+function meta:RemoveSpawnFlags( flags )
+    self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
+end
+
 function meta:GetShouldPlayPickupSound()
 	return self.m_bPlayPickupSound or false
 end
@@ -26,7 +38,7 @@ function meta:__index( key )
 	--
 	-- Search the entity table
 	--
-	local tab = self:GetTable()
+	local tab = meta.GetTable( self )
 	if ( tab ) then
 		local tabval = tab[ key ]
 		if ( tabval != nil ) then return tabval end

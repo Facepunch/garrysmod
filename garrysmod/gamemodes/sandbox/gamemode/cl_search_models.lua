@@ -132,15 +132,18 @@ local function AddSearchProvider( listname, ctype, stype )
 
 			if ( ( isstring( name ) && name:lower():find( str, nil, true ) ) || ( isstring( name_c ) && name_c:lower():find( str, nil, true ) ) ) then
 
+				local contentIconData = {
+					nicename = v.PrintName or v.ClassName,
+					spawnname = v.ClassName,
+					material = "entities/" .. v.ClassName .. ".png",
+					admin = v.AdminOnly
+				}
+
+				if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
+
 				local entry = {
 					text = v.PrintName or v.ClassName,
-					icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, {
-						nicename = v.PrintName or v.ClassName,
-						spawnname = v.ClassName,
-						material = "entities/" .. v.ClassName .. ".png",
-
-						admin = v.AdminOnly
-					} ),
+					icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, contentIconData ),
 					words = { v }
 				}
 

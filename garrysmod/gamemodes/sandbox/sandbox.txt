@@ -199,7 +199,7 @@
 			"text"		"max_constraints"
 			"help"		"Maximum non rope-based constraints a single player can create"
 			"type"		"Numeric"
-			"default"	"1000"
+			"default"	"2000"
 		}
 
 		22

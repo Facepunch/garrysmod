@@ -98,6 +98,11 @@ end
 
 function COLOR:SetUnpacked( r, g, b, a )
 
+	if ( r != nil and !isnumber( r ) ) then error( "bad argument #1 to 'SetUnpacked' (number expected, got " .. type( r ) .. ")", 2 ) end
+	if ( g != nil and !isnumber( g ) ) then error( "bad argument #2 to 'SetUnpacked' (number expected, got " .. type( g ) .. ")", 2 ) end
+	if ( b != nil and !isnumber( b ) ) then error( "bad argument #3 to 'SetUnpacked' (number expected, got " .. type( b ) .. ")", 2 ) end
+	if ( a != nil and !isnumber( a ) ) then error( "bad argument #4 to 'SetUnpacked' (number expected, got " .. type( a ) .. ")", 2 ) end
+
 	self.r = r or 255
 	self.g = g or 255
 	self.b = b or 255
@@ -285,3 +290,8 @@ function HWBToColor( h, w, b )
 	return HSVToColor( h, s, v )
 
 end
+
+local imat = FindMetaTable( "IMaterial" )
+
+-- This is so that the return value has the color meta table
+function imat:GetColor( ... ) return Color( self:GetColor4Part( ... ) ) end

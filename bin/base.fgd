@@ -33,7 +33,7 @@
 // All CBaseAnimating entities
 @BaseClass = GMODLightOrigin
 [
-	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select a info_lighting entity to specify a location to sample lighting from, instead of using this entity's origin."
+	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_target entity to specify a location to sample lighting from, instead of using this entity's origin."
 	lightingoriginhack(target_destination) : "Lighting Origin (Relative)" : "" : "Select an info_lighting_relative to specify a location to sample lighting from, instead of using this entity's origin."
 
 	input SetLightingOrigin(target_destination) : "Sets the lighting origin entity. This will make this entity sample lighting from the given entity's position"
@@ -154,7 +154,7 @@
 	input Disable(void) : "Disable this entity."
 ]
 
-@BaseClass base(GMODSandbox) = RenderFxChoices
+@BaseClass = RenderFxChoices
 [
 	renderfx(choices) :"Render FX" : 0 =
 	[
@@ -1248,6 +1248,12 @@
 		78 : "Sand"
 	]
 
+	spawnflags(flags) =
+	[
+		1: "Trigger on player(s) leaving ground" : 0
+		2: "Set output activator to the player (Warning: may cause unexpected behavior change)" : 0
+	]
+
 	// Inputs
 	input Enable(void) : "Start watching the player's surface."
 	input Disable(void) : "Stop watching the player's surface."
@@ -1345,7 +1351,7 @@
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. See filter_activator_name for more explanation. Allow means 'Allow to Block' for this entity."
 ]
 
-@SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow) = func_brush :
+@SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow, GMODSandbox) = func_brush :
 	"An brush built entity with various features."
 [
 	spawnflags(flags) =
@@ -2395,8 +2401,13 @@
 	spawnflags(flags) =
 	[
 		1: "Use Only" : 0
+		2: "Strip All Weapons First" : 0
+		//4: "Only Strip Same Weapon Type" : 0
 	]
 	master(string) : "Team Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+
+	input TriggerForAllPlayers(void) : "This will force all connected players to take the weapon(s) specified."
+	input TriggerForActivatedPlayer(string) : "This will force the player who activated to equip the specified weapon."
 ]
 
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = game_player_team :
@@ -2445,8 +2456,8 @@
 		1 : "Credits"
 		2 : "Scan Out"
 	]
-	color(color255) : "Color1" : "100 100 100"
-	color2(color255) : "Color2" : "240 110 0"
+	color(color255) : "Color1" : "100 100 100" : "The text color."
+	color2(color255) : "Color2 (Scan)" : "240 110 0" : "The color for the letter being scanned if the 'Text Effect' is set to 'Scan Out'."
 	fadein(string) : "Fade in Time (or character scan time)" : "1.5" : "The time it should take for the text to fully fade in."
 	fadeout(string) : "Fade Out Time" : "0.5" : "The time it should take for the text to fade out, after the hold time has expired."
 	holdtime(string) : "Hold Time" : "1.2" : "The time the text should stay onscreen, after fading in, before it begins to fade out."
@@ -2457,11 +2468,20 @@
 		2 : "Channel 2"
 		3 : "Channel 3"
 		4 : "Channel 4"
+		5 : "Channel 5"
+		6 : "Channel 6"
+		7 : "Channel 7"
+		8 : "Channel 8"
 	]
 	master(string) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 
 	// Inputs
 	input Display(void) : "Display the message text."
+	input SetText(string) : "Set the text to display."
+	input SetPosX(float) : "Set the text position on the screen (X Axis)."
+	input SetPosY(float) : "Set the text position on the screen (Y Axis)."
+	input SetTextColor(color255) : "Set the primary text color."
+	input SetTextColor2(color255) : "Set color of the transition text."
 ]
 
 @PointClass base(Parentname, Angles) size(-2 -2 -2, 2 2 2) = point_enable_motion_fixup :
@@ -3057,6 +3077,16 @@
 	targetname(target_source) : "Name (Read notes)" : : "The name that other entities refer to this entity by. Setting this will allow scripts to control this entity, but will also substantially increase filesize of the map."
 ]
 
+@PointClass base(Angles) iconsprite("editor/light_env.vmt") = light_directional : 
+	"A directional light with no falloff. Similar to sunlight in light_environment."
+[
+	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	_light(color255) : "Brightness" : "255 255 255 200"
+	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
+	_lightscaleHDR(float) : "BrightnessScaleHDR" : "0.7" : "Amount to scale the light by when compiling for HDR."
+	SunSpreadAngle(float) : "SpreadAngle" : 0 : "The angular extent of the light for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+]
+
 @PointClass base(Targetname, Angles, Light) lightprop("models/editor/spot.mdl") lightcone() sphere(_fifty_percent_distance) sphere(_zero_percent_distance) = light_spot :
 	"An invisible and directional spotlight."
 [
@@ -3253,6 +3283,10 @@
 	startsound(sound) : "Sound played when the water brush starts moving."
 	stopsound(sound) : "Sound played when the water brush stops moving."
 	WaveHeight(string) : "Wave Height" : "3.0"
+
+	// GMOD: These work
+	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
+	input Color(color255) : "Set the sprite's color (R G B)."
 
 	// Inputs
 	input Open(void) : "Move the water brush to the end position (starting position + (move direction * move distance))."
@@ -3514,7 +3548,7 @@
 		1024: "Use Activates" : 1
 		2048: "Starts locked" : 0
 		4096: "Sparks" : 0
-		16384: "Non solid": 0
+		16384: "Non solid": 0 // GMOD: From CS:GO
 	]
 	locked_sound(choices) : "Locked Sound" : 0 : "Sound played when the player tries to use the button, and fails because it's locked." =
 	[
@@ -3602,7 +3636,7 @@
 	_minlight(string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
 ]
 
-@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields) = momentary_rot_button :
+@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, GMODSandbox) = momentary_rot_button :
 	"A brush entity that's designed to be used for rotating wheels, where the player can rotate them to arbitrary positions before stopping."
 [
 	speed(integer) : "Speed (deg/sec)" : 50 : "The amount, in degrees, that the wheel turns per second."
@@ -4393,6 +4427,12 @@
 	attach2(target_destination) : "Attachment 2" : "" : "The second entity."
 
 	startdisabled(choices) : "Start with collisions disabled" : 1 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	disable_on_remove(choices) : "Restore collisions on self-removal" : 1 : "Re-enable collisions between the 2 entities if this logic_collision_pair is removed by any means." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5454,6 +5494,11 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	enablelightbounce(choices) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop. Requires vrad.exe to be ran with -StaticPropBounce 3 parameter." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 	lightmapresolutionx(integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes)"
 	lightmapresolutiony(integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes)"
 ]
@@ -5804,15 +5849,28 @@
 @SolidClass base(Targetname, Parentname) = func_precipitation :
 	"A brush entity that creates rain and snow inside its volume."
 [
-	renderamt(integer) : "Density (0-100%)" : 5
-	rendercolor(color255) : "Color (R G B)" : "100 100 100"
+	renderamt(integer) : "Density (0-100%)" : 5 : "Density of the particles for both normal and particle-based precipitation types. In range of 0 to 100."
+	//rendercolor(color255) : "Color (R G B)" : "100 100 100" : "Color for the non particle-based precipitation types." // Doesn't do anything?
 	preciptype(choices) : "Precipitation Type" : 0 =
 	[
 		0 : "Rain"
 		1 : "Snow"
 		2 : "Ash"
 		3 : "Snowfall"
+		4 : "Particle Rain"
+		5 : "Particle Ash"
+		6 : "Particle Rainstorm"
+		7 : "Particle Snow"
 	]
+	particle_name(string) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one. This is the closest particle system to the player.\n\n\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
+	particle_name_inner(string) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one. This is the middle particle system. Your map should contain the entered particle system by name in one of the PCF files in its manifest."
+	particle_name_outer(string) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one. This is the farthest particle system from the player. Your map should contain the entered particle system by name in one of the PCF files in its manifest."
+	particle_dist_inner(float) : "Particle System Distance (Inner)" : "180" : "If using custom particle systems, this will be the distance of the middle one from the player."
+]
+
+@SolidClass base(Targetname, Parentname) = func_precipitation_blocker : 
+	"A brush entity that prevents rain and snow inside its volume."
+[
 ]
 
 @SolidClass base(func_wall) = func_wall_toggle :
@@ -5924,7 +5982,7 @@
 	speed(integer) : "Move/Rotate Speed" : 0				// NEEDHELP
 ]
 
-@BaseClass base(Targetname, Parentname, Origin, RenderFields, Global, Shadow) = BaseTrain
+@BaseClass base(Targetname, Parentname, Origin, RenderFields, Global, Shadow, GMODSandbox) = BaseTrain
 [
 	spawnflags(flags) =
 	[
@@ -6068,12 +6126,16 @@
 ]
 
 @PointClass base(Targetname) iconsprite("editor/tanktrain_ai.vmt") = tanktrain_ai :
-	"Train chase AI"			// NEEDHELP
+	"Makes a func_tracktrain chase a specific entity along its path, by moving to the closest node on the path to the target entity."
 [
-	target(target_destination) : "Train Name"
-	startsound(sound) : "Start Moving Sound" : "vehicles/diesel_start1.wav"
-	enginesound(sound) : "Engine Loop Sound" : "vehicles/diesel_turbo_loop1.wav"
-	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/tank_treads_loop1.wav"
+	target(target_destination) : "Train Name" : "" : "The func_tanktrain to move."
+	chasetarget(target_destination) : "Chase Target" : "" : "The target to chase. !player and similar work. Leave empty for no target."
+
+	startsound(sound) : "Start Moving Sound" : "vehicles/crane/crane_magnet_switchon.wav" : "Sound to play when the train starts moving."
+	enginesound(sound) : "Engine Loop Sound" : "vehicles/crane/crane_idle_loop3.wav" : "Looping sound to play when the train is not moving."
+	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/crane/crane_turn_loop2.wav" : "Looping sound for when the train is moving."
+
+	input TargetEntity(string) : "Start chasing the entity with this name"
 ]
 
 @PointClass base(Targetname, Parentname, Angles) cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) color(255 192 0) size(16 16 16) = path_track :
@@ -6572,10 +6634,10 @@
 @PointClass base(Parentname, Targetname) size(-8 -8 -8, 8 8 8 ) = env_spritetrail :
 	"A magical trail you can parent to anything you heart desires."
 [
-	lifetime(float) : "Lifetime" : "0.5"
+	lifetime(float) : "Lifetime" : "0.5" : "How long it will take, in seconds, for the trail's width to reach from Start Width to End Width. Also defines trail length."
 	startwidth(float) : "Start Width" : "8.0"
 	endwidth(float) : "End Width" : "1.0"
-	spritename(*string) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(*sprite) : "Sprite Name" : "sprites/bluelaser1.vmt" : "Material of the sprite trail to be used."
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
@@ -6588,14 +6650,25 @@
 	]
 ]
 
-// lightprop("models/editor/spot.mdl") <---- use this once the orientation is unfucked
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/cone_helper.mdl") frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture :
+@PointClass base(Targetname, Parentname, Angles) studioprop( "models/editor/spot.mdl" ) frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture :
 	"Projected texture entity."
 [
 	spawnflags(flags) =
 	[
-		1  : "Enabled"				: 1
+		1  : "Start Enabled (Does nothing, ignore)"		: 1
+		//2  : "Always Update (Does nothing)"		: 0
+		4  : "Start Disabled"			: 0
 	]
+
+	texturename(material) 		: "Texture Name" : "effects/flashlight001" : "The name of the texture to project"
+	textureframe(integer) 		: "Texture Frame" : 0 : "The frame of the texture, for animated textures"
+
+	lightcolor(color255)		: "Light Color" : "255 255 255" : "Light Color RGB-Intensity"
+	lightstrength(float)		: "Light Strength" : "1" : "How bright the light appears"
+
+	lightfov(float)				: "FOV" : "90" : "Field of view of the projected texture. Larger numbers will make the texture larger at closer distances, but will also negatively impact shadow quality. Should be below 179."
+	nearz(float)				: "NearZ" : "4" : "Near Z for projected texture. This only affects shadows"
+	farz(float)					: "FarZ" : "750" : "Far Z for projected texture. This affects shadows AND the light's range"
 
 	style(Choices) : "Appearance" : 0 =
 	[
@@ -6615,11 +6688,8 @@
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 
 	target(target_destination)	: "Aim Target" : : "If set, the projected texture will automatically aim at the given entity"
-	lightfov(float)				: "FOV" : "90.0" : "FOV"
-	nearz(float)				: "NearZ" : "4.0" : "Near Z for projected texture. This only affects shadows"
-	farz(float)					: "FarZ" : "750.0" : "Far Z for projected texture. This affects shadows AND the light's range"
 
-	enableshadows(Choices) : "Enable Shadows" : 0 : "Enables/disables shadows from this projected texture." =
+	enableshadows(Choices) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -6639,13 +6709,15 @@
 		0 : "No"
 		1 : "Yes"
 	]
-	lightcolor(color255)		: "Light Color" : "255 255 255 200" : "Light Color RGB-Intensity"
+
 	cameraspace(integer)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
 
 	// Inputs
 	input TurnOn(void)		: "Turn on the texture"
 	input TurnOff(void)		: "Turn off the texture"
+	input Toggle(void)		: "Toggle the texture between being off and on"
 	input SetFOV(float)		: "Set FOV"
+	//input Ambient(float)			: "Set Spotlight ambient (does nothing)"
 	input SpotlightTexture(string)	: "Set the spotlight texture"
 	input EnableShadows(bool)		: "Set the if shadows are enabled"
 	input SetLightStyle(integer)	: "Change the lightstyle (see Appearance field for possible values)."
@@ -6657,7 +6729,6 @@
 	input LightOnlyTarget(bool)		: "Sets whether this projected texture should only apply light to the target entity. This will still light the world"
 	input LightColor(string)		: "Sets the color of the projected texture"
 ]
-
 
 @SolidClass base(func_brush) = func_reflective_glass :
 	"Used to produce perfectly reflective glass that renders world + entities. " +
@@ -6760,4 +6831,12 @@
 @SolidClass = func_friction : "Surface with a change in friction. Does not apply to players." 
 [
 	modifier(integer) : "Percentage of standard (0 - 100)" : 15
+]
+
+// GMOD: From CS:GO
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
+	"An entity that precaches skybox materials and swaps them on trigger." 
+[
+	SkyboxName(string) : "Skybox Material Name" : "sky_dust"
+	input Trigger(void) : "Swap to this skybox."
 ]

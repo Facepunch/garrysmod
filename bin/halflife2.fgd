@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Half-Life 2 game definition file (.fgd) 
 //
@@ -371,6 +371,7 @@
 	[
 		65536 :  "Friendly" : 0
 		131072 : "Use prop_physics collision rules"	: 0
+		262144 : "Spawn as Alyx-hacked" : 0 // GMOD
 	]
 
 	startburied(choices) : "Start Buried" : "No" =
@@ -2190,11 +2191,11 @@
 	m_iszEntity(npcclass) : "Target NPC"
 	m_flRadius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 
-	MoveSpeed(integer) : "Move Speed" : 5			// How quickly should target move between scripted targets
-	PauseDuration(integer) : "Pause Duration" : 0		// How long should target pause at scripted target
-	EffectDuration(integer) : "Effect Duration" : 2		// How long should any associated effect last
+	MoveSpeed(integer) : "Move Speed" : 5 : "How quickly should target move between scripted targets"
+	PauseDuration(integer) : "Pause Duration" : 0 : "How long should target pause at scripted target"
+	EffectDuration(integer) : "Effect Duration" : 2 : "How long should any associated effect last"
 
-	target(target_destination) : "Next Target"		// Next scripted target
+	target(target_destination) : "Next Target" : : "Next scripted target"
 
 	// Inputs
 	input Enable(void) : "Enable this entity"
@@ -2209,7 +2210,7 @@
 	"AI Relationship - Sets relationships between groups of NPCs in the AI."
 [
 	subject(target_name_or_class) : "Subject(s)" : "" : "This is the NPC(s) whose disposition will change. May be a targetname or a classname."
-	target(target_name_or_class) : "Target(s)" : "" : "This is the NPC(s) about whom the Subject(s) will change their disposition. May be a tarGetname or a classname."
+	target(target_name_or_class) : "Target(s)" : "" : "This is the NPC(s) about whom the Subject(s) will change their disposition. May be a targetname or a classname."
 	disposition(choices) : "Disposition" : 3 : "Choose the way the Subject(s) should feel about the Target(s)" =
 	[
 		// These MUST match the enum in the code! (basecombatcharacter.h)

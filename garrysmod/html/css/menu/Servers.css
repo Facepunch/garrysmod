@@ -100,7 +100,7 @@ H1 small
 	left: 0px;
 	right: 0px;
 	position: relative;
-	
+
 	margin-top: 5px;
 	padding: 1px;
 }
@@ -123,6 +123,18 @@ H1 small
 	left: 4px;
 	right: 240px;
 	font-size: 13px;
+}
+
+.serverlist name lastvisited
+{
+	font-weight: normal;
+	position: absolute;
+	right: 0;
+}
+
+.serverlist name lastvisited lbl
+{
+	font-weight: normal;
 }
 
 /*Fix HTML being awful to work with*/
@@ -290,7 +302,7 @@ H1 small
 	{
 		font-size: 13px;
 		font-weight: bold;
-		right: 330px;
+		right: 285px;
 	}
 
 	.serverlist map
@@ -309,6 +321,11 @@ H1 small
 	.serverlist map
 	{
 		width: 170px;
+	}
+
+	.serverlist name
+	{
+		right: 330px;
 	}
 }
 
@@ -491,7 +508,7 @@ SPAN.installgamemode:hover
 .server_gamemodes
 {
 	border: 5px solid white;
-	
+
 	position: absolute;
 	top: 64px;
 	left: 0px;
@@ -646,17 +663,26 @@ input[type=number]::-webkit-inner-spin-button
 
 @media screen and (max-width: 1024px)
 {
-	div.page DIV.innerpage
+	div.page.server_browser DIV.innerpage
 	{
 		left: 180px;
 	}
+}
 
-	DIV.page DIV.options
+@media screen and (max-width: 1366px)
+{
+	div.page.server_browser DIV.innerpage
+	{
+		left: 250px;
+		right: 5px;
+	}
+
+	DIV.page.server_browser DIV.options
 	{
 		padding-left: 5px;
 	}
 
-	DIV.page DIV.options UL
+	DIV.page.server_browser DIV.options UL
 	{
 		margin-left: 0px;
 	}
@@ -749,6 +775,34 @@ input[type=number]::-webkit-inner-spin-button
 	DIV.installgamemode, INPUT.searchbox
 	{
 		margin-right: 0px;
+	}
+}
+
+@media screen and (max-width: 1650px)
+{
+	.serverlist name lastvisited lbl
+	{
+		display: none;
+	}
+}
+@media screen and (max-width: 1520px)
+{
+	.serverlist name lastvisited
+	{
+		margin-left: 5px;
+		right: auto;
+	}
+}
+
+@media screen and (max-width: 1366px)
+{
+	.serverlist
+	{
+		right: 250px;
+	}
+	.serverinfo
+	{
+		width: 215px;
 	}
 }
 

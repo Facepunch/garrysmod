@@ -150,7 +150,6 @@ function PANEL:PerformLayout()
 
 end
 
-
 function PANEL:OnCursorEntered()
 
 	self:InvalidateLayout( true )

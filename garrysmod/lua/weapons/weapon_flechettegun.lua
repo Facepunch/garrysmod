@@ -3,7 +3,7 @@ if ( !IsMounted( "ep2" ) ) then return end
 
 AddCSLuaFile()
 
-SWEP.PrintName = "#GMOD_FlechetteGun"
+SWEP.PrintName = "#weapon_flechettegun"
 SWEP.Author = "garry"
 SWEP.Purpose = "Shoot flechettes with primary attack."
 
