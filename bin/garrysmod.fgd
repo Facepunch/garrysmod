@@ -26,24 +26,24 @@
 	input RunPassedCode(string) : "Run code that was passed as a variable"
 ]
 
-@PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours"
+@PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours. Requires the skybox material be set to 'painted' in Map => Map Properties."
 [
-	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The colour of the top of the sky"
-	bottomcolor(color1)		: "Sky Bottom Color" : "0.8 1.0 1.0" : "The colour of the bottom of the sky"
-	fadebias(float)			: "Sky Fade Bias" : "1.0" : "Controls the bias of the fade between top/bottom (1.0 is even)"
+	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The colour of the top of the sky."
+	bottomcolor(color1)		: "Sky Bottom Color" : "0.8 1.0 1.0" : "The colour of the bottom of the sky."
+	fadebias(float)			: "Sky Fade Bias" : "1.0" : "Controls the bias of the fade between top/bottom. (1.0 is even)"
 
-	sunsize(float)			: "Sun Size" : "2.0" : "Controls the size of the sun glow"
-	sunnormal(vector )		: "Sun Normal" : "0.4 0.0 0.01" : "The position of the sun, expressed as a normal from the center of the world"
+	sunsize(float)			: "Sun Size" : "2.0" : "Controls the size of the sun glow."
+	sunnormal(vector)		: "Sun Normal" : "0.4 0.0 0.01" : "The position of the sun, expressed as a normal from the center of the world."
 	sunposmethod(choices)	: "Sun Position Method" : 0 : "How should we determine the position of the sun?" =
 	[
 		0 : "Custom - Use the Sun Normal to position the sun"
 		1 : "Automatic - Find a env_sun entity and use that"
 	]
-	suncolor(color1)		: "Sun Color" : "0.2 0.1 0.0" : "The color of the sun glow (this is additive)"
+	suncolor(color1)		: "Sun Color" : "0.2 0.1 0.0" : "The color of the sun glow. (this is additive)"
 
-	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect (colouring of the horizon)"
-	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How powerful the dusk effect is"
-	duskcolor(color1)		: "Dusk Color" : "1.0 0.2 0.0" : "The color of the dusk effect"
+	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect. (colouring of the horizon)"
+	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How powerful the dusk effect is."
+	duskcolor(color1)		: "Dusk Color" : "1.0 0.2 0.0" : "The color of the dusk effect."
 
 	drawstars(choices)		: "Draw Stars" : 0 : "" =
 	[
@@ -51,10 +51,11 @@
 		1 : "Yes - Draw the stars please"
 	]
 
-	startexture(string) 	: "Star Texture" : "skybox/starfield" : "The star texture"
-	starscale(float)		: "Star Scale" : "0.5" : "How big the star texture should be"
-	starfade(float)			: "Star Fade" : "1.0" : "Fade the star texture towards the horizon"
-	starspeed(float)		: "Star Speed" : "0.01" : "How fast the star texture should scroll across the sky"
+	startexture(string) 	: "Star Texture" : "skybox/starfield" : "The star texture."
+	starscale(float)		: "Star Scale" : "0.5" : "How big the star texture should be."
+	starfade(float)			: "Star Fade" : "1.0" : "Fade the star texture towards the horizon."
+	starspeed(float)		: "Star Speed" : "0.01" : "How fast the star texture should scroll across the sky."
+	starlayers(float)		: "Star Layers" : "1" : "From 1 to 3, how many layers should the star texture be repated over."
 
 	hdrscale(float)			: "HDR Scale" : "0.66" : "When rendering your skybox in HDR mode, output will be scaled by this amount."
 ]
@@ -87,6 +88,7 @@
 	input Start(void) : "Start the rotator rotating."
 	input Stop(void) : "Stop the rotator from rotating."
 	input Reverse(void) : "Reverse the direction of rotation of the rotator."
+	input SetColor(color255) : "Sets the color of the spotlight."
 	
 	// outputs
 	output OnLightOn(void) : "Fires when light turns on."

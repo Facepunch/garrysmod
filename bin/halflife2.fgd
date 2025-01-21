@@ -371,6 +371,7 @@
 	[
 		65536 :  "Friendly" : 0
 		131072 : "Use prop_physics collision rules"	: 0
+		262144 : "Spawn as Alyx-hacked" : 0 // GMOD
 	]
 
 	startburied(choices) : "Start Buried" : "No" =

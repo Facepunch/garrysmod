@@ -3548,7 +3548,7 @@
 		1024: "Use Activates" : 1
 		2048: "Starts locked" : 0
 		4096: "Sparks" : 0
-		16384: "Non solid": 0
+		16384: "Non solid": 0 // GMOD: From CS:GO
 	]
 	locked_sound(choices) : "Locked Sound" : 0 : "Sound played when the player tries to use the button, and fails because it's locked." =
 	[
