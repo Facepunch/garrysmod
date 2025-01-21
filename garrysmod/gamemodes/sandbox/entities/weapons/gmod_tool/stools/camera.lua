@@ -50,7 +50,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 		end
 
 		ent:SetKey( key )
-		ent.controlkey = key
+		ent.controlkey = key -- Legacy?
 	end
 
 	ent:SetPlayer( ply )
@@ -66,12 +66,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	ent:SetTracking( NULL, Vector( 0 ) )
 	ent:SetLocked( locked )
 
-	if ( toggle == 1 ) then
-		numpad.OnDown( ply, key, "Camera_Toggle", ent )
-	else
-		numpad.OnDown( ply, key, "Camera_On", ent )
-		numpad.OnUp( ply, key, "Camera_Off", ent )
-	end
+	ent:ApplyKeybinds( ply ) -- Trigger the numpad assignments
 
 	if ( IsValid( ply ) ) then
 		ply:AddCleanup( "cameras", ent )
