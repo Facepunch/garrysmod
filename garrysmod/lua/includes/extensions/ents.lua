@@ -21,7 +21,7 @@ end
 
 
 
-local inext = ipairs({})
+local inext = ipairs( {} )
 local EntityCache = nil
 
 function ents.Iterator()
@@ -32,7 +32,7 @@ function ents.Iterator()
 
 end
 
-local function InvalidateEntityCache( ent )
+local function InvalidateEntityCache()
 
 	EntityCache = nil
 
