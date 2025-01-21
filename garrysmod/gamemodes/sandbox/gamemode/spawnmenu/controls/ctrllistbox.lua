@@ -1,11 +1,6 @@
 
 local PANEL = {}
 
---AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
-
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.ConVars = {}
@@ -13,9 +8,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: AddOption
------------------------------------------------------------]]
 function PANEL:AddOption( strName, tabConVars )
 
 	self:AddChoice( strName, tabConVars )
@@ -26,9 +18,6 @@ function PANEL:AddOption( strName, tabConVars )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnSelect
------------------------------------------------------------]]
 function PANEL:OnSelect( index, value, data )
 
 	for k, v in pairs( data ) do
@@ -39,18 +28,12 @@ function PANEL:OnSelect( index, value, data )
 
 end
 
---[[---------------------------------------------------------
-	Name: Think
------------------------------------------------------------]]
-function PANEL:Think( CheckConvarChanges )
+function PANEL:Think()
 
 	self:CheckConVarChanges()
 
 end
 
---[[---------------------------------------------------------
-	Name: ConVarsChanged
------------------------------------------------------------]]
 function PANEL:ConVarsChanged()
 
 	for k, v in pairs( self.ConVars ) do
@@ -64,9 +47,6 @@ function PANEL:ConVarsChanged()
 
 end
 
---[[---------------------------------------------------------
-	Name: CheckForMatch
------------------------------------------------------------]]
 function PANEL:CheckForMatch( cvars )
 
 	if ( table.IsEmpty( cvars ) ) then return false end
@@ -83,9 +63,6 @@ function PANEL:CheckForMatch( cvars )
 
 end
 
---[[---------------------------------------------------------
-	Name: CheckConVarChanges
------------------------------------------------------------]]
 function PANEL:CheckConVarChanges()
 
 	if (!self:ConVarsChanged()) then return end

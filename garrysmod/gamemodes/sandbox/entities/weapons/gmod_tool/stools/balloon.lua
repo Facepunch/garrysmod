@@ -227,6 +227,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:ControlHelp( "#tool.balloon.force.help" )
 
 	CPanel:ColorPicker( "#tool.balloon.color", "balloon_r", "balloon_g", "balloon_b" )
+
 	CPanel:PropSelect( "#tool.balloon.model", "balloon_model", list.Get( "BalloonModels" ), 0 )
 
 end
