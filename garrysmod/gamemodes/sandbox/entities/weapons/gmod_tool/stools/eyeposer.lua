@@ -251,7 +251,7 @@ function TOOL:DrawHUD()
 		local Leye = ( attachment.Pos + attachment.Ang:Right() * 1.5 ):ToScreen()
 		local Reye = ( attachment.Pos - attachment.Ang:Right() * 1.5 ):ToScreen()
 
-		-- Todo, make the line look less like ass
+		-- TODO: make the line look less like ass
 		local scrhit = trace.HitPos:ToScreen()
 		local x = scrhit.x
 		local y = scrhit.y

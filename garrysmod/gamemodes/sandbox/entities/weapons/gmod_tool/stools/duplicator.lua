@@ -158,10 +158,8 @@ if ( CLIENT ) then
 			for _, wsid in pairs( tool.CurrentDupeWSIDs ) do
 				local subbed = ""
 				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " (Subscribed)" end
-				local b = vgui.Create( "DButton", CPanel )
-				b:SetText( wsid .. subbed )
+				local b = CPanel:Button( wsid .. subbed )
 				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
-				CPanel:AddItem( b, nil )
 				steamworks.FileInfo( wsid, function( result )
 					if ( !IsValid( b ) ) then return end
 					b:SetText( result.title .. subbed )
@@ -173,8 +171,6 @@ if ( CLIENT ) then
 			local b = CPanel:Button( "#dupes.savedupe", "dupe_save" )
 			hook.Add( "DupeSaveUnavailable", b, function() b:Remove() end )
 		end
-
-		CPanel:InvalidateLayout()
 
 	end
 
