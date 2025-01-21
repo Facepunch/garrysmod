@@ -104,7 +104,7 @@ end
 
 function cam.Start2D()
 
-	return cam.Start( { type = '2D' } )
+	return cam.Start( { type = "2D" } )
 
 end
 
@@ -112,7 +112,7 @@ function cam.Start3D( pos, ang, fov, x, y, w, h, znear, zfar )
 
 	local tab = {}
 
-	tab.type = '3D';
+	tab.type = "3D"
 	tab.origin = pos
 	tab.angles = ang
 
