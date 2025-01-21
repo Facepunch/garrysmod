@@ -217,7 +217,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.light.desc" )
-
 	CPanel:ToolPresets( "light", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.light.key", "light_key" )

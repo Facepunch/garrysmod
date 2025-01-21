@@ -92,7 +92,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.ballsocket.help" )
-
 	CPanel:ToolPresets( "ballsocket", ConVarsDefault )
 
 	CPanel:NumSlider( "#tool.forcelimit", "ballsocket_forcelimit", 0, 50000, 2 )

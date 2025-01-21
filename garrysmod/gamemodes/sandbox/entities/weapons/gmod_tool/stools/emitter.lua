@@ -185,12 +185,11 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.emitter.desc" )
-
 	CPanel:ToolPresets( "emitter", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.emitter.key", "emitter_key" )
-
 	CPanel:NumSlider( "#tool.emitter.delay", "emitter_delay", 0.01, 2, 2 )
+
 	CPanel:NumSlider( "#tool.emitter.scale", "emitter_scale", 0, 6, 2 )
 	CPanel:ControlHelp( "#tool.emitter.scale.help" )
 

@@ -228,7 +228,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.hydraulic.help" )
-
 	CPanel:ToolPresets( "hydraulic", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.hydraulic.controls", "hydraulic_group" )

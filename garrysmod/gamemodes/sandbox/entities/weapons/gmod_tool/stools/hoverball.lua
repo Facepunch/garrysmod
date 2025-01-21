@@ -220,7 +220,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.hoverball.help" )
-
 	CPanel:ToolPresets( "hoverball", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.hoverball.up", "hoverball_keyup", "#tool.hoverball.down", "hoverball_keydn" )

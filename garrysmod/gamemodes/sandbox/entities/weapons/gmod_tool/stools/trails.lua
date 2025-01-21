@@ -147,7 +147,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.trails.desc" )
-
 	CPanel:ToolPresets( "trails", ConVarsDefault )
 
 	CPanel:ColorPicker( "#tool.trails.color", "trails_r", "trails_g", "trails_b", "trails_a" )

@@ -203,7 +203,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.winch.help" )
-
 	CPanel:ToolPresets( "winch", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.winch.forward", "winch_fwd_group", "#tool.winch.backward", "winch_bwd_group" )

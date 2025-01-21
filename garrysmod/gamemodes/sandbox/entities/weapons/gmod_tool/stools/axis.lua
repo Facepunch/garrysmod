@@ -220,7 +220,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.axis.help" )
-
 	CPanel:ToolPresets( "axis", ConVarsDefault )
 
 	CPanel:NumSlider( "#tool.forcelimit", "axis_forcelimit", 0, 50000, 2 )

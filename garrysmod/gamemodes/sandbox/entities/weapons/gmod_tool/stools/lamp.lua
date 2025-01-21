@@ -238,7 +238,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.lamp.desc" )
-
 	CPanel:ToolPresets( "lamp", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.lamp.key", "lamp_key" )
@@ -253,7 +252,6 @@ function TOOL.BuildCPanel( CPanel )
 
 	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, false, 0.33, 0.33 )
 	MatSelect.Height = 4
-
 	for k, v in pairs( list.Get( "LampTextures" ) ) do
 		MatSelect:AddMaterial( v.Name or k, k )
 	end

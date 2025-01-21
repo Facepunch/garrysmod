@@ -108,7 +108,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.elastic.help" )
-
 	CPanel:ToolPresets( "elastic", ConVarsDefault )
 
 	CPanel:NumSlider( "#tool.elastic.constant", "elastic_constant", 0, 4000, 2 )

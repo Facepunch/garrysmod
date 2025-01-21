@@ -108,7 +108,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.pulley.help" )
-
 	CPanel:ToolPresets( "pulley", ConVarsDefault )
 
 	CPanel:NumSlider( "#tool.forcelimit", "pulley_forcelimit", 0, 1000, 2 )

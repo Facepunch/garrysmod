@@ -289,7 +289,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.weld.help" )
-
 	CPanel:ToolPresets( "weld", ConVarsDefault )
 
 	CPanel:NumSlider( "#tool.forcelimit", "weld_forcelimit", 0, 1000, 2 )

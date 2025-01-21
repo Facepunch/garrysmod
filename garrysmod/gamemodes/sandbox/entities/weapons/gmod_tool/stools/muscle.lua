@@ -240,7 +240,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.muscle.help" )
-
 	CPanel:ToolPresets( "muscle", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.muscle.numpad", "muscle_group" )

@@ -95,7 +95,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.colour.desc" )
-
 	CPanel:ToolPresets( "colour", ConVarsDefault )
 
 	CPanel:ColorPicker( "#tool.colour.color", "colour_r", "colour_g", "colour_b", "colour_a" )

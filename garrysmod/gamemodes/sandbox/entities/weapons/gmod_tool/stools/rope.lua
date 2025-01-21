@@ -179,7 +179,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.rope.help" )
-
 	CPanel:ToolPresets( "rope", ConVarsDefault )
 
 	CPanel:NumSlider( "#tool.forcelimit", "rope_forcelimit", 0, 1000, 2 )

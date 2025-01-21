@@ -223,7 +223,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.thruster.desc" )
-
 	CPanel:ToolPresets( "thruster", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.thruster.forward", "thruster_keygroup", "#tool.thruster.back", "thruster_keygroup_back" )

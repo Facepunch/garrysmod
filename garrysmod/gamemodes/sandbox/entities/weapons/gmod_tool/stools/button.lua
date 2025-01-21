@@ -172,7 +172,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.button.desc" )
-
 	CPanel:ToolPresets( "button", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.button.key", "button_keygroup" )

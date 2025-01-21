@@ -248,7 +248,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.wheel.desc" )
-
 	CPanel:ToolPresets( "wheel", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.wheel.forward", "wheel_fwd", "#tool.wheel.reverse", "wheel_bck" )

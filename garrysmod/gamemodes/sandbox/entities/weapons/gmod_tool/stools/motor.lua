@@ -143,7 +143,6 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:Help( "#tool.motor.help" )
-
 	CPanel:ToolPresets( "motor", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.motor.numpad1", "motor_fwd", "#tool.motor.numpad2", "motor_bwd" )
