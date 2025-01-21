@@ -70,12 +70,26 @@ function PANEL:PropSelect( label, strConVar, mdlList, height )
 
 	local PropSelect = vgui.Create( "PropSelect", self )
 
-	PropSelect:SetConVar( strConVar or "" )
+	PropSelect:SetConVar( strConVar )
 	PropSelect.Label:SetText( label or "" )
-	PropSelect.Height = height || 2
+	PropSelect.Height = height or 2
 
-	for k, v in SortedPairs( mdlList ) do
-		PropSelect:AddModel( k, v )
+	local firstKey, firstVal = next( mdlList )
+	if ( istable( firstVal ) and isstring( firstVal.model ) ) then
+		-- Special case for Balloon tool
+		local tmp = {}
+		for k, v in SortedPairsByMemberValue( mdlList, "model" ) do
+			tmp[ k ] = v.model:lower() .. ( v.skin or 0 )
+		end
+
+		for k, v in SortedPairsByValue( tmp ) do
+			v = mdlList[ k ]
+			PropSelect:AddModelEx( k, v.model, v.skin or 0 )
+		end
+	else
+		for k, v in SortedPairs( mdlList ) do
+			PropSelect:AddModel( k, v )
+		end
 	end
 
 	self:AddPanel( PropSelect )
@@ -218,7 +232,7 @@ function PANEL:AddControl( control, data )
 	if ( control == "slider" ) then
 
 		local Decimals = 0
-		if ( data.type && string.lower(data.type) == "float" ) then Decimals = 2 end
+		if ( data.type and string.lower(data.type) == "float" ) then Decimals = 2 end
 
 		local ctrl = self:NumSlider( data.label or "Untitled", data.command, data.min or 0, data.max or 100, Decimals )
 
