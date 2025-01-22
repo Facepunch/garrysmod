@@ -34,15 +34,20 @@ list.Set( "PostProcess", "#sobel_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#sobel_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#sobel_pp.enable", Command = "pp_sobel" } )
+		CPanel:Help( "#sobel_pp.desc" )
+		CPanel:CheckBox( "#sobel_pp.enable", "pp_sobel" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "sobel" }
-		params.Options[ "#preset.default" ] = { pp_sobel_threshold = "0.11" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		local params = vgui.Create( "ControlPresets", CPanel )
+		local options = {}
+		options[ "#preset.default" ] = { pp_sobel_threshold = "0.11" }
+		params:SetPreset( "sobel" )
+		params:AddOption( "#preset.default", options[ "#preset.default" ] )
+		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
+			params:AddConVar( v )
+		end
+		CPanel:AddPanel( params )
 
-		CPanel:AddControl( "Slider", { Label = "#sobel_pp.threshold", Command = "pp_sobel_threshold", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:NumSlider( "#sobel_pp.threshold", "pp_sobel_threshold", 0, 1, 2 )
 
 	end
 

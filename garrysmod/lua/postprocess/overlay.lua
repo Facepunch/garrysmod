@@ -96,14 +96,19 @@ list.Set( "PostProcess", "#overlay_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#overlay_pp.desc" } )
+		CPanel:Help( "#overlay_pp.desc" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "overlay" }
-		params.Options[ "#preset.default" ] = { pp_mat_overlay_refractamount = "0.3" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		local params = vgui.Create( "ControlPresets", CPanel )
+		local options = {}
+		options[ "#preset.default" ] = { pp_mat_overlay_refractamount = "0.3" }
+		params:SetPreset( "bloom" )
+		params:AddOption( "#preset.default", options[ "#preset.default" ] )
+		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
+			params:AddConVar( v )
+		end
+		CPanel:AddPanel( params )
 
-		CPanel:AddControl( "Slider", { Label = "#overlay_pp.refract", Command = "pp_mat_overlay_refractamount", Type = "Float", Min = "-1", Max = "1" } )
+		CPanel:NumSlider( "#overlay_pp.refract", "pp_mat_overlay_refractamount", -1, 1, 2 )
 
 	end
 
