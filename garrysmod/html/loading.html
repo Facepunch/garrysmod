@@ -41,12 +41,14 @@
 				var isSupportsSystemDarkMode = navigator.userAgent.match(/Chrome\/(\d+)/)[1] >= 76;
 				var systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-				if (isHalloween || (isSupportsSystemDarkMode ? systemDarkMode : darkMode)) {
+				if ( isHalloween || ( isSupportsSystemDarkMode ? systemDarkMode : darkMode ) )
+				{
 					document.body.classList.add( "dark" );
 				}
 			} );
 
-			function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice) {
+			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
+			{
 				document.querySelector("#serverName").innerText = servername;
 				document.querySelector("#serverMap").innerText = mapname;
 				document.querySelector("#serverGamemode").innerText = gamemodeNice;
@@ -68,12 +70,14 @@
 			}
 
 			// A file has begun downloading
-			function DownloadingFile( file ) {
+			function DownloadingFile( file )
+			{
 				//document.querySelector("#spambox").innerHTML = "<span style='color:red'>" + file + "</span><br>" + document.querySelector("#spambox").innerHTML;
 			}
 
 			// This will not be called when DownloadingFile() is
-			function SetStatusChanged( status ) {
+			function SetStatusChanged( status )
+			{
 				//document.querySelector("#spambox").innerHTML = status + "<br>" + document.querySelector("#spambox").innerHTML;
 			}
 		</script>
