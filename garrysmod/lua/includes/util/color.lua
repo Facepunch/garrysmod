@@ -12,8 +12,12 @@ RegisterMetaTable( "Color", COLOR )
 -----------------------------------------------------------]]
 function Color( r, g, b, a )
 
-	a = a or 255
-	return setmetatable( { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }, COLOR )
+	return setmetatable( {
+		r = math.min( tonumber( r ), 255 ),
+		g = math.min( tonumber( g ), 255 ),
+		b = math.min( tonumber( b ), 255 ),
+		a = math.min( tonumber( a or 255 ), 255 )
+	}, COLOR )
 
 end
 
@@ -35,6 +39,82 @@ function IsColor( obj )
 
 end
 
+--[[---------------------------------------------------------
+	Different color represntations
+-----------------------------------------------------------]]
+function HSVToColor( h, s, v )
+
+	h = h % 360
+
+	local c = v * s
+	local x = c * ( 1 - math.abs( ( h / 60 ) % 2 - 1 ) )
+	local m = v - c
+
+	local r, g, b
+	if ( h < 60 ) then
+		r, g, b = c, x, 0
+	elseif ( h < 120 ) then
+		r, g, b = x, c, 0
+	elseif ( h < 180 ) then
+		r, g, b = 0, c, x
+	elseif ( h < 240 ) then
+		r, g, b = 0, x, c
+	elseif ( h < 300 ) then
+		r, g, b = x, 0, c
+	else
+		r, g, b = c, 0, x
+	end
+
+	return Color(
+		math.floor( ( r + m ) * 255 ) % 255,
+		math.floor( ( g + m ) * 255 ) % 255,
+		math.floor( ( b + m ) * 255 ) % 255
+	)
+
+end
+
+function HSLToColor( h, s, l )
+
+	h = h % 360
+
+	local c = ( 1 - math.abs( 2 * l - 1 ) ) * s
+	local x = c * ( 1 - math.abs( ( h / 60 ) % 2 - 1 ) )
+	local m = l - c / 2
+
+	local r, g, b
+	if ( h < 60 ) then
+		r, g, b = c, x, 0
+	elseif ( h < 120 ) then
+		r, g, b = x, c, 0
+	elseif ( h < 180 ) then
+		r, g, b = 0, c, x
+	elseif ( h < 240 ) then
+		r, g, b = 0, x, c
+	elseif ( h < 300 ) then
+		r, g, b = x, 0, c
+	else
+		r, g, b = c, 0, x
+	end
+
+	return Color(
+		math.floor( ( r + m ) * 255 ) % 255,
+		math.floor( ( g + m ) * 255 ) % 255,
+		math.floor( ( b + m ) * 255 ) % 255
+	)
+
+end
+
+function HWBToColor( h, w, b )
+
+	local v = 1 - b
+	local s = 0
+	if ( v > 0 ) then
+		s = 1 - w / v
+	end
+
+	return HSVToColor( h, s, v )
+
+end
 
 --[[---------------------------------------------------------
 	Returns color as a string
@@ -64,11 +144,21 @@ function COLOR:ToHSL()
 end
 
 --[[---------------------------------------------------------
-	Converts a color to HSV
+	Converts a color to HSV color space
 -----------------------------------------------------------]]
 function COLOR:ToHSV()
 
 	return ColorToHSV( self )
+
+end
+
+--[[---------------------------------------------------------
+	Converts a color to HWB color space
+-----------------------------------------------------------]]
+function COLOR:ToHWB()
+
+	local h, s, v = self:ToHSV()
+	return h, ( 1 - s ) * v, 1 - v
 
 end
 
@@ -92,7 +182,12 @@ end
 
 function COLOR:Lerp( target_clr, frac )
 
-	return Color( Lerp( frac, self.r, target_clr.r ), Lerp( frac, self.g, target_clr.g ), Lerp( frac, self.b, target_clr.b ), Lerp( frac, self.a, target_clr.a ) )
+	return Color(
+		Lerp( frac, self.r, target_clr.r ),
+		Lerp( frac, self.g, target_clr.g ),
+		Lerp( frac, self.b, target_clr.b ),
+		Lerp( frac, self.a, target_clr.a )
+	)
 
 end
 
@@ -124,7 +219,7 @@ local function ColorCopy( dest, origin )
 
 end
 
--- hsb hue
+-- HSV hue
 function COLOR:GetHue()
 
 	local hue = self:ToHSV()
@@ -148,7 +243,7 @@ function COLOR:AddHue( hueAdd )
 
 end
 
--- hsb saturation
+-- HSV saturation
 function COLOR:GetSaturation()
 
 	local _, saturation = self:ToHSV()
@@ -172,7 +267,7 @@ function COLOR:AddSaturation( saturationAdd )
 
 end
 
--- hsb brightness
+-- HSV brightness
 function COLOR:GetBrightness()
 
 	local _, _, brightness = self:ToHSV()
@@ -196,7 +291,7 @@ function COLOR:AddBrightness( brightnessAdd )
 
 end
 
--- hsl lightness
+-- HSL lightness
 function COLOR:GetLightness()
 
 	local _, _, lightness = self:ToHSL()
@@ -220,7 +315,7 @@ function COLOR:AddLightness( lightnessAdd )
 
 end
 
--- hwb whiteness
+-- HWB whiteness
 function COLOR:GetWhiteness()
 
 	local _, whiteness = self:ToHWB()
@@ -244,7 +339,7 @@ function COLOR:AddWhiteness( whitenessAdd )
 
 end
 
--- hwb blackness
+-- HWB blackness
 function COLOR:GetBlackness()
 
 	local _, _, blackness = self:ToHWB()
@@ -265,83 +360,6 @@ function COLOR:AddBlackness( blacknessAdd )
 	local hue, whiteness, blackness = self:ToHWB()
 	blackness = math.Clamp( blackness + blacknessAdd, 0, 1 )
 	ColorCopy( self, HWBToColor( hue, whiteness, blackness ) )
-
-end
-
--- hwb implementation
-function COLOR:ToHWB()
-
-	local h, s, v = self:ToHSV()
-	return h, ( 1 - s ) * v, 1 - v
-
-end
-
-function HWBToColor( h, w, b )
-
-	local v = 1 - b
-	local s = 0
-	if ( v > 0 ) then
-		s = 1 - w / v
-	end
-
-	return HSVToColor( h, s, v )
-
-end
-
-function HSVToColor( h, s, v )
-
-	local c = v * s
-	local x = c * ( 1 - math.abs( ( h / 60 ) % 2 - 1 ) )
-	local m = v - c
-
-	local r, g, b
-	if ( h < 60 ) then
-		r, g, b = c, x, 0
-	elseif ( h < 120 ) then
-		r, g, b = x, c, 0
-	elseif ( h < 180 ) then
-		r, g, b = 0, c, x
-	elseif ( h < 240 ) then
-		r, g, b = 0, x, c
-	elseif ( h < 300 ) then
-		r, g, b = x, 0, c
-	else
-		r, g, b = c, 0, x
-	end
-
-	return Color(
-		( r + m ) * 255,
-		( g + m ) * 255,
-		( b + m ) * 255
-	)
-
-end
-
-local function HSLToColor( h, s, l )
-	local c = ( 1 - math.abs( 2 * l - 1 ) ) * s
-	local x = c * (1 - math.abs( ( h / 60 ) % 2 - 1) )
-	local m = l - c / 2
-
-	local r, g, b
-	if ( h < 60 ) then
-		r, g, b = c, x, 0
-	elseif ( h < 120 ) then
-		r, g, b = x, c, 0
-	elseif ( h < 180 ) then
-		r, g, b = 0, c, x
-	elseif ( h < 240 ) then
-		r, g, b = 0, x, c
-	elseif ( h < 300 ) then
-		r, g, b = x, 0, c
-	else
-		r, g, b = c, 0, x
-	end
-
-	return Color(
-		( r + m ) * 255,
-		( g + m ) * 255,
-		( b + m ) * 255
-	)
 
 end
 
