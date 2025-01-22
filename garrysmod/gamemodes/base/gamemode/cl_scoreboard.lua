@@ -70,7 +70,7 @@ local PLAYER_LINE = {
 
 		self.Player = pl
 
-		self.Avatar:SetPlayer( pl )
+		self.Avatar:SetPlayer( pl, 64 )
 
 		self:Think( self )
 
