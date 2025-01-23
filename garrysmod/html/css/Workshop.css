@@ -163,7 +163,7 @@ workshopicon description
 	bottom: 0px;
 	right: 0;
 	text-align: left;
-	background-color: rgba( 70, 180, 250, 0.95 );
+	background-color: rgba( 70, 180, 250, 0.8 );
 	font-size: 11px;
 	padding: 32px 8px;
 	color: #fff;
@@ -172,6 +172,9 @@ workshopicon description
 
 	opacity: 0;
 	-webkit-transition: opacity 100ms ease-in 0ms;
+
+	backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 workshopicon .checkbox
