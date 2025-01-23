@@ -39,7 +39,7 @@ function TOOL:LeftClick( trace, attach )
 	local g = self:GetClientNumber( "g", 0 )
 	local b = self:GetClientNumber( "b", 0 )
 	local model = self:GetClientInfo( "model" )
-	local force = math.Clamp( self:GetClientNumber( "force", 500 ), -1E34, 1E34 )
+	local force = math.Clamp( self:GetClientNumber( "force", 500 ), 0, 1E34 )
 	local length = self:GetClientNumber( "ropelength", 64 )
 
 	local modeltable = list.Get( "BalloonModels" )[ model ]
