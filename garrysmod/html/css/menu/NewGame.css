@@ -3,6 +3,8 @@ UL.category LI.mapicon IMG.thumbnail
 {
 	width: 128px;
 	height: 128px;
+	border-radius: 6px;
+	transition: background-color 0.5s ease;
 }
 UL.category LI.mapicon IMG.favtoggle
 {
@@ -75,7 +77,8 @@ UL.category LI.mapicon span
 UL.category LI.mapicon.selected
 {
 	background-color: #97c5ff;
-	border-radius: 3px;
+	border-radius: 6px;
+	transition: background-color 0.5s ease;
 }
 
 gamesettings
@@ -99,14 +102,14 @@ gamesettings bottom
 
 gamesettings bottom button
 {
-	left: 16px;
-	right: 16px;
+	left: 6px;
+	right: 6px;
 	bottom: 8px;
 	padding: 10px;
 	position: absolute;
 	margin: 10px;
 	font-size: 20px;
-	width: 77%;
+	width: calc(100% - 32px);
 }
 
 gamesettings select
@@ -259,6 +262,7 @@ gamesettings .control-numeric input[type=text]
 	height: 26px;
 	cursor: pointer;
 	position: relative;
+	transition: background-color 0.5s ease;
 }
 
 .controls LI.active
