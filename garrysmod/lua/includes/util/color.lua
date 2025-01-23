@@ -66,9 +66,9 @@ function HSVToColor( h, s, v )
 	end
 
 	return Color(
-		math.floor( ( r + m ) * 255 ) % 255,
-		math.floor( ( g + m ) * 255 ) % 255,
-		math.floor( ( b + m ) * 255 ) % 255
+		math.Clamp( math.floor( ( r + m ) * 255 ), 0, 255 ),
+		math.Clamp( math.floor( ( g + m ) * 255 ), 0, 255 ),
+		math.Clamp( math.floor( ( b + m ) * 255 ), 0, 255 )
 	)
 
 end
@@ -97,9 +97,9 @@ function HSLToColor( h, s, l )
 	end
 
 	return Color(
-		math.floor( ( r + m ) * 255 ) % 255,
-		math.floor( ( g + m ) * 255 ) % 255,
-		math.floor( ( b + m ) * 255 ) % 255
+		math.Clamp( math.floor( ( r + m ) * 255 ), 0, 255 ),
+		math.Clamp( math.floor( ( g + m ) * 255 ), 0, 255 ),
+		math.Clamp( math.floor( ( b + m ) * 255 ), 0, 255 )
 	)
 
 end
