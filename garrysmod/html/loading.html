@@ -2,7 +2,6 @@
 	<head>
 		<title>Loading..</title>
 		<link rel="stylesheet" type="text/css" href="loading.css?3" />
-		<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
 	</head>
 	<body>
 
@@ -30,9 +29,9 @@
 			</div>
 
 		</div>
+
 		<script type="text/javascript">
-			window.onload = function()
-			{
+			document.addEventListener( "DOMContentLoaded", function() {
 				var today = new Date();
 
 				// Force it to dark on Spooktober or when it's late
@@ -42,43 +41,44 @@
 				var isSupportsSystemDarkMode = navigator.userAgent.match(/Chrome\/(\d+)/)[1] >= 76;
 				var systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-				if (isHalloween || (isSupportsSystemDarkMode ? systemDarkMode : darkMode)) {
-					$("body").addClass("dark");
+				if ( isHalloween || ( isSupportsSystemDarkMode ? systemDarkMode : darkMode ) )
+				{
+					document.body.classList.add( "dark" );
 				}
-			}
+			} );
 
 			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
 			{
-				$("#serverName").text( servername );
-				$("#serverMap").text( mapname );
-				$("#serverGamemode").text( gamemodeNice );
-				$("#mapimg").attr("src", "asset://mapimage/" + mapname );
-				$("body").css( "background-image", "url( 'asset://mapimage/" + mapname + "' )" );
+				document.querySelector("#serverName").innerText = servername;
+				document.querySelector("#serverMap").innerText = mapname;
+				document.querySelector("#serverGamemode").innerText = gamemodeNice;
+				document.querySelector("#mapimg").setAttribute( "src", "asset://mapimage/" + mapname );
+				document.body.style.backgroundImage = "url('asset://mapimage/" + mapname + "')";
 
-				$(".server_info").addClass( "visible" );
+				document.querySelector(".server_info").classList.add( "visible" );
 
 				// Do with these what you will :)
 				// this function gets called only when joining a multiplayer server
-				/*$("#spambox").append("serverurl: " + serverurl + "<br>");
-				$("#spambox").append("servername: " + servername + "<br>");
-				$("#spambox").append("maxplayers: " + maxplayers + "<br>");
-				$("#spambox").append("steamid: " + steamid + "<br>");
-				$("#spambox").append("gamemode: " + gamemode + "<br>");
-				$("#spambox").append("mapname: " + mapname + "<br>");
-				$("#spambox").append("volume: " + volume + "<br>");
-				$("#spambox").append("lang: " + lang + "<br>");*/
+				/*document.querySelector("#spambox").innerHTML += "serverurl: " + serverurl + "<br>";
+				document.querySelector("#spambox").innerHTML += "servername: " + servername + "<br>";
+				document.querySelector("#spambox").innerHTML += "maxplayers: " + maxplayers + "<br>";
+				document.querySelector("#spambox").innerHTML += "steamid: " + steamid + "<br>";
+				document.querySelector("#spambox").innerHTML += "gamemode: " + gamemode + "<br>";
+				document.querySelector("#spambox").innerHTML += "mapname: " + mapname + "<br>";
+				document.querySelector("#spambox").innerHTML += "volume: " + volume + "<br>";
+				document.querySelector("#spambox").innerHTML += "lang: " + lang + "<br>";*/
 			}
 
 			// A file has begun downloading
 			function DownloadingFile( file )
 			{
-				//$("#spambox").prepend( "<span style='color:red'>" + file + "</span><br>");
+				//document.querySelector("#spambox").innerHTML = "<span style='color:red'>" + file + "</span><br>" + document.querySelector("#spambox").innerHTML;
 			}
 
 			// This will not be called when DownloadingFile() is
 			function SetStatusChanged( status )
 			{
-				//$("#spambox").prepend( status + "<br>");
+				//document.querySelector("#spambox").innerHTML = status + "<br>" + document.querySelector("#spambox").innerHTML;
 			}
 		</script>
 

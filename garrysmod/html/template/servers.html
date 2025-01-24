@@ -44,7 +44,7 @@
 					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass" ng-tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/>
 
 					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">
-						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )"/>
+						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )" loading="lazy"/>
 					</div>
 				</li>
 			</ul>
@@ -132,8 +132,8 @@
 
 						<name>
 							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
-							<img class="flag" src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/>
-							<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
+							<img class="flag" src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag" loading="lazy"/>
+							<img class="passworded" src='img/server-passworded.png' ng-show="server.pass" loading="lazy"/>
 							<span>{{ServerName(server)}}
 								<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
 							</span>
