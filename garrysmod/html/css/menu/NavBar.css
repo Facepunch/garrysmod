@@ -257,6 +257,7 @@ UL.language_list
 	background-color: #eee;
 	text-align: center;
 	border: 3px solid #333;
+	padding-bottom: 4px;
 }
 
 UL.language_list LI
