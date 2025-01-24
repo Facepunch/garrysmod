@@ -99,14 +99,14 @@ gamesettings bottom
 
 gamesettings bottom button
 {
-	left: 6px;
-	right: 6px;
+	left: 8px;
+	right: 8px;
 	bottom: 8px;
 	padding: 10px;
 	position: absolute;
 	margin: 10px;
 	font-size: 20px;
-	width: calc(100% - 32px);
+	width: calc(100% - 36px);
 }
 
 gamesettings select
