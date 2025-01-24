@@ -95,7 +95,6 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	transition: box-shadow 0.3s ease;
 }
 
 #NavBar .button
@@ -273,12 +272,11 @@ UL.language_list LI
 UL.language_list LI IMG
 {
 	border: 1px solid #888;
-	transition: transform 0.2s ease;
 }
 
 UL.language_list LI:hover
 {
-	transform: scale(1.1);
+	background-color: #fff;
 }
 
 ::-webkit-scrollbar

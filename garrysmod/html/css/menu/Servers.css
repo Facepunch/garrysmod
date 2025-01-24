@@ -1,3 +1,4 @@
+
 .servers
 {
 	position: absolute;
@@ -20,7 +21,6 @@
 	height: 34px;
 	overflow: hidden;
 	background-image: -webkit-linear-gradient(bottom, rgb(230,230,230) 1%, rgb(240,240,240) 99%);
-	transition: background-color 0.2s ease;
 }
 
 .gamemode:hover
@@ -51,7 +51,6 @@
 
 	position: relative;
 	top: -4px;
-	border-radius: 3px;
 }
 
 .gamemode .stats
@@ -92,7 +91,6 @@ H1 small
 	background-color: white;
 	padding: 10px;
 	border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .serverlist.found_servers
@@ -156,7 +154,6 @@ H1 small
 	margin-left: 5px;
 	position: relative;
 	top: -1px;
-	border-radius: 3px;
 }
 
 .serverlist name .flag
@@ -235,7 +232,6 @@ H1 small
 	padding: 3px;
 	color: #444;
 	cursor: pointer;
-	transition: background-color 0.2s ease;
 }
 
 .serverlist .server:nth-child(odd)
@@ -360,12 +356,6 @@ A.bglink
 	margin-top: 4px;
 
 	position: absolute; /*hack to make it appear over the search bar*/
-	transition: background-color 0.2s ease;
-}
-
-A.bglink:hover
-{
-	background-color: #7CF;
 }
 
 .serverinfo
@@ -378,7 +368,6 @@ A.bglink:hover
 	background-color: white;
 	padding: 10px 15px;
 	border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .serverinfo name
@@ -396,12 +385,6 @@ A.bglink:hover
 {
 	width: 100%;
 	font-size: 30px;
-	transition: background-color 0.2s ease;
-}
-
-.serverinfo button:hover
-{
-	background-color: #7CF;
 }
 
 .serverinfo address
@@ -498,7 +481,6 @@ DIV.installgamemode
 	cursor: pointer;
 	background: #5AF url( '../../img/gm_install32.png' ) no-repeat 6px center;
 	padding-left: 36px;
-	transition: background-color 0.2s ease;
 }
 
 DIV.installgamemode:hover
@@ -516,7 +498,6 @@ SPAN.installgamemode
 	cursor: pointer;
 	background: #5AF url( '../../img/gm_install16.png' ) no-repeat 13px center;
 	width: 42px;
-	transition: background-color 0.2s ease;
 }
 
 SPAN.installgamemode:hover
@@ -569,7 +550,6 @@ SPAN.installgamemode:hover
 	margin-left: 5px;
 
 	height: 24px;
-	transition: box-shadow 0.2s ease;
 }
 
 .add_fav_server button:hover
@@ -671,7 +651,6 @@ input[type=number]::-webkit-inner-spin-button
 	margin-bottom: 4px;
 	background: #fff;
 	border-radius: 4px;
-	transition: background-color 0.2s ease;
 }
 .flags_filter .flag.prefer
 {
@@ -834,7 +813,6 @@ name .favbutton
 	height: 16px;
 	width: 16px;
 	display: inline-block;
-	transition: background 0.2s ease;
 }
 name .favbutton:hover
 {
