@@ -60,20 +60,13 @@ list.Set( "PostProcess", "#sunbeams_pp", {
 		CPanel:Help( "#sunbeams_pp.desc" )
 		CPanel:CheckBox( "#sunbeams_pp.enable", "pp_sunbeams" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = {
+		local options = {
 			pp_sunbeams = "0",
 			pp_sunbeams_darken = "0.95",
 			pp_sunbeams_multiply = "1",
 			pp_sunbeams_sunsize = "0.075"
 		}
-		params:SetPreset( "sunbeams" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "sunbeams", options )
 
 		CPanel:NumSlider( "#sunbeams_pp.multiply", "pp_sunbeams_multiply", 0, 1, 2 )
 		CPanel:NumSlider( "#sunbeams_pp.darken", "pp_sunbeams_darken", 0, 1, 2 )

@@ -76,15 +76,7 @@ list.Set( "PostProcess", "#dof_pp", {
 		CPanel:Help( "#dof_pp.desc" )
 		CPanel:CheckBox( "#dof_pp.enable", "pp_dof" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = { pp_dof_initlength = "256", pp_dof_spacing = "512" }
-		params:SetPreset( "dof" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "dof", { pp_dof_initlength = "256", pp_dof_spacing = "512" } )
 
 		CPanel:NumSlider( "#dof_pp.spacing", "pp_dof_spacing", 8, 1024, 2 )
 		CPanel:NumSlider( "#dof_pp.start_distance", "pp_dof_initlength", 9, 1024, 2 )

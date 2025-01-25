@@ -51,15 +51,7 @@ list.Set( "PostProcess", "#toytown_pp", {
 		CPanel:Help( "#toytown_pp.desc" )
 		CPanel:CheckBox( "#toytown_pp.enable", "pp_toytown" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = { pp_toytown_passes = "3", pp_toytown_size = "0.5" }
-		params:SetPreset( "frame_blend" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "toytown", { pp_toytown_passes = "3", pp_toytown_size = "0.5" } )
 
 		CPanel:NumSlider( "#toytown_pp.passes", "pp_toytown_passes", 1, 100, 0 )
 		CPanel:NumSlider( "#toytown_pp.height", "pp_toytown_size", 0, 1, 2 )

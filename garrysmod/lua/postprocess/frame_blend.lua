@@ -198,15 +198,7 @@ list.Set( "PostProcess", "#frame_blend_pp", {
 
 		CPanel:CheckBox( "#frame_blend_pp.enable", "pp_fb" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = { pp_fb_frames = "16", pp_fb_shutter = "0.5" }
-		params:SetPreset( "frame_blend" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "frame_blend", { pp_fb_frames = "16", pp_fb_shutter = "0.5" } )
 
 		CPanel:NumSlider( "#frame_blend_pp.frames", "pp_fb_frames", 3, 64, 0 )
 		CPanel:NumSlider( "#frame_blend_pp.shutter", "pp_fb_shutter", 0, 0.99, 2 )

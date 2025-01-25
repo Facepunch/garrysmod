@@ -76,19 +76,12 @@ list.Set( "PostProcess", "#motion_blur_pp", {
 		CPanel:Help( "#motion_blur_pp.desc" )
 		CPanel:CheckBox( "#motion_blur_pp.enable", "pp_motionblur" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = { 
+		local options = {
 			pp_motionblur_addalpha = "0.2",
 			pp_motionblur_delay = "0.05",
 			pp_motionblur_drawalpha = "0.99"
 		}
-		params:SetPreset( "motionblur" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "motionblur", options )
 
 		CPanel:NumSlider( "#motion_blur_pp.add_alpha", "pp_motionblur_addalpha", 0, 1, 2 )
 		CPanel:NumSlider( "#motion_blur_pp.draw_alpha", "pp_motionblur_drawalpha", 0, 1, 2 )

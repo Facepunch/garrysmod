@@ -84,9 +84,7 @@ list.Set( "PostProcess", "#bloom_pp", {
 		CPanel:Help( "#bloom_pp.desc" )
 		CPanel:CheckBox( "#bloom_pp.enable", "pp_bloom" )
 
-		local presets = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = {
+		local options = {
 			pp_bloom_passes = "4",
 			pp_bloom_darken = "0.65",
 			pp_bloom_multiply = "1.0",
@@ -97,12 +95,7 @@ list.Set( "PostProcess", "#bloom_pp", {
 			pp_bloom_color_g = "255",
 			pp_bloom_color_b = "255"
 		}
-		presets:SetPreset( "bloom" )
-		presets:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			presets:AddConVar( v )
-		end
-		CPanel:AddPanel( presets )
+		CPanel:ToolPresets( "bloom", options )
 
 		CPanel:NumSlider( "#bloom_pp.passes", "pp_bloom_passes", 0, 30, 0 )
 		CPanel:NumSlider( "#bloom_pp.darken", "pp_bloom_darken", 0, 1, 2 )

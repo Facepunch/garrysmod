@@ -41,15 +41,7 @@ list.Set( "PostProcess", "#sharpen_pp", {
 		CPanel:Help( "#sharpen_pp.desc" )
 		CPanel:CheckBox( "#sharpen_pp.enable", "pp_sharpen" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = { pp_sharpen_distance = "1", pp_sharpen_contrast = "1" }
-		params:SetPreset( "sharpen" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "sharpen", { pp_sharpen_distance = "1", pp_sharpen_contrast = "1" } )
 
 		CPanel:NumSlider( "#sharpen_pp.distance", "pp_sharpen_distance", -5, 5, 2 )
 		CPanel:NumSlider( "#sharpen_pp.contrast", "pp_sharpen_contrast", 0, 20, 2 )

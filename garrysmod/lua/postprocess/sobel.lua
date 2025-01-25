@@ -37,15 +37,7 @@ list.Set( "PostProcess", "#sobel_pp", {
 		CPanel:Help( "#sobel_pp.desc" )
 		CPanel:CheckBox( "#sobel_pp.enable", "pp_sobel" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = { pp_sobel_threshold = "0.11" }
-		params:SetPreset( "sobel" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "sobel", { pp_sobel_threshold = "0.11" } )
 
 		CPanel:NumSlider( "#sobel_pp.threshold", "pp_sobel_threshold", 0, 1, 2 )
 

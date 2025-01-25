@@ -65,9 +65,7 @@ list.Set( "PostProcess", "#colormod_pp", {
 		CPanel:Help( "#colormod_pp.desc" )
 		CPanel:CheckBox( "#colormod_pp.enable", "pp_colormod" )
 
-		local params = vgui.Create( "ControlPresets", CPanel )
-		local options = {}
-		options[ "#preset.default" ] = { 
+		local options = {
 			pp_colormod_addr = "0",
 			pp_colormod_addg = "0",
 			pp_colormod_addb = "0",
@@ -79,12 +77,7 @@ list.Set( "PostProcess", "#colormod_pp", {
 			pp_colormod_mulb = "0",
 			pp_colormod_inv = "0"
 		}
-		params:SetPreset( "colormod" )
-		params:AddOption( "#preset.default", options[ "#preset.default" ] )
-		for k, v in pairs( table.GetKeys( options[ "#preset.default" ] ) ) do
-			params:AddConVar( v )
-		end
-		CPanel:AddPanel( params )
+		CPanel:ToolPresets( "colormod", options )
 
 		CPanel:NumSlider( "#colormod_pp.brightness", "pp_colormod_brightness", -2, 2, 2 )
 		CPanel:NumSlider( "#colormod_pp.contrast", "pp_colormod_contrast", 0, 10, 2 )
