@@ -113,6 +113,11 @@ function GMODSpawnRagdoll( ply, model, iSkin, strBody )
 		gamemode.Call( "PlayerSpawnedRagdoll", ply, model, e )
 	end
 
+	-- Fix the wrong face (https://github.com/Facepunch/garrysmod-issues/issues/6146)
+	for i=1, e:GetFlexNum() do
+		e:SetFlexWeight( i, 0.0 )
+	end
+
 	DoPropSpawnedEffect( e )
 
 	undo.Create( "Ragdoll" )
