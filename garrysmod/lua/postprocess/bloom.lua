@@ -98,11 +98,11 @@ list.Set( "PostProcess", "#bloom_pp", {
 		CPanel:ToolPresets( "bloom", options )
 
 		CPanel:NumSlider( "#bloom_pp.passes", "pp_bloom_passes", 0, 30, 0 )
-		CPanel:NumSlider( "#bloom_pp.darken", "pp_bloom_darken", 0, 1, 2 )
-		CPanel:NumSlider( "#bloom_pp.multiply", "pp_bloom_multiply", 0, 5, 2 )
-		CPanel:NumSlider( "#bloom_pp.blurx", "pp_bloom_sizex", 0, 50, 2 )
-		CPanel:NumSlider( "#bloom_pp.blury", "pp_bloom_sizey", 0, 50, 2 )
-		CPanel:NumSlider( "#bloom_pp.multiplier", "pp_bloom_color", 0, 20, 2 )
+		CPanel:NumSlider( "#bloom_pp.darken", "pp_bloom_darken", 0, 1 )
+		CPanel:NumSlider( "#bloom_pp.multiply", "pp_bloom_multiply", 0, 5 )
+		CPanel:NumSlider( "#bloom_pp.blurx", "pp_bloom_sizex", 0, 50 )
+		CPanel:NumSlider( "#bloom_pp.blury", "pp_bloom_sizey", 0, 50 )
+		CPanel:NumSlider( "#bloom_pp.multiplier", "pp_bloom_color", 0, 20 )
 
 		CPanel:ColorPicker( "#bloom_pp.color", "pp_bloom_color_r", "pp_bloom_color_g", "pp_bloom_color_b" )
 

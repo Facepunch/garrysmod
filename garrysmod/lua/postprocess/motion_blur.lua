@@ -83,9 +83,9 @@ list.Set( "PostProcess", "#motion_blur_pp", {
 		}
 		CPanel:ToolPresets( "motionblur", options )
 
-		CPanel:NumSlider( "#motion_blur_pp.add_alpha", "pp_motionblur_addalpha", 0, 1, 2 )
-		CPanel:NumSlider( "#motion_blur_pp.draw_alpha", "pp_motionblur_drawalpha", 0, 1, 2 )
-		CPanel:NumSlider( "#motion_blur_pp.delay", "pp_motionblur_delay", 0, 1, 2 )
+		CPanel:NumSlider( "#motion_blur_pp.add_alpha", "pp_motionblur_addalpha", 0, 1 )
+		CPanel:NumSlider( "#motion_blur_pp.draw_alpha", "pp_motionblur_drawalpha", 0, 1 )
+		CPanel:NumSlider( "#motion_blur_pp.delay", "pp_motionblur_delay", 0, 1 )
 
 	end
 

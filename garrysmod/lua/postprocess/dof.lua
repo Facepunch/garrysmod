@@ -78,8 +78,8 @@ list.Set( "PostProcess", "#dof_pp", {
 
 		CPanel:ToolPresets( "dof", { pp_dof_initlength = "256", pp_dof_spacing = "512" } )
 
-		CPanel:NumSlider( "#dof_pp.spacing", "pp_dof_spacing", 8, 1024, 2 )
-		CPanel:NumSlider( "#dof_pp.start_distance", "pp_dof_initlength", 9, 1024, 2 )
+		CPanel:NumSlider( "#dof_pp.spacing", "pp_dof_spacing", 8, 1024 )
+		CPanel:NumSlider( "#dof_pp.start_distance", "pp_dof_initlength", 9, 1024 )
 
 	end
 

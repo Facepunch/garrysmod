@@ -63,7 +63,7 @@ list.Set( "PostProcess", "#stereoscopy_pp", {
 
 		CPanel:ToolPresets( "stereoscopy", { pp_stereoscopy_size = "6" } )
 
-		CPanel:NumSlider( "#stereoscopy_pp.size", "pp_stereoscopy_size", 0, 10, 2 )
+		CPanel:NumSlider( "#stereoscopy_pp.size", "pp_stereoscopy_size", 0, 10 )
 
 	end
 

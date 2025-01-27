@@ -39,7 +39,7 @@ list.Set( "PostProcess", "#sobel_pp", {
 
 		CPanel:ToolPresets( "sobel", { pp_sobel_threshold = "0.11" } )
 
-		CPanel:NumSlider( "#sobel_pp.threshold", "pp_sobel_threshold", 0, 1, 2 )
+		CPanel:NumSlider( "#sobel_pp.threshold", "pp_sobel_threshold", 0, 1 )
 
 	end
 

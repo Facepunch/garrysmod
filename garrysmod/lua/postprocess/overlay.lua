@@ -100,7 +100,7 @@ list.Set( "PostProcess", "#overlay_pp", {
 
 		CPanel:ToolPresets( "overlay", { pp_mat_overlay_refractamount = "0.3" } )
 
-		CPanel:NumSlider( "#overlay_pp.refract", "pp_mat_overlay_refractamount", -1, 1, 2 )
+		CPanel:NumSlider( "#overlay_pp.refract", "pp_mat_overlay_refractamount", -1, 1 )
 
 	end
 

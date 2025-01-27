@@ -47,20 +47,24 @@ local function ServerSettings( pnl )
 
 	pnl:CheckBox( "#utilities.kickerrornum", "sv_kickerrornum" )
 	pnl:CheckBox( "#utilities.allowcslua", "sv_allowcslua" )
+
 	pnl:CheckBox( "#utilities.sticktoground", "sv_sticktoground" )
 	pnl:ControlHelp( "#utilities.sticktoground.help" )
+
 	pnl:CheckBox( "#utilities.epickupallowed", "sv_playerpickupallowed" )
 	pnl:CheckBox( "#utilities.falldamage", "mp_falldamage" )
 	pnl:CheckBox( "#utilities.gmod_suit", "gmod_suit" )
 
 	-- Fun convars
 	pnl:NumSlider( "#utilities.gravity", "sv_gravity", -500, 1000, 0 )
-	pnl:NumSlider( "#utilities.friction", "sv_friction", 0, 16, 2 )
-	pnl:NumSlider( "#utilities.timescale", "phys_timescale", 0, 2, 2 )
-	pnl:NumSlider( "#utilities.deployspeed", "sv_defaultdeployspeed", 0.1, 10, 2 )
-	pnl:NumSlider( "#utilities.noclipspeed", "sv_noclipspeed", 1, 10, 2 )
+	pnl:NumSlider( "#utilities.friction", "sv_friction", 0, 16, 0 )
+	pnl:NumSlider( "#utilities.timescale", "phys_timescale", 0, 2 )
+	pnl:NumSlider( "#utilities.deployspeed", "sv_defaultdeployspeed", 0.1, 10 )
+	pnl:NumSlider( "#utilities.noclipspeed", "sv_noclipspeed", 1, 10, 0 ) -- TODO: Switch this and friction back to Float once the sliders dont reset the convar from 8 to 8.00
+
 	pnl:NumSlider( "#utilities.maxammo", "gmod_maxammo", 0, 9999, 0 )
 	pnl:ControlHelp( "#utilities.maxammo.help" )
+
 	pnl:NumSlider( "#utilities.max_ragdolls", "g_ragdoll_maxcount", 0, 128, 0 )
 
 	-- Technical convars
@@ -85,25 +89,20 @@ local function SandboxClientSettings( pnl )
 		cl_drawthrusterseffects = "1",
 		cl_showhints = "1",
 	}
-
 	pnl:ToolPresets( "util_sandbox_cl", ConVarsDefault )
 
 	pnl:NumSlider( "#utilities.max_results", "sbox_search_maxresults", 1024, 8192, 0 )
 	pnl:ControlHelp( "#utilities.max_results.help" )
 
-	local function AddCheckbox( title, cvar )
-		pnl:CheckBox( title, cvar )
-	end
-
-	AddCheckbox( "#menubar.drawing.hud", "cl_drawhud" )
-	AddCheckbox( "#menubar.drawing.toolhelp", "gmod_drawhelp" )
-	AddCheckbox( "#menubar.drawing.toolui", "gmod_drawtooleffects" )
-	AddCheckbox( "#menubar.drawing.world_tooltips", "cl_drawworldtooltips" )
-	AddCheckbox( "#menubar.drawing.spawn_effect", "cl_drawspawneffect" )
-	AddCheckbox( "#menubar.drawing.effect_rings", "cl_draweffectrings" )
-	AddCheckbox( "#menubar.drawing.cameras", "cl_drawcameras" )
-	AddCheckbox( "#menubar.drawing.thrusters", "cl_drawthrusterseffects" )
-	AddCheckbox( "#menubar.drawing.hints", "cl_showhints" )
+	pnl:CheckBox( "#menubar.drawing.hud", "cl_drawhud" )
+	pnl:CheckBox( "#menubar.drawing.toolhelp", "gmod_drawhelp" )
+	pnl:CheckBox( "#menubar.drawing.toolui", "gmod_drawtooleffects" )
+	pnl:CheckBox( "#menubar.drawing.world_tooltips", "cl_drawworldtooltips" )
+	pnl:CheckBox( "#menubar.drawing.spawn_effect", "cl_drawspawneffect" )
+	pnl:CheckBox( "#menubar.drawing.effect_rings", "cl_draweffectrings" )
+	pnl:CheckBox( "#menubar.drawing.cameras", "cl_drawcameras" )
+	pnl:CheckBox( "#menubar.drawing.thrusters", "cl_drawthrusterseffects" )
+	pnl:CheckBox( "#menubar.drawing.hints", "cl_showhints" )
 
 end
 

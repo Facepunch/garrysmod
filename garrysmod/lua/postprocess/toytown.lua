@@ -54,7 +54,7 @@ list.Set( "PostProcess", "#toytown_pp", {
 		CPanel:ToolPresets( "toytown", { pp_toytown_passes = "3", pp_toytown_size = "0.5" } )
 
 		CPanel:NumSlider( "#toytown_pp.passes", "pp_toytown_passes", 1, 100, 0 )
-		CPanel:NumSlider( "#toytown_pp.height", "pp_toytown_size", 0, 1, 2 )
+		CPanel:NumSlider( "#toytown_pp.height", "pp_toytown_size", 0, 1 )
 
 	end
 

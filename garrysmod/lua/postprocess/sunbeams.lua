@@ -68,9 +68,9 @@ list.Set( "PostProcess", "#sunbeams_pp", {
 		}
 		CPanel:ToolPresets( "sunbeams", options )
 
-		CPanel:NumSlider( "#sunbeams_pp.multiply", "pp_sunbeams_multiply", 0, 1, 2 )
-		CPanel:NumSlider( "#sunbeams_pp.darken", "pp_sunbeams_darken", 0, 1, 2 )
-		CPanel:NumSlider( "#sunbeams_pp.size", "pp_sunbeams_sunsize", 0.01, 0.25, 2 )
+		CPanel:NumSlider( "#sunbeams_pp.multiply", "pp_sunbeams_multiply", 0, 1 )
+		CPanel:NumSlider( "#sunbeams_pp.darken", "pp_sunbeams_darken", 0, 1 )
+		CPanel:NumSlider( "#sunbeams_pp.size", "pp_sunbeams_sunsize", 0.01, 0.25 )
 
 	end
 

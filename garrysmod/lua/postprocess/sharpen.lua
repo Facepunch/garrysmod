@@ -43,8 +43,8 @@ list.Set( "PostProcess", "#sharpen_pp", {
 
 		CPanel:ToolPresets( "sharpen", { pp_sharpen_distance = "1", pp_sharpen_contrast = "1" } )
 
-		CPanel:NumSlider( "#sharpen_pp.distance", "pp_sharpen_distance", -5, 5, 2 )
-		CPanel:NumSlider( "#sharpen_pp.contrast", "pp_sharpen_contrast", 0, 20, 2 )
+		CPanel:NumSlider( "#sharpen_pp.distance", "pp_sharpen_distance", -5, 5 )
+		CPanel:NumSlider( "#sharpen_pp.contrast", "pp_sharpen_contrast", 0, 20 )
 
 	end
 

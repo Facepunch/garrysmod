@@ -79,10 +79,10 @@ list.Set( "PostProcess", "#colormod_pp", {
 		}
 		CPanel:ToolPresets( "colormod", options )
 
-		CPanel:NumSlider( "#colormod_pp.brightness", "pp_colormod_brightness", -2, 2, 2 )
-		CPanel:NumSlider( "#colormod_pp.contrast", "pp_colormod_contrast", 0, 10, 2 )
-		CPanel:NumSlider( "#colormod_pp.color", "pp_colormod_color", 0, 5, 2 )
-		CPanel:NumSlider( "#colormod_pp.invert", "pp_colormod_inv", 0, 1, 2 )
+		CPanel:NumSlider( "#colormod_pp.brightness", "pp_colormod_brightness", -2, 2 )
+		CPanel:NumSlider( "#colormod_pp.contrast", "pp_colormod_contrast", 0, 10 )
+		CPanel:NumSlider( "#colormod_pp.color", "pp_colormod_color", 0, 5 )
+		CPanel:NumSlider( "#colormod_pp.invert", "pp_colormod_inv", 0, 1 )
 
 		CPanel:ColorPicker( "#colormod_pp.color_add", "pp_colormod_addr", "pp_colormod_addg", "pp_colormod_addb" )
 		CPanel:ColorPicker( "#colormod_pp.color_multiply", "pp_colormod_mulr", "pp_colormod_mulg", "pp_colormod_mulb" )

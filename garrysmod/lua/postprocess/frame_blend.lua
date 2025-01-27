@@ -201,7 +201,7 @@ list.Set( "PostProcess", "#frame_blend_pp", {
 		CPanel:ToolPresets( "frame_blend", { pp_fb_frames = "16", pp_fb_shutter = "0.5" } )
 
 		CPanel:NumSlider( "#frame_blend_pp.frames", "pp_fb_frames", 3, 64, 0 )
-		CPanel:NumSlider( "#frame_blend_pp.shutter", "pp_fb_shutter", 0, 0.99, 2 )
+		CPanel:NumSlider( "#frame_blend_pp.shutter", "pp_fb_shutter", 0, 0.99 )
 
 	end
 
