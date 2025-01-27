@@ -335,7 +335,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 	CPanel:AddItem( QuickFace )
 
-	CPanel:NumSlider( "#tool.faceposer.scale", "faceposer_scale", -5, 5, 2 ):SetHeight( 16 )
+	CPanel:NumSlider( "#tool.faceposer.scale", "faceposer_scale", -5, 5 ):SetHeight( 16 )
 	CPanel:ControlHelp( "#tool.faceposer.scale.help" )
 
 	CPanel:Button( "#tool.faceposer.randomize", "faceposer_randomize" )
@@ -380,7 +380,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 		for id, item in pairs( items ) do
 
-			local ctrl = groupForm:NumSlider( string.NiceName( item.name ), "faceposer_flex" .. item.id, item.min, item.max, 2 )
+			local ctrl = groupForm:NumSlider( string.NiceName( item.name ), "faceposer_flex" .. item.id, item.min, item.max )
 			ctrl:SetDefaultValue( GenerateDefaultFlexValue( faceEntity, item.id ) )
 			ctrl:SetHeight( 11 ) -- This makes the controls all bunched up like how we want
 			ctrl:DockPadding( 0, -6, 0, -4 ) -- Try to make the lower part of the text visible

@@ -244,10 +244,10 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.muscle.numpad", "muscle_group" )
 
-	CPanel:NumSlider( "#tool.muscle.length", "muscle_addlength", -1000, 1000, 2 )
+	CPanel:NumSlider( "#tool.muscle.length", "muscle_addlength", -1000, 1000 )
 	CPanel:ControlHelp( "#tool.muscle.length.help" )
 
-	CPanel:NumSlider( "#tool.muscle.period", "muscle_period", 0, 10, 2 )
+	CPanel:NumSlider( "#tool.muscle.period", "muscle_period", 0, 10 )
 	CPanel:ControlHelp( "#tool.muscle.period.help" )
 
 	CPanel:CheckBox( "#tool.muscle.fixed", "muscle_fixed" )
@@ -256,7 +256,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:CheckBox( "#tool.muscle.starton", "muscle_starton" )
 	CPanel:ControlHelp( "#tool.muscle.starton.help" )
 
-	CPanel:NumSlider( "#tool.muscle.width", "muscle_width", 0, 5, 2 )
+	CPanel:NumSlider( "#tool.muscle.width", "muscle_width", 0, 5 )
 
 	CPanel:RopeSelect( "muscle_material" )
 

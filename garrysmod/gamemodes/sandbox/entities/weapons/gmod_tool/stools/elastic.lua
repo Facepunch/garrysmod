@@ -110,19 +110,19 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:Help( "#tool.elastic.help" )
 	CPanel:ToolPresets( "elastic", ConVarsDefault )
 
-	CPanel:NumSlider( "#tool.elastic.constant", "elastic_constant", 0, 4000, 2 )
+	CPanel:NumSlider( "#tool.elastic.constant", "elastic_constant", 0, 4000 )
 	CPanel:ControlHelp( "#tool.elastic.constant.help" )
 
-	CPanel:NumSlider( "#tool.elastic.damping", "elastic_damping", 0, 50, 2 )
+	CPanel:NumSlider( "#tool.elastic.damping", "elastic_damping", 0, 50 )
 	CPanel:ControlHelp( "#tool.elastic.damping.help" )
 
-	CPanel:NumSlider( "#tool.elastic.rdamping", "elastic_rdamping", 0, 1, 2 )
+	CPanel:NumSlider( "#tool.elastic.rdamping", "elastic_rdamping", 0, 1 )
 	CPanel:ControlHelp( "#tool.elastic.rdamping.help" )
 
 	CPanel:CheckBox( "#tool.elastic.stretchonly", "elastic_stretch_only" )
 	CPanel:ControlHelp( "#tool.elastic.stretchonly.help" )
 
-	CPanel:NumSlider( "#tool.elastic.width", "elastic_width", 0, 20, 2 )
+	CPanel:NumSlider( "#tool.elastic.width", "elastic_width", 0, 20 )
 
 	CPanel:RopeSelect( "elastic_material" )
 

@@ -221,9 +221,9 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.light.key", "light_key" )
 
-	CPanel:NumSlider( "#tool.light.ropelength", "light_ropelength", 0, 256, 2 )
+	CPanel:NumSlider( "#tool.light.ropelength", "light_ropelength", 0, 256 )
 	CPanel:NumSlider( "#tool.light.brightness", "light_brightness", -6, 6, 0 )
-	CPanel:NumSlider( "#tool.light.size", "light_size", 0, 1024, 2 )
+	CPanel:NumSlider( "#tool.light.size", "light_size", 0, 1024 )
 
 	CPanel:CheckBox( "#tool.light.toggle", "light_toggle" )
 

@@ -190,7 +190,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:Help( "#tool.slider.help" )
 	CPanel:ToolPresets( "slider", ConVarsDefault )
 
-	CPanel:NumSlider( "#tool.slider.width", "slider_width", 0, 10, 2 )
+	CPanel:NumSlider( "#tool.slider.width", "slider_width", 0, 10 )
 
 	CPanel:RopeSelect( "slider_material" )
 

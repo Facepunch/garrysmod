@@ -227,7 +227,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.thruster.forward", "thruster_keygroup", "#tool.thruster.back", "thruster_keygroup_back" )
 
-	CPanel:NumSlider( "#tool.thruster.force", "thruster_force", 1, 10000, 2 )
+	CPanel:NumSlider( "#tool.thruster.force", "thruster_force", 1, 10000 )
 
 	local combo = CPanel:ComboBoxMulti( "#tool.thruster.effect" )
 	for k, v in pairs( list.Get( "ThrusterEffects" ) ) do

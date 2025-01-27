@@ -232,10 +232,10 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.hydraulic.controls", "hydraulic_group" )
 
-	CPanel:NumSlider( "#tool.hydraulic.addlength", "hydraulic_addlength", -1000, 1000, 2 )
+	CPanel:NumSlider( "#tool.hydraulic.addlength", "hydraulic_addlength", -1000, 1000 )
 	CPanel:ControlHelp( "#tool.hydraulic.addlength.help" )
 
-	CPanel:NumSlider( "#tool.hydraulic.speed", "hydraulic_speed", 0, 50, 2 )
+	CPanel:NumSlider( "#tool.hydraulic.speed", "hydraulic_speed", 0, 50 )
 	CPanel:ControlHelp( "#tool.hydraulic.speed.help" )
 
 	CPanel:CheckBox( "#tool.hydraulic.fixed", "hydraulic_fixed" )
@@ -244,7 +244,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:CheckBox( "#tool.toggle", "hydraulic_toggle" )
 	CPanel:ControlHelp( "#tool.toggle.help" )
 
-	CPanel:NumSlider( "#tool.hydraulic.width", "hydraulic_width", 0, 5, 2 )
+	CPanel:NumSlider( "#tool.hydraulic.width", "hydraulic_width", 0, 5 )
 
 	CPanel:RopeSelect( "hydraulic_material" )
 

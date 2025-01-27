@@ -242,9 +242,9 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.lamp.key", "lamp_key" )
 
-	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170, 2 )
-	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048, 2 )
-	CPanel:NumSlider( "#tool.lamp.brightness", "lamp_brightness", 0, 8, 2 )
+	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170 )
+	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048 )
+	CPanel:NumSlider( "#tool.lamp.brightness", "lamp_brightness", 0, 8 )
 
 	CPanel:CheckBox( "#tool.lamp.toggle", "lamp_toggle" )
 

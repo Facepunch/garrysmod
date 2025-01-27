@@ -221,9 +221,9 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:Help( "#tool.balloon.help" )
 	CPanel:ToolPresets( "balloon", ConVarsDefault )
 
-	CPanel:NumSlider( "#tool.balloon.ropelength", "balloon_ropelength", 5, 1000, 2 )
+	CPanel:NumSlider( "#tool.balloon.ropelength", "balloon_ropelength", 5, 1000 )
 
-	CPanel:NumSlider( "#tool.balloon.force", "balloon_force", -1000, 2000, 2 )
+	CPanel:NumSlider( "#tool.balloon.force", "balloon_force", -1000, 2000 )
 	CPanel:ControlHelp( "#tool.balloon.force.help" )
 
 	CPanel:ColorPicker( "#tool.balloon.color", "balloon_r", "balloon_g", "balloon_b" )

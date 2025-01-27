@@ -222,13 +222,13 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:Help( "#tool.axis.help" )
 	CPanel:ToolPresets( "axis", ConVarsDefault )
 
-	CPanel:NumSlider( "#tool.forcelimit", "axis_forcelimit", 0, 50000, 2 )
+	CPanel:NumSlider( "#tool.forcelimit", "axis_forcelimit", 0, 50000 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:NumSlider( "#tool.torquelimit", "axis_torquelimit", 0, 50000, 2 )
+	CPanel:NumSlider( "#tool.torquelimit", "axis_torquelimit", 0, 50000 )
 	CPanel:ControlHelp( "#tool.torquelimit.help" )
 
-	CPanel:NumSlider( "#tool.hingefriction", "axis_hingefriction", 0, 200, 2 )
+	CPanel:NumSlider( "#tool.hingefriction", "axis_hingefriction", 0, 200 )
 	CPanel:ControlHelp( "#tool.hingefriction.help" )
 
 	CPanel:CheckBox( "#tool.nocollide", "axis_nocollide" )

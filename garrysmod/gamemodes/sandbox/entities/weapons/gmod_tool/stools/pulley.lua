@@ -110,13 +110,13 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:Help( "#tool.pulley.help" )
 	CPanel:ToolPresets( "pulley", ConVarsDefault )
 
-	CPanel:NumSlider( "#tool.forcelimit", "pulley_forcelimit", 0, 1000, 2 )
+	CPanel:NumSlider( "#tool.forcelimit", "pulley_forcelimit", 0, 1000 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
 	CPanel:CheckBox( "#tool.pulley.rigid", "pulley_rigid" )
 	CPanel:ControlHelp( "#tool.pulley.rigid.help" )
 
-	CPanel:NumSlider( "#tool.pulley.width", "pulley_width", 0, 10, 2 )
+	CPanel:NumSlider( "#tool.pulley.width", "pulley_width", 0, 10 )
 
 	CPanel:RopeSelect( "pulley_material" )
 

@@ -151,9 +151,9 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:ColorPicker( "#tool.trails.color", "trails_r", "trails_g", "trails_b", "trails_a" )
 
-	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10, 2 )
-	CPanel:NumSlider( "#tool.trails.startsize", "trails_startsize", 0, 128, 2 )
-	CPanel:NumSlider( "#tool.trails.endsize", "trails_endsize", 0, 128, 2 )
+	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10 )
+	CPanel:NumSlider( "#tool.trails.startsize", "trails_startsize", 0, 128 )
+	CPanel:NumSlider( "#tool.trails.endsize", "trails_endsize", 0, 128 )
 
 	CPanel:MatSelect( "trails_material", list.Get( "trail_materials" ), true, 0.25, 0.25 )
 

@@ -147,15 +147,15 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.motor.numpad1", "motor_fwd", "#tool.motor.numpad2", "motor_bwd" )
 
-	CPanel:NumSlider( "#tool.motor.torque", "motor_torque", 0, 10000, 2 )
+	CPanel:NumSlider( "#tool.motor.torque", "motor_torque", 0, 10000 )
 
-	CPanel:NumSlider( "#tool.forcelimit", "motor_forcelimit", 0, 50000, 2 )
+	CPanel:NumSlider( "#tool.forcelimit", "motor_forcelimit", 0, 50000 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:NumSlider( "#tool.hingefriction", "motor_friction", 0, 100, 2 )
+	CPanel:NumSlider( "#tool.hingefriction", "motor_friction", 0, 100 )
 	CPanel:ControlHelp( "#tool.hingefriction.help" )
 
-	CPanel:NumSlider( "#tool.motor.forcetime", "motor_forcetime", 0, 120, 2 )
+	CPanel:NumSlider( "#tool.motor.forcetime", "motor_forcetime", 0, 120 )
 	CPanel:ControlHelp( "#tool.motor.forcetime.help" )
 
 	CPanel:CheckBox( "#tool.nocollide", "motor_nocollide" )

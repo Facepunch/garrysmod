@@ -207,13 +207,13 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:KeyBinder( "#tool.winch.forward", "winch_fwd_group", "#tool.winch.backward", "winch_bwd_group" )
 
-	CPanel:NumSlider( "#tool.winch.fspeed", "winch_fwd_speed", 0, 1000, 2 )
+	CPanel:NumSlider( "#tool.winch.fspeed", "winch_fwd_speed", 0, 1000 )
 	CPanel:ControlHelp( "#tool.winch.fspeed.help" )
 
-	CPanel:NumSlider( "#tool.winch.bspeed", "winch_bwd_speed", 0, 1000, 2 )
+	CPanel:NumSlider( "#tool.winch.bspeed", "winch_bwd_speed", 0, 1000 )
 	CPanel:ControlHelp( "#tool.winch.bspeed.help" )
 
-	CPanel:NumSlider( "#tool.winch.width", "winch_rope_width", 0, 10, 2 )
+	CPanel:NumSlider( "#tool.winch.width", "winch_rope_width", 0, 10 )
 
 	CPanel:RopeSelect( "winch_rope_material" )
 

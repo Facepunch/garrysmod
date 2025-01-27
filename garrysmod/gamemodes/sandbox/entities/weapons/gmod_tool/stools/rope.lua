@@ -181,16 +181,16 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:Help( "#tool.rope.help" )
 	CPanel:ToolPresets( "rope", ConVarsDefault )
 
-	CPanel:NumSlider( "#tool.forcelimit", "rope_forcelimit", 0, 1000, 2 )
+	CPanel:NumSlider( "#tool.forcelimit", "rope_forcelimit", 0, 1000 )
 	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:NumSlider( "#tool.rope.addlength", "rope_addlength", -500, 500, 2 )
+	CPanel:NumSlider( "#tool.rope.addlength", "rope_addlength", -500, 500 )
 	CPanel:ControlHelp( "#tool.rope.addlength.help" )
 
 	CPanel:CheckBox( "#tool.rope.rigid", "rope_rigid" )
 	CPanel:ControlHelp( "#tool.rope.rigid.help" )
 
-	CPanel:NumSlider( "#tool.rope.width", "rope_width", 0, 10, 2 )
+	CPanel:NumSlider( "#tool.rope.width", "rope_width", 0, 10 )
 
 	CPanel:RopeSelect( "rope_material" )
 
