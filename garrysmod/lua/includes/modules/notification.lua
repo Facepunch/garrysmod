@@ -91,16 +91,11 @@ function AddNotifyType( typeName, materialName )
 	if ( !isstring( materialName ) ) then error( "bad argument #2 to 'AddNotifyType' (string expected, got " .. type( materialName ) .. ")", 2 ) return end
 
 	local mat = Material( materialName )
+	if ( !mat || mat:IsError() ) then return end
 
-	if ( mat && !mat:IsError() ) then
+	NoticeMaterial[ typeName ] = mat
 
-		NoticeMaterial[ typeName ] = mat
-
-		return mat
-
-	end
-
-	return false
+	return mat
 
 end
 
@@ -229,10 +224,13 @@ function PANEL:SizeToContents()
 
 end
 
+-- Fallback to the generic notify type to prevent erroring when provided a non-existent notify type
+local matNotifyGeneric = NoticeMaterial[ NOTIFY_GENERIC ]
+
 function PANEL:SetLegacyType( t )
 
 	self.Image = vgui.Create( "DImageButton", self )
-	self.Image:SetMaterial( NoticeMaterial[ t ] or NoticeMaterial[ 0 ] )
+	self.Image:SetMaterial( NoticeMaterial[ t ] || matNotifyGeneric )
 	self.Image:SetSize( 32, 32 )
 	self.Image:Dock( LEFT )
 	self.Image:DockMargin( 0, 0, 8, 0 )
