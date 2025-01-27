@@ -62,21 +62,30 @@ list.Set( "PostProcess", "#colormod_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#colormod_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#colormod_pp.enable", Command = "pp_colormod" } )
+		CPanel:Help( "#colormod_pp.desc" )
+		CPanel:CheckBox( "#colormod_pp.enable", "pp_colormod" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "colormod" }
-		params.Options[ "#preset.default" ] = { pp_colormod_addr = "0", pp_colormod_addg = "0", pp_colormod_addb = "0", pp_colormod_brightness = "0", pp_colormod_contrast = "1", pp_colormod_color = "1", pp_colormod_mulr = "0", pp_colormod_mulg = "0", pp_colormod_mulb = "0", pp_colormod_inv = "0" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		local options = {
+			pp_colormod_addr = "0",
+			pp_colormod_addg = "0",
+			pp_colormod_addb = "0",
+			pp_colormod_brightness = "0",
+			pp_colormod_contrast = "1",
+			pp_colormod_color = "1",
+			pp_colormod_mulr = "0",
+			pp_colormod_mulg = "0",
+			pp_colormod_mulb = "0",
+			pp_colormod_inv = "0"
+		}
+		CPanel:ToolPresets( "colormod", options )
 
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.brightness", Command = "pp_colormod_brightness", Type = "Float", Min = "-2", Max = "2" } )
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.contrast", Command = "pp_colormod_contrast", Type = "Float", Min = "0", Max = "10" } )
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.color", Command = "pp_colormod_color", Type = "Float", Min = "0", Max = "5" } )
-		CPanel:AddControl( "Slider", { Label = "#colormod_pp.invert", Command = "pp_colormod_inv", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:NumSlider( "#colormod_pp.brightness", "pp_colormod_brightness", -2, 2 )
+		CPanel:NumSlider( "#colormod_pp.contrast", "pp_colormod_contrast", 0, 10 )
+		CPanel:NumSlider( "#colormod_pp.color", "pp_colormod_color", 0, 5 )
+		CPanel:NumSlider( "#colormod_pp.invert", "pp_colormod_inv", 0, 1 )
 
-		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_add", Red = "pp_colormod_addr", Green = "pp_colormod_addg", Blue = "pp_colormod_addb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )
-		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_multiply", Red = "pp_colormod_mulr", Green = "pp_colormod_mulg", Blue = "pp_colormod_mulb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )
+		CPanel:ColorPicker( "#colormod_pp.color_add", "pp_colormod_addr", "pp_colormod_addg", "pp_colormod_addb" )
+		CPanel:ColorPicker( "#colormod_pp.color_multiply", "pp_colormod_mulr", "pp_colormod_mulg", "pp_colormod_mulb" )
 
 	end
 

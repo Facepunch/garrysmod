@@ -73,16 +73,13 @@ list.Set( "PostProcess", "#dof_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#dof_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#dof_pp.enable", Command = "pp_dof" } )
+		CPanel:Help( "#dof_pp.desc" )
+		CPanel:CheckBox( "#dof_pp.enable", "pp_dof" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "dof" }
-		params.Options[ "#preset.default" ] = { pp_dof_initlength = "256", pp_dof_spacing = "512" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		CPanel:ToolPresets( "dof", { pp_dof_initlength = "256", pp_dof_spacing = "512" } )
 
-		CPanel:AddControl( "Slider", { Label = "#dof_pp.spacing", Command = "pp_dof_spacing", Type = "Float", Min = "8", Max = "1024" } )
-		CPanel:AddControl( "Slider", { Label = "#dof_pp.start_distance", Command = "pp_dof_initlength", Type = "Float", Min = "9", Max = "1024" } )
+		CPanel:NumSlider( "#dof_pp.spacing", "pp_dof_spacing", 8, 1024 )
+		CPanel:NumSlider( "#dof_pp.start_distance", "pp_dof_initlength", 9, 1024 )
 
 	end
 

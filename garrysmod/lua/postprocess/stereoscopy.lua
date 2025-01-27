@@ -58,15 +58,12 @@ list.Set( "PostProcess", "#stereoscopy_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#stereoscopy_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#stereoscopy_pp.enable", Command = "pp_stereoscopy" } )
+		CPanel:Help( "#stereoscopy_pp.desc" )
+		CPanel:CheckBox( "#stereoscopy_pp.enable", "pp_stereoscopy" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "stereoscopy" }
-		params.Options[ "#preset.default" ] = { pp_stereoscopy_size = "6" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		CPanel:ToolPresets( "stereoscopy", { pp_stereoscopy_size = "6" } )
 
-		CPanel:AddControl( "Slider", { Label = "#stereoscopy_pp.size", Command = "pp_stereoscopy_size", Type = "Float", Min = "0", Max = "10" } )
+		CPanel:NumSlider( "#stereoscopy_pp.size", "pp_stereoscopy_size", 0, 10 )
 
 	end
 
