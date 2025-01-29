@@ -89,6 +89,7 @@ local function MakeRagdoll( ply, _, _, model, _, Data )
 	Ent:Activate()
 
 	if ( IsValid( ply ) ) then
+		Ent:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedRagdoll", ply, model, Ent )
 	end
 
@@ -142,6 +143,7 @@ function MakeProp( ply, Pos, Ang, model, _, Data )
 
 	-- Tell the gamemode we just spawned something
 	if ( IsValid( ply ) ) then
+		Prop:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedProp", ply, model, Prop )
 	end
 
@@ -174,6 +176,7 @@ function MakeEffect( ply, model, Data )
 
 	-- Tell the gamemode we just spawned something
 	if ( IsValid( ply ) ) then
+		Prop:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, Prop )
 	end
 
@@ -321,6 +324,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	ent:SetAngles( ang )
 	if ( strBody ) then ent:SetBodyGroups( strBody ) end
 	ent:SetPos( tr.HitPos )
+	ent:SetCreator( ply )
 	ent:Spawn()
 	ent:Activate()
 
@@ -962,6 +966,7 @@ function Spawn_Weapon( ply, wepname, tr )
 		SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
 	end
 
+	entity:SetCreator( ply )
 	entity:SetPos( SpawnPos )
 	entity:Spawn()
 
@@ -1020,6 +1025,7 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 		end
 	end
 
+	if ( ply ) then Ent:SetCreator( ply ) end
 	Ent:SetAngles( Ang )
 	Ent:SetPos( Pos )
 
