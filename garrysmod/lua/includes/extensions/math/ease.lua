@@ -47,7 +47,7 @@ function InOutSine( x )
 end
 
 function InQuad( x )
-	return x ^ 2
+	return x * x
 end
 
 function OutQuad( x )
@@ -55,43 +55,66 @@ function OutQuad( x )
 end
 
 function InOutQuad( x )
-	return x < 0.5 && 2 * x ^ 2 || 1 - ( ( -2 * x + 2 ) ^ 2 ) / 2
+	if x < 0.5 then
+		return 2 * ( x * x )
+	else
+		local w = -2 * x + 2
+		return 1 - ( w * w ) / 2
+	end
 end
 
 function InCubic( x )
-	return x ^ 3
+	return x * x * x
 end
 
 function OutCubic( x )
-	return 1 - ( ( 1 - x ) ^ 3 )
+	local w = 1 - x
+	return 1 - ( w * w * w )
 end
 
 function InOutCubic( x )
-	return x < 0.5 && 4 * x ^ 3 || 1 - ( ( -2 * x + 2 ) ^ 3 ) / 2
+	if x < 0.5 then
+		return 4 * ( x * x * x )
+	else
+		local w = -2 * x + 2
+		return 1 - ( w * w * w ) / 2
+	end
 end
 
 function InQuart( x )
-	return x ^ 4
+	return x * x * x * x
 end
 
 function OutQuart( x )
-	return 1 - ( ( 1 - x ) ^ 4 )
+	local w = 1 - x
+	return 1 - ( w * w * w * w )
 end
 
 function InOutQuart( x )
-	return x < 0.5 && 8 * x ^ 4 || 1 - ( ( -2 * x + 2 ) ^ 4 ) / 2
+	if x < 0.5 then
+		return 8 * ( x * x * x * x )
+	else
+		local w = -2 * x + 2
+		return 1 - ( w * w * w * w ) / 2
+	end
 end
 
 function InQuint( x )
-	return x ^ 5
+	return x * x * x * x * x
 end
 
 function OutQuint( x )
-	return 1 - ( ( 1 - x ) ^ 5 )
+	local w = 1 - x
+	return 1 - ( w * w * w * w * w )
 end
 
 function InOutQuint( x )
-	return x < 0.5 && 16 * x ^ 5 || 1 - ( ( -2 * x + 2 ) ^ 5 ) / 2
+	if x < 0.5 then
+		return 16 * ( x * x * x * x * x )
+	else
+		local w = -2 * x + 2
+		return 1 - ( w * w * w * w * w ) / 2
+	end
 end
 
 function InExpo( x )
@@ -112,31 +135,43 @@ function InOutExpo( x )
 end
 
 function InCirc( x )
-	return 1 - sqrt( 1 - ( x ^ 2 ) )
+	return 1 - sqrt( 1 - ( x * x ) )
 end
 
 function OutCirc( x )
-	return sqrt( 1 - ( ( x - 1 ) ^ 2 ) )
+	local w = x - 1
+	return sqrt( 1 - ( w * w ) )
 end
 
 function InOutCirc( x )
-	return x < 0.5
-		&& ( 1 - sqrt( 1 - ( ( 2 * x ) ^ 2 ) ) ) / 2
-		|| ( sqrt( 1 - ( ( -2 * x + 2 ) ^ 2 ) ) + 1 ) / 2
+	if x < 0.5 then
+		local w = 2 * x
+		return ( 1 - sqrt( 1 - ( w * w ) ) ) / 2
+	else
+		local w = -2 * x + 2
+		return ( sqrt( 1 - ( w * w ) ) + 1 ) / 2
+	end
 end
 
 function InBack( x )
-	return c3 * x ^ 3 - c1 * x ^ 2
+	local x2 = x * x
+	return c3 * ( x2 * x ) - c1 * x2
 end
 
 function OutBack( x )
-	return 1 + c3 * ( ( x - 1 ) ^ 3 ) + c1 * ( ( x - 1 ) ^ 2 )
+	local w = x - 1
+	local w2 = w * w
+	return 1 + c3 * ( w2 * w ) + c1 * w2
 end
 
 function InOutBack( x )
-	return x < 0.5
-		&& ( ( ( 2 * x ) ^ 2 ) * ( ( c2 + 1 ) * 2 * x - c2 ) ) / 2
-		|| ( ( ( 2 * x - 2 ) ^ 2 ) * ( ( c2 + 1 ) * ( x * 2 - 2 ) + c2 ) + 2 ) / 2
+	if x < 0.5 then
+		local w = 2 * x
+		return ( ( w * w ) * ( ( c2 + 1 ) * 2 * x - c2 ) ) / 2
+	else
+		local w = 2 * x - 2
+		return ( ( w * w ) * ( ( c2 + 1 ) * ( x * 2 - 2 ) + c2 ) + 2 ) / 2
+	end
 end
 
 function InElastic( x )
@@ -171,16 +206,16 @@ end
 
 function OutBounce( x )
 	if ( x < 1 / d1 ) then
-		return n1 * x ^ 2
+		return n1 * ( x * x )
 	elseif ( x < 2 / d1 ) then
 		x = x - ( 1.5 / d1 )
-		return n1 * x ^ 2 + 0.75
+		return n1 * ( x * x ) + 0.75
 	elseif ( x < 2.5 / d1 ) then
 		x = x - ( 2.25 / d1 )
-		return n1 * x ^ 2 + 0.9375
+		return n1 * ( x * x ) + 0.9375
 	else
 		x = x - ( 2.625 / d1 )
-		return n1 * x ^ 2 + 0.984375
+		return n1 * ( x * x ) + 0.984375
 	end
 end
 
