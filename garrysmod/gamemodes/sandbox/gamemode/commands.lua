@@ -570,6 +570,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 
 	-- Give the gamemode an opportunity to do whatever
 	if ( IsValid( ply ) ) then
+		SpawnedNPC:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedNPC", ply, SpawnedNPC )
 	end
 
@@ -625,6 +626,7 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 		end
 
 		if ( IsValid( ply ) ) then
+			ent:SetCreator( ply )
 			gamemode.Call( "PlayerSpawnedNPC", ply, ent )
 			ply:AddCleanup( "npcs", ent )
 		end
