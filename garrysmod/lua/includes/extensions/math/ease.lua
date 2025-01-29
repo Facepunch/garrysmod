@@ -73,7 +73,7 @@ function OutCubic( x )
 end
 
 function InOutCubic( x )
-	if x < 0.5 then
+	if ( x < 0.5 ) then
 		return 4 * ( x * x * x )
 	else
 		local w = -2 * x + 2
@@ -91,7 +91,7 @@ function OutQuart( x )
 end
 
 function InOutQuart( x )
-	if x < 0.5 then
+	if ( x < 0.5 ) then
 		return 8 * ( x * x * x * x )
 	else
 		local w = -2 * x + 2
@@ -109,7 +109,7 @@ function OutQuint( x )
 end
 
 function InOutQuint( x )
-	if x < 0.5 then
+	if ( x < 0.5 ) then
 		return 16 * ( x * x * x * x * x )
 	else
 		local w = -2 * x + 2
@@ -144,7 +144,7 @@ function OutCirc( x )
 end
 
 function InOutCirc( x )
-	if x < 0.5 then
+	if ( x < 0.5 ) then
 		local w = 2 * x
 		return ( 1 - sqrt( 1 - ( w * w ) ) ) / 2
 	else
@@ -165,7 +165,7 @@ function OutBack( x )
 end
 
 function InOutBack( x )
-	if x < 0.5 then
+	if ( x < 0.5 ) then
 		local w = 2 * x
 		return ( ( w * w ) * ( ( c2 + 1 ) * 2 * x - c2 ) ) / 2
 	else
