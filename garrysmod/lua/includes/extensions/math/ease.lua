@@ -55,7 +55,7 @@ function OutQuad( x )
 end
 
 function InOutQuad( x )
-	if x < 0.5 then
+	if ( x < 0.5 ) then
 		return 2 * ( x * x )
 	else
 		local w = -2 * x + 2
