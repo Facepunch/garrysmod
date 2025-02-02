@@ -305,7 +305,7 @@ function SWEP:DoAttack(pickup)
             self:SetNextSecondaryFire(CurTime() + delay)
             return
          else
-            local is_ragdoll = trace.Entity:GetClass() == "prop_ragdoll"
+            local is_ragdoll = ent:GetClass() == "prop_ragdoll"
 
             -- pull heavy stuff
             local pdir = trace.Normal * -1
