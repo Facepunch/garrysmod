@@ -23,7 +23,7 @@ end
 
 SScale = ScreenScale
 
-hook.Add( "OnScreenSizeChanged", "ScreenScale.OnScreenSizeChanged", function( oldWidth, oldHeight, newWidth, newHeight )
+hook.Add( "OnScreenSizeChanged", "CachedScreenScale", function( oldWidth, oldHeight, newWidth, newHeight )
     scrW, scrH = newWidth / 640, newHeight / 480
 
     cached = {
