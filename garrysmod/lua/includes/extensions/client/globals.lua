@@ -2,13 +2,32 @@
 
 if ( SERVER ) then return end
 
+local cached = {
+    width = {},
+    height = {},
+}
+
+local scrW, scrH = ScrW() / 640, ScrH() / 480
 
 function ScreenScale( width )
-	return width * ( ScrW() / 640.0 )
+    cached.width[ width ] = cached.width[ width ] or width * scrW
+
+    return cached.width[ width ]
 end
 
 function ScreenScaleH( height )
-	return height * ( ScrH() / 480.0 )
+    cached.height[ height ] = cached.height[ height ] or height * scrH
+
+    return cached.height[ height ]
 end
 
 SScale = ScreenScale
+
+hook.Add( "OnScreenSizeChanged", "ScreenScale.OnScreenSizeChanged", function( oldWidth, oldHeight, newWidth, newHeight )
+    scrW, scrH = newWidth / 640, newHeight / 480
+
+    cached = {
+        width = {},
+        height = {},
+    }
+end )
