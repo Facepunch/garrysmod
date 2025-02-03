@@ -50,6 +50,24 @@ function Material( name, words )
 end
 
 --[[---------------------------------------------------------
+	type
+-----------------------------------------------------------]]
+function type( v )
+
+	local v_type = lua_type( v )
+	if ( v_type != "userdata" ) then return v_type end
+
+	local metatable = getmetatable( v )
+	if ( !metatable ) then return "UserData" end
+
+	local metaName = metatable.MetaName
+	if ( lua_type( metaName ) != "string" ) then return "UserData" end
+
+	return metaName
+
+end
+
+--[[---------------------------------------------------------
 	IsTableOfEntitiesValid
 -----------------------------------------------------------]]
 function IsTableOfEntitiesValid( tab )
