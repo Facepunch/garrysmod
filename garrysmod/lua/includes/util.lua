@@ -52,16 +52,18 @@ end
 --[[---------------------------------------------------------
 	type
 -----------------------------------------------------------]]
+local C_type = type
+
 function type( v )
 
-	local v_type = lua_type( v )
+	local v_type = C_type( v )
 	if ( v_type != "userdata" ) then return v_type end
 
 	local metatable = getmetatable( v )
 	if ( !metatable ) then return "UserData" end
 
 	local metaName = metatable.MetaName
-	if ( lua_type( metaName ) != "string" ) then return "UserData" end
+	if ( C_type( metaName ) != "string" ) then return "UserData" end
 
 	return metaName
 
