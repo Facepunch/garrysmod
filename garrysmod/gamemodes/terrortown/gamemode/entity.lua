@@ -16,3 +16,11 @@ function meta:IsExplosive()
    local kv = self:GetKeyValues()["ExplodeDamage"]
    return self:Health() > 0 and kv and kv > 0
 end
+
+-- Some sounds are important enough that they shouldn't be affected by CPASAttenuationFilter
+function meta:BroadcastSound(snd, lvl, pitch, vol, channel, flags, dsp)
+   local rf = RecipientFilter()
+   rf:AddAllPlayers()
+
+   self:EmitSound(snd, lvl, pitch, vol, channel, flags, dsp, rf)
+end

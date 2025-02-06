@@ -192,7 +192,8 @@ function ENT:PlayDelayedSound(snd, ampl, last)
          snd = table.Random(snd)
       end
 
-      sound.Play(snd, self:GetPos(), ampl)
+      self:BroadcastSound(snd, ampl)
+
       self.Playing = not last
 
       --print("Playing", snd, last)
@@ -200,10 +201,9 @@ function ENT:PlayDelayedSound(snd, ampl, last)
 end
 
 function ENT:PlaySound(snd)
-   local pos = self:GetPos()
    local this = self
    if simplesounds[snd] then
-      sound.Play(table.Random(simplesounds[snd]), pos)
+      self:BroadcastSound(table.Random(simplesounds[snd]))
    elseif gunsounds[snd] then
       local gunsound = gunsounds[snd]
       local times = math.random(gunsound.times[1], gunsound.times[2])
