@@ -58,12 +58,3 @@ App.filter( 'startFrom', function()
 		return input.slice( start );
 	}
 } );
-
-document.addEventListener('DOMContentLoaded', function()
-{
-	//Prevent middle-clicking links from trying to open in new tab
-	document.body.onauxclick = function(e)
-	{
-		e.preventDefault();
-	};
-});
