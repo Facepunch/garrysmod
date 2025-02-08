@@ -434,12 +434,8 @@ function Assert( expression, errorMessage, errorLevel, noHalt, ... )
 
 	errorLevel = errorLevel or 1
 
-	if ( errorMessage != nil ) then
-		
-        if ( ... != nil ) then
-            errorMessage = Format( errorMessage, ... )
-        end
-
+	if ( errorMessage != nil and ... != nil ) then
+        errorMessage = Format( errorMessage, ... )
 	end
 
     if ( expression ) then
