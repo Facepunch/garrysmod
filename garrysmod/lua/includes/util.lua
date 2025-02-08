@@ -439,7 +439,7 @@ function Assert( expression, errorMessage, errorLevel, noHalt, ... )
     end
 
     if ( errorMessage != nil ) then
-        if ( ... ) then
+        if ( ... != nil ) then
             errorMessage = Format( errorMessage, ... )
         end
     else
