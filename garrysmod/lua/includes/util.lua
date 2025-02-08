@@ -434,17 +434,19 @@ function Assert( expression, errorMessage, errorLevel, noHalt, ... )
 
 	errorLevel = errorLevel or 1
 
+	if ( errorMessage != nil ) then
+		
+        if ( ... != nil ) then
+            errorMessage = Format( errorMessage, ... )
+        end
+
+	end
+
     if ( expression ) then
         return expression, errorMessage, errorLevel, noHalt, ...
     end
 
-    if ( errorMessage != nil ) then
-        if ( ... != nil ) then
-            errorMessage = Format( errorMessage, ... )
-        end
-    else
-        errorMessage = "assertion failed!"
-    end
+	errorMessage = errorMessage == nil and "assertion failed!" or errorMessage
 
     if noHalt then
         ProtectedCall( error, errorMessage, errorLevel + 2 )
