@@ -423,6 +423,37 @@ function Either( iff, aa, bb )
 	return bb
 end
 
+--[[---------------------------------------------------------
+	Custom assert with more features
+-----------------------------------------------------------]]
+local ProtectedCall = ProtectedCall
+local Format = Format
+local error = error
+
+function Assert( expression, errorMessage, errorLevel, noHalt, ... )
+
+    if ( expression ) then
+        return expression, errorMessage, errorLevel, noHalt, ...
+    end
+
+    if ( errorMessage ) then
+        if ( ... ) then
+            errorMessage = format( errorMessage, ... )
+        end
+    else
+        errorMessage = "assertion failed!"
+    end
+
+    errorLevel = errorLevel or 1
+
+    if noHalt then
+        ProtectedCall( error, errorMessage, errorLevel + 2 )
+    else
+        error( errorMessage, errorLevel + 1 )
+    end
+
+end
+
 --
 -- You can use this function to add your own CLASS_ var.
 -- Adding in this way will ensure your CLASS_ doesn't collide with another
