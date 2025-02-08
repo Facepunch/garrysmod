@@ -432,6 +432,8 @@ local error = error
 
 function Assert( expression, errorMessage, errorLevel, noHalt, ... )
 
+	errorLevel = errorLevel or 1
+
     if ( expression ) then
         return expression, errorMessage, errorLevel, noHalt, ...
     end
@@ -443,8 +445,6 @@ function Assert( expression, errorMessage, errorLevel, noHalt, ... )
     else
         errorMessage = "assertion failed!"
     end
-
-    errorLevel = errorLevel or 1
 
     if noHalt then
         ProtectedCall( error, errorMessage, errorLevel + 2 )
