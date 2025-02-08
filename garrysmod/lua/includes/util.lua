@@ -438,7 +438,7 @@ function Assert( expression, errorMessage, errorLevel, noHalt, ... )
 
     if ( errorMessage ) then
         if ( ... ) then
-            errorMessage = format( errorMessage, ... )
+            errorMessage = Format( errorMessage, ... )
         end
     else
         errorMessage = "assertion failed!"
