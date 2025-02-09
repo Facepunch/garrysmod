@@ -432,17 +432,21 @@ local error = error
 
 function Assert( expression, errorMessage, errorLevel, noHalt, ... )
 
-	errorLevel = errorLevel or 1
+	if ( errorMessage != nil ) then
+		
+		if ( ... != nil ) then
+        	errorMessage = Format( errorMessage, ... )
+		end
 
-	if ( errorMessage != nil and ... != nil ) then
-        errorMessage = Format( errorMessage, ... )
+	else
+		errorMessage = "assertion failed!"
 	end
 
     if ( expression ) then
-        return expression, errorMessage, errorLevel, noHalt, ...
+        return expression, errorMessage, ...
     end
 
-	errorMessage = errorMessage == nil and "assertion failed!" or errorMessage
+	errorLevel = errorLevel or 1
 
     if noHalt then
         ProtectedCall( error, errorMessage, errorLevel + 2 )
