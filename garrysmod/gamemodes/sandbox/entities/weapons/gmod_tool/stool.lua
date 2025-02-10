@@ -1,4 +1,3 @@
-MsgN("custom stool.lua running")
 
 ToolObj = {}
 

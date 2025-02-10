@@ -1,4 +1,3 @@
-MsgN("custom cl_search_models running")
 
 local sbox_search_maxresults = CreateClientConVar( "sbox_search_maxresults", "1024", true, false, "The maximum amount of results the spawnmenu search should show. Model amount limited to 1/2 of this value, entities are limited to 1/4", 1024 )
 
