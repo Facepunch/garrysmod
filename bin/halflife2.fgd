@@ -869,6 +869,12 @@
 
 	denycommandconcept(string) : "Deny command speech concept" : "" : "If you want your citizens to squad with the player but not obey commands the player gives to move the squad, put a concept here and this citizen will speak the concept instead of obeying the order."
 
+	hostile(choices) : "Hostile" : 0 : "Will be considered a combine, will attack players and be friendly to combine units." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
     //Inputs
 	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
 	input SetExpressionOverride(string) : "Set facial expression override"
