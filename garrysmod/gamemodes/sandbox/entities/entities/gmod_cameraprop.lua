@@ -104,25 +104,25 @@ function ENT:OnRemove()
 
 end
 
-function ENT:ApplyKeybinds( ply )
-
-	if ( self.toggle == 1 ) then
-		numpad.OnDown( ply, self:GetKey(), "Camera_Toggle", self )
-	else
-		numpad.OnDown( ply, self:GetKey(), "Camera_On", self )
-		numpad.OnUp( ply, self:GetKey(), "Camera_Off", self )
-	end
-
-end
-
-function ENT:OnRestore()
-
-	-- HACK: Restore keybinds on level transitions, which can only happen in single player
-	self:ApplyKeybinds( nil )
-
-end
-
 if ( SERVER ) then
+
+	function ENT:ApplyKeybinds( ply )
+
+		if ( self.toggle == 1 ) then
+			numpad.OnDown( ply, self:GetKey(), "Camera_Toggle", self )
+		else
+			numpad.OnDown( ply, self:GetKey(), "Camera_On", self )
+			numpad.OnUp( ply, self:GetKey(), "Camera_Off", self )
+		end
+	
+	end
+	
+	function ENT:OnRestore()
+
+		-- HACK: Restore keybinds on level transitions, which can only happen in single player
+		self:ApplyKeybinds( nil )
+
+	end
 
 	numpad.Register( "Camera_On", function( ply, ent )
 
