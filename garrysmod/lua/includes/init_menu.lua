@@ -42,6 +42,4 @@ include( "util/workshop_files.lua" )
 include( "util/javascript_util.lua" )
 include( "util/tooltips.lua" )
 
-require( "notification" )
-
 include( "menu/derma_icon_browser.lua" )
