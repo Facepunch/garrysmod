@@ -36,7 +36,7 @@ function PANEL:Paint( wide, tall )
 	if ( !matAddonIcon ) then return end
 
 	local size = self.Size
-	local sizeDouble = self.Size * 2
+	local sizeDouble = size * 2
 
 	DisableClipping( true )
 
