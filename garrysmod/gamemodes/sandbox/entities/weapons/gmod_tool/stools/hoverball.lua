@@ -87,7 +87,7 @@ function TOOL:LeftClick( trace )
 	local Offset = CurPos - NearestPoint
 	ball:SetPos( trace.HitPos + Offset )
 
-	undo.Create( "HoverBall" )
+	undo.Create( "gmod_hoverball" )
 		undo.AddEntity( ball )
 
 		-- Don't weld to world

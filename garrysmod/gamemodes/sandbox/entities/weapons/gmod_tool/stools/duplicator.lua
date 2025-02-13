@@ -81,8 +81,9 @@ function TOOL:LeftClick( trace )
 		end
 
 		undo.SetPlayer( self:GetOwner() )
+		undo.SetCustomUndoText( "Undone #undo.duplication" )
 
-	undo.Finish()
+	undo.Finish( "#undo.duplication (" .. tostring( table.Count( Ents ) ) ..  ")" )
 
 	return true
 

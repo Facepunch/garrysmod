@@ -60,7 +60,8 @@ function TOOL:LeftClick( trace )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.slider.name" )
+			undo.Finish( "#tool.slider.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )
@@ -154,7 +155,8 @@ function TOOL:RightClick( trace )
 			undo.AddEntity( constr )
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 			undo.SetPlayer( ply )
-		undo.Finish()
+			undo.SetCustomUndoText( "Undone #tool.slider.name" )
+		undo.Finish( "#tool.slider.name" )
 
 		ply:AddCount( "ropeconstraints", constr )
 		ply:AddCleanup( "ropeconstraints", constr )

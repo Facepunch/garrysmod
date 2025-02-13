@@ -71,7 +71,7 @@ function TOOL:LeftClick( trace, attach )
 	local light = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
 	if ( !IsValid( light ) ) then return false end
 
-	undo.Create( "Light" )
+	undo.Create( "gmod_light" )
 		undo.AddEntity( light )
 
 		if ( attach ) then

@@ -97,7 +97,7 @@ function TOOL:LeftClick( trace )
 	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
 	if ( !IsValid( ent ) ) then return false end
 
-	undo.Create( "Camera" )
+	undo.Create( "gmod_cameraprop" )
 		undo.AddEntity( ent )
 		undo.SetPlayer( ply )
 	undo.Finish()
