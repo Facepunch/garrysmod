@@ -567,8 +567,10 @@ function MissingFlag( element )
 	return true;
 }
 
-function ReverseFilter( cat, me )
+function ReverseFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	RootScope.GMCats.forEach( function( category )
 	{
 		RootScope.GMFilterTags[ category ] = true;
@@ -583,8 +585,10 @@ function ReverseFilter( cat, me )
 	UpdateDigest( RootScope, 50 );
 }
 
-function SwitchFilter( cat, me )
+function SwitchFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	if ( me.checked )
 	{
 		RootScope.GMFilterTags[ cat ] = true;

@@ -8,11 +8,11 @@
 			<li><h2 ng-tranny="'dupes'"></h2></li>
 
 			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 
 				<ul ng-show="Category == cat && cat != 'local'" style="margin-top: 4px; margin-bottom: 15px;">
 					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}" href>{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
@@ -20,11 +20,11 @@
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 
 				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
 					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}" href>{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
@@ -32,18 +32,18 @@
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 
 				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
 					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}" href>{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li><a ng-click="OpenFolder( 'dupes' )" ng-Tranny="'dupes.openfolder'"></a></li>
+			<li><a ng-click="OpenFolder( 'dupes' )" ng-Tranny="'dupes.openfolder'" href></a></li>
 
 		</ul>
 
@@ -93,11 +93,11 @@
 
 			<center>
 				<pagination ng-hide="Loading || TotalResults == 0">
-					<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
-					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+					<a class="back" ng-click="Go( PerPage * -1 )" href>&nbsp;</a>
+					<a class="next" ng-click="Go( PerPage * 1 )" href>&nbsp;</a>
 
 					<div class="pages">
-						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )" href><img src='img/pagination_page.png?1' /></a></span><br>
 					</div>
 					<span class="pagenum">{{Page}}</span>
 				</pagination>

@@ -48,11 +48,11 @@
 			<center>
 				<pagination ng-hide="Loading || TotalResults == 0">
 
-					<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
-					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+					<a class="back" ng-click="Go( PerPage * -1 )" href>&nbsp;</a>
+					<a class="next" ng-click="Go( PerPage * 1 )" href>&nbsp;</a>
 
 					<div class="pages">
-						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )" href><img src='img/pagination_page.png?1' /></a></span><br>
 					</div>
 					<span class="pagenum">{{Page}}</span>
 
