@@ -30,14 +30,19 @@ function DrawMaterialOverlay( texture, refractamount )
 
 end
 
-hook.Add( "RenderScreenspaceEffects", "RenderMaterialOverlay", function()
+cvars.AddChangeCallback( "pp_mat_overlay", function( _, _, newValue )
 
-	local overlay = pp_mat_overlay:GetString()
-
-	if ( overlay == "" ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "material overlay" ) ) then return end
 
-	DrawMaterialOverlay( overlay, pp_mat_overlay_refractamount:GetFloat() )
+	if ( newValue != "" ) then
+		hook.Add( "RenderScreenspaceEffects", "RenderMaterialOverlay", function()
+
+			DrawMaterialOverlay( newValue, pp_mat_overlay_refractamount:GetFloat() )
+
+		end)
+	else
+		hook.Remove( "RenderScreenspaceEffects", "RenderMaterialOverlay" )
+	end
 
 end )
 
