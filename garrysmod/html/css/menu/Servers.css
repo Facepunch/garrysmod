@@ -105,43 +105,28 @@ H1 small
 	padding: 1px;
 }
 
-.serverlist ping, .serverlist maxplayers, .serverlist players, .serverlist map, .serverlist rank
+.serverlist ping, .serverlist maxplayers, .serverlist players, .serverlist map, .serverlist rank, .serverlist lastvisited
 {
 	width: 50px;
 	font-size: 11px;
 	overflow: hidden;
-	height: 16px;
-	position: absolute;
 	text-align: center;
+	display: block;
 }
 
 .serverlist name
 {
-	position: absolute;
 	overflow: hidden;
 	white-space: nowrap;
-	left: 4px;
-	right: 240px;
 	font-size: 13px;
+	display: block;
+	margin-right: 3px;
+	-webkit-box-flex: 1;
 }
 
-.serverlist name lastvisited
-{
-	font-weight: normal;
-	position: absolute;
-	right: 0;
-}
-
-.serverlist name lastvisited lbl
-{
-	font-weight: normal;
-}
-
-/*Fix HTML being awful to work with*/
 .serverlist name span
 {
-	position: relative;
-	top: -3px;
+	vertical-align: top;
 }
 
 .serverlist name tag
@@ -152,8 +137,9 @@ H1 small
 	font-weight: normal;
 	padding: 1px 10px;
 	margin-left: 5px;
-	position: relative;
-	top: -1px;
+	margin-top: 1px;
+	vertical-align: top;
+	display: inline-block;
 }
 
 .serverlist name .flag
@@ -173,28 +159,31 @@ H1 small
 	margin-right: 4px;
 }
 
+.serverlist lastvisited
+{
+	width: auto;
+	padding-right: 5px;
+	text-align: right;
+}
+
 .serverlist map
 {
-	right: 148px;
 	width: 90px;
 	text-align: left;
 }
 
 .serverlist players
 {
-	right: 100px;
 	width: 48px;
 }
 
 .serverlist ping
 {
-	right: 68px;
 	width: 32px;
 }
 
 .serverlist rank
 {
-	right: 4px;
 	width: 64px;
 }
 
@@ -229,9 +218,12 @@ H1 small
 {
 	height: 16px;
 	background-color: #E7F0FF;
-	padding: 3px;
+	padding: 3px 4px;
 	color: #444;
 	cursor: pointer;
+	display: -webkit-box;
+	-webkit-box-pack: justify;
+	-webkit-box-align: stretch;
 }
 
 .serverlist .server:nth-child(odd)
@@ -265,12 +257,15 @@ H1 small
 	height: 30px;
 	position: absolute;
 	border-radius: 4px 4px 0 0;
-	padding-top: 4px;
+	padding: 4px;
 	font-size: 11px;
 
 	top: 8px;
 	left: 8px;
 	right: 8px;
+	display: -webkit-box;
+	-webkit-box-pack: justify;
+	-webkit-box-align: stretch;
 }
 
 .serverlist .body
@@ -295,14 +290,12 @@ H1 small
 	.serverlist .servers ping, .serverlist .servers maxplayers, .serverlist .servers players, .serverlist .servers map, .serverlist .servers rank
 	{
 		font-size: 13px;
-		margin-top: 4px;
 	}
 
 	.serverlist name
 	{
 		font-size: 13px;
 		font-weight: bold;
-		right: 285px;
 	}
 
 	.serverlist map
@@ -321,11 +314,6 @@ H1 small
 	.serverlist map
 	{
 		width: 170px;
-	}
-
-	.serverlist name
-	{
-		right: 330px;
 	}
 }
 
@@ -707,7 +695,7 @@ input[type=number]::-webkit-inner-spin-button
 }
 
 /* just make it not unacceptable */
-@media screen and (max-width: 700px)
+@media screen and (max-width: 1000px)
 {
 	DIV.page DIV.innerpage
 	{
@@ -733,7 +721,6 @@ input[type=number]::-webkit-inner-spin-button
 		top: 3px;
 		left: 3px;
 		right: 3px;
-		height: 18px;
 	}
 	.serverlist .body
 	{
@@ -745,31 +732,55 @@ input[type=number]::-webkit-inner-spin-button
 
 	.serverlist name
 	{
-		left: 0px;
-		right: 158px;
+		font-size: 11px;
+	}
+	.serverlist .server:not(:hover) lastvisited 
+	{
+		display: none;
+	}
+	.serverlist lastvisited .lasttime
+	{
+		display: none;
 	}
 	.serverlist map
 	{
-		right: 100px; /*overlaps but its 640x480*/
 		width: 56px;
 	}
 	.serverlist players
 	{
-		right: 60px;
 		width: 46px;
 	}
 	.serverlist ping
 	{
-		right: 40px;
 		width: 18px;
 	}
 	.serverlist rank
 	{
-		right: 0px;
-		width: 40px;
+		width: 16px;
+	}
+	.serverlist .server rank
+	{
+		background-image: url( '../../img/ranksmall1.png' );
+	}
 
-		background-size: contain;
-		background-repeat: no-repeat;
+	.serverlist .server rank.rank5
+	{
+		background-image: url( '../../img/ranksmall5.png' );
+	}
+
+	.serverlist .server rank.rank4
+	{
+		background-image: url( '../../img/ranksmall4.png' );
+	}
+
+	.serverlist .server rank.rank3
+	{
+		background-image: url( '../../img/ranksmall3.png' );
+	}
+
+	.serverlist .server rank.rank2
+	{
+		background-image: url( '../../img/ranksmall2.png' );
 	}
 
 	DIV.installgamemode, INPUT.searchbox
@@ -780,17 +791,16 @@ input[type=number]::-webkit-inner-spin-button
 
 @media screen and (max-width: 1650px)
 {
-	.serverlist name lastvisited lbl
+	.serverlist lastvisited lbl
 	{
 		display: none;
 	}
 }
 @media screen and (max-width: 1520px)
 {
-	.serverlist name lastvisited
+	.serverlist .server:not(:hover):not(.activeserver) lastvisited .lasttime
 	{
-		margin-left: 5px;
-		right: auto;
+		display: none;
 	}
 }
 
