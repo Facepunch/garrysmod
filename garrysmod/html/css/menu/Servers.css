@@ -245,6 +245,11 @@ H1 small
 	background-color: #F1F6FF;
 }
 
+.serverlist .server.fav + .server:not(.fav)
+{
+	border-top: 2px solid rgba(102, 170, 255, 0.5);
+}
+
 .serverlist .empty
 {
 	color: #777;
