@@ -77,24 +77,36 @@ function ENT:UpdateLabel()
 
 end
 
+local colGlow, vecGlow = Color( 255, 255, 255, 255 ), Vector( 0, 0, 0 )
 function ENT:DrawEffects()
+
 	if ( !self:GetEnabled() ) then return end
 
 	local vOffset = self:GetPos()
-	local vPlayerEyes = LocalPlayer():EyePos()
-	local vDiff = ( vOffset - vPlayerEyes ):GetNormalized()
+	local vNormal = EyePos()
+	vNormal:Negate()
+	vNormal:Add( vOffset )
+	vNormal:Normalize()
 
 	render.SetMaterial( self.Glow )
-	local color = Color( 70, 180, 255, 255 )
-	render.DrawSprite( vOffset - vDiff * 2, 22, 22, color )
 
-	local Distance = math.abs( ( self:GetTargetZ() - self:GetPos().z ) * math.sin( CurTime() * 20 ) ) * 0.05
-	color.r = color.r * math.Clamp( Distance, 0, 1 )
-	color.b = color.b * math.Clamp( Distance, 0, 1 )
-	color.g = color.g * math.Clamp( Distance, 0, 1 )
+	vecGlow:Set( vNormal )
+	vecGlow:Mul( -2 )
+	vecGlow:Add( vOffset )
 
-	render.DrawSprite( vOffset + vDiff * 4, 48, 48, color )
-	render.DrawSprite( vOffset + vDiff * 4, 52, 52, color )
+	colGlow:SetUnpacked( 70, 180, 255, 255 )
+	render.DrawSprite( vecGlow, 22, 22, colGlow )
+
+	vecGlow:Set( vNormal )
+	vecGlow:Mul( 4 )
+	vecGlow:Add( vOffset )
+
+	local Distance = math.Clamp( math.abs( ( self:GetTargetZ() - vOffset.z ) * math.sin( CurTime() * 20 ) ) * 0.05, 0, 1 )
+	colGlow:SetUnpacked( 70 * Distance, 180 * Distance, 255 * Distance, 255 )
+
+	render.DrawSprite( vecGlow, 48, 48, colGlow )
+	render.DrawSprite( vecGlow, 52, 52, colGlow )
+
 end
 
 ENT.WantsTranslucency = true -- If model is opaque, still call DrawTranslucent
