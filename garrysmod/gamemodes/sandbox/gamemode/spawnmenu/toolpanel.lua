@@ -189,6 +189,7 @@ function PANEL:AddCategory( name, catName, tItems )
 	local tools = {}
 	for k, v in pairs( tItems ) do
 		local name = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
+		if ( name:StartsWith( "#" ) ) then name = name:sub( 2 ) end
 		tools[ language.GetPhrase( name ) ] = v
 	end
 
