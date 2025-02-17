@@ -389,7 +389,7 @@ Bir cesedi yakmak belirgin bir ses çıkarır
 
 -- Health station
 L.hstation_name = "Sağlık İstasyonu"
-L.hstation_hint   = "Sağlık almak için {usekey} tuşuna bas. Şarj: {num}."
+L.hstation_hint   = "Sağlık almak için {usekey} tuşunu basılı tutun. Şarj: {num}."
 L.hstation_broken = "Sağlık İstasyonun yok edildi!"
 L.hstation_help = "{primaryfire} Sağlık İstasyonunu yerleştirir."
 
@@ -460,7 +460,7 @@ L.ump_desc = [[
 Hedeflerin kafasını karıştıran deneysel 
 SMG. 
 
-Standart SMG cephanesi kullanır.]]
+Standart HMS cephanesi kullanır.]]
 
 -- DNA scanner
 L.dna_name = "DNA tarayıcı"
@@ -511,7 +511,7 @@ L.unarmed_name = "Gizlendi"
 L.crowbar_name = "Levye"
 L.pistol_name = "Tabanca"
 L.rifle_name = "Tüfek"
-L.shotgun_name = "Pompalı tüfek"
+L.shotgun_name = "Pompalı Tüfek"
 
 -- Teleporter
 L.tele_name = "Işınlayıcı"
@@ -537,11 +537,11 @@ kullanım sayısı sınırlıdır.]]
 -- Ammo names, shown when picked up
 L.ammo_pistol = "9mm cephanesi"
 
-L.ammo_smg1 = "SMG cephanesi"
-L.ammo_buckshot = "Pompalı tüfek cephanesi"
+L.ammo_smg1 = "HMS cephanesi"
+L.ammo_buckshot = "Pompalı Tüfek cephanesi"
 L.ammo_357 = "Tüfek cephanesi"
 L.ammo_alyxgun = "Deagle cephanesi"
-L.ammo_ar2altfire = "İşaret fişeği cephanesi"
+L.ammo_ar2altfire = "İşaret Fişeği cephanesi"
 L.ammo_gravity = "Poltergeist cephanesi"
 
 
@@ -549,7 +549,7 @@ L.ammo_gravity = "Poltergeist cephanesi"
 
 -- Round status
 L.round_wait = "Bekleniyor"
-L.round_prep = "Hazırlanıyor"
+L.round_prep = "Hazırlanılıyor"
 L.round_active = "Devam etmekte"
 L.round_post = "Raunt bitti"
 
@@ -561,7 +561,7 @@ L.hastemode = "HIZLI MOD"
 L.hp_healthy = "Sağlıklı"
 L.hp_hurt = "Hasar Görmüş"
 L.hp_wounded = "Yaralı"
-L.hp_badwnd = "Kötü Yaralanmış"
+L.hp_badwnd = "Ağır Yaralı"
 L.hp_death = "Ölüme Yakın"
 
 
