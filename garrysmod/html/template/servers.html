@@ -117,9 +117,9 @@
 
 				<div class='header'>
 					<name ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'"></name>
-					<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
-					<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
 					<map ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'"></map>
+					<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
+					<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
 					<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
 				</div>
 
@@ -137,13 +137,12 @@
 							<span>{{ServerName(server)}}
 								<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
 							</span>
-								
-							<lastvisited ng-hide="server.lastplayed == 0"><lbl ng-tranny="'server_lastvisit'"></lbl> {{server.lastplayedStr}}</lastvisited>
 						</name>
-						<ping>{{server.ping}}</ping>
-						<players>{{server.players}} / {{server.maxplayers}}</players>
+						<lastvisited ng-hide="server.lastplayed == 0"><lbl ng-tranny="'server_lastvisit'"></lbl> {{server.lastplayedDate}} <span class='lasttime'>{{server.lastplayedTime}}</span></lastvisited>
 						<map>{{server.map}}</map>
-						<rank class='{{ServerRank(server)}}'>&nbsp;</rank>
+						<players>{{server.players}} / {{server.maxplayers}}</players>
+						<ping>{{server.ping}}</ping>
+						<rank class='{{ServerRank(server)}}'><span class='bar'></span></rank>
 
 					</div>
 
