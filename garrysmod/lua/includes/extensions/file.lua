@@ -1,5 +1,6 @@
-
-
+--[[---------------------------------------------
+	File Library
+-----------------------------------------------]]
 
 function file.Read( filename, path )
 
@@ -39,5 +40,37 @@ function file.Append( filename, contents )
 	f:Close()
 
 	return true
+
+end
+
+--[[---------------------------------------------
+	File Meta
+-----------------------------------------------]]
+
+local File = FindMetaTable( "File" )
+
+local function lineIterator( lines )
+
+    local i = lines.i
+    local line = lines[i]
+
+    lines.i = i + 1
+
+    return line
+
+end
+
+function File:Lines()
+
+    local position = self:Tell()
+    local data = self:Read( self:Size() )
+
+    self:Seek( position )
+
+    local lines = string.Explode( "\n", data )
+    
+    lines.i = 1
+
+    return lineIterator, lines
 
 end
