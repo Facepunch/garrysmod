@@ -8,24 +8,24 @@
 			<li><h2 ng-tranny="'demos'"></h2></li>
 
 			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 			</li>
 
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 			</li>
 
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}" href></a>
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li><a ng-click="OpenFolder( 'demos' )" ng-Tranny="'demos.openfolder'"></a></li>
+			<li><a ng-click="OpenFolder( 'demos' )" ng-Tranny="'demos.openfolder'" href></a></li>
 
 		</ul>
 
@@ -77,11 +77,11 @@
 
 			<center>
 				<pagination ng-hide="Loading || TotalResults == 0">
-					<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
-					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+					<a class="back" ng-click="Go( PerPage * -1 )" href>&nbsp;</a>
+					<a class="next" ng-click="Go( PerPage * 1 )" href>&nbsp;</a>
 
 					<div class="pages">
-						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )" href><img src='img/pagination_page.png?1' /></a></span><br>
 					</div>
 					<span class="pagenum">{{Page}}</span>
 				</pagination>
