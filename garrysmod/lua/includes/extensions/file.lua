@@ -52,7 +52,11 @@ local File = FindMetaTable( "File" )
 local function lineIterator( lines )
 
     local i = lines.i
-    local line = lines[i]
+	local last = lines.last
+
+	if ( last and i > last ) then return end
+
+    local line = lines[ i ]
 
     lines.i = i + 1
 
@@ -60,7 +64,7 @@ local function lineIterator( lines )
 
 end
 
-function File:Lines()
+function File:Lines( fromLine, toLine )
 
     local position = self:Tell()
     local data = self:Read( self:Size() )
@@ -69,7 +73,8 @@ function File:Lines()
 
     local lines = string.Explode( "\n", data )
     
-    lines.i = 1
+    lines.i = fromLine or 1
+	lines.last = toLine
 
     return lineIterator, lines
 
