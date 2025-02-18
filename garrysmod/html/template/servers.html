@@ -182,7 +182,7 @@
 
 					<footer>
 						<div class="cell" style="padding-top: 5px;">
-							<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ui-keypress="{'enter':'JoinServer( CurrentGamemode.Selected )'}" placeholder="Password" />
+							<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ng-keyup="PasswordInput( $event, CurrentGamemode.Selected )" placeholder="Password" />
 
 							<div ng-show="CurrentGamemode.Selected.players >= CurrentGamemode.Selected.maxplayers">
 								<input type="checkbox" ng-model="JoinIfHasSlot" id="join_if_not_full" />
