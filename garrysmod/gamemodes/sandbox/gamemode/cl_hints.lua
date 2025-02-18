@@ -2,11 +2,11 @@
 
 CreateClientConVar( "cl_showhints", "1", true, false, "Whether to display popup hints." )
 
--- A list of hints we've already done so we don't repeat ourselves`
+-- A list of hints we've already done so we don't repeat ourselves
 local ProcessedHints = {}
 
 --
--- Throw's a Hint to the screen
+-- Throws a Hint to the screen
 --
 local function ThrowHint( name )
 
