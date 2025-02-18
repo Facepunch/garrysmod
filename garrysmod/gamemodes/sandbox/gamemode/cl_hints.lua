@@ -6,14 +6,14 @@ local cl_showhints = CreateClientConVar( "cl_showhints", "1", true, false, "Whet
 local ProcessedHints = {}
 
 --
--- Handles looking up bindings
+-- Handles looking up bindingsqqqqqqqqqq
 --
 local function LookupBinding( group )
 
 	local key = input.LookupBinding( group )
 
-	if ( ! key ) then
-		return string.lower( group ) .. " not bound"
+	if ( !key ) then
+		return "'" ..  string.lower( group ) .. " not bound'"
 	end
 
 	return "'" ..  string.upper( key ) .. "'"
@@ -24,7 +24,7 @@ end
 -- Throws a Hint to the screen
 --
 local function ThrowHint( name )
-	if ( ! cl_showhints:GetBool() || engine.IsPlayingDemo() ) then return end
+	if ( !cl_showhints:GetBool() || engine.IsPlayingDemo() ) then return end
 
 	local text = language.GetPhrase( "Hint_" .. name )
 	text = string.gsub( text, "%%([^%%]+)%%", LookupBinding )
