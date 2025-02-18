@@ -6,7 +6,7 @@ local cl_showhints = CreateClientConVar( "cl_showhints", "1", true, false, "Whet
 local ProcessedHints = {}
 
 --
--- Handles looking up bindingsqqqqqqqqqq
+-- Handles looking up bindings
 --
 local function LookupBinding( group )
 
