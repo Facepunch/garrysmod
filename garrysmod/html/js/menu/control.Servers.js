@@ -81,6 +81,13 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.SelectServer = function( server, event )
 	{
+		if ( server == null )
+		{
+			RootScope.CurrentGamemode.Selected = null;
+			clearInterval( UpdateInterval );
+			return;
+		}
+		
 		if ( event && event.which != 1 )
 		{
 			var txt = server.address;

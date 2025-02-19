@@ -81,16 +81,27 @@ H1 small
 	padding-left: 8px;
 }
 
-.serverlist
+.serverlist_layout
 {
+	display: -webkit-box;
+	-webkit-box-pack: justify;
+	-webkit-box-align: start;
 	position: absolute;
 	top: 90px;
 	bottom: 0px;
 	left: 0px;
-	right: 320px;
+	right: 0px;
+}
+
+.serverlist
+{
+	-webkit-box-flex: 1;
+	position: relative;
 	background-color: white;
 	padding: 10px;
 	border-radius: 4px;
+	box-sizing: border-box;
+	height: 100%;
 }
 
 .serverlist.found_servers
@@ -127,6 +138,7 @@ H1 small
 .serverlist name span
 {
 	vertical-align: top;
+	line-height: 1.4em;
 }
 
 .serverlist name tag
@@ -140,6 +152,7 @@ H1 small
 	margin-top: 1px;
 	vertical-align: top;
 	display: inline-block;
+	line-height: 1.3em;
 }
 
 .serverlist name .flag
@@ -348,14 +361,24 @@ A.bglink
 
 .serverinfo
 {
-	position: absolute;
-	top: 90px;
-	bottom: 0px;
 	width: 280px;
-	right: 0px;
 	background-color: white;
 	padding: 10px 15px;
 	border-radius: 4px;
+	margin-left: 10px;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.serverinfo .closelink
+{
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: -3px;
+	right: -3px;
+	border-radius: 100%;
+	cursor: pointer;
 }
 
 .serverinfo name
@@ -451,7 +474,6 @@ A.bglink
 
 DIV.installgamemode
 {
-	margin-right: 320px;
 	height: 25px;
 	line-height: 26px;
 	font-size: 24px;
@@ -579,6 +601,7 @@ SPAN.installgamemode:hover
 	height: auto;
 	width: 15%;
 	min-width: 150px;
+	margin-right: 0px;
 }
 
 DIV.page DIV.options UL LI.sb_filters
@@ -657,6 +680,14 @@ input[type=number]::-webkit-inner-spin-button
 	}
 }
 
+@media screen and (min-width: 1367px)
+{
+	div.page.server_browser
+	{
+		margin-right: 50px;
+	}
+}
+
 @media screen and (max-width: 1366px)
 {
 	div.page.server_browser DIV.innerpage
@@ -676,24 +707,6 @@ input[type=number]::-webkit-inner-spin-button
 	}
 }
 
-@media screen and (max-width: 900px)
-{
-	.serverinfo
-	{
-		width: 200px;
-	}
-	.serverlist
-	{
-		right: 240px;
-	}
-
-	/*sigh*/
-	DIV.installgamemode, INPUT.searchbox
-	{
-		margin-right: 240px;
-	}
-}
-
 /* just make it not unacceptable */
 @media screen and (max-width: 1000px)
 {
@@ -708,12 +721,6 @@ input[type=number]::-webkit-inner-spin-button
 	{
 		padding: 5px;
 		width: 150px;
-	}
-
-	.serverlist
-	{
-		/*padding: 5px;*/
-		right: 160px;
 	}
 
 	.serverlist .header
@@ -782,11 +789,6 @@ input[type=number]::-webkit-inner-spin-button
 	{
 		background-image: url( '../../img/ranksmall2.png' );
 	}
-
-	DIV.installgamemode, INPUT.searchbox
-	{
-		margin-right: 0px;
-	}
 }
 
 @media screen and (max-width: 1650px)
@@ -796,20 +798,9 @@ input[type=number]::-webkit-inner-spin-button
 		display: none;
 	}
 }
-@media screen and (max-width: 1520px)
-{
-	.serverlist .server:not(:hover):not(.activeserver) lastvisited .lasttime
-	{
-		display: none;
-	}
-}
 
 @media screen and (max-width: 1366px)
 {
-	.serverlist
-	{
-		right: 250px;
-	}
 	.serverinfo
 	{
 		width: 215px;
