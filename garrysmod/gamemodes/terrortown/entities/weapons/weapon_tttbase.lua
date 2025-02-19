@@ -471,6 +471,27 @@ function SWEP:SetupDataTables()
    self:NetworkVar("Float", 3, "IronsightsTime")
 end
 
+local ReloadActIndex = {
+   [ "pistol" ]      = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+   [ "smg" ]         = ACT_HL2MP_GESTURE_RELOAD_SMG1,
+   [ "grenade" ]     = ACT_HL2MP_GESTURE_RELOAD_GRENADE,
+   [ "ar2" ]         = ACT_HL2MP_GESTURE_RELOAD_AR2,
+   [ "shotgun" ]     = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
+   [ "rpg" ]         = ACT_HL2MP_GESTURE_RELOAD_RPG,
+   [ "physgun" ]     = ACT_HL2MP_GESTURE_RELOAD_PHYSGUN,
+   [ "crossbow" ]    = ACT_HL2MP_GESTURE_RELOAD_CROSSBOW,
+   [ "melee" ]       = ACT_HL2MP_GESTURE_RELOAD_MELEE,
+   [ "slam" ]        = ACT_HL2MP_GESTURE_RELOAD_SLAM,
+   [ "fist" ]        = ACT_HL2MP_GESTURE_RELOAD_FIST,
+   [ "melee2" ]      = ACT_HL2MP_GESTURE_RELOAD_MELEE2,
+   [ "passive" ]     = ACT_HL2MP_GESTURE_RELOAD_PASSIVE,
+   [ "knife" ]       = ACT_HL2MP_GESTURE_RELOAD_KNIFE,
+   [ "duel" ]        = ACT_HL2MP_GESTURE_RELOAD_DUEL,
+   [ "camera" ]      = ACT_HL2MP_GESTURE_RELOAD_CAMERA,
+   [ "magic" ]       = ACT_HL2MP_GESTURE_RELOAD_MAGIC,
+   [ "revolver" ]    = ACT_HL2MP_GESTURE_RELOAD_REVOLVER
+}
+
 function SWEP:Initialize()
    if CLIENT and self:Clip1() == -1 then
       self:SetClip1(self.Primary.DefaultClip)
@@ -485,6 +506,14 @@ function SWEP:Initialize()
    -- compat for gmod update
    if self.SetHoldType then
       self:SetHoldType(self.HoldType or "pistol")
+
+      if self.ReloadHoldType then
+         local act = ReloadActIndex[self.ReloadHoldType]
+         if act then
+            self.ActivityTranslate[ ACT_MP_RELOAD_STAND ] = act
+            self.ActivityTranslate[ ACT_MP_RELOAD_CROUCH ] = act
+         end
+      end
    end
 end
 
