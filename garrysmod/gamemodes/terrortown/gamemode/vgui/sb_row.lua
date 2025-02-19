@@ -321,6 +321,13 @@ function PANEL:DoRightClick()
 end
 
 local frame
+local function HideVolume()
+   if IsValid(frame) then
+      frame:Close()
+   end
+end
+hook.Add("ScoreboardHide", "TTT_HideVolume", HideVolume)
+
 function PANEL:ShowMicVolumeSlider()
    local width = 300
    local height = 50
@@ -350,7 +357,7 @@ function PANEL:ShowMicVolumeSlider()
    end
 
    -- Automatically close after 10 seconds (something may have gone wrong)
-   timer.Create("TTT_CloseVolumeSlider", 10, 1, function() if IsValid(frame) then frame:Close() end end)
+   timer.Create("TTT_CloseVolumeSlider", 10, 1, HideVolume)
 
 
    -- "Player volume"
@@ -412,12 +419,5 @@ function PANEL:ShowMicVolumeSlider()
       draw.RoundedBox(100, 0, 0, sliderHeight, sliderHeight, Color(255, 255, 255, 255))
    end
 end
-
-local function HideVolume()
-   if IsValid(frame) then
-      frame:Close()
-   end
-end
-hook.Add("ScoreboardHide", "TTT_HideVolume", HideVolume)
 
 vgui.Register( "TTTScorePlayerRow", PANEL, "DButton" )
