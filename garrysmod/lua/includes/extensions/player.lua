@@ -262,34 +262,46 @@ function meta:HasGodMode()
 end
 
 -- These are totally in the wrong place.
+local accountID={}
+local uniqueID={}
+local steamID64={}
+local steamID={}
+local bots={}
 function player.GetByAccountID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:AccountID() == ID ) then
-			return players[i]
-		end
+	local ret = accountID[ID]
+	if ( ret and ret:IsValid() ) then
+		return ret
 	end
 
 	return false
 end
 
 function player.GetByUniqueID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:UniqueID() == ID ) then
-			return players[i]
-		end
+	local ret = uniqueID[ID]
+	if ( ret and ret:IsValid() ) then
+		return ret
 	end
-
 	return false
 end
 
 function player.GetBySteamID( ID )
 	ID = string.upper( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID() == ID ) then
-			return players[i]
+	local ret = steamID[ID]--ret could be nil if there was never an entry, or NULL if the player DCed
+	if ( ret and ret:IsValid() ) then
+		return ret
+	end
+	if ( ret and ID=="BOT" ) then--the original function would return the first bot it could find,
+		while ( ret ) do
+			ret = bots[1]--get the first bot on the list
+			if ( not ret ) then--bots is now empty, we failed
+				steamID.BOT = nil
+				return false
+			end
+			if ( ret:IsValid() ) then--is it a valid entity?
+				steamID.BOT = ret--update entry for BOT so that hopefully we don't have to do this again
+				return ret--return the bot
+			end
+			table.remove(bots,1)--remove a null entity from the list
 		end
 	end
 
@@ -298,11 +310,9 @@ end
 
 function player.GetBySteamID64( ID )
 	ID = tostring( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID64() == ID ) then
-			return players[i]
-		end
+	local ret = steamID64[ID]
+	if ( ret and ret:IsValid() ) then
+		return ret
 	end
 
 	return false
@@ -319,11 +329,37 @@ function player.Iterator()
 
 end
 
-local function InvalidatePlayerCache( ent )
-
-	if ( ent:IsPlayer() ) then PlayerCache = nil end
-
-end
-
-hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
-hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )
+hook.Add( "OnEntityCreated", "PlayerCache", function( ent )
+	if ( ent:IsPlayer() ) then 
+		PlayerCache = player.GetAll()
+		accountID[ent:AccountID()] = ent
+		if ( CLIENT ) then--workaround to https://github.com/Facepunch/garrysmod-issues/issues/6012
+			uniqueID[ ent:UniqueID() ] = ent
+		else
+			timer.Simple(0, function()
+				if ent:IsValid()then
+					uniqueID[ ent:UniqueID() ] = ent
+				end
+			end)
+		end
+		steamID64[ent:SteamID64()] = ent
+		local ID=ent:SteamID()
+		if ( ID == "BOT" ) then--if a bot joined, we got a bit more work to do
+			bots = {}--lets rebuild the bot cache
+			for i = 1, #PlayerCache do
+				local p = PlayerCache[i]
+				if ( p:SteamID() == "BOT" ) then--this is more reliable than Player:IsBot() which checks entity flags that may be added or removed
+					table.insert(bots, p)
+					steamID.BOT = steamID.BOT or p
+				end
+			end
+		else
+			steamID[ID] = ent
+		end
+	end
+end )
+hook.Add( "EntityRemoved", "PlayerCache", function( ent )
+	if ( ent:IsPlayer() ) then 
+		PlayerCache = nil
+	end
+end )
