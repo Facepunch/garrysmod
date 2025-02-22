@@ -209,7 +209,7 @@ L.search_eyes = "Dedektiflik becerilerini kullanarak, {player} adlı oyuncuyu g�
 L.sb_playing = "Şu anda şunu oynuyorsunuz..."
 L.sb_mapchange = "{num} rauntta veya {time} içinde harita değişecektir."
 
-L.sb_mia = "Eylem Eksik"
+L.sb_mia = "Çatışmada Kayıp"
 L.sb_confirmed = "Onaylanmış Ölü"
 
 L.sb_ping = "Gecikme"
@@ -250,11 +250,11 @@ L.set_minimal_id      = "Nişangah altında Minimalist Hedef Kimliği (karma met
 L.set_healthlabel     = "Sağlık durumunu sağlık çubuğunda göster"
 L.set_lowsights       = "Gez ve arpacık kullanırken silahı indir"
 L.set_lowsights_tip   = "Gez ve arpacık kullanırken silah modelini ekranda daha aşağı konumlandırmayı etkinleştir. Bu, hedefinizi görmeyi kolaylaştıracak, ancak daha az gerçekçi görünecektir."
-L.set_fastsw          = "Hızlı silah değişme"
+L.set_fastsw          = "Hızlı silah değiştirme"
 L.set_fastsw_tip      = "Silahı kullanmak için tekrar tıklamak zorunda kalmadan silahları dolaştırmayı etkinleştir. Değiştirici menüsünü göstermek için menüyü göster seçeneğini etkinleştirin."
-L.set_fastsw_menu     = "Hızlı silah değişme ile menüyü etkinleştir"
-L.set_fastswmenu_tip  = "Hızlı silah değişme etkinleştirildiğinde, menü değiştirici menüsü açılır."
-L.set_wswitch         = "Silah değişme menüsünü otomatik kapatmayı devre dışı bırak"
+L.set_fastsw_menu     = "Hızlı silah değiştirme ile menüyü etkinleştir"
+L.set_fastswmenu_tip  = "Hızlı silah değiştirme etkinleştirildiğinde, menü değiştirici menüsü açılır."
+L.set_wswitch         = "Silah değiştirme menüsünü otomatik kapatmayı devre dışı bırak"
 L.set_wswitch_tip     = "Varsayılan olarak silah değiştirici, son kaydırmadan birkaç saniye sonra otomatik olarak kapanır. Açık kalması için bunu etkinleştirin."
 L.set_cues            = "Bir raunt başladığında veya bittiğinde ses işaretini çal"
 L.set_msg_cue         = "Bir bildirim göründüğünde ses işaretini çal"
@@ -379,7 +379,7 @@ Sınırsız kullanım. Bunu taşırsanız
 C4'ü fark etmeniz daha kolay olacak.]]
 
 -- Flare gun
-L.flare_name = "İşaret fişeği tabancası"
+L.flare_name = "İşaret Fişeği Tabancası"
 L.flare_desc = [[
 Cesetleri yakmak için kullanılabilir, böylece 
 asla bulunmazlar. Sınırlı cephane. 
@@ -389,7 +389,7 @@ Bir cesedi yakmak belirgin bir ses çıkarır
 
 -- Health station
 L.hstation_name = "Sağlık İstasyonu"
-L.hstation_hint   = "Sağlık almak için {usekey} tuşuna bas. Şarj: {num}."
+L.hstation_hint   = "Sağlık almak için {usekey} tuşunu basılı tutun. Şarj: {num}."
 L.hstation_broken = "Sağlık İstasyonun yok edildi!"
 L.hstation_help = "{primaryfire} Sağlık İstasyonunu yerleştirir."
 
@@ -402,7 +402,7 @@ hasar verilebilir. Kullanıcılarının DNA
 
 -- Knife
 L.knife_name = "Bıçak"
-L.knife_thrown = "Fırlatılan bıçak"
+L.knife_thrown = "Fırlatılan Bıçak"
 
 L.knife_desc = [[
 Yaralı hedefleri anında sessiz bir şekilde öldürür
@@ -436,7 +436,7 @@ Düşük gürültülü tabanca, normal tabanca mermisi kullanır.
 Kurbanlar öldürüldüklerinde çığlık atmazlar.]]
 
 -- Newton launcher
-L.newton_name = "Newton fırlatıcı"
+L.newton_name = "Newton Fırlatıcı"
 
 L.newton_desc = [[
 İnsanları güvenli bir mesafeden itin. 
@@ -460,7 +460,7 @@ L.ump_desc = [[
 Hedeflerin kafasını karıştıran deneysel 
 SMG. 
 
-Standart SMG cephanesi kullanır.]]
+Standart HMS cephanesi kullanır.]]
 
 -- DNA scanner
 L.dna_name = "DNA tarayıcı"
@@ -511,7 +511,7 @@ L.unarmed_name = "Gizlendi"
 L.crowbar_name = "Levye"
 L.pistol_name = "Tabanca"
 L.rifle_name = "Tüfek"
-L.shotgun_name = "Pompalı tüfek"
+L.shotgun_name = "Pompalı Tüfek"
 
 -- Teleporter
 L.tele_name = "Işınlayıcı"
@@ -537,11 +537,11 @@ kullanım sayısı sınırlıdır.]]
 -- Ammo names, shown when picked up
 L.ammo_pistol = "9mm cephanesi"
 
-L.ammo_smg1 = "SMG cephanesi"
-L.ammo_buckshot = "Pompalı tüfek cephanesi"
+L.ammo_smg1 = "HMS cephanesi"
+L.ammo_buckshot = "Pompalı Tüfek cephanesi"
 L.ammo_357 = "Tüfek cephanesi"
 L.ammo_alyxgun = "Deagle cephanesi"
-L.ammo_ar2altfire = "İşaret fişeği cephanesi"
+L.ammo_ar2altfire = "İşaret Fişeği cephanesi"
 L.ammo_gravity = "Poltergeist cephanesi"
 
 
@@ -549,7 +549,7 @@ L.ammo_gravity = "Poltergeist cephanesi"
 
 -- Round status
 L.round_wait = "Bekleniyor"
-L.round_prep = "Hazırlanıyor"
+L.round_prep = "Hazırlanılıyor"
 L.round_active = "Devam etmekte"
 L.round_post = "Raunt bitti"
 
@@ -561,7 +561,7 @@ L.hastemode = "HIZLI MOD"
 L.hp_healthy = "Sağlıklı"
 L.hp_hurt = "Hasar Görmüş"
 L.hp_wounded = "Yaralı"
-L.hp_badwnd = "Kötü Yaralanmış"
+L.hp_badwnd = "Ağır Yaralı"
 L.hp_death = "Ölüme Yakın"
 
 
@@ -597,7 +597,7 @@ L.radar_hud    = "Radar bir sonraki tarama için {time} içinde hazır"
 -- Canlı/ölü -- Spectator muting of living/dead sessize alınması
 L.mute_living = "Canlı oyuncular sessize alındı"
 L.mute_specs = "İzleyiciler sessize alındı"
-L.mute_all = "Tümü sessize alındı"
+L.mute_all = "Herkes sessize alındı"
 L.mute_off = "Kimse sessize alınmadı"
 
 -- Spectators and prop possession
@@ -647,9 +647,9 @@ L.idle_popup = [[{num} saniye boyunca boştaydın ve sonuç olarak yalnızca İz
 L.idle_popup_close = "Hiçbir şey yapma"
 L.idle_popup_off = "İzleyici modunu şimdi devre dışı bırak"
 
-L.idle_warning = "Uyarı: Boşta/AFK gibi görünüyorsunuz ve etkinlik göstermediğiniz sürece izlemeye alınacaksınız!"
+L.idle_warning = "Uyarı: Boşta gibi görünüyorsunuz ve etkinlik göstermediğiniz sürece izlemeye alınacaksınız!"
 
-L.spec_mode_warning = "İzleyici modundasın ve bir raunt başladığında oyuna başlamayacaksın. Bu modu devre dışı bırakmak için F1'e basın, 'Oynanış'a gidin ve 'Yalnızca İzle modu'nun işaretini kaldırın."
+L.spec_mode_warning = "İzleyici modundasın ve bir raunt başladığında oyuna başlamayacaksın. Bu modu devre dışı bırakmak için F1 tuşuna basın, 'Oynanış'a gidin ve 'Yalnızca İzle modu'nun işaretini kaldırın."
 
 
 --- Tips, shown at bottom of screen to spectators
@@ -753,7 +753,7 @@ L.report_tab_scores = "Puanlar"
 L.report_tab_scores_tip = "Sadece bu rauntta her oyuncunun aldığı puan"
 
 -- Event log saving
-L.report_save = "Kaydı .txt olarak kaydet"
+L.report_save = ".txt olarak kaydet"
 L.report_save_tip = "Olay Kaydını bir metin dosyasına kaydeder"
 L.report_save_error = "Kaydedilecek Olay Kaydı verisi yok."
 L.report_save_result = "Olay Kaydı şuraya kaydedildi:"
