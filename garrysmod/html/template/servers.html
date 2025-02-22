@@ -9,15 +9,15 @@
 				<li class="small" style="margin-top: -1.5em;">{{ServerCount[ ServerType ]}} <span ng-tranny="'servers_servercount'"></span></li>
 				<li class="small">{{GamemodeList.length}} <span ng-tranny="'servers_gmcount'"></span></li>
 				<li>&nbsp;</li>
-				<li><a class="{{IfElse( ServerType == 'internet', 'active', '' )}}" ng-tranny="'servers_internet'" ng-click="SwitchType( 'internet' )" href></a></li>
-				<li><a class="{{IfElse( ServerType == 'favorite', 'active', '' )}}" ng-tranny="'servers_favorites'" ng-click="SwitchType( 'favorite' )" href></a></li>
-				<li><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )" href></a></li>
-				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )" href></a></li>
+				<li><a class="{{IfElse( ServerType == 'internet', 'active', '' )}}" ng-tranny="'servers_internet'" ng-click="SwitchType( 'internet' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'favorite', 'active', '' )}}" ng-tranny="'servers_favorites'" ng-click="SwitchType( 'favorite' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
 				<li ng-show="( CurrentGamemode == null && Refreshing[ ServerType ] == 'false' ) || (Refreshing[ ServerType ] == 'true')">&nbsp;</li>
-				<li ng-hide="CurrentGamemode != null || Refreshing[ ServerType ] == 'true'"><a ng-tranny="'servers_refresh'" ng-click="Refresh()" href>refresh</a></li>
-				<li ng-hide="Refreshing[ ServerType ] == 'false'"><a ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()" href>Stop refresh</a></li>
+				<li ng-hide="CurrentGamemode != null || Refreshing[ ServerType ] == 'true'"><a ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
+				<li ng-hide="Refreshing[ ServerType ] == 'false'"><a ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
 				<li>&nbsp;</li>
-				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-tranny="'legacy_browser'" href></a></li>
+				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-tranny="'legacy_browser'"></a></li>
 				<li>&nbsp;</li>
 				<li class="sb_filter_sep"></li>
 				<li class="sb_filters" ng-hide="CurrentGamemode != null">
@@ -83,7 +83,7 @@
 					<div class="found_servers serverlist" ng-show="FoundServers.length > 0">
 						<div ng-repeat="server in FoundServers" class="server">
 							<name>
-								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );Refresh();$event.stopPropagation();" href></a>
+								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );Refresh();$event.stopPropagation();"></a>
 								<!--<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/> -->
 								<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
 								<span>{{ServerName(server)}}</span>
@@ -110,7 +110,7 @@
 
 			<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
 				<input type="text" ng-model="CurrentGamemode.Search" class="searchbox" ng-tranny="'svsearch_placeholder'" />
-				<a class='bglink' ng-click="SelectGamemode(null)" href><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
+				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
 			</div>
 
 			<div class='serverlist'>
@@ -131,7 +131,7 @@
 						class="server {{ ServerClass( server ) }} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-mouseup="SelectServer( server, $event )" >
 
 						<name>
-							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();" href></a>
+							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
 							<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag" loading="lazy"/>
 							<img class="passworded" src='img/server-passworded.png' ng-show="server.pass" loading="lazy"/>
 							<span>{{ServerName(server)}}

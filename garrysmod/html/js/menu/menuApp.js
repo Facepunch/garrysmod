@@ -28,6 +28,33 @@ App.config( function( $routeProvider, $compileProvider, $locationProvider, $cont
 
 	//Default prefix is '!'. Gmod doesn't use this.
 	$locationProvider.hashPrefix( '' );
+	
+	// AngularJS 1.8.2 doesn't apply 'href' on <a> unless ng-href is present. This breaks hover styles in Awesomium compared to 1.1.2.
+	// So we're copying the htmlAnchorDirective from https://github.com/angular/angular.js/blob/master/src/ng/directive/a.js
+	// and re-adding an empty href where needed.
+	$compileProvider.directive('a', function($compile)
+	{
+		return {
+			restrict: 'E',
+			compile: function(element, attr) {
+				if (!attr.href && !attr.xlinkHref) {
+					return function(scope, element) {
+						if (element[0].nodeName.toLowerCase() !== 'a') return;
+
+						if (!attr.href && !attr.ngHref) element.attr("href",""); // Re-add an empty href. see above comment.
+
+						var href = toString.call(element.prop('href')) === '[object SVGAnimatedString]' ?
+							   'xlink:href' : 'href';
+						element.on('click', function(event) {
+							if (!element.attr(href)) {
+								event.preventDefault();
+							}
+						});
+					};
+				}
+			}
+		};
+	});
 
 	//Disable debug info for "a significant performance boost" https://docs.angularjs.org/api/ng/provider/$compileProvider#debugInfoEnabled
 	$compileProvider.debugInfoEnabled( false ); //Comment out for debugging
