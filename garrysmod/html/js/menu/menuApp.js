@@ -1,7 +1,7 @@
 var IN_ENGINE = navigator.userAgent.indexOf( "Valve Source Client" ) != -1;
 var IS_SPAWN_MENU = false;
 
-var App = angular.module( 'MenuApp', [ 'ngRoute', 'tranny', 'ui' ] );
+var App = angular.module( 'MenuApp', [ 'ngRoute', 'tranny' ] );
 
 App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
