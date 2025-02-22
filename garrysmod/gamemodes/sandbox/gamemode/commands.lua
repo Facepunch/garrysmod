@@ -116,10 +116,10 @@ function GMODSpawnRagdoll( ply, model, iSkin, strBody )
 
 	DoPropSpawnedEffect( e )
 
-	undo.Create( "Ragdoll" )
+	undo.Create( "prop_ragdoll" )
 		undo.SetPlayer( ply )
 		undo.AddEntity( e )
-	undo.Finish( "Ragdoll (" .. tostring( model ) .. ")" )
+	undo.Finish( "#prop_ragdoll (" .. tostring( model ) .. ")" )
 
 	ply:AddCleanup( "ragdolls", e )
 
@@ -249,10 +249,10 @@ function GMODSpawnProp( ply, model, iSkin, strBody )
 
 	DoPropSpawnedEffect( e )
 
-	undo.Create( "Prop" )
+	undo.Create( "prop_physics" )
 		undo.SetPlayer( ply )
 		undo.AddEntity( e )
-	undo.Finish( "Prop (" .. tostring( model ) .. ")" )
+	undo.Finish( "#prop_physics (" .. tostring( model ) .. ")" )
 
 	ply:AddCleanup( "props", e )
 
@@ -276,10 +276,10 @@ function GMODSpawnEffect( ply, model, iSkin, strBody )
 		DoPropSpawnedEffect( e.AttachedEntity )
 	end
 
-	undo.Create( "Effect" )
+	undo.Create( "prop_effect" )
 		undo.SetPlayer( ply )
 		undo.AddEntity( e )
-	undo.Finish( "Effect (" .. tostring( model ) .. ")" )
+	undo.Finish( "#prop_effect (" .. tostring( model ) .. ")" )
 
 	ply:AddCleanup( "effects", e )
 
@@ -579,10 +579,8 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	end
 
 	-- See if we can find a nice name for this NPC..
-	local NiceName = nil
-	if ( NPCData ) then
-		NiceName = NPCData.Name
-	end
+	local NiceName = NPCClassName
+	if ( NPCData and NPCData.Name ) then NiceName = NPCData.Name end
 
 	-- Add to undo list
 	undo.Create( "NPC" )
@@ -591,7 +589,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 		if ( NiceName ) then
 			undo.SetCustomUndoText( "Undone " .. NiceName )
 		end
-	undo.Finish( "NPC (" .. tostring( NPCClassName ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.npc (" .. tostring( NiceName ) .. ")" )
 
 	-- And cleanup
 	ply:AddCleanup( "npcs", SpawnedNPC )
@@ -791,7 +789,7 @@ function Spawn_SENT( ply, EntityName, tr )
 	end
 
 	local entity = nil
-	local PrintName = nil
+	local PrintName = EntityName
 	local sent = scripted_ents.GetStored( EntityName )
 
 	if ( sent ) then
@@ -876,7 +874,7 @@ function Spawn_SENT( ply, EntityName, tr )
 		if ( PrintName ) then
 			undo.SetCustomUndoText( "Undone " .. PrintName )
 		end
-	undo.Finish( "Scripted Entity (" .. tostring( EntityName ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.entity (" .. tostring( PrintName ) .. ")" )
 
 	ply:AddCleanup( "sents", entity )
 	entity:SetVar( "Player", ply )
@@ -974,7 +972,7 @@ function Spawn_Weapon( ply, wepname, tr )
 		undo.SetPlayer( ply )
 		undo.AddEntity( entity )
 		undo.SetCustomUndoText( "Undone " .. tostring( swep.PrintName ) )
-	undo.Finish( "Scripted Weapon (" .. tostring( swep.ClassName ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.weapon (" .. tostring( swep.PrintName ) .. ")" )
 
 	-- Throw it into SENTs category
 	ply:AddCleanup( "sents", entity )
@@ -1105,7 +1103,7 @@ function Spawn_Vehicle( ply, vname, tr )
 		undo.SetPlayer( ply )
 		undo.AddEntity( Ent )
 		undo.SetCustomUndoText( "Undone " .. vehicle.Name )
-	undo.Finish( "Vehicle (" .. tostring( vehicle.Name ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.vehicle (" .. tostring( vehicle.Name ) .. ")" )
 
 	ply:AddCleanup( "vehicles", Ent )
 

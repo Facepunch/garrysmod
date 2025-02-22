@@ -86,7 +86,7 @@ function TOOL:LeftClick( trace )
 	local min = thruster:OBBMins()
 	thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
 
-	undo.Create( "Thruster" )
+	undo.Create( "gmod_thruster" )
 		undo.AddEntity( thruster )
 
 		-- Don't weld to world

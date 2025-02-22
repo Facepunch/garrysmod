@@ -201,6 +201,13 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	}
 	$rootScope.PasswordInput = $scope.PasswordInput;
 
+	$scope.PasswordInput = function( e, srv )
+	{
+		if ( e.keyCode == 13 )
+			$scope.JoinServer( srv )
+	}
+	$rootScope.PasswordInput = $scope.PasswordInput;
+
 	$scope.SwitchType = function( type )
 	{
 		if ( RootScope.ServerType == type ) return;

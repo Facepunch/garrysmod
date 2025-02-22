@@ -94,7 +94,8 @@ function TOOL:LeftClick( trace )
 				if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 				if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.muscle.name" )
+			undo.Finish( "#tool.muscle.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )
@@ -204,7 +205,8 @@ function TOOL:RightClick( trace )
 			if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 			undo.SetPlayer( ply )
-		undo.Finish()
+			undo.SetCustomUndoText( "Undone #tool.muscle.name" )
+		undo.Finish( "#tool.muscle.name" )
 
 		ply:AddCount( "ropeconstraints", constr )
 		ply:AddCleanup( "ropeconstraints", constr )

@@ -75,7 +75,7 @@ AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" },
-	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons
+	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons, but doesn't have any default ones
 } )
 
 AddNPC( {
@@ -111,6 +111,13 @@ AddNPC( {
 	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1" }
 }, "Refugee" )
+
+AddNPC( {
+	Class = "npc_citizen",
+	Category = Category,
+	KeyValues = { citizentype = CT_REBEL, SquadName = "combine", Hostile = "1" },
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+}, "npc_citizen_enemy" )
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {

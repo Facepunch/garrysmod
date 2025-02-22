@@ -81,7 +81,7 @@ function TOOL:LeftClick( trace )
 
 	local constr, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
 
-	undo.Create( "Wheel" )
+	undo.Create( "gmod_wheel" )
 		if ( IsValid( constr ) ) then
 			undo.AddEntity( constr )
 			ply:AddCleanup( "wheels", constr )

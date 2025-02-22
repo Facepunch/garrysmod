@@ -67,7 +67,8 @@ function TOOL:LeftClick( trace )
 				if ( IsValid( rope2 ) ) then undo.AddEntity( rope2 ) end
 				if ( IsValid( rope3 ) ) then undo.AddEntity( rope3 ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.pulley.name" )
+			undo.Finish( "#tool.pulley.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )

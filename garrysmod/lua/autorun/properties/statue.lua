@@ -130,7 +130,8 @@ properties.Add( "statue", {
 		end )
 
 		undo.SetPlayer( ply )
-		undo.Finish()
+		undo.SetCustomUndoText( "Undone #makestatue" )
+		undo.Finish( "#makestatue" )
 
 		StatueDuplicator( ply, ent, {} )
 

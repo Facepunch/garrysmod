@@ -58,7 +58,7 @@ function TOOL:LeftClick( trace )
 
 	dynamite:SetPos( trace.HitPos + Offset )
 
-	undo.Create( "Dynamite" )
+	undo.Create( "gmod_dynamite" )
 		undo.AddEntity( dynamite )
 		undo.SetPlayer( ply )
 	undo.Finish()

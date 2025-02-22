@@ -91,7 +91,7 @@ function TOOL:LeftClick( trace )
 
 	lamp:SetPos( trace.HitPos + LampOffset )
 
-	undo.Create( "Lamp" )
+	undo.Create( "gmod_lamp" )
 		undo.AddEntity( lamp )
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()

@@ -88,7 +88,7 @@ function TOOL:LeftClick( trace, attach )
 
 	balloon:SetPos( Pos )
 
-	undo.Create( "Balloon" )
+	undo.Create( "gmod_balloon" )
 		undo.AddEntity( balloon )
 
 		if ( attach ) then

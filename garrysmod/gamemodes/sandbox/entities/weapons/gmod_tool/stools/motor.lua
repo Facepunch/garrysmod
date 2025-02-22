@@ -93,7 +93,8 @@ function TOOL:LeftClick( trace )
 				undo.AddEntity( constr )
 				if ( IsValid( axis ) ) then undo.AddEntity( axis ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.motor.name" )
+			undo.Finish( "#tool.motor.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )

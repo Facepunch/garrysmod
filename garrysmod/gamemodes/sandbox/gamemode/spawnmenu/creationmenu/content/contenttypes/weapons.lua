@@ -8,7 +8,7 @@ local function BuildWeaponCategories()
 
 		if ( !weapon.Spawnable ) then continue end
 
-		local Category = weapon.Category or "Other"
+		local Category = language.GetPhrase( weapon.Category or "#spawnmenu.category.other" )
 		if ( !isstring( Category ) ) then Category = tostring( Category ) end
 
 		Categorised[ Category ] = Categorised[ Category ] or {}
@@ -100,7 +100,7 @@ local function AutorefreshWeaponToSpawnmenu( weapon, name )
 	local tree = swepTab.ContentPanel.ContentNavBar.Tree
 	if ( !tree.Categories ) then return end
 
-	local newCategory = weapon.Category or "Other"
+	local newCategory = weapon.Category or "#spawnmenu.category.other"
 
 	-- Remove from previous category..
 	for cat, catPnl in pairs( tree.Categories ) do

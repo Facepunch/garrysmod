@@ -75,7 +75,7 @@ function TOOL:LeftClick( trace )
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidHoverballModel( model ) ) then return false end
 	if ( !self:GetWeapon():CheckLimit( "hoverballs" ) ) then return false end
 
-	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, nil, nil, nil, key_o )
+	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, key_o )
 	if ( !IsValid( ball ) ) then return false end
 
 	local ang = trace.HitNormal:Angle()
@@ -87,7 +87,7 @@ function TOOL:LeftClick( trace )
 	local Offset = CurPos - NearestPoint
 	ball:SetPos( trace.HitPos + Offset )
 
-	undo.Create( "HoverBall" )
+	undo.Create( "gmod_hoverball" )
 		undo.AddEntity( ball )
 
 		-- Don't weld to world
