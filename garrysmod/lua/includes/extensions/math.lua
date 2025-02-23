@@ -20,7 +20,7 @@ end
 function math.Distance( x1, y1, x2, y2 )
 	local xd = x2 - x1
 	local yd = y2 - y1
-	return math.sqrt( xd * xd + yd * yd )
+	return ( xd * xd + yd * yd ) ^ 0.5
 end
 math.Dist = math.Distance -- Backwards compatibility
 
@@ -47,11 +47,14 @@ function math.IntToBin( int )
 end
 
 --[[---------------------------------------------------------
-	Name: Clamp( in, low, high )
+	Name: Clamp( num, low, high )
 	Desc: Clamp value between 2 values
 ------------------------------------------------------------]]
-function math.Clamp( _in, low, high )
-	return math.min( math.max( _in, low ), high )
+function math.Clamp( num, low, high )
+	if ( num < low ) then return low end
+	if ( num > high ) then return high end
+
+	return num
 end
 
 --[[---------------------------------------------------------
@@ -172,11 +175,13 @@ end
 
 function math.Approach( cur, target, inc )
 	if ( cur < target ) then
-		return math.min( cur + math.abs( inc ), target )
+		cur = cur + ( inc < 0 and -inc or inc )
+		return cur < target and cur or target
 	end
 
 	if ( cur > target ) then
-		return math.max( cur - math.abs( inc ), target )
+		cur = cur - ( inc < 0 and -inc or inc )
+		return cur > target and cur or target
 	end
 
 	return target
