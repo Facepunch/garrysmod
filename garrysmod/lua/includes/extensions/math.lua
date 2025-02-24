@@ -54,7 +54,8 @@ function math.Clamp( num, low, high )
 	if ( num < low ) then return low end
 	if ( num > high ) then return high end
 
-	return num
+	-- If the passed number is NaN, return the lowest limit
+	return num ~= num and low or high
 end
 
 --[[---------------------------------------------------------
