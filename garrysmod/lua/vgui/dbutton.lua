@@ -126,10 +126,18 @@ function PANEL:PerformLayout( w, h )
 
 end
 
-function PANEL:SetConsoleCommand( strName, strArgs )
+function PANEL:SetConsoleCommand( strName, strArg, ... )
+
+	if ( select( "#", ... ) > 0 ) then
+		local extraArgs = { ... }
+		self.DoClick = function( slf, val )
+			RunConsoleCommand( strName, strArg, unpack( extraArgs ) )
+		end
+		return
+	end
 
 	self.DoClick = function( slf, val )
-		RunConsoleCommand( strName, strArgs )
+		RunConsoleCommand( strName, strArg )
 	end
 
 end
