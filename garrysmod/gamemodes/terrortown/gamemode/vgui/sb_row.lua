@@ -173,7 +173,7 @@ function PANEL:SetPlayer(ply)
 
    self.voice.DoRightClick = function()
       if IsValid(ply) and ply != LocalPlayer() then
-         self:ShowMicVolumeSlider()
+         self.voice.volume = self:ShowMicVolumeSlider()
       end
    end
 
@@ -320,14 +320,6 @@ function PANEL:DoRightClick()
    menu:Open()
 end
 
-local frame
-local function HideVolume()
-   if IsValid(frame) then
-      frame:Close()
-   end
-end
-hook.Add("ScoreboardHide", "TTT_HideVolume", HideVolume)
-
 function PANEL:ShowMicVolumeSlider()
    local width = 300
    local height = 50
@@ -344,7 +336,7 @@ function PANEL:ShowMicVolumeSlider()
 
 
    -- Frame for the slider
-   frame = vgui.Create("DFrame")
+   local frame = vgui.Create("DFrame")
    frame:SetPos(x, y)
    frame:SetSize(width, height)
    frame:MakePopup()
@@ -357,7 +349,7 @@ function PANEL:ShowMicVolumeSlider()
    end
 
    -- Automatically close after 10 seconds (something may have gone wrong)
-   timer.Create("TTT_CloseVolumeSlider", 10, 1, HideVolume)
+   timer.Simple(10, function() if IsValid(frame) then frame:Close() end end)
 
 
    -- "Player volume"
@@ -418,6 +410,22 @@ function PANEL:ShowMicVolumeSlider()
 
       draw.RoundedBox(100, 0, 0, sliderHeight, sliderHeight, Color(255, 255, 255, 255))
    end
+
+   return frame
 end
+
+local function HideVolumePanels()
+   if not IsValid(sboard_panel) then return end
+
+   for _, grp in ipairs(sboard_panel.ply_groups) do
+      for _, ply in pairs(grp.rows) do
+         if IsValid(ply.voice.volume) then
+            ply.voice.volume:Close()
+            ply.voice.volume = nil
+         end
+      end
+   end
+end
+hook.Add("ScoreboardHide", "TTT_HideVolumePanels", HideVolumePanels)
 
 vgui.Register( "TTTScorePlayerRow", PANEL, "DButton" )
