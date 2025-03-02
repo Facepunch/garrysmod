@@ -51,11 +51,13 @@ end
 	Desc: Clamp value between 2 values
 ------------------------------------------------------------]]
 function math.Clamp( num, low, high )
-	if ( num < low ) then return low end
-	if ( num > high ) then return high end
+	if ( num < low or num ~= num --[[NaN-check]] ) then
+		return low
+	elseif ( num > high ) then
+		return high
+	end
 
-	-- If the passed number is NaN, return the lowest limit
-	return num ~= num and low or num
+	return num
 end
 
 --[[---------------------------------------------------------
