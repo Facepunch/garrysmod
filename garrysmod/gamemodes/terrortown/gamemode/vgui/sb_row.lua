@@ -9,9 +9,9 @@ local GetPTranslation = LANG.GetParamTranslation
 local OpenedVoicePanels = {}
 local function HideVolumePanels()
    for _, pnl in pairs(OpenedVoicePanels) do
-      if IsValid(ply) then
-         ply:Close()
-         ply = nil
+      if IsValid(pnl) then
+         pnl:Close()
+         pnl = nil
       end
    end
 end
