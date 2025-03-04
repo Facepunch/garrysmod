@@ -1,10 +1,16 @@
 
-App = angular.module( 'CDupesApp', [ 'tranny' ] );
+var IS_SPAWN_MENU = true;
 
-App.config( function ( $routeProvider, $locationProvider )
+App = angular.module( 'CDupesApp', [ 'ngRoute', 'tranny' ] );
+
+App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
 	$routeProvider.when( '/', { templateUrl: 'template/creations/dupes.html' } );
+	$routeProvider.when( '/list/:Category/', { templateUrl: 'template/creations/dupes.html' } );
 	$routeProvider.when( '/list/:Category/:Tag/', { templateUrl: 'template/creations/dupes.html' } );
+	
+	$controllerProvider.register( 'CDupes', CDupes );
+	$controllerProvider.register( 'ControllerDupes', ControllerDupes );
 } );
 
 var CreationScope		= null;
