@@ -168,8 +168,6 @@ for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
 end
 
-ToolObj = nil
-
 if ( SERVER ) then return end
 
 -- Keep the tool list handy
