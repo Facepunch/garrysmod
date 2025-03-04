@@ -29,7 +29,7 @@ function PANEL:Setup( ply )
 	self.LabelName:SetText( ply:Nick() )
 	self.Avatar:SetPlayer( ply )
 	
-	self.Color = team.GetColor( ply:Team() )
+	self.Color = hook.Run("GetTeamColor", ply)
 	
 	self:InvalidateLayout()
 
