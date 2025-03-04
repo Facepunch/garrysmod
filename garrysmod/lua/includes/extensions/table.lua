@@ -550,6 +550,19 @@ local function getKeys( tbl )
 end
 
 --[[---------------------------------------------------------
+	A Value Pairs function (vpairs)
+		A custom iterator similar to ipairs, but it returns 
+		the value first, followed by the key.
+-----------------------------------------------------------]]
+function vpairs(t)
+  local i = 0
+  return function()
+    i = i + 1
+    return t[i], i
+  end
+end
+
+--[[---------------------------------------------------------
 	A Pairs function
 		Sorted by TABLE KEY
 -----------------------------------------------------------]]
