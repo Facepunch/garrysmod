@@ -49,6 +49,15 @@ local function RoleChatRecv()
 end
 net.Receive("TTT_RoleChat", RoleChatRecv)
 
+function GM:GetTeamColor(ent)
+   -- don't reveal that a player has died when they happen to chat or voicechat at the moment of death
+   if ent:IsPlayer() and ent:IsSpec() and ScoreGroup(ent) == GROUP_NOTFOUND then
+      return hook.Run("GetTeamNumColor", TEAM_TERROR)
+   end
+
+   return BaseClass.GetTeamColor(self, ent)
+end
+
 -- special processing for certain special chat types
 function GM:ChatText(idx, name, text, type)
 
