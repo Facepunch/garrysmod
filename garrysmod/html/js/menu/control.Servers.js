@@ -200,6 +200,13 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		$scope.DoStopRefresh();
 	}
 	$rootScope.JoinServer = $scope.JoinServer;
+	
+	$scope.PasswordInput = function( e, srv )
+	{
+		if ( e.keyCode == 13 )
+			$scope.JoinServer( srv )
+	}
+	$rootScope.PasswordInput = $scope.PasswordInput;
 
 	$scope.PasswordInput = function( e, srv )
 	{
@@ -581,8 +588,10 @@ function MissingFlag( element )
 	return true;
 }
 
-function ReverseFilter( cat, me )
+function ReverseFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	RootScope.GMCats.forEach( function( category )
 	{
 		RootScope.GMFilterTags[ category ] = true;
@@ -597,8 +606,10 @@ function ReverseFilter( cat, me )
 	UpdateDigest( RootScope, 50 );
 }
 
-function SwitchFilter( cat, me )
+function SwitchFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	if ( me.checked )
 	{
 		RootScope.GMFilterTags[ cat ] = true;

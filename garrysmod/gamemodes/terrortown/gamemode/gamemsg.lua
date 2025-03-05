@@ -276,12 +276,12 @@ local function LastWordsMsg(ply, words)
    local context = LastWordContext[ply.death_type] or ""
    local lastWordsStr = words .. (final and "" or "--") .. context
 
-   net.Start("TTT_LastWordsMsg")
-      net.WritePlayer(ply)
-      net.WriteString(lastWordsStr)
-   net.Broadcast()
-
-   hook.Run("TTTLastWordsMsg", ply, lastWordsStr)
+   if hook.Run("TTTLastWordsMsg", ply, lastWordsStr, words) ~= true then
+      net.Start("TTT_LastWordsMsg")
+         net.WritePlayer(ply)
+         net.WriteString(lastWordsStr)
+      net.Broadcast()
+   end
 end
 
 local function LastWords(ply, cmd, args)
