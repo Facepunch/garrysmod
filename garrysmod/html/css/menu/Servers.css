@@ -371,15 +371,24 @@ A.bglink
 	height: 100%;
 }
 
-.serverinfo .closelink
+.serverinfo .closebtn
 {
-	width: 24px;
-	height: 24px;
+	width: 21px;
+	height: 21px;
 	position: absolute;
 	top: -3px;
 	right: -3px;
-	border-radius: 100%;
+	border-radius: 4px;
 	cursor: pointer;
+	background: #2387ED;
+	background-image: url(../../img/cross.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 15px;
+}
+.serverinfo .closebtn:hover
+{
+	background-color: #2691FF;
 }
 
 .serverinfo name
