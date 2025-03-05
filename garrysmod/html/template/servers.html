@@ -113,93 +113,96 @@
 				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
 			</div>
 
-			<div class='serverlist'>
+			<div class="serverlist_layout">
+			
+				<div class='serverlist'>
 
-				<div class='header'>
-					<name ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'"></name>
-					<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
-					<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
-					<map ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'"></map>
-					<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
-				</div>
+					<div class='header'>
+						<name ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'"></name>
+						<map ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'"></map>
+						<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
+						<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
+						<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
+					</div>
 
-				<div class='body scrollable' onscroll="UpdateInfiniteScroll( this );">
+					<div class='body scrollable' onscroll="UpdateInfiniteScroll( this );">
 
-					<div id="placeholder_pre" style="height: {{CurrentGamemode.server_offset * 22}}px"></div>
+						<div id="placeholder_pre" style="height: {{CurrentGamemode.server_offset * 22}}px"></div>
 
-					<div ng-repeat="server in CurrentGamemode.servers | orderBy: CurrentGamemode.OrderBy : CurrentGamemode.OrderReverse | filter: serverFilter | startFrom : CurrentGamemode.server_offset | limitTo : ServersPerPage"
-						class="server {{ ServerClass( server ) }} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-mouseup="SelectServer( server, $event )" >
+						<div ng-repeat="server in CurrentGamemode.servers | orderBy: CurrentGamemode.OrderBy : CurrentGamemode.OrderReverse | filter: serverFilter | startFrom : CurrentGamemode.server_offset | limitTo : ServersPerPage"
+							class="server {{ ServerClass( server ) }} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-mouseup="SelectServer( server, $event )" >
 
-						<name>
-							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
-							<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag" loading="lazy"/>
-							<img class="passworded" src='img/server-passworded.png' ng-show="server.pass" loading="lazy"/>
-							<span>{{ServerName(server)}}
-								<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
-							</span>
-								
-							<lastvisited ng-hide="server.lastplayed == 0"><lbl ng-tranny="'server_lastvisit'"></lbl> {{server.lastplayedStr}}</lastvisited>
-						</name>
-						<ping>{{server.ping}}</ping>
-						<players>{{server.players}} / {{server.maxplayers}}</players>
-						<map>{{server.map}}</map>
-						<rank class='{{ServerRank(server)}}'>&nbsp;</rank>
+							<name>
+								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
+								<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag" loading="lazy"/>
+								<img class="passworded" src='img/server-passworded.png' ng-show="server.pass" loading="lazy"/>
+								<span>{{ServerName(server)}}
+									<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
+								</span>
+							</name>
+							<lastvisited ng-hide="server.lastplayed == 0"><lbl ng-tranny="'server_lastvisit'"></lbl> {{server.lastplayedDate}} <span class='lasttime'>{{server.lastplayedTime}}</span></lastvisited>
+							<map>{{server.map}}</map>
+							<players>{{server.players}} / {{server.maxplayers}}</players>
+							<ping>{{server.ping}}</ping>
+							<rank class='{{ServerRank(server)}}'><span class='bar'></span></rank>
+
+						</div>
+
+						<div id="placeholder_post" style="height: {{(CurrentGamemode.servers.length - ServersPerPage - CurrentGamemode.server_offset) * 22}}px"></div>
 
 					</div>
 
-					<div id="placeholder_post" style="height: {{(CurrentGamemode.servers.length - ServersPerPage - CurrentGamemode.server_offset) * 22}}px"></div>
-
 				</div>
 
-			</div>
+				<div class='serverinfo' ng-show="CurrentGamemode.Selected">
+					<span class="closebtn" ng-click="SelectServer( null, $event )"></span>
+					<div>
 
-			<div class='serverinfo' ng-show="CurrentGamemode.Selected">
-				<div>
-
-					<header>
-						<div class="cell" style="padding-bottom: 5px;">
-							<name>{{CurrentGamemode.Selected.name}}</name>
-							<address>{{CurrentGamemode.Selected.address}}</address>
-						</div>
-					</header>
-
-					<players>
-						<table style="font-size: 12px; padding: 8px; width: 100%;">
-
-							<tr style="color: #999; font-weight: bold;">
-								<td class="pname" ng-tranny="'playerlist_name'"></td>
-								<td style="text-align: center;" ng-tranny="'playerlist_score'"></td>
-								<td style="text-align: right;" ng-tranny="'playerlist_time'"></td>
-							</tr>
-
-							<tr ng-repeat="player in CurrentGamemode.Selected.playerlist|orderBy:'time'">
-								<td class="pname">{{player.name}}</td>
-								<td style="text-align: center;">{{player.score}}</td>
-								<td style="text-align: right;" ng-Seconds="player.time"></td>
-							</tr>
-						</table>
-					</players>
-
-					<footer>
-						<div class="cell" style="padding-top: 5px;">
-							<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ng-keyup="PasswordInput( $event, CurrentGamemode.Selected )" placeholder="Password" />
-
-							<div ng-show="CurrentGamemode.Selected.players >= CurrentGamemode.Selected.maxplayers">
-								<input type="checkbox" ng-model="JoinIfHasSlot" id="join_if_not_full" />
-								<label for="join_if_not_full" ng-tranny="'sv_join_if_not_full'"></label>
+						<header>
+							<div class="cell" style="padding-bottom: 5px; padding-right: 8px;">
+								<name>{{CurrentGamemode.Selected.name}}</name>
+								<address>{{CurrentGamemode.Selected.address}}</address>
 							</div>
+						</header>
 
-							<button class="{{IfElse( CurrentGamemode.Selected.players < CurrentGamemode.Selected.maxplayers, 'btn-primary', 'btn-primary-disabled' )}}"
-								ng-click="JoinServer( CurrentGamemode.Selected )"
-								ng-tranny="CurrentGamemode.Selected.players < CurrentGamemode.Selected.maxplayers && 'servers_join_server' || 'servers_join_server_full'">
-							</button>
+						<players>
+							<table style="font-size: 12px; padding: 8px; width: 100%;">
 
-						</div>
-					</footer>
+								<tr style="color: #999; font-weight: bold;">
+									<td class="pname" ng-tranny="'playerlist_name'"></td>
+									<td style="text-align: center;" ng-tranny="'playerlist_score'"></td>
+									<td style="text-align: right;" ng-tranny="'playerlist_time'"></td>
+								</tr>
 
+								<tr ng-repeat="player in CurrentGamemode.Selected.playerlist|orderBy:'time'">
+									<td class="pname">{{player.name}}</td>
+									<td style="text-align: center;">{{player.score}}</td>
+									<td style="text-align: right;" ng-Seconds="player.time"></td>
+								</tr>
+							</table>
+						</players>
+
+						<footer>
+							<div class="cell" style="padding-top: 5px;">
+								<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ng-keyup="PasswordInput( $event, CurrentGamemode.Selected )" placeholder="Password" />
+
+								<div ng-show="CurrentGamemode.Selected.players >= CurrentGamemode.Selected.maxplayers">
+									<input type="checkbox" ng-model="JoinIfHasSlot" id="join_if_not_full" />
+									<label for="join_if_not_full" ng-tranny="'sv_join_if_not_full'"></label>
+								</div>
+
+								<button class="{{IfElse( CurrentGamemode.Selected.players < CurrentGamemode.Selected.maxplayers, 'btn-primary', 'btn-primary-disabled' )}}"
+									ng-click="JoinServer( CurrentGamemode.Selected )"
+									ng-tranny="CurrentGamemode.Selected.players < CurrentGamemode.Selected.maxplayers && 'servers_join_server' || 'servers_join_server_full'">
+								</button>
+
+							</div>
+						</footer>
+
+					</div>
 				</div>
-			</div>
 
+			</div>
 		</div>
 
 	</div>
