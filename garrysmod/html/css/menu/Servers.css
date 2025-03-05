@@ -133,12 +133,12 @@ H1 small
 	display: block;
 	margin-right: 3px;
 	-webkit-box-flex: 1;
+	line-height: 17px;
 }
 
 .serverlist name span
 {
 	vertical-align: top;
-	line-height: 1.4em;
 }
 
 .serverlist name tag
@@ -149,10 +149,10 @@ H1 small
 	font-weight: normal;
 	padding: 1px 10px;
 	margin-left: 5px;
-	margin-top: 1px;
+	margin-top: 2px;
 	vertical-align: top;
 	display: inline-block;
-	line-height: 1.3em;
+	line-height: normal;
 }
 
 .serverlist name .flag
@@ -237,6 +237,7 @@ H1 small
 	display: -webkit-box;
 	-webkit-box-pack: justify;
 	-webkit-box-align: stretch;
+	line-height: 16px;
 }
 
 .serverlist .server:nth-child(odd)
@@ -267,7 +268,6 @@ H1 small
 .serverlist .header
 {
 	background-color: #6af;
-	height: 30px;
 	position: absolute;
 	border-radius: 4px 4px 0 0;
 	padding: 4px;
@@ -279,6 +279,7 @@ H1 small
 	display: -webkit-box;
 	-webkit-box-pack: justify;
 	-webkit-box-align: stretch;
+	line-height: 16px;
 }
 
 .serverlist .body
@@ -740,6 +741,7 @@ input[type=number]::-webkit-inner-spin-button
 	.serverlist name
 	{
 		font-size: 11px;
+		line-height: inherit;
 	}
 	.serverlist .server:not(:hover) lastvisited 
 	{
