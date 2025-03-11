@@ -1087,3 +1087,12 @@ L.sb_playervolume = "Player Volume"
 
 --- 2021-09-22
 L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute icon in the scoreboard."
+
+--- 2025-03-11
+L.set_title_cross = "Crosshair settings"
+
+L.set_cross_color_enable = "Enable custom crosshair color"
+L.set_cross_color = "Custom crosshair color"
+L.set_hip_cross_opacity = "Crosshair opacity"
+L.set_cross_thickness = "Crosshair thickness"
+L.set_cross_outlinethickness = "Crosshair outline thickness"
