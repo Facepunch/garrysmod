@@ -190,7 +190,7 @@ function OnMenuFailedToLoad()
 	local lbl = frame:Add( "DLabel" )
 	lbl:Dock( TOP )
 	lbl:DockMargin( 0, 0, 0, 5 )
-	lbl:SetSize( ScrW() / 2 - 5, 75 )
+	lbl:SetSize( ScrW() / 2, 75 )
 	lbl:SetText( "#html_menu_failed.desc" )
 
 	local btn_srv = frame:Add( "DButton" )
