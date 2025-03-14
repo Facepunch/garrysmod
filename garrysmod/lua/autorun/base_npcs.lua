@@ -112,13 +112,6 @@ AddNPC( {
 	Weapons = { "weapon_pistol", "weapon_smg1" }
 }, "Refugee" )
 
-AddNPC( {
-	Class = "npc_citizen",
-	Category = Category,
-	KeyValues = { citizentype = CT_REBEL, SquadName = "combine", Hostile = "1" },
-	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
-}, "npc_citizen_enemy" )
-
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
 		Name = "#npc_vortigaunt_uriah",
@@ -465,6 +458,15 @@ AddNPC( {
 	KeyValues = { SquadName = "overwatch" },
 	NoDrop = true
 } )
+
+-- This is meant for NPC reskins, so humanoid NPC reskins don't sound like combine.
+-- This is also just for fun, and exists here to let people know that the option exists and how to use it.
+AddNPC( {
+	Class = "npc_citizen",
+	Category = Category,
+	KeyValues = { citizentype = CT_REBEL, SquadName = "overwatch", Hostile = "1" },
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+}, "npc_citizen_rebel_enemy" )
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
