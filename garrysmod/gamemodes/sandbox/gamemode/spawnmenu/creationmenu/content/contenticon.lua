@@ -349,12 +349,12 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	icon:SetColor( Color( 244, 164, 96, 255 ) )
 
 	-- Generate a nice tooltip with extra info.
-	local NPCinfo = weapons.Get( obj.spawnname )
+	local NPCinfo = scripted_ents.Get( obj.spawnname )
 	local toolTip = language.GetPhrase( obj.nicename )
 	if ( !NPCinfo ) then NPCinfo = list.Get( "NPC" )[ obj.spawnname ] end
 	if ( NPCinfo ) then
 		toolTip = toolTip .. "\n"
-		-- TODO: Some kind of description?
+		if ( NPCinfo.Information and NPCinfo.Information != "" ) then toolTip = toolTip .. "\n" .. NPCinfo.Information end
 		if ( NPCinfo.Author and NPCinfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. NPCinfo.Author end
 	end
 
