@@ -43,14 +43,6 @@ function PANEL:Init()
 	self.Image:SetSize( 128 - 6, 128 - 6 )
 	self.Image:SetVisible( false )
 
-	self.Label = self:Add( "DLabel" )
-	self.Label:Dock( BOTTOM )
-	self.Label:SetTall( 18 )
-	self.Label:SetContentAlignment( 5 )
-	self.Label:DockMargin( 4, 0, 4, 6 )
-	self.Label:SetTextColor( color_white )
-	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
-
 	self.Border = 0
 
 end
@@ -58,7 +50,6 @@ end
 function PANEL:SetName( name )
 
 	self:SetTooltip( name )
-	self.Label:SetText( name )
 	self.m_NiceName = name
 
 end
@@ -107,6 +98,12 @@ end
 function PANEL:OnDepressionChanged( b )
 end
 
+local shadowColor = Color( 0, 0, 0, 200 )
+local function DrawTextShadow( text, x, y )
+	draw.SimpleText( text, "DermaDefault", x + 1, y + 1, shadowColor )
+	draw.SimpleText( text, "DermaDefault", x, y, color_white )
+end
+
 function PANEL:Paint( w, h )
 
 	if ( self.Depressed && !self.Dragging ) then
@@ -131,25 +128,27 @@ function PANEL:Paint( w, h )
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 
+	local drawText = false
 	if ( !dragndrop.IsDragging() && ( self:IsHovered() || self.Depressed || self:IsChildHovered() ) ) then
 
 		surface.SetMaterial( matOverlay_Hovered )
-		self.Label:Hide()
 
 	else
 
 		surface.SetMaterial( matOverlay_Normal )
-		self.Label:Show()
+		drawText = true
 
 	end
 
-	surface.DrawTexturedRect( self.Border, self.Border, w-self.Border*2, h-self.Border*2 )
+	surface.DrawTexturedRect( self.Border, self.Border, w - self.Border * 2, h - self.Border * 2 )
 
+	-- Admin only icon
 	if ( self:GetAdminOnly() ) then
 		surface.SetMaterial( matOverlay_AdminOnly )
 		surface.DrawTexturedRect( self.Border + 8, self.Border + 8, 16, 16 )
 	end
 
+	-- Draw NPC weapon support icon
 	-- This whole thing could be more dynamic
 	if ( self:GetIsNPCWeapon() ) then
 		surface.SetMaterial( matOverlay_NPCWeapon )
@@ -160,8 +159,34 @@ function PANEL:Paint( w, h )
 
 		surface.DrawTexturedRect( w - self.Border - 24, self.Border + 8, 16, 16 )
 	end
+
 	self:ScanForNPCWeapons()
 
+	if ( drawText ) then
+		local buffere = self.Border + 10
+
+		-- Set up smaller clipping so cut text looks nicer
+		local px, py = self:LocalToScreen( buffere, 0 )
+		local pw, ph = self:LocalToScreen( w - buffere, h )
+		render.SetScissorRect( px, py, pw, ph, true )
+
+		-- Calculate X pos
+		surface.SetFont( "DermaDefault" )
+		local tW, tH = surface.GetTextSize( self.m_NiceName )
+
+		local x = w / 2 - tW / 2
+		if ( tW > ( w - buffere * 2 ) ) then
+			local mx, my = self:ScreenToLocal( input.GetCursorPos() )
+			local diff = tW - w + buffere * 2
+
+			x = buffere + math.Remap( math.Clamp( mx, 0, w ), 0, w, 0, -diff )
+		end
+
+		-- Draw
+		DrawTextShadow( self.m_NiceName, x, h - tH - 9 )
+
+		render.SetScissorRect( 0, 0, 0, 0, false )
+	end
 end
 
 function PANEL:ScanForNPCWeapons()
