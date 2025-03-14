@@ -630,7 +630,7 @@ function GM:PlayerRequestTeam( ply, teamid )
 		return
 	end
 
-	if ( !hook.Call('PlayerCanJoinTeam', self, ply, teamid) ) then
+	if ( !hook.Call( "PlayerCanJoinTeam", self, ply, teamid ) ) then
 		return
 	end
 
