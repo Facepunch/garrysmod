@@ -78,6 +78,8 @@ function PANEL:OnActivate()
 	self:ShowURL( GetDefaultLoadingHTML() )
 
 	self.NumDownloadables = 0
+	self.CheckedSingleplayer = false
+
 
 end
 
@@ -103,6 +105,14 @@ function PANEL:Think()
 
 	self:CheckForStatusChanges()
 	self:CheckDownloadTables()
+
+	if ( !self.CheckedSingleplayer && IsHostingGame() ) then
+		local map = GetConVarString( "host_map" )
+		map = string.StripExtension( map )
+
+		GameDetails( GetConVarString( "hostname" ), "127.0.0.1", map, 1, "", GetConVarString( "gamemode" ), true )
+		self.CheckedSingleplayer = true
+	end
 
 end
 
@@ -236,7 +246,7 @@ function IsInLoading()
 
 end
 
-function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
+function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, noDump )
 
 	if ( engine.IsPlayingDemo() ) then return end
 
@@ -247,12 +257,14 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	g_SteamID		= steamid
 	g_GameMode		= gamemode
 
-	MsgN( servername )
-	MsgN( serverurl )
-	MsgN( gamemode )
-	MsgN( mapname )
-	MsgN( maxplayers )
-	MsgN( steamid )
+	if ( !noDump ) then
+		MsgN( servername )
+		MsgN( serverurl )
+		MsgN( gamemode )
+		MsgN( mapname )
+		MsgN( maxplayers )
+		MsgN( steamid )
+	end
 
 	serverurl = serverurl:Replace( "%s", steamid )
 	serverurl = serverurl:Replace( "%m", mapname )
