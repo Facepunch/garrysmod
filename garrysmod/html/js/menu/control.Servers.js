@@ -160,12 +160,15 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( gm.OrderByMain == order )
 		{
 			gm.OrderReverse = !gm.OrderReverse;
-			return;
+		} 
+		else
+		{
+			gm.OrderReverse = false;
 		}
 
 		gm.OrderByMain = order;
-		gm.OrderBy = [ order, 'recommended', 'ping', 'address' ];
-		gm.OrderReverse = false;
+		gm.OrderBy = [ (gm.OrderReverse?"+":"-")+'favorite', order, 'recommended', 'ping', 'address' ];
+		
 	}
 
 	$scope.GamemodeName = function( gm )
@@ -380,7 +383,7 @@ function GetGamemode( name, type )
 		server_offset:	0,
 		sort_players:	0,
 		OrderByMain:	'recommended',
-		OrderBy:		[ 'recommended', 'ping', 'address' ],
+		OrderBy:		[ '-favorite', 'recommended', 'ping', 'address' ],
 		info:			GetGamemodeInfo( name ),
 		FilterFlags:	{},
 		HasPreferFlags:	false
