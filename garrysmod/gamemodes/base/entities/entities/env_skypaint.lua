@@ -81,6 +81,59 @@ function ENT:KeyValue( key, value )
 
 end
 
+if ( SERVER ) then
+
+	function ENT:AcceptInput( name, activator, caller, data )
+
+		-- Ensure all inputs are prefixed with "Set"
+		if ( name:sub(1, 3):lower() == "set" ) then
+
+			name = name:sub(4, -1):lower()
+
+			-- Tokenize on whitespace
+			local tokens = {}
+
+			for token in data:gmatch("%S+") do
+				table.insert(tokens, token)
+			end
+
+			if ( #tokens == 3 ) then -- Three tokens: either three floats or three strings
+
+				local s1, s2, s3 = tonumber(tokens[1]), tonumber(tokens[2]), tonumber(tokens[3])
+
+				if ( isnumber(s1) && isnumber(s2) && isnumber(s3) ) then
+
+					-- Interpreted as a Color/Vector
+					local vec = Vector(tonumber(s1), tonumber(s2), tonumber(s3))
+
+					if ( name:sub(-3) == "255" ) then -- Interpret Vector inputs suffixed with "255" as color255
+						self:SetNetworkKeyValue(name:sub(1, -4), vec / 255)
+					else -- Interpret as color1
+						self:SetNetworkKeyValue(name, vec)
+					end
+
+				end
+
+			--[[
+			elseif ( #tokens == 1 ) then
+				-- Single token: either float or string (does not necessitate conversion)
+				local s = tokens[1]
+				self:SetNetworkKeyValue(name, s)
+			--]]
+
+			else
+
+				-- 0 tokens, 1 token, 2 tokens, 4+ tokens, etc.
+				self:SetNetworkKeyValue(name, data)
+
+			end
+
+		end
+
+	end
+
+end
+
 function ENT:Think()
 
 	--
