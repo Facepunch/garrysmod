@@ -143,6 +143,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 
 	local sidebar = ctrl.ContentNavBar
 	sidebar.Options = vgui.Create( "SpawnmenuNPCSidebarToolbox", sidebar )
+	sidebar.Options:Dock( BOTTOM )
 
 	return ctrl
 
