@@ -4,6 +4,7 @@
 
 local function AddNPC( t, class )
 	if ( !t.Name ) then t.Name = "#" .. ( class or t.Class ) end
+	t.Author = "VALVe"
 
 	list.Set( "NPC", class or t.Class, t )
 end
