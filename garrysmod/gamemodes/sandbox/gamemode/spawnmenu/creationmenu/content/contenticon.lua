@@ -264,7 +264,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	if ( ENTinfo ) then
 		local extraInfo = ""
 		if ( ENTinfo.Information and ENTinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. ENTinfo.Information end
-		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\nAuthor: " .. ENTinfo.Author end
+		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. ENTinfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
 
@@ -307,7 +307,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 		local toolTip = language.GetPhrase( VehicleInfo.Name ) .. "\n"
 		if ( VehicleInfo.Information and VehicleInfo.Information != "" ) then toolTip = toolTip .. "\n" .. VehicleInfo.Information end
 
-		if ( VehicleInfo.Author and VehicleInfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. VehicleInfo.Author end
+		if ( VehicleInfo.Author and VehicleInfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .." " .. VehicleInfo.Author end
 
 		icon:SetTooltip( toolTip )
 	end
@@ -432,7 +432,7 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Purpose end
 		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Instructions end
 
-		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. SWEPinfo.Author end
+		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. SWEPinfo.Author end
 	end
 
 	toolTip = toolTip .. "\n\n" .. language.GetPhrase( "spawnmenu.mmb_weapons" )
