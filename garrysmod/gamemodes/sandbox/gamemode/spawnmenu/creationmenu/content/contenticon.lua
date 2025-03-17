@@ -257,9 +257,10 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 205, 92, 92, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
 	-- Generate a nice tooltip with extra info.
 	local ENTinfo = scripted_ents.Get( obj.spawnname )
-	local toolTip = language.GetPhrase( obj.nicename )
 	if ( !ENTinfo ) then ENTinfo = list.Get( "SpawnableEntities" )[ obj.spawnname ] end
 	if ( ENTinfo ) then
 		local extraInfo = ""
@@ -301,16 +302,18 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 0, 0, 0, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
 	-- Generate a nice tooltip with extra info
-	local VehicleInfo = list.Get( "Vehicles" )[ obj.spawnname ]
-	if ( VehicleInfo ) then
-		local toolTip = language.GetPhrase( VehicleInfo.Name ) .. "\n"
-		if ( VehicleInfo.Information and VehicleInfo.Information != "" ) then toolTip = toolTip .. "\n" .. VehicleInfo.Information end
-
-		if ( VehicleInfo.Author and VehicleInfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .." " .. VehicleInfo.Author end
-
-		icon:SetTooltip( toolTip )
+	local VehInfo = list.Get( "Vehicles" )[ obj.spawnname ]
+	if ( VehInfo ) then
+		local extraInfo = ""
+		if ( VehInfo.Information and VehInfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. VehInfo.Information end
+		if ( VehInfo.Author and VehInfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .." " .. VehInfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
+
+	icon:SetTooltip( toolTip )
 
 	icon.DoClick = function()
 		RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
@@ -348,14 +351,16 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	icon:SetNPCWeapon( obj.weapon )
 	icon:SetColor( Color( 244, 164, 96, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
 	-- Generate a nice tooltip with extra info.
 	local NPCinfo = scripted_ents.Get( obj.spawnname )
-	local toolTip = language.GetPhrase( obj.nicename )
 	if ( !NPCinfo ) then NPCinfo = list.Get( "NPC" )[ obj.spawnname ] end
 	if ( NPCinfo ) then
-		toolTip = toolTip .. "\n"
-		if ( NPCinfo.Information and NPCinfo.Information != "" ) then toolTip = toolTip .. "\n" .. NPCinfo.Information end
-		if ( NPCinfo.Author and NPCinfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. NPCinfo.Author end
+		local extraInfo = ""
+		if ( NPCinfo.Information and NPCinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. NPCinfo.Information end
+		if ( NPCinfo.Author and NPCinfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. NPCinfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
 
 	icon:SetTooltip( toolTip )
@@ -434,17 +439,19 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 135, 206, 250, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
 	-- Generate a nice tooltip with extra info.
 	local SWEPinfo = weapons.Get( obj.spawnname )
-	local toolTip = language.GetPhrase( obj.nicename )
 	if ( !SWEPinfo ) then SWEPinfo = list.Get( "Weapon" )[ obj.spawnname ] end
 	if ( SWEPinfo ) then
-		toolTip = toolTip .. "\n"
+		local extraInfo = ""
 		-- These 2 really should be one
 		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Purpose end
 		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Instructions end
 
 		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. SWEPinfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
 
 	toolTip = toolTip .. "\n\n" .. language.GetPhrase( "spawnmenu.mmb_weapons" )
