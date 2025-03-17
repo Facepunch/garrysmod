@@ -144,7 +144,7 @@ if CLIENT then
 
    local mat_antialias = GetConVar("mat_antialias")
 
-   function SWEP:DrawHUD()
+   function SWEP:DrawHUD(static, gap)
       if self.HUDHelp then
          self:DrawHelp()
       end
@@ -156,15 +156,17 @@ if CLIENT then
 
       local x = math.floor(ScrW() / 2.0)
       local y = math.floor(ScrH() / 2.0)
-      local scale = math.max(0.2,  10 * self:GetPrimaryCone())
+      local scale = math.max(0.2, 10 * self:GetPrimaryCone())
 
-      local LastShootTime = self:LastShootTime()
-      scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
+      if not static then
+         local LastShootTime = self:LastShootTime()
+         scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
+      end
 
       local alpha = sights and sights_opacity:GetFloat() or crosshair_opacity:GetFloat()
       local bright = crosshair_brightness:GetFloat() or 1
 
-      local gap = math.floor(20 * scale * (sights and 0.8 or 1))
+      gap = gap or math.floor(20 * scale * (sights and 0.8 or 1))
       local length = math.floor(gap + (25 * crosshair_size:GetFloat()) * scale)
 
       local thickness = math.max(1, crosshair_thickness:GetInt())
