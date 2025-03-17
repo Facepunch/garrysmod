@@ -2479,7 +2479,7 @@
 		1 : "Credits"
 		2 : "Scan Out"
 	]
-	color(color255) : "Color1" : "100 100 100" : "The text color."
+	color(color255) : "Color1" : "200 200 200" : "The text color."
 	color2(color255) : "Color2 (Scan)" : "240 110 0" : "The color for the letter being scanned if the 'Text Effect' is set to 'Scan Out'."
 	fadein(string) : "Fade in Time (or character scan time)" : "1.5" : "The time it should take for the text to fully fade in."
 	fadeout(string) : "Fade Out Time" : "0.5" : "The time it should take for the text to fade out, after the hold time has expired."
