@@ -85,7 +85,7 @@ AddNPC( {
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
 }, "Rebel" )
 
 AddNPC( {
@@ -102,7 +102,7 @@ AddNPC( {
 	Category = Category,
 	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2" }
 }, "Medic" )
 
 AddNPC( {
@@ -466,7 +466,7 @@ AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "overwatch", Hostile = "1" },
-	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
 }, "npc_citizen_rebel_enemy" )
 
 if ( IsMounted( "ep2" ) ) then
