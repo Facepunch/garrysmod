@@ -164,7 +164,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 		MsgAll( attacker:Nick() .. " suicided!\n" )
 
-	return end
+		return
+	end
 
 	if ( attacker:IsPlayer() ) then
 
@@ -172,7 +173,11 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 
-	return end
+		return
+	end
+
+	if ( !IsValid( attacker ) ) then attacker = game.GetWorld() end
+	if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	local flags = 0
 	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end

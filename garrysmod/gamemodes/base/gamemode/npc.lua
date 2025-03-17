@@ -17,26 +17,27 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 
 	net.Start( "DeathNoticeEvent" )
 
-		if ( !attacker ) then
-			net.WriteUInt( 0, 2 )
-		elseif ( isstring( attacker ) ) then
+		if ( isstring( attacker ) ) then
 			net.WriteUInt( 1, 2 )
 			net.WriteString( attacker )
 		elseif ( IsValid( attacker ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( attacker )
+		else
+			-- TODO: game.GetWorld will be "written" here, because its not IsValid. Make it write a separate type?
+			net.WriteUInt( 0, 2 )
 		end
 
 		net.WriteString( inflictor )
 
-		if ( !victim ) then
-			net.WriteUInt( 0, 2 )
-		elseif ( isstring( victim ) ) then
+		if ( isstring( victim ) ) then
 			net.WriteUInt( 1, 2 )
 			net.WriteString( victim )
 		elseif ( IsValid( victim ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( victim )
+		else
+			net.WriteUInt( 0, 2 )
 		end
 
 		net.WriteUInt( flags, 8 )
@@ -46,6 +47,9 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 end
 
 function GM:GetDeathNoticeEntityName( ent )
+
+	if ( !isstring( ent ) ) then return ent end
+	if ( !IsValid( ent ) ) then return nil end
 
 	-- Some specific HL2 NPCs, just for fun
 	-- TODO: Localization strings?
