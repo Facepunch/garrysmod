@@ -85,7 +85,7 @@ AddNPC( {
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
 }, "Rebel" )
 
 AddNPC( {
