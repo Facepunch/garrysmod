@@ -42,10 +42,10 @@
 	suncolor(color1)		: "Sun Color" : "0.2 0.1 0.0" : "The color of the sun glow. (this is additive)"
 
 	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect. (colouring of the horizon)"
-	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How powerful the dusk effect is."
+	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How intense the dusk effect is."
 	duskcolor(color1)		: "Dusk Color" : "1.0 0.2 0.0" : "The color of the dusk effect."
 
-	drawstars(choices)		: "Draw Stars" : 0 : "" =
+	drawstars(choices)		: "Draw Stars" : 0 : "Whether to draw the star/cloud texture at all" =
 	[
 		0 : "No - Don't draw stars"
 		1 : "Yes - Draw the stars please"
@@ -55,9 +55,26 @@
 	starscale(float)		: "Star Scale" : "0.5" : "How big the star texture should be."
 	starfade(float)			: "Star Fade" : "1.0" : "Fade the star texture towards the horizon."
 	starspeed(float)		: "Star Speed" : "0.01" : "How fast the star texture should scroll across the sky."
-	starlayers(float)		: "Star Layers" : "1" : "From 1 to 3, how many layers should the star texture be repated over."
+	starlayers(float)		: "Star Layers" : "1" : "From 1 to 3, how many layers should the star texture be repeated over."
 
 	hdrscale(float)			: "HDR Scale" : "0.66" : "When rendering your skybox in HDR mode, output will be scaled by this amount."
+
+	// Inputs
+	input SetTopColor(color255) : "Sets the colour of the top of the sky."
+	input SetBottomColor(color255) : "Sets the colour of the bottom of the sky."
+	input SetFadeBias(float) : "Sets the bias of the fade between top/bottom. (1.0 is even)"
+	input SetSunSize(float) : "Sets the size of the sun glow."
+	input SetSunNormal(vector) : "Sets the position of the sun, expressed as a normal from the center of the world."
+	input SetSunColor(color255) : "Sets the color of the sun glow. (this is additive)"
+	input SetDuskScale(float) : "Sets the size of the dusk effect. (colouring of the horizon)"
+	input SetDuskIntensity(float) : "Sets how intense the dusk effect is."
+	input SetDuskColor(color255) : "Sets the color of the dusk effect."
+	input StarTexture(string) : "Sets the star texture."
+	input StarScale(float) : "Sets how big the star texture should be."
+	input StarFade(float) : "Sets the fading term of the star texture towards the horizon."
+	input StarSpeed(float) : "Sets how fast the star texture should scroll across the sky."
+	input StarLayers(float) : "Sets how many layers should the star texture be repeated over. (1 to 3)"
+	input HDRScale(float) : "Sets the amount by which output will be scaled in HDR mode."
 ]
 
 @PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice) studio("models/editor/cone_helper.mdl") = beam_spotlight : 
