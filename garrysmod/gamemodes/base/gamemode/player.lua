@@ -164,7 +164,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 		MsgAll( attacker:Nick() .. " suicided!\n" )
 
-	return end
+		return
+	end
 
 	if ( attacker:IsPlayer() ) then
 
@@ -172,7 +173,11 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 
-	return end
+		return
+	end
+
+	if ( !IsValid( attacker ) ) then attacker = game.GetWorld() end
+	if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	local flags = 0
 	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
@@ -543,8 +548,29 @@ end
 	Name: gamemode:OnDamagedByExplosion( ply, dmginfo)
 	Desc: Player has been hurt by an explosion
 -----------------------------------------------------------]]
-function GM:OnDamagedByExplosion( ply, dmginfo )
-	ply:SetDSP( 35, false )
+local MIN_SHOCK_AND_CONFUSION_DAMAGE = 30
+local MIN_EAR_RINGING_DISTANCE = 240
+
+function GM:OnDamagedByExplosion( ply, info )
+
+	local ear_ringing = false
+	local inflictor = info:GetInflictor()
+	if ( IsValid( inflictor ) ) then
+		local delta = ply:GetPos() - inflictor:GetPos()
+		ear_ringing = delta:Length() < MIN_EAR_RINGING_DISTANCE
+	end
+
+	local shock = info:GetDamage() >= MIN_SHOCK_AND_CONFUSION_DAMAGE
+
+	if ( !shock and !ear_ringing ) then return end
+
+	-- The effect names are actually backwards
+	if ( shock ) then
+		ply:SetDSP( math.random( 35, 37 ), false )
+		return
+	end
+
+	ply:SetDSP( math.random( 32, 34 ), false )
 end
 
 --[[---------------------------------------------------------

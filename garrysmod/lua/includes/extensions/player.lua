@@ -184,7 +184,7 @@ function meta:CanUseFlashlight() return self.m_bFlashlight == true end
 
 -- A function to set up player hands, so coders don't have to copy all the code everytime.
 -- Call this in PlayerSpawn hook
-function meta:SetupHands( ply )
+function meta:SetupHands( spec_ply )
 
 	local oldhands = self:GetHands()
 	if ( IsValid( oldhands ) ) then
@@ -193,7 +193,7 @@ function meta:SetupHands( ply )
 
 	local hands = ents.Create( "gmod_hands" )
 	if ( IsValid( hands ) ) then
-		hands:DoSetup( self, ply )
+		hands:DoSetup( self, spec_ply )
 		hands:Spawn()
 	end
 

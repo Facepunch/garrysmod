@@ -90,12 +90,6 @@ function meta:AddCount( str, ent )
 
 end
 
-function meta:LimitHit( str )
-
-	self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
-
-end
-
 function meta:AddCleanup( type, ent )
 
 	cleanup.Add( self, type, ent )
@@ -115,6 +109,12 @@ function meta:GetTool( mode )
 end
 
 if ( SERVER ) then
+
+	function meta:LimitHit( str )
+
+		self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
+
+	end
 
 	function meta:SendHint( str, delay )
 
