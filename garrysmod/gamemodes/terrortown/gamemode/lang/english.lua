@@ -244,7 +244,7 @@ L.set_tips      = "Show gameplay tips at the bottom of the screen while spectati
 L.set_startpopup = "Start of round info popup duration"
 L.set_startpopup_tip = "When the round starts, a small popup appears at the bottom of your screen for a few seconds. Change the time it displays for here."
 
-L.set_cross_opacity   = "Ironsight opacity"
+L.set_cross_opacity   = "Iron sight opacity"
 L.set_cross_disable   = "Disable crosshair completely"
 L.set_minimal_id      = "Minimalist Target ID under crosshair (no karma text, hints, etc)"
 L.set_healthlabel     = "Show health status label on health bar"
