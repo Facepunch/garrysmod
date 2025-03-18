@@ -174,9 +174,7 @@ end
 
 function GetColor( index )
 
-	if ( !TeamInfo[index] ) then return DefaultColor end
-
-	local color = TeamInfo[index].Color
+	local color = TeamInfo[index] && TeamInfo[index].Color || DefaultColor
 	return Color( color.r, color.g, color.b, color.a )
 
 end
