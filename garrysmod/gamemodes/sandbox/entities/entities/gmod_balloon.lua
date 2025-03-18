@@ -37,7 +37,7 @@ end
 
 function ENT:GetOverlayText()
 
-	local txt = "Force: " .. math.floor( self:GetForce() )
+	local txt = language.GetPhrase( "tool.balloon.force" ) .. " " .. math.floor( self:GetForce() )
 
 	if ( txt == "" ) then return "" end
 	if ( game.SinglePlayer() ) then return txt end
