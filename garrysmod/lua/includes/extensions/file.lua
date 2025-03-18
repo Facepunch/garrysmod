@@ -1,6 +1,4 @@
 
-
-
 function file.Read( filename, path )
 
 	if ( path == true ) then path = "GAME" end
