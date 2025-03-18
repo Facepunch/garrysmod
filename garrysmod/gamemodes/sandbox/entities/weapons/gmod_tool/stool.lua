@@ -241,7 +241,7 @@ spawnmenu.AddContentType( "tool", function( container, obj )
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "tool" )
 	icon:SetSpawnName( obj.spawnname )
-	icon:SetName( obj.nicename or "#tool." .. obj.spawnname .. ".name" )
+	icon:SetName( obj.nicename or ( "#tool." .. obj.spawnname .. ".name" ) )
 	icon:SetMaterial( "gui/tool.png" )
 
 	icon.DoClick = function()

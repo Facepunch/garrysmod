@@ -215,7 +215,15 @@ function PANEL:OpenAutoComplete( tab )
 	if ( !tab ) then return end
 	if ( #tab == 0 ) then return end
 
-	self.Menu = DermaMenu()
+	-- If we have a modal parent at some level, we gotta parent to
+	-- that or our menu items are not gonna be selectable
+	local parent = self
+	while ( IsValid( parent ) && !parent:IsModal() ) do
+		parent = parent:GetParent()
+	end
+	if ( !IsValid( parent ) ) then parent = self end
+
+	self.Menu = DermaMenu( false, parent )
 
 	for k, v in pairs( tab ) do
 

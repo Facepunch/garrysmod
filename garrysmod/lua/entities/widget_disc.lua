@@ -54,7 +54,7 @@ function ENT:TestCollision( startpos, delta, isbox, extents )
 	local fwd = self:GetAngles():Forward()
 	local size = self:GetSize() * 0.5
 
-	local hitpos = util.IntersectRayWithPlane( startpos, delta:GetNormal(), self:GetPos(), fwd )
+	local hitpos = util.IntersectRayWithPlane( startpos, delta:GetNormalized(), self:GetPos(), fwd )
 	if ( !hitpos ) then return end
 
 	local dist = self:GetPos():Distance( hitpos )

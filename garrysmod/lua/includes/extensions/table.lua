@@ -567,7 +567,7 @@ function SortedPairs( pTable, Desc )
 		end )
 	end
 
-	local i, key = 1
+	local i, key = 1, nil
 	return function()
 		key, i = keys[ i ], i + 1
 		return key, pTable[ key ]
