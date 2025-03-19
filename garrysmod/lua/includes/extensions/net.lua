@@ -1,33 +1,24 @@
 
--- This is just enough for the entity index. This however is not perfect
--- as the entity at given index may have changed during transport.
--- If this becomes a problem, inclusion of entity's serial will also be necessary
-local MAX_EDICT_BITS = 13
-
+-- TODO: Hack. Move to where color is defined?
 TYPE_COLOR = 255
 
-net.Receivers = {}
-net.ReceiversConfigTime = {}
+-- TODO: Temp hack, remove meta
+local MAX_EDICT_BITS = 13
 
-CreateConVar("sv_net_time", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "The time in seconds between each net message a player can send.")
-CreateConVar("sv_net_protect", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Whether or not to protect the net messages from spam.")
+net.Receivers = {}
 
 --
 -- Set up a function to receive network messages
 --
-function net.Receive( name, func, iTime )
+function net.Receive( name, func )
 
 	net.Receivers[ name:lower() ] = func
 
-	if SERVER and iTime then
-		net.ReceiversConfigTime[name:lower()] = iTime
-	end
 end
 
 --
 -- A message has been received from the network..
 --
-
 function net.Incoming( len, client )
 
 	local i = net.ReadHeader()
@@ -42,34 +33,6 @@ function net.Incoming( len, client )
 	-- len includes the 16 bit int which told us the message name
 	--
 	len = len - 16
-
-	if SERVER and GetConVar("sv_net_protect"):GetBool() then
-		net.ReceiversProtectionSpam = net.ReceiversProtectionSpam or {}
-
-		local sSteamID64 = client:SteamID64()
-		if net.ReceiversProtectionSpam[sSteamID64] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] > CurTime() then
-			print("Player " .. client:Nick() .. " (" .. client:SteamID() .. ") tried to spam the net message " .. strName .. " too much.")
-
-			return
-		end
-
-		local iTime = net.ReceiversConfigTime and isnumber(net.ReceiversConfigTime[strName:lower()]) and net.ReceiversConfigTime[strName:lower()] or GetConVar("sv_net_time"):GetFloat()
-
-		net.ReceiversProtectionSpam[sSteamID64] = net.ReceiversProtectionSpam[sSteamID64] or {}
-		net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = CurTime() + iTime
-
-		timer.Simple(iTime, function()
-			if IsValid(client) and net.ReceiversProtectionSpam[sSteamID64] then
-				net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = nil
-
-				if table.Count(net.ReceiversProtectionSpam[sSteamID64]) == 0 then
-					net.ReceiversProtectionSpam[sSteamID64] = nil
-				end
-			elseif net.ReceiversProtectionSpam[sSteamID64] then 
-				net.ReceiversProtectionSpam[sSteamID64] = nil
-			end
-		end)
-	end
 
 	func( len, client )
 
