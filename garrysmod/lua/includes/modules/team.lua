@@ -1,11 +1,16 @@
 module( "team", package.seeall )
 
 local TeamInfo = {}
+local TeamInfoByName = {}
 local DefaultColor = Color( 255, 255, 100, 255 )
 
 TeamInfo[TEAM_CONNECTING] 	= { Name = "Joining/Connecting", 	Color = DefaultColor, 	Score = 0, 	Joinable = false }
 TeamInfo[TEAM_UNASSIGNED] 	= { Name = "Unassigned", 			Color = DefaultColor, 	Score = 0, 	Joinable = false }
 TeamInfo[TEAM_SPECTATOR] 	= { Name = "Spectator", 			Color = DefaultColor, 	Score = 0, 	Joinable = true }
+
+TeamInfoByName["Joining/Connecting"] = TEAM_CONNECTING
+TeamInfoByName["Unassigned"] = TEAM_UNASSIGNED
+TeamInfoByName["Spectator"] = TEAM_SPECTATOR
 
 --[[------------------------------------------------------------
 
@@ -27,7 +32,7 @@ function SetUp( id, name, color, joinable )
 	if ( joinable == nil ) then joinable = true end
 
 	TeamInfo[id] = { Name = name, Color = color, Score = 0, Joinable = joinable }
-
+	TeamInfoByName[name] = id
 end
 
 
@@ -212,4 +217,10 @@ function BestAutoJoinTeam()
 
 	return SmallestTeam
 
+end
+
+function getTeamIDByName( sName )
+	if not sName or not isstring( sName ) then return end
+
+	return TeamInfoByName[sName] or false
 end
