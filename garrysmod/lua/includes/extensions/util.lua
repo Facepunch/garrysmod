@@ -416,3 +416,27 @@ function util.IsBinaryModuleInstalled( name )
 
 	return false
 end
+
+--[[---------------------------------------------------------
+	Name: IsSteamID( sSteamID )
+	Desc: Returns true if the argument is a valid SteamID
+-----------------------------------------------------------]]
+
+function util.IsSteamID( sSteamID )
+
+	if not isstring( sSteamID ) or sSteamID == "" then return false end
+
+	return sSteamID:match( "STEAM_%d:%d:%d+" ) ~= nil
+end
+
+--[[---------------------------------------------------------
+	Name: IsSteamID64( sSteamID64 )
+	Desc: Returns true if the argument is a valid SteamID64
+-----------------------------------------------------------]]
+
+function util.IsSteamID64( sSteamID64 )
+
+	if not isstring( sSteamID64 ) or sSteamID64 == "" then return false end
+
+	return sSteamID64:match( "7656119%d+" ) ~= nil
+end
