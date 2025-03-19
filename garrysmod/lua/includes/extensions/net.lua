@@ -2,20 +2,31 @@
 -- TODO: Hack. Move to where color is defined?
 TYPE_COLOR = 255
 
+-- TODO: Temp hack, remove meta
+local MAX_EDICT_BITS = 13
+
 net.Receivers = {}
+net.ReceiversConfigTime = {}
+
+CreateConVar("sv_net_time", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "The time in seconds between each net message a player can send.")
+CreateConVar("sv_net_protect", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Whether or not to protect the net messages from spam.")
 
 --
 -- Set up a function to receive network messages
 --
-function net.Receive( name, func )
+function net.Receive( name, func, iTime )
 
 	net.Receivers[ name:lower() ] = func
 
+	if SERVER and iTime then
+		net.ReceiversConfigTime[name:lower()] = iTime
+	end
 end
 
 --
 -- A message has been received from the network..
 --
+
 function net.Incoming( len, client )
 
 	local i = net.ReadHeader()
@@ -30,6 +41,27 @@ function net.Incoming( len, client )
 	-- len includes the 16 bit int which told us the message name
 	--
 	len = len - 16
+
+	if SERVER and GetConVar("sv_net_protect"):GetBool() then
+		net.ReceiversProtectionSpam = net.ReceiversProtectionSpam or {}
+
+		if net.ReceiversProtectionSpam[client:SteamID64()] and net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] and net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] > CurTime() then
+			print("Player " .. client:Nick() .. " (" .. client:SteamID() .. ") tried to spam the net message " .. strName .. " too much.")
+
+			return
+		end
+
+		local iTime = net.ReceiversConfigTime and isnumber(net.ReceiversConfigTime[strName:lower()]) and net.ReceiversConfigTime[strName:lower()] or GetConVar("sv_net_time"):GetFloat()
+
+		net.ReceiversProtectionSpam[client:SteamID64()] = net.ReceiversProtectionSpam[client:SteamID64()] or {}
+		net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] = CurTime() + iTime
+
+		timer.Simple(iTime, function()
+			if IsValid(client) and net.ReceiversProtectionSpam[client:SteamID64()] then
+				net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] = nil
+			end
+		end)
+	end
 
 	func( len, client )
 
