@@ -56,18 +56,6 @@ function net.Incoming( len, client )
 
 		net.ReceiversProtectionSpam[sSteamID64] = net.ReceiversProtectionSpam[sSteamID64] or {}
 		net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = CurTime() + iTime
-
-		timer.Simple(iTime, function()
-			if IsValid(client) and net.ReceiversProtectionSpam[sSteamID64] then
-				net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = nil
-
-				if table.Count(net.ReceiversProtectionSpam[sSteamID64]) == 0 then
-					net.ReceiversProtectionSpam[sSteamID64] = nil
-				end
-			elseif net.ReceiversProtectionSpam[sSteamID64] then 
-				net.ReceiversProtectionSpam[sSteamID64] = nil
-			end
-		end)
 	end
 
 	func( len, client )
