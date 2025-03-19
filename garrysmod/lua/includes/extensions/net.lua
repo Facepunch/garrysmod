@@ -45,7 +45,8 @@ function net.Incoming( len, client )
 	if SERVER and GetConVar("sv_net_protect"):GetBool() then
 		net.ReceiversProtectionSpam = net.ReceiversProtectionSpam or {}
 
-		if net.ReceiversProtectionSpam[client:SteamID64()] and net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] and net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] > CurTime() then
+		local sSteamID64 = client:SteamID64()
+		if net.ReceiversProtectionSpam[sSteamID64] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] > CurTime() then
 			print("Player " .. client:Nick() .. " (" .. client:SteamID() .. ") tried to spam the net message " .. strName .. " too much.")
 
 			return
@@ -53,12 +54,18 @@ function net.Incoming( len, client )
 
 		local iTime = net.ReceiversConfigTime and isnumber(net.ReceiversConfigTime[strName:lower()]) and net.ReceiversConfigTime[strName:lower()] or GetConVar("sv_net_time"):GetFloat()
 
-		net.ReceiversProtectionSpam[client:SteamID64()] = net.ReceiversProtectionSpam[client:SteamID64()] or {}
-		net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] = CurTime() + iTime
+		net.ReceiversProtectionSpam[sSteamID64] = net.ReceiversProtectionSpam[sSteamID64] or {}
+		net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = CurTime() + iTime
 
 		timer.Simple(iTime, function()
-			if IsValid(client) and net.ReceiversProtectionSpam[client:SteamID64()] then
-				net.ReceiversProtectionSpam[client:SteamID64()][strName:lower()] = nil
+			if IsValid(client) and net.ReceiversProtectionSpam[sSteamID64] then
+				net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = nil
+
+				if table.Count(net.ReceiversProtectionSpam[sSteamID64]) == 0 then
+					net.ReceiversProtectionSpam[sSteamID64] = nil
+				end
+			elseif net.ReceiversProtectionSpam[sSteamID64] then 
+				net.ReceiversProtectionSpam[sSteamID64] = nil
 			end
 		end)
 	end
