@@ -244,12 +244,12 @@ L.set_tips      = "Show gameplay tips at the bottom of the screen while spectati
 L.set_startpopup = "Start of round info popup duration"
 L.set_startpopup_tip = "When the round starts, a small popup appears at the bottom of your screen for a few seconds. Change the time it displays for here."
 
-L.set_cross_opacity   = "Ironsight crosshair opacity"
+L.set_cross_opacity   = "Opacity (iron sights)"
 L.set_cross_disable   = "Disable crosshair completely"
 L.set_minimal_id      = "Minimalist Target ID under crosshair (no karma text, hints, etc)"
 L.set_healthlabel     = "Show health status label on health bar"
-L.set_lowsights       = "Lower weapon when using ironsights"
-L.set_lowsights_tip   = "Enable to position the weapon model lower on the screen while using ironsights. This will make it easier to see your target, but it will look less realistic."
+L.set_lowsights       = "Lower weapon when using iron sights"
+L.set_lowsights_tip   = "Enable to position the weapon model lower on the screen while using iron sights. This will make it easier to see your target, but it will look less realistic."
 L.set_fastsw          = "Fast weapon switch"
 L.set_fastsw_tip      = "Enable to cycle through weapons without having to click again to use weapon. Enable show menu to show switcher menu."
 L.set_fastsw_menu     = "Enable menu with fast weapon switch"
@@ -730,7 +730,7 @@ L.tip31 = "As Spectator, press {duckkey} to unlock your mouse cursor and click t
 
 L.tip32 = "The Crowbar's secondary fire will push other players."
 
-L.tip33 = "Firing through the ironsights of a weapon will slightly increase your accuracy and decrease recoil. Crouching does not."
+L.tip33 = "Firing through the iron sights of a weapon will slightly increase your accuracy and decrease recoil. Crouching does not."
 
 L.tip34 = "Smoke grenades are effective indoors, especially for creating confusion in crowded rooms."
 
@@ -1051,8 +1051,8 @@ L.set_avoid_det_tip = "Enable this to ask the server not to select you as Detect
 L.drop_no_ammo = "Insufficient ammo in your weapon's clip to drop as an ammo box."
 
 --- v31
-L.set_cross_brightness = "Crosshair brightness"
-L.set_cross_size = "Crosshair size"
+L.set_cross_brightness = "Brightness"
+L.set_cross_size = "Size"
 
 --- 2015-05-25
 L.hat_retrieve = "You picked up a Detective's hat."
@@ -1087,3 +1087,12 @@ L.sb_playervolume = "Player Volume"
 
 --- 2021-09-22
 L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute icon in the scoreboard."
+
+--- 2025-03-11
+L.set_title_cross = "Crosshair settings"
+
+L.set_cross_color_enable = "Enable custom color"
+L.set_cross_color = "Custom color"
+L.set_hip_cross_opacity = "Opacity"
+L.set_cross_thickness = "Thickness"
+L.set_cross_outlinethickness = "Outline thickness"

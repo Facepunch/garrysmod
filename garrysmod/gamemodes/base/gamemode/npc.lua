@@ -48,7 +48,7 @@ end
 
 function GM:GetDeathNoticeEntityName( ent )
 
-	if ( !isstring( ent ) ) then return ent end
+	if ( isstring( ent ) ) then return ent end
 	if ( !IsValid( ent ) ) then return nil end
 
 	-- Some specific HL2 NPCs, just for fun

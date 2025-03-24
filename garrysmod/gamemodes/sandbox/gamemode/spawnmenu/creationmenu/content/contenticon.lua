@@ -17,18 +17,29 @@ AccessorFunc( PANEL, "m_NPCWeapon", "NPCWeapon" )
 AccessorFunc( PANEL, "m_bAdminOnly", "AdminOnly" )
 AccessorFunc( PANEL, "m_bIsNPCWeapon", "IsNPCWeapon" )
 
-local function DoGenericSpawnmenuRightclickMenu( self )
+function PANEL:OpenGenericSpawnmenuRightClickMenu()
+
 	local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetSpawnName() ) end ):SetIcon( "icon16/page_copy.png" )
+
+		if ( self:GetSpawnName() and self:GetSpawnName() != "" ) then
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetSpawnName() ) end ):SetIcon( "icon16/page_copy.png" )
+		end
+
 		if ( isfunction( self.OpenMenuExtra ) ) then
 			self:OpenMenuExtra( menu )
 		end
 
+		hook.Run( "SpawnmenuIconMenuOpen", menu, self, self:GetContentType() )
+
 		if ( !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly() ) then
 			menu:AddSpacer()
-			menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
+			menu:AddOption( "#spawnmenu.menu.delete", function()
+				self:Remove()
+				hook.Run( "SpawnlistContentChanged" )
+			end ):SetIcon( "icon16/bin_closed.png" )
 		end
 	menu:Open()
+
 end
 
 function PANEL:Init()
@@ -278,7 +289,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	icon.OpenMenuExtra = function( self, menu )
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -322,7 +333,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	icon.OpenMenuExtra = function( self, menu )
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -415,7 +426,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		addWeps( subMenu, weaps )
 
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -484,7 +495,7 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 			end
 		end
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )

@@ -449,7 +449,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_stalker",
 	Category = Category,
-	KeyValues = { squadname = "npc_stalker_squad" },
+	KeyValues = { SquadName = "npc_stalker_squad" },
 	Offset = 10
 } )
 

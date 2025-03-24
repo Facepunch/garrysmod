@@ -27,7 +27,7 @@ L.win_traitor      = "Hainler kazandı!"
 L.win_innocent     = "Hainler yenildi!"
 L.win_showreport = "{num} saniye boyunca raunt raporuna bakalım."
 
-L.limit_round      = "Raunt limitine ulaşıldı. {mapname} yakında yüklenecek."
+L.limit_round      = "Raunt sınırına ulaşıldı. {mapname} yakında yüklenecek."
 L.limit_time       = "Süre sınırına ulaşıldı. {mapname} yakında yüklenecek."
 L.limit_left = "Harita değişmeden önce {num} raunt veya {time} dakika kaldı."
 
@@ -808,7 +808,7 @@ L.ev_burn_using  = "{victim}, {attacker} nedeniyle {trap} tarafından yakıldı"
 L.ev_club        = "{victim}, {attacker} tarafından dövüldü"
 L.ev_club_using  = "{victim}, {trap} kullanılarak {attacker} tarafından dövülerek öldürüldü"
 
-L.ev_slash       = "{kurban}, {saldırgan} tarafından bıçaklandı"
+L.ev_slash       = "{victim}, {attacker} tarafından bıçaklandı"
 L.ev_slash_using = "{victim}, {trap} kullanılarak {attacker} tarafından kesildi"
 
 L.ev_tele        = "{victim} {attacker} tarafından ışınlanarak öldürüldü"
