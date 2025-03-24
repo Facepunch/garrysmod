@@ -136,6 +136,11 @@ if ( SERVER ) then
 
 		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return NULL end
 
+		if ( !isnumber( r ) ) then r = 255 end
+		if ( !isnumber( g ) ) then g = 255 end
+		if ( !isnumber( b ) ) then b = 255 end
+		if ( !isnumber( force ) ) then force = 0 end
+
 		local balloon = ents.Create( "gmod_balloon" )
 		if ( !IsValid( balloon ) ) then return NULL end
 
@@ -146,8 +151,6 @@ if ( SERVER ) then
 		DoPropSpawnedEffect( balloon )
 
 		duplicator.DoGenericPhysics( balloon, ply, Data )
-
-		force = math.Clamp( force, -1E34, 1E34 )
 
 		balloon:SetColor( Color( r, g, b, 255 ) )
 		balloon:SetForce( force )

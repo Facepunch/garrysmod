@@ -78,7 +78,9 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 
-	local vLinear = Vector( 0, 0, self:GetForce() * 5000 ) * deltatime
+	local force = math.Clamp( self:GetForce(), -1E34, 1E34 ) * 5000
+
+	local vLinear = Vector( 0, 0, force ) * deltatime
 	local vAngular = vector_origin
 
 	return vAngular, vLinear, SIM_GLOBAL_FORCE
