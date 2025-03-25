@@ -58,6 +58,16 @@ function PANEL:Setup( vars )
 		ctrl:SetValue( val )
 	end
 
+	-- Set the min
+	self.SetMin = function( slf, val )
+		ctrl:SetMin( val )
+	end
+
+	-- Set the max
+	self.SetMax = function( slf, val )
+		ctrl:SetMax( val )
+	end
+	
 	-- Alert row that value changed
 	ctrl.OnValueChanged = function( slf, newval )
 
