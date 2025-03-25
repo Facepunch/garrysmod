@@ -390,7 +390,7 @@ L.flare_desc      = [[
 
 -- Health station
 L.hstation_name   = "Лечебная станция"
-L.hstation_hint   = "Нажмите {usekey}, чтобы восстановить здоровье. Заряд: {num}."
+L.hstation_hint   = "Зажмите {usekey}, чтобы восстановить здоровье. Заряд: {num}."
 L.hstation_broken = "Ваша Лечебная станция уничтожена!"
 L.hstation_help   = "{primaryfire}: поместить Лечебную станцию."
 
