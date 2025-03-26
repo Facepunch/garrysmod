@@ -6,6 +6,64 @@ include ( "panel/scriptedpanels.lua" )
 
 local meta = FindMetaTable( "Panel" )
 
+--
+-- Panel index accessor
+--
+local g_PanelsTables = {}
+
+function meta:__index( key )
+
+	--
+	-- Panel-specialized values
+	--
+	if ( key == "Hovered" ) then
+		return meta.GetTable( self ).Hovered
+	elseif ( key == "x" or key == "X" ) then
+
+		local x = meta.GetPos( self )
+		return x
+
+	elseif ( key == "y" or key == "Y" ) then
+
+		local _, y = meta.GetPos( self )
+		return y
+
+	end
+
+	--
+	-- Search the panel table
+	--
+	local pnlTable = g_PanelsTables[self]
+
+	if ( !pnlTable ) then
+
+		pnlTable = meta.GetTable( self )
+
+		if ( !pnlTable ) then
+
+			-- If table isn't yet installed, look in the metatable
+			return meta[key]
+
+		end
+
+		g_PanelsTables[self] = pnlTable
+
+	end
+
+	local value = pnlTable[key]
+
+	-- Look in the table
+	if ( value != nil ) then
+		return value
+	end
+
+	-- Look in the metatable
+	value = meta[key]
+
+	return value
+
+end
+
 AccessorFunc( meta, "m_strCookieName", "CookieName" )
 
 meta.SetFGColorEx = meta.SetFGColor
