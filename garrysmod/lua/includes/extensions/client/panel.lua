@@ -9,23 +9,17 @@ local meta = FindMetaTable( "Panel" )
 --
 -- Panel index accessor
 --
+local __index_internal = meta.__index
+
 local g_PanelsTables = {}
 
 function meta:__index( key )
 
 	--
-	-- Panel-specialized values
+	-- Panel-specialized values; fall back on the original index accessor
 	--
-	if ( key == "x" or key == "X" ) then
-
-		local x = meta.GetPos( self )
-		return x
-
-	elseif ( key == "y" or key == "Y" ) then
-
-		local _, y = meta.GetPos( self )
-		return y
-
+	if ( key == "Hovered" or key == "x" or key == "y" or key == "X" or key == "Y" ) then
+		return __index_internal( self, key )
 	end
 
 	--
