@@ -16,9 +16,7 @@ function meta:__index( key )
 	--
 	-- Panel-specialized values
 	--
-	if ( key == "Hovered" ) then
-		return meta.GetTable( self ).Hovered
-	elseif ( key == "x" or key == "X" ) then
+	if ( key == "x" or key == "X" ) then
 
 		local x = meta.GetPos( self )
 		return x
