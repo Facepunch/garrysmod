@@ -2,9 +2,6 @@
 -- TODO: Hack. Move to where color is defined?
 TYPE_COLOR = 255
 
--- TODO: Temp hack, remove meta
-local MAX_EDICT_BITS = 13
-
 net.Receivers = {}
 
 --
