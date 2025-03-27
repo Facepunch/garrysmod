@@ -247,6 +247,7 @@ function PANEL:Copy()
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
 	copy.OpenMenuExtra = self.OpenMenuExtra
+	copy:SetTooltip( self:GetTooltip() )
 
 	return copy
 
