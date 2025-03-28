@@ -90,12 +90,6 @@ function meta:AddCount( str, ent )
 
 end
 
-function meta:AddCleanup( type, ent )
-
-	cleanup.Add( self, type, ent )
-
-end
-
 function meta:GetTool( mode )
 
 	local wep = self:GetWeapon( "gmod_tool" )
@@ -109,6 +103,12 @@ function meta:GetTool( mode )
 end
 
 if ( SERVER ) then
+
+	function meta:AddCleanup( type, ent )
+
+		cleanup.Add( self, type, ent )
+
+	end
 
 	function meta:LimitHit( str )
 
