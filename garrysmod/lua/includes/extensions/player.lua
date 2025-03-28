@@ -261,53 +261,9 @@ function meta:HasGodMode()
 
 end
 
--- These are totally in the wrong place.
-function player.GetByAccountID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:AccountID() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
-function player.GetByUniqueID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:UniqueID() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
-function player.GetBySteamID( ID )
-	ID = string.upper( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
-function player.GetBySteamID64( ID )
-	ID = tostring( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID64() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
+--[[---------------------------------------------------------
+	Iterator for players
+-----------------------------------------------------------]]
 local inext = ipairs( {} )
 local PlayerCache = nil
 
