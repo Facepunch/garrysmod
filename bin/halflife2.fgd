@@ -4559,21 +4559,21 @@
 	input ExitVehicle(void) : "Boots the prisoner out of the vehicle."
 	input Viewlock(bool) : "Set true to prevent Gordon from looking around *at all*. Set false to let him look within limits."
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
+	input SetCanShoot(bool) : "Set if the driver can shoot their weapon."
+	input SetMaxPitch(float) : "Set max pitch for driver."
+	input SetMinPitch(float) : "Set min pitch for driver."
+	input SetMaxYaw(float) : "Set max yaw for driver."
+	input SetMinYaw(float) : "Set min yaw for driver."
+	input UseAttachmentEyes(bool) : "Force the view to use the attachment's orientation and position and don't blend in the player's look."
 	
 	output OnOpen(void) : "Fired when the vehicle is open enough to enter."
 	output OnClose(void) : "Fired when the vehicle too closed to enter."
 
-	ignoremoveparent(choices) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent went performing exit checks." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
+	ignoremoveparent(boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent went performing exit checks."
 
-	ignoreplayer(choices) : "Ignore Player collision" : 0 : "The player wont collide against this vehicle when moving around." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
+	ignoreplayer(boolean) : "Ignore Player collision" : 0 : "The player wont collide against this vehicle when moving around."
+	playercanshoot(boolean) : "Can the player shoot" : 0 : "Lets the player shoot their weapon while in the vehicle"
+	useattachmenteyes(boolean) : "Use attachment eyes" : 0 : "Should the driver's view use the attachment's orientation and not blend in the player's look."
 ]
 
 @FilterClass base(BaseFilter) iconsprite("editor/filter_class.vmt") = filter_combineball_type :

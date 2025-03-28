@@ -7073,3 +7073,121 @@
 	// Outputs
 	output OnFoundEntity(void) : "Fired when FindEntity is input and an entity was found. Passes the found entity as !caller."
 ]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname, EnableDisable) size(-8 -8 -8, 8 8 8) = logic_register_activator :
+	"Stores an entity and sends messages with it as the activator\n" +
+	"Useful for keeping track of entities with mangled names due " +
+	"to template spawners and instances."
+[
+	// Inputs
+	input Toggle(void) : "Toggle between enabled and disabled."
+	input FireRegisteredAsActivator1(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator2(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator3(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator4(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input RegisterEntity(string) : "Stores an entity to later be used as an activator."
+	
+	// Outputs
+	output OnRegisteredActivate1(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate2(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate3(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate4(void) : "Fired to send a message using the registered as the activator."
+]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname) = logic_coop_manager :
+	"Manages two sets of values and can fire outputs based on the state of those values. " +
+	"Useful in coop where you can have players independently setting states on buttons, switches, etc."
+[
+	// keys
+	DefaultPlayerStateA(choices) : "Default State A" : 0 :
+	"The default state of A" = 
+	[
+		0 : "FALSE"
+		1 : "TRUE"
+	]
+	DefaultPlayerStateB(choices) : "Default State B" : 0 :
+	"The default state of B" = 
+	[
+		0 : "FALSE"
+		1 : "TRUE"
+	]
+	
+	// Inputs
+	input SetStateATrue(void) : "Set State A to TRUE"
+	input SetStateAFalse(void) : "Set State A to FALSE"
+	input ToggleStateA(void) : "Toggle State A"
+	input SetStateBTrue(void) : "Set State B to TRUE"
+	input SetStateBFalse(void) : "Set State B to FALSE"
+	input ToggleStateB(void) : "Toggle State B"
+
+	// Outputs
+	output OnChangeToAllTrue(void) : "Fires when ALL of the values change to TRUE for the first time"
+	output OnChangeToAnyTrue(void) : "Fires when ANY of the values change to tTRUE for the first time"
+	output OnChangeToAllFalse(void) : "Fires when ALL of the values change to FALSE for the first time"
+	output OnChangeToAnyFalse(void) : "Fires when ANY of the values change to FALSE for the first time"
+]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewcontrol_multiplayer : 
+	"A camera entity that controls all players' views. While it's active, the players will see out of the camera." 
+[
+	fov(float) : "Field of view" : "90" : "Player FOV"
+	fov_rate(float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
+	target_entity(target_destination): "Target Entity" : "" : "Entity to move to. (End of move will match origin and angles)."
+	interp_time(float) : "Seconds to reach target entity" : "1.0" : "Amount of time it should take to reach the target entity's origin and angles."
+	target_team(choices) : "Target Team" : -1 : "Which team (or all) to allow to touch this trigger." =
+	[
+		-1 : "All Teams"
+		0 : "0 (Spectators)"
+		1 : "1"
+		2 : "2 (Portal2 Orange)"
+		3 : "3 (Portal2 Blue)"
+	]
+	
+	spawnflags(flags) =
+	[
+		1: "Disable when move finished" : 1
+		2: "Set FOV" : 0
+	]
+
+	// Inputs
+	input Enable(void) : "Enable the point_viewcontrol_multiplayer, and start controlling the players' view."
+	input Disable(void) : "Disable the point_viewcontrol_multiplayer, and stop controlling the players' view."
+	input StartMovement(void) : "Start the movement to the target entity."
+]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewproxy : 
+	"A camera entity that moves the player's view. Use this if you want the player to retain control of where the player looks but want to base the position to be based on the proxy." 
+[
+	spawnflags(flags) =
+	[
+		4: "Freeze Player" : 0
+		32:"Make Player non-solid" : 0
+	]
+	
+	offsettype(choices) : "Offset type " : 0 : "How the player's view moves to the view of the camera." = 
+	[
+		0: "Snap to camera"
+		1: "Ease to camera"
+		2: "Keep offset"
+	]
+
+	proxy(target_destination) : "Proxy Entity" : : "Name of the entity that the camera uses to translate the view."
+	proxyattachment(target_destination) : "Attachment Point" : : "Use this attachment on the proxy's parent for position and orientation."
+
+	tiltfraction(float) : "Tilt Fraction" : "0.5" : "How much the angle of the proxy affects the angle of the view. 0.0 will keep the players view angles unmodified. 1.0 will add in the whole tilt from the proxy."
+
+	usefakeacceleration(boolean) : "Use Fake Acceleration" : 0 : "If the player maintains an offset from the proxy apply fake acceleration on the player based on the movement of the proxy."
+	skewaccelerationforward(boolean) : "Skew Acceleration Forward" : 1 : "If this is set fake acceleration will be more noticeable in the direction of the proxy."
+	accelerationscalar(float) : "Acceleration Scalar" : "1.0" : "Multiply the fake acceleration by this ammount."
+	easeanglestocamera(boolean) : "Ease Angles To Camera" : 0 : "Move the player's angles to the camera - this will stop them from looking around."
+
+	// Inputs
+	input Enable(void) : "Enable the view proxy, and start modifying the player's view."
+	input Disable(void) : "Disable the view proxy, and start modifying the player's view."
+	
+	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
+]
