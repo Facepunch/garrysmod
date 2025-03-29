@@ -3,6 +3,7 @@ AddCSLuaFile()
 
 local matBone = Material( "widgets/bone.png", "smooth" )
 local matBoneSmall = Material( "widgets/bone_small.png", "smooth" )
+local c = Color( 255, 255, 255, 255 )
 
 local widget_bone = {
 	Base = "widget_base",
@@ -25,7 +26,6 @@ local widget_bone = {
 		local pp = self:GetParentPos()
 		if ( !pp ) then return end
 
-		--local fwd = self:GetAngles():Forward()
 		local len = self:GetSize() / 2
 		local w = len * 0.2
 
@@ -35,21 +35,23 @@ local widget_bone = {
 			render.SetMaterial( matBoneSmall )
 		end
 
-		local c = Color( 255, 255, 255, 255 )
+		local hovered = LocalPlayer():GetHoveredWidget()
 
-		if ( self:IsHovered() ) then
-			self.a = math.Approach( self.a, 255, FrameTime() * 255 * 10 )
-		elseif ( self:SomethingHovered() ) then
+		if ( IsValid( hovered ) && hovered != self ) then
 			self.a = math.Approach( self.a, 20, FrameTime() * 255 * 10 )
 		else
 			self.a = math.Approach( self.a, 255, FrameTime() * 255 * 10 )
 		end
 
+		local pos = self:GetPos()
+
 		cam.IgnoreZ( true )
-			render.DrawBeam( self:GetPos(), pp, w, 0, 1, Color( c.r, c.g, c.b, self.a * 0.5 ) )
+			c.a = self.a * 0.5
+			render.DrawBeam( pos, pp, w, 0, 1, c )
 		cam.IgnoreZ( false )
 
-		render.DrawBeam( self:GetPos(), pp, w, 0, 1, Color( c.r, c.g, c.b, self.a ) )
+		c.a = self.a
+		render.DrawBeam( pos, pp, w, 0, 1, c )
 
 	end,
 
@@ -61,7 +63,8 @@ local widget_bone = {
 		local pp = self:GetParentPos()
 		if ( !pp ) then return end
 
-		local fwd = ( pp - self:GetPos() ):GetNormal()
+		local pos = self:GetPos()
+		local fwd = ( pp - pos ):GetNormal()
 		local ang = fwd:Angle()
 		local len = self:GetSize() / 2
 		local w = len * 0.2
@@ -69,7 +72,7 @@ local widget_bone = {
 		local mins = Vector( 0, w * -0.5, w * -0.5 )
 		local maxs = Vector( len, w * 0.5, w * 0.5 )
 
-		local hit, norm, fraction = util.IntersectRayWithOBB( startpos, delta, self:GetPos(), ang, mins, maxs )
+		local hit, norm, fraction = util.IntersectRayWithOBB( startpos, delta, pos, ang, mins, maxs )
 		if ( !hit ) then return end
 
 		--debugoverlay.BoxAngles( self:GetPos(), mins, maxs, ang, 0.1, Color( 0, 255, 0, 64 ) )
@@ -84,14 +87,17 @@ local widget_bone = {
 	Think = function( self )
 
 		if ( !SERVER ) then return end
-		if ( !IsValid( self:GetParent() ) ) then return end
+
+		local parent = self:GetParent()
+
+		if ( !IsValid( parent ) ) then return end
 
 		--
 		-- Because the bone length changes (with the manipulator)
 		-- we need to update the bones pretty regularly
 		--
 
-		local size = self:GetParent():BoneLength( self:GetParentAttachment() ) * 2
+		local size = parent:BoneLength( self:GetParentAttachment() ) * 2
 		size = math.ceil( size )
 
 		self:SetSize( size )
