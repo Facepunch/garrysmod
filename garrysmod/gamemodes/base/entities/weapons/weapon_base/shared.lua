@@ -162,6 +162,8 @@ function SWEP:TakePrimaryAmmo( num )
 	-- Doesn't use clips
 	if ( self:Clip1() <= 0 ) then
 
+		if ( self:GetOwner():IsNPC() ) then return end
+
 		if ( self:Ammo1() <= 0 ) then return end
 
 		self:GetOwner():RemoveAmmo( num, self:GetPrimaryAmmoType() )
@@ -180,6 +182,8 @@ function SWEP:TakeSecondaryAmmo( num )
 
 	-- Doesn't use clips
 	if ( self:Clip2() <= 0 ) then
+
+		if ( self:GetOwner():IsNPC() ) then return end
 
 		if ( self:Ammo2() <= 0 ) then return end
 
