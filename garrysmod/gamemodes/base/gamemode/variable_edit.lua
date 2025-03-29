@@ -19,6 +19,8 @@ function GM:VariableEdited( ent, ply, key, val, editor )
 	--
 	ent:EditValue( key, val )
 
+	hook.Call( "PlayerEditedVariable", self, ply, ent, key, val )
+
 end
 
 --
