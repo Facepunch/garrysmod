@@ -247,6 +247,9 @@ end
 	Desc: Returns how much of ammo1 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo1()
+	-- Owner cannot have ammo? Such as NPCs.
+	if ( !self:GetOwner().GetAmmoCount ) then return 0 end
+
 	return self:GetOwner():GetAmmoCount( self:GetPrimaryAmmoType() )
 end
 
@@ -255,6 +258,9 @@ end
 	Desc: Returns how much of ammo2 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo2()
+	-- Owner cannot have ammo? Such as NPCs.
+	if ( !self:GetOwner().GetAmmoCount ) then return 0 end
+
 	return self:GetOwner():GetAmmoCount( self:GetSecondaryAmmoType() )
 end
 
