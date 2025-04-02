@@ -1,3 +1,4 @@
+
 local realmColors = {}
 realmColors[ "menu" ] = Color( 121, 221, 100 )
 realmColors[ "client" ] = Color( 255, 222, 102 )
@@ -74,10 +75,7 @@ function PANEL:Paint( w, h )
 
 	-- The error count
 	if ( count > 0 ) then
-		local txt = "x" .. count
-		surface.SetFont( "DermaMedium" )
-
-		draw.SimpleText( txt, "DermaMedium", w - 16 - 16, h / 2, clr, draw.TEXT_ALIGN_RIGHT, draw.TEXT_ALIGN_CENTER )
+		draw.SimpleText( "x" .. count, "DermaMedium", w - 16 - 16, h / 2, clr, draw.TEXT_ALIGN_RIGHT, draw.TEXT_ALIGN_CENTER )
 	end
 
 	-- The error
