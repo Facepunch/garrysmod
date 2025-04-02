@@ -48,6 +48,14 @@ function PANEL:Init()
 
 end
 
+function PANEL:Think()
+
+    if ( input.IsKeyDown( KEY_ESCAPE ) ) then
+        self:Remove()
+    end
+
+end
+
 function PANEL:AddEmptyWarning( txt, parent )
 
 	local lab = parent:Add( "DLabel" )
@@ -66,9 +74,11 @@ function PANEL:AddEmptyWarning( txt, parent )
 
 end
 
+local color_background = Color( 0, 0, 0, 240 )
+
 function PANEL:Paint( w, h )
 
-	draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 240 ) )
+	draw.RoundedBox( 0, 0, 0, w, h, color_background )
 
 end
 
