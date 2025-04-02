@@ -238,16 +238,36 @@ end
 do
 	local mask = 0x100000000
 
-	function net.WriteSteamID64( steamid64 )
-		local unique_part = tonumber( string.sub(steamid64, 6) )
+	function net.WriteSteamID64(steamid64)
+		local prefix = tonumber(string.sub(steamid64, 1, 5))
+		local unique_part = tonumber(string.sub(steamid64, 6))
+
 		local high = unique_part % mask
 		local low = math.floor(unique_part / mask)
 
-		net.WriteUInt(high, 32) net.WriteUInt(low, 8)
+		net.WriteUInt(high, 32)
+
+		if prefix == 76561 then
+			net.WriteBool(false)
+			net.WriteUInt(low, 8)
+		else
+			net.WriteBool(true)
+			net.WriteUInt(low, 10) -- 0x0170000000000000
+			net.WriteUInt(prefix, 17)
+		end
 	end
 
 	function net.ReadSteamID64()
-		local high, low = net.ReadUInt(32), net.ReadUInt(8)
-		return "76561" .. tostring(low * mask + high)
+		local high = net.ReadUInt(32)
+		local is_special = net.ReadBool()
+		local low = net.ReadUInt(is_special and 10 or 8)
+		local part = tostring(low * mask + high)
+
+		if is_special then
+			local prefix = net.ReadUInt(17)
+			return tostring(prefix) .. part
+		end
+
+		return "76561" .. part
 	end
 end
