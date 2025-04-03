@@ -6520,6 +6520,13 @@
 	]
 ]
 
+@SolidClass base(Trigger) = trigger_teleport_relative : 
+	"A trigger volume that teleports entities that touch it. Entities are teleported by Offset from their current position. Useful to get " +
+	"objects out of situations where levels or entities suddenly appear interseting with them."
+[
+	teleportoffset(vector) : "Offset (X Y Z)" : "0 0 0" : "The offset (in World-Space Coordinates X Y Z) to teleport the entity when the trigger is touched."
+]
+
 @SolidClass base(Targetname) = trigger_transition :
 	"A volume that's used to control which entities go through the level transition. Create one or more trigger_transitions and "+
 	"give them the same name as the changelevel landmark. Any entities within the trigger_transition(s) will go to the next map."+

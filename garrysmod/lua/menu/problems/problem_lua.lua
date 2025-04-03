@@ -17,9 +17,10 @@ function PANEL:Init()
 	self:Dock( TOP )
 	self:DockMargin( 0, 0, 0, 1 )
 
-	self.CopyBtn = self:Add( "DImageButton" )
+	self.CopyBtn = self:Add( "DButton" )
 	self.CopyBtn:SetImage( "icon16/page_copy.png" )
-	self.CopyBtn:SetSize( 16, 16 )
+	self.CopyBtn:SetText( "#spawnmenu.menu.copy" )
+	self.CopyBtn:SizeToContentsX( 4 )
 	self.CopyBtn.DoClick = function( btm )
 		if ( !self.Problem ) then return end
 
