@@ -219,7 +219,7 @@ function BestAutoJoinTeam()
 
 end
 
-function getTeamIDByName( sName )
+function GetIDByName( sName )
 	if not sName or not isstring( sName ) then return end
 
 	return TeamInfoByName[sName] or false
