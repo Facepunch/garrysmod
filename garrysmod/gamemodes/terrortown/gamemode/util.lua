@@ -330,7 +330,7 @@ if CLIENT then
    };
 
    function util.KarmaToString(karma)
-      local maxkarma = GetGlobalInt("ttt_karma_max", 1050)
+      local maxkarma = GetGlobalInt("ttt_karma_max", 1000)
 
       if karma > maxkarma * 0.89 then
          return "karma_max", karmacolors.max

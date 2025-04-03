@@ -85,7 +85,7 @@
 			"name"		"ttt_haste_minutes_per_death"
 			"text"		"haste_kill_time_bonus"
 			"type"		"Numeric"
-			"default"	".5"
+			"default"	"0.5"
 		}
 
 		13
@@ -93,7 +93,7 @@
 			"name"		"ttt_postround_dm"
 			"text"		"postround_deathmatch"
 			"type"		"CheckBox"
-			"default"	"1"
+			"default"	"0"
 		}
 
 		14
@@ -133,7 +133,7 @@
 			"name"		"ttt_detective_pct"
 			"text"		"detective_ratio"
 			"type"		"Numeric"
-			"default"	"0.125"
+			"default"	"0.13"
 		}
 
 		19

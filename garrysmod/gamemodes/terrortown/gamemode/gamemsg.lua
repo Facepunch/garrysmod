@@ -259,7 +259,7 @@ local function MuteTeam(ply, cmd, args)
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
-local ttt_lastwords = CreateConVar("ttt_lastwords_chatprint", "1")
+local ttt_lastwords = CreateConVar("ttt_lastwords_chatprint", "0")
 
 local LastWordContext = {
    [KILL_NORMAL] = "",

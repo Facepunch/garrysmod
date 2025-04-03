@@ -867,7 +867,7 @@ function GM:OnPlayerHitGround(ply, in_water, on_floater, speed)
    end
 end
 
-local ttt_postdm = CreateConVar("ttt_postround_dm", "1", FCVAR_NOTIFY)
+local ttt_postdm = CreateConVar("ttt_postround_dm", "0", FCVAR_NOTIFY)
 
 function GM:AllowPVP()
    local rs = GetRoundState()
