@@ -224,5 +224,12 @@
 			"default"	"10"
 		}
 
+		32
+		{
+			"name"		"ttt_karma"
+			"text"		"karma_system"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
 	}
 }
