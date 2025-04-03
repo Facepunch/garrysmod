@@ -8,33 +8,26 @@ local MenuUpdated = false
 Problems = Problems or {}
 ErrorLog = ErrorLog or {}
 
-local function RefreshList( listPanel, itemsTable, panels, receiver )
-	if ( !IsValid( ProblemsPanel ) ) then return end
-
-	listPanel:Clear()
-	panels = {}
-	for id, item in pairs( itemsTable ) do
-		receiver( id, item )
-	end
-	ProblemsPanel:InvalidateLayout()
-end
-
 local function RefreshGenericProblemList()
-	RefreshList(
-		ProblemsPanel.ProblemsList,
-		Problems,
-		ProblemsPanel.ProblemPanels,
-		ProblemsPanel.ReceivedProblem
-	)
+	if ( IsValid( ProblemsPanel ) ) then
+		ProblemsPanel.ProblemsList:Clear()
+		ProblemsPanel.ProblemPanels = {}
+		for id, prob in pairs( Problems ) do
+			ProblemsPanel:ReceivedProblem( id, prob )
+		end
+		ProblemsPanel:InvalidateLayout()
+	end
 end
 
 local function RefreshLuaErrorList()
-	RefreshList(
-		ProblemsPanel.LuaErrorList,
-		ErrorLog,
-		ProblemsPanel.ErrorPanels,
-		ProblemsPanel.ReceivedError
-	)
+	if ( IsValid( ProblemsPanel ) ) then
+		ProblemsPanel.LuaErrorList:Clear()
+		ProblemsPanel.ErrorPanels = {}
+		for id, err in pairs( ErrorLog ) do
+			ProblemsPanel:ReceivedError( id, err )
+		end
+		ProblemsPanel:InvalidateLayout()
+	end
 end
 
 local function CountProblem( severity )
