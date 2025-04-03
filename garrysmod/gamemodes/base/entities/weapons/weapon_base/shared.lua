@@ -146,6 +146,8 @@ function SWEP:ShootBullet( damage, num_bullets, aimcone, ammo_type, force, trace
 	bullet.Force	= force || 1						-- Amount of force to give to phys objects
 	bullet.Damage	= damage
 	bullet.AmmoType = ammo_type || self.Primary.Ammo
+	bullet.Attacker = owner
+	bullet.Inflictor = self
 
 	owner:FireBullets( bullet )
 
