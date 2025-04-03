@@ -50,9 +50,9 @@ end
 
 function PANEL:Think()
 
-    if ( input.IsKeyDown( KEY_ESCAPE ) ) then
-        self:Remove()
-    end
+	if ( input.IsKeyDown( KEY_ESCAPE ) and !IsInGame() ) then
+		self:Remove()
+	end
 
 end
 
