@@ -3,7 +3,7 @@
 	Name: GetByAccountID( ID )
 	Desc: Attempts to get the player by the AccountID
 -----------------------------------------------------------]]
-local AccountIDMap = setmetatable( {}, { __mode = 'v' } )
+local AccountIDMap = {}
 
 function player.GetByAccountID( ID )
 
@@ -22,7 +22,7 @@ end
 	Name: GetByUniqueID( ID )
 	Desc: Attempts to get the player by the UniqueID
 -----------------------------------------------------------]]
-local UniqueIDMap = setmetatable( {}, { __mode = 'v' } )
+local UniqueIDMap = {}
 
 function player.GetByUniqueID( ID )
 
@@ -41,7 +41,7 @@ end
 	Name: GetBySteamID( ID )
 	Desc: Attempts to get the player by the SteamID
 -----------------------------------------------------------]]
-local SteamIDMap = setmetatable( {}, { __mode = 'v' } )
+local SteamIDMap = {}
 
 function player.GetBySteamID( ID )
 
@@ -60,7 +60,7 @@ end
 	Name: GetBySteamID64( ID )
 	Desc: Attempts to get the player by the SteamID64
 -----------------------------------------------------------]]
-local SteamID64Map = setmetatable( {}, { __mode = 'v' } )
+local SteamID64Map = {}
 
 function player.GetBySteamID64( ID )
 
@@ -76,7 +76,7 @@ function player.GetBySteamID64( ID )
 end
 
 --[[---------------------------------------------------------
-	Update the maps
+	Manage the maps
 -----------------------------------------------------------]]
 hook.Add( "OnEntityCreated", "PlayerFinders", function( ent )
 
@@ -90,15 +90,54 @@ hook.Add( "OnEntityCreated", "PlayerFinders", function( ent )
 	-- Store in the maps
 	--
 	local AID = tostring( ply:AccountID() )
-	AccountIDMap[AID] = ply
-
 	local UID = tostring( ply:UniqueID() )
-	UniqueIDMap[UID] = ply
-
 	local SID = ply:SteamID()
-	SteamIDMap[SID] = ply
-
 	local S64 = ply:SteamID64()
+
+	AccountIDMap[AID] = ply
+	AccountIDMap[ply] = AID
+
+	UniqueIDMap[UID] = ply
+	UniqueIDMap[ply] = UID
+
+	SteamIDMap[SID] = ply
+	SteamIDMap[ply] = SID
+
 	SteamID64Map[S64] = ply
+	SteamID64Map[ply] = S64
+
+end )
+
+hook.Add( "EntityRemoved", "PlayerFinders", function( ent, fullUpdate )
+
+	if ( fullUpdate ) then
+		return
+	end
+
+	if ( not ent:IsPlayer() ) then
+		return
+	end
+
+	local ply = ent
+
+	--
+	-- Clear from the maps
+	--
+	local AID = AccountIDMap[ply]
+	local UID = UniqueIDMap[ply]
+	local SID = SteamIDMap[ply]
+	local S64 = SteamID64Map[ply]
+
+	AccountIDMap[AID] = nil
+	AccountIDMap[ply] = nil
+
+	UniqueIDMap[UID] = nil
+	UniqueIDMap[ply] = nil
+
+	SteamIDMap[SID] = nil
+	SteamIDMap[ply] = nil
+
+	SteamID64Map[S64] = nil
+	SteamID64Map[ply] = nil
 
 end )
