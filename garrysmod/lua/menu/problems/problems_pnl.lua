@@ -6,7 +6,7 @@ include( "permissions.lua" )
 local PANEL = {}
 
 function PANEL:Init()
-
+	self:SetText( "" )
 	self:SetSize( ScrW(), ScrH() )
 	self:MakePopup()
 
@@ -17,6 +17,7 @@ function PANEL:Init()
 	ProblemsFrame:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
 	ProblemsFrame:Center()
 	ProblemsFrame:SetTitle( "" )
+	ProblemsFrame:ShowCloseButton( false )
 	ProblemsFrame:SetDraggable( false )
 	ProblemsFrame:SetBackgroundBlur( true )
 	ProblemsFrame.OnRemove = function( frm ) self:Remove() end
@@ -45,6 +46,12 @@ function PANEL:Init()
 	ProblemsFrame.btnClose:MoveToFront()
 	ProblemsFrame.btnMaxim:MoveToFront()
 	ProblemsFrame.btnMinim:MoveToFront()
+
+end
+
+function PANEL:DoClick()
+
+	self:Remove()
 
 end
 
@@ -136,4 +143,4 @@ function PANEL:ReceivedProblem( uid, prob )
 
 end
 
-vgui.Register( "ProblemsPanel", PANEL, "EditablePanel" )
+vgui.Register( "ProblemsPanel", PANEL, "DButton" )
