@@ -17,7 +17,6 @@ function PANEL:Init()
 	ProblemsFrame:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
 	ProblemsFrame:Center()
 	ProblemsFrame:SetTitle( "" )
-	ProblemsFrame:ShowCloseButton( false )
 	ProblemsFrame:SetDraggable( false )
 	ProblemsFrame:SetBackgroundBlur( true )
 	ProblemsFrame.OnRemove = function( frm ) self:Remove() end
