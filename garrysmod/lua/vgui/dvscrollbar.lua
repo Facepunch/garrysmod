@@ -45,6 +45,7 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_HideButtons", "HideButtons" )
+AccessorFunc( PANEL, "m_BlockScrolling", "BlockScrolling" )
 
 function PANEL:Init()
 
@@ -121,7 +122,7 @@ end
 
 function PANEL:OnMouseWheeled( dlta )
 
-	if ( !self:IsVisible() ) then return false end
+	if ( !self:IsVisible() || self:GetBlockScrolling() ) then return false end
 
 	-- We return true if the scrollbar changed.
 	-- If it didn't, we feed the mousehweeling to the parent panel
