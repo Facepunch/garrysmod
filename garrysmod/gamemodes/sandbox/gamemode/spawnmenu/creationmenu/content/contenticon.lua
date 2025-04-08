@@ -288,7 +288,11 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
 	end
 	icon.OpenMenuExtra = function( self, menu )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "0" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
+		end ):SetIcon( "icon16/brick_add.png" )
 	end
 	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
@@ -332,7 +336,11 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
 	end
 	icon.OpenMenuExtra = function( self, menu )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "1" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
+		end ):SetIcon( "icon16/brick_add.png" )
 	end
 	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
@@ -390,8 +398,9 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
-			RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" )
-			RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon )
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "2" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
 		end ):SetIcon( "icon16/brick_add.png" )
 
 		-- Quick access to spawning NPCs with a spcific weapon without the need to change gmod_npcweapon
@@ -485,7 +494,11 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	end
 
 	icon.OpenMenuExtra = function( self, menu )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "3" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
+		end ):SetIcon( "icon16/brick_add.png" )
 
 		if ( self:GetIsNPCWeapon() ) then
 			local opt = menu:AddOption( "#spawnmenu.menu.use_as_npc_gun", function() RunConsoleCommand( "gmod_npcweapon", self:GetSpawnName() ) end )
