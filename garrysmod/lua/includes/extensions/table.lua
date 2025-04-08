@@ -778,6 +778,25 @@ function table.Flip( tab )
 
 end
 
+function table.RemoveIf( t, funcname )
+
+	local j, n = 1, #t;
+
+	for i = 1, n do
+		if funcname( i, t[ i ] ) then
+			t[ i ] = nil
+		else
+			if ( i != j ) then
+				t[ j ] = t[ i ];
+				t[ i ] = nil;
+			end
+
+			j = j + 1;
+		end
+	end
+
+end
+
 -- Polyfill for table.move on 32-bit
 -- Don't forget to remove this when it's no longer necessary
 if ( !table.move ) then
