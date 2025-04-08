@@ -122,7 +122,7 @@ end
 
 function PANEL:OnMouseWheeled( dlta )
 
-	if ( !self:IsVisible() || self:GetBlockScrolling() ) then return false end
+	if ( !self:IsVisible() ) then return false end
 
 	-- We return true if the scrollbar changed.
 	-- If it didn't, we feed the mousehweeling to the parent panel
@@ -145,6 +145,7 @@ end
 function PANEL:SetScroll( scrll )
 
 	if ( !self.Enabled ) then self.Scroll = 0 return end
+	if ( !self:GetBlockScrolling() ) then return end
 
 	self.Scroll = math.Clamp( scrll, 0, self.CanvasSize )
 

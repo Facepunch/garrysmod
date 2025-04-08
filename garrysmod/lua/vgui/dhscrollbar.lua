@@ -79,7 +79,7 @@ end
 
 function PANEL:OnMouseWheeled( dlta )
 
-	if ( !self:IsVisible() || self:GetBlockScrolling() ) then return false end
+	if ( !self:IsVisible() ) then return false end
 
 	-- We return true if the scrollbar changed.
 	-- If it didn't, we feed the mousehweeling to the parent panel
@@ -89,6 +89,8 @@ function PANEL:OnMouseWheeled( dlta )
 end
 
 function PANEL:AddScroll( dlta )
+
+	if ( !self:GetBlockScrolling() ) then return end
 
 	local OldScroll = self:GetScroll()
 
