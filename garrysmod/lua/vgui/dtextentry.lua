@@ -417,10 +417,11 @@ derma.DefineControl( "DTextEntry", "A simple TextEntry control", PANEL, "TextEnt
 -----------------------------------------------------------]]
 function TextEntryLoseFocus( panel, mcode )
 
-	local pnl = vgui.GetKeyboardFocus()
-	if ( !pnl ) then return end
-	if ( pnl == panel ) then return end
-	if ( !pnl.m_bLoseFocusOnClickAway ) then return end
+	local textArea = vgui.GetKeyboardFocus()
+	if ( !textArea ) then return end
+	if ( textArea == panel ) then return end
+	if ( textArea:IsOurChild( panel ) ) then return end -- Do not lose focus when clicking panels parented to the text entry (Autocomplete DMenu)
+	if ( !textArea.m_bLoseFocusOnClickAway ) then return end
 
 	-- We gotta find the EdtiablePanel parent and call KillFocus on it
 	-- We do it from the panel clicked, not the KB focus, which is necessary for DTextEntry autocomplete to not break
