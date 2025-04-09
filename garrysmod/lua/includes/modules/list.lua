@@ -38,6 +38,12 @@ function Set( listid, key, value )
 
 end
 
+function Remove( listid, key )
+
+	GetForEdit( listid )[ key ] = nil
+	
+end
+
 function Add( listid, value )
 
 	return table.insert( GetForEdit( listid ), value )
