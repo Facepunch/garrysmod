@@ -74,6 +74,7 @@ end
 function ENT:SetPlayer( ply )
 
 	self.Founder = ply
+	self:SetCreator( ply )
 
 	if ( IsValid( ply ) ) then
 

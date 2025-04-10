@@ -42,12 +42,17 @@ function TOOL:LeftClick( trace )
 
 		-- Clientside can bail out now
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			self:ReleaseGhostEntity()
 
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			self:ReleaseGhostEntity()
+			return false
 		end
 
 		-- Get client's CVars
@@ -86,10 +91,12 @@ function TOOL:LeftClick( trace )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+				undo.SetPlayer( ply )
+				undo.SetCustomUndoText( "Undone #tool.axis.name" )
+			undo.Finish( "#tool.axis.name" )
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -125,12 +132,16 @@ function TOOL:RightClick( trace )
 	if ( iNum > 0 ) then
 
 		-- Clientside can bail out now
+		local ply = self:GetOwner()
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 
 			return true
+		end
 
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -161,10 +172,12 @@ function TOOL:RightClick( trace )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+				undo.SetPlayer( ply )
+				undo.SetCustomUndoText( "Undone #tool.axis.name" )
+			undo.Finish( "#tool.axis.name" )
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -208,13 +221,19 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.axis.help" } )
+	CPanel:Help( "#tool.axis.help" )
+	CPanel:ToolPresets( "axis", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "axis", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "axis_forcelimit", 0, 50000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "axis_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "axis_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "axis_hingefriction", Type = "Float", Min = 0, Max = 200, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide", Help = true } )
+	CPanel:NumSlider( "#tool.torquelimit", "axis_torquelimit", 0, 50000 )
+	CPanel:ControlHelp( "#tool.torquelimit.help" )
+
+	CPanel:NumSlider( "#tool.hingefriction", "axis_hingefriction", 0, 200 )
+	CPanel:ControlHelp( "#tool.hingefriction.help" )
+
+	CPanel:CheckBox( "#tool.nocollide", "axis_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide.help" )
 
 end

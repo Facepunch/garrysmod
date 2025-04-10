@@ -30,29 +30,29 @@ function PANEL:Think()
 end
 ]]
 
-function PANEL:Paint()
+function PANEL:Paint( wide, tall )
 
-	if ( !self.Material ) then return end
+	local matAddonIcon = self.Material
+	if ( !matAddonIcon ) then return end
 
-	local angle = 0
+	local size = self.Size
+	local sizeDouble = size * 2
 
 	DisableClipping( true )
 
+		wide = wide * 0.5
+		tall = tall * 0.5
+
 		surface.SetDrawColor( 255, 255, 255, 255 )
 		surface.SetMaterial( matWorkshopRocket )
-		surface.DrawTexturedRectRotated( self:GetWide() * 0.5, self:GetTall() * 0.5, self.Size * 2, self.Size * 2, angle )
+		surface.DrawTexturedRectRotated( wide, tall, sizeDouble, sizeDouble, 0 )
 
-		if ( self.Material ) then
-
-			surface.SetMaterial( self.Material )
-			surface.DrawTexturedRectRotated( self:GetWide() * 0.5, self:GetTall() * 0.5, self.Size, self.Size, angle )
-
-		end
+		surface.SetMaterial( matAddonIcon )
+		surface.DrawTexturedRectRotated( wide, tall, size, size, 0 )
 
 	DisableClipping( false )
 
 end
-
 
 function PANEL:Charging( id, iImageID )
 
@@ -66,11 +66,5 @@ function PANEL:Charging( id, iImageID )
 		self.Material = AddonMaterial( name )
 
 	end)
-
-end
-
-function PANEL:Blast()
-
-	self:Remove()
 
 end

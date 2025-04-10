@@ -528,6 +528,7 @@ end
 
 local OldHand = nil
 local OldEntity = nil
+local OldEntityValid = false
 
 --[[
 	Updates the selected entity with the values from the convars
@@ -541,12 +542,13 @@ function TOOL:Think()
 
 	if ( self.NextUpdate && self.NextUpdate > CurTime() ) then return end
 
-	if ( CLIENT && ( OldHand != hand || OldEntity != selected ) ) then
+	if ( CLIENT && ( OldHand != hand || OldEntity != selected || IsValid( selected ) != OldEntityValid ) ) then
 
 		OldHand = hand
 		OldEntity = selected
+		OldEntityValid = IsValid( selected )
 
-		self:RebuildControlPanel( hand )
+		self:RebuildControlPanel( self:HandEntity(), self:HandNum() )
 
 	end
 
@@ -565,27 +567,15 @@ for i = 0, VarsOnHand do
 	TOOL.ClientConVar[ "" .. i ] = "0 0"
 end
 
--- Rebuilds the context menu based on the current selected entity/hand
-function TOOL:RebuildControlPanel( hand )
-
-	-- We've selected a new entity - rebuild the controls list
-	local CPanel = controlpanel.Get( "finger" )
-	if ( !CPanel ) then return end
-
-	CPanel:ClearControls()
-	self.BuildCPanel( CPanel, self:HandEntity(), self:HandNum() )
-
-end
-
 local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel, ent, hand )
 
-	CPanel:AddControl( "Header", { Description = "#tool.finger.desc" } )
+	CPanel:Help( "#tool.finger.desc" )
 
 	if ( !IsValid( ent ) ) then return end
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "finger", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "finger", ConVarsDefault )
 
 	SetupFingers( ent )
 
@@ -594,9 +584,11 @@ function TOOL.BuildCPanel( CPanel, ent, hand )
 	-- Detect mitten hands
 	local NumVars = table.Count( ent.FingerIndex )
 
-	CPanel:AddControl( "fingerposer", { hand = hand, numvars = NumVars } )
+	local fingerPoser = vgui.Create( "fingerposer", CPanel )
+	fingerPoser:ControlValues( { hand = hand, numvars = NumVars } )
+	CPanel:AddPanel( fingerPoser )
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.finger.restrict_axis", Command = "finger_restrict" } )
+	CPanel:CheckBox( "#tool.finger.restrict_axis", "finger_restrict" )
 
 end
 

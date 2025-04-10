@@ -33,6 +33,7 @@
 # Don't add user config files
 /garrysmod/cfg/*
 garrysmod/settings/addonpresets.txt
+garrysmod/settings/permissions.bin
 
 # Don't add spawnlists
 /garrysmod/settings/spawnlist/*

@@ -5,8 +5,9 @@ DEFINE_BASECLASS( "base_edit" )
 ENT.Spawnable = true
 ENT.AdminOnly = true
 
-ENT.PrintName = "Sky Editor"
-ENT.Category = "Editors"
+ENT.PrintName = "#edit_sky"
+ENT.Category = "#spawnmenu.category.editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the sky."
 
 function ENT:Initialize()
 
@@ -94,7 +95,7 @@ hook.Add( "PlayerSpawnedSENT", "CopyOverEditSkySettings", function( ply, ent )
 	ent:SetStarTexture( skyPaint:GetStarTexture() )
 	ent:SetStarSpeed( skyPaint:GetStarSpeed() )
 	ent:SetStarFade( skyPaint:GetStarFade() )
-	ent:SetStarFade( skyPaint:GetStarFade() )
+	ent:SetStarScale( skyPaint:GetStarScale() )
 
 	ent:SetDuskIntensity( skyPaint:GetDuskIntensity() )
 	ent:SetDuskScale( skyPaint:GetDuskScale() )

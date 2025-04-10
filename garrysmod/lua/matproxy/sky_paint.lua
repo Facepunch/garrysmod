@@ -8,35 +8,32 @@ matproxy.Add( {
 	bind = function( self, mat, ent )
 
 		local skyPaint = g_SkyPaint
-		if ( !IsValid( skyPaint ) ) then return end
+		if ( not IsValid( skyPaint ) ) then return end
 
-		local values = skyPaint:GetNetworkVars()
+		mat:SetVector( "$TOPCOLOR",		skyPaint:GetDTVector( 0 ) )
+		mat:SetVector( "$BOTTOMCOLOR",	skyPaint:GetDTVector( 1 ) )
+		mat:SetVector( "$DUSKCOLOR",	skyPaint:GetDTVector( 4 ) )
+		mat:SetFloat( "$DUSKSCALE",		skyPaint:GetDTFloat( 2 ) )
+		mat:SetFloat( "$DUSKINTENSITY",	skyPaint:GetDTFloat( 3 ) )
+		mat:SetFloat( "$FADEBIAS",		skyPaint:GetDTFloat( 0 ) )
+		mat:SetFloat( "$HDRSCALE",		skyPaint:GetDTFloat( 1 ) )
 
-		mat:SetVector( "$TOPCOLOR",		values.TopColor )
-		mat:SetVector( "$BOTTOMCOLOR",	values.BottomColor )
-		mat:SetVector( "$DUSKCOLOR",	values.DuskColor )
-		mat:SetFloat( "$DUSKSCALE",		values.DuskScale )
-		mat:SetFloat( "$DUSKINTENSITY",	values.DuskIntensity )
-		mat:SetFloat( "$FADEBIAS",		values.FadeBias )
-		mat:SetFloat( "$HDRSCALE",		values.HDRScale )
+		mat:SetVector( "$SUNNORMAL",	skyPaint:GetDTVector( 2 ) )
+		mat:SetVector( "$SUNCOLOR",		skyPaint:GetDTVector( 3 ) )
+		mat:SetFloat( "$SUNSIZE",		skyPaint:GetDTFloat( 4 ) )
 
-		mat:SetVector( "$SUNNORMAL",	values.SunNormal )
-		mat:SetVector( "$SUNCOLOR",		values.SunColor )
-		mat:SetFloat( "$SUNSIZE",		values.SunSize )
-
-		if ( values.DrawStars ) then
-
-			mat:SetInt( "$STARLAYERS",		values.StarLayers )
-			mat:SetFloat( "$STARSCALE",		values.StarScale )
-			mat:SetFloat( "$STARFADE",		values.StarFade )
-			mat:SetFloat( "$STARPOS",		values.StarSpeed * RealTime() )
-			mat:SetTexture( "$STARTEXTURE",	values.StarTexture )
-
-		else
-
-			mat:SetInt( "$STARLAYERS", 0 )
-
+		if ( not skyPaint:GetDTBool( 0 ) ) then
+			return mat:SetInt( "$STARLAYERS", 0 )
 		end
+
+		mat:SetInt( "$STARLAYERS",		skyPaint:GetDTInt( 0 ) )
+
+		local star = skyPaint:GetDTAngle( 0 )
+		mat:SetFloat( "$STARSCALE",		star.p )
+		mat:SetFloat( "$STARFADE",		star.y )
+		mat:SetFloat( "$STARPOS",		star.r * RealTime() )
+
+		mat:SetTexture( "$STARTEXTURE",	skyPaint:GetDTString( 0 ) )
 
 	end
 } )

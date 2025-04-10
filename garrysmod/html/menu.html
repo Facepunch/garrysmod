@@ -13,15 +13,15 @@
 	<script type="text/javascript" src="js/lua.js"></script>
 
 	<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
-	<script type="text/javascript" src="js/thirdparty/jquery-color.js"></script>
 	<script type="text/javascript" src="js/thirdparty/angular.js"></script>
-	<script type="text/javascript" src="js/thirdparty/angular-ui.js"></script>
+	<script type="text/javascript" src="js/thirdparty/angular-route.js"></script>
 
 	<script type="text/javascript" src="js/menu/WorkshopFiles.js"></script>
 	<script type="text/javascript" src="js/menu/Subscriptions.js"></script>
-	<script type="text/javascript" src="js/menu/menuApp.js?2"></script>
-	<script type="text/javascript" src="js/menu/control.Menu.js?2"></script>
-	<script type="text/javascript" src="js/menu/control.Main.js?2"></script>
+	<script type="text/javascript" src="js/menu/menuApp.js"></script>
+	<script type="text/javascript" src="js/menu/common.js"></script>
+	<script type="text/javascript" src="js/menu/control.Menu.js"></script>
+	<script type="text/javascript" src="js/menu/control.Main.js"></script>
 	<script type="text/javascript" src="js/menu/control.NewGame.js"></script>
 	<script type="text/javascript" src="js/menu/control.Servers.js"></script>
 	<script type="text/javascript" src="js/menu/control.Addons.js"></script>
@@ -49,7 +49,7 @@
 
 	<div class="left" ng-show="ShowBack">
 
-		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png'><span ng-Tranny="'back_to_main_menu'" ></span></a>
+		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png' loading="lazy"><span ng-Tranny="'back_to_main_menu'" ></span></a>
 
 	</div>
 
@@ -57,7 +57,7 @@
 		<li class="bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
 		<li class="smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></li>
 		<li class="smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Tranny="'games'"></span></li>
-		<li class="smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png'><span></span></li>
+		<li class="smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png' loading="lazy"><span></span></li>
 		<li class="smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/error.png'>
 			<span ng-Tranny="'problems'"></span>
 			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSeverity > 0, 'severity' + ProblemSeverity, '' )}}">{{ProblemCount}}</number>
@@ -67,10 +67,10 @@
 	<ul class="center" ng-show="InGame">
 
 		<span ng-show="ShowFavButton">
-			<li class="bigicon hidelabel" ng-hide="IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png'><span ng-Tranny="'favorite_this_server'"></span></a></li>
-			<li class="bigicon hidelabel" ng-show="IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png'><span ng-Tranny="'unfavorite_this_server'"></span></a></li>
+			<li class="bigicon hidelabel" ng-hide="IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Tranny="'favorite_this_server'"></span></a></li>
+			<li class="bigicon hidelabel" ng-show="IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Tranny="'unfavorite_this_server'"></span></a></li>
 		</span>
-		<li class="bigicon" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png'><span ng-Tranny="'back_to_game'"></span></a></li>
+		<li class="bigicon" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span ng-Tranny="'back_to_game'"></span></a></li>
 		<!--
 		<li ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></li>
 		-->
@@ -81,28 +81,27 @@
 
 <ul class="gamemode_list popup">
 	<li ng-repeat="gm in Gamemodes|filter:{menusystem:true}|orderBy:'name'" ng-click="SelectGamemode( gm )">
-		<img ng-src='../gamemodes/{{gm.name}}/icon24.png'><span>{{gm.title}}</span>
+		<img ng-src='../gamemodes/{{gm.name}}/icon24.png' loading="lazy"><span>{{gm.title}}</span>
 	</li>
-
 </ul>
 
 <ul class="language_list popup">
-	<li  ng-repeat="lang in Languages" ng-click="SelectLanguage( lang )">
-		<img ng-src='../resource/localization/{{lang}}.png'>
+	<li ng-repeat="lang in Languages" ng-click="SelectLanguage( lang )">
+		<img ng-src='../resource/localization/{{lang}}.png' loading="lazy">
 	</li>
 </ul>
 
 <ul class="games_list popup">
 
-	<li class="notowned"><img src='img/notowned.png' width="16" height="16"> <span ng-Tranny="'game_not_owned'"></span></li>
-	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16"> <span ng-Tranny="'game_not_installed'"></span></li>
+	<li class="notowned"><img src='img/notowned.png' width="16" height="16" loading="lazy"> <span ng-Tranny="'game_not_owned'"></span></li>
+	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16" loading="lazy"> <span ng-Tranny="'game_not_installed'"></span></li>
 	<hr/>
 	<li ng-repeat="game in Games|orderBy:'title'" class="{{IfElse( !game.owned, 'notowned', '' )}} {{IfElse( !game.installed, 'notinstalled', '' )}}">
 		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/>
-		<img src='img/notowned.png' ng-show="!game.owned" width="16" height="16">
-		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width="16" height="16">
-
-		<span>{{game.title}}</span>
+		<img src='img/notowned.png' ng-show="!game.owned" width="16" height="16" loading="lazy">
+		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width="16" height="16" loading="lazy">
+		<img ng-src='../materials/games/16/{{game.folder}}.png' style="margin-left: 20px;" loading="lazy">
+		<span style="margin-left: 16px;">{{game.title}}</span>
 	</li>
 
 </ul>

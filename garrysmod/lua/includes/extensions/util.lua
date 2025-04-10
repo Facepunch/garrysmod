@@ -114,9 +114,9 @@ function util.StringToType( str, typename )
 
 	if ( typename == "vector" )	then return Vector( str ) end
 	if ( typename == "angle" )	then return Angle( str ) end
-	if ( typename == "float" )	then return tonumber( str ) end
-	if ( typename == "int" )	then return math.Round( tonumber( str ) ) end
-	if ( typename == "bool" )	then return tobool( str ) end
+	if ( typename == "float" || typename == "number" )	then return tonumber( str ) end
+	if ( typename == "int" )	then local v = tonumber( str ) return v and math.Round( v ) or nil end
+	if ( typename == "bool" || typename == "boolean" )	then return tobool( str ) end
 	if ( typename == "string" )	then return tostring( str ) end
 	if ( typename == "entity" )	then return Entity( str ) end
 
@@ -177,6 +177,7 @@ local T =
 	--
 	Reset = function( self )
 
+		self.starttime = CurTime() - self.starttime
 		self.endtime = nil
 
 	end,
@@ -186,7 +187,8 @@ local T =
 	--
 	Start = function( self, time )
 
-		self.endtime = CurTime() + time
+		self.starttime = CurTime()
+		self.endtime = CurTime() + ( time or 0 )
 
 	end,
 
@@ -206,6 +208,15 @@ local T =
 
 		return self.endtime == nil or self.endtime <= CurTime()
 
+	end,
+
+	--
+	-- Returns the amount of time that has passed since the Timer was started
+	--
+	GetElaspedTime = function( self )
+
+		return self:Started() and CurTime() - self.starttime or self.starttime
+
 	end
 }
 
@@ -216,15 +227,12 @@ T.__index = T
 --
 function util.Timer( startdelay )
 
-	startdelay = startdelay or 0
-
 	local t = {}
 	setmetatable( t, T )
-	t.endtime = CurTime() + startdelay
+	t:Start( startdelay or 0 )
 	return t
 
 end
-
 
 local function PopStack( self, num )
 
@@ -392,9 +400,9 @@ local suffix = ( { "osx64", "osx", "linux64", "linux", "win64", "win32" } )[
 local fmt = "lua/bin/gm" .. ( ( CLIENT and !MENU_DLL ) and "cl" or "sv" ) .. "_%s_%s.dll"
 function util.IsBinaryModuleInstalled( name )
 	if ( !isstring( name ) ) then
-		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")" )
+		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")", 2 )
 	elseif ( #name == 0 ) then
-		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)" )
+		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)", 2 )
 	end
 
 	if ( file.Exists( string.format( fmt, name, suffix ), "MOD" ) ) then

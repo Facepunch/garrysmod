@@ -81,6 +81,13 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.SelectServer = function( server, event )
 	{
+		if ( server == null )
+		{
+			RootScope.CurrentGamemode.Selected = null;
+			clearInterval( UpdateInterval );
+			return;
+		}
+		
 		if ( event && event.which != 1 )
 		{
 			var txt = server.address;
@@ -166,14 +173,14 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !gm ) return "Unknown Gamemode";
 
 		if ( gm.info && gm.info.title )
-			return gm.info.title.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF]/g, "" );;
+			return gm.info.title.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
 
-		return gm.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF]/g, "" );;
+		return gm.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
 	}
 
 	$scope.ServerName = function( server )
 	{
-		return server.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF]/g, "" );
+		return server.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
 	}
 
 	$scope.JoinServer = function( srv )
@@ -193,6 +200,20 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		$scope.DoStopRefresh();
 	}
 	$rootScope.JoinServer = $scope.JoinServer;
+	
+	$scope.PasswordInput = function( e, srv )
+	{
+		if ( e.keyCode == 13 )
+			$scope.JoinServer( srv )
+	}
+	$rootScope.PasswordInput = $scope.PasswordInput;
+
+	$scope.PasswordInput = function( e, srv )
+	{
+		if ( e.keyCode == 13 )
+			$scope.JoinServer( srv )
+	}
+	$rootScope.PasswordInput = $scope.PasswordInput;
 
 	$scope.SwitchType = function( type )
 	{
@@ -388,7 +409,7 @@ function CalculateRank( server )
 	var recommended = server.ping;
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
-	if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
+	//if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
 	if ( server.pass ) recommended += 300; // Password protected, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
 
@@ -495,7 +516,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		maxplayers:		parseInt( maxplayers ) - parseInt( botplayers ),
 		botplayers:		parseInt( botplayers ),
 		pass:			pass == "1",
-		lastplayed:		parseInt( lastplayed ),
+		lastplayed:		parseInt( lastplayed ) * 1000, // Steam gives us time in seconds
 		address:		address,
 		flag: 			loc.toLowerCase(),
 		category: 		gmcat || "",
@@ -514,6 +535,14 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
 	data.hasmap = DoWeHaveMap( data.map );
+	
+	if ( !IN_ENGINE && ( Math.random() < 0.5 ) ) data.lastplayed = Date.now() - Math.random() * 1000000000;
+
+	// Generate a user-friendly date that is also as short as possible
+	var actualDate = new Date( data.lastplayed );
+	var pad = function( num ) { return  ( "0" + num ).slice( -2 ); }
+	data.lastplayedDate = pad( actualDate.getDate() ) + "." + pad( actualDate.getMonth() + 1 ) + "." + actualDate.getFullYear();
+	data.lastplayedTime = pad( actualDate.getHours() ) + ":" + pad( actualDate.getMinutes() ); // + ":" + pad( actualDate.getSeconds() );
 
 	data.recommended = CalculateRank( data );
 
@@ -559,8 +588,10 @@ function MissingFlag( element )
 	return true;
 }
 
-function ReverseFilter( cat, me )
+function ReverseFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	RootScope.GMCats.forEach( function( category )
 	{
 		RootScope.GMFilterTags[ category ] = true;
@@ -575,8 +606,10 @@ function ReverseFilter( cat, me )
 	UpdateDigest( RootScope, 50 );
 }
 
-function SwitchFilter( cat, me )
+function SwitchFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	if ( me.checked )
 	{
 		RootScope.GMFilterTags[ cat ] = true;

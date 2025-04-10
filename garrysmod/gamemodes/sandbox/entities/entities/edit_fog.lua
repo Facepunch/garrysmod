@@ -5,8 +5,9 @@ DEFINE_BASECLASS( "base_edit" )
 ENT.Spawnable = true
 ENT.AdminOnly = true
 
-ENT.PrintName = "Fog Editor"
-ENT.Category = "Editors"
+ENT.PrintName = "#edit_fog"
+ENT.Category = "#spawnmenu.category.editors"
+ENT.Information = "Right click on this entity via the context menu (hold C by default) and select 'Edit Properties' to edit the fog."
 
 function ENT:Initialize()
 

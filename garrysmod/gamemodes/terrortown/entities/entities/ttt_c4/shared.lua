@@ -249,7 +249,7 @@ function ENT:Explode(tr)
       util.Effect("Explosion", effect, true, true)
       util.Effect("HelicopterMegaBomb", effect, true, true)
 
-      timer.Simple(0.1, function() sound.Play(c4boom, pos, 100, 100) end)
+      self:BroadcastSound(c4boom, 100)
 
       -- extra push
       local phexp = ents.Create("env_physexplosion")
@@ -351,7 +351,7 @@ function ENT:Think()
       end
 
       if SERVER then
-         sound.Play(beep, self:GetPos(), amp, 100)
+         self:BroadcastSound(beep, amp)
       end
 
       local btime = (etime - CurTime()) / 30
@@ -360,7 +360,7 @@ function ENT:Think()
 end
 
 function ENT:Defusable()
-	return self:GetArmed()
+   return self:GetArmed()
 end
 
 -- Timer configuration handlign

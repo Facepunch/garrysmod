@@ -123,7 +123,7 @@ function SWEP:DrawHUD()
 		if ( v.stage && v.stage != self:GetStage() ) then continue end
 		if ( v.op && v.op != toolObject:GetOperation() ) then continue end
 
-		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. name
+		local txt = "#tool." .. mode .. "." .. name
 		if ( name == "info" ) then txt = toolObject:GetHelpText() end
 
 		TextTable.text = txt

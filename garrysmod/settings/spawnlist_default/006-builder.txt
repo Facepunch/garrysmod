@@ -94,11 +94,15 @@
 		{
 			"type"		"model"
 			"model"		"models/props_phx/huge/evildisc_corp.mdl"
+			"wide"		"128"
+			"tall"		"256"
 		}
 		"19"
 		{
 			"type"		"model"
 			"model"		"models/props_phx/huge/tower.mdl"
+			"wide"		"128"
+			"tall"		"256"
 		}
 		"20"
 		{
@@ -139,16 +143,19 @@
 		{
 			"type"		"model"
 			"model"		"models/props_phx/misc/t_light_single_a.mdl"
+			"tall"		"128"
 		}
 		"28"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/misc/t_light_x.mdl"
+			"model"		"models/props_phx/misc/t_light_single_b.mdl"
+			"tall"		"128"
 		}
 		"29"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/misc/t_light_single_b.mdl"
+			"model"		"models/props_phx/misc/t_light_x.mdl"
+			"tall"		"128"
 		}
 		"30"
 		{

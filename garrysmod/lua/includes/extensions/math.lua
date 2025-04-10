@@ -71,149 +71,115 @@ math.Min = math.min
 			to Lua by me :p
 	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters should be between 0 and 1
 -----------------------------------------------------------]]
-function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
+function math.EaseInOut( frac, easeIn, easeOut )
+	if ( frac == 0 or frac == 1 ) then return frac end
 
-	if ( fEaseIn == nil ) then fEaseIn = 0 end
-	if ( fEaseOut == nil ) then fEaseOut = 1 end
+	if ( easeIn == nil ) then easeIn = 0 end
+	if ( easeOut == nil ) then easeOut = 1 end
 
-	if ( fProgress == 0 or fProgress == 1 ) then return fProgress end
+	local fSumEase = easeIn + easeOut
 
-	local fSumEase = fEaseIn + fEaseOut
-
-	if ( fSumEase == 0 ) then return fProgress end
+	if ( fSumEase == 0 ) then return frac end
 	if ( fSumEase > 1 ) then
-		fEaseIn = fEaseIn / fSumEase
-		fEaseOut = fEaseOut / fSumEase
+		easeIn = easeIn / fSumEase
+		easeOut = easeOut / fSumEase
 	end
 
-	local fProgressCalc = 1 / ( 2 - fEaseIn - fEaseOut )
+	local fProgressCalc = 1 / ( 2 - easeIn - easeOut )
 
-	if ( fProgress < fEaseIn ) then
-		return ( ( fProgressCalc / fEaseIn ) * fProgress * fProgress )
-	elseif ( fProgress < 1 - fEaseOut ) then
-		return ( fProgressCalc * ( 2 * fProgress - fEaseIn ) )
+	if ( frac < easeIn ) then
+		return ( ( fProgressCalc / easeIn ) * frac * frac )
+	elseif ( frac < 1 - easeOut ) then
+		return ( fProgressCalc * ( 2 * frac - easeIn ) )
 	else
-		fProgress = 1 - fProgress
-		return ( 1 - ( fProgressCalc / fEaseOut ) * fProgress * fProgress )
+		frac = 1 - frac
+		return ( 1 - ( fProgressCalc / easeOut ) * frac * frac )
 	end
 end
 
+function math.calcBSplineN( i, k, t, tInc )
+	local knot = ( i - 3 ) * tInc
 
-local function KNOT( i, tinc ) return ( i - 3 ) * tinc end
-
-function math.calcBSplineN( i, k, t, tinc )
-
-	if ( k == 1 ) then
-
-		if ( ( KNOT( i, tinc ) <= t ) and ( t < KNOT( i + 1, tinc ) ) ) then
-
+	if ( k <= 1 ) then
+		if ( knot <= t && t < knot + tInc ) then
 			return 1
-
-		else
-
-			return 0
-
 		end
 
-	else
-
-		local ft = ( t - KNOT( i, tinc ) ) * math.calcBSplineN( i, k - 1, t, tinc )
-		local fb = KNOT( i + k - 1, tinc ) - KNOT( i, tinc )
-
-		local st = ( KNOT( i + k, tinc ) - t ) * math.calcBSplineN( i + 1, k - 1, t, tinc )
-		local sb = KNOT( i + k, tinc ) - KNOT( i + 1, tinc )
-
-		local first = 0
-		local second = 0
-
-		if ( fb > 0 ) then
-
-			first = ft / fb
-
-		end
-		if ( sb > 0 ) then
-
-			second = st / sb
-
-		end
-
-		return first + second
-
+		return 0
 	end
 
+	local count = i + k - 4
+	local len = count * tInc
+	local knots = len - knot
+
+	local nknot = k - 1
+	local ret = 0
+
+	if ( knots > 0 ) then
+		ret = ( t - knot ) * math.calcBSplineN( i, nknot, t, tInc ) / knots
+	end
+
+	local sb = nknot * tInc
+
+	if ( sb > 0 ) then
+		ret = ret + ( len + tInc - t ) * math.calcBSplineN( i + 1, nknot, t, tInc ) / sb
+	end
+
+	return ret
 end
 
-function math.BSplinePoint( tDiff, tPoints, tMax )
+function math.BSplinePoint( frac, points, frac_max )
+	local len = #points
+	local tInc = frac_max / ( len - 3 )
+	frac = frac + tInc
 
-	local Q = Vector( 0, 0, 0 )
-	local tinc = tMax / ( #tPoints - 3 )
-
-	tDiff = tDiff + tinc
-
-	for idx, pt in pairs( tPoints ) do
-
-		local n = math.calcBSplineN( idx, 4, tDiff, tinc )
-		Q = Q + ( n * pt )
-
+	local ret = Vector()
+	for i = 1, len do
+		ret:Add( math.calcBSplineN( i, 4, frac, tInc ) * points[ i ] )
 	end
 
-	return Q
-
+	return ret
 end
 
 --[[---------------------------------------------------------
 	Cubic hermite spline
-	p0, p1 - points; m0, m1 - tangets; t - fraction along the curve (0-1)
+	p0, p1 - points; m0, m1 - tangets; frac - fraction along the curve (0-1)
 -----------------------------------------------------------]]
-function math.CHSpline( t, p0, m0, p1, m1 )
+function math.CHSpline( frac, p0, m0, p1, m1 )
+	if ( frac >= 1 ) then return p1 end
+	if ( frac <= 0 ) then return p0 end
 
-	if ( t >= 1 ) then return p1 end
-	if ( t <= 0 ) then return p0 end
-
-	local t2 = t * t
-	local t3 = t * t2
+	local t2 = frac * frac
+	local t3 = frac * t2
 
 	return p0 * ( 2 * t3 - 3 * t2 + 1 ) +
-		m0 * ( t3 - 2 * t2 + t ) +
+		m0 * ( t3 - 2 * t2 + frac ) +
 		p1 * ( -2 * t3 + 3 * t2 ) +
 		m1 * ( t3 - t2 )
-
 end
 
 -- Round to the nearest integer
 function math.Round( num, idp )
-
 	local mult = 10 ^ ( idp or 0 )
 	return math.floor( num * mult + 0.5 ) / mult
-
 end
 
 -- Rounds towards zero
 function math.Truncate( num, idp )
-
 	local mult = 10 ^ ( idp or 0 )
-	local FloorOrCeil = num < 0 and math.ceil or math.floor
-
-	return FloorOrCeil( num * mult ) / mult
-
+	return ( num < 0 and math.ceil or math.floor )( num * mult ) / mult
 end
 
 function math.Approach( cur, target, inc )
-
-	inc = math.abs( inc )
-
 	if ( cur < target ) then
+		return math.min( cur + math.abs( inc ), target )
+	end
 
-		return math.min( cur + inc, target )
-
-	elseif ( cur > target ) then
-
-		return math.max( cur - inc, target )
-
+	if ( cur > target ) then
+		return math.max( cur - math.abs( inc ), target )
 	end
 
 	return target
-
 end
 
 function math.NormalizeAngle( a )
@@ -221,7 +187,6 @@ function math.NormalizeAngle( a )
 end
 
 function math.AngleDifference( a, b )
-
 	local diff = math.NormalizeAngle( a - b )
 
 	if ( diff < 180 ) then
@@ -229,15 +194,10 @@ function math.AngleDifference( a, b )
 	end
 
 	return diff - 360
-
 end
 
 function math.ApproachAngle( cur, target, inc )
-
-	local diff = math.AngleDifference( target, cur )
-
-	return math.Approach( cur, cur + diff, inc )
-
+	return math.Approach( cur, cur + math.AngleDifference( target, cur ), inc )
 end
 
 function math.TimeFraction( Start, End, Current )
@@ -282,7 +242,6 @@ end
 	Desc: Calculate the factorial value of num
 -----------------------------------------------------------]]
 function math.Factorial( num )
-
 	if ( num < 0 ) then
 		return nil
 	elseif ( num < 2 ) then
@@ -290,11 +249,21 @@ function math.Factorial( num )
 	end
 
 	local res = 1
-
 	for i = 2, num do
 		res = res * i
 	end
 
 	return res
+end
 
+--[[---------------------------------------------------------
+	Name: IsNearlyEqual( a, b, tolerance )
+	Desc: Checks if two floating point numbers are nearly equal
+-----------------------------------------------------------]]
+function math.IsNearlyEqual( a, b, tolerance )
+	if ( tolerance == nil ) then
+		tolerance = 1e-8
+	end
+
+	return math.abs( a - b ) <= tolerance
 end

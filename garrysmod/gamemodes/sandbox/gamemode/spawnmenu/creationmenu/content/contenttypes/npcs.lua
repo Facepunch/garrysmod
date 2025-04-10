@@ -8,7 +8,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 	local Categories = {}
 	for k, v in pairs( NPCList ) do
 
-		local Category = v.Category or "Other"
+		local Category = language.GetPhrase( v.Category or "#spawnmenu.category.other" )
 		if ( !isstring( Category ) ) then Category = tostring( Category ) end
 
 		local Tab = Categories[ Category ] or {}
@@ -143,6 +143,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 
 	local sidebar = ctrl.ContentNavBar
 	sidebar.Options = vgui.Create( "SpawnmenuNPCSidebarToolbox", sidebar )
+	sidebar.Options:Dock( BOTTOM )
 
 	return ctrl
 

@@ -93,6 +93,16 @@ function PANEL:DoRightClick()
 
 end
 
+function PANEL:UpdateColours( skin )
+
+	if ( self:GetHighlight() ) then return self:SetTextStyleColor( skin.Colours.Label.Highlight ) end
+	if ( self:GetBright() ) then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
+	if ( self:GetDark() ) then return self:SetTextStyleColor( skin.Colours.Label.Dark ) end
+
+	return self:SetTextStyleColor( skin.Colours.Label.Default )
+
+end
+
 function PANEL:OpenMenu()
 
 	-- Do not allow removal from read only panels

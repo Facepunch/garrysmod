@@ -1,0 +1,566 @@
+"TableToKeyValues"
+{
+	"parentid"		"16"
+	"icon"		"games/16/episodic.png"
+	"id"		"25"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Props"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/door03_left.mdl"
+			"body"		"B030000000"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/door03_left.mdl"
+			"skin"		"1"
+			"body"		"B020000000"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_bed01.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_surgerytable01.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_cart01.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_ivstand01.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_shelf01.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_surgerylight01.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/powerbox.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/slidinggate001.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/mobileprojector.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/flare.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/extras/crank.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/extras/widget.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_debris/metal_panel01a_breakable.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_railing_160_01.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_railing_256_01.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_railing_32_01.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/hospital_railing_64_01.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/metalladder004.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/metalladder005.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/scrapyarddumpster_static.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/undergroundelevator.mdl"
+		}
+		"25"
+		{
+			"type"		"header"
+			"text"		"Combine"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcard001b.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadeldestroyed001.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/advisorpod_docked.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/advisorpod.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_ballsocket.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_bridge_b01.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelwall_destroyed01.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelwall_destroyed02.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelwall_destroyed03.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_core_arm01.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_core_platform01.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_core_ring01.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_core_tube01.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_debris128pile001a.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_debris256barricade001a.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_ceiling01a_shard01.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_ceiling01a_shard02.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_ceiling02a_shard01.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_ceiling01a_shard03.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_cover01a.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_cover02a.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_cover03a.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_floor01a.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_destroyedpipes01.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_floor02a.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_ceiling02a.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_ceiling01a.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_wall01a.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_wall02a.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_shard01a.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_shard01b.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_shard02a.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_shard02b.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_shard03a.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_wall01a_shard01.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_wall01a_shard02.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_wall02a_shard01.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_explosivepanel_wall02a_shard02.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_hatch01.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/coreball.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/corecontrol_set001.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/corecontrolmonitor.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stalkercar.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/crashedgunship.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/combine_dropship_container_static.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/ep1_combine_wall.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combinewallcrushed.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stalkerpod_physanim.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/soldier_bed.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stalkerpod_lid.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stalkerpod.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stalkerpod_legs.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stalkerpod_nolid.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stalkerpod_torso.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/zombie/zombie_soldier.mdl"
+			"body"		"B010000000"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/zombie/zombie_soldier_legs.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/zombie/zombie_soldier_torso.mdl"
+		}
+		"83"
+		{
+			"type"		"header"
+			"text"		"Foliage"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_01.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_02.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_03.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_01.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_02.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_02_skybox.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_cluster_01.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_tall_01.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_tall_02.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_tall_cluster_01.mdl"
+		}
+		"94"
+		{
+			"type"		"header"
+			"text"		"Vehicles"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_outro_car01.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_outro_porch01.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_outro_porch02.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_outro_porch03.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/vehicles/vehicle_van.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/vehicles/vehicle_vandoor.mdl"
+		}
+		"101"
+		{
+			"type"		"header"
+			"text"		"Effects"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/effects/intro_vortshield.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelburst.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelbeacon.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_lightning001b.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloudlight001a.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelsplode001a.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadeltwirl.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloud001a.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloud002a.mdl"
+		}
+	}
+	"needsapp"		"episodic"
+	"name"		"Episode 1"
+	"version"		"3"
+}

@@ -396,6 +396,18 @@ function GetPlayerClass( ply )
 
 end
 
+function GetPlayerClassTable( ply )
+
+	local id = ply:GetClassID()
+	if ( id == 0 ) then return end
+
+	local ct = Type[ util.NetworkIDToString( id ) ]
+	if ( !ct ) then return end
+
+	return table.Copy( ct )
+
+end
+
 function ClearPlayerClass( ply )
 
 	ply:SetClassID( 0 )

@@ -10,7 +10,7 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 
 		for k, v in pairs( PostProcess ) do
 
-			local Category = v.category or "Other"
+			local Category = language.GetPhrase( v.category or "#spawnmenu.category.other" )
 			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 

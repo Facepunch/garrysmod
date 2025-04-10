@@ -1,6 +1,6 @@
 ---- Turkish language strings
 
-local L = LANG.CreateLanguage("Turkish")
+local L = LANG.CreateLanguage("Türkçe")
 
 -- General text used in various places
 L.traitor    = "Hain"
@@ -27,7 +27,7 @@ L.win_traitor      = "Hainler kazandı!"
 L.win_innocent     = "Hainler yenildi!"
 L.win_showreport = "{num} saniye boyunca raunt raporuna bakalım."
 
-L.limit_round      = "Raunt limitine ulaşıldı. {mapname} yakında yüklenecek."
+L.limit_round      = "Raunt sınırına ulaşıldı. {mapname} yakında yüklenecek."
 L.limit_time       = "Süre sınırına ulaşıldı. {mapname} yakında yüklenecek."
 L.limit_left = "Harita değişmeden önce {num} raunt veya {time} dakika kaldı."
 
@@ -150,18 +150,18 @@ L.quick_yes = "Evet."
 L.quick_no = "Hayır."
 L.quick_help = "Yardım edin!"
 L.quick_imwith = "{player} ile birlikteyim."
-L.quick_see = "{player} adlı oyuncuyu görüyorum."
+L.quick_see = "{player} oyuncusunu görüyorum."
 L.quick_suspect = "{player} şüpheli davranıyor."
-L.quick_traitor = "{player} bir Hain!"
+L.quick_traitor = "{player} Hain!"
 L.quick_inno = "{player} masum."
 L.quick_check = "Kimse hayatta mı?"
 
 -- {player} in the quickchat text normally becomes a player nickname, but can
 -- also be one of the below.  Keep these lowercase.
 L.quick_nobody = "hiç kimse"
-L.quick_disg = "kılık değiştirmiş biri var"
-L.quick_corpse = "kimliği belirsiz bir ceset var"
-L.quick_corpse_id = "{player} oyuncusunun cesedi"
+L.quick_disg = "kılık değiştirmiş"
+L.quick_corpse = "kimliği belirsiz bir ceset"
+L.quick_corpse_id = "{player} adlı ceset"
 
 
 -- Body search window
@@ -206,14 +206,14 @@ L.search_eyes = "Dedektiflik becerilerini kullanarak, {player} adlı oyuncuyu g�
 
 
 -- Scoreboard
-L.sb_playing = "Şu anda oynuyorsunuz..."
+L.sb_playing = "Şu anda şunu oynuyorsunuz..."
 L.sb_mapchange = "{num} rauntta veya {time} içinde harita değişecektir."
 
-L.sb_mia = "Eylem Eksik"
+L.sb_mia = "Çatışmada Kayıp"
 L.sb_confirmed = "Onaylanmış Ölü"
 
 L.sb_ping = "Gecikme"
-L.sb_deaths = "Ölümler"
+L.sb_deaths = "Ölüm"
 L.sb_score = "Puan"
 L.sb_karma = "Karma"
 
@@ -244,17 +244,17 @@ L.set_tips      = "İzlerken ekranın alt kısmında oyun ipuçlarını göster"
 L.set_startpopup = "Raunt başlangıç bilgisi açılır pencere süresi"
 L.set_startpopup_tip = "Raunt başladığında, ekranınızın altında birkaç saniye boyunca küçük bir açılır pencere görünür. Burada görüntülenen süreyi değiştirin."
 
-L.set_cross_opacity   = "Gez ve arpacık nişangah opaklığı"
-L.set_cross_disable   = "Nişangahı tamamen devre dışı bırak"
-L.set_minimal_id      = "Nişangah altında Minimalist Hedef Kimliği (karma metin, ipucu vb.)"
+L.set_cross_opacity   = "Gez ve arpacık nişangâh opaklığı"
+L.set_cross_disable   = "Nişangâhı tamamen devre dışı bırak"
+L.set_minimal_id      = "Nişangâh altında Minimalist Hedef Kimliği (karma metin, ipucu vb.)"
 L.set_healthlabel     = "Sağlık durumunu sağlık çubuğunda göster"
 L.set_lowsights       = "Gez ve arpacık kullanırken silahı indir"
 L.set_lowsights_tip   = "Gez ve arpacık kullanırken silah modelini ekranda daha aşağı konumlandırmayı etkinleştir. Bu, hedefinizi görmeyi kolaylaştıracak, ancak daha az gerçekçi görünecektir."
-L.set_fastsw          = "Hızlı silah değişme"
+L.set_fastsw          = "Hızlı silah değiştirme"
 L.set_fastsw_tip      = "Silahı kullanmak için tekrar tıklamak zorunda kalmadan silahları dolaştırmayı etkinleştir. Değiştirici menüsünü göstermek için menüyü göster seçeneğini etkinleştirin."
-L.set_fastsw_menu     = "Hızlı silah değişme ile menüyü etkinleştir"
-L.set_fastswmenu_tip  = "Hızlı silah değişme etkinleştirildiğinde, menü değiştirici menüsü açılır."
-L.set_wswitch         = "Silah değişme menüsünü otomatik kapatmayı devre dışı bırak"
+L.set_fastsw_menu     = "Hızlı silah değiştirme ile menüyü etkinleştir"
+L.set_fastswmenu_tip  = "Hızlı silah değiştirme etkinleştirildiğinde, menü değiştirici menüsü açılır."
+L.set_wswitch         = "Silah değiştirme menüsünü otomatik kapatmayı devre dışı bırak"
 L.set_wswitch_tip     = "Varsayılan olarak silah değiştirici, son kaydırmadan birkaç saniye sonra otomatik olarak kapanır. Açık kalması için bunu etkinleştirin."
 L.set_cues            = "Bir raunt başladığında veya bittiğinde ses işaretini çal"
 L.set_msg_cue         = "Bir bildirim göründüğünde ses işaretini çal"
@@ -379,7 +379,7 @@ Sınırsız kullanım. Bunu taşırsanız
 C4'ü fark etmeniz daha kolay olacak.]]
 
 -- Flare gun
-L.flare_name = "İşaret fişeği tabancası"
+L.flare_name = "İşaret Fişeği Tabancası"
 L.flare_desc = [[
 Cesetleri yakmak için kullanılabilir, böylece 
 asla bulunmazlar. Sınırlı cephane. 
@@ -389,7 +389,7 @@ Bir cesedi yakmak belirgin bir ses çıkarır
 
 -- Health station
 L.hstation_name = "Sağlık İstasyonu"
-L.hstation_hint   = "Sağlık almak için {usekey} tuşuna bas. Şarj: {num}."
+L.hstation_hint   = "Sağlık almak için {usekey} tuşunu basılı tutun. Şarj: {num}."
 L.hstation_broken = "Sağlık İstasyonun yok edildi!"
 L.hstation_help = "{primaryfire} Sağlık İstasyonunu yerleştirir."
 
@@ -402,7 +402,7 @@ hasar verilebilir. Kullanıcılarının DNA
 
 -- Knife
 L.knife_name = "Bıçak"
-L.knife_thrown = "Fırlatılan bıçak"
+L.knife_thrown = "Fırlatılan Bıçak"
 
 L.knife_desc = [[
 Yaralı hedefleri anında sessiz bir şekilde öldürür
@@ -436,7 +436,7 @@ Düşük gürültülü tabanca, normal tabanca mermisi kullanır.
 Kurbanlar öldürüldüklerinde çığlık atmazlar.]]
 
 -- Newton launcher
-L.newton_name = "Newton fırlatıcı"
+L.newton_name = "Newton Fırlatıcı"
 
 L.newton_desc = [[
 İnsanları güvenli bir mesafeden itin. 
@@ -460,7 +460,7 @@ L.ump_desc = [[
 Hedeflerin kafasını karıştıran deneysel 
 SMG. 
 
-Standart SMG cephanesi kullanır.]]
+Standart HMS cephanesi kullanır.]]
 
 -- DNA scanner
 L.dna_name = "DNA tarayıcı"
@@ -511,7 +511,7 @@ L.unarmed_name = "Gizlendi"
 L.crowbar_name = "Levye"
 L.pistol_name = "Tabanca"
 L.rifle_name = "Tüfek"
-L.shotgun_name = "Pompalı tüfek"
+L.shotgun_name = "Pompalı Tüfek"
 
 -- Teleporter
 L.tele_name = "Işınlayıcı"
@@ -537,11 +537,11 @@ kullanım sayısı sınırlıdır.]]
 -- Ammo names, shown when picked up
 L.ammo_pistol = "9mm cephanesi"
 
-L.ammo_smg1 = "SMG cephanesi"
-L.ammo_buckshot = "Pompalı tüfek cephanesi"
+L.ammo_smg1 = "HMS cephanesi"
+L.ammo_buckshot = "Pompalı Tüfek cephanesi"
 L.ammo_357 = "Tüfek cephanesi"
 L.ammo_alyxgun = "Deagle cephanesi"
-L.ammo_ar2altfire = "İşaret fişeği cephanesi"
+L.ammo_ar2altfire = "İşaret Fişeği cephanesi"
 L.ammo_gravity = "Poltergeist cephanesi"
 
 
@@ -549,7 +549,7 @@ L.ammo_gravity = "Poltergeist cephanesi"
 
 -- Round status
 L.round_wait = "Bekleniyor"
-L.round_prep = "Hazırlanıyor"
+L.round_prep = "Hazırlanılıyor"
 L.round_active = "Devam etmekte"
 L.round_post = "Raunt bitti"
 
@@ -561,7 +561,7 @@ L.hastemode = "HIZLI MOD"
 L.hp_healthy = "Sağlıklı"
 L.hp_hurt = "Hasar Görmüş"
 L.hp_wounded = "Yaralı"
-L.hp_badwnd = "Kötü Yaralanmış"
+L.hp_badwnd = "Ağır Yaralı"
 L.hp_death = "Ölüme Yakın"
 
 
@@ -597,7 +597,7 @@ L.radar_hud    = "Radar bir sonraki tarama için {time} içinde hazır"
 -- Canlı/ölü -- Spectator muting of living/dead sessize alınması
 L.mute_living = "Canlı oyuncular sessize alındı"
 L.mute_specs = "İzleyiciler sessize alındı"
-L.mute_all = "Tümü sessize alındı"
+L.mute_all = "Herkes sessize alındı"
 L.mute_off = "Kimse sessize alınmadı"
 
 -- Spectators and prop possession
@@ -647,9 +647,9 @@ L.idle_popup = [[{num} saniye boyunca boştaydın ve sonuç olarak yalnızca İz
 L.idle_popup_close = "Hiçbir şey yapma"
 L.idle_popup_off = "İzleyici modunu şimdi devre dışı bırak"
 
-L.idle_warning = "Uyarı: Boşta/AFK gibi görünüyorsunuz ve etkinlik göstermediğiniz sürece izlemeye alınacaksınız!"
+L.idle_warning = "Uyarı: Boşta gibi görünüyorsunuz ve etkinlik göstermediğiniz sürece izlemeye alınacaksınız!"
 
-L.spec_mode_warning = "İzleyici modundasın ve bir raunt başladığında oyuna başlamayacaksın. Bu modu devre dışı bırakmak için F1'e basın, 'Oynanış'a gidin ve 'Yalnızca İzle modu'nun işaretini kaldırın."
+L.spec_mode_warning = "İzleyici modundasın ve bir raunt başladığında oyuna başlamayacaksın. Bu modu devre dışı bırakmak için F1 tuşuna basın, 'Oynanış'a gidin ve 'Yalnızca İzle modu'nun işaretini kaldırın."
 
 
 --- Tips, shown at bottom of screen to spectators
@@ -732,7 +732,7 @@ L.tip35 = "Hain olarak, cesetleri taşıyabileceğinizi ve onları masumların v
 
 L.tip36 = "{helpkey} altında bulunan öğretici, oyunun en önemli ince ayrıntılarına genel bir bakış içerir."
 
-L.tip37 = "Puan tablosunda, yaşayan bir oyuncunun adına tıklayıp 'şüpheli' veya 'arkadaş' gibi bir etiket seçebilirsiniz. Bu etiket, nişangahınızın altındaysa görünecektir."
+L.tip37 = "Puan tablosunda, yaşayan bir oyuncunun adına tıklayıp 'şüpheli' veya 'arkadaş' gibi bir etiket seçebilirsiniz. Bu etiket, nişangâhınızın altındaysa görünecektir."
 
 L.tip38 = "Yerleştirilebilir ekipman öğelerinin çoğu (C4, Radyo gibi) ikincil ateş kullanılarak duvarlara yapıştırılabilir."
 
@@ -753,7 +753,7 @@ L.report_tab_scores = "Puanlar"
 L.report_tab_scores_tip = "Sadece bu rauntta her oyuncunun aldığı puan"
 
 -- Event log saving
-L.report_save = "Kaydı .txt olarak kaydet"
+L.report_save = ".txt olarak kaydet"
 L.report_save_tip = "Olay Kaydını bir metin dosyasına kaydeder"
 L.report_save_error = "Kaydedilecek Olay Kaydı verisi yok."
 L.report_save_result = "Olay Kaydı şuraya kaydedildi:"
@@ -808,7 +808,7 @@ L.ev_burn_using  = "{victim}, {attacker} nedeniyle {trap} tarafından yakıldı"
 L.ev_club        = "{victim}, {attacker} tarafından dövüldü"
 L.ev_club_using  = "{victim}, {trap} kullanılarak {attacker} tarafından dövülerek öldürüldü"
 
-L.ev_slash       = "{kurban}, {saldırgan} tarafından bıçaklandı"
+L.ev_slash       = "{victim}, {attacker} tarafından bıçaklandı"
 L.ev_slash_using = "{victim}, {trap} kullanılarak {attacker} tarafından kesildi"
 
 L.ev_tele        = "{victim} {attacker} tarafından ışınlanarak öldürüldü"
@@ -1045,8 +1045,8 @@ L.set_avoid_det_tip = "Sunucunun mümkünse sizi Dedektif olarak seçmemesini is
 L.drop_no_ammo = "Silahının şarjöründe cephane kutusu olarak düşecek yeterli cephane yok."
 
 --- v31
-L.set_cross_brightness = "Nişangah parlaklığı"
-L.set_cross_size = "Nişangah boyutu"
+L.set_cross_brightness = "Parlaklık"
+L.set_cross_size = "Uzunluk"
 
 -- 2015-05-25
 L.hat_retrieve = "Bir Dedektif'in şapkasını aldın."
@@ -1076,8 +1076,17 @@ L.binoc_body = "CESET ALGILANDI"
 
 L.idle_popup_title = "Boşta"
 
---- 2021 -06 -07
+--- 2021-06-07
 L.sb_playervolume = "Oyuncu Sesi"
 
---- 2021 -09 -22
+--- 2021-09-22
 L.tip41 = "Puan tablosundaki sessize alma simgesine sağ tıklayarak bir oyuncunun mikrofon sesini ayarlayabilirsin."
+
+--- 2025-03-11
+L.set_title_cross = "Nişangâh Ayarları"
+
+L.set_cross_color_enable = "Özel rengi etkinleştir"
+L.set_cross_color = "Özel renk"
+L.set_hip_cross_opacity = "Opaklık"
+L.set_cross_thickness = "Kalınlık"
+L.set_cross_outlinethickness = "Dış çizgi kalınlığı"

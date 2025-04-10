@@ -165,7 +165,7 @@
 UL.games_list
 {
 	right: 150px;
-	width: 230px;
+	width: 260px;
 	overflow: auto;
 	max-height: 300px;
 	padding: 0;
@@ -232,7 +232,7 @@ UL.gamemode_list LI
 	margin: 3px;
 	border-radius: 0;
 	background-color: #eee;
-	margin: 0 2px 2px 0;
+	margin: 0 0 2px 0;
 }
 
 UL.gamemode_list LI:hover
@@ -257,6 +257,7 @@ UL.language_list
 	background-color: #eee;
 	text-align: center;
 	border: 3px solid #333;
+	padding-bottom: 4px;
 }
 
 UL.language_list LI

@@ -357,9 +357,9 @@ end
 function string.Comma( number, str )
 
 	if ( str ~= nil and not isstring( str ) ) then
-		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")" )
+		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")", 2 )
 	elseif ( str ~= nil and string.match( str, "%d" ) ~= nil ) then
-		error( "bad argument #2 to 'string.Comma' (non-numerical values expected, got " .. str .. ")" )
+		error( "bad argument #2 to 'string.Comma' (non-numerical values expected, got " .. str .. ")", 2 )
 	end
 
 	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
@@ -407,5 +407,45 @@ function string.CardinalToOrdinal( cardinal )
 	end
 
 	return cardinal .. "th"
+
+end
+
+function string.NiceName( name )
+
+	name = name:Replace( "_", " " )
+
+	-- Try to split text into words, where words would start with single uppercase character
+	local newParts = {}
+	for id, str in ipairs( string.Explode( " ", name ) ) do
+		local wordStart = 1
+		for i = 2, str:len() do
+			local c = str[ i ]
+			if ( c:upper() == c ) then
+				local toAdd = str:sub( wordStart, i - 1 )
+				if ( toAdd:upper() == toAdd ) then continue end
+				table.insert( newParts, toAdd )
+				wordStart = i
+			end
+
+		end
+
+		table.insert( newParts, str:sub( wordStart, str:len() ) )
+	end
+
+	-- Capitalize
+	--[[
+	for i, word in ipairs( newParts ) do
+		if ( #word == 1 ) then
+			newParts[i] = string.upper( word )
+		else
+			newParts[i] = string.upper( string.sub( word, 1, 1 ) ) .. string.sub( word, 2 )
+		end
+	end
+
+	return table.concat( newParts, " " )]]
+
+	local ret = table.concat( newParts, " " )
+	ret = string.upper( string.sub( ret, 1, 1 ) ) .. string.sub( ret, 2 )
+	return ret
 
 end

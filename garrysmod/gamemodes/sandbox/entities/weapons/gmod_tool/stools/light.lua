@@ -71,7 +71,7 @@ function TOOL:LeftClick( trace, attach )
 	local light = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
 	if ( !IsValid( light ) ) then return false end
 
-	undo.Create( "Light" )
+	undo.Create( "gmod_light" )
 		undo.AddEntity( light )
 
 		if ( attach ) then
@@ -118,12 +118,12 @@ end
 
 if ( SERVER ) then
 
-	function MakeLight( ply, r, g, b, brght, size, toggle, on, KeyDown, Data )
+	function MakeLight( ply, r, g, b, brght, size, toggle, on, keyDown, Data )
 
-		if ( IsValid( ply ) && !ply:CheckLimit( "lights" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "lights" ) ) then return NULL end
 
 		local light = ents.Create( "gmod_light" )
-		if ( !IsValid( light ) ) then return end
+		if ( !IsValid( light ) ) then return NULL end
 
 		duplicator.DoGeneric( light, Data )
 
@@ -146,11 +146,11 @@ if ( SERVER ) then
 		light.lightb = b
 		light.Brightness = brght
 		light.Size = size
-		light.KeyDown = KeyDown
+		light.KeyDown = keyDown
 		light.on = on
 
-		light.NumDown = numpad.OnDown( ply, KeyDown, "LightToggle", light, 1 )
-		light.NumUp = numpad.OnUp( ply, KeyDown, "LightToggle", light, 0 )
+		light.NumDown = numpad.OnDown( ply, keyDown, "LightToggle", light, 1 )
+		light.NumUp = numpad.OnUp( ply, keyDown, "LightToggle", light, 0 )
 
 		if ( IsValid( ply ) ) then
 			ply:AddCount( "lights", light )
@@ -216,18 +216,17 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.light.desc" } )
+	CPanel:Help( "#tool.light.desc" )
+	CPanel:ToolPresets( "light", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "light", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.light.key", "light_key" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
+	CPanel:NumSlider( "#tool.light.ropelength", "light_ropelength", 0, 256 )
+	CPanel:NumSlider( "#tool.light.brightness", "light_brightness", -6, 6, 0 )
+	CPanel:NumSlider( "#tool.light.size", "light_size", 0, 1024 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.light.ropelength", Command = "light_ropelength", Type = "Float", Min = 0, Max = 256 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = -6, Max = 6 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.size", Command = "light_size", Type = "Float", Min = 0, Max = 1024 } )
+	CPanel:CheckBox( "#tool.light.toggle", "light_toggle" )
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )
-
-	CPanel:AddControl( "Color", { Label = "#tool.light.color", Red = "light_r", Green = "light_g", Blue = "light_b" } )
+	CPanel:ColorPicker( "#tool.light.color", "light_r", "light_g", "light_b" )
 
 end

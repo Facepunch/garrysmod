@@ -183,6 +183,14 @@ function PANEL:NumSlider( strLabel, strConVar, numMin, numMax, numDecimals )
 	left:SetConVar( strConVar )
 	left:SizeToContents()
 
+	if ( strConVar ) then
+		local cvar = GetConVar( strConVar )
+		if ( cvar ) then
+			local defaultValue = tonumber( cvar:GetDefault() )
+			if ( defaultValue ) then left:SetDefaultValue( defaultValue ) end
+		end
+	end
+
 	self:AddItem( left, nil )
 
 	return left
@@ -301,4 +309,4 @@ end
 function PANEL:GenerateExample( class, tabs, w, h )
 end
 
-derma.DefineControl( "DForm", "WHAT", PANEL, "DCollapsibleCategory" )
+derma.DefineControl( "DForm", "A panel with quick methods to create basic user inputs.", PANEL, "DCollapsibleCategory" )

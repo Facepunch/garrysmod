@@ -288,6 +288,11 @@ end
 
 function GetContentType( name )
 
+	if ( !name ) then
+		ErrorNoHaltWithStack( "spawnmenu.GetContentType got an invalid value\n" )
+		return
+	end
+
 	if ( !cp[ name ] ) then
 
 		cp[ name ] = function() end

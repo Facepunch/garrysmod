@@ -67,24 +67,6 @@ function HELPSCRN:Show()
    end
    cb:SetTooltip(GetTranslation("set_startpopup_tip"))
 
-   cb = dgui:NumSlider(GetTranslation("set_cross_opacity"), "ttt_ironsights_crosshair_opacity", 0, 1, 1)
-   if cb.Label then
-      cb.Label:SetWrap(true)
-   end
-   cb:SetTooltip(GetTranslation("set_cross_opacity"))
-
-   cb = dgui:NumSlider(GetTranslation("set_cross_brightness"), "ttt_crosshair_brightness", 0, 1, 1)
-   if cb.Label then
-      cb.Label:SetWrap(true)
-   end
-
-   cb = dgui:NumSlider(GetTranslation("set_cross_size"), "ttt_crosshair_size", 0.1, 3, 1)
-   if cb.Label then
-      cb.Label:SetWrap(true)
-   end
-
-   dgui:CheckBox(GetTranslation("set_cross_disable"), "ttt_disable_crosshair")
-
    dgui:CheckBox(GetTranslation("set_minimal_id"), "ttt_minimal_targetid")
 
    dgui:CheckBox(GetTranslation("set_healthlabel"), "ttt_health_label")
@@ -102,7 +84,7 @@ function HELPSCRN:Show()
    cb:SetTooltip(GetTranslation("set_wswitch_tip"))
 
    cb = dgui:CheckBox(GetTranslation("set_cues"), "ttt_cl_soundcues")
-   
+
    cb = dgui:CheckBox(GetTranslation("set_msg_cue"), "ttt_cl_msg_soundcue")
 
    dsettings:AddItem(dgui)
@@ -148,6 +130,58 @@ function HELPSCRN:Show()
    dlanguage:AddItem(dlang)
 
    dsettings:AddItem(dlanguage)
+
+   --- Crosshair area
+
+   local dcross = vgui.Create("DForm", dsettings)
+   dcross:SetName(GetTranslation("set_title_cross"))
+
+   dcross:CheckBox(GetTranslation("set_cross_disable"), "ttt_disable_crosshair")
+
+   dcross:CheckBox(GetTranslation("set_cross_color_enable"), "ttt_crosshair_color_enable")
+
+   cb = vgui.Create("DColorMixer")
+   cb:SetLabel(GetTranslation("set_cross_color"))
+   cb:SetTall(120)
+   cb:SetAlphaBar(false)
+   cb:SetPalette(false)
+   cb:SetColor(Color(255, 255, 255, 255))
+   cb:SetConVarR("ttt_crosshair_color_r")
+   cb:SetConVarG("ttt_crosshair_color_g")
+   cb:SetConVarB("ttt_crosshair_color_b")
+   dcross:AddItem(cb)
+
+   cb = dcross:NumSlider(GetTranslation("set_hip_cross_opacity"), "ttt_crosshair_opacity", 0, 1, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dcross:NumSlider(GetTranslation("set_cross_opacity"), "ttt_ironsights_crosshair_opacity", 0, 1, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dcross:NumSlider(GetTranslation("set_cross_brightness"), "ttt_crosshair_brightness", 0, 1, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dcross:NumSlider(GetTranslation("set_cross_size"), "ttt_crosshair_size", 0.1, 3, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dcross:NumSlider(GetTranslation("set_cross_thickness"), "ttt_crosshair_thickness", 1, 10, 0)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dcross:NumSlider(GetTranslation("set_cross_outlinethickness"), "ttt_crosshair_outlinethickness", 0, 4, 0)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   dsettings:AddItem(dcross)
 
    dtabs:AddSheet(GetTranslation("help_settings"), dsettings, "icon16/wrench.png", false, false, GetTranslation("help_settings_tip"))
 

@@ -110,7 +110,7 @@ function PANEL:Open()
 
 	-- If the context menu is open, try to close it..
 	if ( IsValid( g_ContextMenu ) && g_ContextMenu:IsVisible() ) then
-		g_ContextMenu:Close( true )
+		g_ContextMenu:Close()
 	end
 
 	if ( self:IsVisible() ) then return end
@@ -136,7 +136,7 @@ end
 --[[---------------------------------------------------------
 	Name: Paint
 -----------------------------------------------------------]]
-function PANEL:Close( bSkipAnim )
+function PANEL:Close()
 
 	if ( self.m_bHangOpen ) then
 		self.m_bHangOpen = false

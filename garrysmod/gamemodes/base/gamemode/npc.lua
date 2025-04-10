@@ -17,26 +17,27 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 
 	net.Start( "DeathNoticeEvent" )
 
-		if ( !attacker ) then
-			net.WriteUInt( 0, 2 )
-		elseif ( isstring( attacker ) ) then
+		if ( isstring( attacker ) ) then
 			net.WriteUInt( 1, 2 )
 			net.WriteString( attacker )
 		elseif ( IsValid( attacker ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( attacker )
+		else
+			-- TODO: game.GetWorld will be "written" here, because its not IsValid. Make it write a separate type?
+			net.WriteUInt( 0, 2 )
 		end
 
 		net.WriteString( inflictor )
 
-		if ( !victim ) then
-			net.WriteUInt( 0, 2 )
-		elseif ( isstring( victim ) ) then
+		if ( isstring( victim ) ) then
 			net.WriteUInt( 1, 2 )
 			net.WriteString( victim )
 		elseif ( IsValid( victim ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( victim )
+		else
+			net.WriteUInt( 0, 2 )
 		end
 
 		net.WriteUInt( flags, 8 )
@@ -47,23 +48,28 @@ end
 
 function GM:GetDeathNoticeEntityName( ent )
 
+	if ( isstring( ent ) ) then return ent end
+	if ( !IsValid( ent ) ) then return nil end
+
 	-- Some specific HL2 NPCs, just for fun
-	-- TODO: Localization strings?
 	if ( ent:GetClass() == "npc_citizen" ) then
-		if ( ent:GetName() == "griggs" ) then return "Griggs" end
-		if ( ent:GetName() == "sheckley" ) then return "Sheckley" end
-		if ( ent:GetName() == "tobias" ) then return "Laszlo" end
-		if ( ent:GetName() == "stanley" ) then return "Sandy" end
-
-		if ( ent:GetModel() == "models/odessa.mdl" ) then return "Odessa Cubbage" end
+		if ( ent:GetName() == "griggs" ) then return "#npc_citizen_griggs" end
+		if ( ent:GetName() == "sheckley" ) then return "#npc_citizen_sheckley" end
+		if ( ent:GetName() == "tobias" ) then return "#npc_citizen_laszlo" end
+		if ( ent:GetName() == "stanley" ) then return "#npc_citizen_sandy" end
 	end
+	if ( ent:GetClass() == "npc_sniper" and ( ent:GetName() == "alyx_sniper" || ent:GetName() == "sniper_alyx" ) ) then return "#npc_alyx" end
 
-	-- Custom vehicle and NPC names
+	-- Custom vehicle and NPC names from spawnmenu
 	if ( ent:IsVehicle() and ent.VehicleTable and ent.VehicleTable.Name ) then
 		return ent.VehicleTable.Name
 	end
 	if ( ent:IsNPC() and ent.NPCTable and ent.NPCTable.Name ) then
 		return ent.NPCTable.Name
+	end
+
+	if ( ent:GetClass() == "npc_antlion" and ent:GetModel() == "models/antlion_worker.mdl" ) then
+		return list.Get( "NPC" )[ "npc_antlion_worker" ].Name
 	end
 
 	-- Fallback to old behavior
@@ -78,22 +84,22 @@ end
 function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	-- Don't spam the killfeed with scripted stuff
-	if ( ent:GetClass() == "npc_bullseye" || ent:GetClass() == "npc_launcher" ) then return end
+	if ( ent:GetClass() == "npc_bullseye" or ent:GetClass() == "npc_launcher" ) then return end
 
 	-- If killed by trigger_hurt, act as if NPC killed itself
-	if ( IsValid( attacker ) && attacker:GetClass() == "trigger_hurt" ) then attacker = ent end
+	if ( IsValid( attacker ) and attacker:GetClass() == "trigger_hurt" ) then attacker = ent end
 
 	-- NPC got run over..
-	if ( IsValid( attacker ) && attacker:IsVehicle() && IsValid( attacker:GetDriver() ) ) then
+	if ( IsValid( attacker ) and attacker:IsVehicle() and IsValid( attacker:GetDriver() ) ) then
 		attacker = attacker:GetDriver()
 	end
 
-	if ( !IsValid( inflictor ) && IsValid( attacker ) ) then
+	if ( !IsValid( inflictor ) and IsValid( attacker ) ) then
 		inflictor = attacker
 	end
 
 	-- Convert the inflictor to the weapon that they're holding if we can.
-	if ( IsValid( inflictor ) && attacker == inflictor && ( inflictor:IsPlayer() || inflictor:IsNPC() ) ) then
+	if ( IsValid( inflictor ) and attacker == inflictor and ( inflictor:IsPlayer() or inflictor:IsNPC() ) ) then
 
 		inflictor = inflictor:GetActiveWeapon()
 		if ( !IsValid( attacker ) ) then inflictor = attacker end
@@ -130,8 +136,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	if ( ent == AttackerClass ) then InflictorClass = "suicide" end
 
 	local flags = 0
-	if ( IsValid( Entity( 1 ) ) and ent:IsNPC() and ent:Disposition( Entity( 1 ) ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
-	if ( IsValid( Entity( 1 ) ) and AttackerClass:IsNPC() and AttackerClass:Disposition( Entity( 1 ) ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
+	if ( IsValid( Entity( 1 ) ) and ent:IsNPC() and ent:Disposition( Entity( 1 ) ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
+	if ( IsValid( Entity( 1 ) ) and AttackerClass:IsNPC() and AttackerClass:Disposition( Entity( 1 ) ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
 	self:SendDeathNotice( self:GetDeathNoticeEntityName( AttackerClass ), InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
 
@@ -151,10 +157,10 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 	end
 
 	-- Less damage if we're shot in the arms or legs
-	if ( hitgroup == HITGROUP_LEFTARM ||
-		 hitgroup == HITGROUP_RIGHTARM ||
-		 hitgroup == HITGROUP_LEFTLEG ||
-		 hitgroup == HITGROUP_RIGHTLEG ||
+	if ( hitgroup == HITGROUP_LEFTARM or
+		 hitgroup == HITGROUP_RIGHTARM or
+		 hitgroup == HITGROUP_LEFTLEG or
+		 hitgroup == HITGROUP_RIGHTLEG or
 		 hitgroup == HITGROUP_GEAR ) then
 
 		dmginfo:ScaleDamage( 0.25 )

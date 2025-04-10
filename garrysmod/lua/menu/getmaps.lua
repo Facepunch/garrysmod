@@ -67,16 +67,49 @@ local function UpdateMaps()
 	MapNames[ "sav_dojo6" ] = "Dystopia"
 	MapNames[ "varena" ] = "Dystopia"
 
-	MapNames[ "d1_" ] = "Half-Life 2"
-	MapNames[ "d2_" ] = "Half-Life 2"
-	MapNames[ "d3_" ] = "Half-Life 2"
+	-- Do these manually, so edits of these maps don't end up in the same category.
+	local HL2Maps = {
+		"d1_trainstation_01", "d1_trainstation_02", "d1_trainstation_03", "d1_trainstation_04", "d1_trainstation_05", "d1_trainstation_06",
+		"d1_canals_01", "d1_canals_01a", "d1_canals_02",  "d1_canals_03", "d1_canals_05", "d1_canals_06", "d1_canals_07", "d1_canals_08", "d1_canals_09",
+		"d1_canals_10", "d1_canals_11","d1_canals_12", "d1_canals_13", "d1_eli_01", "d1_eli_02",
+		"d1_town_01", "d1_town_01a", "d1_town_02", "d1_town_02a", "d1_town_03", "d1_town_04","d1_town_05",
+		"d2_coast_01", "d2_coast_03", "d2_coast_04", "d2_coast_05","d2_coast_07", "d2_coast_08", "d2_coast_09", "d2_coast_10", "d2_coast_11", "d2_coast_12",
+		"d2_prison_01", "d2_prison_02", "d2_prison_03", "d2_prison_04", "d2_prison_05", "d2_prison_06", "d2_prison_07", "d2_prison_08",
+		"d3_c17_01", "d3_c17_02", "d3_c17_03", "d3_c17_04", "d3_c17_05", "d3_c17_06a", "d3_c17_06b", "d3_c17_07", "d3_c17_08",
+		"d3_c17_09", "d3_c17_10a", "d3_c17_10b", "d3_c17_11", "d3_c17_12", "d3_c17_12b", "d3_c17_13",
+		"d3_citadel_01", "d3_citadel_02", "d3_citadel_03", "d3_citadel_04", "d3_citadel_05", "d3_breen_01"
+	}
+	for _, map in ipairs( HL2Maps ) do MapNames[ map ] = "Half-Life 2" end
+
+	local EP1Maps = {
+		"ep1_citadel_00", "ep1_citadel_01", "ep1_citadel_02", "ep1_citadel_02b", "ep1_citadel_03", "ep1_citadel_04", "ep1_c17_00",
+		"ep1_c17_00a", "ep1_c17_01", "ep1_c17_01a", "ep1_c17_02", "ep1_c17_02b", "ep1_c17_02a", "ep1_c17_05", "ep1_c17_06"
+	}
+	for _, map in ipairs( EP1Maps ) do MapNames[ map ] = "Half-Life 2: Episode 1" end
+
+	local EP2Maps = {
+		"ep2_outland_01", "ep2_outland_01a", "ep2_outland_02", "ep2_outland_03", "ep2_outland_04", "ep2_outland_05", "ep2_outland_06", "ep2_outland_06a", "ep2_outland_07",
+		"ep2_outland_08", "ep2_outland_09", "ep2_outland_10", "ep2_outland_10a", "ep2_outland_11", "ep2_outland_11a", "ep2_outland_11b", "ep2_outland_12", "ep2_outland_12a"
+	}
+	for _, map in ipairs( EP2Maps ) do MapNames[ map ] = "Half-Life 2: Episode 2" end
+
+	local GStringMaps = {
+		"dragon_girl", "dragon_girl1", "dragon_girl2", "dragon_girl3", "free_mars1", "free_mars2",
+		"free_mars3", "hazardous_ai", "hazardous_ai_more",  "hazardous_ai0", "hazardous_ai01", "hazardous_ai2", "hazardous_ai3", "hazardous_ai3b", "hazardous_ai4",
+		"hazardous_ai5", "hazardous_ai6","hazardous_ai7", "human_waste_x1", "human_waste1", "human_waste2",
+		"human_waste3", "human_waste4", "human_waste5", "human_waste6", "human_waste7", "human_waste8","human_waste9",
+		"lab_rat", "lab_rat1", "money_is_dead", "money_is_dead_1","money_is_dead0", "money_is_dead2", "money_is_dead2_1", "money_is_dead2_2", "money_is_dead3", "money_is_dead3_2",
+		"money_is_dead4", "money_is_dead4_2", "money_is_dead4_3", "murdock_air_x1", "murdock_air_x2", "murdock_air_x3", "murdock_air_x4", "murdock_air_x5",
+		"murdock_air_x6", "murdock_air1", "murdock_air2", "murdock_air3", "murdock_air4", "murdock_air5", "murdock_air6", "murdock_air7", "murdock_air8",
+		"murdock_air9", "perp_org1", "perp_org2", "perp_org3", "perp_org4", "sabotage", "sabotage1",
+		"smog_storm", "smog_storm1", "smog_storm2", "smog_storm3", "space_race", "space_race1",
+		"space_race2", "space_race3", "space_race4", "space_race5", "terror_management_x1", "terror_management_x2",
+		"terror_management_x3", "the_call1"
+	}
+	for _, map in ipairs( GStringMaps ) do MapNames[ map ] = "G String" end
 
 	MapNames[ "dm_" ] = "Half-Life 2: Deathmatch"
 	MapNames[ "halls3" ] = "Half-Life 2: Deathmatch"
-
-	MapNames[ "ep1_" ] = "Half-Life 2: Episode 1"
-	MapNames[ "ep2_" ] = "Half-Life 2: Episode 2"
-	MapNames[ "ep3_" ] = "Half-Life 2: Episode 3"
 
 	MapNames[ "d2_lostcoast" ] = "Half-Life 2: Lost Coast"
 
@@ -96,6 +129,8 @@ local function UpdateMaps()
 	MapNames[ "undertow" ] = "Half-Life Deathmatch"
 
 	MapNames[ "ins_" ] = "Insurgency"
+
+	MapNames[ "t_" ] = "Klaus Veen's Treason"
 
 	MapNames[ "l4d_" ] = "Left 4 Dead"
 
@@ -142,12 +177,13 @@ local function UpdateMaps()
 	MapNames[ "rd_" ] = "Team Fortress 2"
 	MapNames[ "pd_" ] = "Team Fortress 2"
 	MapNames[ "sd_" ] = "Team Fortress 2"
-	MapNames[ "tc_" ] = "Team Fortress 2"
-	MapNames[ "tr_" ] = "Team Fortress 2"
+	MapNames[ "tc_" ] = "Team Fortress 2" // Territory Control
+	MapNames[ "tr_" ] = "Team Fortress 2" // Training
 	MapNames[ "trade_" ] = "Team Fortress 2"
-	MapNames[ "pass_" ] = "Team Fortress 2"
-	MapNames[ "vsh_" ] = "Team Fortress 2"
-	MapNames[ "zi_" ] = "Team Fortress 2"
+	MapNames[ "pass_" ] = "Team Fortress 2" // PASS time
+	MapNames[ "vsh_" ] = "Team Fortress 2" // Versus Saxton Hale
+	MapNames[ "zi_" ] = "Team Fortress 2" // Zombie Invasion
+	MapNames[ "tow_" ] = "Team Fortress 2" // Tug of War
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
@@ -161,6 +197,8 @@ local function UpdateMaps()
 	MapNames[ "gt_" ] = "Fistful of Frags"
 	MapNames[ "tp_" ] = "Fistful of Frags"
 	MapNames[ "vs_" ] = "Fistful of Frags"
+
+	MapNames[ "ff_" ] = "Fortress Forever"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
@@ -188,6 +226,7 @@ local function UpdateMaps()
 	MapNames[ "zm_" ] = "Zombie Survival"
 	MapNames[ "zombiesurvival_" ] = "Zombie Survival"
 	MapNames[ "zs_" ] = "Zombie Survival"
+	MapNames[ "ze_" ] = "Zombie Escape"
 	MapNames[ "coop_" ] = "Cooperative"
 
 	local GamemodeList = engine.GetGamemodes()
@@ -321,7 +360,7 @@ local function RefreshMaps( skip )
 		end
 
 		-- Throw all uncategorised maps into Other
-		Category = Category or "Other"
+		Category = Category or language.GetPhrase( "spawnmenu.category.other" )
 
 		local fav
 

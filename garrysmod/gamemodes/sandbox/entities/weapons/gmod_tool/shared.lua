@@ -1,8 +1,8 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		= "#GMOD_ToolGun"
-SWEP.Author			= ""
+SWEP.PrintName		= "#gmod_tool"
+SWEP.Author			= "Facepunch"
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
 SWEP.Instructions	= ""
@@ -17,7 +17,6 @@ SWEP.Spawnable		= true
 util.PrecacheModel( SWEP.ViewModel )
 util.PrecacheModel( SWEP.WorldModel )
 
--- Todo, make/find a better sound.
 SWEP.ShootSound = Sound( "Airboat.FireGunRevDown" )
 
 SWEP.Tool = {}
@@ -40,8 +39,10 @@ function SWEP:InitializeTools()
 	local owner = self:GetOwner()
 
 	local temp = {}
-
 	for k, v in pairs( self.Tool ) do
+
+		-- This is from saverestore.LoadEntity..
+		if ( !v.Init ) then continue end
 
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self
@@ -144,7 +145,8 @@ function SWEP:Think()
 			local lastmode_obj = self:GetToolObject( lastmode )
 
 			if ( lastmode_obj ) then
-				lastmode_obj:ReleaseGhostEntity()
+				lastmode_obj:ReleaseGhostEntity() -- In case tool overwrites the default Holster
+				lastmode_obj:Holster( true )
 			end
 		end
 
@@ -157,7 +159,11 @@ function SWEP:Think()
 		if ( lastmode_obj ) then
 			-- We want to release the ghost entity just in case
 			lastmode_obj:ReleaseGhostEntity()
+			lastmode_obj:Holster( true )
 		end
+
+		-- Deploy the new tool
+		tool:Deploy( true )
 	end
 
 	self.Primary.Automatic = tool.LeftClickAutomatic or false

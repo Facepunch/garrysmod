@@ -1,5 +1,24 @@
 
 --
+-- Hack for debug.getregistry
+--
+local meta = {}
+function meta.__index( self, key )
+	return FindMetaTable( key )
+end
+function meta.__newindex( self, key, value )
+	rawset( self, key, value )
+
+	if ( isstring( key ) and istable( value ) ) then
+		RegisterMetaTable( key, value )
+	end
+end
+
+local tbl = {}
+setmetatable( tbl, meta )
+function debug.getregistry() return tbl end
+
+--
 -- Seed the rand!
 --
 math.randomseed( os.time() )
@@ -318,14 +337,14 @@ end
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedSin( freq, min, max, offset )
-	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
+	return math.sin( freq * math.tau * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedCos( freq, min, max, offset )
-	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
+	return math.cos( freq * math.tau * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end
 
 --[[---------------------------------------------------------
@@ -376,6 +395,10 @@ end
 		IsMounted( 4010 )
 -----------------------------------------------------------]]
 function IsMounted( name )
+
+	if ( name == "episodic" || name == "ep2" || name == "lostcoast" ) then
+		name = "hl2"
+	end
 
 	local games = engine.GetGames()
 

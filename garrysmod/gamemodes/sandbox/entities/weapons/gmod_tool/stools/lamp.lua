@@ -91,7 +91,7 @@ function TOOL:LeftClick( trace )
 
 	lamp:SetPos( trace.HitPos + LampOffset )
 
-	undo.Create( "Lamp" )
+	undo.Create( "gmod_lamp" )
 		undo.AddEntity( lamp )
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
@@ -130,13 +130,13 @@ end
 
 if ( SERVER ) then
 
-	function MakeLamp( ply, r, g, b, KeyDown, toggle, texture, model, fov, distance, brightness, on, Data )
+	function MakeLamp( ply, r, g, b, keyDown, toggle, texture, model, fov, distance, brightness, on, Data )
 
-		if ( IsValid( ply ) and !ply:CheckLimit( "lamps" ) ) then return false end
-		if ( !IsValidLampModel( model ) ) then return false end
+		if ( IsValid( ply ) and !ply:CheckLimit( "lamps" ) ) then return NULL end
+		if ( !IsValidLampModel( model ) ) then return NULL end
 
 		local lamp = ents.Create( "gmod_lamp" )
-		if ( !IsValid( lamp ) ) then return false end
+		if ( !IsValid( lamp ) ) then return NULL end
 
 		duplicator.DoGeneric( lamp, Data )
 		lamp:SetModel( model ) -- Backwards compatible for addons directly calling this function
@@ -162,7 +162,7 @@ if ( SERVER ) then
 		end
 
 		lamp.Texture = texture
-		lamp.KeyDown = KeyDown
+		lamp.KeyDown = keyDown
 		lamp.fov = fov
 		lamp.distance = distance
 		lamp.r = r
@@ -170,8 +170,8 @@ if ( SERVER ) then
 		lamp.b = b
 		lamp.brightness = brightness
 
-		lamp.NumDown = numpad.OnDown( ply, KeyDown, "LampToggle", lamp, 1 )
-		lamp.NumUp = numpad.OnUp( ply, KeyDown, "LampToggle", lamp, 0 )
+		lamp.NumDown = numpad.OnDown( ply, keyDown, "LampToggle", lamp, 1 )
+		lamp.NumUp = numpad.OnUp( ply, keyDown, "LampToggle", lamp, 0 )
 
 		return lamp
 
@@ -237,28 +237,26 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.lamp.desc" } )
+	CPanel:Help( "#tool.lamp.desc" )
+	CPanel:ToolPresets( "lamp", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "lamp", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.lamp.key", "lamp_key" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.key", Command = "lamp_key" } )
+	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170 )
+	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048 )
+	CPanel:NumSlider( "#tool.lamp.brightness", "lamp_brightness", 0, 8 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.fov", Command = "lamp_fov", Type = "Float", Min = 10, Max = 170 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.distance", Command = "lamp_distance", Min = 64, Max = 2048 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.brightness", Command = "lamp_brightness", Type = "Float", Min = 0, Max = 8 } )
+	CPanel:CheckBox( "#tool.lamp.toggle", "lamp_toggle" )
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
-
-	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
+	CPanel:ColorPicker( "#tool.lamp.color", "lamp_r", "lamp_g", "lamp_b" )
 
 	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, false, 0.33, 0.33 )
 	MatSelect.Height = 4
-
 	for k, v in pairs( list.Get( "LampTextures" ) ) do
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 0, Models = list.Get( "LampModels" ) } )
+	CPanel:PropSelect( "#tool.lamp.model", "lamp_model", list.Get( "LampModels" ), 0 )
 
 end
 
@@ -278,5 +276,12 @@ list.Set( "LampTextures", "effects/flashlight/camera", { Name = "#lamptexture.ca
 list.Set( "LampTextures", "effects/flashlight/view", { Name = "#lamptexture.view" } )
 
 list.Set( "LampModels", "models/lamps/torch.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", {} )
-list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", {} )
+list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", { Offset = Vector( 8.5, 0, 0 ) } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight01_lamp.mdl", { Offset = Vector( 9, 0, 4 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/light_spotlight02_lamp.mdl", { Offset = Vector( 5.5, 0, 0 ), Skin = 1 } )
+list.Set( "LampModels", "models/props_c17/light_decklight01_off.mdl", { Offset = Vector( 3, 0, 0 ), Skin = 1, Scale = 3 } )
+list.Set( "LampModels", "models/props_wasteland/prison_lamp001c.mdl", { Offset = Vector( 0, 0, -5 ), Angle = Angle( 90, 0, 0 ) } )
+
+-- This works, but the ghost entity is invisible due to $alphatest...
+--list.Set( "LampModels", "models/props_c17/lamp_standard_off01.mdl", { Offset = Vector( 5.20, 0.25, 8 ), Angle = Angle( 90, 0, 0 ), NearZ = 6 } )

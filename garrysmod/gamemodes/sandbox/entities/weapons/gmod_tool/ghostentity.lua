@@ -50,6 +50,12 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSCOLOR )
 	self.GhostEntity:SetColor( Color( 255, 255, 255, 150 ) )
 
+	-- Do not save this thing in saves/dupes
+	self.GhostEntity.DoNotDuplicate = true
+
+	-- Mark this entity as ghost prop for other code
+	self.GhostEntity.IsToolGhost = true
+
 end
 
 --[[---------------------------------------------------------

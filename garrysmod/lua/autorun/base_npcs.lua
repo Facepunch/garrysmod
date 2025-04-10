@@ -4,13 +4,14 @@
 
 local function AddNPC( t, class )
 	if ( !t.Name ) then t.Name = "#" .. ( class or t.Class ) end
+	t.Author = "VALVe"
 
 	list.Set( "NPC", class or t.Class, t )
 end
 
 
 
-local Category = "Humans + Resistance"
+local Category = "#spawnmenu.category.humans_resistance"
 
 AddNPC( {
 	Class = "npc_alyx",
@@ -65,7 +66,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Vortigaunt Slave",
+	Name = "#npc_vortigaunt_slave",
 	Class = "npc_vortigaunt",
 	Category = Category,
 	Model = "models/vortigaunt_slave.mdl"
@@ -75,20 +76,19 @@ AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" },
-	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons
+	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons, but doesn't have any default ones
 } )
 
 AddNPC( {
-	Name = "Rebel",
+	Name = "#npc_citizen_rebel",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
 }, "Rebel" )
 
 AddNPC( {
-	Name = "Odessa Cubbage",
 	Class = "npc_citizen",
 	Category = Category,
 	Model = "models/odessa.mdl",
@@ -97,16 +97,16 @@ AddNPC( {
 }, "npc_odessa" )
 
 AddNPC( {
-	Name = "Rebel Medic",
+	Name = "#npc_citizen_medic",
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2" }
 }, "Medic" )
 
 AddNPC( {
-	Name = "Refugee",
+	Name = "#npc_citizen_refugee",
 	Class = "npc_citizen",
 	Category = Category,
 	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
@@ -115,7 +115,7 @@ AddNPC( {
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
-		Name = "Uriah",
+		Name = "#npc_vortigaunt_uriah",
 		Class = "npc_vortigaunt",
 		Category = Category,
 		Model = "models/vortigaunt_doctor.mdl",
@@ -133,12 +133,33 @@ if ( IsMounted( "lostcoast" ) ) then
 		Class = "npc_fisherman",
 		Category = Category,
 		Weapons = { "weapon_oldmanharpoon" }
-	} ) -- Has no death sequence
+	} ) -- Has no death sequence/ragdoll
 end
 
+if ( IsMounted( "ep2" ) ) then
+	AddNPC( {
+		Class = "npc_turret_floor",
+		Category = Category,
+		OnFloor = true,
+		TotalSpawnFlags = SF_FLOOR_TURRET_CITIZEN,
+		Rotate = Angle( 0, 180, 0 ),
+		Offset = 2,
+		KeyValues = { SquadName = "overwatch" }
+	}, "npc_turret_floor_resistance" )
+end
 
+if ( IsMounted( "episodic" ) ) then
+	AddNPC( {
+		Class = "npc_rollermine",
+		Category = Category,
+		Offset = 20,
+		KeyValues = { SquadName = "resistance" },
+		SpawnFlags = 262144, -- SF_ROLLERMINE_HACKED
+		NoDrop = true
+	}, "npc_rollermine_hacked" )
+end
 
-Category = "Zombies + Enemy Aliens"
+Category = "#spawnmenu.category.zombies_aliens"
 
 AddNPC( {
 	Class = "npc_zombie",
@@ -221,7 +242,6 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	AddNPC( {
-		Name = "Antlion Guardian",
 		Class = "npc_antlionguard",
 		Category = Category,
 		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
@@ -244,7 +264,7 @@ end
 
 
 
-Category = "Animals"
+Category = "#spawnmenu.category.animals"
 
 AddNPC( {
 	Class = "npc_monk",
@@ -272,7 +292,7 @@ AddNPC( {
 
 
 
-Category = "Combine"
+Category = "#spawnmenu.category.combine"
 
 AddNPC( {
 	Class = "npc_metropolice",
@@ -289,6 +309,16 @@ AddNPC( {
 	KeyValues = { SquadName = "overwatch" },
 	NoDrop = true
 } )
+
+-- It is still considered an enemy by friendly NPCs (so that it chases them)
+AddNPC( {
+	Class = "npc_rollermine",
+	Category = Category,
+	Offset = 20,
+	KeyValues = { SquadName = "overwatch" },
+	SpawnFlags = 65536, -- SF_ROLLERMINE_FRIENDLY
+	NoDrop = true
+}, "npc_rollermine_friendly" )
 
 AddNPC( {
 	Class = "npc_turret_floor",
@@ -310,7 +340,7 @@ AddNPC( {
 } )
 
 AddNPC( {
-	Name = "Shotgun Soldier",
+	Name = "#npc_combine_s_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
@@ -320,7 +350,7 @@ AddNPC( {
 }, "ShotgunSoldier" )
 
 AddNPC( {
-	Name = "Prison Guard",
+	Name = "#npc_combine_s_prison",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
@@ -330,7 +360,7 @@ AddNPC( {
 }, "CombinePrison" )
 
 AddNPC( {
-	Name = "Prison Shotgun Guard",
+	Name = "#npc_combine_s_prison_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
@@ -340,7 +370,7 @@ AddNPC( {
 }, "PrisonShotgunner" )
 
 AddNPC( {
-	Name = "Combine Elite",
+	Name = "#npc_combine_s_elite",
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_super_soldier.mdl",
@@ -419,7 +449,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_stalker",
 	Category = Category,
-	KeyValues = { squadname = "npc_stalker_squad" },
+	KeyValues = { SquadName = "npc_stalker_squad" },
 	Offset = 10
 } )
 
@@ -430,6 +460,15 @@ AddNPC( {
 	NoDrop = true
 } )
 
+-- This is meant for NPC reskins, so humanoid NPC reskins don't sound like combine.
+-- This is also just for fun, and exists here to let people know that the option exists and how to use it.
+AddNPC( {
+	Class = "npc_citizen",
+	Category = Category,
+	KeyValues = { citizentype = CT_REBEL, SquadName = "overwatch", Hostile = "1" },
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
+}, "npc_citizen_rebel_enemy" )
+
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
 		Class = "npc_hunter",
@@ -437,7 +476,6 @@ if ( IsMounted( "ep2" ) ) then
 		KeyValues = { SquadName = "overwatch" }
 	} )
 end
-
 
 if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 

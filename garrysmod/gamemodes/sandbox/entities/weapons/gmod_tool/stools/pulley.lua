@@ -35,6 +35,12 @@ function TOOL:LeftClick( trace )
 
 		if ( CLIENT ) then return true end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "ropeconstraints" ) ) then
+			self:ClearObjects()
+			return false
+		end
+
 		local width = self:GetClientNumber( "width" )
 		local forcelimit = self:GetClientNumber( "forcelimit" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
@@ -53,20 +59,22 @@ function TOOL:LeftClick( trace )
 		local WPos2 = self:GetPos( 2 )
 		local WPos3 = self:GetPos( 3 )
 
-		local constr, rope1, rope2, rope3 = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope1, rope2, rope3 = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, Color( colorR, colorG, colorB ) )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Pulley" )
 				undo.AddEntity( constr )
 				if ( IsValid( rope1 ) ) then undo.AddEntity( rope1 ) end
 				if ( IsValid( rope2 ) ) then undo.AddEntity( rope2 ) end
 				if ( IsValid( rope3 ) ) then undo.AddEntity( rope3 ) end
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+				undo.SetPlayer( ply )
+				undo.SetCustomUndoText( "Undone #tool.pulley.name" )
+			undo.Finish( "#tool.pulley.name" )
 
-			self:GetOwner():AddCleanup( "ropeconstraints", constr )
-			if ( IsValid( rope1 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope1 ) end
-			if ( IsValid( rope2 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope2 ) end
-			if ( IsValid( rope3 ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope3 ) end
+			ply:AddCount( "ropeconstraints", constr )
+			ply:AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope1 ) ) then ply:AddCleanup( "ropeconstraints", rope1 ) end
+			if ( IsValid( rope2 ) ) then ply:AddCleanup( "ropeconstraints", rope2 ) end
+			if ( IsValid( rope3 ) ) then ply:AddCleanup( "ropeconstraints", rope3 ) end
 		end
 
 		self:ClearObjects()
@@ -100,15 +108,19 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.pulley.help" } )
+	CPanel:Help( "#tool.pulley.help" )
+	CPanel:ToolPresets( "pulley", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "pulley", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "pulley_forcelimit", 0, 1000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "pulley_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.pulley.rigid", Command = "pulley_rigid", Help = true } )
+	CPanel:CheckBox( "#tool.pulley.rigid", "pulley_rigid" )
+	CPanel:ControlHelp( "#tool.pulley.rigid.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.pulley.width", Command = "pulley_width", Type = "Float", Min = 0, Max = 10 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.pulley.material", ConVar = "pulley_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.pulley.color", Red = "pulley_color_r", Green = "pulley_color_g", Blue = "pulley_color_b" } )
+	CPanel:NumSlider( "#tool.pulley.width", "pulley_width", 0, 10 )
+
+	CPanel:RopeSelect( "pulley_material" )
+
+	CPanel:ColorPicker( "#tool.pulley.color", "pulley_color_r", "pulley_color_g", "pulley_color_b" )
 
 end

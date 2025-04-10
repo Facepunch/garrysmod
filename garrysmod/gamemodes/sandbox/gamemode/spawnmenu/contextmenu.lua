@@ -24,7 +24,7 @@ function PANEL:Open()
 
 	-- If the spawn menu is open, try to close it..
 	if ( IsValid( g_SpawnMenu ) && g_SpawnMenu:IsVisible() ) then
-		g_SpawnMenu:Close( true )
+		g_SpawnMenu:Close()
 	end
 
 	if ( self:IsVisible() ) then return end
@@ -46,7 +46,9 @@ function PANEL:Open()
 
 		self.OldParent = spawnmenu.ActiveControlPanel():GetParent()
 		self.OldPosX, self.OldPosY = spawnmenu.ActiveControlPanel():GetPos()
+
 		spawnmenu.ActiveControlPanel():SetParent( self )
+
 		self.Canvas:Clear()
 		self.Canvas:AddItem( spawnmenu.ActiveControlPanel() )
 		self.Canvas:Rebuild()
@@ -62,7 +64,7 @@ function PANEL:Open()
 
 end
 
-function PANEL:Close( bSkipAnim )
+function PANEL:Close()
 
 	if ( self:GetHangOpen() ) then
 		self:SetHangOpen( false )
@@ -170,6 +172,8 @@ function CreateContextMenu()
 	IconLayout:SetStretchHeight( false ) -- No infinite re-layouts
 	IconLayout:Dock( LEFT )
 
+	g_ContextMenu.DesktopWidgets = IconLayout
+
 	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
 	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
 
@@ -178,7 +182,8 @@ function CreateContextMenu()
 		local icon = IconLayout:Add( "DButton" )
 		icon:SetText( "" )
 		icon:SetSize( 80, 82 )
-		icon.Paint = function() end
+		icon.Paint = nil
+		icon.WidgetClass = k
 
 		local image = icon:Add( "DImage" )
 		image:SetImage( v.icon )
@@ -200,7 +205,12 @@ function CreateContextMenu()
 			--
 			local newv = list.Get( "DesktopWindows" )[ k ]
 
-			if ( v.onewindow and IsValid( icon.Window ) ) then
+			-- Changing parents causes loss of input and I don't have time to figure out why
+			if ( IsValid( icon.Window ) && icon.Window:GetParent() != g_ContextMenu ) then
+				icon.Window:Remove()
+			end
+
+			if ( newv.onewindow and IsValid( icon.Window ) ) then
 				icon.Window:Center()
 				return
 			end

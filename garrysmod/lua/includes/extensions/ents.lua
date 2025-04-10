@@ -1,33 +1,27 @@
 
 function ents.FindByClassAndParent( classname, entity )
 
-	if ( !IsValid( entity ) ) then return end
+    if ( !IsValid( entity ) ) then return end
 
-	local list = ents.FindByClass( classname )
-	if ( !list ) then return end
+    local out = {}
 
-	local out = {}
-	for k, v in ipairs( list ) do
+    for k, v in ipairs( ents.FindByClass( classname ) ) do
 
-		if ( !IsValid(v) ) then continue end
+        if ( v:GetParent() == entity ) then
+      		table.insert( out, v )
+    	end
 
-		local p = v:GetParent()
-		if ( !IsValid(p) ) then continue end
-		if ( p != entity ) then continue end
+    end
 
-		table.insert( out, v )
+    if ( out[1] == nil ) then return end
 
-	end
-
-	if ( #out == 0 ) then return end
-
-	return out
+    return out
 
 end
 
 
 
-local inext = ipairs({})
+local inext = ipairs( {} )
 local EntityCache = nil
 
 function ents.Iterator()
@@ -38,7 +32,7 @@ function ents.Iterator()
 
 end
 
-local function InvalidateEntityCache( ent )
+local function InvalidateEntityCache()
 
 	EntityCache = nil
 

@@ -99,7 +99,8 @@ function TOOL:LeftClick( trace )
 		undo.Create( "Trail" )
 			undo.AddEntity( trail )
 			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
+			undo.SetCustomUndoText( "Undone #tool.trail.name" )
+		undo.Finish( "#tool.trail.name" )
 	end
 
 	return true
@@ -146,15 +147,14 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.trails.desc" } )
+	CPanel:Help( "#tool.trails.desc" )
+	CPanel:ToolPresets( "trails", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "trails", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ColorPicker( "#tool.trails.color", "trails_r", "trails_g", "trails_b", "trails_a" )
 
-	CPanel:AddControl( "Color", { Label = "#tool.trails.color", Red = "trails_r", Green = "trails_g", Blue = "trails_b", Alpha = "trails_a" } )
-
-	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10, 2 )
-	CPanel:NumSlider( "#tool.trails.startsize", "trails_startsize", 0, 128, 2 )
-	CPanel:NumSlider( "#tool.trails.endsize", "trails_endsize", 0, 128, 2 )
+	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10 )
+	CPanel:NumSlider( "#tool.trails.startsize", "trails_startsize", 0, 128 )
+	CPanel:NumSlider( "#tool.trails.endsize", "trails_endsize", 0, 128 )
 
 	CPanel:MatSelect( "trails_material", list.Get( "trail_materials" ), true, 0.25, 0.25 )
 

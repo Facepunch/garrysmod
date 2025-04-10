@@ -167,6 +167,8 @@ local function DetectServerPlugin()
       return "evolve"
    elseif exsto and exsto.GetPlugin('administration') then
       return "exsto"
+   elseif sam and sam.player.ban then
+      return "sam"
    else
       return "gmod"
    end
@@ -194,6 +196,8 @@ local ban_functions = {
                   adm:Ban(nil, p, l, r)
                end
             end,
+   
+   sam = sam and sam.player and sam.player.ban,
 
    gmod   = StandardBan
 };

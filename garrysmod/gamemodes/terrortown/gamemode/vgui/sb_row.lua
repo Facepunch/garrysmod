@@ -6,6 +6,16 @@ include("sb_info.lua")
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 
+local OpenedVoicePanels = {}
+local function HideVolumePanels()
+   for _, pnl in pairs(OpenedVoicePanels) do
+      if IsValid(pnl) then
+         pnl:Close()
+         pnl = nil
+      end
+   end
+end
+hook.Add("ScoreboardHide", "TTT_HideVolumePanels", HideVolumePanels)
 
 SB_ROW_HEIGHT = 24 --16
 
@@ -173,7 +183,9 @@ function PANEL:SetPlayer(ply)
 
    self.voice.DoRightClick = function()
       if IsValid(ply) and ply != LocalPlayer() then
-         self:ShowMicVolumeSlider()
+         HideVolumePanels()
+         local voiceSlider = self:ShowMicVolumeSlider()
+         table.insert(OpenedVoicePanels, voiceSlider)
       end
    end
 
@@ -320,7 +332,6 @@ function PANEL:DoRightClick()
    menu:Open()
 end
 
-
 function PANEL:ShowMicVolumeSlider()
    local width = 300
    local height = 50
@@ -329,7 +340,7 @@ function PANEL:ShowMicVolumeSlider()
    local sliderHeight = 16
    local sliderDisplayHeight = 8
 
-   local x = math.max(gui.MouseX() - width, 0)
+   local x = math.max(gui.MouseX() - width - padding, 0)
    local y = math.min(gui.MouseY(), ScrH() - height)
 
    local currentPlayerVolume = self:GetPlayer():GetVoiceVolumeScale()
@@ -348,6 +359,7 @@ function PANEL:ShowMicVolumeSlider()
    frame.Paint = function(self, w, h)
       draw.RoundedBox(5, 0, 0, w, h, Color(24, 25, 28, 255))
    end
+   frame.Player = self:GetPlayer()
 
    -- Automatically close after 10 seconds (something may have gone wrong)
    timer.Simple(10, function() if IsValid(frame) then frame:Close() end end)
@@ -370,7 +382,7 @@ function PANEL:ShowMicVolumeSlider()
    slider:SetSlideX(currentPlayerVolume)
    slider:SetLockY(0.5)
    slider.TranslateValues = function(slider, x, y)
-      if IsValid(self:GetPlayer()) then self:GetPlayer():SetVoiceVolumeScale(x) end
+      if IsValid(frame.Player) then frame.Player:SetVoiceVolumeScale(x) end
       return x, y
    end
 
@@ -408,9 +420,11 @@ function PANEL:ShowMicVolumeSlider()
          )
          draw.DrawText(textValue, "cool_small", sliderHeight / 2, -20, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
       end
-      
+
       draw.RoundedBox(100, 0, 0, sliderHeight, sliderHeight, Color(255, 255, 255, 255))
    end
+
+   return frame
 end
 
 vgui.Register( "TTTScorePlayerRow", PANEL, "DButton" )

@@ -26,10 +26,14 @@ function TOOL:LeftClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -48,10 +52,12 @@ function TOOL:LeftClick( trace )
 		if ( IsValid( constr ) ) then
 			undo.Create( "BallSocket" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+				undo.SetPlayer( ply )
+				undo.SetCustomUndoText( "Undone #tool.ballsocket.name" )
+			undo.Finish( "#tool.ballsocket.name" )
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -86,12 +92,16 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.ballsocket.help" } )
+	CPanel:Help( "#tool.ballsocket.help" )
+	CPanel:ToolPresets( "ballsocket", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "ballsocket", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "ballsocket_forcelimit", 0, 50000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "ballsocket_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	--CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "ballsocket_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "ballsocket_nocollide", Help = true } )
+	--CPanel:NumSlider( "#tool.torquelimit", "ballsocket_torquelimit", 0, 50000 )
+	--CPanel:ControlHelp( "#tool.torquelimit.help" )
+
+	CPanel:CheckBox( "#tool.nocollide", "ballsocket_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide.help" )
 
 end

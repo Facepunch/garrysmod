@@ -538,10 +538,11 @@ end
 
 local function getKeys( tbl )
 
-	local keys = {}
+	local keys, i = {}, 0
 
 	for k in pairs( tbl ) do
-		table.insert( keys, k )
+		i = i + 1
+		keys[ i ] = k
 	end
 
 	return keys
@@ -566,10 +567,10 @@ function SortedPairs( pTable, Desc )
 		end )
 	end
 
-	local i, key
+	local i, key = 1, nil
 	return function()
-		i, key = next( keys, i )
-		return key, pTable[key]
+		key, i = keys[ i ], i + 1
+		return key, pTable[ key ]
 	end
 
 end
@@ -782,12 +783,12 @@ end
 if ( !table.move ) then
 	function table.move( sourceTbl, from, to, dest, destTbl )
 
-		if ( !istable( sourceTbl ) ) then error( "bad argument #1 to 'move' (table expected, got " .. type( sourceTbl ) .. ")" ) end
-		if ( !isnumber( from ) ) then error( "bad argument #2 to 'move' (number expected, got " .. type( from ) .. ")" ) end
-		if ( !isnumber( to ) ) then error( "bad argument #3 to 'move' (number expected, got " .. type( to ) .. ")" ) end
-		if ( !isnumber( dest ) ) then error( "bad argument #4 to 'move' (number expected, got " .. type( dest ) .. ")" ) end
+		if ( !istable( sourceTbl ) ) then error( "bad argument #1 to 'move' (table expected, got " .. type( sourceTbl ) .. ")", 2 ) end
+		if ( !isnumber( from ) ) then error( "bad argument #2 to 'move' (number expected, got " .. type( from ) .. ")", 2 ) end
+		if ( !isnumber( to ) ) then error( "bad argument #3 to 'move' (number expected, got " .. type( to ) .. ")", 2 ) end
+		if ( !isnumber( dest ) ) then error( "bad argument #4 to 'move' (number expected, got " .. type( dest ) .. ")", 2 ) end
 		if ( destTbl != nil ) then
-			if ( !istable( destTbl ) ) then error( "bad argument #5 to 'move' (table expected, got " .. type( destTbl ) .. ")" ) end
+			if ( !istable( destTbl ) ) then error( "bad argument #5 to 'move' (table expected, got " .. type( destTbl ) .. ")", 2 ) end
 		else
 			destTbl = sourceTbl
 		end

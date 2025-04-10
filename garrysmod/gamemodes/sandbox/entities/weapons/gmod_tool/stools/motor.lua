@@ -39,12 +39,17 @@ function TOOL:LeftClick( trace )
 	if ( iNum > 0 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			self:ReleaseGhostEntity()
 
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			self:ReleaseGhostEntity()
+			return false
 		end
 
 		-- Get client's CVars
@@ -82,16 +87,18 @@ function TOOL:LeftClick( trace )
 		-- Set the hinge Axis perpendicular to the trace hit surface
 		LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 * 64 )
 
-		local constr, axis = constraint.Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, time, nocollide, toggle, self:GetOwner(), limit, forekey, backkey, 1 )
+		local constr, axis = constraint.Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, time, nocollide, toggle, ply, limit, forekey, backkey, 1 )
 		if ( IsValid( constr ) ) then
 			undo.Create( "Motor" )
 				undo.AddEntity( constr )
 				if ( IsValid( axis ) ) then undo.AddEntity( axis ) end
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+				undo.SetPlayer( ply )
+				undo.SetCustomUndoText( "Undone #tool.motor.name" )
+			undo.Finish( "#tool.motor.name" )
 
-			self:GetOwner():AddCleanup( "constraints", constr )
-			if ( IsValid( axis ) ) then self:GetOwner():AddCleanup( "constraints", axis ) end
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
+			if ( IsValid( axis ) ) then ply:AddCleanup( "constraints", axis ) end
 		end
 
 		-- Clear the objects so we're ready to go again
@@ -136,16 +143,26 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.motor.help" } )
+	CPanel:Help( "#tool.motor.help" )
+	CPanel:ToolPresets( "motor", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "motor", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.motor.numpad1", "motor_fwd", "#tool.motor.numpad2", "motor_bwd" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.motor.numpad1", Command = "motor_fwd", Label2 = "#tool.motor.numpad2", Command2 = "motor_bwd" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.motor.torque", Command = "motor_torque", Type = "Float", Min = 0, Max = 10000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "motor_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "motor_friction", Type = "Float", Min = 0, Max = 100, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.motor.forcetime", Command = "motor_forcetime", Type = "Float", Min = 0, Max = 120, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "motor_nocollide", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "motor_toggle", Help = true } )
+	CPanel:NumSlider( "#tool.motor.torque", "motor_torque", 0, 10000 )
+
+	CPanel:NumSlider( "#tool.forcelimit", "motor_forcelimit", 0, 50000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
+
+	CPanel:NumSlider( "#tool.hingefriction", "motor_friction", 0, 100 )
+	CPanel:ControlHelp( "#tool.hingefriction.help" )
+
+	CPanel:NumSlider( "#tool.motor.forcetime", "motor_forcetime", 0, 120 )
+	CPanel:ControlHelp( "#tool.motor.forcetime.help" )
+
+	CPanel:CheckBox( "#tool.nocollide", "motor_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide.help" )
+
+	CPanel:CheckBox( "#tool.toggle", "motor_toggle" )
+	CPanel:ControlHelp( "#tool.toggle.help" )
 
 end

@@ -2,16 +2,21 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bFirstPerson", "FirstPerson" )
+AccessorFunc( PANEL, "m_iMoveScale", "MovementScale" )
 
 function PANEL:Init()
 
 	self.mx = 0
 	self.my = 0
 	self.aLookAngle = angle_zero
+	self:SetMovementScale( 1 )
 
 end
 
 function PANEL:OnMousePressed( mousecode )
+
+	-- input.SetCursorPos does not work while main menu is open
+	if ( !MENU_DLL and gui.IsGameUIVisible() ) then return end
 
 	self:SetCursor( "none" )
 	self:MouseCapture( true )
@@ -57,6 +62,9 @@ function PANEL:Think()
 end
 
 function PANEL:CaptureMouse()
+
+	-- input.SetCursorPos does not work while main menu is open
+	if ( !MENU_DLL and gui.IsGameUIVisible() ) then return 0, 0 end
 
 	local x, y = input.GetCursorPos()
 
@@ -139,7 +147,7 @@ function PANEL:FirstPersonControls()
 	local speed = 0.5
 	if ( input.IsShiftDown() ) then speed = 4.0 end
 
-	self.vCamPos = self.vCamPos + Movement * speed
+	self.vCamPos = self.vCamPos + Movement * speed * self:GetMovementScale()
 
 end
 

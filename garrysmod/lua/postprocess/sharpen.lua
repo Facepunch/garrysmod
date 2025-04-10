@@ -38,16 +38,13 @@ list.Set( "PostProcess", "#sharpen_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#sharpen_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#sharpen_pp.enable", Command = "pp_sharpen" } )
+		CPanel:Help( "#sharpen_pp.desc" )
+		CPanel:CheckBox( "#sharpen_pp.enable", "pp_sharpen" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "sharpen" }
-		params.Options[ "#preset.default" ] = { pp_sharpen_distance = "1", pp_sharpen_contrast = "1" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		CPanel:ToolPresets( "sharpen", { pp_sharpen_distance = "1", pp_sharpen_contrast = "1" } )
 
-		CPanel:AddControl( "Slider", { Label = "#sharpen_pp.distance", Command = "pp_sharpen_distance", Type = "Float", Min = "-5", Max = "5" } )
-		CPanel:AddControl( "Slider", { Label = "#sharpen_pp.contrast", Command = "pp_sharpen_contrast", Type = "Float", Min = "0", Max = "20" } )
+		CPanel:NumSlider( "#sharpen_pp.distance", "pp_sharpen_distance", -5, 5 )
+		CPanel:NumSlider( "#sharpen_pp.contrast", "pp_sharpen_contrast", 0, 20 )
 
 	end
 

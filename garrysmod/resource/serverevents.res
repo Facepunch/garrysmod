@@ -113,6 +113,7 @@
 	{
 		"userid"	"short"		// user ID on server
 		"text"		"string"	// the say text
+		"teamonly"	"bool"		// is it teamonly
 	}
 	
 	"client_disconnect"			// client side disconnect message
@@ -152,5 +153,11 @@
 		"index"		"short"		// entity index of the player
 		"name"		"string"	// player name
 		"networkid"	"string"	// player network (i.e steam) id
+	}
+
+	"nav_blocked"
+	{
+		"area"		"long"
+		"blocked"	"bool"
 	}
 }

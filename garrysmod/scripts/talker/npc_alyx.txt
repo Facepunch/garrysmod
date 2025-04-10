@@ -21,6 +21,7 @@ rule AlyxIsBack
 	response AlyxIsBack
 }
 
+criterion "PlayerNotUsingPhysCannon" "playerweapon"  "!=weapon_physcannon" required
 response "AlyxDanger"
 {
 	scene "scenes/npc/Alyx/getback01.vcd" respeakdelay 60

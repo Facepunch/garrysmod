@@ -89,6 +89,7 @@ local function MakeRagdoll( ply, _, _, model, _, Data )
 	Ent:Activate()
 
 	if ( IsValid( ply ) ) then
+		Ent:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedRagdoll", ply, model, Ent )
 	end
 
@@ -115,10 +116,10 @@ function GMODSpawnRagdoll( ply, model, iSkin, strBody )
 
 	DoPropSpawnedEffect( e )
 
-	undo.Create( "Ragdoll" )
+	undo.Create( "prop_ragdoll" )
 		undo.SetPlayer( ply )
 		undo.AddEntity( e )
-	undo.Finish( "Ragdoll (" .. tostring( model ) .. ")" )
+	undo.Finish( "#prop_ragdoll (" .. tostring( model ) .. ")" )
 
 	ply:AddCleanup( "ragdolls", e )
 
@@ -142,6 +143,7 @@ function MakeProp( ply, Pos, Ang, model, _, Data )
 
 	-- Tell the gamemode we just spawned something
 	if ( IsValid( ply ) ) then
+		Prop:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedProp", ply, model, Prop )
 	end
 
@@ -174,6 +176,7 @@ function MakeEffect( ply, model, Data )
 
 	-- Tell the gamemode we just spawned something
 	if ( IsValid( ply ) ) then
+		Prop:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, Prop )
 	end
 
@@ -246,10 +249,10 @@ function GMODSpawnProp( ply, model, iSkin, strBody )
 
 	DoPropSpawnedEffect( e )
 
-	undo.Create( "Prop" )
+	undo.Create( "prop_physics" )
 		undo.SetPlayer( ply )
 		undo.AddEntity( e )
-	undo.Finish( "Prop (" .. tostring( model ) .. ")" )
+	undo.Finish( "#prop_physics (" .. tostring( model ) .. ")" )
 
 	ply:AddCleanup( "props", e )
 
@@ -273,10 +276,10 @@ function GMODSpawnEffect( ply, model, iSkin, strBody )
 		DoPropSpawnedEffect( e.AttachedEntity )
 	end
 
-	undo.Create( "Effect" )
+	undo.Create( "prop_effect" )
 		undo.SetPlayer( ply )
 		undo.AddEntity( e )
-	undo.Finish( "Effect (" .. tostring( model ) .. ")" )
+	undo.Finish( "#prop_effect (" .. tostring( model ) .. ")" )
 
 	ply:AddCleanup( "effects", e )
 
@@ -321,6 +324,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	ent:SetAngles( ang )
 	if ( strBody ) then ent:SetBodyGroups( strBody ) end
 	ent:SetPos( tr.HitPos )
+	ent:SetCreator( ply )
 	ent:Spawn()
 	ent:Activate()
 
@@ -455,10 +459,28 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 	--
 	-- Optional Key Values
 	--
+	local squadName = nil
 	if ( NPCData.KeyValues ) then
 		for k, v in pairs( NPCData.KeyValues ) do
 			NPC:SetKeyValue( k, v )
+
+			if ( string.lower( k ) == "squadname" ) then squadName = v end
 		end
+	end
+
+	--
+	-- Handle squads being overflown.
+	--
+	local MAX_SQUAD_MEMBERS	= 16
+	if ( squadName and ai.GetSquadMemberCount( squadName ) >= MAX_SQUAD_MEMBERS ) then
+
+		-- Find first open squad
+		local sqNum = 0
+		while ( ai.GetSquadMemberCount( squadName .. sqNum ) >= MAX_SQUAD_MEMBERS ) do
+			sqNum = sqNum + 1
+		end
+
+		NPC:SetKeyValue( "SquadName", squadName .. sqNum )
 	end
 
 	--
@@ -570,14 +592,13 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 
 	-- Give the gamemode an opportunity to do whatever
 	if ( IsValid( ply ) ) then
+		SpawnedNPC:SetCreator( ply )
 		gamemode.Call( "PlayerSpawnedNPC", ply, SpawnedNPC )
 	end
 
 	-- See if we can find a nice name for this NPC..
-	local NiceName = nil
-	if ( NPCData ) then
-		NiceName = NPCData.Name
-	end
+	local NiceName = NPCClassName
+	if ( NPCData and NPCData.Name ) then NiceName = NPCData.Name end
 
 	-- Add to undo list
 	undo.Create( "NPC" )
@@ -586,12 +607,14 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 		if ( NiceName ) then
 			undo.SetCustomUndoText( "Undone " .. NiceName )
 		end
-	undo.Finish( "NPC (" .. tostring( NPCClassName ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.npc (" .. tostring( NiceName ) .. ")" )
 
 	-- And cleanup
 	ply:AddCleanup( "npcs", SpawnedNPC )
 
 	ply:SendLua( "achievements.SpawnedNPC()" )
+
+	return SpawnedNPC
 
 end
 concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end )
@@ -625,6 +648,7 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 		end
 
 		if ( IsValid( ply ) ) then
+			ent:SetCreator( ply )
 			gamemode.Call( "PlayerSpawnedNPC", ply, ent )
 			ply:AddCleanup( "npcs", ent )
 		end
@@ -785,7 +809,7 @@ function Spawn_SENT( ply, EntityName, tr )
 	end
 
 	local entity = nil
-	local PrintName = nil
+	local PrintName = EntityName
 	local sent = scripted_ents.GetStored( EntityName )
 
 	if ( sent ) then
@@ -870,10 +894,12 @@ function Spawn_SENT( ply, EntityName, tr )
 		if ( PrintName ) then
 			undo.SetCustomUndoText( "Undone " .. PrintName )
 		end
-	undo.Finish( "Scripted Entity (" .. tostring( EntityName ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.entity (" .. tostring( PrintName ) .. ")" )
 
 	ply:AddCleanup( "sents", entity )
 	entity:SetVar( "Player", ply )
+
+	return entity
 
 end
 concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end )
@@ -960,6 +986,7 @@ function Spawn_Weapon( ply, wepname, tr )
 		SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
 	end
 
+	entity:SetCreator( ply )
 	entity:SetPos( SpawnPos )
 	entity:Spawn()
 
@@ -967,7 +994,7 @@ function Spawn_Weapon( ply, wepname, tr )
 		undo.SetPlayer( ply )
 		undo.AddEntity( entity )
 		undo.SetCustomUndoText( "Undone " .. tostring( swep.PrintName ) )
-	undo.Finish( "Scripted Weapon (" .. tostring( swep.ClassName ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.weapon (" .. tostring( swep.PrintName ) .. ")" )
 
 	-- Throw it into SENTs category
 	ply:AddCleanup( "sents", entity )
@@ -975,6 +1002,8 @@ function Spawn_Weapon( ply, wepname, tr )
 	TryFixPropPosition( ply, entity, tr.HitPos )
 
 	gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
+
+	return entity
 
 end
 concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
@@ -1018,6 +1047,7 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 		end
 	end
 
+	if ( ply ) then Ent:SetCreator( ply ) end
 	Ent:SetAngles( Ang )
 	Ent:SetPos( Pos )
 
@@ -1097,9 +1127,11 @@ function Spawn_Vehicle( ply, vname, tr )
 		undo.SetPlayer( ply )
 		undo.AddEntity( Ent )
 		undo.SetCustomUndoText( "Undone " .. vehicle.Name )
-	undo.Finish( "Vehicle (" .. tostring( vehicle.Name ) .. ")" )
+	undo.Finish( "#spawnmenu.utilities.undo.vehicle (" .. tostring( vehicle.Name ) .. ")" )
 
 	ply:AddCleanup( "vehicles", Ent )
+
+	return Ent
 
 end
 concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply, args[1] ) end )

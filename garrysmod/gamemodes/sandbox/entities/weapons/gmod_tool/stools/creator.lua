@@ -2,7 +2,6 @@
 TOOL.AddToMenu = false
 TOOL.ClientConVar[ "type" ] = "0"
 TOOL.ClientConVar[ "name" ] = "0"
-TOOL.ClientConVar[ "arg" ] = "0"
 
 TOOL.Information = { { name = "left" } }
 
@@ -10,7 +9,6 @@ function TOOL:LeftClick( trace, attach )
 
 	local type = self:GetClientNumber( "type", 0 )
 	local name = self:GetClientInfo( "name" )
-	local arg = self:GetClientInfo( "arg" )
 
 	if ( CLIENT ) then return true end
 
@@ -24,7 +22,13 @@ function TOOL:LeftClick( trace, attach )
 
 	elseif ( type == 2 ) then
 
-		Spawn_NPC( self:GetOwner(), name, arg, trace )
+		-- Load a weapon just like left clicking would
+		local NPCinfo = list.Get( "NPC" )[ name ]
+		local weapon = table.Random( NPCinfo.Weapons ) or ""
+		local gmod_npcweapon = GetConVar( "gmod_npcweapon" )
+		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
+
+		Spawn_NPC( self:GetOwner(), name, weapon, trace )
 
 	elseif ( type == 3 ) then
 

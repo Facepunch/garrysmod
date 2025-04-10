@@ -81,7 +81,7 @@ function TOOL:LeftClick( trace )
 
 	local constr, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
 
-	undo.Create( "Wheel" )
+	undo.Create( "gmod_wheel" )
 		if ( IsValid( constr ) ) then
 			undo.AddEntity( constr )
 			ply:AddCleanup( "wheels", constr )
@@ -153,11 +153,11 @@ if ( SERVER ) then
 	-- For duplicator, creates the wheel.
 	function MakeWheel( ply, pos, ang, model, key_f, key_r, axis, direction, toggle, baseTorque, Data )
 
-		if ( IsValid( ply ) and !ply:CheckLimit( "wheels" ) ) then return false end
-		if ( !IsValidWheelModel( model ) ) then return false end
+		if ( IsValid( ply ) and !ply:CheckLimit( "wheels" ) ) then return NULL end
+		if ( !IsValidWheelModel( model ) ) then return NULL end
 
 		local wheel = ents.Create( "gmod_wheel" )
-		if ( !IsValid( wheel ) ) then return end
+		if ( !IsValid( wheel ) ) then return NULL end
 
 		duplicator.DoGeneric( wheel, Data )
 		wheel:SetModel( model ) -- Backwards compatible for addons directly calling this function
@@ -247,20 +247,19 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.wheel.desc" } )
+	CPanel:Help( "#tool.wheel.desc" )
+	CPanel:ToolPresets( "wheel", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "wheel", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.wheel.forward", "wheel_fwd", "#tool.wheel.reverse", "wheel_bck" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.wheel.forward", Command = "wheel_fwd", Label2 = "#tool.wheel.reverse", Command2 = "wheel_bck" } )
+	CPanel:NumSlider( "#tool.wheel.torque", "wheel_torque", 10, 10000 )
+	CPanel:NumSlider( "#tool.wheel.forcelimit", "wheel_forcelimit", 0, 50000 )
+	CPanel:NumSlider( "#tool.wheel.friction", "wheel_friction", 0, 100 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.torque", Command = "wheel_torque", Type = "Float", Min = 10, Max = 10000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.forcelimit", Command = "wheel_forcelimit", Type = "Float", Min = 0, Max = 50000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.wheel.friction", Command = "wheel_friction", Type = "Float", Min = 0, Max = 100 } )
+	CPanel:CheckBox( "#tool.wheel.nocollide", "wheel_nocollide" )
+	CPanel:CheckBox( "#tool.wheel.toggle", "wheel_toggle" )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.nocollide", Command = "wheel_nocollide" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.toggle", Command = "wheel_toggle" } )
-
-	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model", ConVar = "wheel_model", Height = 0, Models = list.Get( "WheelModels" ) } )
+	CPanel:PropSelect( "#tool.wheel.model", "wheel_model", list.Get( "WheelModels" ), 0 )
 
 end
 

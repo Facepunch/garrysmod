@@ -27,10 +27,8 @@ function TOOL:LeftClick( trace )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 
 	if ( CLIENT ) then
-
 		if ( iNum > 0 ) then self:ClearObjects() end
 		return true
-
 	end
 
 	self:SetOperation( 2 )
@@ -43,6 +41,12 @@ function TOOL:LeftClick( trace )
 	end
 
 	if ( iNum == 1 ) then
+
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			return false
+		end
 
 		-- Get client's CVars
 		local forcelimit = self:GetClientNumber( "forcelimit" )
@@ -57,10 +61,12 @@ function TOOL:LeftClick( trace )
 
 			undo.Create( "Weld" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+				undo.SetPlayer( ply )
+				undo.SetCustomUndoText( "Undone #tool.weld.name" )
+			undo.Finish( "#tool.weld.name" )
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 
 		end
 
@@ -163,10 +169,14 @@ function TOOL:RightClick( trace )
 	if ( iNum == 2 ) then
 
 		if ( CLIENT ) then
-
 			self:ClearObjects()
 			return true
+		end
 
+		local ply = self:GetOwner()
+		if ( !ply:CheckLimit( "constraints" ) ) then
+			self:ClearObjects()
+			return false
 		end
 
 		-- Get client's CVars
@@ -193,10 +203,12 @@ function TOOL:RightClick( trace )
 
 			undo.Create( "Weld" )
 				undo.AddEntity( constr )
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+				undo.SetPlayer( ply )
+				undo.SetCustomUndoText( "Undone #tool.weld.name" )
+			undo.Finish( "#tool.weld.name" )
 
-			self:GetOwner():AddCleanup( "constraints", constr )
+			ply:AddCount( "constraints", constr )
+			ply:AddCleanup( "constraints", constr )
 
 		end
 
@@ -278,11 +290,12 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.weld.help" } )
+	CPanel:Help( "#tool.weld.help" )
+	CPanel:ToolPresets( "weld", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "weld", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "weld_forcelimit", 0, 1000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "weld_nocollide" } )
+	CPanel:CheckBox( "#tool.nocollide", "weld_nocollide" )
 
 end

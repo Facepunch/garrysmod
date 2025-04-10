@@ -205,7 +205,7 @@ end
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
 	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
-		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
+		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end, severity = 1 } )
 	else
 		ClearProblem( "mat_hdr_level" )
 	end
@@ -229,9 +229,15 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	if ( math.abs( GetConVarNumber( "voice_fadeouttime" ) - 0.1 ) > 0.001 ) then
-		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) end } )
+		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) ClearProblem( "voice_fadeouttime" ) end } )
 	else
 		ClearProblem( "voice_fadeouttime" )
+	end
+
+	if ( GetConVarNumber( "mat_viewportscale" ) < 0.1 ) then
+		FireProblem( { id = "mat_viewportscale", text = "#problem.mat_viewportscale", type = "config", fix = function() RunConsoleCommand( "mat_viewportscale", "1" ) ClearProblem( "mat_viewportscale" ) end } )
+	else
+		ClearProblem( "mat_viewportscale" )
 	end
 
 	if ( ScrW() < 1000 or ScrH() < 700 ) then

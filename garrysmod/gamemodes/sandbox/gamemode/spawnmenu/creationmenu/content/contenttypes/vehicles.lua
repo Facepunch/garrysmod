@@ -8,7 +8,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 	if ( Vehicles ) then
 		for k, v in pairs( Vehicles ) do
 
-			local Category = v.Category or "Other"
+			local Category = language.GetPhrase( v.Category or "#spawnmenu.category.other" )
 			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 

@@ -10,12 +10,12 @@ WeaponData
 	"bucket"				"5"
 	"bucket_position"		"0"
 
-	"clip_size"				"0"
-	"clip2_size"			"0"
+	//"clip_size"				"0"
+	//"clip2_size"			"0"
 	"primary_ammo"			"None"
 	"secondary_ammo"		"None"
-	"default_clip"			"0"
-	"default_clip2"			"0"
+	//"default_clip"			"0"
+	//"default_clip2"			"0"
 
 	"autoswitchto"			"0"
 	"autoswitchfrom"		"0"

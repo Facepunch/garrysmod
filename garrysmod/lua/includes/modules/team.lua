@@ -1,7 +1,7 @@
 module( "team", package.seeall )
 
 local TeamInfo = {}
-local DefaultColor = Color(255, 255, 100, 255)
+local DefaultColor = Color( 255, 255, 100, 255 )
 
 TeamInfo[TEAM_CONNECTING] 	= { Name = "Joining/Connecting", 	Color = DefaultColor, 	Score = 0, 	Joinable = false }
 TeamInfo[TEAM_UNASSIGNED] 	= { Name = "Unassigned", 			Color = DefaultColor, 	Score = 0, 	Joinable = false }
@@ -80,7 +80,7 @@ end
 function SetSpawnPoint( id, ent_name )
 
 	if ( !TeamInfo[id] ) then return end
-	if ( !istable( ent_name ) ) then ent_name = {ent_name} end
+	if ( !istable( ent_name ) ) then ent_name = { ent_name } end
 
 	TeamInfo[id].SpawnPointTable = ent_name
 
@@ -89,7 +89,7 @@ end
 function SetClass( id, classtable )
 
 	if ( !TeamInfo[id] ) then return end
-	if ( !istable( classtable ) ) then classtable = {classtable} end
+	if ( !istable( classtable ) ) then classtable = { classtable } end
 
 	TeamInfo[id].SelectableClasses = classtable
 
@@ -102,43 +102,47 @@ function GetClass( id )
 
 end
 
-function TotalDeaths(index)
+function TotalDeaths( index )
 
 	local score = 0
-	for id,pl in ipairs( player.GetAll() ) do
-		if (pl:Team() == index) then
-			score = score + pl:Deaths()
+
+	for _, ply in player.Iterator() do
+		if ( ply:Team() == index ) then
+			score = score + ply:Deaths()
 		end
 	end
+
 	return score
 
 end
 
-function TotalFrags(index)
+function TotalFrags( index )
 
 	local score = 0
-	for id,pl in ipairs( player.GetAll() ) do
-		if (pl:Team() == index) then
-			score = score + pl:Frags()
+
+	for _, ply in player.Iterator() do
+		if ( ply:Team() == index ) then
+			score = score + ply:Frags()
 		end
 	end
+
 	return score
 
 end
 
-function NumPlayers(index)
+function NumPlayers( index )
 
-	return #GetPlayers(index)
+	return #GetPlayers( index )
 
 end
 
-function GetPlayers(index)
+function GetPlayers( index )
 
 	local TeamPlayers = {}
 
-	for id,pl in ipairs( player.GetAll() ) do
-		if (IsValid(pl) and pl:Team() == index) then
-			table.insert(TeamPlayers, pl)
+	for _, ply in player.Iterator() do
+		if ( ply:Team() == index ) then
+			table.insert(TeamPlayers, ply)
 		end
 	end
 
@@ -146,22 +150,22 @@ function GetPlayers(index)
 
 end
 
-function GetScore(index)
+function GetScore( index )
 
-	return GetGlobalInt( "Team."..tostring(index)..".Score", 0 )
+	return GetGlobalInt( "Team." .. tostring( index ) .. ".Score", 0 )
 
 end
 
 function GetName( index )
 
-	if (!TeamInfo[index]) then return "" end
+	if ( !TeamInfo[index] ) then return "" end
 	return TeamInfo[index].Name
 
 end
 
 function SetColor( index, color )
 
-	if ( !TeamInfo[ index ] ) then return false; end
+	if ( !TeamInfo[ index ] ) then return false end
 	TeamInfo[ index ].Color = color
 
 	return color
@@ -170,14 +174,14 @@ end
 
 function GetColor( index )
 
-	if (!TeamInfo[index]) then return DefaultColor end
-	return table.Copy( TeamInfo[index].Color )
+	local color = TeamInfo[index] && TeamInfo[index].Color || DefaultColor
+	return Color( color.r, color.g, color.b, color.a )
 
 end
 
-function SetScore(index, score)
+function SetScore( index, score )
 
-	return SetGlobalInt( "Team."..tostring(index)..".Score", score )
+	return SetGlobalInt( "Team." .. tostring( index ) .. ".Score", score )
 
 end
 

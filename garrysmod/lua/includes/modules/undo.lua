@@ -31,7 +31,7 @@ if ( CLIENT ) then
 		if ( !IsValid( Panel ) ) then return end
 
 		Panel:Clear()
-		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.undo.help" } )
+		Panel:Help( "#spawnmenu.utilities.undo.help" )
 
 		local ComboBox = Panel:ListBox()
 		ComboBox:SetTall( 500 )
@@ -56,10 +56,18 @@ if ( CLIENT ) then
 	-----------------------------------------------------------]]
 	net.Receive( "Undo_AddUndo", function()
 
-		local k	= net.ReadInt( 16 )
-		local v	= net.ReadString()
+		local key = net.ReadInt( 16 )
+		local name = net.ReadString()
 
-		table.insert( ClientUndos, 1, { Key = k, Name = v } )
+		-- HACK: To support localization of "#prop_physics (models/path.mdl)"
+		if ( name[ 1 ] == "#" and string.find( name, " (", nil, true ) ) then
+			local undoName, undoSecondary = string.match( name, "^(#.*) %((.*)%)$" )
+			if ( undoName and undoSecondary ) then
+				name = string.format( "%s (%s)", language.GetPhrase( undoName ), language.GetPhrase( undoSecondary ) )
+			end
+		end
+
+		table.insert( ClientUndos, 1, { Key = key, Name = name } )
 
 		MakeUIDirty()
 
@@ -339,7 +347,7 @@ function Finish( NiceText )
 	local index = Current_Undo.Owner:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
-	Current_Undo.NiceText = NiceText or Current_Undo.Name
+	Current_Undo.NiceText = NiceText or ( "#" .. Current_Undo.Name )
 
 	local id = table.insert( PlayerUndo[ index ], Current_Undo )
 

@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Half-Life 2 game definition file (.fgd) 
 //
@@ -188,7 +188,7 @@
 		2 : "Balls should collide against player" : 0
 	]
 
-    // Inputs
+	// Inputs
 	input LaunchBall(void) : "Launch a ball from the spawner."
 ]
 
@@ -371,6 +371,7 @@
 	[
 		65536 :  "Friendly" : 0
 		131072 : "Use prop_physics collision rules"	: 0
+		262144 : "Spawn as Alyx-hacked" : 0 // GMOD
 	]
 
 	startburied(choices) : "Start Buried" : "No" =
@@ -387,6 +388,10 @@
 
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
 	input TurnOff(void) : "Make this rollermine completely inert. Does not run AI and NPCs will ignore it." 
+	//input PowerDown(void) : "Shuts down this rollermine." // Duplicate of InteractivePowerDown
+	input JoltVehicle(void) : "Jolt the vehicle this rollermine is attached to, if attached to one."
+	input RespondToChirp(void) : "Plays a 'respont to chirp' sound."
+	input RespondToExplodeChirp(void) : "Plays a 'respont to explode chirp' sound and explodes."
 
 	output OnPhysGunPickup(void) : "Picked up with Gravity Gun"
 	output OnPhysGunDrop(void) : "Released by Gravity Gun"
@@ -868,7 +873,13 @@
 
 	denycommandconcept(string) : "Deny command speech concept" : "" : "If you want your citizens to squad with the player but not obey commands the player gives to move the squad, put a concept here and this citizen will speak the concept instead of obeying the order."
 
-    //Inputs
+	hostile(choices) : "Hostile" : 0 : "Will be considered a combine, will attack players and be friendly to combine units." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	//Inputs
 	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
 	input SetExpressionOverride(string) : "Set facial expression override"
 
@@ -1042,9 +1053,9 @@
 [
 	FollowTarget(target_destination) : "Strider to Follow" : "" : "The name of the strider that this hunter should follow."
 	
-    // Inputs
-    input FollowStrider(target_destination) : "Sets the name of the strider that this hunter should follow."
-    
+	// Inputs
+	input FollowStrider(target_destination) : "Sets the name of the strider that this hunter should follow."
+
 	input SetMinigunTime(float) : "Time to shoot at any set minigun target."
 	input SetMinigunTarget(string) : "Hunter will shoot minigun at the named target."
 
@@ -1092,7 +1103,7 @@
 	output OnPickingThrowable(void) : "Fires just before I pick something to hurl"
 	output OnThrowWarn(void)        : "Fires when I trigger the warning green glow before tossing"
 	output OnThrow(void)            : "Fires just after I throw something"
-	output OnHealthIsNow(integer)       : "When I am damaged, my hitpoints thereafter"
+	output OnHealthIsNow(integer)   : "When I am damaged, my hitpoints thereafter"
 	
 	input SetThrowRate(float) : "Advisor will throw an object once per this many seconds (plus a little more)"
 	input WrenchImmediate(string) : "Advisor will immediately start levitating all objects with this name"
@@ -1832,7 +1843,7 @@
 	]
 
 
-    // Inputs
+	// Inputs
 	input AllowInteraction(void) : "Allow Alyx's 'hacking' AI to run."
 	input DisallowInteraction(void) : "Disallow Alyx's 'hacking' AI."
 	input AllowDarknessSpeech(bool) : "Enables or disables Alyx's darkness speech ('where are you', etc)." 
@@ -1840,7 +1851,7 @@
 	input ClearAnimLockedEntity(void) : "Stops Alyx from taking her animation locking from another character."
 	input GiveEMP(bool): "Gives or removes the EMP tool."
 
-    //Outputs
+	//Outputs
 	output OnFinishInteractWithObject(void) : "Fires when Alyx finishes interacting with an object (usually hacking it)."
 	output OnPlayerUse(void) : "Fires when a player +USEs Alyx."
 
@@ -2044,7 +2055,7 @@
 	input SetPoolRegenTime(float) : "Set the time interval between pool regeneration ticks."
 	input ChangeDestinationGroup(string) : "Change the spawn group for this spawner."
 
-    // Outputs
+	// Outputs
 	output OnAllBlocked(void) : "Fires when all the hint nodes are blocked."
 
 	createspores(choices): "Create Spore effect" : "0" =
@@ -2190,11 +2201,11 @@
 	m_iszEntity(npcclass) : "Target NPC"
 	m_flRadius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 
-	MoveSpeed(integer) : "Move Speed" : 5			// How quickly should target move between scripted targets
-	PauseDuration(integer) : "Pause Duration" : 0		// How long should target pause at scripted target
-	EffectDuration(integer) : "Effect Duration" : 2		// How long should any associated effect last
+	MoveSpeed(integer) : "Move Speed" : 5 : "How quickly should target move between scripted targets"
+	PauseDuration(integer) : "Pause Duration" : 0 : "How long should target pause at scripted target"
+	EffectDuration(integer) : "Effect Duration" : 2 : "How long should any associated effect last"
 
-	target(target_destination) : "Next Target"		// Next scripted target
+	target(target_destination) : "Next Target" : : "Next scripted target"
 
 	// Inputs
 	input Enable(void) : "Enable this entity"
@@ -2209,7 +2220,7 @@
 	"AI Relationship - Sets relationships between groups of NPCs in the AI."
 [
 	subject(target_name_or_class) : "Subject(s)" : "" : "This is the NPC(s) whose disposition will change. May be a targetname or a classname."
-	target(target_name_or_class) : "Target(s)" : "" : "This is the NPC(s) about whom the Subject(s) will change their disposition. May be a tarGetname or a classname."
+	target(target_name_or_class) : "Target(s)" : "" : "This is the NPC(s) about whom the Subject(s) will change their disposition. May be a targetname or a classname."
 	disposition(choices) : "Disposition" : 3 : "Choose the way the Subject(s) should feel about the Target(s)" =
 	[
 		// These MUST match the enum in the code! (basecombatcharacter.h)
@@ -3159,11 +3170,11 @@
 		16: "Only Direct" : 0
 		32: "Controllable" : 0
 		64: "Damage Kick" : 0
-	      1024: "NPC Controllable" : 0
-              2048: "NPC Set Controller" : 0
-	      4096: "Allow friendlies to hit player" : 0
-	     32768: "Non-solid." : 0
-	    131072: "Perfect accuracy every 3rd shot at player" : 0
+		1024: "NPC Controllable" : 0
+		2048: "NPC Set Controller" : 0
+		4096: "Allow friendlies to hit player" : 0
+		32768: "Non-solid." : 0
+		131072: "Perfect accuracy every 3rd shot at player" : 0
 	]
 
 	control_volume(target_destination) : "Control Volume" : "" : "Name of a trigger the specifies the volume in which a player must be to control this tank."
@@ -4193,10 +4204,13 @@
 		0 : "No"
 		1 : "Yes"
 	]	
-	fogColor(color255) : "Fog Color" : "0 0 0"
+	fogColor(color255) : "Fog Color" : "0 0 0" : "The fog color."
+	fogColor_HDR(color255) : "Fog Color (HDR Override)" : "0 0 0" : "The fog color for HDR maps. 0 0 0 means no override."
 	fogStart(float) : "Fog Start" : 2048 : "The near fog plane."
 	fogEnd(float) : "Fog End" : 4096 : "The far fog/clipping plane."
 	fogMaxDensity(float) : "Fog Max Density [0..1]" : 1 : "The maximum fog density. 0=no fog, 1=full fog."
+	//fogRadial(boolean) : "Use Radial Fog?" : 0
+	//UseHDCamera(boolean) : "Use HD Camera?" : 0
 
 	// Inputs
 	input ChangeFOV(string) : "Changes camera's FOV over time"
@@ -4318,11 +4332,11 @@
 [
 	missilehint(target_destination) : "Missile Hint Target" : "" : "Name of one or more info_apc_missile_hint entities to use to determine what to hit."
 	
-    //Inputs
-    input FireMissileAt(target_destination) : "A target to fire a missile at"
+	//Inputs
+	input FireMissileAt(target_destination) : "A target to fire a missile at"
 	input Destroy(void) : "Causes the APC to blow up."
 
-    // Outputs
+	// Outputs
 	output OnFiredMissile(void) : "Fired when the APC shoots a missile."
 	output OnDeath(void) : "Fired when the APC is killed."
 	output OnDamaged(void) : "Fired when the APC is damaged."
@@ -4545,21 +4559,21 @@
 	input ExitVehicle(void) : "Boots the prisoner out of the vehicle."
 	input Viewlock(bool) : "Set true to prevent Gordon from looking around *at all*. Set false to let him look within limits."
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
+	input SetCanShoot(bool) : "Set if the driver can shoot their weapon."
+	input SetMaxPitch(float) : "Set max pitch for driver."
+	input SetMinPitch(float) : "Set min pitch for driver."
+	input SetMaxYaw(float) : "Set max yaw for driver."
+	input SetMinYaw(float) : "Set min yaw for driver."
+	input UseAttachmentEyes(bool) : "Force the view to use the attachment's orientation and position and don't blend in the player's look."
 	
 	output OnOpen(void) : "Fired when the vehicle is open enough to enter."
 	output OnClose(void) : "Fired when the vehicle too closed to enter."
 
-	ignoremoveparent(choices) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent went performing exit checks." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
+	ignoremoveparent(boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent went performing exit checks."
 
-	ignoreplayer(choices) : "Ignore Player collision" : 0 : "The player wont collide against this vehicle when moving around." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
+	ignoreplayer(boolean) : "Ignore Player collision" : 0 : "The player wont collide against this vehicle when moving around."
+	playercanshoot(boolean) : "Can the player shoot" : 0 : "Lets the player shoot their weapon while in the vehicle"
+	useattachmenteyes(boolean) : "Use attachment eyes" : 0 : "Should the driver's view use the attachment's orientation and not blend in the player's look."
 ]
 
 @FilterClass base(BaseFilter) iconsprite("editor/filter_class.vmt") = filter_combineball_type :

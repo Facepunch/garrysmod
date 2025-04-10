@@ -26,80 +26,55 @@
 	input RunPassedCode(string) : "Run code that was passed as a variable"
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studioprop( "models/editor/spot.mdl" ) frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture : "Projected texture entity."
+@PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours. Requires the skybox material be set to 'painted' in Map => Map Properties."
 [
-	spawnflags(flags) =
-	[
-		1  : "Enabled"			: 1
-	]
+	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The colour of the top of the sky."
+	bottomcolor(color1)		: "Sky Bottom Color" : "0.8 1.0 1.0" : "The colour of the bottom of the sky."
+	fadebias(float)			: "Sky Fade Bias" : "1.0" : "Controls the bias of the fade between top/bottom. (1.0 is even)"
 
-	target(target_destination)	: "target" : : "target"
-	lightfov(float)				: "FOV" : "90.0" : "FOV"
-	nearz(float)				: "NearZ" : "4.0" : "Near Z for projected texture"
-	farz(float)					: "FarZ" : "750.0" : "Far Z for projected texture"
-
-	enableshadows(Choices) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	lightonlytarget(Choices) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	lightworld(Choices) : "Light World" : 1 : "Control whether flashlight effects static world geometry." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	lightcolor(color255)		: "Light Color" : "255 255 255" : "Light Color RGB-Intensity"
-	lightstrength(float)		: "Light Strength" : "1.0" : "How bright the light appears"
-	cameraspace(integer)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
-
-	texturename(*string) 		: "Texture Name" : "effects/flashlight001" : "The name of the texture to use"
-	textureframe(integer) 		: "Texture Frame" : 0 : "The frame of the texture"
-
-	// Inputs
-	input TurnOn(void)					: "Turn on the texture"
-	input TurnOff(void)					: "Turn off the texture"
-	input SetFOV(float)					: "Set FOV"
-	input SpotlightTexture(string)		: "Set Spotlight Texture"
-	input Ambient(float)				: "Set Spotlight Ambient"
-
-]
-
-@PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours"
-[
-	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The colour of the top of the sky"
-	bottomcolor(color1)		: "Sky Bottom Color" : "0.8 1.0 1.0" : "The colour of the bottom of the sky"
-	fadebias(float)			: "Sky Fade Bias" : "1.0" : "Controls the bias of the fade between top/bottom (1.0 is even)"
-
-	sunsize(float)			: "Sun Size" : "2.0" : "Controls the size of the sun glow"
-	sunnormal(vector )		: "Sun Normal" : "0.4 0.0 0.01" : "The position of the sun, expressed as a normal from the center of the world"
+	sunsize(float)			: "Sun Size" : "2.0" : "Controls the size of the sun glow."
+	sunnormal(vector)		: "Sun Normal" : "0.4 0.0 0.01" : "The position of the sun, expressed as a normal from the center of the world."
 	sunposmethod(choices)	: "Sun Position Method" : 0 : "How should we determine the position of the sun?" =
 	[
 		0 : "Custom - Use the Sun Normal to position the sun"
 		1 : "Automatic - Find a env_sun entity and use that"
 	]
-	suncolor(color1)		: "Sun Color" : "0.2 0.1 0.0" : "The color of the sun glow (this is additive)"
+	suncolor(color1)		: "Sun Color" : "0.2 0.1 0.0" : "The color of the sun glow. (this is additive)"
 
-	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect (colouring of the horizon)"
-	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How powerful the dusk effect is"
-	duskcolor(color1)		: "Dusk Color" : "1.0 0.2 0.0" : "The color of the dusk effect"
+	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect. (colouring of the horizon)"
+	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How intense the dusk effect is."
+	duskcolor(color1)		: "Dusk Color" : "1.0 0.2 0.0" : "The color of the dusk effect."
 
-	drawstars(choices)		: "Draw Stars" : 0 : "" =
+	drawstars(choices)		: "Draw Stars" : 0 : "Whether to draw the star/cloud texture at all" =
 	[
 		0 : "No - Don't draw stars"
 		1 : "Yes - Draw the stars please"
 	]
 
-	startexture(string) 	: "Star Texture" : "skybox/starfield" : "The star texture"
-	starscale(float)		: "Star Scale" : "0.5" : "How big the star texture should be"
-	starfade(float)			: "Star Fade" : "1.0" : "Fade the star texture towards the horizon"
-	starspeed(float)		: "Star Speed" : "0.01" : "How fast the star texture should scroll across the sky"
+	startexture(string) 	: "Star Texture" : "skybox/starfield" : "The star texture."
+	starscale(float)		: "Star Scale" : "0.5" : "How big the star texture should be."
+	starfade(float)			: "Star Fade" : "1.0" : "Fade the star texture towards the horizon."
+	starspeed(float)		: "Star Speed" : "0.01" : "How fast the star texture should scroll across the sky."
+	starlayers(float)		: "Star Layers" : "1" : "From 1 to 3, how many layers should the star texture be repeated over."
 
 	hdrscale(float)			: "HDR Scale" : "0.66" : "When rendering your skybox in HDR mode, output will be scaled by this amount."
+
+	// Inputs
+	input SetTopColor(color255) : "Sets the colour of the top of the sky."
+	input SetBottomColor(color255) : "Sets the colour of the bottom of the sky."
+	input SetFadeBias(float) : "Sets the bias of the fade between top/bottom. (1.0 is even)"
+	input SetSunSize(float) : "Sets the size of the sun glow."
+	input SetSunNormal(vector) : "Sets the position of the sun, expressed as a normal from the center of the world."
+	input SetSunColor(color255) : "Sets the color of the sun glow. (this is additive)"
+	input SetDuskScale(float) : "Sets the size of the dusk effect. (colouring of the horizon)"
+	input SetDuskIntensity(float) : "Sets how intense the dusk effect is."
+	input SetDuskColor(color255) : "Sets the color of the dusk effect."
+	input StarTexture(string) : "Sets the star texture."
+	input StarScale(float) : "Sets how big the star texture should be."
+	input StarFade(float) : "Sets the fading term of the star texture towards the horizon."
+	input StarSpeed(float) : "Sets how fast the star texture should scroll across the sky."
+	input StarLayers(float) : "Sets how many layers should the star texture be repeated over. (1 to 3)"
+	input HDRScale(float) : "Sets the amount by which output will be scaled in HDR mode."
 ]
 
 @PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice) studio("models/editor/cone_helper.mdl") = beam_spotlight : 
@@ -130,6 +105,7 @@
 	input Start(void) : "Start the rotator rotating."
 	input Stop(void) : "Stop the rotator from rotating."
 	input Reverse(void) : "Reverse the direction of rotation of the rotator."
+	input SetColor(color255) : "Sets the color of the spotlight."
 	
 	// outputs
 	output OnLightOn(void) : "Fires when light turns on."
@@ -206,4 +182,14 @@
 		0 : "Team 0"
 		1 : "Team 1"
 	]
+]
+
+@PointClass base(Targetname) sphere(ball_size, 255, 255, 255, diameter) iconsprite("sprites/sent_ball_hammer.vmt") = sent_ball : 
+	"An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. "+
+	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests." +
+	"This spotlight is entirely client side, it is not sync'd across clients."
+[
+	ball_size(float) : "Ball Size" : 30 : "The size of the ball. Use the sphere helper for accurate in-world size."
+
+	rendercolor(color255) : "Ball Color (R G B)" : "255 255 255" : "The ball color"
 ]

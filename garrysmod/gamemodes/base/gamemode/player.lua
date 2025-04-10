@@ -31,7 +31,7 @@ end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerAuthed()
-	Desc: Player's STEAMID has been authed
+	Desc: Player's UniqueID was set
 -----------------------------------------------------------]]
 function GM:PlayerAuthed( ply, SteamID, UniqueID )
 end
@@ -164,7 +164,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 		MsgAll( attacker:Nick() .. " suicided!\n" )
 
-	return end
+		return
+	end
 
 	if ( attacker:IsPlayer() ) then
 
@@ -172,7 +173,11 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 
-	return end
+		return
+	end
+
+	if ( !IsValid( attacker ) ) then attacker = game.GetWorld() end
+	if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	local flags = 0
 	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
@@ -378,6 +383,9 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_combine" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_rebel" ) )
 
+		-- Portal 2 Coop
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_coop_spawn" ) )
+
 		-- CS Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_counterterrorist" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_terrorist" ) )
@@ -433,6 +441,13 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_rescue" ) )
 		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
 		--self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
+
+		-- NEOTOKYO Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_attacker" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_defender" ) )
+
+		-- Fortress Forever Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_ff_teamspawn" ) )
 
 	end
 
@@ -533,8 +548,29 @@ end
 	Name: gamemode:OnDamagedByExplosion( ply, dmginfo)
 	Desc: Player has been hurt by an explosion
 -----------------------------------------------------------]]
-function GM:OnDamagedByExplosion( ply, dmginfo )
-	ply:SetDSP( 35, false )
+local MIN_SHOCK_AND_CONFUSION_DAMAGE = 30
+local MIN_EAR_RINGING_DISTANCE = 240
+
+function GM:OnDamagedByExplosion( ply, info )
+
+	local ear_ringing = false
+	local inflictor = info:GetInflictor()
+	if ( IsValid( inflictor ) ) then
+		local delta = ply:GetPos() - inflictor:GetPos()
+		ear_ringing = delta:Length() < MIN_EAR_RINGING_DISTANCE
+	end
+
+	local shock = info:GetDamage() >= MIN_SHOCK_AND_CONFUSION_DAMAGE
+
+	if ( !shock and !ear_ringing ) then return end
+
+	-- The effect names are actually backwards
+	if ( shock ) then
+		ply:SetDSP( math.random( 35, 37 ), false )
+		return
+	end
+
+	ply:SetDSP( math.random( 32, 34 ), false )
 end
 
 --[[---------------------------------------------------------
@@ -818,7 +854,7 @@ concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerReques
 -----------------------------------------------------------]]
 function GM:HandlePlayerArmorReduction( ply, dmginfo )
 
-	-- If no armor, or special damage types, bypass armor 
+	-- If no armor, or special damage types, bypass armor
 	if ( ply:Armor() <= 0 || bit.band( dmginfo:GetDamageType(), DMG_FALL + DMG_DROWN + DMG_POISON + DMG_RADIATION ) != 0 ) then return end
 
 	local flBonus = 1.0 -- Each Point of Armor is worth 1/x points of health

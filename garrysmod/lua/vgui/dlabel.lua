@@ -24,7 +24,7 @@ function PANEL:Init()
 
 	self:SetIsToggle( false )
 	self:SetToggle( false )
-	self:SetDisabled( false )
+	self:SetEnabled( true )
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )
 	self:SetDoubleClickingEnabled( true )
@@ -101,13 +101,30 @@ function PANEL:IsEnabled()
 
 end
 
+function PANEL:SetDark( bDark )
+
+	self.m_bDark = bDark
+	if ( bDark ) then self.m_bBright = false end
+
+end
+function PANEL:SetBright( bBright )
+
+	self.m_bBright = bBright
+	if ( bBright ) then self.m_bDark = false end
+
+end
+
 function PANEL:UpdateColours( skin )
 
-	if ( self:GetBright() ) then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
-	if ( self:GetDark() ) then return self:SetTextStyleColor( skin.Colours.Label.Dark ) end
-	if ( self:GetHighlight() ) then return self:SetTextStyleColor( skin.Colours.Label.Highlight ) end
+	local gray = Color( 128, 128, 128, 128 )
+	local frac = 0
+	if ( !self:IsEnabled() ) then frac = 0.75 end
 
-	return self:SetTextStyleColor( skin.Colours.Label.Default )
+	if ( self:GetHighlight() ) then return self:SetTextStyleColor( skin.Colours.Label.Highlight:Lerp( gray, frac ) ) end
+	if ( self:GetBright() ) then return self:SetTextStyleColor( skin.Colours.Label.Bright:Lerp( gray, frac ) ) end
+	if ( self:GetDark() ) then return self:SetTextStyleColor( skin.Colours.Label.Dark:Lerp( gray, frac ) ) end
+
+	return self:SetTextStyleColor( skin.Colours.Label.Default:Lerp( gray, frac ) )
 
 end
 
@@ -133,7 +150,6 @@ function PANEL:PerformLayout()
 
 end
 
-
 function PANEL:OnCursorEntered()
 
 	self:InvalidateLayout( true )
@@ -148,7 +164,7 @@ end
 
 function PANEL:OnMousePressed( mousecode )
 
-	if ( self:GetDisabled() ) then return end
+	if ( !self:IsEnabled() ) then return end
 
 	if ( mousecode == MOUSE_LEFT && !dragndrop.IsDragging() && self.m_bDoubleClicking ) then
 
@@ -191,7 +207,7 @@ function PANEL:OnMouseReleased( mousecode )
 
 	self:MouseCapture( false )
 
-	if ( self:GetDisabled() ) then return end
+	if ( !self:IsEnabled() ) then return end
 	if ( !self.Depressed && dragndrop.m_DraggingMain != self ) then return end
 
 	if ( self.Depressed ) then
