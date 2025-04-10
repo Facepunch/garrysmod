@@ -69,7 +69,7 @@ function PANEL:SetMaterial( name )
 
 	self.m_MaterialName = name
 
-	local mat = Material( name )
+	local mat = Material( name, "mips" )
 
 	-- Look for the old style material
 	if ( !mat || mat:IsError() ) then
@@ -129,13 +129,13 @@ function PANEL:Paint( w, h )
 		end
 	end
 
-	render.PushFilterMag( TEXFILTER.ANISOTROPIC )
-	render.PushFilterMin( TEXFILTER.ANISOTROPIC )
+	-- render.PushFilterMag( TEXFILTER.ANISOTROPIC )
+	-- render.PushFilterMin( TEXFILTER.ANISOTROPIC )
 
 	self.Image:PaintAt( 3 + self.Border, 3 + self.Border, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
 
-	render.PopFilterMin()
-	render.PopFilterMag()
+	-- render.PopFilterMin()
+	-- render.PopFilterMag()
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 
