@@ -45,6 +45,7 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_HideButtons", "HideButtons" )
+AccessorFunc( PANEL, "m_BlockScrolling", "BlockScrolling" )
 
 function PANEL:Init()
 
@@ -144,6 +145,7 @@ end
 function PANEL:SetScroll( scrll )
 
 	if ( !self.Enabled ) then self.Scroll = 0 return end
+	if ( self:GetBlockScrolling() ) then return end
 
 	self.Scroll = math.Clamp( scrll, 0, self.CanvasSize )
 
