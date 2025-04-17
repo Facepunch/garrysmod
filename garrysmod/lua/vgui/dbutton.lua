@@ -93,8 +93,7 @@ function PANEL:UpdateColours( skin )
 
 end
 
-function PANEL:PerformLayout( w, h )
-
+function PANEL:PerformLayoutImage()
 	--
 	-- If we have an image we have to place the image on the left
 	-- and make the text align to the left, then set the inset
@@ -118,9 +117,20 @@ function PANEL:PerformLayout( w, h )
 			self.m_Image:SetPos( 2 + ( targetSize - self.m_Image:GetWide() ) * 0.5, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
 		end
 
-		self:SetTextInset( self.m_Image:GetWide() + 8, 0 )
+		-- For center alignments, reduce the inset of the image, so the text appears more centered visually
+		local alignment = self:GetContentAlignment()
+		if ( alignment == 8 || alignment == 5 || alignment == 2 ) then
+			self:SetTextInset( self.m_Image:GetWide() + 4, 0 )
+		else
+			self:SetTextInset( self.m_Image:GetWide() + 8, 0 )
+		end
 
 	end
+end
+
+function PANEL:PerformLayout( w, h )
+
+	self:PerformLayoutImage()
 
 	DLabel.PerformLayout( self, w, h )
 
@@ -143,8 +153,17 @@ function PANEL:SetConsoleCommand( strName, strArg, ... )
 end
 
 function PANEL:SizeToContents()
+	self:PerformLayoutImage() -- Set the text inset first.
 	local w, h = self:GetContentSize()
+
 	self:SetSize( w + 8, h + 4 )
+end
+
+function PANEL:SizeToContentsX( addVal )
+	self:PerformLayoutImage() -- Set the text inset first.
+	local w, h = self:GetContentSize()
+
+	self:SetWide( w + 8 + ( addVal or 0 ) )
 end
 
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )

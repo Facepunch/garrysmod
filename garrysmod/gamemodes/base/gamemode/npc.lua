@@ -52,12 +52,11 @@ function GM:GetDeathNoticeEntityName( ent )
 	if ( !IsValid( ent ) ) then return nil end
 
 	-- Some specific HL2 NPCs, just for fun
-	-- TODO: Localization strings?
 	if ( ent:GetClass() == "npc_citizen" ) then
-		if ( ent:GetName() == "griggs" ) then return "Griggs" end
-		if ( ent:GetName() == "sheckley" ) then return "Sheckley" end
-		if ( ent:GetName() == "tobias" ) then return "Laszlo" end
-		if ( ent:GetName() == "stanley" ) then return "Sandy" end
+		if ( ent:GetName() == "griggs" ) then return "#npc_citizen_griggs" end
+		if ( ent:GetName() == "sheckley" ) then return "#npc_citizen_sheckley" end
+		if ( ent:GetName() == "tobias" ) then return "#npc_citizen_laszlo" end
+		if ( ent:GetName() == "stanley" ) then return "#npc_citizen_sandy" end
 	end
 	if ( ent:GetClass() == "npc_sniper" and ( ent:GetName() == "alyx_sniper" || ent:GetName() == "sniper_alyx" ) ) then return "#npc_alyx" end
 

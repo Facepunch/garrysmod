@@ -174,34 +174,21 @@ function meta:PhysWake()
 
 end
 
-local GetColorOriginal4 = meta.GetColor4Part  -- Do not use me! I will be removed
-local GetColorOriginal = meta.GetColor
+-- This makes these a bit faster
 function meta:GetColor()
 
-	-- Backwards comp slower method
-	if ( !GetColorOriginal4 ) then
-		return GetColorOriginal( self )
-	end
-
-	return Color( GetColorOriginal4( self ) )
+	return Color( self:GetColor4Part() )
 
 end
 
-local SetColorOriginal4 = meta.SetColor4Part  -- Do not use me! I will be removed
-local SetColorOriginal = meta.SetColor
 function meta:SetColor( col )
 
-	-- Backwards comp slower method
-	if ( !SetColorOriginal4 ) then
-		return SetColorOriginal( self, col )
-	end
-
-	-- Even more backwards compat
+	-- Backwards compatibility
 	if ( !col ) then
-		return SetColorOriginal4( self, 255, 255, 255, 255 )
+		return self:SetColor4Part( 255, 255, 255, 255 )
 	end
 
-	SetColorOriginal4( self, col.r, col.g, col.b, col.a )
+	self:SetColor4Part( col.r, col.g, col.b, col.a )
 
 end
 

@@ -614,6 +614,8 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 
 	ply:SendLua( "achievements.SpawnedNPC()" )
 
+	return SpawnedNPC
+
 end
 concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end )
 
@@ -897,6 +899,8 @@ function Spawn_SENT( ply, EntityName, tr )
 	ply:AddCleanup( "sents", entity )
 	entity:SetVar( "Player", ply )
 
+	return entity
+
 end
 concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end )
 
@@ -998,6 +1002,8 @@ function Spawn_Weapon( ply, wepname, tr )
 	TryFixPropPosition( ply, entity, tr.HitPos )
 
 	gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
+
+	return entity
 
 end
 concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
@@ -1124,6 +1130,8 @@ function Spawn_Vehicle( ply, vname, tr )
 	undo.Finish( "#spawnmenu.utilities.undo.vehicle (" .. tostring( vehicle.Name ) .. ")" )
 
 	ply:AddCleanup( "vehicles", Ent )
+
+	return Ent
 
 end
 concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply, args[1] ) end )
