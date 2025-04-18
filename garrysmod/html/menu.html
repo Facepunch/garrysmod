@@ -96,7 +96,7 @@
 	<li class="notowned"><img src='img/notowned.png' width="16" height="16" loading="lazy"> <span ng-Tranny="'game_not_owned'"></span></li>
 	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16" loading="lazy"> <span ng-Tranny="'game_not_installed'"></span></li>
 	<hr/>
-	<li ng-repeat="game in Games|orderBy:'title'" class="{{IfElse( !game.owned, 'notowned', '' )}} {{IfElse( !game.installed, 'notinstalled', '' )}}">
+	<li ng-repeat="game in Games|orderBy:['-installed','-owned','title']" class="game-item {{ !game.owned ? 'notowned' : '' }} {{ !game.installed ? 'notinstalled' : '' }}">
 		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/>
 		<img src='img/notowned.png' ng-show="!game.owned" width="16" height="16" loading="lazy">
 		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width="16" height="16" loading="lazy">

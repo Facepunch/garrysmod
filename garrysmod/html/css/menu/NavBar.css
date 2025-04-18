@@ -164,6 +164,8 @@
 
 UL.games_list
 {
+	display: flex;
+	flex-direction: column;
 	right: 150px;
 	width: 260px;
 	overflow: auto;
@@ -207,16 +209,21 @@ UL.games_list LI IMG
 	top: 2px;
 }
 
-UL.games_list LI.notinstalled
-{
+.game-item.notowned,
+.game-item.notinstalled {
+    order: 2;
 	opacity: 0.7;
 	cursor: default;
 }
 
-UL.games_list LI.notowned
-{
-	opacity: 0.7;
-	cursor: default;
+UL.games_list > .notowned,
+UL.games_list > .notinstalled,
+UL.games_list > hr {
+    order: 1;
+}
+
+.game-item:not(.notowned):not(.notinstalled) {
+    order: 0;
 }
 
 UL.gamemode_list
