@@ -47,6 +47,7 @@ DIV.page DIV.options, DIV.page DIV.options A
 	color: #fff;
 	font-weight: bold;
 	text-shadow: 2px 2px 1px #000;
+	font-weight: 600;
 }
 
 DIV.page DIV.options .submenu A, DIV.page DIV.options .submenu LABEL
