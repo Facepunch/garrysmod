@@ -132,7 +132,15 @@ end
 
 function NumPlayers( index )
 
-	return #GetPlayers( index )
+	local players = 0
+
+	for _, ply in player.Iterator() do
+		if ( ply:Team() == index ) then
+			players = players + 1
+		end
+	end
+
+	return players
 
 end
 
