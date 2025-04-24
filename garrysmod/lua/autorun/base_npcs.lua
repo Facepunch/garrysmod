@@ -384,7 +384,7 @@ AddNPC( {
 	Class = "npc_cscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
+	KeyValues = { SquadName = "overwatch", SpotlightLength = 500, SpotlightWidth = 100 },
 	NoDrop = true
 } )
 
@@ -392,7 +392,7 @@ AddNPC( {
 	Class = "npc_clawscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
+	KeyValues = { SquadName = "overwatch", SpotlightLength = 500, SpotlightWidth = 100 },
 	NoDrop = true
 } )
 
