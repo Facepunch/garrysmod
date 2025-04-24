@@ -853,8 +853,8 @@
 		"models/humans/group01/female_04.mdl" : "Female 4"
 		"models/humans/group01/female_06.mdl" : "Female 5"
 		"models/humans/group01/female_07.mdl" : "Female 6"
-		"models/humans/male_cheaple.mdl" : "Cheaple Male 1"
-		"models/odessa.mdl" : "Odessa. DO NOT USE."
+		"models/humans/group01/male_cheaple.mdl" : "Cheaple Male 1"
+		"models/odessa.mdl" : "Odessa Cubbage"
 	]
 
 	ExpressionOverride(string) : "Facial expression override"

@@ -2343,6 +2343,8 @@
 
 	output OnGustStart(void) : "Fired when a wind gust begins."
 	output OnGustEnd(void) : "Fired when a wind gust ends."
+
+	input SetWindDir(integer) : "Set the wind direction. (Yaw only)"
 ]
 
 @PointClass base(Angles) size(-16 -16 -16, 16 16 16) color(0 0 255) = sky_camera :
@@ -5938,6 +5940,9 @@
 	particle_name_outer(string) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the farthest particle system from the player.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
 	particle_dist_inner(float) : "Particle System Distance (Inner)" : "180" : "If using custom particle systems, this will be the distance of the middle one from the player."
+
+	// Inputs
+	input Alpha(integer) : "Set the particle density (0 - 100)."
 ]
 
 @SolidClass base(Targetname, Parentname) = func_precipitation_blocker : 
@@ -6145,7 +6150,21 @@
 	"NOTE: Build your train so that the front of the train is facing down the X axis. " +
 	"When it spawns it will automatically rotate to face the next path_track on the path."
 [
+	ManualSpeedChanges(choices) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times." =
+	[
+		0 : "Off"
+		1 : "On"
+	]
+
+	ManualAccelSpeed(float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
+	ManualDecelSpeed(float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
+
 	// Inputs
+	input SetSpeedDirAccel(float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
+	input TeleportToPathTrack(string) : "Teleport train to the designated path track."
+	input SetSpeedForwardModifier(float) : "Applies the given modifier to all forward speeds. [0, 1]"
+
+	// GMOD: From Portal 2
 	input MoveToPathNode(string) : "Start moving to a destination and stop when you get there. This must be in the same path."
 	input TeleportToPathNode(string) : "Teleport to a destination and stop there. This can be in a new path."
 	input LockOrientation(void) : "Lock the current orientation of the train."
@@ -6156,21 +6175,8 @@
 	// Outputs
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
-	output OnArrivedAtDestinationNode(void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."	
 	//output OnNext(string) : "Fires when this train picks a new point to move towards (and just after OnStart)."
-
-	ManualSpeedChanges(choices) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times." =
-	[
-		0 : "Off"
-		1 : "On"
-	]
-
-	ManualAccelSpeed(float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
-	ManualDecelSpeed(float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
-
-	input SetSpeedDirAccel(float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
-	input TeleportToPathTrack(string) : "Teleport train to the designated path track."
-	input SetSpeedForwardModifier(float) : "Applies the given modifier to all forward speeds. [0, 1]"
+	output OnArrivedAtDestinationNode(void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."	
 ]
 
 @SolidClass base(BaseTrain) = func_tanktrain :
