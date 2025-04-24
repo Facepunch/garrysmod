@@ -9,6 +9,10 @@
 	background-color: rgba( 0, 0, 0, 0.5 );
 }
 
+#NavBar .popup {
+	display: none;
+}
+
 #NavBar UL
 {
 	display: block;
@@ -164,14 +168,20 @@
 
 UL.games_list
 {
-	display: flex;
-	flex-direction: column;
 	right: 150px;
 	width: 260px;
 	overflow: auto;
 	max-height: 300px;
 	padding: 0;
 	border: 3px solid #333;
+}
+
+ul.games_list .popup .open {
+	display: flex;
+	flex-direction: column;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
 }
 
 UL.games_list LI
