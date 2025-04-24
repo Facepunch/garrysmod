@@ -23,10 +23,14 @@ function TOOL:LeftClick( trace, attach )
 	elseif ( type == 2 ) then
 
 		-- Load a weapon just like left clicking would
-		local NPCinfo = list.Get( "NPC" )[ name ]
-		local weapon = table.Random( NPCinfo.Weapons ) or ""
-		local gmod_npcweapon = GetConVar( "gmod_npcweapon" )
-		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
+		local weapon = ""
+		local gmod_npcweapon = self:GetOwner():GetInfo( "gmod_npcweapon" )
+		if ( gmod_npcweapon != "" ) then
+			weapon = gmod_npcweapon
+		else
+			local NPCinfo = list.Get( "NPC" )[ name ]
+			weapon = table.Random( NPCinfo.Weapons or {} ) or ""
+		end
 
 		Spawn_NPC( self:GetOwner(), name, weapon, trace )
 
