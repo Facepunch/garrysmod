@@ -99,6 +99,20 @@ function PANEL:FirstPersonControls()
 
 	local x, y = self:CaptureMouse()
 
+	if ( IsKeyBindDown( "+reload" ) or input.IsKeyDown( KEY_R ) ) then
+		self.vCamPos = Vector( 50, 50, 50 )
+		self.vLookatPos = Vector( 0, 0, 40 )
+
+		self.aLookAngle = ( self.vLookatPos - self.vCamPos ):Angle()
+
+		self.fFOV = 70
+
+		self.OrbitPoint = self.vLookatPos
+		self.OrbitDistance = ( self.OrbitPoint - self.vCamPos ):Length()
+
+		return
+	end
+
 	local scale = self:GetFOV() / 180
 	x = x * -0.5 * scale
 	y = y * 0.5 * scale
