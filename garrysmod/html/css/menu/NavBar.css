@@ -9,7 +9,8 @@
 	background-color: rgba( 0, 0, 0, 0.5 );
 }
 
-#NavBar .popup {
+#NavBar .popup
+{
 	display: none;
 }
 
@@ -176,7 +177,8 @@ UL.games_list
 	border: 3px solid #333;
 }
 
-ul.games_list .popup .open {
+ul.games_list .popup .open
+{
 	display: flex;
 	flex-direction: column;
 	display: -webkit-box;
@@ -220,7 +222,8 @@ UL.games_list LI IMG
 }
 
 .game-item.notowned,
-.game-item.notinstalled {
+.game-item.notinstalled
+{
     order: 2;
 	opacity: 0.7;
 	cursor: default;
@@ -228,11 +231,13 @@ UL.games_list LI IMG
 
 UL.games_list > .notowned,
 UL.games_list > .notinstalled,
-UL.games_list > hr {
+UL.games_list > hr
+{
     order: 1;
 }
 
-.game-item:not(.notowned):not(.notinstalled) {
+.game-item:not(.notowned):not(.notinstalled)
+{
     order: 0;
 }
 
