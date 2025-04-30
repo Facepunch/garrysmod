@@ -1,4 +1,5 @@
 
+-- Recursively searches through a Lua table and logs keys that match a search term.
 local function FindInTable( tab, find, parents, depth )
 
 	depth = depth or 0
