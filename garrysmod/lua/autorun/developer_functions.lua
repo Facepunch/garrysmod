@@ -146,3 +146,21 @@ concommand.Add( "trace", function( ply )
 end )
 
 end
+
+--[[---------------------------------------------------------
+	Command: find_globals
+	Searches _G for global variables containing the given string.
+-----------------------------------------------------------]]
+concommand.Add("find_globals", function(ply, cmd, args)
+	if not args[1] then
+		MsgN("Usage: find_globals <search_term>")
+		return
+	end
+
+	local term = args[1]:lower()
+	for k, v in pairs(_G) do
+		if isstring(k) and k:lower():find(term, 1, true) then
+			MsgN("Global: ", k, " = ", tostring(v), " (", type(v), ")")
+		end
+	end
+end)
