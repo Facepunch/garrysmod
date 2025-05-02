@@ -262,6 +262,17 @@ function meta:HasGodMode()
 end
 
 -- These are totally in the wrong place.
+function player.GetByNick( ID )
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:Nick() == ID ) then
+			return players[i]
+		end
+	end
+
+	return false
+end
+
 function player.GetByAccountID( ID )
 	local players = player.GetAll()
 	for i = 1, #players do
