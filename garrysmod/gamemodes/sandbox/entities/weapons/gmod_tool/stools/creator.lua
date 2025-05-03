@@ -29,7 +29,7 @@ function TOOL:LeftClick( trace, attach )
 			weapon = gmod_npcweapon
 		else
 			local NPCinfo = list.Get( "NPC" )[ name ]
-			weapon = table.Random( NPCinfo.Weapons or {} ) or ""
+			weapon = table.Random( NPCinfo and NPCinfo.Weapons or {} ) or ""
 		end
 
 		Spawn_NPC( self:GetOwner(), name, weapon, trace )
