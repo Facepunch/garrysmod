@@ -373,8 +373,8 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    bullet.TracerName = self.Tracer or "Tracer"
    bullet.Force      = 10
    bullet.Damage     = dmg
-	bullet.Attacker   = self:GetOwner()
-	bullet.Inflictor  = self
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
    if CLIENT and sparkle:GetBool() then
       bullet.Callback = Sparklies
    end

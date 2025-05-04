@@ -106,8 +106,8 @@ function SWEP:FirePulse(force_fwd, force_up)
    bullet.Force      = force_fwd / 10
    bullet.Damage     = 1
    bullet.TracerName = "AirboatGunHeavyTracer"
-	bullet.Attacker   = self:GetOwner()
-	bullet.Inflictor  = self
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
 
    local owner = self:GetOwner()
    local fwd = force_fwd / num

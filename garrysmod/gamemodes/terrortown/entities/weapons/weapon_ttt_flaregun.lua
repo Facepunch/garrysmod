@@ -174,8 +174,8 @@ function SWEP:ShootFlare()
    bullet.Damage     = self.Primary.Damage
    bullet.TracerName = self.Tracer
    bullet.Callback   = IgniteTarget
-	bullet.Attacker   = self:GetOwner()
-	bullet.Inflictor  = self
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
 
    self:GetOwner():FireBullets( bullet )
 end

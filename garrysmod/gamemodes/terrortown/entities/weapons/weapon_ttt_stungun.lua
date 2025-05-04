@@ -64,8 +64,8 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    bullet.Tracer    = 4
    bullet.Force     = 5
    bullet.Damage    = dmg
-	bullet.Attacker  = self:GetOwner()
-	bullet.Inflictor = self
+   bullet.Attacker  = self:GetOwner()
+   bullet.Inflictor = self
 
    bullet.Callback = function(att, tr, dmginfo)
                         if SERVER or (CLIENT and IsFirstTimePredicted()) then
