@@ -157,7 +157,7 @@ function SWEP:PrimaryAttack()
             -- do a bullet just to make blood decals work sanely
             -- need to disable lagcomp because firebullets does its own
             self:GetOwner():LagCompensation(false)
-            self:GetOwner():FireBullets({Num=1, Src=spos, Dir=self:GetOwner():GetAimVector(), Spread=Vector(0,0,0), Tracer=0, Force=1, Damage=0})
+            self:GetOwner():FireBullets({Attacker=self:GetOwner(), Inflictor=self, Num=1, Src=spos, Dir=self:GetOwner():GetAimVector(), Spread=Vector(0,0,0), Tracer=0, Force=1, Damage=0})
          else
             util.Effect("Impact", edata)
          end
@@ -196,7 +196,7 @@ function SWEP:PrimaryAttack()
 --         self:SendWeaponAnim( ACT_VM_HITCENTER )         
 
 --         self:GetOwner():TraceHullAttack(spos, sdest, Vector(-16,-16,-16), Vector(16,16,16), 30, DMG_CLUB, 11, true)
---         self:GetOwner():FireBullets({Num=1, Src=spos, Dir=self:GetOwner():GetAimVector(), Spread=Vector(0,0,0), Tracer=0, Force=1, Damage=20})
+--         self:GetOwner():FireBullets({Attacker=self:GetOwner(), Inflictor=self, Num=1, Src=spos, Dir=self:GetOwner():GetAimVector(), Spread=Vector(0,0,0), Tracer=0, Force=1, Damage=20})
       
       else
 --         if tr_main.HitWorld then
