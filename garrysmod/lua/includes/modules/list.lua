@@ -13,6 +13,19 @@ function Get( listid )
 
 end
 
+function GetEntry( listid, key )
+
+	local list = GetForEdit( listid )
+	local value = list[ key ]
+
+	if ( istable( value ) ) then
+		value = table.Copy( value )
+	end
+
+	return value
+
+end
+
 function GetForEdit( listid, nocreate )
 
 	local list = Lists[ listid ]
