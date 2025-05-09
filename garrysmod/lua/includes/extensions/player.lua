@@ -6,6 +6,18 @@ local entity = FindMetaTable( "Entity" )
 if ( !meta ) then return end
 
 --
+-- Cache entity.GetTable for even faster access
+--
+local PlayerTable = setmetatable( {}, {
+	__index = function( tab, ply )
+		local var = entity.GetTable( ply )
+		tab[ ply ] = var
+		return var
+	end,
+	__mode = "kv"
+} )
+
+--
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
 --
 function meta:__index( key )
@@ -13,24 +25,22 @@ function meta:__index( key )
 	--
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
-	local val = meta[key]
-	if ( val ~= nil ) then return val end
+	if ( meta[ key ] ~= nil ) then
+		return meta[ key ]
+	end
 
 	--
 	-- Search the entity metatable
 	--
-	local entval = entity[key]
-	if ( entval ~= nil ) then return entval end
+	if ( entity[ key ] ~= nil ) then
+		return entity[ key ]
+	end
 
 	--
 	-- Search the entity table
 	--
-	local tab = entity.GetTable( self )
-	if ( tab ) then
-		return tab[ key ]
-	end
-
-	return nil
+	local tab = PlayerTable[ self ]
+	return tab and tab[ key ]
 
 end
 

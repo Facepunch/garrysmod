@@ -25,6 +25,18 @@ function meta:SetShouldPlayPickupSound( bPlaySound )
 end
 
 --
+-- Cache entity.GetTable for even faster access
+--
+local EntityTable = setmetatable( {}, {
+	__index = function( tab, ent )
+		local var = meta.GetTable( ent )
+		tab[ ent ] = var
+		return var
+	end,
+	__mode = "kv"
+} )
+
+--
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
 --
 function meta:__index( key )
@@ -32,16 +44,16 @@ function meta:__index( key )
 	--
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
-	local val = meta[ key ]
-	if ( val != nil ) then return val end
+	if ( meta[ key ] ~= nil ) then
+		return meta[ key ]
+	end
 
 	--
 	-- Search the entity table
 	--
-	local tab = meta.GetTable( self )
-	if ( tab ) then
-		local tabval = tab[ key ]
-		if ( tabval != nil ) then return tabval end
+	local tab = EntityTable[ self ]
+	if ( tab and tab[ key ] ~= nil ) then
+		return tab[ key ]
 	end
 
 	--
