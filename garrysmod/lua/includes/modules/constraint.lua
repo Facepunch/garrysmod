@@ -32,8 +32,9 @@ hook.Add( "EntityRemoved", "Constraint Library - ConstraintRemoved", function( e
 	-- Remove this constraint from Entity.Constraints table of the constrained entities
 	if ( ent:IsConstraint() || constraintClasses[ ent:GetClass() ] ) then
 		for i = 1, 6 do
-			if ( IsValid( ent[ "Ent" .. i ] ) ) then
-				table.RemoveByValue( ent[ "Ent" .. i ].Constraints, ent )
+			local entX = ent[ "Ent" .. i ]
+			if ( IsValid( entX ) and entX.Constraints ) then
+				table.RemoveByValue( entX.Constraints, ent )
 			end
 		end
 	end

@@ -4,6 +4,7 @@
 
 local function AddNPC( t, class )
 	if ( !t.Name ) then t.Name = "#" .. ( class or t.Class ) end
+	t.Author = "VALVe"
 
 	list.Set( "NPC", class or t.Class, t )
 end
@@ -84,7 +85,7 @@ AddNPC( {
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
 }, "Rebel" )
 
 AddNPC( {
@@ -101,7 +102,7 @@ AddNPC( {
 	Category = Category,
 	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2" }
 }, "Medic" )
 
 AddNPC( {
@@ -111,13 +112,6 @@ AddNPC( {
 	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1" }
 }, "Refugee" )
-
-AddNPC( {
-	Class = "npc_citizen",
-	Category = Category,
-	KeyValues = { citizentype = CT_REBEL, SquadName = "combine", Hostile = "1" },
-	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
-}, "npc_citizen_enemy" )
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
@@ -390,7 +384,7 @@ AddNPC( {
 	Class = "npc_cscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
+	KeyValues = { SquadName = "overwatch", SpotlightLength = 500, SpotlightWidth = 100 },
 	NoDrop = true
 } )
 
@@ -398,7 +392,7 @@ AddNPC( {
 	Class = "npc_clawscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
+	KeyValues = { SquadName = "overwatch", SpotlightLength = 500, SpotlightWidth = 100 },
 	NoDrop = true
 } )
 
@@ -455,7 +449,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_stalker",
 	Category = Category,
-	KeyValues = { squadname = "npc_stalker_squad" },
+	KeyValues = { SquadName = "npc_stalker_squad" },
 	Offset = 10
 } )
 
@@ -465,6 +459,15 @@ AddNPC( {
 	KeyValues = { SquadName = "overwatch" },
 	NoDrop = true
 } )
+
+-- This is meant for NPC reskins, so humanoid NPC reskins don't sound like combine.
+-- This is also just for fun, and exists here to let people know that the option exists and how to use it.
+AddNPC( {
+	Class = "npc_citizen",
+	Category = Category,
+	KeyValues = { citizentype = CT_REBEL, SquadName = "overwatch", Hostile = "1" },
+	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
+}, "npc_citizen_rebel_enemy" )
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {

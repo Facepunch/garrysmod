@@ -28,6 +28,7 @@ function PANEL:EnableModify()
 	self:CreateSaveNotification()
 
 	self.Toolbox = vgui.Create( "ContentSidebarToolbox", self )
+	self.Toolbox:Dock( BOTTOM )
 
 	hook.Add( "OpenToolbox", "OpenToolbox", function()
 

@@ -27,7 +27,7 @@ L.win_traitor      = "Hainler kazandı!"
 L.win_innocent     = "Hainler yenildi!"
 L.win_showreport = "{num} saniye boyunca raunt raporuna bakalım."
 
-L.limit_round      = "Raunt limitine ulaşıldı. {mapname} yakında yüklenecek."
+L.limit_round      = "Raunt sınırına ulaşıldı. {mapname} yakında yüklenecek."
 L.limit_time       = "Süre sınırına ulaşıldı. {mapname} yakında yüklenecek."
 L.limit_left = "Harita değişmeden önce {num} raunt veya {time} dakika kaldı."
 
@@ -244,9 +244,9 @@ L.set_tips      = "İzlerken ekranın alt kısmında oyun ipuçlarını göster"
 L.set_startpopup = "Raunt başlangıç bilgisi açılır pencere süresi"
 L.set_startpopup_tip = "Raunt başladığında, ekranınızın altında birkaç saniye boyunca küçük bir açılır pencere görünür. Burada görüntülenen süreyi değiştirin."
 
-L.set_cross_opacity   = "Gez ve arpacık nişangah opaklığı"
-L.set_cross_disable   = "Nişangahı tamamen devre dışı bırak"
-L.set_minimal_id      = "Nişangah altında Minimalist Hedef Kimliği (karma metin, ipucu vb.)"
+L.set_cross_opacity   = "Gez ve arpacık nişangâh opaklığı"
+L.set_cross_disable   = "Nişangâhı tamamen devre dışı bırak"
+L.set_minimal_id      = "Nişangâh altında Minimalist Hedef Kimliği (karma metin, ipucu vb.)"
 L.set_healthlabel     = "Sağlık durumunu sağlık çubuğunda göster"
 L.set_lowsights       = "Gez ve arpacık kullanırken silahı indir"
 L.set_lowsights_tip   = "Gez ve arpacık kullanırken silah modelini ekranda daha aşağı konumlandırmayı etkinleştir. Bu, hedefinizi görmeyi kolaylaştıracak, ancak daha az gerçekçi görünecektir."
@@ -732,7 +732,7 @@ L.tip35 = "Hain olarak, cesetleri taşıyabileceğinizi ve onları masumların v
 
 L.tip36 = "{helpkey} altında bulunan öğretici, oyunun en önemli ince ayrıntılarına genel bir bakış içerir."
 
-L.tip37 = "Puan tablosunda, yaşayan bir oyuncunun adına tıklayıp 'şüpheli' veya 'arkadaş' gibi bir etiket seçebilirsiniz. Bu etiket, nişangahınızın altındaysa görünecektir."
+L.tip37 = "Puan tablosunda, yaşayan bir oyuncunun adına tıklayıp 'şüpheli' veya 'arkadaş' gibi bir etiket seçebilirsiniz. Bu etiket, nişangâhınızın altındaysa görünecektir."
 
 L.tip38 = "Yerleştirilebilir ekipman öğelerinin çoğu (C4, Radyo gibi) ikincil ateş kullanılarak duvarlara yapıştırılabilir."
 
@@ -808,7 +808,7 @@ L.ev_burn_using  = "{victim}, {attacker} nedeniyle {trap} tarafından yakıldı"
 L.ev_club        = "{victim}, {attacker} tarafından dövüldü"
 L.ev_club_using  = "{victim}, {trap} kullanılarak {attacker} tarafından dövülerek öldürüldü"
 
-L.ev_slash       = "{kurban}, {saldırgan} tarafından bıçaklandı"
+L.ev_slash       = "{victim}, {attacker} tarafından bıçaklandı"
 L.ev_slash_using = "{victim}, {trap} kullanılarak {attacker} tarafından kesildi"
 
 L.ev_tele        = "{victim} {attacker} tarafından ışınlanarak öldürüldü"
@@ -1045,8 +1045,8 @@ L.set_avoid_det_tip = "Sunucunun mümkünse sizi Dedektif olarak seçmemesini is
 L.drop_no_ammo = "Silahının şarjöründe cephane kutusu olarak düşecek yeterli cephane yok."
 
 --- v31
-L.set_cross_brightness = "Nişangah parlaklığı"
-L.set_cross_size = "Nişangah boyutu"
+L.set_cross_brightness = "Parlaklık"
+L.set_cross_size = "Uzunluk"
 
 -- 2015-05-25
 L.hat_retrieve = "Bir Dedektif'in şapkasını aldın."
@@ -1076,8 +1076,17 @@ L.binoc_body = "CESET ALGILANDI"
 
 L.idle_popup_title = "Boşta"
 
---- 2021 -06 -07
+--- 2021-06-07
 L.sb_playervolume = "Oyuncu Sesi"
 
---- 2021 -09 -22
+--- 2021-09-22
 L.tip41 = "Puan tablosundaki sessize alma simgesine sağ tıklayarak bir oyuncunun mikrofon sesini ayarlayabilirsin."
+
+--- 2025-03-11
+L.set_title_cross = "Nişangâh Ayarları"
+
+L.set_cross_color_enable = "Özel rengi etkinleştir"
+L.set_cross_color = "Özel renk"
+L.set_hip_cross_opacity = "Opaklık"
+L.set_cross_thickness = "Kalınlık"
+L.set_cross_outlinethickness = "Dış çizgi kalınlığı"

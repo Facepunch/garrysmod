@@ -362,8 +362,3 @@ function COLOR:AddBlackness( blacknessAdd )
 	ColorCopy( self, HWBToColor( hue, whiteness, blackness ) )
 
 end
-
-local imat = FindMetaTable( "IMaterial" )
-
--- This is so that the return value has the color meta table
-function imat:GetColor( ... ) return Color( self:GetColor4Part( ... ) ) end

@@ -133,7 +133,18 @@ if CLIENT then
    local crosshair_size = CreateConVar("ttt_crosshair_size", "1.0", FCVAR_ARCHIVE)
    local disable_crosshair = CreateConVar("ttt_disable_crosshair", "0", FCVAR_ARCHIVE)
 
-   function SWEP:DrawHUD()
+   local enable_color_crosshair = CreateConVar("ttt_crosshair_color_enable", "0", FCVAR_ARCHIVE)
+   local crosshair_color_r = CreateConVar("ttt_crosshair_color_r", "255", FCVAR_ARCHIVE)
+   local crosshair_color_g = CreateConVar("ttt_crosshair_color_g", "255", FCVAR_ARCHIVE)
+   local crosshair_color_b = CreateConVar("ttt_crosshair_color_b", "255", FCVAR_ARCHIVE)
+
+   local crosshair_opacity = CreateConVar("ttt_crosshair_opacity", "1", FCVAR_ARCHIVE)
+   local crosshair_thickness = CreateConVar("ttt_crosshair_thickness", "1", FCVAR_ARCHIVE)
+   local crosshair_outlinethickness = CreateConVar("ttt_crosshair_outlinethickness", "0", FCVAR_ARCHIVE)
+
+   local mat_antialias = GetConVar("mat_antialias")
+
+   function SWEP:DrawHUD(static, gap)
       if self.HUDHelp then
          self:DrawHelp()
       end
@@ -145,17 +156,64 @@ if CLIENT then
 
       local x = math.floor(ScrW() / 2.0)
       local y = math.floor(ScrH() / 2.0)
-      local scale = math.max(0.2,  10 * self:GetPrimaryCone())
+      local scale = math.max(0.2, 10 * self:GetPrimaryCone())
 
-      local LastShootTime = self:LastShootTime()
-      scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
+      if not static then
+         local LastShootTime = self:LastShootTime()
+         scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
+      end
 
-      local alpha = sights and sights_opacity:GetFloat() or 1
+      local alpha = sights and sights_opacity:GetFloat() or crosshair_opacity:GetFloat()
       local bright = crosshair_brightness:GetFloat() or 1
 
-      -- somehow it seems this can be called before my player metatable
-      -- additions have loaded
-      if client.IsTraitor and client:IsTraitor() then
+      gap = gap or math.floor(20 * scale * (sights and 0.8 or 1))
+      local length = math.floor(gap + (25 * crosshair_size:GetFloat()) * scale)
+
+      local thickness = math.max(1, crosshair_thickness:GetInt())
+      local rect = thickness > 1
+
+      -- lines are drawn with antialiasing when MSAA is enabled which makes them 1 pixel longer
+      local antialias = not rect and mat_antialias:GetInt() > 1
+
+      local offset, odd_offset = 0, 0
+      if rect then
+         offset = math.floor(thickness / 2)
+
+         -- ensures that high thickness levels don't cause the crosshair to overlap itself
+         gap = gap + offset
+         length = length + offset
+
+         -- prevents the distance between crosshair prongs from becoming uneven with odd thickness levels
+         odd_offset = thickness % 2
+      elseif not antialias then
+         odd_offset = 1
+      end
+
+      local outline = crosshair_outlinethickness:GetInt()
+      if outline > 0 then
+         surface.SetDrawColor(0, 0, 0, 255 * alpha)
+
+         local out_thick = thickness + outline * 2
+         local out_length = antialias and length + 1 or length
+         out_length = out_length - gap + outline * 2
+
+         local out_offset = offset + outline
+
+         local out_topleft = length + outline
+         local out_bottomright = gap - outline + odd_offset
+
+         surface.DrawRect( x - out_topleft, y - out_offset, out_length, out_thick )
+         surface.DrawRect( x + out_bottomright, y - out_offset, out_length, out_thick )
+         surface.DrawRect( x - out_offset, y - out_topleft, out_thick, out_length )
+         surface.DrawRect( x - out_offset, y + out_bottomright, out_thick, out_length )
+      end
+
+      if enable_color_crosshair:GetBool() then
+         surface.SetDrawColor(crosshair_color_r:GetInt() * bright,
+                              crosshair_color_g:GetInt() * bright,
+                              crosshair_color_b:GetInt() * bright,
+                              255 * alpha)
+      elseif client.IsTraitor and client:IsTraitor() then -- somehow it seems this can be called before my player metatable additions have loaded
          surface.SetDrawColor(255 * bright,
                               50 * bright,
                               50 * bright,
@@ -167,12 +225,20 @@ if CLIENT then
                               255 * alpha)
       end
 
-      local gap = math.floor(20 * scale * (sights and 0.8 or 1))
-      local length = math.floor(gap + (25 * crosshair_size:GetFloat()) * scale)
-      surface.DrawLine( x - length, y, x - gap, y )
-      surface.DrawLine( x + length, y, x + gap, y )
-      surface.DrawLine( x, y - length, x, y - gap )
-      surface.DrawLine( x, y + length, x, y + gap )
+      if rect then
+         local rect_length = length - gap
+         gap = gap + odd_offset
+
+         surface.DrawRect( x - length, y - offset, rect_length, thickness )
+         surface.DrawRect( x + gap, y - offset, rect_length, thickness )
+         surface.DrawRect( x - offset, y - length, thickness, rect_length )
+         surface.DrawRect( x - offset, y + gap, thickness, rect_length )
+      else
+         surface.DrawLine( x - length, y, x - gap, y )
+         surface.DrawLine( x + length, y, x + gap, y )
+         surface.DrawLine( x, y - length, x, y - gap )
+         surface.DrawLine( x, y + length, x, y + gap )
+      end
    end
 
    local GetPTranslation = LANG.GetParamTranslation
@@ -445,7 +511,7 @@ function SWEP:WasBought(buyer)
 end
 
 function SWEP:SetIronsights(b)
-   if (b ~= self:GetIronsights()) then
+   if (b != self:GetIronsights()) then
       self:SetIronsightsPredicted(b)
       self:SetIronsightsTime(CurTime())
       if CLIENT then

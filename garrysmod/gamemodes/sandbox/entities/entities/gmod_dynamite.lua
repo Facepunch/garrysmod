@@ -29,7 +29,9 @@ end
 
 function ENT:GetOverlayText()
 
-	local txt = string.format( "Damage: %g\nDelay: %g",  math.Clamp( self:GetDamage(), 0, 1500 ), self:GetDelay() )
+	local txt = string.format( "%s %g\n%s %g",
+		language.GetPhrase( "#tool.dynamite.damage" ), math.Clamp( self:GetDamage(), 0, 1500 ), 
+		language.GetPhrase( "#tool.dynamite.delay" ), self:GetDelay() )
 
 	if ( game.SinglePlayer() ) then return txt end
 

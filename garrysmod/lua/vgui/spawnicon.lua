@@ -166,6 +166,8 @@ function PANEL:Copy()
 	copy:CopyBase( self )
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
+	copy.OpenMenuExtra = self.OpenMenuExtra
+	copy:SetTooltip( self:GetTooltip() )
 
 	return copy
 
@@ -297,6 +299,12 @@ spawnmenu.AddContentType( "model", function( container, obj )
 			editor:Center()
 
 		end ):SetIcon( "icon16/pencil.png" )
+
+		if ( isfunction( pnl.OpenMenuExtra ) ) then
+			pnl:OpenMenuExtra( menu )
+		end
+
+		hook.Run( "SpawnmenuIconMenuOpen", menu, pnl, "model" )
 
 		-- Do not allow removal/size changes from read only panels
 		if ( IsValid( pnl:GetParent() ) && pnl:GetParent().GetReadOnly && pnl:GetParent():GetReadOnly() ) then menu:Open() return end

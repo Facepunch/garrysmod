@@ -17,18 +17,29 @@ AccessorFunc( PANEL, "m_NPCWeapon", "NPCWeapon" )
 AccessorFunc( PANEL, "m_bAdminOnly", "AdminOnly" )
 AccessorFunc( PANEL, "m_bIsNPCWeapon", "IsNPCWeapon" )
 
-local function DoGenericSpawnmenuRightclickMenu( self )
+function PANEL:OpenGenericSpawnmenuRightClickMenu()
+
 	local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetSpawnName() ) end ):SetIcon( "icon16/page_copy.png" )
+
+		if ( self:GetSpawnName() and self:GetSpawnName() != "" ) then
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetSpawnName() ) end ):SetIcon( "icon16/page_copy.png" )
+		end
+
 		if ( isfunction( self.OpenMenuExtra ) ) then
 			self:OpenMenuExtra( menu )
 		end
 
+		hook.Run( "SpawnmenuIconMenuOpen", menu, self, self:GetContentType() )
+
 		if ( !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly() ) then
 			menu:AddSpacer()
-			menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
+			menu:AddOption( "#spawnmenu.menu.delete", function()
+				self:Remove()
+				hook.Run( "SpawnlistContentChanged" )
+			end ):SetIcon( "icon16/bin_closed.png" )
 		end
 	menu:Open()
+
 end
 
 function PANEL:Init()
@@ -43,14 +54,6 @@ function PANEL:Init()
 	self.Image:SetSize( 128 - 6, 128 - 6 )
 	self.Image:SetVisible( false )
 
-	self.Label = self:Add( "DLabel" )
-	self.Label:Dock( BOTTOM )
-	self.Label:SetTall( 18 )
-	self.Label:SetContentAlignment( 5 )
-	self.Label:DockMargin( 4, 0, 4, 6 )
-	self.Label:SetTextColor( color_white )
-	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
-
 	self.Border = 0
 
 end
@@ -58,7 +61,6 @@ end
 function PANEL:SetName( name )
 
 	self:SetTooltip( name )
-	self.Label:SetText( name )
 	self.m_NiceName = name
 
 end
@@ -107,6 +109,12 @@ end
 function PANEL:OnDepressionChanged( b )
 end
 
+local shadowColor = Color( 0, 0, 0, 200 )
+local function DrawTextShadow( text, x, y )
+	draw.SimpleText( text, "DermaDefault", x + 1, y + 1, shadowColor )
+	draw.SimpleText( text, "DermaDefault", x, y, color_white )
+end
+
 function PANEL:Paint( w, h )
 
 	if ( self.Depressed && !self.Dragging ) then
@@ -131,25 +139,27 @@ function PANEL:Paint( w, h )
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 
+	local drawText = false
 	if ( !dragndrop.IsDragging() && ( self:IsHovered() || self.Depressed || self:IsChildHovered() ) ) then
 
 		surface.SetMaterial( matOverlay_Hovered )
-		self.Label:Hide()
 
 	else
 
 		surface.SetMaterial( matOverlay_Normal )
-		self.Label:Show()
+		drawText = true
 
 	end
 
-	surface.DrawTexturedRect( self.Border, self.Border, w-self.Border*2, h-self.Border*2 )
+	surface.DrawTexturedRect( self.Border, self.Border, w - self.Border * 2, h - self.Border * 2 )
 
+	-- Admin only icon
 	if ( self:GetAdminOnly() ) then
 		surface.SetMaterial( matOverlay_AdminOnly )
 		surface.DrawTexturedRect( self.Border + 8, self.Border + 8, 16, 16 )
 	end
 
+	-- Draw NPC weapon support icon
 	-- This whole thing could be more dynamic
 	if ( self:GetIsNPCWeapon() ) then
 		surface.SetMaterial( matOverlay_NPCWeapon )
@@ -160,8 +170,34 @@ function PANEL:Paint( w, h )
 
 		surface.DrawTexturedRect( w - self.Border - 24, self.Border + 8, 16, 16 )
 	end
+
 	self:ScanForNPCWeapons()
 
+	if ( drawText ) then
+		local buffere = self.Border + 10
+
+		-- Set up smaller clipping so cut text looks nicer
+		local px, py = self:LocalToScreen( buffere, 0 )
+		local pw, ph = self:LocalToScreen( w - buffere, h )
+		render.SetScissorRect( px, py, pw, ph, true )
+
+		-- Calculate X pos
+		surface.SetFont( "DermaDefault" )
+		local tW, tH = surface.GetTextSize( self.m_NiceName )
+
+		local x = w / 2 - tW / 2
+		if ( tW > ( w - buffere * 2 ) ) then
+			local mx, my = self:ScreenToLocal( input.GetCursorPos() )
+			local diff = tW - w + buffere * 2
+
+			x = buffere + math.Remap( math.Clamp( mx, 0, w ), 0, w, 0, -diff )
+		end
+
+		-- Draw
+		DrawTextShadow( self.m_NiceName, x, h - tH - 9 )
+
+		render.SetScissorRect( 0, 0, 0, 0, false )
+	end
 end
 
 function PANEL:ScanForNPCWeapons()
@@ -211,6 +247,7 @@ function PANEL:Copy()
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
 	copy.OpenMenuExtra = self.OpenMenuExtra
+	copy:SetTooltip( self:GetTooltip() )
 
 	return copy
 
@@ -232,14 +269,15 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 205, 92, 92, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
 	-- Generate a nice tooltip with extra info.
 	local ENTinfo = scripted_ents.Get( obj.spawnname )
-	local toolTip = language.GetPhrase( obj.nicename )
 	if ( !ENTinfo ) then ENTinfo = list.Get( "SpawnableEntities" )[ obj.spawnname ] end
 	if ( ENTinfo ) then
 		local extraInfo = ""
 		if ( ENTinfo.Information and ENTinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. ENTinfo.Information end
-		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\nAuthor: " .. ENTinfo.Author end
+		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. ENTinfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
 
@@ -250,9 +288,13 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
 	end
 	icon.OpenMenuExtra = function( self, menu )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "0" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
+		end ):SetIcon( "icon16/brick_add.png" )
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -276,25 +318,31 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 0, 0, 0, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
 	-- Generate a nice tooltip with extra info
-	local VehicleInfo = list.Get( "Vehicles" )[ obj.spawnname ]
-	if ( VehicleInfo ) then
-		local toolTip = language.GetPhrase( VehicleInfo.Name ) .. "\n"
-		if ( VehicleInfo.Information and VehicleInfo.Information != "" ) then toolTip = toolTip .. "\n" .. VehicleInfo.Information end
-
-		if ( VehicleInfo.Author and VehicleInfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. VehicleInfo.Author end
-
-		icon:SetTooltip( toolTip )
+	local VehInfo = list.Get( "Vehicles" )[ obj.spawnname ]
+	if ( VehInfo ) then
+		local extraInfo = ""
+		if ( VehInfo.Information and VehInfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. VehInfo.Information end
+		if ( VehInfo.Author and VehInfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .." " .. VehInfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
+
+	icon:SetTooltip( toolTip )
 
 	icon.DoClick = function()
 		RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
 	end
 	icon.OpenMenuExtra = function( self, menu )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "1" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
+		end ):SetIcon( "icon16/brick_add.png" )
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -304,7 +352,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 
 end )
 
-local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE }, "Overrides the weapon all spawnmenu NPCs will spawn with. Set to \"\" to not override." )
+local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE, FCVAR_USERINFO }, "Overrides the weapon all spawnmenu NPCs will spawn with. Set to \"\" to not override." )
 
 spawnmenu.AddContentType( "npc", function( container, obj )
 
@@ -323,6 +371,20 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	icon:SetNPCWeapon( obj.weapon )
 	icon:SetColor( Color( 244, 164, 96, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
+	-- Generate a nice tooltip with extra info.
+	local NPCinfo = scripted_ents.Get( obj.spawnname )
+	if ( !NPCinfo ) then NPCinfo = list.Get( "NPC" )[ obj.spawnname ] end
+	if ( NPCinfo ) then
+		local extraInfo = ""
+		if ( NPCinfo.Information and NPCinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. NPCinfo.Information end
+		if ( NPCinfo.Author and NPCinfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. NPCinfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
+	end
+
+	icon:SetTooltip( toolTip )
+
 	icon.DoClick = function()
 		local weapon = table.Random( obj.weapon ) or ""
 		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
@@ -336,8 +398,9 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
-			RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" )
-			RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon )
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "2" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
 		end ):SetIcon( "icon16/brick_add.png" )
 
 		-- Quick access to spawning NPCs with a spcific weapon without the need to change gmod_npcweapon
@@ -373,7 +436,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		addWeps( subMenu, weaps )
 
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -397,17 +460,19 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	icon:SetAdminOnly( obj.admin )
 	icon:SetColor( Color( 135, 206, 250, 255 ) )
 
+	local toolTip = language.GetPhrase( obj.nicename )
+
 	-- Generate a nice tooltip with extra info.
 	local SWEPinfo = weapons.Get( obj.spawnname )
-	local toolTip = language.GetPhrase( obj.nicename )
 	if ( !SWEPinfo ) then SWEPinfo = list.Get( "Weapon" )[ obj.spawnname ] end
 	if ( SWEPinfo ) then
-		toolTip = toolTip .. "\n"
+		local extraInfo = ""
 		-- These 2 really should be one
 		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Purpose end
 		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Instructions end
 
-		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\nAuthor: " .. SWEPinfo.Author end
+		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. SWEPinfo.Author end
+		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
 
 	toolTip = toolTip .. "\n\n" .. language.GetPhrase( "spawnmenu.mmb_weapons" )
@@ -429,7 +494,11 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	end
 
 	icon.OpenMenuExtra = function( self, menu )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" )
+			RunConsoleCommand( "creator_type", "3" )
+			RunConsoleCommand( "creator_name", obj.spawnname )
+		end ):SetIcon( "icon16/brick_add.png" )
 
 		if ( self:GetIsNPCWeapon() ) then
 			local opt = menu:AddOption( "#spawnmenu.menu.use_as_npc_gun", function() RunConsoleCommand( "gmod_npcweapon", self:GetSpawnName() ) end )
@@ -440,7 +509,7 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 			end
 		end
 	end
-	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
