@@ -1,4 +1,3 @@
-
 include( "problems_pnl.lua" )
 
 local ProblemsPanel
