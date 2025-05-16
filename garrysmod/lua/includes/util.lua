@@ -70,11 +70,13 @@ function TypeID( v )
 	local id = STORED_TYPE_IDS[ type( v ) ]
 	if ( id ) then return id end
 
-	-- Garry's Mod types have their IDs in their metatables
-	local vMeta = getmetatable( v )
-	if ( vMeta ) then
-		id = vMeta.MetaID
-		if ( id ) then return id end
+	if ( C_type( v ) == "userdata" ) then
+		-- Garry's Mod types have their IDs in their metatables
+		local vMeta = getmetatable( v )
+		if ( vMeta ) then
+			id = vMeta.MetaID
+			if ( id ) then return id end
+		end
 	end
 
 	return OldTypeID( v )
