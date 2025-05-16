@@ -50,6 +50,37 @@ function Material( name, words )
 end
 
 --[[---------------------------------------------------------
+	TypeID
+-----------------------------------------------------------]]
+local getmetatable = getmetatable
+
+-- Builtin types don't have MetaIDs in their metatables
+local STORED_TYPE_IDS = {
+	["nil"] = TYPE_NIL,
+	["boolean"] = TYPE_BOOL,
+	["number"] = TYPE_NUMBER,
+	["string"] = TYPE_STRING,
+	["table"] = TYPE_TABLE,
+	["function"] = TYPE_FUNCTION,
+	["thread"] = TYPE_THREAD,
+}
+
+local OldTypeID = TypeID
+function TypeID( v )
+	local id = STORED_TYPE_IDS[ type( v ) ]
+	if ( id ) then return id end
+
+	-- Garry's Mod types have their IDs in their metatables
+	local vMeta = getmetatable( v )
+	if ( vMeta ) then
+		id = vMeta.MetaID
+		if ( id ) then return id end
+	end
+
+	return OldTypeID( v )
+end
+
+--[[---------------------------------------------------------
 	IsTableOfEntitiesValid
 -----------------------------------------------------------]]
 function IsTableOfEntitiesValid( tab )
