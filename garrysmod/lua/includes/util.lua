@@ -107,6 +107,7 @@ function isentity( v )
 	end
 	return false
 end
+IsEntity = isentity -- Backwards compatibility?
 function ismatrix( v ) return type( v ) == "VMatrix" end
 function ispanel( v ) return type( v ) == "Panel" end
 
