@@ -92,7 +92,21 @@ function isfunction( v ) return C_type( v ) == "function" end
 function isbool( v ) return C_type( v ) == "boolean" end
 function isangle( v ) return type( v ) == "Angle" end
 function isvector( v ) return type( v ) == "Vector" end
-function isentity( v ) return type( v ) == "Entity" end
+function isentity( v )
+	if ( C_type( v ) == "userdata" ) then
+		local vMeta = getmetatable( v )
+		if ( vMeta ) then
+			if ( vMeta.MetaName == "Entity" ) then
+				return true
+			end
+			vMeta = vMeta.MetaBaseClass
+			if ( vMeta ) then
+				return vMeta.MetaName == "Entity"
+			end
+		end
+	end
+	return false
+end
 function ismatrix( v ) return type( v ) == "VMatrix" end
 function ispanel( v ) return type( v ) == "Panel" end
 
