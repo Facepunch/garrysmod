@@ -176,7 +176,7 @@ if ( !SERVER ) then return end
 
 local PlayerUndo = {}
 -- PlayerUndo
---	- Player UniqueID
+--	- Player AccountID
 --		- Undo Table
 --			- Name
 --			- Entities (table of ents)
@@ -344,7 +344,7 @@ function Finish( NiceText )
 		return false
 	end
 
-	local index = Current_Undo.Owner:UniqueID()
+	local index = Current_Undo.Owner:AccountID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	Current_Undo.NiceText = NiceText or ( "#" .. Current_Undo.Name )
@@ -437,7 +437,7 @@ end
 -----------------------------------------------------------]]
 local function CC_UndoLast( pl, command, args )
 
-	local index = pl:UniqueID()
+	local index = pl:AccountID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local last = nil
@@ -483,7 +483,7 @@ local function CC_UndoNum( ply, command, args )
 
 	if ( !args[ 1 ] ) then return end
 
-	local index = ply:UniqueID()
+	local index = ply:AccountID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
