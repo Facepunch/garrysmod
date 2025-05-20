@@ -182,7 +182,12 @@ end
 
 function COLOR:Copy()
 
-	return Color(self:Unpack())
+    return setmetatable({
+        r = self.r,
+        g = self.g,
+        b = self.b,
+        a = self.a
+    }, COLOR)
 
 end
 
