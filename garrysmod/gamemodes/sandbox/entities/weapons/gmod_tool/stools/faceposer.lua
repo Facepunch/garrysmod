@@ -351,7 +351,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 		if ( !IsUselessFaceFlex( name ) ) then
 			local group = faceEntity:GetFlexType( i )
 
-			if ( group == name ) then group = "Other" end
+			if ( group == name ) then group = "#spawnmenu.category.other" end
 
 			local min, max = faceEntity:GetFlexBounds( i )
 
