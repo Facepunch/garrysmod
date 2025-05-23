@@ -205,6 +205,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local function UpdateFromConvars()
 
+			if ( !IsValid( mdl ) ) then return end
+
 			local model = LocalPlayer():GetInfo( "cl_playermodel" )
 			local modelname = player_manager.TranslatePlayerModel( model )
 			util.PrecacheModel( modelname )
