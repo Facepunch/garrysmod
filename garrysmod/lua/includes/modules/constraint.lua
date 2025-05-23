@@ -976,7 +976,7 @@ local function MotorControl( pl, motor, onoff, dir )
 
 	local activate = false
 
-	if ( motor.toggle == 1 ) then
+	if ( motor.toggle == 1 || motor.toggle == true ) then
 
 		-- Toggle mode, only do something when the key is pressed
 		-- if the motor is off, turn it on, and vice-versa.

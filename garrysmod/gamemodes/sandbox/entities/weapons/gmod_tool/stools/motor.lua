@@ -59,7 +59,7 @@ function TOOL:LeftClick( trace )
 		local time = self:GetClientNumber( "forcetime" )
 		local forekey = self:GetClientNumber( "fwd" )
 		local backkey = self:GetClientNumber( "bwd" )
-		local toggle = self:GetClientNumber( "toggle" )
+		local toggle = self:GetClientNumber( "toggle" ) != 0
 		local limit = self:GetClientNumber( "forcelimit" )
 
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )

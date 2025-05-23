@@ -121,6 +121,8 @@ function TOOL:RightClick( trace )
 	local toggle = self:GetClientNumber( "toggle" ) != 0
 	local fwd = self:GetClientNumber( "fwd" )
 	local bck = self:GetClientNumber( "bck" )
+	-- TODO: Friction
+	-- TODO: Force Limit
 
 	wheelEnt.BaseTorque = torque
 	wheelEnt:SetTorque( torque )
