@@ -32,7 +32,6 @@ Format = string.format
 -- Send C the flags for any materials we want to create
 --
 local C_Material = Material
-
 function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
@@ -49,11 +48,7 @@ function Material( name, words )
 
 end
 
---[[---------------------------------------------------------
-	type
------------------------------------------------------------]]
-C_type = type
-
+local C_type = type
 function type( v )
 
 	local v_type = C_type( v )
