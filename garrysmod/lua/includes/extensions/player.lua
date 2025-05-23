@@ -14,7 +14,7 @@ local PlayerTable = setmetatable( {}, {
 		tab[ ply ] = var
 		return var or {}
 	end,
-	__mode = "k"
+	__mode = "kv"
 } )
 
 --

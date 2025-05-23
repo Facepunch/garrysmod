@@ -16,7 +16,7 @@ local WeaponTable = setmetatable( {}, {
 		tab[ wep ] = var
 		return var or {}
 	end,
-	__mode = "k"
+	__mode = "kv"
 } )
 
 --

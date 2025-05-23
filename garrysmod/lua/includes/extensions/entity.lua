@@ -33,7 +33,7 @@ local EntityTable = setmetatable( {}, {
 		tab[ ent ] = var
 		return var or {}
 	end,
-	__mode = "k"
+	__mode = "kv"
 } )
 
 --
