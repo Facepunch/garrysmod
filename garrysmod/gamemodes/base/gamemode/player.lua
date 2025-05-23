@@ -423,7 +423,7 @@ GM.SpawnPointClasses = {
 
 	-- L4D Maps
 	"info_survivor_rescue",
-	--self.SpawnPointClasses = table.Add( self.SpawnPointClasses, { "info_survivor_position" } ) -- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
+	--"info_survivor_position", -- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
 
 	-- NEOTOKYO Maps
 	"info_player_attacker",
