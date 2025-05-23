@@ -180,6 +180,17 @@ function COLOR:Unpack()
 
 end
 
+function COLOR:Copy()
+
+    return setmetatable({
+        r = self.r,
+        g = self.g,
+        b = self.b,
+        a = self.a
+    }, COLOR)
+
+end
+
 function COLOR:Lerp( target_clr, frac )
 
 	return Color(
