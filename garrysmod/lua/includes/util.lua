@@ -65,6 +65,68 @@ function type( v )
 end
 
 --[[---------------------------------------------------------
+	TypeID
+-----------------------------------------------------------]]
+local getmetatable = getmetatable
+
+-- Builtin types don't have MetaIDs in their metatables
+local STORED_TYPE_IDS = {
+	["nil"] = TYPE_NIL,
+	["boolean"] = TYPE_BOOL,
+	["number"] = TYPE_NUMBER,
+	["string"] = TYPE_STRING,
+	["table"] = TYPE_TABLE,
+	["function"] = TYPE_FUNCTION,
+	["thread"] = TYPE_THREAD,
+}
+
+local OldTypeID = TypeID
+function TypeID( v )
+	local id = STORED_TYPE_IDS[ type( v ) ]
+	if ( id ) then return id end
+
+	if ( C_type( v ) == "userdata" ) then
+		-- Garry's Mod types have their IDs in their metatables
+		local vMeta = getmetatable( v )
+		if ( vMeta ) then
+			id = vMeta.MetaID
+			if ( id ) then return id end
+		end
+	end
+
+	return OldTypeID( v )
+end
+
+--[[---------------------------------------------------------
+	is* functions
+-----------------------------------------------------------]]
+function isstring( v ) return C_type( v ) == "string" end
+function isnumber( v ) return C_type( v ) == "number" end
+function istable( v ) return C_type( v ) == "table" end
+function isfunction( v ) return C_type( v ) == "function" end
+function isbool( v ) return C_type( v ) == "boolean" end
+function isangle( v ) return type( v ) == "Angle" end
+function isvector( v ) return type( v ) == "Vector" end
+function isentity( v )
+	if ( C_type( v ) == "userdata" ) then
+		local vMeta = getmetatable( v )
+		if ( vMeta ) then
+			if ( vMeta.MetaName == "Entity" ) then
+				return true
+			end
+			vMeta = vMeta.MetaBaseClass
+			if ( vMeta ) then
+				return vMeta.MetaName == "Entity"
+			end
+		end
+	end
+	return false
+end
+IsEntity = isentity -- Backwards compatibility?
+function ismatrix( v ) return type( v ) == "VMatrix" end
+function ispanel( v ) return type( v ) == "Panel" end
+
+--[[---------------------------------------------------------
 	IsTableOfEntitiesValid
 -----------------------------------------------------------]]
 function IsTableOfEntitiesValid( tab )
