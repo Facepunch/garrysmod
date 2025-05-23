@@ -31,7 +31,7 @@ local EntityTable = setmetatable( {}, {
 	__index = function( tab, ent )
 		local var = meta.GetTable( ent )
 		tab[ ent ] = var
-		return var
+		return var or {}
 	end,
 	__mode = "k"
 } )

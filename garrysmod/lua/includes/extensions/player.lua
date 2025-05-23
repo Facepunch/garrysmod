@@ -12,7 +12,7 @@ local PlayerTable = setmetatable( {}, {
 	__index = function( tab, ply )
 		local var = entity.GetTable( ply )
 		tab[ ply ] = var
-		return var
+		return var or {}
 	end,
 	__mode = "k"
 } )

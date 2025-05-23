@@ -14,7 +14,7 @@ local WeaponTable = setmetatable( {}, {
 	__index = function( tab, wep )
 		local var = entity.GetTable( wep )
 		tab[ wep ] = var
-		return var
+		return var or {}
 	end,
 	__mode = "k"
 } )
