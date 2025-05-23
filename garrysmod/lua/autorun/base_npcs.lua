@@ -144,7 +144,7 @@ if ( IsMounted( "ep2" ) ) then
 		TotalSpawnFlags = SF_FLOOR_TURRET_CITIZEN,
 		Rotate = Angle( 0, 180, 0 ),
 		Offset = 2,
-		KeyValues = { SquadName = "overwatch" }
+		KeyValues = { SquadName = "resistance" }
 	}, "npc_turret_floor_resistance" )
 end
 
