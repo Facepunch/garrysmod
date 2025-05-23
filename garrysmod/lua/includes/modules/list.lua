@@ -13,19 +13,6 @@ function Get( listid )
 
 end
 
-function GetEntry( listid, key )
-
-	local list = GetForEdit( listid )
-	local value = list[ key ]
-
-	if ( istable( value ) ) then
-		value = table.Copy( value )
-	end
-
-	return value
-
-end
-
 function GetForEdit( listid, nocreate )
 
 	local list = Lists[ listid ]
@@ -43,18 +30,6 @@ function GetTable()
 
 	return table.GetKeys( Lists )
 
-end
-
-function Set( listid, key, value )
-
-	GetForEdit( listid )[ key ] = value
-
-end
-
-function Remove( listid, key )
-
-	GetForEdit( listid )[ key ] = nil
-	
 end
 
 function Add( listid, value )
@@ -76,10 +51,35 @@ function Contains( listid, value )
 
 end
 
+function Set( listid, key, value )
+
+	GetForEdit( listid )[ key ] = value
+
+end
+
+function RemoveEntry( listid, key )
+
+	GetForEdit( listid )[ key ] = nil
+
+end
+
 function HasEntry( listid, key )
 
 	local list = Lists[ listid ]
 
 	return list != nil && list[ key ] != nil
+
+end
+
+function GetEntry( listid, key )
+
+	local list = GetForEdit( listid )
+	local value = list[ key ]
+
+	if ( istable( value ) ) then
+		value = table.Copy( value )
+	end
+
+	return value
 
 end
