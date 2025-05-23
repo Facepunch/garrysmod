@@ -671,7 +671,17 @@
 
 @BaseClass color(0 255 0) = PlayerClass []
 
-@BaseClass color(180 10 180) = Light
+@BaseClass = LightInputs
+[
+	// Inputs
+	input TurnOn(void) : "Turn the light on."
+	input TurnOff(void) : "The the light off."
+	input Toggle(void) : "Toggle the light's current state."
+	input SetPattern(string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+	input FadeToPattern(string) : "Fades from first value in old pattern, to first value in the new given pattern. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+]
+
+@BaseClass color(180 10 180) base(LightInputs) = Light
 [
 	_light(color255) : "Brightness" : "255 255 255 200"
 	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
@@ -705,13 +715,6 @@
 		0 : "Don't affect entity shadow angles"
 		1 : "Affect entity shadow angles"
 	]
-
-	// Inputs
-	input TurnOn(void) : "Turn the light on."
-	input TurnOff(void) : "The the light off."
-	input Toggle(void) : "Toggle the light's current state."
-	input SetPattern(string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
-	input FadeToPattern(string) : "Fades from first value in old pattern, to first value in the new given pattern. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 ]
 
 @BaseClass = Node
@@ -2595,19 +2598,21 @@
 	input DoSpark(void) : "Force a single arc."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_clientcommand :
-	"An entity that issues commands to the client console, as if it was typed in by the player (if activator is a player, or the local player in single player)."
-[
-	// Inputs
-	input Command(string) : "Command to execute."
-]
+// GMOD: These 2 are disabled in GMod, so no point in having them in Hammer
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_servercommand :
-	"An entity that issues commands to the server console."
-[
-	// Inputs
-	input Command(string) : "Command to execute."
-]
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_clientcommand :
+//	"An entity that issues commands to the client console, as if it was typed in by the player (if activator is a player, or the local player in single player)."
+//[
+//	// Inputs
+//	input Command(string) : "Command to execute."
+//]
+
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_servercommand :
+//	"An entity that issues commands to the server console."
+//[
+//	// Inputs
+//	input Command(string) : "Command to execute."
+//]
 
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor :
 	"An entity that relays bonus maps changes."
@@ -3087,7 +3092,7 @@
 	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast, in inches."
 ]
 
-@PointClass base(Angles) iconsprite("editor/light_env.vmt") = light_environment :
+@PointClass base(Angles, LightInputs) iconsprite("editor/light_env.vmt") = light_environment :
 	"Sets the color and angle of the light from the sun and sky."
 [
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
