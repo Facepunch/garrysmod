@@ -1,21 +1,21 @@
 
 function ents.FindByClassAndParent( classname, entity )
 
-    if ( !IsValid( entity ) ) then return end
+	if ( !IsValid( entity ) ) then return end
 
-    local out = {}
+	local out = {}
 
-    for k, v in ipairs( ents.FindByClass( classname ) ) do
+	for k, v in ipairs( ents.FindByClass( classname ) ) do
 
-        if ( v:GetParent() == entity ) then
-      		table.insert( out, v )
-    	end
+		if ( v:GetParent() == entity ) then
+			table.insert( out, v )
+		end
 
-    end
+	end
 
-    if ( out[1] == nil ) then return end
+	if ( out[1] == nil ) then return end
 
-    return out
+	return out
 
 end
 

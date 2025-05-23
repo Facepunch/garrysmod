@@ -73,11 +73,11 @@ end
 -----------------------------------------------------------]]
 local currentGM
 function Call( name, ... )
-	
+
 	if ( !currentGM ) then
-        currentGM = gmod.GetGamemode()
-    end
-	
+	currentGM = gmod.GetGamemode()
+	end
+
 	-- If the gamemode function doesn't exist just return false
 	if ( currentGM && currentGM[name] == nil ) then return false end
 

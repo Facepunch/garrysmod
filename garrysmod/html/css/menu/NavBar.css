@@ -183,7 +183,7 @@ ul.games_list .popup .open
 	flex-direction: column;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
+	-webkit-box-direction: normal;
 }
 
 UL.games_list LI
@@ -224,7 +224,7 @@ UL.games_list LI IMG
 .game-item.notowned,
 .game-item.notinstalled
 {
-    order: 2;
+	order: 2;
 	opacity: 0.7;
 	cursor: default;
 }
@@ -233,12 +233,12 @@ UL.games_list > .notowned,
 UL.games_list > .notinstalled,
 UL.games_list > hr
 {
-    order: 1;
+	order: 1;
 }
 
 .game-item:not(.notowned):not(.notinstalled)
 {
-    order: 0;
+	order: 0;
 }
 
 UL.gamemode_list

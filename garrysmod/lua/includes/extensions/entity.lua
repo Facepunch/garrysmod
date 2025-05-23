@@ -5,15 +5,15 @@ local meta = FindMetaTable( "Entity" )
 if ( !meta ) then return end
 
 function meta:SetSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", flags )
+	self:SetKeyValue( "spawnflags", flags )
 end
 
 function meta:AddSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
+	self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
 end
 
 function meta:RemoveSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
+	self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
 end
 
 function meta:GetShouldPlayPickupSound()
