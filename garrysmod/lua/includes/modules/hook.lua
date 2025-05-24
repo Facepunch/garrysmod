@@ -7,6 +7,7 @@ local isbool = isbool
 local IsValid = IsValid
 local type = type
 local ErrorNoHaltWithStack = ErrorNoHaltWithStack
+local GProtectedCall = ProtectedCall
 
 module( "hook" )
 
@@ -76,6 +77,21 @@ function Run( name, ... )
 	return Call( name, currentGM, ... )
 end
 
+--[[---------------------------------------------------------
+	Name: ProtectedRun
+	Args: string hookName, vararg args
+	Desc: Executes hooks associated with the given hook name.
+		  Unlike hook.Run, it ensures that execution continues
+		  even if a hook returns a value or throws an error.
+-----------------------------------------------------------]]
+function ProtectedRun( name, ... )
+	if ( !currentGM ) then
+		currentGM = gmod and gmod.GetGamemode() or nil
+	end
+
+	return ProtectedCall( name, currentGM, ... )
+end
+
 
 --[[---------------------------------------------------------
     Name: Run
@@ -140,4 +156,61 @@ function Call( name, gm, ... )
 
 	return GamemodeFunction( gm, ... )
 
+end
+
+--[[---------------------------------------------------------
+    Name: ProtectedCall
+    Args: string hookName, table gamemodeTable, vararg args
+    Desc: Executes hooks associated with the given hook name.
+          Unlike hook.Call, it ensures that execution continues
+          even if a hook returns a value or throws an error.
+-----------------------------------------------------------]]
+function ProtectedCall( name, gm, ... )
+
+	--
+	-- Run hooks
+	--
+	local HookTable = Hooks[ name ]
+	if ( HookTable != nil ) then
+
+		for k, v in pairs( HookTable ) do
+
+			if ( isstring( k ) ) then
+
+				--
+				-- If it's a string, it's cool
+				--
+				GProtectedCall( v, ... )
+
+			else
+
+				--
+				-- If the key isn't a string - we assume it to be an entity
+				-- Or panel, or something else that IsValid works on.
+				--
+				if ( IsValid( k ) ) then
+					--
+					-- If the object is valid - pass it as the first argument (self)
+					--
+					GProtectedCall( v, k, ... )
+				else
+					--
+					-- If the object has become invalid - remove it
+					--
+					HookTable[ k ] = nil
+				end
+			end
+
+		end
+	end
+
+	--
+	-- Call the gamemode function
+	--
+	if ( !gm ) then return end
+
+	local GamemodeFunction = gm[ name ]
+	if ( GamemodeFunction == nil ) then return end
+
+	GProtectedCall( GamemodeFunction, gm, ... )
 end
