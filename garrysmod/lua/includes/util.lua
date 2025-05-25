@@ -89,7 +89,7 @@ function isstring( v ) return C_type( v ) == "string" end
 function isnumber( v ) return C_type( v ) == "number" end
 function istable( v ) return C_type( v ) == "table" end
 function isfunction( v ) return C_type( v ) == "function" end
-function isbool( v ) return C_type( v ) == "boolean" end
+function isbool( v ) return v == true or v == false end
 function isangle( v ) return type( v ) == "Angle" end
 function isvector( v ) return type( v ) == "Vector" end
 function isentity( v )
