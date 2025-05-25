@@ -449,3 +449,14 @@ function string.NiceName( name )
 	return ret
 
 end
+
+
+function string.Capitalize(str, allWords)
+
+	if allWords then
+		return string.gsub(str, "(%S+)", string.Capitalize)
+	else
+		return string.upper(string.sub(str, 1, 1)) .. string.sub(str, 2)
+	end
+
+end
