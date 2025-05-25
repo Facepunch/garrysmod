@@ -76,6 +76,11 @@ function vgui.Register( classname, mtable, base )
 	-- Remove the global
 	PANEL = nil
 
+	-- Check if something wants to modify or prevent it
+	if ( hook.Run( "PreRegisterPANEL", classname, mtable, base ) == false ) then
+		return
+	end
+
 	-- Default base is Panel
 	mtable.Base = base or "Panel"
 	mtable.Init = mtable.Init or function() end
