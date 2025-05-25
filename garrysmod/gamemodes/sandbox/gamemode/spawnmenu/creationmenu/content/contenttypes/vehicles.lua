@@ -1,5 +1,5 @@
 
-hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, node )
+hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, browseNode )
 
 	local Categorised = {}
 
@@ -8,7 +8,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, no
 	if ( Vehicles ) then
 		for k, v in pairs( Vehicles ) do
 
-			local Category = v.Category or "Other"
+			local Category = language.GetPhrase( v.Category or "#spawnmenu.category.other" )
 			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 
@@ -23,10 +23,11 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, no
 	--
 	-- Add a tree node for each category
 	--
+	local CustomIcons = list.Get( "ContentCategoryIcons" )
 	for CategoryName, v in SortedPairs( Categorised ) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/bricks.png" )
+		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/bricks.png" )
 
 			-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )

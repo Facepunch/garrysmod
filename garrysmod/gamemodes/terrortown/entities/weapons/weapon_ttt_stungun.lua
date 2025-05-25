@@ -33,7 +33,7 @@ SWEP.Primary.ClipSize      = 30
 SWEP.Primary.ClipMax       = 60
 SWEP.Primary.DefaultClip   = 30
 SWEP.Primary.Automatic     = true
-SWEP.Primary.Ammo          = "smg1"
+SWEP.Primary.Ammo          = "SMG1"
 SWEP.Primary.Recoil        = 1.2
 SWEP.Primary.Sound         = Sound( "Weapon_UMP45.Single" )
 

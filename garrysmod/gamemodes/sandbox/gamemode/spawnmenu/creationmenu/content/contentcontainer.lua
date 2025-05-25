@@ -111,7 +111,7 @@ end
 
 function PANEL:Clear()
 
-	self.IconList:Clear( true )
+	self.IconList:Clear()
 
 end
 
@@ -164,15 +164,6 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 	local selected = canvas:GetSelectedChildren()
 
 	local menu = DermaMenu()
-	menu:AddOption( language.GetPhrase( "spawnmenu.menu.deletex" ):format( #selected ), function()
-
-		for k, v in pairs( selected ) do
-			v:Remove()
-		end
-
-		hook.Run( "SpawnlistContentChanged" )
-
-	end ):SetIcon( "icon16/bin_closed.png" )
 
 	-- This is less than ideal
 	local spawnicons = 0
@@ -205,6 +196,18 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 			end
 		end ):SetIcon( "icon16/picture.png" )
 	end
+
+	menu:AddSpacer()
+
+	menu:AddOption( language.GetPhrase( "spawnmenu.menu.deletex" ):format( #selected ), function()
+
+		for k, v in pairs( selected ) do
+			v:Remove()
+		end
+
+		hook.Run( "SpawnlistContentChanged" )
+
+	end ):SetIcon( "icon16/bin_closed.png" )
 
 	menu:Open()
 

@@ -9,11 +9,11 @@ function PANEL:Init()
 
 	self.BackButton = vgui.Create( "DImageButton", self )
 	self.BackButton:SetSize( ButtonSize, ButtonSize )
-	self.BackButton:SetMaterial( "gui/HTML/back" )
+	self.BackButton:SetImage( "gui/HTML/back" )
 	self.BackButton:Dock( LEFT )
 	self.BackButton:DockMargin( Spacing * 3, Margins, Spacing, Margins )
 	self.BackButton.DoClick = function()
-		self.BackButton:SetDisabled( true )
+		self.BackButton:SetEnabled( false )
 		self.Cur = self.Cur - 1
 		self.Navigating = true
 		self.HTML:GoBack()
@@ -21,11 +21,11 @@ function PANEL:Init()
 
 	self.ForwardButton = vgui.Create( "DImageButton", self )
 	self.ForwardButton:SetSize( ButtonSize, ButtonSize )
-	self.ForwardButton:SetMaterial( "gui/HTML/forward" )
+	self.ForwardButton:SetImage( "gui/HTML/forward" )
 	self.ForwardButton:Dock( LEFT )
 	self.ForwardButton:DockMargin( Spacing, Margins, Spacing, Margins )
 	self.ForwardButton.DoClick = function()
-		self.ForwardButton:SetDisabled( true )
+		self.ForwardButton:SetEnabled( false )
 		self.Cur = self.Cur + 1
 		self.Navigating = true
 		self.HTML:GoForward()
@@ -33,14 +33,14 @@ function PANEL:Init()
 
 	self.RefreshButton = vgui.Create( "DImageButton", self )
 	self.RefreshButton:SetSize( ButtonSize, ButtonSize )
-	self.RefreshButton:SetMaterial( "gui/HTML/refresh" )
+	self.RefreshButton:SetImage( "gui/HTML/refresh" )
 	self.RefreshButton:Dock( LEFT )
 	self.RefreshButton:DockMargin( Spacing, Margins, Spacing, Margins )
 	self.RefreshButton.DoClick = function() self.HTML:Refresh() end
 
 	self.HomeButton = vgui.Create( "DImageButton", self )
 	self.HomeButton:SetSize( ButtonSize, ButtonSize )
-	self.HomeButton:SetMaterial( "gui/HTML/home" )
+	self.HomeButton:SetImage( "gui/HTML/home" )
 	self.HomeButton:Dock( LEFT )
 	self.HomeButton:DockMargin( Spacing, Margins, Spacing * 3, Margins )
 	self.HomeButton.DoClick = function()
@@ -51,7 +51,7 @@ function PANEL:Init()
 
 	self.StopButton = vgui.Create( "DImageButton", self )
 	self.StopButton:SetSize( ButtonSize, ButtonSize )
-	self.StopButton:SetMaterial( "gui/HTML/stop" )
+	self.StopButton:SetImage( "gui/HTML/stop" )
 	self.StopButton:Dock( RIGHT )
 	self.StopButton:DockMargin( Spacing * 3, Margins, Spacing * 3, Margins )
 	self.StopButton.DoClick = function() self.HTML:Stop() end
@@ -102,13 +102,13 @@ function PANEL:SetHTML( html )
 
 	end
 
-	local OldFunc = self.HTML.OnFinishLoadingDocument
+	local OldFunc2 = self.HTML.OnFinishLoadingDocument
 	self.HTML.OnFinishLoadingDocument = function( panel, url )
 
 		self:FinishedLoading()
 
-		if ( OldFunc ) then
-			OldFunc( panel, url )
+		if ( OldFunc2 ) then
+			OldFunc2( panel, url )
 		end
 
 	end
@@ -148,22 +148,22 @@ end
 
 function PANEL:FinishedLoading()
 
-	self.StopButton:SetDisabled( true )
-	self.RefreshButton:SetDisabled( false )
+	self.StopButton:SetEnabled( false )
+	self.RefreshButton:SetEnabled( true )
 
 end
 
 function PANEL:StartedLoading()
 
-	self.StopButton:SetDisabled( false )
-	self.RefreshButton:SetDisabled( true )
+	self.StopButton:SetEnabled( true )
+	self.RefreshButton:SetEnabled( false )
 
 end
 
 function PANEL:UpdateNavButtonStatus()
 
-	self.ForwardButton:SetDisabled( self.Cur >= table.Count( self.History ) )
-	self.BackButton:SetDisabled( self.Cur == 1 )
+	self.ForwardButton:SetEnabled( self.Cur < table.Count( self.History ) )
+	self.BackButton:SetEnabled( self.Cur != 1 )
 
 end
 

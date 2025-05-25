@@ -1,8 +1,8 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		= "#GMOD_ToolGun"
-SWEP.Author			= ""
+SWEP.PrintName		= "#gmod_tool"
+SWEP.Author			= "Facepunch"
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
 SWEP.Instructions	= ""
@@ -17,7 +17,6 @@ SWEP.Spawnable		= true
 util.PrecacheModel( SWEP.ViewModel )
 util.PrecacheModel( SWEP.WorldModel )
 
--- Todo, make/find a better sound.
 SWEP.ShootSound = Sound( "Airboat.FireGunRevDown" )
 
 SWEP.Tool = {}
@@ -40,8 +39,10 @@ function SWEP:InitializeTools()
 	local owner = self:GetOwner()
 
 	local temp = {}
-
 	for k, v in pairs( self.Tool ) do
+
+		-- This is from saverestore.LoadEntity..
+		if ( !v.Init ) then continue end
 
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self
@@ -121,7 +122,7 @@ function SWEP:Think()
 
 	-- SWEP:Think is called one more time clientside
 	-- after holstering using Player:SelectWeapon in multiplayer
-	if ( CLIENT && self.m_uHolsterFrame == FrameNumber() ) then return end
+	if ( CLIENT and self.m_uHolsterFrame == FrameNumber() ) then return end
 
 	local owner = self:GetOwner()
 	if ( !owner:IsPlayer() ) then return end
@@ -144,25 +145,30 @@ function SWEP:Think()
 			local lastmode_obj = self:GetToolObject( lastmode )
 
 			if ( lastmode_obj ) then
-				lastmode_obj:ReleaseGhostEntity()
+				lastmode_obj:ReleaseGhostEntity() -- In case tool overwrites the default Holster
+				lastmode_obj:Holster( true )
 			end
 		end
 
 		return
 	end
 
-	if ( lastmode && lastmode != curmode ) then
+	if ( lastmode and lastmode ~= curmode ) then
 		local lastmode_obj = self:GetToolObject( lastmode )
 
 		if ( lastmode_obj ) then
 			-- We want to release the ghost entity just in case
 			lastmode_obj:ReleaseGhostEntity()
+			lastmode_obj:Holster( true )
 		end
+
+		-- Deploy the new tool
+		tool:Deploy( true )
 	end
 
-	self.Primary.Automatic = tool.LeftClickAutomatic || false
-	self.Secondary.Automatic = tool.RightClickAutomatic || false
-	self.RequiresTraceHit = tool.RequiresTraceHit || true
+	self.Primary.Automatic = tool.LeftClickAutomatic or false
+	self.Secondary.Automatic = tool.RightClickAutomatic or false
+	self.RequiresTraceHit = tool.RequiresTraceHit or true
 
 	tool:Think()
 
@@ -190,12 +196,12 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 	effectdata:SetAttachment( physbone )
 	util.Effect( "selection_indicator", effectdata )
 
-	local effectdata = EffectData()
-	effectdata:SetOrigin( hitpos )
-	effectdata:SetStart( owner:GetShootPos() )
-	effectdata:SetAttachment( 1 )
-	effectdata:SetEntity( self )
-	util.Effect( "ToolTracer", effectdata )
+	local effect_tr = EffectData()
+	effect_tr:SetOrigin( hitpos )
+	effect_tr:SetStart( owner:GetShootPos() )
+	effect_tr:SetAttachment( 1 )
+	effect_tr:SetEntity( self )
+	util.Effect( "ToolTracer", effect_tr )
 
 end
 
@@ -208,7 +214,10 @@ function SWEP:PrimaryAttack()
 
 	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
 	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -235,7 +244,10 @@ function SWEP:SecondaryAttack()
 
 	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
 	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -264,8 +276,11 @@ function SWEP:Reload()
 	if ( !owner:KeyPressed( IN_RELOAD ) ) then return end
 
 	local tr = util.GetPlayerTrace( owner )
-	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+	tr.mask = toolmask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
 	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -301,7 +316,7 @@ function SWEP:Holster()
 
 	-- Save the frame the weapon was holstered on to prevent
 	-- the extra Think call after calling Player:SelectWeapon in multiplayer
-	if ( CLIENT && CanHolster == true ) then self.m_uHolsterFrame = FrameNumber() end
+	if ( CLIENT and CanHolster == true ) then self.m_uHolsterFrame = FrameNumber() end
 
 	if ( CanHolster == true and toolobj ) then toolobj:ReleaseGhostEntity() end
 

@@ -32,6 +32,7 @@ function PANEL:ShowURL( url, force )
 	self.HTML:OpenURL( url )
 
 	self:InvalidateLayout()
+	self:SetMouseInputEnabled( false )
 
 	self.LoadedURL = url
 
@@ -77,6 +78,8 @@ function PANEL:OnActivate()
 	self:ShowURL( GetDefaultLoadingHTML() )
 
 	self.NumDownloadables = 0
+	self.CheckedSingleplayer = false
+
 
 end
 
@@ -92,10 +95,24 @@ function PANEL:OnDeactivate()
 
 end
 
+function PANEL:OnScreenSizeChanged( oldW, oldH, newW, newH )
+
+	self:InvalidateLayout( true )
+
+end
+
 function PANEL:Think()
 
 	self:CheckForStatusChanges()
 	self:CheckDownloadTables()
+
+	if ( !self.CheckedSingleplayer && IsHostingGame() ) then
+		local map = GetConVarString( "host_map" )
+		map = string.StripExtension( map )
+
+		GameDetails( GetConVarString( "hostname" ), "127.0.0.1", map, 1, "", GetConVarString( "gamemode" ), true )
+		self.CheckedSingleplayer = true
+	end
 
 end
 
@@ -229,15 +246,7 @@ function IsInLoading()
 
 end
 
-function UpdateLoadPanel( strJavascript )
-
-	if ( !pnlLoading ) then return end
-
-	pnlLoading:RunJavascript( strJavascript )
-
-end
-
-function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
+function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, noDump )
 
 	if ( engine.IsPlayingDemo() ) then return end
 
@@ -248,17 +257,19 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	g_SteamID		= steamid
 	g_GameMode		= gamemode
 
-	MsgN( servername )
-	MsgN( serverurl )
-	MsgN( gamemode )
-	MsgN( mapname )
-	MsgN( maxplayers )
-	MsgN( steamid )
+	if ( !noDump ) then
+		MsgN( servername )
+		MsgN( serverurl )
+		MsgN( gamemode )
+		MsgN( mapname )
+		MsgN( maxplayers )
+		MsgN( steamid )
+	end
 
 	serverurl = serverurl:Replace( "%s", steamid )
 	serverurl = serverurl:Replace( "%m", mapname )
 
-	if ( maxplayers > 1 && GetConVar( "cl_enable_loadingurl" ):GetBool() && serverurl:StartWith( "http" ) ) then
+	if ( maxplayers > 1 && GetConVar( "cl_enable_loadingurl" ):GetBool() && ( serverurl:StartsWith( "http" ) || serverurl:StartsWith( "asset://" ) ) ) then
 		pnlLoading:ShowURL( serverurl, true )
 	end
 
@@ -271,7 +282,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 		end
 	end
 
-	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );',
+	pnlLoading.JavascriptRun = string.format( [[if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );]],
 		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(),
 		GetConVarNumber( "snd_musicvolume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
 

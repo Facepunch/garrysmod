@@ -207,11 +207,11 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 	render.SetMaterial( matFB )
 	render.DrawScreenQuad()
 
-	local Radials = ( math.pi * 2 ) / radial_steps
+	local Radials = ( math.tau ) / radial_steps
 
 	for mul = 1 / passes, 1, 1 / passes do
 
-		for i = 0, math.pi * 2, Radials do
+		for i = 0, math.tau, Radials do
 
 			local VA = vAngle * 1 -- hack - this makes it copy the angles instead of the reference
 			local VRot = vAngle * 1
@@ -230,7 +230,7 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 
 			-- Copy it to our floating point buffer at a reduced alpha
 			render.SetRenderTarget( texFSB )
-			local alpha = ( Radials / ( math.pi * 2 ) ) -- Divide alpha by number of radials
+			local alpha = ( Radials / ( math.tau ) ) -- Divide alpha by number of radials
 			alpha = alpha * ( 1 - mul ) -- Reduce alpha the further away from center we are
 			matFB:SetFloat( "$alpha", alpha )
 
@@ -251,7 +251,7 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 				render.DrawScreenQuad()
 
 				cam.Start2D()
-					local add = ( i / ( math.pi * 2 ) ) * ( 1 / passes )
+					local add = ( i / ( math.tau ) ) * ( 1 / passes )
 					local percent = string.format( "%.1f", ( mul - ( 1 / passes ) + add ) * 100 )
 					draw.DrawText( percent .. "%", "SuperDofText", view.w - 100, view.h - 100, color_black, TEXT_ALIGN_CENTER )
 					draw.DrawText( percent .. "%", "SuperDofText", view.w - 101, view.h - 101, color_white, TEXT_ALIGN_CENTER )
@@ -282,7 +282,7 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 
 	if ( FocusGrabber ) then
 
-		local x, y = gui.MousePos()
+		local x, y = input.GetCursorPos()
 		local dir = util.AimVector( ViewAngles, ViewFOV, x, y, ScrW(), ScrH() )
 
 		local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer(), dir ) )

@@ -106,7 +106,7 @@ function PANEL:SetCurrentFolder( strDir )
 	strDir = tostring( strDir )
 	strDir = string.Trim( strDir, "/" )
 
-	if ( self.m_strBaseFolder && !string.StartWith( strDir, self.m_strBaseFolder ) ) then
+	if ( self.m_strBaseFolder && !string.StartsWith( strDir, self.m_strBaseFolder ) ) then
 		strDir = string.Trim( self.m_strBaseFolder, "/" ) .. "/" .. string.Trim( strDir, "/" )
 	end
 
@@ -274,7 +274,7 @@ function PANEL:Clear()
 
 	DPanel.Clear( self )
 
-	self.m_strBaseFolder, self.m_strCurrentFolder, self.m_strFilter, self.m_strName, self.m_strSearch, self.Divider.m_pRight = nil
+	self.m_strBaseFolder, self.m_strCurrentFolder, self.m_strFilter, self.m_strName, self.m_strSearch, self.Divider.m_pRight = nil, nil, nil, nil, nil, nil
 	self.m_bOpen, self.m_bModels, self.m_strPath = false, false, "GAME"
 	self.bSetup = nil
 
@@ -308,7 +308,7 @@ end
 
 function PANEL:GenerateExample( class, sheet, w, h )
 
-	local browser = vgui.Create( class, frame )
+	local browser = vgui.Create( class )
 	browser:Dock( FILL )
 	browser:DockMargin( 5, 0, 5, 5 )
 

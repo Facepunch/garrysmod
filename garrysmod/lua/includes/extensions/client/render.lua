@@ -31,10 +31,9 @@ STENCIL_DECR = STENCILOPERATION_DECR
 -----------------------------------------------------------]]
 function render.ClearRenderTarget( rt, color )
 
-	local OldRT = render.GetRenderTarget();
-		render.SetRenderTarget( rt )
+	render.PushRenderTarget( rt )
 		render.Clear( color.r, color.g, color.b, color.a )
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 
@@ -60,12 +59,9 @@ end
 -----------------------------------------------------------]]
 function render.CopyTexture( from, to )
 
-	local OldRT = render.GetRenderTarget();
-
-		render.SetRenderTarget( from )
+	render.PushRenderTarget( from )
 		render.CopyRenderTargetToTexture( to )
-
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 
@@ -106,9 +102,10 @@ function render.BlurRenderTarget( rt, sizex, sizey, passes )
 
 end
 
+local camera2DTable = { type = "2D" }
 function cam.Start2D()
 
-	return cam.Start( { type = '2D' } )
+	return cam.Start( camera2DTable )
 
 end
 
@@ -116,7 +113,7 @@ function cam.Start3D( pos, ang, fov, x, y, w, h, znear, zfar )
 
 	local tab = {}
 
-	tab.type = '3D';
+	tab.type = "3D"
 	tab.origin = pos
 	tab.angles = ang
 

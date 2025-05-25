@@ -29,7 +29,9 @@ local function SetMaterial( Player, Entity, Data )
 	return true
 
 end
-duplicator.RegisterEntityModifier( "material", SetMaterial )
+if ( SERVER ) then
+	duplicator.RegisterEntityModifier( "material", SetMaterial )
+end
 
 -- Left click applies the current material
 function TOOL:LeftClick( trace )
@@ -125,9 +127,9 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.material.help" } )
+	CPanel:Help( "#tool.material.help" )
 
-	local filter = CPanel:AddControl( "TextBox", { Label = "#spawnmenu.quick_filter_tool" } )
+	local filter = CPanel:TextEntry( "#spawnmenu.quick_filter_tool" )
 	filter:SetUpdateOnType( true )
 
 	-- Remove duplicate materials. table.HasValue is used to preserve material order

@@ -90,29 +90,29 @@ function meta:AddCount( str, ent )
 
 end
 
-function meta:LimitHit( str )
+function meta:GetTool( mode )
 
-	self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
+	local wep = self:GetWeapon( "gmod_tool" )
+	if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
 
-end
+	local tool = wep:GetToolObject( mode )
+	if ( !tool ) then return nil end
 
-function meta:AddCleanup( type, ent )
-
-	cleanup.Add( self, type, ent )
+	return tool
 
 end
 
 if ( SERVER ) then
 
-	function meta:GetTool( mode )
+	function meta:AddCleanup( type, ent )
 
-		local wep = self:GetWeapon( "gmod_tool" )
-		if ( !IsValid( wep ) ) then return nil end
+		cleanup.Add( self, type, ent )
 
-		local tool = wep:GetToolObject( mode )
-		if ( !tool ) then return nil end
+	end
 
-		return tool
+	function meta:LimitHit( str )
+
+		self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
 
 	end
 
@@ -133,23 +133,6 @@ if ( SERVER ) then
 
 		self:SendLua( string.format( 'hook.Run("SuppressHint",%q)', str ) )
 		self.Hints[ str ] = true
-
-	end
-
-else
-
-	function meta:GetTool( mode )
-
-		local wep
-		for _, ent in ipairs( ents.FindByClass( "gmod_tool" ) ) do
-			if ( ent:GetOwner() == self ) then wep = ent break end
-		end
-		if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
-
-		local tool = wep:GetToolObject( mode )
-		if ( !tool ) then return nil end
-
-		return tool
 
 	end
 

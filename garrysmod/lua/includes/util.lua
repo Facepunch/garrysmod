@@ -1,5 +1,24 @@
 
 --
+-- Hack for debug.getregistry
+--
+local meta = {}
+function meta.__index( self, key )
+	return FindMetaTable( key )
+end
+function meta.__newindex( self, key, value )
+	rawset( self, key, value )
+
+	if ( isstring( key ) and istable( value ) ) then
+		RegisterMetaTable( key, value )
+	end
+end
+
+local tbl = {}
+setmetatable( tbl, meta )
+function debug.getregistry() return tbl end
+
+--
 -- Seed the rand!
 --
 math.randomseed( os.time() )
@@ -13,7 +32,6 @@ Format = string.format
 -- Send C the flags for any materials we want to create
 --
 local C_Material = Material
-
 function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
@@ -27,6 +45,22 @@ function Material( name, words )
 	str = str .. (words:find("ignorez") and "1" or "0")
 
 	return C_Material( name, str )
+
+end
+
+local C_type = type
+function type( v )
+
+	local v_type = C_type( v )
+	if ( v_type != "userdata" ) then return v_type end
+
+	local metatable = getmetatable( v )
+	if ( !metatable ) then return "UserData" end
+
+	local metaName = metatable.MetaName
+	if ( C_type( metaName ) != "string" ) then return "UserData" end
+
+	return metaName
 
 end
 
@@ -64,7 +98,7 @@ function PrintTable( t, indent, done )
 	local keys = table.GetKeys( t )
 
 	table.sort( keys, function( a, b )
-		if ( isnumber( a ) && isnumber( b ) ) then return a < b end
+		if ( isnumber( a ) and isnumber( b ) ) then return a < b end
 		return tostring( a ) < tostring( b )
 	end )
 
@@ -73,9 +107,10 @@ function PrintTable( t, indent, done )
 	for i = 1, #keys do
 		local key = keys[ i ]
 		local value = t[ key ]
+		key = ( type( key ) == "string" ) and "[\"" .. key .. "\"]" || "[" .. tostring( key ) .. "]"
 		Msg( string.rep( "\t", indent ) )
 
-		if  ( istable( value ) && !done[ value ] ) then
+		if  ( istable( value ) and !done[ value ] ) then
 
 			done[ value ] = true
 			Msg( key, ":\n" )
@@ -162,7 +197,7 @@ function IncludeCS( filename )
 	if ( SERVER ) then
 		AddCSLuaFile( filename )
 	end
-	
+
 	return include( filename )
 end
 
@@ -284,7 +319,7 @@ local UselessModels = {
 
 function IsUselessModel( modelname )
 
-	local modelname = modelname:lower()
+	modelname = modelname:lower()
 
 	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
 
@@ -317,25 +352,35 @@ end
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedSin( freq, min, max, offset )
-	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
+	return math.sin( freq * math.tau * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedCos( freq, min, max, offset )
-	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
+	return math.cos( freq * math.tau * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end
 
 --[[---------------------------------------------------------
 	IsEnemyEntityName
 -----------------------------------------------------------]]
 local EnemyNames = {
+	-- Half-Life 1.
+	monster_alien_grunt = true, monster_nihilanth = true, monster_tentacle = true, monster_alien_slave = true,
+	monster_bigmomma = true, monster_bullchicken = true, monster_gargantua = true, monster_human_assassin = true,
+	monster_babycrab = true, monster_human_grunt = true, monster_cockroach = true, monster_houndeye = true,
+	monster_zombie = true, monster_headcrab = true, monster_alien_controller = true, monster_turret = true,
+	monster_miniturret = true, monster_sentry = true,
+
+	-- Half-Life 2.
 	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true,
 	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true,
 	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true,
-	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true,
-	npc_strider = true, npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true
+	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true, npc_strider = true,
+	npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true, npc_combine_camera = true,
+	npc_turret_ceiling = true, npc_combinedropship = true, npc_combinegunship = true, npc_helicopter = true,
+	npc_turret_floor = true, npc_antlion_worker = true, npc_headcrab_black = true
 }
 
 function IsEnemyEntityName( victimtype )
@@ -346,6 +391,10 @@ end
 	IsFriendEntityName
 -----------------------------------------------------------]]
 local FriendlyNames = {
+	-- Half-Life 1.
+	monster_scientist = true, monster_barney = true,
+
+	-- Half-Life 2.
 	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true,
 	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true,
 	npc_monk = true, npc_mossman = true, npc_odessa = true, npc_vortigaunt = true
@@ -361,6 +410,10 @@ end
 		IsMounted( 4010 )
 -----------------------------------------------------------]]
 function IsMounted( name )
+
+	if ( name == "episodic" || name == "ep2" || name == "lostcoast" ) then
+		name = "hl2"
+	end
 
 	local games = engine.GetGames()
 
@@ -411,10 +464,10 @@ if ( CLIENT ) then
 
 	function RememberCursorPosition()
 
-		local x, y = gui.MousePos()
+		local x, y = input.GetCursorPos()
 
 		-- If the cursor isn't visible it will return 0,0 ignore it.
-		if ( x == 0 && y == 0 ) then return end
+		if ( x == 0 and y == 0 ) then return end
 
 		StoredCursorPos.x, StoredCursorPos.y = x, y
 
@@ -456,9 +509,9 @@ local ConVarCache = {}
 
 function GetConVar( name )
 	local c = ConVarCache[ name ]
-	if not c then
+	if ( !c ) then
 		c = GetConVar_Internal( name )
-		if not c then
+		if ( !c ) then
 			return
 		end
 

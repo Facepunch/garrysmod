@@ -76,19 +76,21 @@ function PANEL:Add( strName )
 
 	local button = vgui.Create( "DButton", self )
 	button.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
-	button.UpdateColours = function( button, skin )
+	button.UpdateColours = function( panel, skin )
 
-		if ( button.AltLine ) then
+		if ( panel.AltLine ) then
 
-			if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
-			if ( button.Hovered ) then							return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
-			return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text )
+			if ( !panel:IsEnabled() ) then						return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Disabled ) end
+			if ( panel.Depressed || panel.m_bSelected ) then	return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
+			if ( panel.Hovered ) then							return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
+			return panel:SetTextStyleColor( skin.Colours.Category.LineAlt.Text )
 
 		end
 
-		if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
-		if ( button.Hovered ) then							return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
-		return button:SetTextStyleColor( skin.Colours.Category.Line.Text )
+		if ( !panel:IsEnabled() ) then						return panel:SetTextStyleColor( skin.Colours.Category.Line.Text_Disabled ) end
+		if ( panel.Depressed || panel.m_bSelected ) then	return panel:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
+		if ( panel.Hovered ) then							return panel:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
+		return panel:SetTextStyleColor( skin.Colours.Category.Line.Text )
 
 	end
 

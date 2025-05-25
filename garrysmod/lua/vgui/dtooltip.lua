@@ -3,7 +3,7 @@
 -- The delay before a tooltip appears
 -- Can be overridden with PANEL:SetTooltipDelay
 --
-local tooltip_delay = CreateClientConVar( "tooltip_delay", "0.5", true, false )
+local tooltip_delay = CreateConVar( "tooltip_delay", "0.5", FCVAR_ARCHIVE + FCVAR_DONTRECORD, "Delay between hovering over a panel, and a tooltip appearing, if it has one." )
 
 local PANEL = {}
 
@@ -123,7 +123,7 @@ end
 
 function PANEL:Close()
 
-	if ( !self.DeleteContentsOnClose && IsValid( self.Contents ) ) then
+	if ( !self.DeleteContentsOnClose and IsValid( self.Contents ) ) then
 
 		self.Contents:SetVisible( false )
 		self.Contents:SetParent( nil )

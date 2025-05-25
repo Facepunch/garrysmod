@@ -3,11 +3,33 @@ AddCSLuaFile()
 
 if ( SERVER ) then return end
 
-local function InstallSVCheatsEnable( pnl )
-	local think = pnl.Think
-	pnl.Think = function( s ) think( s ) if ( GetConVarNumber( "sv_cheats" ) != 0 ) then s:SetEnabled( true ) else s:SetEnabled( false ) end end
-	pnl:SetToolTip( "#menubar.cheatstip" )
+local checkList = {}
+checkList[ "cheat" ] = { tooltip = "#menubar.cheatstip", func = function() return GetConVarNumber( "sv_cheats" ) != 0 end }
+checkList[ "cheatSP" ] = { tooltip = "#menubar.cheatstip", func = function() return GetConVarNumber( "sv_cheats" ) != 0 or game.SinglePlayer() end }
+checkList[ "host" ] = { tooltip = "#menubar.host_only", func = function() return IsValid( LocalPlayer() ) and LocalPlayer():IsListenServerHost() end }
+
+local function AddCVar( s, checkStr, ... )
+	local cvar = s:AddCVar( ... )
+	cvar.OldThink = cvar.Think
+	cvar.Think = function( se )
+		se:OldThink()
+		local checks = string.Split( checkStr, " " )
+		for k, v in ipairs( checks ) do
+			if ( checkList[ v ] and !checkList[ v ].func() ) then
+				se:SetEnabled( false )
+				se:SetTooltip( checkList[ v ].tooltip )
+				return
+			end
+		end
+
+		se:SetEnabled( true )
+		se:SetTooltip()
+	end
 end
+
+local function AddHostCVar( s, ... ) AddCVar( s, "host", ... ) end
+local function AddCheatCVar( s, ... ) AddCVar( s, "cheat", ... ) end
+local function AddCheatOrSPCVar( s, ... ) AddCVar( s, "cheatSP host", ... ) end
 
 -- Display options
 hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
@@ -39,11 +61,8 @@ hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 
 	m:AddCVar( "#menubar.drawing.showfps", "cl_showfps", "1", "0" )
 
-	local opt = m:AddCVar( "#menubar.drawing.minecraftify", "mat_showlowresimage", "1", "0", function() timer.Simple( 0.1, function() RunConsoleCommand( "mat_reloadallmaterials" ) end ) end )
-	InstallSVCheatsEnable( opt )
-
-	local opt = m:AddCVar( "#menubar.drawing.wireframe", "mat_wireframe", "1", "0" )
-	InstallSVCheatsEnable( opt )
+	AddCheatOrSPCVar( m, "#menubar.drawing.minecraftify", "mat_showlowresimage", "1", "0", function() timer.Simple( 0.1, function() RunConsoleCommand( "mat_reloadallmaterials" ) end ) end )
+	AddCheatCVar( m, "#menubar.drawing.wireframe", "mat_wireframe", "1", "0" )
 
 	m:AddSpacer()
 
@@ -56,10 +75,10 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 
 	local m = menubar:AddOrGetMenu( "#menubar.npcs" )
 
-	m:AddCVar( "#menubar.npcs.disableai", "ai_disabled", "1", "0" )
-	m:AddCVar( "#menubar.npcs.ignoreplayers", "ai_ignoreplayers", "1", "0" )
-	m:AddCVar( "#menubar.npcs.keepcorpses", "ai_serverragdolls", "1", "0" )
-	m:AddCVar( "#menubar.npcs.autoplayersquad", "npc_citizen_auto_player_squad", "1", "0" )
+	AddHostCVar( m, "#menubar.npcs.disableai", "ai_disabled", "1", "0" )
+	AddHostCVar( m, "#menubar.npcs.ignoreplayers", "ai_ignoreplayers", "1", "0" )
+	AddHostCVar( m, "#menubar.npcs.keepcorpses", "ai_serverragdolls", "1", "0" )
+	AddHostCVar( m, "#menubar.npcs.autoplayersquad", "npc_citizen_auto_player_squad", "1", "0" )
 
 	local wpns = m:AddSubMenu( "#menubar.npcs.weapon" )
 
@@ -70,7 +89,7 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 
 	local groupedWeps = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-		local cat = (v.category or ""):lower()
+		local cat = ( v.category or "" ):lower()
 		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
 		groupedWeps[ cat ][ v.class ] = language.GetPhrase( v.title )
 	end
@@ -78,8 +97,31 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 	for group, items in SortedPairs( groupedWeps ) do
 		wpns:AddSpacer()
 		for class, title in SortedPairsByValue( items ) do
-			wpns:AddCVar( title,"gmod_npcweapon", class )
+			wpns:AddCVar( title, "gmod_npcweapon", class )
 		end
 	end
+
+end )
+
+-- Server options
+hook.Add( "PopulateMenuBar", "MenuBar_ServerOptions", function( menubar )
+
+	local m = menubar:AddOrGetMenu( "#menubar.server" )
+
+	AddHostCVar( m, "#utilities.allowcslua", "sv_allowcslua", "1", "0" )
+	AddHostCVar( m, "#utilities.falldamage", "mp_falldamage", "1", "0" )
+	AddHostCVar( m, "#utilities.gmod_suit", "gmod_suit", "1", "0" )
+	AddCheatOrSPCVar( m, "#physcannon_mega_enabled", "physcannon_mega_enabled", "1", "0" )
+
+	m:AddSpacer()
+	AddHostCVar( m, "#enable_weapons", "sbox_weapons", "1", "0" )
+	AddHostCVar( m, "#allow_god_mode", "sbox_godmode", "1", "0" )
+
+	m:AddSpacer()
+	AddHostCVar( m, "#players_damage_players", "sbox_playershurtplayers", "1", "0" )
+	AddHostCVar( m, "#allow_noclip", "sbox_noclip", "1", "0" )
+	AddHostCVar( m, "#bone_manipulate_npcs", "sbox_bonemanip_npc", "1", "0" )
+	AddHostCVar( m, "#bone_manipulate_players", "sbox_bonemanip_player", "1", "0" )
+	AddHostCVar( m, "#bone_manipulate_others", "sbox_bonemanip_misc", "1", "0" )
 
 end )

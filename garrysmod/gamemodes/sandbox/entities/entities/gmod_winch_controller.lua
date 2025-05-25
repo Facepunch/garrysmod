@@ -170,7 +170,7 @@ end
 --[[----------------------------------------------------------------------
 	HydraulicToggle - Toggle hydraulic on and off
 ------------------------------------------------------------------------]]
-local function HydraulicToggle( pl, hyd )
+local function HydraulicToggle( ply, hyd )
 
 	if ( !IsValid( hyd ) ) then return false end
 
@@ -199,7 +199,7 @@ numpad.Register( "HydraulicToggle", HydraulicToggle )
 --[[----------------------------------------------------------------------
 	WinchOn - Called to switch the winch on
 ------------------------------------------------------------------------]]
-local function WinchOn( pl, winch, dir )
+local function WinchOn( ply, winch, dir )
 	if ( !IsValid( winch ) ) then return false end
 	winch:SetDirection( dir )
 end
@@ -209,7 +209,7 @@ numpad.Register( "HydraulicDir", WinchOn ) -- A little cheat
 --[[----------------------------------------------------------------------
 	WinchOff - Called to switch the winch off
 ------------------------------------------------------------------------]]
-local function WinchOff( pl, winch )
+local function WinchOff( ply, winch )
 	if ( !IsValid( winch ) ) then return false end
 	winch:SetDirection( 0 )
 end
@@ -218,7 +218,7 @@ numpad.Register( "WinchOff", WinchOff )
 --[[----------------------------------------------------------------------
 	WinchToggle - Called to toggle the winch
 ------------------------------------------------------------------------]]
-local function WinchToggle( pl, winch, dir )
+local function WinchToggle( ply, winch, dir )
 	if ( !IsValid( winch ) ) then return false end
 	if ( winch:GetDirection() == dir ) then
 		winch:SetDirection( 0 )
@@ -231,7 +231,7 @@ numpad.Register( "WinchToggle", WinchToggle )
 --[[----------------------------------------------------------------------
 	MuscleToggle - Called to toggle the muslce
 ------------------------------------------------------------------------]]
-local function MuscleToggle( pl, hyd )
+local function MuscleToggle( ply, hyd )
 
 	if ( !IsValid( hyd ) ) then return false end
 

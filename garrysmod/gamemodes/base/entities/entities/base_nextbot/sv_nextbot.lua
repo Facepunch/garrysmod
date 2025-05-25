@@ -231,7 +231,7 @@ function ENT:FindSpots( tbl )
 			-- Work out the length, and add them to a table
 			path:Invalidate()
 
-			path:Compute( self, vec, 1 ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
+			path:Compute( self, vec ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
 
 			table.insert( found, { vector = vec, distance = path:GetLength() } )
 

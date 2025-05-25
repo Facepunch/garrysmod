@@ -5,16 +5,17 @@
 -----------------------------------------------------------]]
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
+	-- Non vphysics entity, we don't know how to handle that
+	if ( !IsValid( phys ) ) then return end
+
 	-- Object is already frozen (!?)
-	if ( !phys:IsMoveable() ) then return false end
-	if ( ent:GetUnFreezable() ) then return false end
+	if ( !phys:IsMoveable() ) then return end
+	if ( ent:GetUnFreezable() ) then return end
 
 	phys:EnableMotion( false )
 
 	-- Add it to the player's frozen props
 	ply:AddFrozenPhysicsObject( ent, phys )
-
-	return true
 
 end
 
@@ -30,7 +31,7 @@ end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerAuthed()
-	Desc: Player's STEAMID has been authed
+	Desc: Player's UniqueID was set
 -----------------------------------------------------------]]
 function GM:PlayerAuthed( ply, SteamID, UniqueID )
 end
@@ -125,11 +126,6 @@ function GM:PlayerSilentDeath( Victim )
 
 end
 
--- Pool network strings used for PlayerDeaths.
-util.AddNetworkString( "PlayerKilled" )
-util.AddNetworkString( "PlayerKilledSelf" )
-util.AddNetworkString( "PlayerKilledByPlayer" )
-
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerDeath()
 	Desc: Called when a player dies.
@@ -164,35 +160,29 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker == ply ) then
 
-		net.Start( "PlayerKilledSelf" )
-			net.WriteEntity( ply )
-		net.Broadcast()
+		self:SendDeathNotice( nil, "suicide", ply, 0 )
 
 		MsgAll( attacker:Nick() .. " suicided!\n" )
 
-	return end
+		return
+	end
 
 	if ( attacker:IsPlayer() ) then
 
-		net.Start( "PlayerKilledByPlayer" )
-
-			net.WriteEntity( ply )
-			net.WriteString( inflictor:GetClass() )
-			net.WriteEntity( attacker )
-
-		net.Broadcast()
+		self:SendDeathNotice( attacker, inflictor:GetClass(), ply, 0 )
 
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 
-	return end
+		return
+	end
 
-	net.Start( "PlayerKilled" )
+	if ( !IsValid( attacker ) ) then attacker = game.GetWorld() end
+	if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
-		net.WriteEntity( ply )
-		net.WriteString( inflictor:GetClass() )
-		net.WriteString( attacker:GetClass() )
+	local flags = 0
+	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	net.Broadcast()
+	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
 
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 
@@ -321,7 +311,7 @@ function GM:PlayerSelectTeamSpawn( TeamID, pl )
 
 	for i = 0, 6 do
 
-		local ChosenSpawnPoint = table.Random( SpawnPoints )
+		ChosenSpawnPoint = table.Random( SpawnPoints )
 		if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == 6 ) ) then
 			return ChosenSpawnPoint
 		end
@@ -393,6 +383,9 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_combine" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_rebel" ) )
 
+		-- Portal 2 Coop
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_coop_spawn" ) )
+
 		-- CS Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_counterterrorist" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_terrorist" ) )
@@ -448,6 +441,13 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_rescue" ) )
 		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
 		--self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
+
+		-- NEOTOKYO Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_attacker" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_defender" ) )
+
+		-- Fortress Forever Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_ff_teamspawn" ) )
 
 	end
 
@@ -548,8 +548,29 @@ end
 	Name: gamemode:OnDamagedByExplosion( ply, dmginfo)
 	Desc: Player has been hurt by an explosion
 -----------------------------------------------------------]]
-function GM:OnDamagedByExplosion( ply, dmginfo )
-	ply:SetDSP( 35, false )
+local MIN_SHOCK_AND_CONFUSION_DAMAGE = 30
+local MIN_EAR_RINGING_DISTANCE = 240
+
+function GM:OnDamagedByExplosion( ply, info )
+
+	local ear_ringing = false
+	local inflictor = info:GetInflictor()
+	if ( IsValid( inflictor ) ) then
+		local delta = ply:GetPos() - inflictor:GetPos()
+		ear_ringing = delta:Length() < MIN_EAR_RINGING_DISTANCE
+	end
+
+	local shock = info:GetDamage() >= MIN_SHOCK_AND_CONFUSION_DAMAGE
+
+	if ( !shock and !ear_ringing ) then return end
+
+	-- The effect names are actually backwards
+	if ( shock ) then
+		ply:SetDSP( math.random( 35, 37 ), false )
+		return
+	end
+
+	ply:SetDSP( math.random( 32, 34 ), false )
 end
 
 --[[---------------------------------------------------------
@@ -606,7 +627,7 @@ end
 function GM:PlayerCanJoinTeam( ply, teamid )
 
 	local TimeBetweenSwitches = GAMEMODE.SecondsBetweenTeamSwitches or 10
-	if ( ply.LastTeamSwitch && RealTime()-ply.LastTeamSwitch < TimeBetweenSwitches ) then
+	if ( ply.LastTeamSwitch && RealTime() - ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
 		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
 		return false
@@ -826,3 +847,41 @@ function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
 concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber( args[ 1 ] ) ) end )
+
+--[[---------------------------------------------------------
+	Name: gamemode:HandlePlayerArmorReduction()
+	Desc: Handle player armor reduction
+-----------------------------------------------------------]]
+function GM:HandlePlayerArmorReduction( ply, dmginfo )
+
+	-- If no armor, or special damage types, bypass armor
+	if ( ply:Armor() <= 0 || bit.band( dmginfo:GetDamageType(), DMG_FALL + DMG_DROWN + DMG_POISON + DMG_RADIATION ) != 0 ) then return end
+
+	local flBonus = 1.0 -- Each Point of Armor is worth 1/x points of health
+	local flRatio = 0.2 -- Armor Takes 80% of the damage
+	if ( GetConVar( "player_old_armor" ):GetBool() ) then
+		flBonus = 0.5
+	end
+
+	local flNew = dmginfo:GetDamage() * flRatio
+	local flArmor = (dmginfo:GetDamage() - flNew) * flBonus
+
+	if ( !GetConVar( "player_old_armor" ):GetBool() ) then
+		if ( flArmor < 0.1 ) then flArmor = 0 end -- Let's not have tiny amounts of damage reduce a lot of our armor
+		else if ( flArmor < 1.0 ) then flArmor = 1.0 end
+	end
+
+	-- Does this use more armor than we have?
+	if ( flArmor > ply:Armor() ) then
+
+		flArmor = ply:Armor() * ( 1 / flBonus )
+		flNew = dmginfo:GetDamage() - flArmor
+		ply:SetArmor( 0 )
+
+	else
+		ply:SetArmor( ply:Armor() - flArmor )
+	end
+
+	dmginfo:SetDamage( flNew )
+
+end

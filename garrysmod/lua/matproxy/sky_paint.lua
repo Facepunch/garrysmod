@@ -8,33 +8,32 @@ matproxy.Add( {
 	bind = function( self, mat, ent )
 
 		local skyPaint = g_SkyPaint
-	
-		if ( !IsValid( skyPaint ) ) then return end
+		if ( not IsValid( skyPaint ) ) then return end
 
-		mat:SetVector( "$TOPCOLOR",		skyPaint:GetTopColor() )
-		mat:SetVector( "$BOTTOMCOLOR",	skyPaint:GetBottomColor() )
-		mat:SetVector( "$SUNNORMAL",	skyPaint:GetSunNormal() )
-		mat:SetVector( "$SUNCOLOR",		skyPaint:GetSunColor() )
-		mat:SetVector( "$DUSKCOLOR",	skyPaint:GetDuskColor() )
-		mat:SetFloat( "$FADEBIAS",		skyPaint:GetFadeBias() )
-		mat:SetFloat( "$HDRSCALE",		skyPaint:GetHDRScale() )
-		mat:SetFloat( "$DUSKSCALE",		skyPaint:GetDuskScale() )
-		mat:SetFloat( "$DUSKINTENSITY",	skyPaint:GetDuskIntensity() )
-		mat:SetFloat( "$SUNSIZE",		skyPaint:GetSunSize() )
+		mat:SetVector( "$TOPCOLOR",		skyPaint:GetDTVector( 0 ) )
+		mat:SetVector( "$BOTTOMCOLOR",	skyPaint:GetDTVector( 1 ) )
+		mat:SetVector( "$DUSKCOLOR",	skyPaint:GetDTVector( 4 ) )
+		mat:SetFloat( "$DUSKSCALE",		skyPaint:GetDTFloat( 2 ) )
+		mat:SetFloat( "$DUSKINTENSITY",	skyPaint:GetDTFloat( 3 ) )
+		mat:SetFloat( "$FADEBIAS",		skyPaint:GetDTFloat( 0 ) )
+		mat:SetFloat( "$HDRSCALE",		skyPaint:GetDTFloat( 1 ) )
 
-		if ( skyPaint:GetDrawStars() ) then
+		mat:SetVector( "$SUNNORMAL",	skyPaint:GetDTVector( 2 ) )
+		mat:SetVector( "$SUNCOLOR",		skyPaint:GetDTVector( 3 ) )
+		mat:SetFloat( "$SUNSIZE",		skyPaint:GetDTFloat( 4 ) )
 
-			mat:SetInt( "$STARLAYERS",		skyPaint:GetStarLayers() )
-			mat:SetFloat( "$STARSCALE",		skyPaint:GetStarScale() )
-			mat:SetFloat( "$STARFADE",		skyPaint:GetStarFade() )
-			mat:SetFloat( "$STARPOS",		RealTime() * skyPaint:GetStarSpeed() )
-			mat:SetTexture( "$STARTEXTURE",	skyPaint:GetStarTexture() )
-
-		else
-
-			mat:SetInt( "$STARLAYERS", 0 )
-
+		if ( not skyPaint:GetDTBool( 0 ) ) then
+			return mat:SetInt( "$STARLAYERS", 0 )
 		end
+
+		mat:SetInt( "$STARLAYERS",		skyPaint:GetDTInt( 0 ) )
+
+		local star = skyPaint:GetDTAngle( 0 )
+		mat:SetFloat( "$STARSCALE",		star.p )
+		mat:SetFloat( "$STARFADE",		star.y )
+		mat:SetFloat( "$STARPOS",		star.r * RealTime() )
+
+		mat:SetTexture( "$STARTEXTURE",	skyPaint:GetDTString( 0 ) )
 
 	end
 } )

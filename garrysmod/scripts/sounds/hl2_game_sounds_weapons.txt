@@ -1383,9 +1383,11 @@
 
 	"rndwave"
 	{
-		"wave"		")weapons/fx/rics/laser_ric1.wav"
-		"wave"		")weapons/fx/rics/laser_ric2.wav"
-		"wave"		")weapons/fx/rics/laser_ric3.wav"
+		"wave"		")weapons\airboat\airboat_gun_energy1.wav"
+		"wave"		")weapons\airboat\airboat_gun_energy2.wav"
+		//"wave"		")weapons/fx/rics/laser_ric1.wav
+		//"wave"		")weapons/fx/rics/laser_ric2.wav"
+		//"wave"		")weapons/fx/rics/laser_ric3.wav"
 	}
 }
 

@@ -203,7 +203,8 @@ workshopmessage
 	margin: 64px;
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 800px)
+{
 	workshopmessage
 	{
 		margin: 16px;
@@ -254,6 +255,13 @@ controls control IMG
 controls control:hover
 {
 	background-color: white;
+}
+
+
+controls control.disabled
+{
+	background-color: #bfbfbf;
+	cursor: default;
 }
 
 .ugc_settings_button
@@ -344,13 +352,19 @@ controls control:hover
 	min-width: 500px;
 	margin-bottom: 5px;
 }
+.preset_content input[type=text]
+{
+	padding: 2px 4px;
+	box-sizing: border-box;
+	margin-bottom: 8px;
+}
 .preset_list
 {
 	background: #eee;
 	width: 150px;
 	display: inline-block;
 	max-height: 400px;
-	min-height: 230px;
+	min-height: 290px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }

@@ -7,7 +7,7 @@ local GetPTranslation = LANG.GetParamTranslation
 local string = string
 
 local function LastWordsRecv()
-   local sender = net.ReadEntity()
+   local sender = net.ReadPlayer()
    local words  = net.ReadString()
 
    local was_detective = IsValid(sender) and sender:IsDetective()
@@ -25,7 +25,7 @@ net.Receive("TTT_LastWordsMsg", LastWordsRecv)
 local function RoleChatRecv()
    -- virtually always our role, but future equipment might allow listening in
    local role = net.ReadUInt(2)
-   local sender = net.ReadEntity()
+   local sender = net.ReadPlayer()
    if not IsValid(sender) then return end
 
    local text = net.ReadString()
@@ -48,6 +48,15 @@ local function RoleChatRecv()
    end
 end
 net.Receive("TTT_RoleChat", RoleChatRecv)
+
+function GM:GetTeamColor(ent)
+   -- don't reveal that a player has died when they happen to chat or voicechat at the moment of death
+   if LocalPlayer():IsTerror() and ent:IsPlayer() then
+      return hook.Run("GetTeamNumColor", TEAM_TERROR)
+   end
+
+   return BaseClass.GetTeamColor(self, ent)
+end
 
 -- special processing for certain special chat types
 function GM:ChatText(idx, name, text, type)
@@ -362,7 +371,7 @@ concommand.Add("ttt_radio", RadioCommand, RadioComplete)
 
 
 local function RadioMsgRecv()
-   local sender = net.ReadEntity()
+   local sender = net.ReadPlayer()
    local msg    = net.ReadString()
    local param  = net.ReadString()
 

@@ -1,0 +1,411 @@
+"TableToKeyValues"
+{
+	"parentid"		"41"
+	"icon"		"icon16/page.png"
+	"id"		"42"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Good guys"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_fbi.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_fbi_varianta.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_fbi_variantb.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_fbi_variantc.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_fbi_variantd.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gign.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gign_varianta.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gign_variantb.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gign_variantc.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gign_variantd.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gsg9.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gsg9_varianta.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gsg9_variantb.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gsg9_variantc.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_gsg9_variantd.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_idf.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_idf_variantb.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_idf_variantc.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_idf_variantd.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_idf_variante.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_idf_variantf.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_sas.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_sas_varianta.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_sas_variantb.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_sas_variantc.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_sas_variantd.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_sas_variante.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_st6.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_swat_varianta.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_swat.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_st6_varianta.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_st6_variantb.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_st6_variantc.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_st6_variantd.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_swat_variantb.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_swat_variantc.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/player/ctm_swat_variantd.mdl"
+		}
+		"39"
+		{
+			"type"		"header"
+			"text"		"Bad guys"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_anarchist.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_anarchist_varianta.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_anarchist_variantb.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_anarchist_variantc.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_anarchist_variantd.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_balkan_varianta.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_balkan_variantb.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_balkan_variantc.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_balkan_variantd.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_balkan_variante.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_leet_varianta.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_leet_variantb.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_leet_variantc.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_leet_variantd.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_leet_variante.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_phoenix.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_phoenix_varianta.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_phoenix_variantb.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_phoenix_variantc.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_phoenix_variantd.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_pirate.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_pirate_varianta.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_pirate_variantc.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_pirate_variantb.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_pirate_variantd.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_professional.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_professional_var1.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_professional_var2.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_professional_var3.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_professional_var4.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_separatist.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_separatist_varianta.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_separatist_variantb.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_separatist_variantd.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/player/tm_separatist_variantc.mdl"
+		}
+		"75"
+		{
+			"type"		"header"
+			"text"		"Dumb guys"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/hostage/hostage.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/hostage/hostage_varianta.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/hostage/hostage_variantb.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/hostage/hostage_variantc.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/player/zombie.mdl"
+		}
+	}
+	"name"		"Characters"
+	"version"		"3"
+}

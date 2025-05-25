@@ -17,14 +17,15 @@ function PANEL:Init()
 	self:Dock( TOP )
 	self:DockMargin( 0, 0, 0, 1 )
 
-	self.CopyBtn = self:Add( "DImageButton" )
+	self.CopyBtn = self:Add( "DButton" )
 	self.CopyBtn:SetImage( "icon16/page_copy.png" )
-	self.CopyBtn:SetSize( 16, 16 )
+	self.CopyBtn:SetText( "#spawnmenu.menu.copy" )
+	self.CopyBtn:SizeToContentsX( 4 )
 	self.CopyBtn.DoClick = function( btm )
 		if ( !self.Problem ) then return end
 
 		local prepend = ""
-		if ( self.Problem.title && self.Problem.title:len() > 0 && self.Problem.title != "Other" ) then prepend = "[" .. self.Problem.title .. "] " end
+		if ( self.Problem.title and self.Problem.title:len() > 0 and self.Problem.title != "Other" ) then prepend = "[" .. self.Problem.title .. "] " end
 		SetClipboardText( prepend .. self.Problem.text )
 	end
 
@@ -71,7 +72,7 @@ function PANEL:Paint( w, h )
 
 	-- Draw background
 	local count = 0
-	if ( self.Problem && self.Problem.count ) then count = self.Problem.count end
+	if ( self.Problem and self.Problem.count ) then count = self.Problem.count end
 
 	-- The error count
 	if ( count > 0 ) then
@@ -133,13 +134,13 @@ function PANEL:Paint( w, h )
 	draw.SimpleText( self.Title, "DermaLarge", 4, 2, white, draw.TEXT_ALIGN_LEFT, draw.TEXT_ALIGN_TOP )
 
 	surface.SetMaterial( arrowMat )
-	surface.SetDrawColor( white )
-	surface.DrawTexturedRectRotated( w - 20, 18, 20, 12, self.Collapsed && 180 || 0 )
+	surface.SetDrawColor( 255, 255, 255, white.a )
+	surface.DrawTexturedRectRotated( w - 20, 18, 20, 12, self.Collapsed and 180 or 0 )
 
 	local h2 = self.LuaErrorList:GetTall()
 	local _, lY = self.LuaErrorList:GetPos()
 
-	draw.DrawText( self:GetExplainerText(), "DermaDefault", w / 2, lY + h2 + 5, white, draw.TEXT_ALIGN_CENTER, draw.TEXT_ALIGN_TOP )
+	draw.DrawText( self:GetExplainerText(), "DermaDefault", w / 2, lY + h2 + 5, white, draw.TEXT_ALIGN_CENTER )
 
 end
 
@@ -162,12 +163,12 @@ end
 
 function PANEL:GetExplainerText()
 
-	if ( self.Title == "Other" && self.AddonID && self.AddonID:len() < 2 ) then
+	if ( self.Title == "Other" and self.AddonID and self.AddonID:len() < 2 ) then
 		return language.GetPhrase( "problems.generic_lua_error" )
 	end
 
 	-- Not a workshop addon, or a floating .gma (WSID=0)
-	if ( self.AddonID && self.AddonID:len() < 2 ) then
+	if ( self.AddonID and self.AddonID:len() < 2 ) then
 		return language.GetPhrase( "problems.addon_lua_error" ):format( self.Title )
 	end
 
@@ -183,7 +184,7 @@ function PANEL:SetTitleAndID( title, id, groupid )
 
 	self.Collapsed = collapsedCache[ self.Title ]
 
-	if ( self.AddonID && self.AddonID:len() > 1 ) then
+	if ( self.AddonID and self.AddonID:len() > 1 ) then
 		self.DisableBtn = self:Add( "DButton" )
 		self.DisableBtn:SetText( "#problems.disable" )
 		self.DisableBtn:SizeToContentsX( 10 )
@@ -247,7 +248,7 @@ end
 function PANEL:Think()
 
 	if ( IsValid( self.DisableBtn ) ) then
-		self.DisableBtn:SetEnabled( steamworks.IsSubscribed( self.AddonID ) && steamworks.ShouldMountAddon( self.AddonID ) )
+		self.DisableBtn:SetEnabled( steamworks.IsSubscribed( self.AddonID ) and steamworks.ShouldMountAddon( self.AddonID ) )
 		self.UninstallBtn:SetEnabled( steamworks.IsSubscribed( self.AddonID ) )
 	end
 
@@ -270,13 +271,13 @@ function PANEL:ReceivedError( uid, err )
 
 	if ( shouldSort ) then
 		local sorted = {}
-		for gid, pnl in pairs( self.ErrorPanels ) do
-			sorted[ pnl.Problem.firstOccurence ] = pnl
+		for gid, epnl in pairs( self.ErrorPanels ) do
+			sorted[ epnl.Problem.firstOccurence ] = epnl
 		end
 
 		local z = 0
-		for sort, pnl in SortedPairs( sorted ) do
-			pnl:SetZPos( z )
+		for sort, spnl in SortedPairs( sorted ) do
+			spnl:SetZPos( z )
 			z = z + 1
 		end
 	end

@@ -3,7 +3,7 @@ concommand.Add( "whereis", function( _, _, _, path )
 
 	local absolutePath = util.RelativePathToFull_Menu( path, "GAME" )
 
-	if ( !absolutePath || !file.Exists( path, "GAME" ) ) then
+	if ( !absolutePath or !file.Exists( path, "GAME" ) ) then
 		MsgN "File not found."
 		return
 	end

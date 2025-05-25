@@ -59,6 +59,12 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		scope.SwitchWithTag( scope.Category, 0, scope.Tagged, scope.MapName )
 	}
 
+	// Refresh current page, etc
+	this.Scope.RefreshCurrentView = function()
+	{
+		scope.SwitchWithTag( scope.Category, scope.Offset, scope.Tagged, scope.MapName )
+	}
+
 	var hackyWackyTimer = 0;
 	this.Scope.HandleOnSearch = function()
 	{
@@ -124,9 +130,8 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 	this.Scope.Rate = function( entry, b )
 	{
 		if ( !entry.id ) return;
-
-		// Hide the rating icons
-		entry.rated = true;
+		if ( b && entry.info.voted_up ) return;
+		if ( !b && entry.info.voted_down ) return;
 
 		// Cast our vote
 		gmod.Vote( entry.id, ( b ? "1" : "0" ) )
@@ -134,6 +139,16 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		// Update the scores locally (the votes don't update on the server straight away)
 		if ( entry.info )
 		{
+			if ( b )
+			{
+				entry.info.voted_up = true;
+				entry.info.voted_down = false;
+			}
+			else
+			{
+				entry.info.voted_up = false;
+				entry.info.voted_down = true;
+			}
 			if ( b ) entry.info.up++; else entry.info.down++;
 		}
 
@@ -141,6 +156,21 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		if ( b )	lua.PlaySound( "npc/roller/mine/rmine_chirp_answer1.wav" );
 		else 		lua.PlaySound( "buttons/button10.wav" );
 
+	}
+
+	this.Scope.Favorite = function( entry, b )
+	{
+		if ( !entry.id ) return;
+
+		// Update favorite button
+		entry.info.favorite = b;
+
+		// Set favorite status
+		gmod.SetFavorite( entry.id, ( b ? "1" : "0" ) )
+
+		// And play a sound
+		if ( b )	lua.PlaySound( "npc/roller/mine/rmine_chirp_answer1.wav" );
+		else 		lua.PlaySound( "buttons/button10.wav" );
 	}
 
 	this.Scope.PublishLocal = function( entry )
@@ -209,7 +239,7 @@ WorkshopFiles.prototype.ReceiveIndex = function( data )
 	}
 
 	this.Scope.FilesOther = [];
-	if ( data.otherresults ) 
+	if ( data.otherresults )
 	{
 		for ( var j in data.otherresults )
 		{
@@ -232,6 +262,19 @@ WorkshopFiles.prototype.ReceiveFileInfo = function( id, data )
 
 		this.Scope.Files[k].filled	= true;
 		this.Scope.Files[k].info	= data;
+
+		this.Changed();
+	}
+}
+WorkshopFiles.prototype.ReceiveFileUserInfo = function( id, data )
+{
+	for ( var k in this.Scope.Files )
+	{
+		if ( this.Scope.Files[k].id != id ) continue;
+
+		this.Scope.Files[k].info.favorite = data.favorite;
+		this.Scope.Files[k].info.voted_up = data.voted_up;
+		this.Scope.Files[k].info.voted_down = data.voted_down;
 
 		this.Changed();
 	}

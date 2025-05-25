@@ -69,7 +69,7 @@ properties.Add( "motioncontrol_ragdoll", {
 		ragdoll_motion:SetController( player )
 		ragdoll_motion:Spawn()
 
-		undo.Create( "MotionController" )
+		undo.Create( "ragdoll_motion" )
 			undo.AddEntity( ragdoll_motion )
 			undo.SetPlayer( player )
 		undo.Finish()

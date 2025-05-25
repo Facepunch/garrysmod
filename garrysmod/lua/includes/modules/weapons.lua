@@ -45,19 +45,20 @@ end
 -----------------------------------------------------------]]
 function Register( t, name )
 
-	t.ClassName = t.ClassName or name
+	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
 
-	if ( hook.Run( "PreRegisterSWEP", t, t.ClassName ) == false ) then return end
+	if ( isstring( t.ClassNameOverride ) ) then name = t.ClassNameOverride end
 
-	local old = WeaponList[ t.ClassName ]
-	WeaponList[ t.ClassName ] = t
+	local old = WeaponList[ name ]
+	t.ClassName = name
+	WeaponList[ name ] = t
 
 	--baseclass.Set( name, t )
 
-	list.Set( "Weapon", t.ClassName, {
-		ClassName = t.ClassName,
-		PrintName = t.PrintName or t.ClassName,
-		Category = t.Category or "Other",
+	list.Set( "Weapon", name, {
+		ClassName = name,
+		PrintName = t.PrintName or name,
+		Category = t.Category or "#spawnmenu.category.other",
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
 		ScriptedEntityType = t.ScriptedEntityType,
@@ -66,7 +67,7 @@ function Register( t, name )
 
 	-- Allow all SWEPS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( t.ClassName )
+		duplicator.Allow( name )
 	end
 
 	--
@@ -79,7 +80,7 @@ function Register( t, name )
 		for _, e in ipairs( ents.GetAll() ) do
 			local class = e:GetClass()
 
-			if ( class == t.ClassName ) then
+			if ( class == name ) then
 				--
 				-- Replace the contents with this entity table
 				--
@@ -93,7 +94,7 @@ function Register( t, name )
 				end
 			end
 
-			if ( IsBasedOn( class, t.ClassName ) ) then
+			if ( IsBasedOn( class, name ) ) then
 				table.Merge( e, Get( class ) )
 
 				if ( e.OnReloaded ) then

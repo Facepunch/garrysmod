@@ -28,15 +28,15 @@ concommand.Add( "cef_credits", function()
 end )
 
 concommand.Add( "gmod_tos", function()
-	gui.OpenURL( "https://gmod.facepunch.com/legal/tos" )
+	gui.OpenURL( "https://facepunch.com/legal/tos" )
 end )
 
 concommand.Add( "gmod_privacy", function()
-	gui.OpenURL( "https://gmod.facepunch.com/legal/privacy" )
+	gui.OpenURL( "https://facepunch.com/legal/privacy" )
 end )
 
 concommand.Add( "gmod_modding", function()
-	gui.OpenURL( "https://gmod.facepunch.com/legal/modding" )
+	gui.OpenURL( "https://facepunch.com/legal/modding" )
 end )
 
 concommand.Add( "gmod_servers", function()

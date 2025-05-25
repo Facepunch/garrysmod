@@ -629,6 +629,31 @@
 	}
 }
 
+"Ladder.WoodStepLeft"
+{
+	"soundlevel"		"SNDLVL_75dB"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"rndwave"
+	{
+		"wave"		"player/footsteps/wood1.wav"
+		"wave"		"player/footsteps/wood3.wav"
+	}
+}
+
+"Ladder.WoodStepRight"
+{
+	"soundlevel"		"SNDLVL_75dB"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"rndwave"
+	{
+		"wave"		"player/footsteps/wood2.wav"
+		"wave"		"player/footsteps/wood4.wav"
+	}
+}
+
+
 "Glass.StepLeft"
 {
 	"soundlevel"		"SNDLVL_75dB"

@@ -34,20 +34,20 @@ function ToolObj:CreateConVars()
 
 	local mode = self:GetMode()
 
-	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, { FCVAR_NOTIFY, FCVAR_REPLICATED } )
+	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, "1", { FCVAR_NOTIFY, FCVAR_REPLICATED }, "Set to 0 to disallow players being able to use the \"" .. mode .. "\" tool." )
 	self.ClientConVars = {}
 	self.ServerConVars = {}
 
 	if ( CLIENT ) then
 
 		for cvar, default in pairs( self.ClientConVar ) do
-			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true )
+			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true, "Tool specific client setting (" .. mode .. ")" )
 		end
-		
+
 	else
 
 		for cvar, default in pairs( self.ServerConVar ) do
-			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
+			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE, "Tool specific server setting (" .. mode .. ")" )
 		end
 
 	end
@@ -116,9 +116,9 @@ end
 function ToolObj:Init() end
 
 function ToolObj:GetMode()		return self.Mode end
-function ToolObj:GetSWEP()		return self.SWEP end
-function ToolObj:GetOwner()		return self:GetSWEP().Owner or self.Owner end
-function ToolObj:GetWeapon()	return self:GetSWEP().Weapon or self.Weapon end
+function ToolObj:GetWeapon()	return self.SWEP end
+function ToolObj:GetOwner()		return self:GetWeapon():GetOwner() or self.Owner end
+function ToolObj:GetSWEP()		return self:GetWeapon() end
 
 function ToolObj:LeftClick()	return false end
 function ToolObj:RightClick()	return false end
@@ -135,7 +135,7 @@ function ToolObj:CheckObjects()
 
 	for k, v in pairs( self.Objects ) do
 
-		if ( !v.Ent:IsWorld() && !v.Ent:IsValid() ) then
+		if ( !v.Ent:IsWorld() and !v.Ent:IsValid() ) then
 			self:ClearObjects()
 		end
 
@@ -145,7 +145,12 @@ end
 
 for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
-	local char1, char2, toolmode = string.find( val, "([%w_]*).lua" )
+	local _, _, toolmode = string.find( val, "([%w_]*).lua" )
+
+	-- In multiplayer, the clientside filename is always lowercase (due to the Lua datapack)
+	-- So ensure that the toolmode matches between client and server,
+	-- when the serverside name is not all lowercase
+	toolmode = toolmode:lower()
 
 	TOOL = ToolObj:Create()
 	TOOL.Mode = toolmode
@@ -155,7 +160,9 @@ for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
 	TOOL:CreateConVars()
 
-	SWEP.Tool[ toolmode ] = TOOL
+	if ( hook.Run( "PreRegisterTOOL", TOOL, toolmode ) != false ) then
+		SWEP.Tool[ toolmode ] = TOOL
+	end
 
 	TOOL = nil
 
@@ -171,18 +178,18 @@ local TOOLS_LIST = SWEP.Tool
 -- Add the STOOLS to the tool menu
 hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 
-	for ToolName, TOOL in pairs( TOOLS_LIST ) do
+	for ToolName, tool in pairs( TOOLS_LIST ) do
 
-		if ( TOOL.AddToMenu != false ) then
+		if ( tool.AddToMenu != false ) then
 
 			spawnmenu.AddToolMenuOption(
-				TOOL.Tab or "Main",
-				TOOL.Category or "New Category",
+				tool.Tab or "Main",
+				tool.Category or "New Category",
 				ToolName,
-				TOOL.Name or "#" .. ToolName,
-				TOOL.Command or "gmod_tool " .. ToolName,
-				TOOL.ConfigName or ToolName,
-				TOOL.BuildCPanel
+				tool.Name or ( "#" .. ToolName ),
+				tool.Command or ( "gmod_tool " .. ToolName ),
+				tool.ConfigName or ToolName,
+				tool.BuildCPanel
 			)
 
 		end
@@ -200,16 +207,16 @@ search.AddProvider( function( str )
 
 	for k, v in pairs( TOOLS_LIST ) do
 
-		local niceName = v.Name or "#" .. k
-		if ( niceName:StartWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
+		local niceName = v.Name or ( "#" .. k )
+		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
-		if ( !k:lower():find( str, nil, true ) && !niceName:lower():find( str, nil, true ) ) then continue end
+		if ( !k:lower():find( str, nil, true ) and !niceName:lower():find( str, nil, true ) ) then continue end
 
 		local entry = {
 			text = niceName,
 			icon = spawnmenu.CreateContentIcon( "tool", nil, {
 				spawnname = k,
-				nicename = v.Name or "#" .. k
+				nicename = v.Name or ( "#" .. k )
 			} ),
 			words = { k }
 		}
@@ -234,7 +241,7 @@ spawnmenu.AddContentType( "tool", function( container, obj )
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "tool" )
 	icon:SetSpawnName( obj.spawnname )
-	icon:SetName( obj.nicename or "#tool." .. obj.spawnname .. ".name" )
+	icon:SetName( obj.nicename or ( "#tool." .. obj.spawnname .. ".name" ) )
 	icon:SetMaterial( "gui/tool.png" )
 
 	icon.DoClick = function()
@@ -245,19 +252,7 @@ spawnmenu.AddContentType( "tool", function( container, obj )
 
 	end
 
-	icon.OpenMenu = function( icon )
-
-		-- Do not allow removal from read only panels
-		if ( IsValid( icon:GetParent() ) && icon:GetParent().GetReadOnly && icon:GetParent():GetReadOnly() ) then return end
-
-		local menu = DermaMenu()
-			menu:AddOption( "#spawnmenu.menu.delete", function()
-				icon:Remove()
-				hook.Run( "SpawnlistContentChanged" )
-			end ):SetIcon( "icon16/bin_closed.png" )
-		menu:Open()
-
-	end
+	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )

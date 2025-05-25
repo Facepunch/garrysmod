@@ -1,0 +1,868 @@
+"TableToKeyValues"
+{
+	"parentid"		"16"
+	"icon"		"games/16/lostcoast.png"
+	"id"		"27"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Fisherman"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/fisherman/fisherman.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/fisherman/harpoon.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/fisherman/keys.mdl"
+		}
+		"5"
+		{
+			"type"		"header"
+			"text"		"Outdoors"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_junk/float01a.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_junk/float02a.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_junk/float03a.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_drydock01a.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_fishing01a.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/shipwreck_part02.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/shipwreck_part01.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/shipwreck_part03.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden01a.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden03a.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden02a.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/crabpot.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_debris/metal_panel02a_breakable.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_1stair01.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_2stair01.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset06.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset05.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset03.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset04.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_deck01.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_deck03.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support01.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support02.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support03.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/gate01a.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/gate01b.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/gate01c.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_cliff01e.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_cliff02a.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_cliff02b.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_cliff02c.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_cliff02d.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_cliff02e.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast01a.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast01b.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast01c.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast01d.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast01e.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02a.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02b.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02c.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02d.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02e.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02f.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02g.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/rock_coast02h.mdl"
+		}
+		"52"
+		{
+			"type"		"header"
+			"text"		"Interior"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/altar.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/candlestick.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/chandelier.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/hanging_oil_lamp.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/door01_left.mdl"
+			"body"		"B010000000"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_middle_divide.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_pillar_short.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_pillar_medium.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_pillar_tall.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_stain_window001a.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_window001a.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_window001b.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_window001c.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_window_frame001a.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_window_frame001b.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_window_frame001c.mdl"
+		}
+		"71"
+		{
+			"type"		"header"
+			"text"		"Buildings"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/cloisters.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/destroyed_walls01.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/destroyed_walls02.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/destroyed_walls03.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/destroyed_walls04.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/dome_large.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/dome_small.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_door_divide_left.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_door_divide02.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_door_divide.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_end_domes.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery01.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_chimmney01.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_chimmneycluster01.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_chimmneycluster02.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_chimmneycluster03.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_chimmneycluster04.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_gutter01.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_gutter01b.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_gutter02.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_gutter03.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_gutter05.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/scaffolding02a.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/scaffolding_courtyard01a.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/scaffolding_outside01a.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/village_cluster01.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/village_cluster02.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/village_cluster03.mdl"
+		}
+		"101"
+		{
+			"type"		"header"
+			"text"		"Gibs"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk01.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk02.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk03.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk04.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk05.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk06.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk07.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_chunk08.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_shard01.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/furniture_doublechair_shard02.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_stain_window001a_gib01.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk01.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk02.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk03.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk04.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk05.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk06.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk07.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk08.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk09.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk10.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/interior_dome_wall_window_chunk11.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_stain_window001a_gib02.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_stain_window001a_gib03.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_stain_window001a_gib04.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_stain_window001a_gib05.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_monastery/monastery_stain_window001a_gib06.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden001a_gib01.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden001a_gib02.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden001a_gib03.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden001a_gib04.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden001a_gib05.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden001a_gib06.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden001a_gib07.mdl"
+		}
+		"136"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden02a_gib01.mdl"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden02a_gib02.mdl"
+		}
+		"138"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden02a_gib03.mdl"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden02a_gib04.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden02a_gib05.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden02a_gib06.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden03a_gib01.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden03a_gib02.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden03a_gib03.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden03a_gib04.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden03a_gib05.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/boat_wooden03a_gib06.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_1stair01_br02.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_1stair01_br01.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_2stair01_br02.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_2stair01_br01.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_deck01_br01.mdl"
+		}
+		"153"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_deck01_br02.mdl"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_deck03_br01.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_deck03_br02.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_shard01.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_shard02.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset03_br01.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset03_br02.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset04_br01.mdl"
+		}
+		"161"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset04_br02.mdl"
+		}
+		"162"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset05_br01.mdl"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset05_br02.mdl"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset06_br01.mdl"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_stepset06_br02.mdl"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support01_br02.mdl"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support01_br01.mdl"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support02_br02.mdl"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support02_br01.mdl"
+		}
+		"170"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support03_br02.mdl"
+		}
+		"171"
+		{
+			"type"		"model"
+			"model"		"models/lostcoast/props_wasteland/cliff_stairs_support03_br01.mdl"
+		}
+	}
+	"needsapp"		"lostcoast"
+	"name"		"Lost Coast"
+	"version"		"3"
+}

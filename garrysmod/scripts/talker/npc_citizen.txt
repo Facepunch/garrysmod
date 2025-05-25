@@ -1,10 +1,37 @@
 //============================================================================================================
 // Citizen criteria
 //============================================================================================================
+criterion "IsCitizen" "classname" "npc_citizen" "required"
 criterion "IsRPGUser" "attacking_with_weapon" "weapon_rpg" required
 criterion "EnemyIsSniper" "enemy" "npc_sniper" required
+criterion "EnemyIsStrider" "enemy" "npc_strider" required
 criterion "HurtByFire" "hurt_by_fire" "1" required
 criterion "AlyxCitizenHelloOkay" "AlyxCitizenHelloOkay" "1" required
+
+
+criterion "NotInPanic" "readiness" "!panic" required
+//cit response groups
+criterion "RGroupLess10"            "randomnum"               "<=10"   required
+criterion "RGroupLess20"            "randomnum"               "<=20"   required
+criterion "RGroupLess30"            "randomnum"               "<=30"   required
+criterion "RGroupLess40"            "randomnum"               "<=40"   required
+criterion "RGroupLess50"            "randomnum"               "<=50"   required
+criterion "RGroupLess60"            "randomnum"               "<=60"   required
+criterion "RGroupLess70"            "randomnum"               "<=70"   required
+criterion "RGroupLess80"            "randomnum"               "<=80"   required
+criterion "RGroupLess90"            "randomnum"               "<=90"   required
+criterion "RGroupLess100"           "randomnum"               "<=100"  required
+criterion "RGroupMore00"            "randomnum"               ">0"    required
+criterion "RGroupMore10"            "randomnum"               ">10"   required
+criterion "RGroupMore20"            "randomnum"               ">20"   required
+criterion "RGroupMore30"            "randomnum"               ">30"   required
+criterion "RGroupMore40"            "randomnum"               ">40"   required
+criterion "RGroupMore50"            "randomnum"               ">50"   required
+criterion "RGroupMore60"            "randomnum"               ">60"   required
+criterion "RGroupMore70"            "randomnum"               ">70"   required
+criterion "RGroupMore80"            "randomnum"               ">80"   required
+criterion "RGroupMore90"            "randomnum"               ">90"   required
+
 
 
 
@@ -175,7 +202,7 @@ rule CitizenAnswer
 }
 
 //============================================================================================================
-// Citizen Questions & Responses with Vortigaunts
+// Citizen Questions & Responses with Vortigaunts in Scene
 //============================================================================================================
 response "CitizenQuestionVort"
 {
@@ -186,6 +213,7 @@ response "CitizenQuestionVort"
 	scene "scenes/npc/$gender01/vquestion05.vcd" delay 1
 	scene "scenes/npc/$gender01/vquestion06.vcd" delay 1
 	scene "scenes/npc/$gender01/vquestion07.vcd" delay 1
+
 }
 
 rule CitizenQuestionVort
@@ -211,6 +239,7 @@ response "CitizenAnswerVort"
 	scene "scenes/npc/$gender01/vanswer12.vcd" delay 2
 	scene "scenes/npc/$gender01/vanswer13.vcd" delay 2
 	scene "scenes/npc/$gender01/vanswer14.vcd" delay 2
+
 }
 
 rule CitizenAnswerVort
@@ -295,7 +324,7 @@ rule CitizenAnswerVort
 //
 //response "CitizenQuestionHelloAlyx1"
 //{
-//	scene "scenes/episode_1/npc/$gender01/cit_greet_alyx01.vcd" delay 1 // Hey!  You’re Alyx Vance!
+//	scene "scenes/episode_1/npc/$gender01/cit_greet_alyx01.vcd" delay 1 // Hey!  You?re Alyx Vance!
 //
 //}
 //
@@ -320,7 +349,7 @@ rule CitizenAnswerVort
 //
 //response "CitizenQuestionHelloAlyx3"
 //{
-//	scene "scenes/episode_1/npc/$gender01/cit_greet_alyx03.vcd" delay 1 // Alyx Vance and Gordon Freeman!  You stayed behind to look after us, didn’t you?
+//	scene "scenes/episode_1/npc/$gender01/cit_greet_alyx03.vcd" delay 1 // Alyx Vance and Gordon Freeman!  You stayed behind to look after us, didn?t you?
 //	scene "scenes/episode_1/npc/$gender01/cit_greet_alyx05.vcd" delay 1 // I hope you two are here to help.
 //}
 //
@@ -602,11 +631,18 @@ rule CitizenDangerBig
 
 response "CitizenAntLionDanger" 
 {
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions03.vcd" respeakdelay 30
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions04.vcd" respeakdelay 30
 	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions05.vcd" respeakdelay 30
 	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions06.vcd" respeakdelay 30
 	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions07.vcd" respeakdelay 30
 	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions08.vcd" respeakdelay 30
 	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions09.vcd" respeakdelay 30
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions10.vcd" respeakdelay 30
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions12.vcd" respeakdelay 30
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions13.vcd" respeakdelay 30
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions14.vcd" respeakdelay 30
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions15.vcd" respeakdelay 30
 	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions18.vcd" respeakdelay 30
 }
 
@@ -855,26 +891,28 @@ rule CitizenWatchOutFar
 //------------------------------------------------------------------------------------------------------------
 response "CitizenEnemyDead"
 {
-	scene "scenes/episode_1/npc/$gender01/cit_kill01.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill02.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill03.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill04.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill06.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill07.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill08.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill09.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill10.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill11.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill12.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill13.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill14.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill17.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill18.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill19.vcd"
-	scene "scenes/episode_1/npc/$gender01/cit_kill20.vcd"
-	scene "scenes/npc/$gender01/gotone01.vcd"
-	scene "scenes/npc/$gender01/gotone02.vcd"
-	scene "scenes/npc/$gender01/likethat.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill01.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill02.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill03.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill04.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill06.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill07.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill08.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill09.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill10.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill11.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill12.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill13.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill14.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill15.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill17.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill18.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill19.vcd"  respeakdelay 20
+	scene "scenes/episode_1/npc/$gender01/cit_kill20.vcd"  respeakdelay 20
+	scene "scenes/npc/$gender01/gotone01.vcd"  respeakdelay 20
+	scene "scenes/npc/$gender01/gotone02.vcd"  respeakdelay 20
+//	scene "scenes/npc/$gender01/likethemapples.vcd"
+	scene "scenes/npc/$gender01/likethat.vcd"  respeakdelay 20
 }
 
 rule CitizenEnemyDead
@@ -1160,6 +1198,17 @@ rule CitizenFiringRPG
 //}
 
 //------------------------------------------------------------------------------------------------------------
+response "CitizenLeadAttractPlayer"
+{
+	scene "scenes/npc/$gender01/overhere01.vcd"
+}
+
+rule CitizenLeadAttractPlayer
+{
+	criteria		IsCitizen ConceptLeadAttractPlayer
+	response		CitizenLeadAttractPlayer
+}
+
 response "CitizenSeeCombine"
 {
 	scene "scenes/npc/$gender01/combine01.vcd"
@@ -1186,16 +1235,11 @@ rule CitizenPlayerPhysAttack
 	response		CitizenPlayerPhysAttack
 }
 
-
-
-
-
-
 //============================================================================================================
-//#include "talker/npc_citizen_commandermode.txt"
-//#include "talker/npc_citizen_terminal.txt"
-//#include "talker/npc_citizen_tenement.txt"
-//#include "talker/npc_citizen_coast.txt"
-//#include "talker/npc_citizen_canals.txt"
-//#include "talker/npc_citizen_c17.txt"
-//#include "talker/npc_citizen_ep1.txt"
+#include "talker/npc_citizen_commandermode.txt"
+#include "talker/npc_citizen_terminal.txt"
+#include "talker/npc_citizen_tenement.txt"
+#include "talker/npc_citizen_coast.txt"
+#include "talker/npc_citizen_canals.txt"
+#include "talker/npc_citizen_c17.txt"
+#include "talker/npc_citizen_ep1.txt"

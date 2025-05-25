@@ -1,5 +1,5 @@
 
-local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE } )
+local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE }, "Whether to draw the spawn effect when spawning objects." )
 
 local matRefract = Material( "models/spawn_effect" )
 
@@ -89,7 +89,7 @@ function EFFECT:RenderOverlay( entity )
 			-- Draw model with refraction texture
 			render.MaterialOverride( matRefract )
 				entity:DrawModel()
-			render.MaterialOverride( 0 )
+			render.MaterialOverride()
 
 		end
 
@@ -123,7 +123,7 @@ function EFFECT:StartClip( model, spd )
 	local Bottom = model:GetPos() + mn
 	local Top = model:GetPos() + mx
 
-	local Fraction = (self.LifeTime - CurTime()) / self.Time
+	local Fraction = ( self.LifeTime - CurTime() ) / self.Time
 	Fraction = math.Clamp( Fraction / spd, 0, 1 )
 
 	local Lerped = LerpVector( Fraction, Bottom, Top )

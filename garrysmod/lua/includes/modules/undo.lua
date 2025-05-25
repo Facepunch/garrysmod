@@ -31,7 +31,7 @@ if ( CLIENT ) then
 		if ( !IsValid( Panel ) ) then return end
 
 		Panel:Clear()
-		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.undo.help" } )
+		Panel:Help( "#spawnmenu.utilities.undo.help" )
 
 		local ComboBox = Panel:ListBox()
 		ComboBox:SetTall( 500 )
@@ -56,10 +56,18 @@ if ( CLIENT ) then
 	-----------------------------------------------------------]]
 	net.Receive( "Undo_AddUndo", function()
 
-		local k	= net.ReadInt( 16 )
-		local v	= net.ReadString()
+		local key = net.ReadInt( 16 )
+		local name = net.ReadString()
 
-		table.insert( ClientUndos, 1, { Key = k, Name = v } )
+		-- HACK: To support localization of "#prop_physics (models/path.mdl)"
+		if ( name[ 1 ] == "#" and string.find( name, " (", nil, true ) ) then
+			local undoName, undoSecondary = string.match( name, "^(#.*) %((.*)%)$" )
+			if ( undoName and undoSecondary ) then
+				name = string.format( "%s (%s)", language.GetPhrase( undoName ), language.GetPhrase( undoSecondary ) )
+			end
+		end
+
+		table.insert( ClientUndos, 1, { Key = key, Name = name } )
 
 		MakeUIDirty()
 
@@ -313,6 +321,17 @@ local function SendUndoneMessage( ent, id, ply )
 end
 
 --[[---------------------------------------------------------
+	Checks whether an undo is allowed to be created
+-----------------------------------------------------------]]
+local function Can_CreateUndo( undo )
+
+	local call = hook.Run( "CanCreateUndo", undo.Owner, undo )
+
+	return call == true or call == nil
+
+end
+
+--[[---------------------------------------------------------
 	Finish
 -----------------------------------------------------------]]
 function Finish( NiceText )
@@ -320,15 +339,15 @@ function Finish( NiceText )
 	if ( !Current_Undo ) then return end
 
 	-- Do not add undos that have no owner or anything to undo
-	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then
+	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) or !Can_CreateUndo( Current_Undo ) ) then
 		Current_Undo = nil
-		return
+		return false
 	end
 
 	local index = Current_Undo.Owner:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
-	Current_Undo.NiceText = NiceText or Current_Undo.Name
+	Current_Undo.NiceText = NiceText or ( "#" .. Current_Undo.Name )
 
 	local id = table.insert( PlayerUndo[ index ], Current_Undo )
 
@@ -346,6 +365,8 @@ function Finish( NiceText )
 	end
 
 	Current_Undo = nil
+	
+	return true
 
 end
 
@@ -466,6 +487,7 @@ local function CC_UndoNum( ply, command, args )
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
+	if ( !UndoNum ) then return end
 
 	local TheUndo = PlayerUndo[ index ][ UndoNum ]
 	if ( !TheUndo ) then return end

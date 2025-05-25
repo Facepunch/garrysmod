@@ -1,24 +1,26 @@
 "blank"				"=========================="
-"blank"				"Garry's Mod"
+"blank"				"#GarrysMod_Keyboard_Title"
 "blank"				"=========================="
 
-"+menu"				"Open Spawn Menu"
-"+menu_context"		"Open Context Menu"
+"+menu"				"#GarrysMod_Keyboard_OpenSpawnmenu"
+"+menu_context"		"#GarrysMod_Keyboard_OpenContextMenu"
 
-"gmod_undo"			"Undo"
-"noclip"			"Toggle No-Clip Mode"
-"gm_demo"			"Start/Stop recording a demo"
-"gm_video"			"Start/Stop recording a video"
+"gmod_undo"			"#GarrysMod_Keyboard_Undo"
+"gmod_cleanup"		"#GarrysMod_Keyboard_Cleanup"
+"noclip"			"#GarrysMod_Keyboard_NoclipMode"
+"gm_demo"			"#GarrysMod_Keyboard_RecordDemo"
+"gm_video"			"#GarrysMod_Keyboard_RecordVideo"
+"gmod_camera"		"#GarrysMod_Keyboard_SwitchToCamera"
 
 
 "blank"				"=========================="
-"blank"				"Game Modes"
+"blank"				"#GarrysMod_Keyboard_GameMode_Title"
 "blank"				"=========================="
 
-"gm_showhelp"		"Open Help"
-"gm_showteam"		"Open Team Menu"
-"gm_showspare1"		"Server Customizable Spare 1"
-"gm_showspare2"		"Server Customizable Spare 2"
+"gm_showhelp"		"#GarrysMod_Keyboard_ShowHelp"
+"gm_showteam"		"#GarrysMod_Keyboard_ShowTeam"
+"gm_showspare1"		"#GarrysMod_Keyboard_ShowSpare"
+"gm_showspare2"		"#GarrysMod_Keyboard_ShowSpare2"
 
 "blank"				"=========================="
 "blank"				"#Valve_Movement_Title"

@@ -63,7 +63,7 @@ function PANEL:AddCVar( strText, convar, on, off, funcFunction )
 
 end
 
-function PANEL:AddSpacer( strText, funcFunction )
+function PANEL:AddSpacer()
 
 	local pnl = vgui.Create( "DPanel", self )
 	pnl.Paint = function( p, w, h )
@@ -80,7 +80,7 @@ end
 function PANEL:AddSubMenu( strText, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOption", self )
-	local SubMenu = pnl:AddSubMenu( strText, funcFunction )
+	local SubMenu = pnl:AddSubMenu()
 
 	pnl:SetText( strText )
 	if ( funcFunction ) then pnl.DoClick = funcFunction end
@@ -152,23 +152,23 @@ end
 
 function PANEL:PerformLayout( w, h )
 
-	local w = self:GetMinimumWidth()
+	local minW = self:GetMinimumWidth()
 
 	-- Find the widest one
 	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 
 		pnl:InvalidateLayout( true )
-		w = math.max( w, pnl:GetWide() )
+		minW = math.max( minW, pnl:GetWide() )
 
 	end
 
-	self:SetWide( w )
+	self:SetWide( minW )
 
 	local y = 0 -- for padding
 
 	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 
-		pnl:SetWide( w )
+		pnl:SetWide( minW )
 		pnl:SetPos( 0, y )
 		pnl:InvalidateLayout( true )
 
@@ -182,7 +182,7 @@ function PANEL:PerformLayout( w, h )
 
 	derma.SkinHook( "Layout", "Menu", self )
 
-	DScrollPanel.PerformLayout( self, w, h )
+	DScrollPanel.PerformLayout( self, minW, h )
 
 end
 

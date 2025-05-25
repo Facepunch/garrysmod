@@ -4,12 +4,24 @@ local meta = FindMetaTable( "Entity" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
+function meta:SetSpawnFlags( flags )
+	self:SetKeyValue( "spawnflags", flags )
+end
+
+function meta:AddSpawnFlags( flags )
+	self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
+end
+
+function meta:RemoveSpawnFlags( flags )
+	self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
+end
+
 function meta:GetShouldPlayPickupSound()
-	return self.m_bPlayPickupSound || false
+	return self.m_bPlayPickupSound or false
 end
 
 function meta:SetShouldPlayPickupSound( bPlaySound )
-	self.m_bPlayPickupSound = tobool( bPlaySound ) || false
+	self.m_bPlayPickupSound = tobool( bPlaySound ) or false
 end
 
 --
@@ -26,10 +38,10 @@ function meta:__index( key )
 	--
 	-- Search the entity table
 	--
-	local tab = self:GetTable()
+	local tab = meta.GetTable( self )
 	if ( tab ) then
-		local val = tab[ key ]
-		if ( val != nil ) then return val end
+		local tabval = tab[ key ]
+		if ( tabval != nil ) then return tabval end
 	end
 
 	--
@@ -67,7 +79,7 @@ if ( SERVER ) then
 	end
 
 	function meta:GetCreator()
-		return self.m_PlayerCreator || NULL
+		return self.m_PlayerCreator or NULL
 	end
 
 end
@@ -136,7 +148,7 @@ end
 -----------------------------------------------------------]]
 local function DoDieFunction( ent )
 
-	if ( !ent || !ent.OnDieFunctions ) then return end
+	if ( !ent or !ent.OnDieFunctions ) then return end
 
 	for k, v in pairs( ent.OnDieFunctions ) do
 
@@ -162,10 +174,28 @@ function meta:PhysWake()
 
 end
 
+-- This makes these a bit faster
+function meta:GetColor()
+
+	return Color( self:GetColor4Part() )
+
+end
+
+function meta:SetColor( col )
+
+	-- Backwards compatibility
+	if ( !col ) then
+		return self:SetColor4Part( 255, 255, 255, 255 )
+	end
+
+	self:SetColor4Part( col.r, col.g, col.b, col.a )
+
+end
+
 function meta:GetChildBones( bone )
 
 	local bonecount = self:GetBoneCount()
-	if ( bonecount == 0 || bonecount < bone ) then return end
+	if ( bonecount == 0 or bonecount < bone ) then return end
 
 	local bones = {}
 
@@ -187,12 +217,13 @@ end
 function meta:InstallDataTable()
 
 	self.dt = {}
+	local typetable = {}
 	local datatable = {}
 	local keytable = {}
-	local meta = {}
+	local dtmeta = {}
 	local editing = {}
 
-	meta.__index = function ( ent, key )
+	dtmeta.__index = function ( ent, key )
 
 		local dt = datatable[ key ]
 		if ( dt == nil ) then return end
@@ -201,7 +232,7 @@ function meta:InstallDataTable()
 
 	end
 
-	meta.__newindex = function( ent, key, value )
+	dtmeta.__newindex = function( ent, key, value )
 
 		local dt = datatable[ key ]
 		if ( dt == nil ) then return end
@@ -210,25 +241,56 @@ function meta:InstallDataTable()
 
 	end
 
+	local function FindUnusedIndex( typename )
+
+		local tbl = typetable[ typename ]
+		if ( !tbl ) then return 0 end
+
+		for i = 0, 31 do
+			if ( !tbl[i] ) then return i end
+		end
+
+	end
+
+	self.IsDTVarSlotUsed = function( ent, typename, index )
+
+		local tbl = typetable[ typename ]
+		if ( !tbl or !tbl[index] ) then return false end
+		return true
+
+	end
+
 	self.DTVar = function( ent, typename, index, name )
+
+		if ( isstring( index ) && !name ) then
+			name = index
+			index = FindUnusedIndex( typename )
+		elseif ( !index && isstring( name ) ) then
+			index = FindUnusedIndex( typename )
+		end
 
 		local SetFunc = ent[ "SetDT" .. typename ]
 		local GetFunc = ent[ "GetDT" .. typename ]
 
-		if ( !SetFunc || !GetFunc ) then
-			MsgN( "Couldn't addvar " , name, " - type ", typename," is invalid!" )
+		if ( !SetFunc or !GetFunc ) then
+			MsgN( "Couldn't addvar ", name, " - type ", typename, " is invalid!" )
 			return
 		end
 
-		datatable[ name ] = {
+		local data = {
 			index = index,
+			name = name,
 			SetFunc = SetFunc,
 			GetFunc = GetFunc,
 			typename = typename,
 			Notify = {}
 		}
 
-		return datatable[ name ]
+		typetable[ typename ] = typetable[ typename ] or {}
+		typetable[ typename ][ index ] = data
+		datatable[ name ] = data
+
+		return data
 
 	end
 
@@ -252,7 +314,7 @@ function meta:InstallDataTable()
 
 	end
 
-	self.SetupKeyValue = function( ent, keyname, type, setfunc, getfunc, other_data )
+	self.SetupKeyValue = function( ent, keyname, kvtype, setfunc, getfunc, other_data )
 
 		keyname = keyname:lower()
 
@@ -260,7 +322,7 @@ function meta:InstallDataTable()
 			KeyName		= keyname,
 			Set			= setfunc,
 			Get			= getfunc,
-			Type		= type
+			Type		= kvtype
 		}
 
 		if ( other_data ) then
@@ -273,32 +335,41 @@ function meta:InstallDataTable()
 
 	local CallProxies = function( ent, tbl, name, oldval, newval )
 
-		for k, v in pairs( tbl ) do
-			v( ent, name, oldval, newval )
+		for i = 1, #tbl do
+			tbl[ i ]( ent, name, oldval, newval )
 		end
 
 	end
 
 	self.CallDTVarProxies = function( ent, typename, index, newVal )
-		for name, t in pairs( datatable ) do
-			if ( t.index == index && t.typename == typename ) then
-				CallProxies( ent, t.Notify, name, self.dt[ name ], newVal )
-				break
-			end
+
+		local t = typetable[ typename ] && typetable[ typename ][ index ] or nil
+		if ( t ) then
+			CallProxies( ent, t.Notify, t.name, t.GetFunc( ent, index ), newVal )
 		end
+
 	end
 
 	self.NetworkVar = function( ent, typename, index, name, other_data )
 
-		local t = ent.DTVar( ent, typename, index, name )
-
-		ent[ "Set" .. name ] = function( self, value )
-			CallProxies( ent, t.Notify, name, self.dt[ name ], value )
-			self.dt[ name ] = value
+		if ( isstring( index ) && ( istable( name ) or !name ) ) then
+			other_data = name
+			name = index
+			index = FindUnusedIndex( typename )
+		elseif ( !index && isstring( name ) ) then
+			index = FindUnusedIndex( typename )
 		end
 
-		ent[ "Get" .. name ] = function( self )
-			return self.dt[ name ]
+		local t = ent.DTVar( ent, typename, index, name )
+
+		-- Some addons call these on the entity table, and that used to work, so we keep that
+		ent[ "Set" .. name ] = function( selfent, value )
+			CallProxies( ent, t.Notify, name, t.GetFunc( ent, index ), value )
+			t.SetFunc( ent, index, value )
+		end
+
+		ent[ "Get" .. name ] = function( selfent )
+			return t.GetFunc( ent, index )
 		end
 
 		if ( !other_data ) then return end
@@ -330,17 +401,26 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarElement = function( ent, typename, index, element, name, other_data )
 
-		local datatab = ent.DTVar( ent, typename, index, name, keyname )
-		datatab.element = element
-
-		ent[ "Set" .. name ] = function( self, value )
-			local old = self.dt[ name ]
-			old[ element ] = value
-			self.dt[ name ] = old
+		if ( isstring( index ) && isstring( element ) ) then
+			other_data = name
+			name = element
+			element = index
+			index = FindUnusedIndex( typename )
+		elseif ( !index && isstring( name ) ) then
+			index = FindUnusedIndex( typename )
 		end
 
-		ent[ "Get" .. name ] = function( self )
-			return self.dt[ name ][ element ]
+		local t = ent.DTVar( ent, typename, index, name )
+		t.element = element
+
+		ent[ "Set" .. name ] = function( selfent, value )
+			local old = t.GetFunc( selfent, index )
+			old[ element ] = value
+			t.SetFunc( selfent, index, old )
+		end
+
+		ent[ "Get" .. name ] = function( selfent )
+			return t.GetFunc( selfent, index )[ element ]
 		end
 
 		if ( !other_data ) then return end
@@ -354,7 +434,7 @@ function meta:InstallDataTable()
 
 	end
 
-	self.SetNetworkKeyValue = function( self, key, value )
+	self.SetNetworkKeyValue = function( ent, key, value )
 
 		key = key:lower()
 
@@ -364,19 +444,44 @@ function meta:InstallDataTable()
 		local v = util.StringToType( value, k.Type )
 		if ( v == nil ) then return end
 
-		k.Set( self, v )
+		k.Set( ent, v )
 		return true
 
 	end
 
-	self.GetNetworkKeyValue = function( self, key )
+	self.SetNetworkVarsFromMapInput = function( ent, name, data )
+
+		name = name:lower()
+		if ( !string.StartsWith( name, "set" ) ) then return end
+
+		name = string.sub( name, 4 )
+		if ( name == "" ) then return end
+
+		-- Only allow setting variables that were marked as editable!
+		local k = keytable[ name ]
+		if ( !k || !k.Edit ) then return end
+
+		local v = util.StringToType( data, k.Type )
+		if ( v == nil ) then return end
+
+		-- Special case for colors. FGD (maps) use color255 format, while colors in this system use unit vectors.
+		if ( k.Edit.type == "VectorColor" ) then
+			v = v / 255
+		end
+
+		k.Set( ent, v )
+		return true
+
+	end
+
+	self.GetNetworkKeyValue = function( ent, key )
 
 		key = key:lower()
 
 		local k = keytable[ key ]
 		if ( !k ) then return end
 
-		return k.Get( self )
+		return k.Get( ent )
 
 	end
 
@@ -423,7 +528,7 @@ function meta:InstallDataTable()
 			if ( tab[ k ] == nil ) then continue end
 
 			-- Support old saves/dupes with incorrectly saved data
-			if ( v.element && ( isangle( tab[ k ] ) || isvector( tab[ k ] ) ) ) then
+			if ( v.element && ( isangle( tab[ k ] ) or isvector( tab[ k ] ) ) ) then
 				tab[ k ] = tab[ k ][ v.element ]
 			end
 
@@ -438,7 +543,7 @@ function meta:InstallDataTable()
 
 	end
 
-	setmetatable( self.dt, meta )
+	setmetatable( self.dt, dtmeta )
 
 	--
 	-- In sandbox the client can edit certain values on certain entities
@@ -452,7 +557,7 @@ function meta:InstallDataTable()
 	--
 	-- Called serverside it will set the value.
 	--
-	self.EditValue = function( self, variable, value )
+	self.EditValue = function( ent, variable, value )
 
 		if ( !isstring( variable ) ) then return end
 		if ( !isstring( value ) ) then return end
@@ -464,7 +569,7 @@ function meta:InstallDataTable()
 		if ( CLIENT ) then
 
 			net.Start( "editvariable" )
-				net.WriteUInt( self:EntIndex(), 32 )
+				net.WriteEntity( ent )
 				net.WriteString( variable )
 				net.WriteString( value )
 			net.SendToServer()
@@ -476,7 +581,7 @@ function meta:InstallDataTable()
 		--
 		if ( SERVER ) then
 
-			self:SetNetworkKeyValue( variable, value )
+			ent:SetNetworkKeyValue( variable, value )
 
 		end
 
@@ -490,12 +595,11 @@ if ( SERVER ) then
 
 	net.Receive( "editvariable", function( len, client )
 
-		local iIndex = net.ReadUInt( 32 )
-		local ent = Entity( iIndex )
+		local ent = net.ReadEntity()
 
 		if ( !IsValid( ent ) ) then return end
 		if ( !isfunction( ent.GetEditingData ) ) then return end
-		if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
+		if ( ent.AdminOnly && !( client:IsAdmin() or game.SinglePlayer() ) ) then return end
 
 		local key = net.ReadString()
 
@@ -509,11 +613,11 @@ if ( SERVER ) then
 	end )
 
 	function meta:GetUnFreezable()
-		return self.m_bUnFreezable || false
+		return self.m_bUnFreezable or false
 	end
 
 	function meta:SetUnFreezable( bFreeze )
-		self.m_bUnFreezable = tobool( bFreeze ) || false
+		self.m_bUnFreezable = tobool( bFreeze ) or false
 	end
 
 end

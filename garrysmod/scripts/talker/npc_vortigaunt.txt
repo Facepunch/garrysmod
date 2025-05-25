@@ -2,6 +2,7 @@
 // Vortigaunt criteria
 //============================================================================================================
 criterion "IsVortigaunt" "classname" "npc_vortigaunt" required
+
 criterion "VortigauntCure"  concept" "VORT_CURE" required
 criterion "VortigauntCureStop" "concept" "VORT_CURESTOP" required
 criterion "VortigauntCureInterrupt" "concept" "VORT_CURE_INTERRUPT" required

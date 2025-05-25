@@ -12,12 +12,12 @@ if ( CLIENT ) then
 
 		if ( !arg[ 1 ] ) then return end
 
-		if ( LastDupeArm > CurTime() && !game.SinglePlayer() ) then ply:ChatPrint( "Please wait a second before trying to load another duplication!" ) return end
+		if ( LastDupeArm > CurTime() and !game.SinglePlayer() ) then ply:ChatPrint( "Please wait a second before trying to load another duplication!" ) return end
 		LastDupeArm = CurTime() + 1
 
 		-- Server doesn't allow us to do this, don't even try to send them data
-		local res = hook.Run( "CanArmDupe", ply )
-		if ( res == false ) then ply:ChatPrint( "Refusing to load dupe, server has blocked usage of the Duplicator tool!" ) return end
+		local res, msg = hook.Run( "CanArmDupe", ply )
+		if ( res == false ) then ply:ChatPrint( msg or "Refusing to load dupe, server has blocked usage of the Duplicator tool!" ) return end
 
 		-- Load the dupe (engine takes care of making sure it's a dupe)
 		local dupe = engine.OpenDupe( arg[ 1 ] )
@@ -61,10 +61,10 @@ if ( SERVER ) then
 
 	net.Receive( "ArmDupe", function( size, client )
 
-		if ( !IsValid( client ) || size < 48 ) then return end
+		if ( !IsValid( client ) or size < 48 ) then return end
 
-		local res = hook.Run( "CanArmDupe", client )
-		if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
+		local res, msg = hook.Run( "CanArmDupe", client )
+		if ( res == false ) then client:ChatPrint( msg or "Server has blocked usage of the Duplicator tool!" ) return end
 
 		local part = net.ReadUInt( 8 )
 		local total = net.ReadUInt( 8 )
@@ -72,17 +72,17 @@ if ( SERVER ) then
 		local length = net.ReadUInt( 32 )
 		if ( length > DUPE_SEND_SIZE ) then return end
 
-		local data = net.ReadData( length )
+		local datachunk = net.ReadData( length )
 
 		client.CurrentDupeBuffer = client.CurrentDupeBuffer or {}
-		client.CurrentDupeBuffer[ part ] = data
+		client.CurrentDupeBuffer[ part ] = datachunk
 
 		if ( part != total ) then return end
 
 		local data = table.concat( client.CurrentDupeBuffer )
 		client.CurrentDupeBuffer = nil
 
-		if ( ( client.LastDupeArm or 0 ) > CurTime() && !game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
+		if ( ( client.LastDupeArm or 0 ) > CurTime() and !game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
 		client.LastDupeArm = CurTime() + 1
 
 		ServerLog( tostring( client ) .. " is arming a dupe, size: " .. data:len() .. "\n" )

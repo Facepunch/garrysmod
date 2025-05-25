@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 if ( CLIENT ) then
-	CreateConVar( "cl_draweffectrings", "1", 0, "Should the effect green rings be visible?" )
+	CreateConVar( "cl_draweffectrings", "1", 0, "Should the green effect rings be visible?" )
 end
 
 ENT.Type = "anim"
@@ -79,7 +79,7 @@ function ENT:Draw()
 
 	local weapon_name = wep:GetClass()
 
-	if ( weapon_name != "weapon_physgun" && weapon_name != "weapon_physcannon" && weapon_name != "gmod_tool" ) then
+	if ( weapon_name != "weapon_physgun" && weapon_name != "gmod_tool" ) then
 		return
 	end
 

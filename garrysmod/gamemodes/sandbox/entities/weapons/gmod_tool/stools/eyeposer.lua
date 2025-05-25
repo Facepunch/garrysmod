@@ -26,7 +26,9 @@ local function SetEyeTarget( ply, ent, data )
 	end
 
 end
-duplicator.RegisterEntityModifier( "eyetarget", SetEyeTarget )
+if ( SERVER ) then
+	duplicator.RegisterEntityModifier( "eyetarget", SetEyeTarget )
+end
 
 local function ConvertRelativeToEyesAttachment( ent, pos )
 
@@ -82,7 +84,7 @@ function TOOL:SetSelectedEntity( ent )
 
 	if ( !IsValid( ent ) ) then self:SetOperation( 0 ) end
 
-	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( IsValid( ent ) and ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 	return self:GetWeapon():SetNWEntity( "eyeposer_ent", ent )
 end
 
@@ -158,7 +160,7 @@ function TOOL:MakeLookAtMe( trace )
 	self:SetOperation( 0 )
 
 	local ent = trace.Entity
-	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( IsValid( ent ) and ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 	if ( !IsValid( ent ) ) then return false end
 
 	if ( CLIENT ) then return true end
@@ -181,7 +183,7 @@ function TOOL:Reload( trace )
 	self:SetOperation( 0 )
 
 	local ent = trace.Entity
-	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( IsValid( ent ) and ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 	if ( !IsValid( ent ) ) then return false end
 
 	if ( CLIENT ) then return true end
@@ -208,7 +210,7 @@ function TOOL:Think()
 	end
 
 	if ( !IsValid( ent ) ) then self:SetOperation( 0 ) return end
-	
+
 	if ( self:GetOperation() != 2 ) then return end
 
 	-- On the server we continually set the eye position
@@ -249,7 +251,7 @@ function TOOL:DrawHUD()
 		local Leye = ( attachment.Pos + attachment.Ang:Right() * 1.5 ):ToScreen()
 		local Reye = ( attachment.Pos - attachment.Ang:Right() * 1.5 ):ToScreen()
 
-		-- Todo, make the line look less like ass
+		-- TODO: make the line look less like ass
 		local scrhit = trace.HitPos:ToScreen()
 		local x = scrhit.x
 		local y = scrhit.y
@@ -277,8 +279,6 @@ function TOOL:DrawHUD()
 		-- Clientside preview
 		--selected:SetEyeTarget( self:CalculateEyeTarget() )
 
-		local pos = selected:GetPos()
-
 		-- Work out the side distance to give a rough headsize box..
 		local player_eyes = LocalPlayer():EyeAngles()
 		local side = ( attachment.Pos + player_eyes:Right() * 20 ):ToScreen()
@@ -295,7 +295,7 @@ end
 
 function TOOL.BuildCPanel( CPanel, hasEntity )
 
-	CPanel:AddControl( "Header", { Description = "#tool.eyeposer.desc" } )
+	CPanel:Help( "#tool.eyeposer.desc" )
 
 	if ( hasEntity ) then
 
@@ -325,10 +325,11 @@ function TOOL.BuildCPanel( CPanel, hasEntity )
 			surface.DrawRect( w / 2 - 2, h / 2 - 2, 5, 5 )
 		end
 
-		CPanel:AddControl( "Slider", { Label = "#tool.eyeposer.strabismus", Command = "eyeposer_strabismus", Type = "Float", Min = -1, Max = 1, Default = 0 } )
+		CPanel:NumSlider( "#tool.eyeposer.strabismus", "eyeposer_strabismus", -1, 1 )
 
 	end
 
-	CPanel:AddControl( "Slider", { Label = "#tool.eyeposer.size_eyes", Command = "r_eyesize", Type = "Float", Min = -0.5, Max = 2, Help = true, Default = 0 } )
+	CPanel:NumSlider( "#tool.eyeposer.size_eyes", "r_eyesize", -0.5, 2 )
+	CPanel:ControlHelp( "#tool.eyeposer.size_eyes.help" )
 
 end

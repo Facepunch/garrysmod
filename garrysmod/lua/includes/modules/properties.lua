@@ -35,6 +35,18 @@ function Add( name, tab )
 
 end
 
+function Remove( name )
+
+	if ( !name || name == "" ) then return end
+
+	name = name:lower()
+
+	if ( !List[ name ] ) then return end
+
+	List[ name ] = nil
+
+end
+
 local function AddToggleOption( data, menu, ent, ply, tr )
 
 	if ( !menu.ToggleSpacer ) then
@@ -178,13 +190,18 @@ end
 
 if ( CLIENT ) then
 
-	local lastEyePos = vector_zero
+	local lastEyePos = vector_origin
+	local function UpdateEyePos()
+		-- A bit of a hack due to EyePos() being affected by other rendering functions
+		-- So we cache the value when we know it is the correct value for the frame
+		lastEyePos = EyePos()
+	end
+
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
 		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
-		-- A bit of a hack due to EyePos() being affected by other rendering functions
-		lastEyePos = EyePos()
+		UpdateEyePos()
 
 		local ent = GetHovered( lastEyePos, LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
@@ -198,6 +215,10 @@ if ( CLIENT ) then
 		if ( ent.GetActiveWeapon && IsValid( ent:GetActiveWeapon() ) ) then table.insert( t, ent:GetActiveWeapon() ) end
 		halo.Add( t, c, 2, 2, 2, true, false )
 
+	end )
+
+	hook.Add( "PreDrawEffects", "PropertiesUpdateEyePos", function()
+		UpdateEyePos()
 	end )
 
 	hook.Add( "GUIMousePressed", "PropertiesClick", function( code, vector )

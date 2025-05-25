@@ -1,0 +1,9 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/dod.png"
+	"id"		"28"
+	"needsapp"		"dod"
+	"name"		"Day Of Defeat"
+	"version"		"3"
+}

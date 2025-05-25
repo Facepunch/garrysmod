@@ -21,6 +21,8 @@ local function LanguageChanged(old, new)
 
    local eng = LANG.GetUnsafeNamed("english")
    for k, v in pairs(eng) do
+      if k == "language_name" then continue end
+
       L[k] = gsub(v, "[{}%w]+", Borkify)
    end
 

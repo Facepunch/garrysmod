@@ -1,5 +1,5 @@
 
-local ConVar_RestrictFingers = CreateClientConVar( "finger_restrict", "1", false, false )
+local ConVar_RestrictFingers = CreateClientConVar( "finger_restrict", "1", false, false, "Whether to restrict non-root Fingerposer sliders to the Y axis only." )
 
 local PANEL = {}
 

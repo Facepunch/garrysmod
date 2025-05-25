@@ -66,7 +66,7 @@ function PANEL:AddColumn( strName, iPosition )
 			ErrorNoHaltWithStack( "Attempted to insert column at invalid position ", iPosition )
 			return
 		end
-	
+
 		if ( IsValid( self.Columns[ iPosition ] ) ) then
 			ErrorNoHaltWithStack( "Attempted to insert duplicate column." )
 			return
@@ -280,13 +280,17 @@ function PANEL:DataLayout()
 	local y = 0
 	local h = self.m_iDataHeight
 
+	local alt = false
 	for k, Line in ipairs( self.Sorted ) do
+
+		if ( !Line:IsVisible() ) then continue end
 
 		Line:SetPos( 1, y )
 		Line:SetSize( self:GetWide() - 2, h )
 		Line:DataLayout( self )
 
-		Line:SetAltLine( k % 2 == 1 )
+		Line:SetAltLine( alt )
+		alt = !alt
 
 		y = y + Line:GetTall()
 
@@ -446,8 +450,6 @@ end
 
 function PANEL:SortByColumns( c1, d1, c2, d2, c3, d3, c4, d4 )
 
-	table.Copy( self.Sorted, self.Lines )
-
 	table.sort( self.Sorted, function( a, b )
 
 		if ( !IsValid( a ) ) then return true end
@@ -482,8 +484,6 @@ function PANEL:SortByColumns( c1, d1, c2, d2, c3, d3, c4, d4 )
 end
 
 function PANEL:SortByColumn( ColumnID, Desc )
-
-	table.Copy( self.Sorted, self.Lines )
 
 	table.sort( self.Sorted, function( a, b )
 
@@ -577,11 +577,10 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 
-	local Col1 = ctrl:AddColumn( "Address" )
+	ctrl:AddColumn( "Address" )
 	local Col2 = ctrl:AddColumn( "Port" )
 
-	Col2:SetMinWidth( 30 )
-	Col2:SetMaxWidth( 30 )
+	Col2:SetFixedWidth( 30 )
 
 	for i = 1, 128 do
 		ctrl:AddLine( "192.168.0." .. i, "80" )

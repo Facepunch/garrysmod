@@ -3,7 +3,7 @@ if ( !IsMounted( "ep2" ) ) then return end
 
 AddCSLuaFile()
 
-SWEP.PrintName = "#GMOD_FlechetteGun"
+SWEP.PrintName = "#weapon_flechettegun"
 SWEP.Author = "garry"
 SWEP.Purpose = "Shoot flechettes with primary attack."
 
@@ -53,7 +53,7 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire( CurTime() + 0.1 )
 
 	self:EmitSound( ShootSound )
-	self:ShootEffects( self )
+	self:ShootEffects()
 
 	if ( CLIENT ) then return end
 

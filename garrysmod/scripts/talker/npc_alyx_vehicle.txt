@@ -2,6 +2,8 @@
 // Alyx
 //============================================================================================================
 
+criterion IsAlyx "classname" "npc_alyx" required
+
 criterion VehicleMoving "vehicle_speed" ">100" required
 criterion VehicleNear "vehicle_distance" "<512" required
 criterion VehicleAlmostNear "vehicle_distance" "<800" required
@@ -193,7 +195,7 @@ rule Alyx_PlayerGetInCarAlertNag
 
 response AlyxPassengerCollisionWarning
 {
-
+	//scene "scenes/episode_2/al_passenger_warncollision.vcd"
 }
 
 rule AlyxPassengerCollisionWarning

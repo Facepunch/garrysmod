@@ -7,7 +7,7 @@ AccessorFunc( PANEL, "pnlCanvas", "Canvas" )
 function PANEL:Init()
 
 	self.pnlCanvas = vgui.Create( "Panel", self )
-	self.pnlCanvas.OnMousePressed = function( self, code ) self:GetParent():OnMousePressed( code ) end
+	self.pnlCanvas.OnMousePressed = function( slf, code ) slf:GetParent():OnMousePressed( code ) end
 	self.pnlCanvas:SetMouseInputEnabled( true )
 	self.pnlCanvas.PerformLayout = function( pnl )
 

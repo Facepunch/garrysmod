@@ -1,0 +1,3039 @@
+"TableToKeyValues"
+{
+	"parentid"		"16"
+	"icon"		"games/16/ep2.png"
+	"id"		"26"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Characters"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/alyx_ep2.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/alyx_interior.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/hunter.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/magnusson.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/vortigaunt_blue.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/vortigaunt_doctor.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/antlion_guard.mdl"
+			"skin"		"1"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/antlion_worker.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/combine_strider_vsdog.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/antlion_grub.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/antlion_grub_squashed.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/zombie/zombie_soldier.mdl"
+			"body"		"B010000000"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/zombie/zombie_soldier_legs.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/zombie/zombie_soldier_torso.mdl"
+		}
+		"16"
+		{
+			"type"		"header"
+			"text"		"Props"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/gantry_crane/crane_controlbox.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/gantry_crane/crane_lever.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/gantry_crane/crane_pulleys.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/gantry_crane/crane_rotator.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/gantry_crane/crane_trolley.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/gantry_crane/crane_wheel.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/items/ammocrate_buckshot.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/items/ammocrate_pistol.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/items/ammocrate_smg2.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/items/item_beacon_crate.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/props_citizen_tech/transponder.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/props_citizen_tech/firetrap_propanecanister01b.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/oildrum_crush.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/powerbox_damaged.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/powerboxcover_damaged.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/substation_stripebox01b.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can02.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/bunkbed.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/bunkbed2.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/circularsaw01.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/axe.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pickaxe01.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/dog_gate.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/footlocker01_closed.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/footlocker01_open.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/furnace01.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/utilitypole01b.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/furniture_shelf01a.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/floodlight.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/light_outdoor_glass.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/light_outdoor.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/light_security.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wall_light.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wall_light_off.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/lighthanging.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/lightfixture01.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/industriallight01.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/light_red1.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/light_red2.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/light_security.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/spotlight.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/lightfixture01_base.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/railing_endcap.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/refrigerator01.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/sawhorse.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/sawmill_boiler.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/sawmill_engine.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/sawmill_logs.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/forest_log01.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/log.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/sheetrock_leaning.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/shelves.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/shelves_wood.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/stove01.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/table_shed.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/urine_trough.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/whiteforestinn_sign.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/whiteforestsign.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/whiteforestsignleft.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/whiteforestsignright.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/gnome.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/ibeam01b_cluster01.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/wood_spool01.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/incubatorplug.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/power_cable001.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/power_cable001a.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/power_cable002.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/power_cable002a.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props_citizen_tech/firetrap_gashose01d.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/furnace01pipes.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/furnace01pipes02.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/tpplugholder_light.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/chandelier.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/forklift_body.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/forklift_fork.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/generator_static01a.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/pumpkin01.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/trough_farm01.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/acunit01.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/acunit02.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/barrelwarning.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/consolepanelloadingbay.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/desk_console1b.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/desk_console1.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/desk_console1a.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/desk_console2.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/desk_console3.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/equipment1.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/processor.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/processor_nobase.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_launchroom_monitor.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/transformer.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/turret.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/ventilationduct01.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/ventilationduct02.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/ventilationduct02large.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wall_console1.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wall_console2.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wall_console3.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wall_vent.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/welding_helmet.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/welding_torch.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/haybale.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/antlion_detector.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/antlion_detector_lights_base.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/antlion_detector_lights_lamp.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/bucket_mining01.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/control_lever01.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/diesel_generator.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/diesel_generator_crank.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/elevator_winch_cog.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/flatbed_cart01.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/flatbed_cart02.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/flatbed_cart03.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/freightelevatorbutton01.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/freightelevatorbutton02.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/indicator_updown01.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/oiltank01.mdl"
+		}
+		"136"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pickaxe01_head.mdl"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/railroad_spike01.mdl"
+		}
+		"138"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/switch01.mdl"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/switch_updown01.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/camera.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/eli_weapon.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/eli_weapon_phys.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/fanhousing.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/fanoff.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/fan.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/floodlight.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/floodlight01.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/floodlight02.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/floodlights_01.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/fuel_cask.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handtruck.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/launch_button.mdl"
+		}
+		"153"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/nucleartestcabinet.mdl"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/rocket.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/rocket_low.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/rocket_stage1.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/rocket_stage2.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/rocket_stage3.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/rocket_engine.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/signalbox_01.mdl"
+		}
+		"161"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_elevator.mdl"
+		}
+		"162"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_hatch.mdl"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/tire1.mdl"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/tire2.mdl"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/tirestack.mdl"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/tirestack2.mdl"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/tirestack3.mdl"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/pushcart.mdl"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/plasterwall029c_window01b.mdl"
+		}
+		"170"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/plasterwall029g_window01b.mdl"
+		}
+		"171"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/woodwall030b_window01b.mdl"
+		}
+		"172"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/woodwall030b_window02b.mdl"
+		}
+		"173"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/woodwall030b_window03b.mdl"
+		}
+		"174"
+		{
+			"type"		"model"
+			"model"		"models/grub_nugget_large.mdl"
+		}
+		"175"
+		{
+			"type"		"model"
+			"model"		"models/grub_nugget_medium.mdl"
+		}
+		"176"
+		{
+			"type"		"model"
+			"model"		"models/grub_nugget_small.mdl"
+		}
+		"177"
+		{
+			"type"		"model"
+			"model"		"models/weapons/hunter_flechette.mdl"
+		}
+		"178"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_combine_sniper.mdl"
+		}
+		"179"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_grenade.mdl"
+		}
+		"180"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_magnade.mdl"
+		}
+		"181"
+		{
+			"type"		"model"
+			"model"		"models/magnusson_device.mdl"
+		}
+		"182"
+		{
+			"type"		"model"
+			"model"		"models/magnusson_teleporter.mdl"
+		}
+		"183"
+		{
+			"type"		"model"
+			"model"		"models/magnusson_teleporter_off.mdl"
+		}
+		"184"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/egg.mdl"
+		}
+		"185"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/egg_phy.mdl"
+		}
+		"186"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/larval_essence.mdl"
+		}
+		"187"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/nest_extract.mdl"
+		}
+		"188"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/nest_lrg_flat.mdl"
+		}
+		"189"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/nest_med_flat.mdl"
+		}
+		"190"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/nest_sm_flat.mdl"
+		}
+		"191"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/combine_podholder.mdl"
+		}
+		"192"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/forklift_lever.mdl"
+		}
+		"193"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/strider_sign.mdl"
+		}
+		"194"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_antenna01_pylon.mdl"
+		}
+		"195"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rollup_doortoppart128.mdl"
+		}
+		"196"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rollup_doortoppart256.mdl"
+		}
+		"197"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rollup_doortoppart72.mdl"
+		}
+		"198"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/elevator01_cage.mdl"
+		}
+		"199"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/elevator02_cage.mdl"
+		}
+		"200"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_a.mdl"
+		}
+		"201"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_b.mdl"
+		}
+		"202"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_c.mdl"
+		}
+		"203"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_d.mdl"
+		}
+		"204"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_workspace1.mdl"
+		}
+		"205"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/ceiling_winch01.mdl"
+		}
+		"206"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/elevator_winch_empty.mdl"
+		}
+		"207"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/elevator_winch_shaft.mdl"
+		}
+		"208"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/arches_u.mdl"
+		}
+		"209"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/brace_mining01.mdl"
+		}
+		"210"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/fanbase01.mdl"
+		}
+		"211"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/fanblade01.mdl"
+		}
+		"212"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/flatbed_flap01.mdl"
+		}
+		"213"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/flatbed_flap02.mdl"
+		}
+		"214"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/mesh_ceiling01.mdl"
+		}
+		"215"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/mesh_ceiling02.mdl"
+		}
+		"216"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/mesh_ceiling03.mdl"
+		}
+		"217"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/mesh_ceiling04.mdl"
+		}
+		"218"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/chimneycluster01.mdl"
+		}
+		"219"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/duct.mdl"
+		}
+		"220"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/pylon.mdl"
+		}
+		"221"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wall_wires2.mdl"
+		}
+		"222"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/winch.mdl"
+		}
+		"223"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wirepipe.mdl"
+		}
+		"224"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/wirespout.mdl"
+		}
+		"225"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/electricalbox01.mdl"
+		}
+		"226"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/electricalbox02.mdl"
+		}
+		"227"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/missile_doors.mdl"
+		}
+		"228"
+		{
+			"type"		"header"
+			"text"		"Fences, Gates, Doors, etc"
+		}
+		"229"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/ladderwood.mdl"
+		}
+		"230"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/metalladder002d.mdl"
+		}
+		"231"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/metalladder002c_damaged.mdl"
+		}
+		"232"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/ladderrung.mdl"
+		}
+		"233"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/exterior_fence_nohandle.mdl"
+		}
+		"234"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/exterior_fence_notbarbed002a.mdl"
+		}
+		"235"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/exterior_fence_notbarbed002b.mdl"
+		}
+		"236"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/exterior_fence_notbarbed002c.mdl"
+		}
+		"237"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/exterior_fence_notbarbed002d.mdl"
+		}
+		"238"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/exterior_fence_notbarbed002e.mdl"
+		}
+		"239"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/exterior_fence_notbarbed002f.mdl"
+		}
+		"240"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/interior_fence004c.mdl"
+		}
+		"241"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/gate_door03.mdl"
+		}
+		"242"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_border_128.mdl"
+		}
+		"243"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_border_256.mdl"
+		}
+		"244"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_border_512.mdl"
+		}
+		"245"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/railing_large.mdl"
+		}
+		"246"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/railing_small.mdl"
+		}
+		"247"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_trail_128.mdl"
+		}
+		"248"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_trail_256.mdl"
+		}
+		"249"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_trail_512.mdl"
+		}
+		"250"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_barb_256.mdl"
+		}
+		"251"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fence_barb_512.mdl"
+		}
+		"252"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fencebarbedwire01.mdl"
+		}
+		"253"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/door_fence01.mdl"
+		}
+		"254"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/elevatorshaft_door01b.mdl"
+		}
+		"255"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rollup_door01.mdl"
+		}
+		"256"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rollup_door02.mdl"
+		}
+		"257"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/techgate01.mdl"
+		}
+		"258"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/techgate01_outland03.mdl"
+		}
+		"259"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/basementdoor01a.mdl"
+		}
+		"260"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/basementdoor01a_damaged.mdl"
+		}
+		"261"
+		{
+			"type"		"model"
+			"model"		"models/map10_doors/singledoor.mdl"
+		}
+		"262"
+		{
+			"type"		"model"
+			"model"		"models/map10_doors/doubledoor.mdl"
+		}
+		"263"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_door01.mdl"
+		}
+		"264"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_door01_static.mdl"
+		}
+		"265"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_elevator_door.mdl"
+		}
+		"266"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_metaldoor01.mdl"
+		}
+		"267"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_metaldoor01a.mdl"
+		}
+		"268"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_metaldoor01b.mdl"
+		}
+		"269"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_metaldoor01c.mdl"
+		}
+		"270"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_metaldoor02.mdl"
+		}
+		"271"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_metaldoor02a.mdl"
+		}
+		"272"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_metaldoor02b.mdl"
+		}
+		"273"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_singlespan_128.mdl"
+		}
+		"274"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_alley-upperdeck.mdl"
+		}
+		"275"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_alley-stairs.mdl"
+		}
+		"276"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_tower-lower.mdl"
+		}
+		"277"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_tower-upper.mdl"
+		}
+		"278"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_tspawn-balcony.mdl"
+		}
+		"279"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_yarda-sniperspot.mdl"
+		}
+		"280"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_yardb-catwalk.mdl"
+		}
+		"281"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/handrail_yardb-lower.mdl"
+		}
+		"282"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_ceiling_end.mdl"
+		}
+		"283"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_ceiling_1024.mdl"
+		}
+		"284"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_ceiling_1664.mdl"
+		}
+		"285"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_cluster01.mdl"
+		}
+		"286"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_goopit01.mdl"
+		}
+		"287"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_goopit02.mdl"
+		}
+		"288"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_turretsroom01.mdl"
+		}
+		"289"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_turretsroom02.mdl"
+		}
+		"290"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_turretsroom03.mdl"
+		}
+		"291"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_turretsroom04.mdl"
+		}
+		"292"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/pipe_ceiling_support.mdl"
+		}
+		"293"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts01.mdl"
+		}
+		"294"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_ceiling01.mdl"
+		}
+		"295"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_ceiling02.mdl"
+		}
+		"296"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_ceiling03.mdl"
+		}
+		"297"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_single01.mdl"
+		}
+		"298"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_single02.mdl"
+		}
+		"299"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel192_01.mdl"
+		}
+		"300"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel192_02.mdl"
+		}
+		"301"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel192_03.mdl"
+		}
+		"302"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel320_01.mdl"
+		}
+		"303"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel320_02.mdl"
+		}
+		"304"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel320_03.mdl"
+		}
+		"305"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel320_04.mdl"
+		}
+		"306"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_tunnel320_05.mdl"
+		}
+		"307"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_wall01.mdl"
+		}
+		"308"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_wall02.mdl"
+		}
+		"309"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_wall03.mdl"
+		}
+		"310"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_wall04.mdl"
+		}
+		"311"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_wall05.mdl"
+		}
+		"312"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_cluster02.mdl"
+		}
+		"313"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_cluster03.mdl"
+		}
+		"314"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_cluster01.mdl"
+		}
+		"315"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_room01.mdl"
+		}
+		"316"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/struts_shaft01.mdl"
+		}
+		"317"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/track01.mdl"
+		}
+		"318"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/track02.mdl"
+		}
+		"319"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/track03.mdl"
+		}
+		"320"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/track_1024_01.mdl"
+		}
+		"321"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/track_1664_01.mdl"
+		}
+		"322"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/track_1664_02.mdl"
+		}
+		"323"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/track_512_01.mdl"
+		}
+		"324"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/wood_stack.mdl"
+		}
+		"325"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_tower01.mdl"
+		}
+		"326"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/elevator01_framework.mdl"
+		}
+		"327"
+		{
+			"type"		"model"
+			"model"		"models/props_radiostation/radio_antenna01.mdl"
+		}
+		"328"
+		{
+			"type"		"model"
+			"model"		"models/gantry_crane/crane_beam.mdl"
+		}
+		"329"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/missile_doors_frame.mdl"
+		}
+		"330"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/barrier_cluster.mdl"
+		}
+		"331"
+		{
+			"type"		"header"
+			"text"		"Effects"
+		}
+		"332"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light01.mdl"
+		}
+		"333"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloud001b.mdl"
+		}
+		"334"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloud001c.mdl"
+		}
+		"335"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloud001d.mdl"
+		}
+		"336"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloud002b.mdl"
+		}
+		"337"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloud003.mdl"
+		}
+		"338"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_citadelcloudcenter.mdl"
+		}
+		"339"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceiling02.mdl"
+		}
+		"340"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceilingbig02.mdl"
+		}
+		"341"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceiling03.mdl"
+		}
+		"342"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceiling04.mdl"
+		}
+		"343"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceiling05.mdl"
+		}
+		"344"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceilingbig05.mdl"
+		}
+		"345"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/grubtunnel_door.mdl"
+		}
+		"346"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceiling01.mdl"
+		}
+		"347"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackceilingbig01.mdl"
+		}
+		"348"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackhalf.mdl"
+		}
+		"349"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackhalf_b.mdl"
+		}
+		"350"
+		{
+			"type"		"model"
+			"model"		"models/props_hive/websackhalf_c.mdl"
+		}
+		"351"
+		{
+			"type"		"model"
+			"model"		"models/spitball_large.mdl"
+		}
+		"352"
+		{
+			"type"		"model"
+			"model"		"models/spitball_medium.mdl"
+		}
+		"353"
+		{
+			"type"		"model"
+			"model"		"models/spitball_small.mdl"
+		}
+		"354"
+		{
+			"type"		"header"
+			"text"		"Combine"
+		}
+		"355"
+		{
+			"type"		"model"
+			"model"		"models/combine_advisor_pod/combine_advisor_pod.mdl"
+		}
+		"356"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/combine_cannon.mdl"
+		}
+		"357"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/combine_cannon_gun.mdl"
+		}
+		"358"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/combine_cannon_powergen.mdl"
+		}
+		"359"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/combine_cannon_stand.mdl"
+		}
+		"360"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/combine_cannon_stand02.mdl"
+		}
+		"361"
+		{
+			"type"		"model"
+			"model"		"models/advisorpod_crash/advisor_pod_crash.mdl"
+		}
+		"362"
+		{
+			"type"		"model"
+			"model"		"models/combinecannon/cironwall.mdl"
+		}
+		"363"
+		{
+			"type"		"model"
+			"model"		"models/combinecannon/debris.mdl"
+		}
+		"364"
+		{
+			"type"		"model"
+			"model"		"models/combinecannon/remnants.mdl"
+		}
+		"365"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_interface001a.mdl"
+		}
+		"366"
+		{
+			"type"		"header"
+			"text"		"Vehicles"
+		}
+		"367"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/boxcar.mdl"
+		}
+		"368"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/boxcar2.mdl"
+		}
+		"369"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/boxcar2_damaged1.mdl"
+		}
+		"370"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/boxcar2a.mdl"
+		}
+		"371"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/diesel.mdl"
+		}
+		"372"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/flatcar.mdl"
+		}
+		"373"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/passengercar001.mdl"
+		}
+		"374"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/passengercar001_dam01a.mdl"
+		}
+		"375"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/passengercar001_dam01b.mdl"
+		}
+		"376"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/passengercar001_dam01c.mdl"
+		}
+		"377"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/tanker.mdl"
+		}
+		"378"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/tanker_damaged1.mdl"
+		}
+		"379"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train003_damaged1.mdl"
+		}
+		"380"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_boxcar.mdl"
+		}
+		"381"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_boxcar_damaged.mdl"
+		}
+		"382"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_engine.mdl"
+		}
+		"383"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_orecar.mdl"
+		}
+		"384"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/train_wheels1.mdl"
+		}
+		"385"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_boxcar_gate.mdl"
+		}
+		"386"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_boxcar_jump.mdl"
+		}
+		"387"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/passengercardoor001.mdl"
+		}
+		"388"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_door.mdl"
+		}
+		"389"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_boxcar_gate_door.mdl"
+		}
+		"390"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_boxcar_panel01.mdl"
+		}
+		"391"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_boxcar_panel02.mdl"
+		}
+		"392"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_boxcar_panel03.mdl"
+		}
+		"393"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train.mdl"
+		}
+		"394"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_02.mdl"
+		}
+		"395"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_divider_01.mdl"
+		}
+		"396"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_divider_02.mdl"
+		}
+		"397"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_panel_01.mdl"
+		}
+		"398"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_panel_02.mdl"
+		}
+		"399"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_panel_03.mdl"
+		}
+		"400"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_rack_01.mdl"
+		}
+		"401"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_rack_02.mdl"
+		}
+		"402"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/wrecked_train_seat.mdl"
+		}
+		"403"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/mining_car.mdl"
+		}
+		"404"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/van001a_nodoor.mdl"
+		}
+		"405"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/van001a_nodoor_physics.mdl"
+		}
+		"406"
+		{
+			"type"		"model"
+			"model"		"models/tanker/tanker1.mdl"
+		}
+		"407"
+		{
+			"type"		"model"
+			"model"		"models/tanker/tanker2.mdl"
+		}
+		"408"
+		{
+			"type"		"model"
+			"model"		"models/vehicle/helicopter.mdl"
+		}
+		"409"
+		{
+			"type"		"model"
+			"model"		"models/vehicle/vehicle_engine_block.mdl"
+		}
+		"410"
+		{
+			"type"		"model"
+			"model"		"models/vehicle/vehicle_rich.mdl"
+		}
+		"411"
+		{
+			"type"		"model"
+			"model"		"models/vehicle.mdl"
+		}
+		"412"
+		{
+			"type"		"header"
+			"text"		"Rocks"
+		}
+		"413"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rockcluster01.mdl"
+		}
+		"414"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rockcluster02.mdl"
+		}
+		"415"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_large01.mdl"
+		}
+		"416"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_large01_veg.mdl"
+		}
+		"417"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_large02.mdl"
+		}
+		"418"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_large02_veg.mdl"
+		}
+		"419"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_large03.mdl"
+		}
+		"420"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_large03_veg.mdl"
+		}
+		"421"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_medium01.mdl"
+		}
+		"422"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_medium01_veg.mdl"
+		}
+		"423"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_medium02.mdl"
+		}
+		"424"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_medium02_veg.mdl"
+		}
+		"425"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_medium03.mdl"
+		}
+		"426"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_medium03_veg.mdl"
+		}
+		"427"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_small01.mdl"
+		}
+		"428"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_small01_veg.mdl"
+		}
+		"429"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_small02.mdl"
+		}
+		"430"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_small02_veg.mdl"
+		}
+		"431"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_small03.mdl"
+		}
+		"432"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_small03_veg.mdl"
+		}
+		"433"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_xlarge01.mdl"
+		}
+		"434"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_xlarge01_veg.mdl"
+		}
+		"435"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_xlarge02.mdl"
+		}
+		"436"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_xlarge02_veg.mdl"
+		}
+		"437"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_xlarge03.mdl"
+		}
+		"438"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/rocks_xlarge03_veg.mdl"
+		}
+		"439"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/forestrock_cluster01.mdl"
+		}
+		"440"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/forestrock_cluster02.mdl"
+		}
+		"441"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/forestrock_single01.mdl"
+		}
+		"442"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02a.mdl"
+		}
+		"443"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02b.mdl"
+		}
+		"444"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02c.mdl"
+		}
+		"445"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02d.mdl"
+		}
+		"446"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02e.mdl"
+		}
+		"447"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02f.mdl"
+		}
+		"448"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02g.mdl"
+		}
+		"449"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_coast02h.mdl"
+		}
+		"450"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest01.mdl"
+		}
+		"451"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest01a.mdl"
+		}
+		"452"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest01b.mdl"
+		}
+		"453"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest01c.mdl"
+		}
+		"454"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest01d.mdl"
+		}
+		"455"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest02.mdl"
+		}
+		"456"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest03.mdl"
+		}
+		"457"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/rock_forest04.mdl"
+		}
+		"458"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/caverocks_cluster01.mdl"
+		}
+		"459"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/caverocks_cluster02.mdl"
+		}
+		"460"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rock_caves01.mdl"
+		}
+		"461"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rock_caves01a.mdl"
+		}
+		"462"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rock_caves01b.mdl"
+		}
+		"463"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/rock_caves01c.mdl"
+		}
+		"464"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster01a.mdl"
+		}
+		"465"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster01b.mdl"
+		}
+		"466"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster01c.mdl"
+		}
+		"467"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster01d.mdl"
+		}
+		"468"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster01e.mdl"
+		}
+		"469"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster02a.mdl"
+		}
+		"470"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster02b.mdl"
+		}
+		"471"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster02c.mdl"
+		}
+		"472"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster02d.mdl"
+		}
+		"473"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster03a.mdl"
+		}
+		"474"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster03b.mdl"
+		}
+		"475"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster03c.mdl"
+		}
+		"476"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster03d.mdl"
+		}
+		"477"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster03e.mdl"
+		}
+		"478"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster04.mdl"
+		}
+		"479"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster04a.mdl"
+		}
+		"480"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster04b.mdl"
+		}
+		"481"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster04c.mdl"
+		}
+		"482"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster04d.mdl"
+		}
+		"483"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster04e.mdl"
+		}
+		"484"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster01.mdl"
+		}
+		"485"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster03.mdl"
+		}
+		"486"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_cluster02.mdl"
+		}
+		"487"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_static01.mdl"
+		}
+		"488"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_static02.mdl"
+		}
+		"489"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_static03.mdl"
+		}
+		"490"
+		{
+			"type"		"model"
+			"model"		"models/props_mining/stalactite_static04.mdl"
+		}
+		"491"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/cliff01.mdl"
+		}
+		"492"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/cliff_path01.mdl"
+		}
+		"493"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/o5cliff01.mdl"
+		}
+		"494"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/o5cliff02.mdl"
+		}
+		"495"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/o5cliff03.mdl"
+		}
+		"496"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/o5cliff04.mdl"
+		}
+		"497"
+		{
+			"type"		"model"
+			"model"		"models/cliffs/o5cliff05.mdl"
+		}
+		"498"
+		{
+			"type"		"header"
+			"text"		"Foliage"
+		}
+		"499"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/bush2.mdl"
+		}
+		"500"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/detail_cluster01.mdl"
+		}
+		"501"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/detail_cluster02.mdl"
+		}
+		"502"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/detail_cluster03.mdl"
+		}
+		"503"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/detail_cluster04.mdl"
+		}
+		"504"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/fallentree01.mdl"
+		}
+		"505"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/fallentree02.mdl"
+		}
+		"506"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/fallentree_dry01.mdl"
+		}
+		"507"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/fallentree_dry02.mdl"
+		}
+		"508"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/fern01.mdl"
+		}
+		"509"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/ferns01.mdl"
+		}
+		"510"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/ferns02.mdl"
+		}
+		"511"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/ferns03.mdl"
+		}
+		"512"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass3.mdl"
+		}
+		"513"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster01.mdl"
+		}
+		"514"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster01a.mdl"
+		}
+		"515"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster02.mdl"
+		}
+		"516"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster02a.mdl"
+		}
+		"517"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster03.mdl"
+		}
+		"518"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster03a.mdl"
+		}
+		"519"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster04.mdl"
+		}
+		"520"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/grass_cluster04a.mdl"
+		}
+		"521"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/vine_wall1.mdl"
+		}
+		"522"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/vine_wall2.mdl"
+		}
+		"523"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/shrub_small.mdl"
+		}
+		"524"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fern01lg.mdl"
+		}
+		"525"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/fern01.mdl"
+		}
+		"526"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/small_cattails.mdl"
+		}
+		"527"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_128.mdl"
+		}
+		"528"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_128_128high.mdl"
+		}
+		"529"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_256.mdl"
+		}
+		"530"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_256_128high.mdl"
+		}
+		"531"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_medium.mdl"
+		}
+		"532"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/hedge_small.mdl"
+		}
+		"533"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_dead01.mdl"
+		}
+		"534"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_dead02.mdl"
+		}
+		"535"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_dead03.mdl"
+		}
+		"536"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_dead04.mdl"
+		}
+		"537"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_dry01.mdl"
+		}
+		"538"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_dry02.mdl"
+		}
+		"539"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine04.mdl"
+		}
+		"540"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_large.mdl"
+		}
+		"541"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine05.mdl"
+		}
+		"542"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine06.mdl"
+		}
+		"543"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_01.mdl"
+		}
+		"544"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_01_skybox.mdl"
+		}
+		"545"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_02.mdl"
+		}
+		"546"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_card_cluster_02_skybox.mdl"
+		}
+		"547"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_pine_cluster_01.mdl"
+		}
+		"548"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_slice01.mdl"
+		}
+		"549"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_slice02.mdl"
+		}
+		"550"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_slice_chunk01.mdl"
+		}
+		"551"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_slice_chunk02.mdl"
+		}
+		"552"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_slice_chunk03.mdl"
+		}
+		"553"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_stump01.mdl"
+		}
+		"554"
+		{
+			"type"		"model"
+			"model"		"models/props_docks/dock_poles_cluster.mdl"
+		}
+		"555"
+		{
+			"type"		"model"
+			"model"		"models/props_forest/riverlogs.mdl"
+		}
+		"556"
+		{
+			"type"		"header"
+			"text"		"Gibs"
+		}
+		"557"
+		{
+			"type"		"model"
+			"model"		"models/gibs/advisorpod_wreckage_front.mdl"
+		}
+		"558"
+		{
+			"type"		"model"
+			"model"		"models/gibs/advisorpod_wreckage_mid_1.mdl"
+		}
+		"559"
+		{
+			"type"		"model"
+			"model"		"models/gibs/advisorpod_wreckage_mid_2.mdl"
+		}
+		"560"
+		{
+			"type"		"model"
+			"model"		"models/gibs/advisorpod_wreckage_mid_3.mdl"
+		}
+		"561"
+		{
+			"type"		"model"
+			"model"		"models/gibs/advisorpod_wreckage_rear.mdl"
+		}
+		"562"
+		{
+			"type"		"model"
+			"model"		"models/gibs/advisorpod_wreckage_wing_l.mdl"
+		}
+		"563"
+		{
+			"type"		"model"
+			"model"		"models/gibs/advisorpod_wreckage_wing_r.mdl"
+		}
+		"564"
+		{
+			"type"		"model"
+			"model"		"models/gibs/antlion_gib_medium_3a.mdl"
+		}
+		"565"
+		{
+			"type"		"model"
+			"model"		"models/gibs/antlion_worker_gibs_backlegl.mdl"
+		}
+		"566"
+		{
+			"type"		"model"
+			"model"		"models/gibs/antlion_worker_gibs_backlegr.mdl"
+		}
+		"567"
+		{
+			"type"		"model"
+			"model"		"models/gibs/antlion_worker_gibs_frontlegl.mdl"
+		}
+		"568"
+		{
+			"type"		"model"
+			"model"		"models/gibs/antlion_worker_gibs_frontlegr.mdl"
+		}
+		"569"
+		{
+			"type"		"model"
+			"model"		"models/gibs/antlion_worker_gibs_head.mdl"
+		}
+		"570"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can_chunka.mdl"
+		}
+		"571"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can_chunkc.mdl"
+		}
+		"572"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can_chunkd.mdl"
+		}
+		"573"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can_chunke.mdl"
+		}
+		"574"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can_chunkf.mdl"
+		}
+		"575"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can_chunkb.mdl"
+		}
+		"576"
+		{
+			"type"		"model"
+			"model"		"models/props_explosive/explosive_butane_can_chunkg.mdl"
+		}
+		"577"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/floor_turret_gib1.mdl"
+		}
+		"578"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/floor_turret_gib2.mdl"
+		}
+		"579"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/floor_turret_gib3.mdl"
+		}
+		"580"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/floor_turret_gib4.mdl"
+		}
+		"581"
+		{
+			"type"		"model"
+			"model"		"models/combine_turrets/floor_turret_gib5.mdl"
+		}
+		"582"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/pumpkin01_chunk01a.mdl"
+		}
+		"583"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/pumpkin01_chunk01b.mdl"
+		}
+		"584"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/pumpkin01_chunk02a.mdl"
+		}
+		"585"
+		{
+			"type"		"model"
+			"model"		"models/strider_parts/strider_brain.mdl"
+		}
+		"586"
+		{
+			"type"		"model"
+			"model"		"models/strider_parts/strider_shell.mdl"
+		}
+		"587"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_whole_noskins.mdl"
+		}
+		"588"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_whole.mdl"
+		}
+		"589"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_arm.mdl"
+		}
+		"590"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_arm_l.mdl"
+		}
+		"591"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_arm_l_noskins.mdl"
+		}
+		"592"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_arm_noskins.mdl"
+		}
+		"593"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_leg.mdl"
+		}
+		"594"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_leg_l.mdl"
+		}
+		"595"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_leg_l_noskins.mdl"
+		}
+		"596"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_leg_noskins.mdl"
+		}
+		"597"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_torso3.mdl"
+		}
+		"598"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_torso3_noskins.mdl"
+		}
+		"599"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_torso.mdl"
+		}
+		"600"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_torso_noskins.mdl"
+		}
+		"601"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_torso2.mdl"
+		}
+		"602"
+		{
+			"type"		"model"
+			"model"		"models/skeleton/skeleton_torso2_noskins.mdl"
+		}
+		"603"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/basementdoor01a_shard1.mdl"
+		}
+		"604"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/basementdoor01a_shard2.mdl"
+		}
+		"605"
+		{
+			"type"		"model"
+			"model"		"models/props_outland/basementdoor01a_shard3.mdl"
+		}
+	}
+	"needsapp"		"ep2"
+	"name"		"Episode 2"
+	"version"		"3"
+}

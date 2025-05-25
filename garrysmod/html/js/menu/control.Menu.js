@@ -138,7 +138,7 @@ function MenuController( $scope, $rootScope )
 
 	$scope.ShowNews = function()
 	{
-		if ( gScope.Branch != "unknown" ) return lua.Run( "gui.OpenURL( 'https://commits.facepunch.com/r/Garrys%20Mod' )" );
+		if ( gScope.Branch != "unknown" ) return lua.Run( "gui.OpenURL( 'https://commits.facepunch.com/r/garrysmod.main' )" );
 
 		lua.Run( "gui.OpenURL( 'http://gmod.facepunch.com/changes/' )" );
 	}
@@ -234,10 +234,10 @@ function UpdateCurrentGamemode( gm )
 
 function GetGamemodeInfo( name )
 {
-	name = name.toLowerCase();
-	if ( !GamemodeDetails[name] ) GamemodeDetails[name] = {}
+	var nameL = name.toLowerCase();
+	if ( !GamemodeDetails[nameL] ) GamemodeDetails[nameL] = { title: name, name: nameL }
 
-	return GamemodeDetails[name];
+	return GamemodeDetails[nameL];
 }
 
 function UpdateAddonMaps( inmaps )

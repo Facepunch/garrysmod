@@ -35,12 +35,11 @@ include( "extensions/util.lua" )
 include( "extensions/file.lua" )
 include( "extensions/debug.lua" )
 include( "extensions/client/render.lua" )
+include( "extensions/client/globals.lua" )
 
 include( "util/vgui_showlayout.lua" )
 include( "util/workshop_files.lua" )
 include( "util/javascript_util.lua" )
 include( "util/tooltips.lua" )
-
-require( "notification" )
 
 include( "menu/derma_icon_browser.lua" )

@@ -1,6 +1,9 @@
 
 AddCSLuaFile()
 
+local m_pitch = GetConVar( "m_pitch" )
+local m_yaw = GetConVar( "m_yaw" )
+
 --
 -- This is designed so you can call it like
 --
@@ -48,6 +51,7 @@ function TauntCamera()
 		if ( !on && OutLerp >= 1 ) then
 
 			CustomAngles = view.angles * 1
+			CustomAngles.r = 0
 			PlayerLockAngles = nil
 			InLerp = 0
 			return
@@ -103,8 +107,8 @@ function TauntCamera()
 		--
 		-- Rotate our view
 		--
-		CustomAngles.pitch	= CustomAngles.pitch	+ cmd:GetMouseY() * 0.01
-		CustomAngles.yaw	= CustomAngles.yaw		- cmd:GetMouseX() * 0.01
+		CustomAngles.pitch	= CustomAngles.pitch	+ cmd:GetMouseY() * m_pitch:GetFloat()
+		CustomAngles.yaw	= CustomAngles.yaw		- cmd:GetMouseX() * m_yaw:GetFloat()
 
 		--
 		-- Lock the player's controls and angles

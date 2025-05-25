@@ -146,6 +146,8 @@ function SWEP:ShootBullet( damage, num_bullets, aimcone, ammo_type, force, trace
 	bullet.Force	= force || 1						-- Amount of force to give to phys objects
 	bullet.Damage	= damage
 	bullet.AmmoType = ammo_type || self.Primary.Ammo
+	bullet.Attacker = owner
+	bullet.Inflictor = self
 
 	owner:FireBullets( bullet )
 
@@ -247,6 +249,9 @@ end
 	Desc: Returns how much of ammo1 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo1()
+	-- Owner cannot have ammo? Such as NPCs.
+	if ( !self:GetOwner().GetAmmoCount ) then return 0 end
+
 	return self:GetOwner():GetAmmoCount( self:GetPrimaryAmmoType() )
 end
 
@@ -255,16 +260,10 @@ end
 	Desc: Returns how much of ammo2 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo2()
-	return self:GetOwner():GetAmmoCount( self:GetSecondaryAmmoType() )
-end
+	-- Owner cannot have ammo? Such as NPCs.
+	if ( !self:GetOwner().GetAmmoCount ) then return 0 end
 
---[[---------------------------------------------------------
-	Name: SetDeploySpeed
-	Desc: Sets the weapon deploy speed.
-		 This value needs to match on client and server.
------------------------------------------------------------]]
-function SWEP:SetDeploySpeed( speed )
-	self.m_WeaponDeploySpeed = tonumber( speed )
+	return self:GetOwner():GetAmmoCount( self:GetSecondaryAmmoType() )
 end
 
 --[[---------------------------------------------------------

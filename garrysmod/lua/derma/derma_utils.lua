@@ -9,7 +9,7 @@ function Derma_DrawBackgroundBlur( panel, starttime )
 	local Fraction = 1
 
 	if ( starttime ) then
-		Fraction = math.Clamp( (SysTime() - starttime) / 1, 0, 1 )
+		Fraction = math.Clamp( ( SysTime() - starttime ) / 1, 0, 1 )
 	end
 
 	local x, y = panel:LocalToScreen( 0, 0 )
@@ -21,7 +21,7 @@ function Derma_DrawBackgroundBlur( panel, starttime )
 		surface.SetMaterial( matBlurScreen )
 		surface.SetDrawColor( 255, 255, 255, 255 )
 
-		for i=0.33, 1, 0.33 do
+		for i = 0.33, 1, 0.33 do
 			matBlurScreen:SetFloat( "$blur", Fraction * 5 * i )
 			matBlurScreen:Recompute()
 			if ( render ) then render.UpdateScreenEffectTexture() end -- Todo: Make this available to menu Lua
@@ -87,6 +87,7 @@ function Derma_Message( strText, strTitle, strButtonText )
 
 	Window:MakePopup()
 	Window:DoModal()
+
 	return Window
 
 end
@@ -127,15 +128,15 @@ function Derma_Query( strText, strTitle, ... )
 	local NumOptions = 0
 	local x = 5
 
-	for k=1, 8, 2 do
+	for k = 1, 8, 2 do
 
-		local Text = select( k, ... )
-		if Text == nil then break end
+		local txt = select( k, ... )
+		if ( txt == nil ) then break end
 
-		local Func = select( k+1, ... ) or function() end
+		local Func = select( k + 1, ... ) or function() end
 
 		local Button = vgui.Create( "DButton", ButtonPanel )
-		Button:SetText( Text )
+		Button:SetText( txt )
 		Button:SizeToContents()
 		Button:SetTall( 20 )
 		Button:SetWide( Button:GetWide() + 20 )

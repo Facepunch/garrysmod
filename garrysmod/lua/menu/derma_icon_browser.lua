@@ -64,7 +64,7 @@ function Derma_OpenIconBrowser()
 	Derma_IconBrowser:SetMinimumSize( minFrameW, minFrameH )
 	Derma_IconBrowser:Center()
 	Derma_IconBrowser:MakePopup()
-	
+
 	-- Some variables for our "copied" icon
 	local copyIconSize = 16
 	local copyIconSpacing = 5
@@ -125,7 +125,8 @@ function Derma_OpenIconBrowser()
 	Search:SetTall( 24 )
 	Search:SetUpdateOnType( true )
 	Search.OnValueChange = function( self )
-		IconBrowser:FilterByText( ( Search:GetValue():Trim():gsub( "^icon16/(.+)", "%1" ) ) ) -- If the user typed icon16/ at the start, get rid of it for them and trim any whitespace
+		local str = Search:GetValue():Trim():gsub( "^icon16/(.+)", "%1" )
+		IconBrowser:FilterByText( str ) -- If the user typed icon16/ at the start, get rid of it for them and trim any whitespace
 	end
 
 	-- Add a little magnifying glass icon in the right corner of the search box
@@ -134,7 +135,7 @@ function Derma_OpenIconBrowser()
 	SearchIcon:Dock( RIGHT )
 	SearchIcon:DockMargin( 4, 4, 4, 4 )
 	SearchIcon:SetSize( 16, 16 )
-	
+
 	-- Keep this line at the bottom otherwise an error could zombify the icon browser
 	Derma_IconBrowser:SetDeleteOnClose( false )
 end

@@ -74,6 +74,7 @@ end
 function ENT:SetPlayer( ply )
 
 	self.Founder = ply
+	self:SetCreator( ply )
 
 	if ( IsValid( ply ) ) then
 
@@ -107,7 +108,7 @@ function ENT:GetPlayer()
 
 	-- See if the player has left the server then rejoined
 	local ply = player.GetBySteamID64( self.FounderSID )
-	if ( not IsValid( ply ) ) then
+	if ( !IsValid( ply ) ) then
 
 		-- Oh well
 		return NULL

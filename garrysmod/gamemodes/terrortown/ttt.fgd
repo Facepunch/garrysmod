@@ -130,7 +130,7 @@
 ]
 
 @PointClass base(Targetname, Origin, Angles) = ttt_logic_role :
-	"Point ent a bit like a combination of a filter and a logic ent (because it is currently not possible to write proper filters in Lua). Tests if !activator is a certain role (detective/traitor/innocent/any) and fires output OnPass if true, or OnFail if not."
+	"Point ent a bit like a combination of a filter and a logic ent. Tests if !activator is a certain role (detective/traitor/innocent/any) and fires output OnPass if true, or OnFail if not."
 [
 	Role(choices) : "Player role to test for" : 1 : "Specifies what role the !activator of TestActivator should be for this entity to fire the OnPass output." =
 	[
@@ -223,4 +223,15 @@
 	"Spectators will be moved here as soon as they stop viewing their ragdoll. If more than one of these exists, a random one is used. The angles of this entity determine the eye angles of the player, ie. where they are facing after being moved here."
 [
 
+]
+
+@FilterClass base(BaseFilter) = ttt_filter_role :
+	"A filter that filters by the role of the activator."
+[
+	Role(choices) : "Player role to filter for" : 1 : "The role to filter by. If the filter mode is Allow, only players with the given role will pass the filter. If the filter mode is Disallow, all players EXCEPT those whose role matches the given role will pass the filter." =
+	[
+		0 : "Innocent"
+		1 : "Traitor"
+		2 : "Detective"
+	]
 ]

@@ -18,13 +18,13 @@
 
 			<div class="scrollable" style="margin: 0px; top: 0px; left: 200px">
 
-				<ul class="category" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0" ng-show="CurrentCategory == category.category">
+				<ul class="category" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0 || CurrentCategory != category.category" ng-show="CurrentCategory == category.category">
 
 					<li>{{category.category}} <small>{{CountFiltered(category.maps)}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small></li>
 
 					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'toString()' | mapFilter:SearchText" >
-						<img ng-click="FavMap( map )" class="{{FavMapClass( map )}} {{FavMapHover( map )}}" src="img/empty.png" />
-						<img ng-click="ClickMap( map )" ng-src="{{MapIcon( map, category.category )}}" class="thumbnail" /><br />
+						<img ng-click="FavMap( map )" class="{{FavMapClass( map )}} {{FavMapHover( map )}}" src="img/empty.png" loading="lazy"/>
+						<img ng-click="ClickMap( map )" ng-src="{{MapIcon( map, category.category )}}" class="thumbnail" loading="lazy"/><br />
 						<span>{{map}}</span>
 					</li>
 

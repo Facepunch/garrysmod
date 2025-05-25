@@ -26,7 +26,7 @@ local function CheckLimit( ply, key )
 		break
 	end
 
-	if ( !found and !ply:CheckLimit( "cameras" ) ) then
+	if ( !found && !ply:CheckLimit( "cameras" ) ) then
 		return false
 	end
 
@@ -35,10 +35,10 @@ local function CheckLimit( ply, key )
 end
 
 local function MakeCamera( ply, key, locked, toggle, Data )
-	if ( IsValid( ply ) && !CheckLimit( ply, key ) ) then return false end
+	if ( IsValid( ply ) && !CheckLimit( ply, key ) ) then return NULL end
 
 	local ent = ents.Create( "gmod_cameraprop" )
-	if ( !IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return NULL end
 
 	duplicator.DoGeneric( ent, Data )
 
@@ -50,7 +50,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 		end
 
 		ent:SetKey( key )
-		ent.controlkey = key
+		ent.controlkey = key -- Legacy?
 	end
 
 	ent:SetPlayer( ply )
@@ -61,16 +61,12 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	ent:Spawn()
 
 	DoPropSpawnedEffect( ent )
+	duplicator.DoGenericPhysics( ent, ply, Data )
 
 	ent:SetTracking( NULL, Vector( 0 ) )
 	ent:SetLocked( locked )
 
-	if ( toggle == 1 ) then
-		numpad.OnDown( ply, key, "Camera_Toggle", ent )
-	else
-		numpad.OnDown( ply, key, "Camera_On", ent )
-		numpad.OnUp( ply, key, "Camera_Off", ent )
-	end
+	ent:ApplyKeybinds( ply ) -- Trigger the numpad assignments
 
 	if ( IsValid( ply ) ) then
 		ply:AddCleanup( "cameras", ent )
@@ -80,7 +76,10 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	return ent
 
 end
-duplicator.RegisterEntityClass( "gmod_cameraprop", MakeCamera, "controlkey", "locked", "toggle", "Data" )
+
+if ( SERVER ) then
+	duplicator.RegisterEntityClass( "gmod_cameraprop", MakeCamera, "controlkey", "locked", "toggle", "Data" )
+end
 
 function TOOL:LeftClick( trace )
 
@@ -96,8 +95,9 @@ function TOOL:LeftClick( trace )
 	local toggle = self:GetClientNumber( "toggle" )
 
 	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
+	if ( !IsValid( ent ) ) then return false end
 
-	undo.Create( "Camera" )
+	undo.Create( "gmod_cameraprop" )
 		undo.AddEntity( ent )
 		undo.SetPlayer( ply )
 	undo.Finish()
@@ -136,10 +136,13 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "camera", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "camera", ConVarsDefault )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.camera.key", Command = "camera_key" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "camera_toggle" } )
+	CPanel:KeyBinder( "#tool.camera.key", "camera_key" )
+
+	CPanel:CheckBox( "#tool.camera.static", "camera_locked" )
+	CPanel:ControlHelp( "#tool.camera.static.help" )
+
+	CPanel:CheckBox( "#tool.toggle", "camera_toggle" )
 
 end

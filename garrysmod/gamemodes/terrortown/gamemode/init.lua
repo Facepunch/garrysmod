@@ -60,7 +60,7 @@ include("player.lua")
 CreateConVar("ttt_roundtime_minutes", "10", FCVAR_NOTIFY)
 CreateConVar("ttt_preptime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_posttime_seconds", "30", FCVAR_NOTIFY)
-CreateConVar("ttt_firstpreptime", "60")
+CreateConVar("ttt_firstpreptime", "60", FCVAR_NOTIFY)
 
 -- Haste mode
 local ttt_haste = CreateConVar("ttt_haste", "1", FCVAR_NOTIFY)
@@ -68,30 +68,30 @@ CreateConVar("ttt_haste_starting_minutes", "5", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_minutes_per_death", "0.5", FCVAR_NOTIFY)
 
 -- Player Spawning
-CreateConVar("ttt_spawn_wave_interval", "0")
+CreateConVar("ttt_spawn_wave_interval", "0", FCVAR_NOTIFY)
 
-CreateConVar("ttt_traitor_pct", "0.25")
-CreateConVar("ttt_traitor_max", "32")
+CreateConVar("ttt_traitor_pct", "0.25", FCVAR_NOTIFY)
+CreateConVar("ttt_traitor_max", "32", FCVAR_NOTIFY)
 
 CreateConVar("ttt_detective_pct", "0.13", FCVAR_NOTIFY)
-CreateConVar("ttt_detective_max", "32")
-CreateConVar("ttt_detective_min_players", "8")
-CreateConVar("ttt_detective_karma_min", "600")
+CreateConVar("ttt_detective_max", "32", FCVAR_NOTIFY)
+CreateConVar("ttt_detective_min_players", "8", FCVAR_NOTIFY)
+local detective_karma_min = CreateConVar("ttt_detective_karma_min", "600", FCVAR_NOTIFY)
 
 
 -- Traitor credits
-CreateConVar("ttt_credits_starting", "2")
-CreateConVar("ttt_credits_award_pct", "0.35")
-CreateConVar("ttt_credits_award_size", "1")
-CreateConVar("ttt_credits_award_repeat", "1")
-CreateConVar("ttt_credits_detectivekill", "1")
+CreateConVar("ttt_credits_starting", "2", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_award_pct", "0.35", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_award_size", "1", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_award_repeat", "1", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_detectivekill", "1", FCVAR_NOTIFY)
 
-CreateConVar("ttt_credits_alonebonus", "1")
+CreateConVar("ttt_credits_alonebonus", "1", FCVAR_NOTIFY)
 
 -- Detective credits
-CreateConVar("ttt_det_credits_starting", "1")
-CreateConVar("ttt_det_credits_traitorkill", "0")
-CreateConVar("ttt_det_credits_traitordead", "1")
+CreateConVar("ttt_det_credits_starting", "1", FCVAR_NOTIFY)
+CreateConVar("ttt_det_credits_traitorkill", "0", FCVAR_NOTIFY)
+CreateConVar("ttt_det_credits_traitordead", "1", FCVAR_NOTIFY)
 
 -- Other
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
@@ -104,11 +104,11 @@ CreateConVar("ttt_idle_limit", "180", FCVAR_NOTIFY)
 
 CreateConVar("ttt_voice_drain", "0", FCVAR_NOTIFY)
 CreateConVar("ttt_voice_drain_normal", "0.2", FCVAR_NOTIFY)
-CreateConVar("ttt_voice_drain_admin", "0.05", FCVAR_NOTIFY)
+CreateConVar("ttt_voice_drain_admin", "0", FCVAR_NOTIFY)
 CreateConVar("ttt_voice_drain_recharge", "0.05", FCVAR_NOTIFY)
 
 CreateConVar("ttt_namechange_kick", "1", FCVAR_NOTIFY)
-CreateConVar("ttt_namechange_bantime", "10")
+CreateConVar("ttt_namechange_bantime", "10", FCVAR_NOTIFY)
 
 local ttt_detective = CreateConVar("ttt_sherlock_mode", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 local ttt_minply = CreateConVar("ttt_minimum_players", "2", FCVAR_ARCHIVE + FCVAR_NOTIFY)
@@ -206,11 +206,7 @@ function GM:Initialize()
       RunConsoleCommand("sv_alltalk", "0")
    end
 
-   local cstrike = false
-   for _, g in ipairs(engine.GetGames()) do
-      if g.folder == 'cstrike' then cstrike = true end
-   end
-   if not cstrike then
+   if not IsMounted("cstrike") then
       ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
    end
 end
@@ -271,7 +267,7 @@ end
 local function EnoughPlayers()
    local ready = 0
    -- only count truly available players, ie. no forced specs
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if IsValid(ply) and ply:ShouldSpawn() then
          ready = ready + 1
       end
@@ -304,7 +300,7 @@ end
 -- we regularly check for these broken spectators while we wait for players
 -- and immediately fix them.
 function FixSpectators()
-   for k, ply in ipairs(player.GetAll()) do
+   for k, ply in player.Iterator() do
       if ply:IsSpec() and not ply:GetRagdollSpec() and ply:GetMoveType() < MOVETYPE_NOCLIP then
          ply:Spectate(OBS_MODE_ROAMING)
       end
@@ -354,7 +350,7 @@ function StartNameChangeChecks()
    if not GetConVar("ttt_namechange_kick"):GetBool() then return end
 
    -- bring nicks up to date, may have been changed during prep/post
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       ply.spawn_nick = ply:Nick()
    end
 
@@ -381,12 +377,10 @@ local function CleanUp()
 
    et.FixParentedPreCleanup()
 
-   game.CleanUpMap()
-
-   et.FixParentedPostCleanup()
+   game.CleanUpMap(false, nil, function() et.FixParentedPostCleanup() end)
 
    -- Strip players now, so that their weapons are not seen by ReplaceEntities
-   for k,v in ipairs(player.GetAll()) do
+   for k,v in player.Iterator() do
       if IsValid(v) then
          v:StripWeapons()
       end
@@ -527,10 +521,8 @@ function IncRoundEnd(incr)
 end
 
 function TellTraitorsAboutTraitors()
-  local plys = player.GetAll()
-
    local traitornicks = {}
-   for k,v in ipairs(plys) do
+   for k,v in player.Iterator() do
       if v:IsTraitor() then
          table.insert(traitornicks, v:Nick())
       end
@@ -538,7 +530,7 @@ function TellTraitorsAboutTraitors()
 
    -- This is ugly as hell, but it's kinda nice to filter out the names of the
    -- traitors themselves in the messages to them
-   for k,v in ipairs(plys) do
+   for k,v in player.Iterator() do
       if v:IsTraitor() then
          if #traitornicks < 2 then
             LANG.Msg(v, "round_traitors_one")
@@ -559,13 +551,12 @@ end
 
 
 function SpawnWillingPlayers(dead_only)
-   local plys = player.GetAll()
    local wave_delay = GetConVar("ttt_spawn_wave_interval"):GetFloat()
 
    -- simple method, should make this a case of the other method once that has
    -- been tested.
    if wave_delay <= 0 or dead_only then
-      for k, ply in ipairs(plys) do
+      for k, ply in player.Iterator() do
          if IsValid(ply) then
             ply:SpawnForRound(dead_only)
          end
@@ -575,7 +566,7 @@ function SpawnWillingPlayers(dead_only)
       local num_spawns = #GetSpawnEnts()
 
       local to_spawn = {}
-      for _, ply in RandomPairs(plys) do
+      for _, ply in RandomPairs(player.GetAll()) do
          if IsValid(ply) and ply:ShouldSpawn() then
             table.insert(to_spawn, ply)
             GAMEMODE:PlayerSpawnAsSpectator(ply)
@@ -795,7 +786,7 @@ function GM:TTTCheckForWin()
 
    local traitor_alive = false
    local innocent_alive = false
-   for k,v in ipairs(player.GetAll()) do
+   for k,v in player.Iterator() do
       if v:Alive() and v:IsTerror() then
          if v:GetTraitor() then
             traitor_alive = true
@@ -852,14 +843,12 @@ function SelectRoles()
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 
-   local plys = player.GetAll()
-
-   for k,v in ipairs(plys) do
+   for k,v in player.Iterator() do
       -- everyone on the spec team is in specmode
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
 
-         local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
+         local r = GAMEMODE.LastRole[v:SteamID64()] or v:GetRole() or ROLE_INNOCENT
 
          table.insert(prev_roles[r], v)
 
@@ -900,7 +889,7 @@ function SelectRoles()
    -- traitor, so becoming detective does not mean you lost a chance to be
    -- traitor
    local ds = 0
-   local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
+   local min_karma = detective_karma_min:GetInt()
    while (ds < det_count) and (#choices >= 1) do
 
       -- sometimes we need all remaining choices to be detective to fill the
@@ -939,12 +928,12 @@ function SelectRoles()
 
    GAMEMODE.LastRole = {}
 
-   for _, ply in ipairs(plys) do
+   for _, ply in player.Iterator() do
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 
-      -- store a steamid -> role map
-      GAMEMODE.LastRole[ply:SteamID()] = ply:GetRole()
+      -- store a steamid64 -> role map
+      GAMEMODE.LastRole[ply:SteamID64()] = ply:GetRole()
    end
 end
 

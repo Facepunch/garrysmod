@@ -43,17 +43,17 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 
 	CurrentlyActivePersistencePage = name
 
-	local file = file.Read( "persist/" .. game.GetMap() .. "_" .. name .. ".txt" )
-	if ( !file ) then return end
+	local data = file.Read( "persist/" .. game.GetMap() .. "_" .. name .. ".txt" )
+	if ( !data ) then return end
 
-	local tab = util.JSONToTable( file )
+	local tab = util.JSONToTable( data )
 	if ( !tab ) then return end
 	if ( !tab.Entities ) then return end
 	if ( !tab.Constraints ) then return end
 
-	local Ents, Constraints = duplicator.Paste( nil, tab.Entities, tab.Constraints )
+	local entities = duplicator.Paste( nil, tab.Entities, tab.Constraints )
 
-	for k, v in pairs( Ents ) do
+	for k, v in pairs( entities ) do
 		v:SetPersistent( true )
 	end
 
@@ -75,9 +75,15 @@ cvars.AddChangeCallback( "sbox_persist", function( name, old, new )
 
 		if ( newPage == "" ) then return end
 
-		game.CleanUpMap() -- Maybe this should be moved to PersistenceLoad?
+		-- Addons are forcing us to use this hook
+		hook.Add( "PostCleanupMap", "GMod_Sandbox_PersistanceLoad", function()
+			hook.Remove( "PostCleanupMap", "GMod_Sandbox_PersistanceLoad" )
 
-		hook.Run( "PersistenceLoad", newPage )
+			hook.Run( "PersistenceLoad", newPage )
+		end )
+
+		-- Maybe this game.CleanUpMap call should be moved to PersistenceLoad?
+		game.CleanUpMap( false, nil, function() end )
 
 	end )
 

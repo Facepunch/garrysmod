@@ -2,6 +2,7 @@
 -- Variables that are used on both client and server
 
 SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
+SWEP.Author			= "Facepunch"
 
 SWEP.Spawnable			= true
 SWEP.AdminOnly			= true
@@ -24,7 +25,7 @@ SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
 SWEP.AutoSwitchFrom		= false
 
-SWEP.PrintName			= "#GMOD_ManhackGun"
+SWEP.PrintName			= "#manhack_welder"
 SWEP.Slot				= 3
 SWEP.SlotPos			= 1
 SWEP.DrawAmmo			= false
@@ -67,7 +68,7 @@ function SWEP:PrimaryAttack()
 
 	self:EmitSound( ShootSound )
 
-	self:ShootEffects( self )
+	self:ShootEffects()
 
 	-- The rest is only done on the server
 	if ( CLIENT ) then return end
@@ -95,9 +96,8 @@ function SWEP:PrimaryAttack()
 	end
 
 	if ( owner:IsPlayer() ) then
-		undo.Create( "Manhack" )
+		undo.Create( "npc_manhack" )
 			undo.AddEntity( weld )
-			undo.AddEntity( nocl )
 			undo.AddEntity( ent )
 			undo.SetPlayer( owner )
 		undo.Finish()
@@ -116,7 +116,7 @@ function SWEP:SecondaryAttack()
 	--if ( tr.HitWorld ) then return end
 
 	self:EmitSound( ShootSound )
-	self:ShootEffects( self )
+	self:ShootEffects()
 
 	if ( IsFirstTimePredicted() ) then
 		local effectdata = EffectData()
@@ -150,9 +150,8 @@ function SWEP:SecondaryAttack()
 	end
 
 	if ( owner:IsPlayer() ) then
-		undo.Create( "Rollermine" )
+		undo.Create( "npc_rollermine" )
 			undo.AddEntity( weld )
-			undo.AddEntity( nocl )
 			undo.AddEntity( ent )
 			undo.SetPlayer( owner )
 		undo.Finish()

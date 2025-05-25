@@ -37,12 +37,13 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 		self:DrawShadow( false )
 
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys ) ) then phys:Wake() end
+
+		local lightInfo = self:GetLightInfo()
+		self:SetSkin( lightInfo.Skin )
 
 	end
 
@@ -51,6 +52,25 @@ function ENT:Initialize()
 		self.PixVis = util.GetPixelVisibleHandle()
 
 	end
+
+end
+
+local defaultOffset = Vector( 5, 0, 0 )
+local defaultAngle = Angle( 0, 0, 0 )
+function ENT:GetLightInfo()
+
+	local lightInfo = {}
+	if ( list.Get( "LampModels" )[ self:GetModel() ] ) then
+		lightInfo = list.Get( "LampModels" )[ self:GetModel() ]
+	end
+
+	lightInfo.Offset = lightInfo.Offset or defaultOffset
+	lightInfo.Angle = lightInfo.Angle or defaultAngle
+	lightInfo.NearZ = lightInfo.NearZ or 12
+	lightInfo.Scale = lightInfo.Scale or 2
+	lightInfo.Skin = lightInfo.Skin or 1
+
+	return lightInfo
 
 end
 
@@ -75,9 +95,6 @@ if ( SERVER ) then
 
 	end
 
-	function ENT:Use( activator, caller )
-	end
-
 	function ENT:Switch( bOn )
 		self:SetOn( bOn )
 	end
@@ -94,16 +111,21 @@ if ( SERVER ) then
 
 		end
 
+		local lightInfo = self:GetLightInfo()
+
 		self.flashlight = ents.Create( "env_projectedtexture" )
 		self.flashlight:SetParent( self )
 
 		-- The local positions are the offsets from parent..
-		self.flashlight:SetLocalPos( vector_origin )
-		self.flashlight:SetLocalAngles( angle_zero )
+		local offset = lightInfo.Offset * -1
+		offset.x = offset.x + 5 -- Move the position a bit back to preserve old behavior. Ideally this would be moved by NearZ?
+
+		self.flashlight:SetLocalPos( -offset )
+		self.flashlight:SetLocalAngles( lightInfo.Angle )
 
 		self.flashlight:SetKeyValue( "enableshadows", 1 )
-		self.flashlight:SetKeyValue( "nearz", 12 )
-		self.flashlight:SetKeyValue( "lightfov", math.Clamp( self:GetLightFOV(), 10, 170 ) ) 
+		self.flashlight:SetKeyValue( "nearz", lightInfo.NearZ )
+		self.flashlight:SetKeyValue( "lightfov", math.Clamp( self:GetLightFOV(), 10, 170 ) )
 
 		local dist = self:GetDistance()
 		if ( !game.SinglePlayer() ) then dist = math.Clamp( dist, 64, 2048 ) end
@@ -172,7 +194,9 @@ end
 
 -- Show the name of the player that spawned it..
 function ENT:GetOverlayText()
+
 	return self:GetPlayerName()
+
 end
 
 local matLight = Material( "sprites/light_ignorez" )
@@ -182,12 +206,10 @@ function ENT:DrawEffects()
 	-- No glow if we're not switched on!
 	if ( !self:GetOn() ) then return end
 
-	local LightNrm = self:GetAngles():Forward()
-	local ViewNormal = self:GetPos() - EyePos()
-	local Distance = ViewNormal:Length()
-	ViewNormal:Normalize()
-	local ViewDot = ViewNormal:Dot( LightNrm * -1 )
-	local LightPos = self:GetPos() + LightNrm * 5
+	local lightInfo = self:GetLightInfo()
+
+	local LightPos = self:LocalToWorld( lightInfo.Offset )
+	local LightNrm = self:LocalToWorldAngles( lightInfo.Angle ):Forward()
 
 	-- glow sprite
 	--[[
@@ -202,6 +224,11 @@ function ENT:DrawEffects()
 	render.EndBeam()
 	--]]
 
+	local ViewNormal = self:GetPos() - EyePos()
+	local Distance = ViewNormal:Length()
+	ViewNormal:Normalize()
+	local ViewDot = ViewNormal:Dot( LightNrm * -1 )
+
 	if ( ViewDot >= 0 ) then
 
 		render.SetMaterial( matLight )
@@ -209,7 +236,7 @@ function ENT:DrawEffects()
 
 		if ( !Visibile ) then return end
 
-		local Size = math.Clamp( Distance * Visibile * ViewDot * 2, 64, 512 )
+		local Size = math.Clamp( Distance * Visibile * ViewDot * lightInfo.Scale, 64, 512 )
 
 		Distance = math.Clamp( Distance, 32, 800 )
 		local Alpha = math.Clamp( ( 1000 - Distance ) * Visibile * ViewDot, 0, 100 )
@@ -223,10 +250,11 @@ function ENT:DrawEffects()
 
 end
 
--- We have to do this to ensure DrawTranslucent is called for Opaque only models to draw our effects
-ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.WantsTranslucency = true -- If model is opaque, still call DrawTranslucent
 function ENT:DrawTranslucent( flags )
+
 	BaseClass.DrawTranslucent( self, flags )
 	self:DrawEffects()
+
 end
 

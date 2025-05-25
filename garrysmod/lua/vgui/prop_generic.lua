@@ -30,7 +30,7 @@ end
 --
 function PANEL:ValueChanged( newval, bForce )
 
-	if ( (self:IsEditing() || bForce) && isfunction( self.m_pRow.DataChanged ) ) then
+	if ( ( self:IsEditing() || bForce ) && isfunction( self.m_pRow.DataChanged ) ) then
 
 		self.m_pRow:DataChanged( newval )
 
@@ -48,25 +48,25 @@ function PANEL:Setup( vars )
 	text:Dock( FILL )
 
 	-- Return true if we're editing
-	self.IsEditing = function( self )
+	self.IsEditing = function( slf )
 		return text:IsEditing()
 	end
 
 	-- Enabled/disabled support
-	self.IsEnabled = function( self )
+	self.IsEnabled = function( slf )
 		return text:IsEnabled()
 	end
-	self.SetEnabled = function( self, b )
+	self.SetEnabled = function( slf, b )
 		text:SetEnabled( b )
 	end
 
 	-- Set the value
-	self.SetValue = function( self, val )
+	self.SetValue = function( slf, val )
 		text:SetText( util.TypeToString( val ) )
 	end
 
 	-- Alert row that value changed
-	text.OnValueChange = function( text, newval )
+	text.OnValueChange = function( slf, newval )
 
 		self:ValueChanged( newval )
 

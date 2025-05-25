@@ -22,7 +22,7 @@ end
 
 function PANEL:SetValue( val )
 
-	if ( tonumber( val ) == 0 ) then val = 0 end // Tobool bugs out with "0.00"
+	if ( tonumber( val ) == 0 ) then val = 0 end -- Tobool bugs out with "0.00"
 	val = tobool( val )
 
 	self:SetChecked( val )
@@ -32,6 +32,7 @@ function PANEL:SetValue( val )
 
 	if ( val ) then val = "1" else val = "0" end
 	self:ConVarChanged( val )
+	self:SetCookie( "checked", val )
 
 end
 
@@ -56,6 +57,12 @@ end
 function PANEL:Think()
 
 	self:ConVarStringThink()
+
+end
+
+function PANEL:LoadCookies()
+
+	self:SetValue( self:GetCookie( "checked" ) )
 
 end
 
@@ -156,6 +163,13 @@ end
 function PANEL:GetText()
 
 	return self.Label:GetText()
+
+end
+
+-- Just pass this to the checkbox itself.
+function PANEL:SetCookieName( str )
+
+	self.Button:SetCookieName( str )
 
 end
 

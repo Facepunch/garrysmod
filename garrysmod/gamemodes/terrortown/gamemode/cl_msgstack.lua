@@ -64,6 +64,8 @@ function MSTACK:AddColoredBgMessage(text, bg_clr)
    self:AddMessageEx(item)
 end
 
+local ttt_msg_soundcue = CreateClientConVar("ttt_cl_msg_soundcue", "0", true)
+
 -- Internal
 function MSTACK:AddMessageEx(item)
    item.col = table.Copy(item.col or msgcolors.generic_text)
@@ -78,7 +80,7 @@ function MSTACK:AddMessageEx(item)
    item.height = (#item.text * text_height) + (margin * (1 + #item.text))
 
    item.time = CurTime()
-   item.sounded = false
+   item.sounded = not ttt_msg_soundcue:GetBool()
    item.move_y = -item.height
 
    -- Stagger the fading a bit
@@ -128,7 +130,16 @@ function MSTACK:WrapText(text, width)
    return lines
 end
 
-local msg_sound = Sound("Hud.Hint")
+sound.Add({
+   name = "TTT.MessageCue",
+   channel = CHAN_STATIC,
+   volume = 1.0,
+   level = SNDLVL_NONE,
+   pitch = 100,
+   sound = "ui/hint.wav"
+})
+
+local msg_sound = Sound("TTT.MessageCue")
 local base_spec = {
    font = msgfont,
    xalign = TEXT_ALIGN_CENTER,
