@@ -393,12 +393,15 @@ function FormatVersion( ver )
 // Calculates the default server ranking
 function CalculateRank( server )
 {
-	var recommended = server.ping;
+	// Initial ranking based on ping group. Pings grouped by 20.
+	var recommended = Math.floor( server.ping / 20 ) * 20;
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	//if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
 	if ( server.pass ) recommended += 300; // Password protected, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
+	if ( server.flag == "" ) recommended += 150; // No location
+	if ( server.version_c != 0 ) recommended += 300; // Oudated, can't join it
 
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( server.players >= 4 ) recommended -= 10;
