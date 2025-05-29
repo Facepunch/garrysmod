@@ -656,7 +656,7 @@ end )
 --
 
 local function reloadMenu()
-	if IsValid(pnlMainMenu) then
+	if IsValid( pnlMainMenu ) then
 		pnlMainMenu:Remove()
 	end
 
@@ -677,4 +677,4 @@ local function reloadMenu()
 	end )
 end
 timer.Simple( 0, reloadMenu )
-concommand.Add("mainmenu_reload_html", reloadMenu)
+concommand.Add( "mainmenu_reload_html", reloadMenu )
