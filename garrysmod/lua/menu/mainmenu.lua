@@ -654,7 +654,11 @@ end )
 --
 -- Initialize
 --
-timer.Simple( 0, function()
+
+local function reloadMenu()
+	if IsValid(pnlMainMenu) then
+		pnlMainMenu:Remove()
+	end
 
 	pnlMainMenu = vgui.Create( "MainMenuPanel" )
 	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR:JavascriptSafe() .. "', '" .. NETVERSIONSTR:JavascriptSafe() .. "', '" .. BRANCH:JavascriptSafe() .. "' )" )
@@ -671,4 +675,6 @@ timer.Simple( 0, function()
 	timer.Simple( 5, function()
 		if ( !pnlMainMenu.menuLoaded ) then OnMenuFailedToLoad() end
 	end )
-end )
+end
+timer.Simple( 0, reloadMenu )
+concommand.Add("mainmenu_reload_html", reloadMenu)
