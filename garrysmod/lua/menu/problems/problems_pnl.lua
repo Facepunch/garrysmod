@@ -6,7 +6,7 @@ include( "permissions.lua" )
 local PANEL = {}
 
 function PANEL:Init()
-
+	self:SetText( "" )
 	self:SetSize( ScrW(), ScrH() )
 	self:MakePopup()
 
@@ -48,6 +48,20 @@ function PANEL:Init()
 
 end
 
+function PANEL:DoClick()
+
+	self:Remove()
+
+end
+
+function PANEL:Think()
+
+	if ( input.IsKeyDown( KEY_ESCAPE ) and !IsInGame() ) then
+		self:Remove()
+	end
+
+end
+
 function PANEL:AddEmptyWarning( txt, parent )
 
 	local lab = parent:Add( "DLabel" )
@@ -66,9 +80,11 @@ function PANEL:AddEmptyWarning( txt, parent )
 
 end
 
+local color_background = Color( 0, 0, 0, 240 )
+
 function PANEL:Paint( w, h )
 
-	draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 240 ) )
+	draw.RoundedBox( 0, 0, 0, w, h, color_background )
 
 end
 
@@ -126,4 +142,4 @@ function PANEL:ReceivedProblem( uid, prob )
 
 end
 
-vgui.Register( "ProblemsPanel", PANEL, "EditablePanel" )
+vgui.Register( "ProblemsPanel", PANEL, "DButton" )
