@@ -180,6 +180,12 @@ function COLOR:Unpack()
 
 end
 
+function COLOR:Copy()
+
+    return Color( self.r, self.g, self.b, self.a )
+
+end
+
 function COLOR:Lerp( target_clr, frac )
 
 	return Color(
