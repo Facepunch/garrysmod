@@ -396,16 +396,14 @@ function CalculateRank( server )
 	// Initial ranking based on ping group. Pings grouped by 20.
 	var recommended = Math.floor( server.ping / 20 ) * 20;
 
-	// Promote Ranking
-	if ( server.lastplayed > 0 && ( (Date.now() - server.lastplayed) < (28 * 86400000) ) ) recommended -= 50; // Recently played (past 28 days)
-	if ( server.favorite ) recommended -= 100; // Favourite server
-	
 	// Penalise Ranking
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	if ( server.flag == "" ) recommended += 150; // No location
 	if ( server.pass || server.version_c != 0 ) recommended += 300; // Password protected or outdated, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
-
+	
+	// Promote Ranking
+	if ( server.favorite ) recommended -= 100; // Favourite server
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( server.players >= 4 ) recommended -= 10;
 	if ( server.players >= 8 ) recommended -= 15;
