@@ -19,7 +19,7 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 
 		if ( isstring( attacker ) ) then
 			net.WriteUInt( 1, 2 )
-			net.WriteString( attacker )
+			net.WriteString( attacker:sub( 0, 512 ) )
 		elseif ( IsValid( attacker ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( attacker )
@@ -28,11 +28,16 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 			net.WriteUInt( 0, 2 )
 		end
 
-		net.WriteString( inflictor )
+		if ( isstring( inflictor ) ) then
+			net.WriteString( inflictor:sub( 0, 512 ) )
+		else
+			-- Should never really reach here..
+			net.WriteString( "" )
+		end
 
 		if ( isstring( victim ) ) then
 			net.WriteUInt( 1, 2 )
-			net.WriteString( victim )
+			net.WriteString( victim:sub( 0, 512 ) )
 		elseif ( IsValid( victim ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( victim )
