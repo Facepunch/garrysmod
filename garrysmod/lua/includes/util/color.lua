@@ -182,12 +182,7 @@ end
 
 function COLOR:Copy()
 
-    return setmetatable({
-        r = self.r,
-        g = self.g,
-        b = self.b,
-        a = self.a
-    }, COLOR)
+    return Color( self.r, self.g, self.b, self.a )
 
 end
 
