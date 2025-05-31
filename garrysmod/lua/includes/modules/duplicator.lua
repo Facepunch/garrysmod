@@ -485,7 +485,7 @@ function GenericDuplicatorFunction( Player, data )
 	--
 	if ( IsValid( Player ) and !Player:IsAdmin() ) then
 
-		local weapon = list.GetForEdit("Weapon")
+		local weapon = list.GetForEdit( "Weapon" )
 
 		if ( weapon[ data.Class ] ) then
 			if ( !weapon.Spawnable ) then return end
