@@ -297,7 +297,6 @@ function player.GetBySteamID( ID )
 end
 
 function player.GetBySteamID64( ID )
-	ID = tostring( ID )
 	local players = player.GetAll()
 	for i = 1, #players do
 		if ( players[i]:SteamID64() == ID ) then
