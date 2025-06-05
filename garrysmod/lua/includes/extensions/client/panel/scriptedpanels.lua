@@ -77,7 +77,7 @@ function vgui.Register( classname, mtable, base )
 	PANEL = nil
 
 	-- Check if something wants to modify or prevent it
-	if ( hook.Run( "PreRegisterPANEL", classname, mtable, base ) == false ) then
+	if ( hook.Run( "PreRegisterPANEL", mtable, classname, base ) == false ) then
 		return
 	end
 
