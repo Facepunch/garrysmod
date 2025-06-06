@@ -29,8 +29,8 @@ end
 function PANEL:AddOrGetMenu( label )
 
 	if ( self.Menus[ label ] ) then return self.Menus[ label ] end
-	return self:AddMenu( label )
-
+	local menu, btn = self:AddMenu( label )
+	return menu, btn
 end
 
 function PANEL:AddMenu( label )
@@ -67,7 +67,7 @@ function PANEL:AddMenu( label )
 		b:DoClick()
 	end
 
-	return m
+	return m, b
 
 end
 
