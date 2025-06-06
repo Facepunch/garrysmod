@@ -307,12 +307,13 @@ function player.GetBySteamID64( ID )
 	return false
 end
 
+local player_GetAll = player.GetAll
 local inext = ipairs( {} )
 local PlayerCache = nil
 
 function player.Iterator()
 
-	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
+	if ( PlayerCache == nil ) then PlayerCache = player_GetAll() end
 
 	return inext, PlayerCache, 0
 
@@ -326,3 +327,13 @@ end
 
 hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
 hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )
+
+function player.GetAll()
+	local players = {}
+
+	for _, pl in player.Iterator() do
+		table.insert( players, pl )
+	end
+
+	return players
+end
