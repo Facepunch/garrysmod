@@ -331,8 +331,8 @@ hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )
 function player.GetAll()
 	local players = {}
 
-	for _, pl in player.Iterator() do
-		table.insert( players, pl )
+	for i, pl in player.Iterator() do
+		players[i] = pl
 	end
 
 	return players
