@@ -6,7 +6,7 @@ include( "permissions.lua" )
 local PANEL = {}
 
 function PANEL:Init()
-	self:SetText( "" )
+
 	self:SetSize( ScrW(), ScrH() )
 	self:MakePopup()
 
@@ -48,9 +48,11 @@ function PANEL:Init()
 
 end
 
-function PANEL:DoClick()
+function PANEL:OnMousePressed( mcode )
 
-	self:Remove()
+	if ( mcode == MOUSE_LEFT ) then
+		self:Remove()
+	end
 
 end
 
@@ -142,4 +144,4 @@ function PANEL:ReceivedProblem( uid, prob )
 
 end
 
-vgui.Register( "ProblemsPanel", PANEL, "DButton" )
+vgui.Register( "ProblemsPanel", PANEL, "EditablePanel" )
