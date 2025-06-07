@@ -159,3 +159,8 @@ body.dark
 	width: 26px;
 	height: 26px;
 }
+
+.server_info #serverGamemode img.hidden
+{
+	display: none;
+}
