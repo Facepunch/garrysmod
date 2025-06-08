@@ -68,8 +68,10 @@ end
 
 function GetSize( name, dontEqualizeHeight )
 
+	name = name or "default"
+
 	if ( !Icons[name] ) then
-		Msg( "Warning: killicon not found '" .. name .. "'\n" )
+		Msg( "Warning: killicon not found '", name, "'\n" )
 		Icons[name] = Icons["default"]
 	end
 
@@ -132,9 +134,10 @@ end
 local function DrawInternal( x, y, name, alpha, noCorrections, dontEqualizeHeight )
 
 	alpha = alpha or 255
+	name = name or "default"
 
 	if ( !Icons[name] ) then
-		Msg( "Warning: killicon not found '" .. name .. "'\n" )
+		Msg( "Warning: killicon not found '", name, "'\n" )
 		Icons[name] = Icons["default"]
 	end
 
