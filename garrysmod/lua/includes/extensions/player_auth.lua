@@ -47,12 +47,27 @@ function meta:GetUserGroup()
 
 end
 
+if CLIENT then
+	hook.Add( "InitPostEntity", "PlayerAuthInitPostEntity", function()
+		net.Start( "GMODPlayerFullyConnected" )
+		net.SendToServer()
+	end )
+end
 
 --[[---------------------------------------------------------
 	This is the meat and spunk of the player auth system
 -----------------------------------------------------------]]
 
 if ( not SERVER ) then return end
+
+util.AddNetworkString( "GMODPlayerFullyConnected" )
+net.Receive( "GMODPlayerFullyConnected", function( len, ply )
+	if not IsValid( ply ) then return end
+	if ply.bIsFullyConnected then return end
+
+	ply.bIsFullyConnected = true
+	hook.Run( "PlayerFullyConnected", ply )
+end ) 
 
 --[[---------------------------------------------------------
 	Name: SetUserGroup
