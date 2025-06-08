@@ -47,8 +47,6 @@ function net.Incoming( len, client )
 
 		local sSteamID64 = client:SteamID64()
 		if net.ReceiversProtectionSpam[sSteamID64] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] > CurTime() then
-			print("Player " .. client:Nick() .. " (" .. client:SteamID() .. ") tried to spam the net message " .. strName .. " too much.")
-
 			return
 		end
 
@@ -56,6 +54,20 @@ function net.Incoming( len, client )
 
 		net.ReceiversProtectionSpam[sSteamID64] = net.ReceiversProtectionSpam[sSteamID64] or {}
 		net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = CurTime() + iTime
+
+		local sTimerName = ("NetProtectionSpam_%s:%s"):format(sSteamID64, strName:lower())
+
+		if not timer.Exists(sTimerName) then
+			timer.Create(sTimerName, iTime, 1, function()
+				if net.ReceiversProtectionSpam[sSteamID64] then
+					net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = nil
+
+					if table.Count(net.ReceiversProtectionSpam[sSteamID64]) == 0 then
+						net.ReceiversProtectionSpam[sSteamID64] = nil
+					end
+				end
+			end)
+		end
 	end
 
 	func( len, client )
