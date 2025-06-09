@@ -38,6 +38,11 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerBindPress( pl, bind, down )
 
+	if ( bind == "gm_showhelp" ) then hook.Run( "ShowHelp" ) end
+	if ( bind == "gm_showteam" ) then hook.Run( "ShowTeam" ) end
+	if ( bind == "gm_showspare1" ) then hook.Run( "ShowSpare1" ) end
+	if ( bind == "gm_showspare2" ) then hook.Run( "ShowSpare2" ) end
+
 	return false
 
 end
