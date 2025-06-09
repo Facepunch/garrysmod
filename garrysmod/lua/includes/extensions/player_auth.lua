@@ -47,27 +47,11 @@ function meta:GetUserGroup()
 
 end
 
-if CLIENT then
-	hook.Add( "InitPostEntity", "PlayerAuthInitPostEntity", function()
-		net.Start( "GMODPlayerFullyConnected" )
-		net.SendToServer()
-	end )
-end
-
 --[[---------------------------------------------------------
 	This is the meat and spunk of the player auth system
 -----------------------------------------------------------]]
 
 if ( not SERVER ) then return end
-
-util.AddNetworkString( "GMODPlayerFullyConnected" )
-net.Receive( "GMODPlayerFullyConnected", function( len, ply )
-	if not IsValid( ply ) then return end
-	if ply.bIsFullyConnected then return end
-
-	ply.bIsFullyConnected = true
-	hook.Run( "PlayerFullyConnected", ply )
-end ) 
 
 --[[---------------------------------------------------------
 	Name: SetUserGroup
@@ -117,7 +101,10 @@ function util.GetUserGroups()
 
 end
 
+local tAuth = {}
 hook.Add( "PlayerInitialSpawn", "PlayerAuthSpawn", function( ply )
+
+	tAuth[ ply ] = true
 
 	local steamid = ply:SteamID()
 
@@ -141,4 +128,20 @@ hook.Add( "PlayerInitialSpawn", "PlayerAuthSpawn", function( ply )
 	ply:SetUserGroup( SteamIDs[ steamid ].group )
 	ply:ChatPrint( string.format( "Hey '%s' - You're in the '%s' group on this server.", SteamIDs[ steamid ].name, SteamIDs[ steamid ].group ) )
 
+end )
+
+gameevent.Listen( "OnRequestFullUpdate" )
+hook.Add( "OnRequestFullUpdate", "PlayerAuthActivate", function( tData )
+
+	local ply = Player( tData.userid )
+
+	if not IsValid( ply ) then return end
+
+	if not tAuth[ ply ] then
+		return
+	end
+
+	hook.Run( "PlayerFullyConnected", ply )
+
+	tAuth[ ply ] = nil
 end )
