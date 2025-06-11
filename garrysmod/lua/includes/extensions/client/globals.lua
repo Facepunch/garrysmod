@@ -2,18 +2,14 @@
 
 if ( SERVER ) then return end
 
-local scrW, scrH = ScrW() / 640.0, ScrH() / 480.0
+local scrW, scrH = ScrW(), ScrH()
 
 function ScreenScale( width )
-	return width * scrW
+	return width * ( scrW / 640.0 )
 end
 
 function ScreenScaleH( height )
-	return height * scrH
+	return height * ( scrH / 480.0 )
 end
 
 SScale = ScreenScale
-
-hook.Add( "OnScreenSizeChanged", "CachedScreenScale", function( oldWidth, oldHeight, newWidth, newHeight )
-	scrW, scrH = newWidth / 640.0, newHeight / 480.0
-end )
