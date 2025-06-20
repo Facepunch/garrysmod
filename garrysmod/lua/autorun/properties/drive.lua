@@ -17,7 +17,7 @@ properties.Add( "drive", {
 		if ( ent:GetClass() == "prop_vehicle_jeep" || ent:GetClass() == "prop_vehicle_jeep_old" ) then return false end
 
 		-- Make sure nobody else is driving this or we can get into really invalid states
-		for id, pl in ipairs( player.GetAll() ) do
+		for id, pl in player.Iterator() do
 			if ( pl:GetDrivingEntity() == ent ) then return false end
 		end
 
