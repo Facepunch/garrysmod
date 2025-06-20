@@ -264,22 +264,25 @@ end
 local tPlayersSteamID64 = {}
 local tPlayersSteamID32 = {}
 local tPlayersAccountID = {}
+local tPlayersUserID = {}
 
-local function insertPlayer( eEnt ) 
-    if not eEnt:IsPlayer() then return end
+local function insertPlayer( ent )
+    if not ent:IsPlayer() then return end
 
-    tPlayersSteamID64[eEnt:SteamID64()] = eEnt
-    tPlayersSteamID32[eEnt:SteamID()] = eEnt
-    tPlayersAccountID[eEnt:AccountID()] = eEnt
-    
+    tPlayersSteamID64[ent:SteamID64()] = ent
+    tPlayersSteamID32[ent:SteamID()] = ent
+    tPlayersAccountID[ent:AccountID()] = ent
+	tPlayersUserID[ent:UserID()] = ent
+
 end
 
-local function removePlayer( eEnt )
-    if not eEnt:IsPlayer() then return end
+local function removePlayer( ent )
+    if not ent:IsPlayer() then return end
 
-    tPlayersSteamID64[eEnt:SteamID64()] = nil
-    tPlayersSteamID32[eEnt:SteamID()] = nil
-    tPlayersAccountID[eEnt:AccountID()] = nil
+    tPlayersSteamID64[ent:SteamID64()] = nil
+    tPlayersSteamID32[ent:SteamID()] = nil
+    tPlayersAccountID[ent:AccountID()] = nil
+	tPlayersUserID[ent:UserID()] = nil
 end
 
 hook.Add("OnEntityCreated", "player.Search", insertPlayer)
@@ -291,13 +294,7 @@ function player.GetByAccountID( ID )
 end
 
 function player.GetByUniqueID( ID )
-	for _, pl in player.Iterator() do
-		if ( pl:UniqueID() == ID ) then
-			return pl
-		end
-	end
-
-	return false
+	return tPlayersUserID[ID] or false
 end
 
 function player.GetBySteamID( ID )
