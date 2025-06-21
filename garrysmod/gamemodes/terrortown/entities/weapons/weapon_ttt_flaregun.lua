@@ -165,15 +165,17 @@ end
 function SWEP:ShootFlare()
    local cone = self.Primary.Cone
    local bullet = {}
-   bullet.Num       = 1
-   bullet.Src       = self:GetOwner():GetShootPos()
-   bullet.Dir       = self:GetOwner():GetAimVector()
-   bullet.Spread    = Vector( cone, cone, 0 )
-   bullet.Tracer    = 1
-   bullet.Force     = 2
-   bullet.Damage    = self.Primary.Damage
+   bullet.Num        = 1
+   bullet.Src        = self:GetOwner():GetShootPos()
+   bullet.Dir        = self:GetOwner():GetAimVector()
+   bullet.Spread     = Vector( cone, cone, 0 )
+   bullet.Tracer     = 1
+   bullet.Force      = 2
+   bullet.Damage     = self.Primary.Damage
    bullet.TracerName = self.Tracer
-   bullet.Callback = IgniteTarget
+   bullet.Callback   = IgniteTarget
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
 
    self:GetOwner():FireBullets( bullet )
 end
