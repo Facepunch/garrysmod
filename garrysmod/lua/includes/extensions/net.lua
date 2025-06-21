@@ -79,7 +79,10 @@ function net.WritePlayer( ply )
 end
 
 function net.ReadPlayer()
-	return Entity( net.ReadUInt( maxplayers_bits ) )
+	local i = net.ReadUInt( maxplayers_bits )
+	if ( !i ) then return end
+
+	return Entity( i )
 end
 
 
