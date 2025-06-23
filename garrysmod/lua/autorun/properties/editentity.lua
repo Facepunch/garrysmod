@@ -19,9 +19,18 @@ properties.Add( "editentity", {
 
 	Action = function( self, ent )
 
+		local printName = ent.PrintName
+
+		if printName then
+			printName = language.GetPhrase( printName )
+			printName = string.format( "%s [%d]", printName, ent:EntIndex() )
+		else
+			printName = tostring( ent )
+		end
+
 		local window = g_ContextMenu:Add( "DFrame" )
 		window:SetSize( 320, 400 )
-		window:SetTitle( tostring( ent ) )
+		window:SetTitle( printName )
 		window:Center()
 		window:SetSizable( true )
 
