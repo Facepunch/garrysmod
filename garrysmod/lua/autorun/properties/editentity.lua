@@ -21,7 +21,7 @@ properties.Add( "editentity", {
 
 		local printName = ent.PrintName
 
-		if printName then
+		if ( isstring( printName ) ) then
 			printName = language.GetPhrase( printName )
 			printName = string.format( "%s [%d]", printName, ent:EntIndex() )
 		else
@@ -43,5 +43,6 @@ properties.Add( "editentity", {
 			window:Remove()
 
 		end
+
 	end
 } )
