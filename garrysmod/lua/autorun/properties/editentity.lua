@@ -21,12 +21,12 @@ properties.Add( "editentity", {
 
 		local printName = ent.PrintName
 
-		if ( isstring( printName ) ) then
-			printName = language.GetPhrase( printName )
-			printName = string.format( "%s [%d]", printName, ent:EntIndex() )
-		else
-			printName = tostring( ent )
+		if ( !isstring( printName ) ) then
+			printName = ent:GetClass()
 		end
+
+		printName = language.GetPhrase( printName )
+		printName = string.format( "%s [%d]", printName, ent:EntIndex() )
 
 		local window = g_ContextMenu:Add( "DFrame" )
 		window:SetSize( 320, 400 )
