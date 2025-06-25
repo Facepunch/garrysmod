@@ -365,14 +365,16 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    cone   = cone   or 0.01
 
    local bullet = {}
-   bullet.Num    = numbul
-   bullet.Src    = self:GetOwner():GetShootPos()
-   bullet.Dir    = self:GetOwner():GetAimVector()
-   bullet.Spread = Vector( cone, cone, 0 )
-   bullet.Tracer = 4
+   bullet.Num        = numbul
+   bullet.Src        = self:GetOwner():GetShootPos()
+   bullet.Dir        = self:GetOwner():GetAimVector()
+   bullet.Spread     = Vector( cone, cone, 0 )
+   bullet.Tracer     = 4
    bullet.TracerName = self.Tracer or "Tracer"
-   bullet.Force  = 10
-   bullet.Damage = dmg
+   bullet.Force      = 10
+   bullet.Damage     = dmg
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
    if CLIENT and sparkle:GetBool() then
       bullet.Callback = Sparklies
    end
