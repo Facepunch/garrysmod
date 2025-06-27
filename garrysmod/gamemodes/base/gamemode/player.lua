@@ -361,79 +361,89 @@ end
 	Name: gamemode:LoadSpawnPoints()
 	Desc: Loads all the spawn points from the map
 -----------------------------------------------------------]]
+
+local ListSpawnPointsClasses = {
+    ["info_player_start"] = true,
+    ["info_player_deathmatch"] = true,
+    ["info_player_combine"] = true,
+    ["info_player_rebel"] = true,
+
+    -- Portal 2 Coop
+    ["info_coop_spawn"] = true,
+
+    -- CS Maps
+    ["info_player_counterterrorist"] = true,
+    ["info_player_terrorist"] = true,
+
+    -- DOD Maps
+    ["info_player_axis"] = true,
+    ["info_player_allies"] = true,
+
+    -- (Old) GMod Maps
+    ["gmod_player_start"] = true,
+
+    -- TF Maps
+    ["info_player_teamspawn"] = true,
+
+    -- INS Maps
+    ["ins_spawnpoint"] = true,
+
+    -- AOC Maps
+    ["aoc_spawnpoint"] = true,
+
+    -- Dystopia Maps
+    ["dys_spawn_point"] = true,
+
+    -- PVKII Maps
+    ["info_player_pirate"] = true,
+    ["info_player_viking"] = true,
+    ["info_player_knight"] = true,
+
+    -- DIPRIP Maps
+    ["diprip_start_team_blue"] = true,
+    ["diprip_start_team_red"] = true,
+
+    -- OB Maps
+    ["info_player_red"] = true,
+    ["info_player_blue"] = true,
+
+    -- SYN Maps
+    ["info_player_coop"] = true,
+
+    -- ZPS Maps
+    ["info_player_human"] = true,
+    ["info_player_zombie"] = true,
+
+    -- ZM Maps
+    ["info_player_zombiemaster"] = true,
+
+    -- FOF Maps
+    ["info_player_fof"] = true,
+    ["info_player_desperado"] = true,
+    ["info_player_vigilante"] = true,
+
+    -- L4D Maps
+    ["info_survivor_rescue"] = true,
+    --["info_survivor_position"] = true, -- volontairement désactivé
+
+    -- NEOTOKYO Maps
+    ["info_player_attacker"] = true,
+    ["info_player_defender"] = true,
+
+    -- Fortress Forever Maps
+    ["info_ff_teamspawn"] = true
+}
+
 function GM:LoadSpawnPoints()
 
     self.LastSpawnPoint = 0
-    self.SpawnPoints = ents.FindByClass( "info_player_start" )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_deathmatch" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_combine" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_rebel" ) )
 
-    -- Portal 2 Coop
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_coop_spawn" ) )
-
-    -- CS Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_counterterrorist" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_terrorist" ) )
-
-    -- DOD Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_axis" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_allies" ) )
-
-    -- (Old) GMod Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "gmod_player_start" ) )
-
-    -- TF Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_teamspawn" ) )
-
-    -- INS Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "ins_spawnpoint" ) )
-
-    -- AOC Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "aoc_spawnpoint" ) )
-
-    -- Dystopia Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "dys_spawn_point" ) )
-
-    -- PVKII Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_pirate" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_viking" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_knight" ) )
-
-    -- DIPRIP Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "diprip_start_team_blue" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "diprip_start_team_red" ) )
-
-    -- OB Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_red" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_blue" ) )
-
-    -- SYN Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_coop" ) )
-
-    -- ZPS Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_human" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombie" ) )
-
-    -- ZM Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
-
-    -- FOF Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_fof" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_desperado" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_vigilante" ) )
-
-    -- L4D Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_rescue" ) )
-    -- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
-    --self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
-
-    -- NEOTOKYO Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_attacker" ) )
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_defender" ) )
-
-    -- Fortress Forever Maps
-    self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_ff_teamspawn" ) )
+	self.SpawnPoints = {}
+	for _, ent in ipairs(ents.GetAll()) do
+		if ( ListSpawnPointsClasses[ent:GetClass()] ) then
+			self.SpawnPoints[#self.SpawnPoints + 1] = ent
+		end
+	end
 
 end
 
