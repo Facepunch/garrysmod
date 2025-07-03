@@ -305,7 +305,7 @@ end
 
 function GetStoredPlayerClass( name )
 
-	return Type[name]
+	return Type[ name ]
 
 end
 
