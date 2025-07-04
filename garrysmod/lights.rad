@@ -1,3 +1,5 @@
+xeno/crys_4b			255 160 128 40000
+
 ldr: lights/fluorescentcool001a	189 231 232 350
 hdr: lights/fluorescentcool001a	189 231 232 175
 
@@ -76,6 +78,15 @@ hdr: lights/white005_nochop 234 235 220 187
 ldr: lights/white006_nochop 234 235 220 100
 hdr: lights/white006_nochop 234 235 220 50
 
+ldr: lights/red001 254 10 10 425
+hdr: lights/red001 254 10 10 300
+
+ldr: lights/blue001 166 180 196 200
+hdr: lights/blue001 166 180 196 100
+
+ldr: lights/blue002 141 176 203 200
+hdr: lights/blue002 141 176 203 100
+
 ldr: lights/incandescentcool001a 235 235 235 300
 hdr: lights/incandescentcool001a 235 235 235 150
 
@@ -133,6 +144,12 @@ hdr: building_template/Building_Trainstation_window002e	230 230 200 150
 ldr: lights/physgunlight 189 231 232 20
 hdr: lights/physgunlight 189 231 232 10
 
+ldr: lights/lightpanel_01 241 232 165 300
+hdr: lights/lightpanel_01 241 232 165 150
+
+ldr: lights/lightpanel_02 117 121 159 200
+hdr: lights/lightpanel_02 117 121 159 100
+
 noshadow tree_deciduous_01a_branches.vmt
 noshadow tree_deciduous_01a_leaves.vmt
 noshadow tree_deciduous_01a_lod.vmt
@@ -153,6 +170,16 @@ forcetextureshadow props_wasteland/exterior_fence002d.mdl
 forcetextureshadow props_wasteland/exterior_fence002e.mdl
 forcetextureshadow props_wasteland/exterior_fence003a.mdl
 forcetextureshadow props_wasteland/exterior_fence003b.mdl
+forcetextureshadow props_foliage/tree_dead01.mdl
+forcetextureshadow props_foliage/tree_dead02.mdl
+forcetextureshadow props_foliage/tree_dead03.mdl
+forcetextureshadow props_foliage/tree_dead04.mdl
+forcetextureshadow props_foliage/tree_dry01.mdl
+forcetextureshadow props_foliage/tree_dry02.mdl
+forcetextureshadow props_foliage/tree_pine_large.mdl
+forcetextureshadow props_foliage/tree_pine04.mdl
+forcetextureshadow props_foliage/tree_pine05.mdl
+forcetextureshadow props_foliage/tree_pine06.mdl
 forcetextureshadow props_foliage/tree_cliff_01a.mdl
 forcetextureshadow props_foliage/tree_cliff_02a.mdl
 forcetextureshadow props_foliage/tree_deciduous_01a-lod.mdl
@@ -161,6 +188,14 @@ forcetextureshadow props_foliage/tree_deciduous_02a.mdl
 forcetextureshadow props_foliage/tree_deciduous_03a.mdl
 forcetextureshadow props_foliage/tree_deciduous_03b.mdl
 forcetextureshadow props_foliage/tree_poplar_01.mdl
+forcetextureshadow props_forest/fence_barb_256.mdl
+forcetextureshadow props_forest/fence_barb_512.mdl
+forcetextureshadow props_forest/fence_border_128.mdl
+forcetextureshadow props_forest/fence_border_256.mdl
+forcetextureshadow props_forest/fence_border_512.mdl
+forcetextureshadow props_forest/fence_trail_128.mdl
+forcetextureshadow props_forest/fence_trail_256.mdl
+forcetextureshadow props_forest/fence_trail_512.mdl
 forcetextureshadow props_wasteland/interior_fence001a.mdl
 forcetextureshadow props_wasteland/interior_fence001b.mdl
 forcetextureshadow props_wasteland/interior_fence001c.mdl
@@ -180,3 +215,9 @@ forcetextureshadow props_wasteland/interior_fence003e.mdl
 forcetextureshadow props_wasteland/interior_fence003f.mdl
 forcetextureshadow props_wasteland/interior_fence004a.mdl
 forcetextureshadow props_wasteland/interior_fence004b.mdl
+forcetextureshadow props_foliage/fern01.mdl
+forcetextureshadow props_foliage/ferns01.mdl
+forcetextureshadow props_foliage/ferns02.mdl
+forcetextureshadow props_foliage/ferns03.mdl
+forcetextureshadow props_forest/fern01.mdl
+forcetextureshadow props_forest/fern01lg.mdl
