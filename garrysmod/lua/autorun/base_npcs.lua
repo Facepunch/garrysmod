@@ -113,20 +113,18 @@ AddNPC( {
 	Weapons = { "weapon_pistol", "weapon_smg1" }
 }, "Refugee" )
 
-if ( IsMounted( "ep2" ) ) then
-	AddNPC( {
-		Name = "#npc_vortigaunt_uriah",
-		Class = "npc_vortigaunt",
-		Category = Category,
-		Model = "models/vortigaunt_doctor.mdl",
-		KeyValues = { SquadName = "resistance" }
-	}, "VortigauntUriah" )
+AddNPC( {
+	Name = "#npc_vortigaunt_uriah",
+	Class = "npc_vortigaunt",
+	Category = Category,
+	Model = "models/vortigaunt_doctor.mdl",
+	KeyValues = { SquadName = "resistance" }
+}, "VortigauntUriah" )
 
-	AddNPC( {
-		Class = "npc_magnusson",
-		Category = Category
-	} )
-end
+AddNPC( {
+	Class = "npc_magnusson",
+	Category = Category
+} )
 
 if ( IsMounted( "lostcoast" ) ) then
 	AddNPC( {
@@ -136,28 +134,24 @@ if ( IsMounted( "lostcoast" ) ) then
 	} ) -- Has no death sequence/ragdoll
 end
 
-if ( IsMounted( "ep2" ) ) then
-	AddNPC( {
-		Class = "npc_turret_floor",
-		Category = Category,
-		OnFloor = true,
-		TotalSpawnFlags = SF_FLOOR_TURRET_CITIZEN,
-		Rotate = Angle( 0, 180, 0 ),
-		Offset = 2,
-		KeyValues = { SquadName = "resistance" }
-	}, "npc_turret_floor_resistance" )
-end
+AddNPC( {
+	Class = "npc_turret_floor",
+	Category = Category,
+	OnFloor = true,
+	TotalSpawnFlags = SF_FLOOR_TURRET_CITIZEN,
+	Rotate = Angle( 0, 180, 0 ),
+	Offset = 2,
+	KeyValues = { SquadName = "resistance" }
+}, "npc_turret_floor_resistance" )
 
-if ( IsMounted( "episodic" ) ) then
-	AddNPC( {
-		Class = "npc_rollermine",
-		Category = Category,
-		Offset = 20,
-		KeyValues = { SquadName = "resistance" },
-		SpawnFlags = 262144, -- SF_ROLLERMINE_HACKED
-		NoDrop = true
-	}, "npc_rollermine_hacked" )
-end
+AddNPC( {
+	Class = "npc_rollermine",
+	Category = Category,
+	Offset = 20,
+	KeyValues = { SquadName = "resistance" },
+	SpawnFlags = 262144, -- SF_ROLLERMINE_HACKED
+	NoDrop = true
+}, "npc_rollermine_hacked" )
 
 Category = "#spawnmenu.category.zombies_aliens"
 
@@ -228,39 +222,35 @@ AddNPC( {
 	KeyValues = { SquadName = "zombies" }
 } )
 
-if ( IsMounted( "episodic" ) or IsMounted( "ep2" ) ) then
-	AddNPC( {
-		Class = "npc_zombine",
-		Category = Category,
-		KeyValues = { SquadName = "zombies" }
-	} )
-end
+AddNPC( {
+	Class = "npc_zombine",
+	Category = Category,
+	KeyValues = { SquadName = "zombies" }
+} )
 
-if ( IsMounted( "ep2" ) ) then
-	game.AddParticles( "particles/grub_blood.pcf" )
-	game.AddParticles( "particles/antlion_gib_02.pcf" )
-	game.AddParticles( "particles/antlion_worker.pcf" )
+//game.AddParticles( "particles/grub_blood.pcf" )
+//game.AddParticles( "particles/antlion_gib_02.pcf" )
+//game.AddParticles( "particles/antlion_worker.pcf" )
 
-	AddNPC( {
-		Class = "npc_antlionguard",
-		Category = Category,
-		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
-		Material = "Models/antlion_guard/antlionGuard2"
-	}, "npc_antlionguardian" )
+AddNPC( {
+	Class = "npc_antlionguard",
+	Category = Category,
+	KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
+	Material = "Models/antlion_guard/antlionGuard2"
+}, "npc_antlionguardian" )
 
-	AddNPC( {
-		Class = "npc_antlion_grub",
-		Category = Category,
-		NoDrop = true,
-		Offset = 1
-	} )
+AddNPC( {
+	Class = "npc_antlion_grub",
+	Category = Category,
+	NoDrop = true,
+	Offset = 1
+} )
 
-	AddNPC( {
-		Class = "npc_antlion_worker",
-		Category = Category,
-		KeyValues = { SquadName = "antlions" }
-	} )
-end
+AddNPC( {
+	Class = "npc_antlion_worker",
+	Category = Category,
+	KeyValues = { SquadName = "antlions" }
+} )
 
 
 
@@ -469,13 +459,11 @@ AddNPC( {
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
 }, "npc_citizen_rebel_enemy" )
 
-if ( IsMounted( "ep2" ) ) then
-	AddNPC( {
-		Class = "npc_hunter",
-		Category = Category,
-		KeyValues = { SquadName = "overwatch" }
-	} )
-end
+AddNPC( {
+	Class = "npc_hunter",
+	Category = Category,
+	KeyValues = { SquadName = "overwatch" }
+} )
 
 if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 

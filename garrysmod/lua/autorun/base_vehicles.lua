@@ -53,21 +53,19 @@ AddVehicle( {
 	}
 }, "Pod" )
 
-if ( IsMounted( "ep2" ) ) then
-	AddVehicle( {
-		Name = "#spawnmenu.vehicle.jalopy",
-		Model = "models/vehicle.mdl",
-		Class = "prop_vehicle_jeep",
-		Category = Category,
+AddVehicle( {
+	Name = "#spawnmenu.vehicle.jalopy",
+	Model = "models/vehicle.mdl",
+	Class = "prop_vehicle_jeep",
+	Category = Category,
 
-		Author = "VALVe",
-		Information = "The muscle car from Episode 2",
+	Author = "VALVe",
+	Information = "The muscle car from Episode 2",
 
-		KeyValues = {
-			vehiclescript = "scripts/vehicles/jalopy.txt"
-		}
-	}, "Jalopy" )
-end
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/jalopy.txt"
+	}
+}, "Jalopy" )
 
 Category = "#spawnmenu.category.chairs"
 
