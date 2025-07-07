@@ -84,7 +84,7 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 	surface.DrawTexturedRect( x, y - 64 - 5, 128, 64 )
 	draw.RoundedBox( 8, x - 5, y - 5, 260, self.InfoMarkup:GetHeight() + 18, Color( 60, 60, 60, alpha ) )
 
-	self.InfoMarkup:Draw( x + 5, y + 6, nil, nil, alpha )
+	self.InfoMarkup:Draw( x + 5, y + 5, nil, nil, alpha )
 
 end
 
