@@ -4,7 +4,9 @@ local meta = FindMetaTable( "Player" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
-g_SBoxObjects = {}
+if ( SERVER ) then
+	g_SBoxObjects = {}
+end
 
 function meta:CheckLimit( str )
 
@@ -37,22 +39,16 @@ function meta:GetCount( str, minus )
 		return self:GetNWInt( "Count." .. str, 0 )
 	end
 
-	minus = minus or 0
-
 	if ( !self:IsValid() ) then return end
 
 	local key = self:UniqueID()
 	local tab = g_SBoxObjects[ key ]
-
 	if ( !tab || !tab[ str ] ) then
-
 		self:SetNWInt( "Count." .. str, 0 )
 		return 0
-
 	end
 
 	local c = 0
-
 	for k, v in pairs( tab[ str ] ) do
 
 		if ( IsValid( v ) && !v:IsMarkedForDeletion() ) then
@@ -63,6 +59,13 @@ function meta:GetCount( str, minus )
 
 	end
 
+	-- Clear the table for this "count type" if its empty
+	if ( c == 0 ) then tab[ str ] = nil end
+
+	-- Clear the top level table for the player if there's nothing in it left
+	if ( !next( tab ) ) then g_SBoxObjects[ key ] = nil end
+
+	minus = minus or 0
 	self:SetNWInt( "Count." .. str, math.max( c - minus, 0 ) )
 
 	return c
@@ -84,7 +87,11 @@ function meta:AddCount( str, ent )
 		-- Update count (for client)
 		self:GetCount( str )
 
-		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, str ) ply:GetCount( str ) end, self, str )
+		-- Update count on deletion
+		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, countType, uid )
+			if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
+			ply:GetCount( countType )
+		end, self, str, key )
 
 	end
 
