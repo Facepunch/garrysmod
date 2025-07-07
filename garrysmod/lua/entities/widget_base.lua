@@ -98,9 +98,11 @@ function ENT:PressedThinkInternal( ply, mv )
 	if ( NewPos && OldPos ) then
 
 		local dist = self:WorldToLocal( OldPos ) - self:WorldToLocal( NewPos )
-		local len = dist:Length()
+		local len = dist:LengthSqr()
+		local minLen = 0.01 * 0.01
+		local maxLen = 512 * 512
 
-		if ( len > 0.01 && len < 512 ) then
+		if ( len > minLen && len < maxLen ) then
 			self:DragThink( ply, mv, dist )
 		end
 

@@ -43,7 +43,7 @@ function ENT:OverlayRender()
 	render.DrawQuadEasy( pos, fwd, size, size, Color( c.r, c.g, c.b, c.a * 0.2 ), ang )
 	render.DepthRange( 0, 1 )
 	render.SetMaterial( matDisc )
-	render.DrawQuadEasy( pos, fwd, size, size, Color( c.r, c.g, c.b, c.a ), ang )
+	render.DrawQuadEasy( pos, fwd, size, size, c, ang )
 	render.DepthRange( 0, 1 )
 
 end
@@ -60,7 +60,8 @@ function ENT:TestCollision( startpos, delta, isbox, extents )
 	local hitpos = util.IntersectRayWithPlane( startpos, delta:GetNormalized(), pos, fwd )
 	if ( !hitpos ) then return end
 
-	local dist = pos:Distance( hitpos )
+	local dist = pos:DistToSqr( hitpos )
+	size = size * size
 	if ( dist > size ) then return end
 	if ( dist < size * 0.9 ) then return end
 

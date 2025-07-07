@@ -106,8 +106,7 @@ function widgets.RenderMe() end
 
 local function RenderWidgets()
 
-	local pl = LocalPlayer()
-	local prs = pl:GetPressedWidget()
+	local prs = LocalPlayer():GetPressedWidget()
 	local prsValid = IsValid( prs )
 
 	cam.Start3D( EyePos(), EyeAngles() )
