@@ -99,8 +99,8 @@ function TOOL:LeftClick( trace )
 		undo.Create( "Trail" )
 			undo.AddEntity( trail )
 			undo.SetPlayer( self:GetOwner() )
-			undo.SetCustomUndoText( "Undone #tool.trail.name" )
-		undo.Finish( "#tool.trail.name" )
+			undo.SetCustomUndoText( "Undone #tool.trails.name" )
+		undo.Finish( "#tool.trails.name" )
 	end
 
 	return true
