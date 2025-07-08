@@ -2,17 +2,17 @@
 {
 	"dsp"	"1"
 
-	//"playsoundscape"
-	//{
-	//	"name"		"ep2_forest.util_birds"
-	//	"volume"	"0.3"
-	//}
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"volume"	"0.3"
+	}
 
-	//"playsoundscape"
-	//{
-	//	"name"		"ep2_forest.util_windgusts"
-	//	"volume"	"0.4"
-	//}
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"volume"	"0.4"
+	}
 
 	"playlooping"
 	{
