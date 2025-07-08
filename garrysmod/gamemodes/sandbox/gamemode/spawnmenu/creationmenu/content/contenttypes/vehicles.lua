@@ -6,9 +6,14 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 	-- Add this list into the tormoil
 	local Vehicles = list.Get( "Vehicles" )
 	if ( Vehicles ) then
+		local TranslateNames = {
+			["Chairs"] = "#spawnmenu.category.chairs",
+			["Other"] = "#spawnmenu.category.other"
+		}
+
 		for k, v in pairs( Vehicles ) do
 
-			local Category = language.GetPhrase( v.Category or "#spawnmenu.category.other" )
+			local Category = language.GetPhrase( TranslateNames[v.Category] or v.Category or "#spawnmenu.category.other" )
 			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 

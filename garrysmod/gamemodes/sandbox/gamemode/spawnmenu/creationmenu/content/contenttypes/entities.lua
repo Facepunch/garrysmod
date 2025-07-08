@@ -10,9 +10,15 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 	-- Add this list into the tormoil
 	local SpawnableEntities = list.Get( "SpawnableEntities" )
 	if ( SpawnableEntities ) then
+		local TranslateNames = {
+			["Editors"] = "#spawnmenu.category.editors",
+			["Fun + Games"] = "#spawnmenu.category.fun_games",
+			["Other"] = "#spawnmenu.category.other"
+		}
+
 		for k, v in pairs( SpawnableEntities ) do
 
-			local Category = language.GetPhrase( v.Category or "#spawnmenu.category.other" )
+			local Category = language.GetPhrase( TranslateNames[v.Category] or v.Category or "#spawnmenu.category.other" )
 			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 
