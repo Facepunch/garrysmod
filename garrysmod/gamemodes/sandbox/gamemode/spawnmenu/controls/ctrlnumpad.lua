@@ -56,6 +56,28 @@ function PANEL:SetConVar2( cvar )
 end
 
 --[[---------------------------------------------------------
+	Name: GetValue1
+-----------------------------------------------------------]]
+function PANEL:GetValue1()
+	return self.NumPad1:GetValue()
+end
+
+--[[---------------------------------------------------------
+	Name: GetValue2
+-----------------------------------------------------------]]
+function PANEL:GetValue2()
+	if ( !self.m_ConVar2 ) then return nil end
+	return self.NumPad2:GetValue()
+end
+
+--[[---------------------------------------------------------
+	Name: GetValues
+-----------------------------------------------------------]]
+function PANEL:GetValues()
+	return self:GetValue1(), self:GetValue2()
+end
+
+--[[---------------------------------------------------------
 	Name: Init
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
