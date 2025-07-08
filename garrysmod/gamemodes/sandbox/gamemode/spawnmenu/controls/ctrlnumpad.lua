@@ -66,7 +66,7 @@ end
 	Name: GetValue2
 -----------------------------------------------------------]]
 function PANEL:GetValue2()
-	if ( !self.m_ConVar2 ) then return nil end
+	if ( !self.m_ConVar2 or !IsValid(self.NumPad2) ) then return nil end
 	return self.NumPad2:GetValue()
 end
 
