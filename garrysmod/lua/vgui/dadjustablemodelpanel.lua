@@ -17,8 +17,8 @@ function PANEL:OnMousePressed( mousecode )
 
 	-- input.SetCursorPos does not work while main menu is open
 	if ( !MENU_DLL and gui.IsGameUIVisible() ) then return end
-	-- Prevent the FOV to reset
-	if ( mousecode == MOUSE_MIDDLE ) then return end
+
+	if ( mousecode != MOUSE_LEFT and mousecode != MOUSE_RIGHT ) then return end
 
 	self:SetCursor( "none" )
 	self:MouseCapture( true )
