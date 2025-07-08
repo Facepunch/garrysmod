@@ -17,7 +17,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 
 	for k, v in pairs( NPCList ) do
 
-		local Category = language.GetPhrase( v.Category or "#spawnmenu.category.other" )
+		local Category = language.GetPhrase( TranslateNames[v.Category] or v.Category or "#spawnmenu.category.other" )
 		if ( !isstring( Category ) ) then Category = tostring( Category ) end
 
 		local Tab = Categories[ Category ] or {}
