@@ -8,7 +8,7 @@ local function BuildWeaponCategories()
 
 		if ( !weapon.Spawnable ) then continue end
 
-		local Category = language.GetPhrase( weapon.Category or "#spawnmenu.category.other" )
+		local Category = language.GetPhrase( weapon.Category != "Other" and weapon.Category or "#spawnmenu.category.other" )
 		if ( !isstring( Category ) ) then Category = tostring( Category ) end
 
 		Categorised[ Category ] = Categorised[ Category ] or {}

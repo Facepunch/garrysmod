@@ -7,10 +7,16 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 	local PostProcess = list.Get( "PostProcess" )
 
 	if ( PostProcess ) then
+		local TranslateNames = {
+			["Effects"] = "#effects_pp",
+			["Overlay"] = "#overlay_pp",
+			["Shaders"] = "#shaders_pp",
+			["Texturize"] = "#texturize_pp"
+		}
 
 		for k, v in pairs( PostProcess ) do
 
-			local Category = language.GetPhrase( v.category or "#spawnmenu.category.other" )
+			local Category = language.GetPhrase( TranslateNames[v.category] or v.category or "#spawnmenu.category.other" )
 			if ( !isstring( Category ) ) then Category = tostring( Category ) end
 			Categorised[ Category ] = Categorised[ Category ] or {}
 
