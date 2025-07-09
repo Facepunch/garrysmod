@@ -211,9 +211,9 @@ end
 --[[---------------------------------------------------------
 	Converts color to a hex string
 -----------------------------------------------------------]]
-function COLOR:ToHex()
+function COLOR:ToHex( omitAlpha )
 
-	if self.a == 255 then
+	if omitAlpha or self.a == 255 then
 		return string.format( "#%02x%02x%02x", self.r, self.g, self.b )
 	end
 
