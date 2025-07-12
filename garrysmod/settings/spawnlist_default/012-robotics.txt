@@ -606,6 +606,6 @@
 			"model"		"models/mechanics/articulating/arm2x20d2.mdl"
 		}
 	}
-	"name"		"Robotics"
+	"name"		"#spawnmenu.spawnlist.robotics"
 	"version"		"3"
 }

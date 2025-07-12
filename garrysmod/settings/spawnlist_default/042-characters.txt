@@ -406,6 +406,6 @@
 			"model"		"models/player/zombie.mdl"
 		}
 	}
-	"name"		"Characters"
+	"name"		"#spawnmenu.spawnlist.characters"
 	"version"		"3"
 }

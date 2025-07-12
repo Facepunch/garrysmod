@@ -1446,6 +1446,6 @@
 			"model"		"models/props_vehicles/pickup_truck_78.mdl"
 		}
 	}
-	"name"		"Map Props"
+	"name"		"#spawnmenu.spawnlist.map_props"
 	"version"		"3"
 }

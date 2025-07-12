@@ -687,6 +687,6 @@
 			"model"		"models/Humans/corpse1.mdl"
 		}
 	}
-	"name"		"Characters"
+	"name"		"#spawnmenu.spawnlist.characters"
 	"version"		"3"
 }

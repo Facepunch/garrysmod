@@ -486,6 +486,6 @@
 			"model"		"models/mechanics/solid_steel/sheetmetal_y_8.mdl"
 		}
 	}
-	"name"		"Solid Steel"
+	"name"		"#spawnmenu.spawnlist.solid_steel"
 	"version"		"3"
 }

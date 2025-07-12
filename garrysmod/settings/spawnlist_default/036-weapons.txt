@@ -201,6 +201,6 @@
 			"model"		"models/weapons/w_models/w_wrench.mdl"
 		}
 	}
-	"name"		"Weapons"
+	"name"		"#spawnmenu.spawnlist.weapons"
 	"version"		"3"
 }

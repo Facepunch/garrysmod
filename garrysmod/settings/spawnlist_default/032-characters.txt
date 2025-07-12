@@ -420,6 +420,6 @@
 			"tall"		"128"
 		}
 	}
-	"name"		"Characters"
+	"name"		"#spawnmenu.spawnlist.characters"
 	"version"		"3"
 }

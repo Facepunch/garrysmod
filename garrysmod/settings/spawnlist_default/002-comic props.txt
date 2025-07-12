@@ -1056,6 +1056,6 @@
 			"model"		"models/props_vehicles/carparts_wheel01a.mdl"
 		}
 	}
-	"name"		"Comic Props"
+	"name"		"#spawnmenu.spawnlist.comic_props"
 	"version"		"3"
 }

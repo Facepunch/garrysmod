@@ -1696,6 +1696,6 @@
 			"model"		"models/props_wasteland/lighthouse_stairs0b.mdl"
 		}
 	}
-	"name"		"Buildings and Outdoors"
+	"name"		"#spawnmenu.spawnlist.buildings_and_outdoors"
 	"version"		"3"
 }

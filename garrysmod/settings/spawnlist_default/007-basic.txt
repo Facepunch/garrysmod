@@ -851,6 +851,6 @@
 			"model"		"models/props_phx/construct/plastic/plastic_angle_180.mdl"
 		}
 	}
-	"name"		"Basic"
+	"name"		"#spawnmenu.spawnlist.basic"
 	"version"		"3"
 }

@@ -2846,6 +2846,6 @@
 			"model"		"models/gibs/strider_right_leg.mdl"
 		}
 	}
-	"name"		"Debris and Gibs"
+	"name"		"#spawnmenu.spawnlist.debris_and_gibs"
 	"version"		"3"
 }

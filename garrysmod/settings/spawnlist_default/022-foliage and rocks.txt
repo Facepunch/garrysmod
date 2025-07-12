@@ -411,6 +411,6 @@
 			"model"		"models/props_canal/rock_riverbed02c.mdl"
 		}
 	}
-	"name"		"Foliage and Rocks"
+	"name"		"#spawnmenu.spawnlist.foliage_and_rocks"
 	"version"		"3"
 }

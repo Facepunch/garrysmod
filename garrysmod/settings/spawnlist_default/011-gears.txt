@@ -446,6 +446,6 @@
 			"model"		"models/props_phx/mechanics/mech3.mdl"
 		}
 	}
-	"name"		"Gears"
+	"name"		"#spawnmenu.spawnlist.gears"
 	"version"		"3"
 }

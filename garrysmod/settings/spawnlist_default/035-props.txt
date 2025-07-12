@@ -2066,6 +2066,6 @@
 			"model"		"models/props_well/computer_cart02.mdl"
 		}
 	}
-	"name"		"Props"
+	"name"		"#spawnmenu.spawnlist.props"
 	"version"		"3"
 }

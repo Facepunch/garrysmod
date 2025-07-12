@@ -1066,6 +1066,6 @@
 			"model"		"models/props_phx/trains/track_4096.mdl"
 		}
 	}
-	"name"		"Rails and Tracks"
+	"name"		"#spawnmenu.spawnlist.rails_and_tracks"
 	"version"		"3"
 }

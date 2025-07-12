@@ -816,6 +816,6 @@
 			"model"		"models/props_combine/pipes01_cluster02c.mdl"
 		}
 	}
-	"name"		"Combine"
+	"name"		"#spawnmenu.spawnlist.combine"
 	"version"		"3"
 }
