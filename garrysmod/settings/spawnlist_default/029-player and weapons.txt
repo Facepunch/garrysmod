@@ -448,6 +448,6 @@
 			"model"		"models/props_vehicles/b17_skybox32.mdl"
 		}
 	}
-	"name"		"#spawnmenu.spawnlist.players_and_weapons"
+	"name"		"#spawnmenu.spawnlist.player_and_weapons"
 	"version"		"3"
 }
