@@ -1251,6 +1251,6 @@
 			"model"		"models/props_urban/wood_fence_end.mdl"
 		}
 	}
-	"name"		"Map Props"
+	"name"		"#spawnmenu.spawnlist.map_props"
 	"version"		"3"
 }

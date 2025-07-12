@@ -81,6 +81,6 @@
 			"model"		"models/Characters/hostage_04.mdl"
 		}
 	}
-	"name"		"Characters"
+	"name"		"#spawnmenu.spawnlist.characters"
 	"version"		"3"
 }
