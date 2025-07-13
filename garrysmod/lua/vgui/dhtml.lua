@@ -63,6 +63,82 @@ function PANEL:Call( js )
 	self:QueueJavascript( js )
 end
 
+local function BuildFunction( func, ... )
+
+	--
+	-- Build a Javascript-safe JS function call.
+	-- To be run by either panel:RunFunction or panel:QueueFunction
+	--
+	-- First parameter is the JS function name,
+	-- additional parameters are the values to provide to the function call.
+	-- The values provided to the function call are treated as strings except where noted below.
+	--
+	
+	local formatArgs = {}
+	local safeArgs = {}
+	
+	for k, v in ipairs( { ... } ) do
+	
+		if isbool( v ) then -- Boolean
+		
+			formatArgs[ k ] = '%s'
+			safeArgs[ k ] = v and true or false
+			
+		elseif isnumber( v ) then -- Numbers
+		
+			formatArgs[ k ] = '%s'
+			safeArgs[ k ] = v
+			
+		elseif IsColor( v ) then -- Colors, convert to CSS format
+		
+			formatArgs[ k ] = '"%s"'
+			safeArgs[ k ] = v:ToHex() -- returns "#rrggbb" or "#rrggbbaa" depending on alpha
+			
+			-- Awesomium does NOT support "#rrggbbaa", so for now we're overriding any alpha ones with "rgba()". Once Awesomium has been fully replaced by CEF, remove this override.
+			if v.a != 255 then
+				-- alpha has 3dp precision, as that's enough to accurately convert back to 0-255 or 00-FF.
+				safeArgs[ k ] = string.format( "rgba(%d,%d,%d,%.3f)", v.r, v.g, v.b, ( v.a / 255 ) )
+			end
+			
+		elseif istable( v ) then -- Tables, convert to json object
+		
+			formatArgs[ k ] = 'JSON.parse("%s")'
+			safeArgs[ k ] = string.JavascriptSafe( util.TableToJSON( v ) )
+			
+		else -- Strings, and all else treated as strings
+		
+			formatArgs[ k ] = '"%s"'
+			safeArgs[ k ] = string.JavascriptSafe( tostring( v ) )
+			
+		end
+		
+	end
+	
+	
+	func = string.gsub( func, "[^%w%._]", "" ) -- Function name strips any characters that aren't underscore "_", dot ".", or alphanumeric.
+
+	return string.format( [[ %s( ]] .. table.concat( formatArgs, ", " ) .. [[ ); ]], func, unpack( safeArgs ) )
+	
+end
+
+function PANEL:RunFunction( func, ... )
+
+	--
+	-- Build and Run a Javascript function immediately.
+	--
+	self:RunJavascript( BuildFunction( func, ... ) )
+	
+end
+
+function PANEL:QueueFunction( func, ... )
+
+	--
+	-- Build and Queue a Javascript function.
+	--
+	self:QueueJavascript( BuildFunction( func, ... ) )
+	
+end
+
 function PANEL:ConsoleMessage( msg, file, line, severity )
 
 	if ( !isstring( msg ) ) then msg = "*js variable*" end
