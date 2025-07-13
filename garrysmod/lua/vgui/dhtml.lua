@@ -72,12 +72,10 @@ local function BuildFunction( func, ... )
 	-- additional parameters are the values to provide to the function call.
 	-- The values provided to the function call are treated as strings except where noted below.
 	
-	local args, amount = table.Pack( ... )
-	
 	local formatArgs = {}
 	local safeArgs = {}
 	
-	for k, v in ipairs( args ) do
+	for k, v in ipairs( table.Pack( ... ) ) do
 	
 		if isbool( v ) then -- Boolean
 		
@@ -93,9 +91,9 @@ local function BuildFunction( func, ... )
 		
 			formatArgs[ k ] = '"%s"'
 			if v.a == 255 then -- don't include alpha if it isn't needed
-				safeArgs[ k ] = "rgb( " .. v.r .. ", " .. v.g .. ", " .. v.b .. " )"
+				safeArgs[ k ] = string.format( "rgb(%s,%s,%s)", tonumber( v.r ), tonumber( v.g ), tonumber( v.b ) )
 			else
-				safeArgs[ k ] = "rgba( " .. v.r .. ", " .. v.g .. ", " .. v.b .. ", " .. ( v.a / 255 ) .. " )"
+				safeArgs[ k ] = string.format( "rgba(%s,%s,%s,%s)", tonumber( v.r ), tonumber( v.g ), tonumber( v.b ), tonumber( v.a / 255 ) )
 			end
 			safeArgs[ k ] = string.JavascriptSafe( safeArgs[ k ] )
 			
@@ -107,7 +105,7 @@ local function BuildFunction( func, ... )
 		else -- Strings, and all else treated as strings
 		
 			formatArgs[ k ] = '"%s"'
-			safeArgs[ k ] = string.JavascriptSafe( v )
+			safeArgs[ k ] = string.JavascriptSafe( tostring( v ) )
 			
 		end
 		
