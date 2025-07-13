@@ -71,7 +71,7 @@ function PANEL:Init()
 		if ( !IsValid( node ) || !IsValid( label ) || !IsValid( icons ) ) then return end
 
 		if ( node.CustomSpawnlist ) then
-			label:SetText( language.GetPhrase( node:GetText() ) )
+			label:SetText( node:GetText() )
 			icons:SelectIcon( node:GetIcon() )
 			icons:ScrollToSelected()
 			overlay:SetVisible( false )
