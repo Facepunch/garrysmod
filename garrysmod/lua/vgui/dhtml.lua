@@ -65,17 +65,19 @@ end
 
 local function BuildFunction( func, ... )
 
+	--
 	-- Build a Javascript-safe JS function call.
 	-- To be run by either panel:RunFunction or panel:QueueFunction
 	--
 	-- First parameter is the JS function name,
 	-- additional parameters are the values to provide to the function call.
 	-- The values provided to the function call are treated as strings except where noted below.
+	--
 	
 	local formatArgs = {}
 	local safeArgs = {}
 	
-	for k, v in ipairs( table.Pack( ... ) ) do
+	for k, v in ipairs( { ... } ) do
 	
 		if isbool( v ) then -- Boolean
 		
@@ -87,15 +89,20 @@ local function BuildFunction( func, ... )
 			formatArgs[ k ] = '%s'
 			safeArgs[ k ] = v
 			
-		elseif IsColor( v ) then -- Colors, convert to CSS. Should be updated to use srlion's colour conversion PR when available.
+		elseif IsColor( v ) then -- Colors, convert to CSS format
 		
 			formatArgs[ k ] = '"%s"'
+			
 			if v.a == 255 then -- don't include alpha if it isn't needed
-				safeArgs[ k ] = string.format( "rgb(%s,%s,%s)", tonumber( v.r ), tonumber( v.g ), tonumber( v.b ) )
+				-- returns "#rrggbb"
+				safeArgs[ k ] = string.format( "#%02x%02x%02x", v.r, v.g, v.b )
+				--// safeArgs[ k ] = v:ToHex()   -- should be replaced with this once PR#2312 is merged.
 			else
-				safeArgs[ k ] = string.format( "rgba(%s,%s,%s,%s)", tonumber( v.r ), tonumber( v.g ), tonumber( v.b ), tonumber( v.a / 255 ) )
+				-- returns "rgba()", as required by Awesomium
+				-- alpha has 3dp precision, as that's enough to accurately convert back to 0-255.
+				safeArgs[ k ] = string.format( "rgba(%d,%d,%d,%.3f)", v.r, v.g, v.b, ( v.a / 255 ) )
+				--// safeArgs[ k ] = v:ToHex()   -- should be replaced with this once PR#2312 is merged AND Awesomium is fully removed.
 			end
-			safeArgs[ k ] = string.JavascriptSafe( safeArgs[ k ] )
 			
 		elseif istable( v ) then -- Tables, convert to json string
 		
@@ -112,20 +119,28 @@ local function BuildFunction( func, ... )
 	end
 	
 	
-	func = string.gsub( func, "[^%w%._]", "" )
+	func = string.gsub( func, "[^%w%._]", "" ) -- Function name strips any characters that aren't underscore "_", dot ".", or alphanumeric.
 
 	return string.format( [[ %s( ]] .. table.concat( formatArgs, ", " ) .. [[ ); ]], func, unpack( safeArgs ) )
 	
 end
 
 function PANEL:RunFunction( func, ... )
+
+	--
 	-- Build and Run a Javascript function immediately.
+	--
 	self:RunJavascript( BuildFunction( func, ... ) )
+	
 end
 
 function PANEL:QueueFunction( func, ... )
+
+	--
 	-- Build and Queue a Javascript function.
+	--
 	self:QueueJavascript( BuildFunction( func, ... ) )
+	
 end
 
 function PANEL:ConsoleMessage( msg, file, line )
