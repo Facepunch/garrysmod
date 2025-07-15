@@ -1,5 +1,3 @@
-local string = string
-local math = math
 
 local COLOR = {}
 COLOR.__index = COLOR
@@ -128,7 +126,7 @@ function HexToColor( hex )
 	local idx = string.byte( hex, 1 ) == 35 and 2 or 1 -- '#' check without allocation
 	local len = #hex - ( idx - 1 )
 
-	if len == 3 or len == 4 then
+	if ( len == 3 or len == 4 ) then
 
 		local r, g, b, a = string.byte( hex, idx, idx + len - 1 )
 		r = hex_to_dec[ r ]
@@ -142,7 +140,7 @@ function HexToColor( hex )
 
 		return Color( r * 16 + r, g * 16 + g, b * 16 + b, a * 16 + a )
 
-	elseif len == 6 or len == 8 then
+	elseif ( len == 6 or len == 8 ) then
 
 		local r1, r2, g1, g2, b1, b2, a1, a2 = string.byte( hex, idx, idx + len - 1 )
 		r1, r2 = hex_to_dec[ r1 ], hex_to_dec[ r2 ]
@@ -213,7 +211,7 @@ end
 -----------------------------------------------------------]]
 function COLOR:ToHex( omitAlpha )
 
-	if omitAlpha or self.a == 255 then
+	if ( omitAlpha or self.a == 255 ) then
 		return string.format( "#%02x%02x%02x", self.r, self.g, self.b )
 	end
 
