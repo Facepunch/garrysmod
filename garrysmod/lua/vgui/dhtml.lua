@@ -104,9 +104,9 @@ local function BuildFunction( func, ... )
 				--// safeArgs[ k ] = v:ToHex()   -- should be replaced with this once PR#2312 is merged AND Awesomium is fully removed.
 			end
 			
-		elseif istable( v ) then -- Tables, convert to json string
+		elseif istable( v ) then -- Tables, convert to json object
 		
-			formatArgs[ k ] = '"%s"'
+			formatArgs[ k ] = 'JSON.parse("%s")'
 			safeArgs[ k ] = string.JavascriptSafe( util.TableToJSON( v ) )
 			
 		else -- Strings, and all else treated as strings
