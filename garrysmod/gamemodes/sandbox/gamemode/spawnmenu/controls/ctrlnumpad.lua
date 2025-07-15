@@ -59,6 +59,7 @@ end
 	Name: GetValue1
 -----------------------------------------------------------]]
 function PANEL:GetValue1()
+	if ( !self.m_ConVar1 or !IsValid( self.NumPad1 ) ) then return KEY_NONE end
 	return self.NumPad1:GetValue()
 end
 
@@ -66,15 +67,8 @@ end
 	Name: GetValue2
 -----------------------------------------------------------]]
 function PANEL:GetValue2()
-	if ( !self.m_ConVar2 or !IsValid(self.NumPad2) ) then return nil end
+	if ( !self.m_ConVar2 or !IsValid( self.NumPad2 ) ) then return KEY_NONE end
 	return self.NumPad2:GetValue()
-end
-
---[[---------------------------------------------------------
-	Name: GetValues
------------------------------------------------------------]]
-function PANEL:GetValues()
-	return self:GetValue1(), self:GetValue2()
 end
 
 --[[---------------------------------------------------------
