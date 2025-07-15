@@ -23,6 +23,7 @@ if ( SERVER ) then
 	   Desc: The entity has been picked up
 	-----------------------------------------------------------]]
 	function GM:GravGunOnPickedUp( ply, ent )
+		ent.PickupPlayer = ply -- Store the player who picked it up
 	end
 
 
@@ -31,6 +32,7 @@ if ( SERVER ) then
 	   Desc: The entity has been dropped
 	-----------------------------------------------------------]]
 	function GM:GravGunOnDropped( ply, ent )
+		ent.PickupPlayer = nil -- Clear the player who picked it up
 	end
 
 end
