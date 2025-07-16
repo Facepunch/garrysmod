@@ -92,16 +92,12 @@ local function BuildFunction( func, ... )
 		elseif IsColor( v ) then -- Colors, convert to CSS format
 		
 			formatArgs[ k ] = '"%s"'
+			safeArgs[ k ] = v:ToHex() -- returns "#rrggbb" or "#rrggbbaa" depending on alpha
 			
-			if v.a == 255 then -- don't include alpha if it isn't needed
-				-- returns "#rrggbb"
-				safeArgs[ k ] = string.format( "#%02x%02x%02x", v.r, v.g, v.b )
-				--// safeArgs[ k ] = v:ToHex()   -- should be replaced with this once PR#2312 is merged.
-			else
-				-- returns "rgba()", as required by Awesomium
-				-- alpha has 3dp precision, as that's enough to accurately convert back to 0-255.
+			-- Awesomium does NOT support "#rrggbbaa", so for now we're overriding any alpha ones with "rgba()". Once Awesomium has been fully replaced by CEF, remove this override.
+			if v.a != 255 then
+				-- alpha has 3dp precision, as that's enough to accurately convert back to 0-255 or 00-FF.
 				safeArgs[ k ] = string.format( "rgba(%d,%d,%d,%.3f)", v.r, v.g, v.b, ( v.a / 255 ) )
-				--// safeArgs[ k ] = v:ToHex()   -- should be replaced with this once PR#2312 is merged AND Awesomium is fully removed.
 			end
 			
 		elseif istable( v ) then -- Tables, convert to json object
