@@ -90,6 +90,8 @@ function meta:AddCount( str, ent )
 		-- Update count on deletion
 		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, countType, uid )
 			if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
+			if ( !IsValid( ply ) ) then return end
+
 			ply:GetCount( countType )
 		end, self, str, key )
 
