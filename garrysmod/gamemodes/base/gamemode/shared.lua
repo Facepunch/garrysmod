@@ -13,6 +13,7 @@
 include( "obj_player_extend.lua" )
 
 include( "gravitygun.lua" )
+include( "physgun.lua" )
 include( "player_shd.lua" )
 include( "animations.lua" )
 include( "player_class/player_default.lua" )
@@ -49,25 +50,6 @@ end
    Desc: Prop has been broken
 -----------------------------------------------------------]]
 function GM:PropBreak( attacker, prop )
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:PhysgunPickup( )
-   Desc: Return true if player can pickup entity
------------------------------------------------------------]]
-function GM:PhysgunPickup( ply, ent )
-
-	-- Don't pick up players
-	if ( ent:GetClass() == "player" ) then return false end
-
-	return true
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:PhysgunDrop( )
-   Desc: Dropped an entity
------------------------------------------------------------]]
-function GM:PhysgunDrop( ply, ent )
 end
 
 --[[---------------------------------------------------------

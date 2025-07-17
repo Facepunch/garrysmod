@@ -27,6 +27,7 @@ gamemodes\base\gamemode\cl_deathnotice.lua
 gamemodes\base\gamemode\cl_pickteam.lua
 gamemodes\base\gamemode\cl_voice.lua
 gamemodes\base\gamemode\gravitygun.lua
+gamemodes\base\gamemode\physgun.lua
 gamemodes\base\gamemode\player_shd.lua
 gamemodes\base\gamemode\animations.lua
 gamemodes\base\gamemode\obj_player_extend.lua

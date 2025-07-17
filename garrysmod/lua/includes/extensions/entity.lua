@@ -82,6 +82,10 @@ if ( SERVER ) then
 		return self.m_PlayerCreator or NULL
 	end
 
+	function ENT:GetPickupPlayer()
+		return self.PickupPlayer
+	end
+
 end
 
 --[[---------------------------------------------------------
