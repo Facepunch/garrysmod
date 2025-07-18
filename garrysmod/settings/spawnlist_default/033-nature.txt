@@ -966,6 +966,6 @@
 			"model"		"models/props_woods/woods_tree_01.mdl"
 		}
 	}
-	"name"		"Nature"
+	"name"		"#spawnmenu.spawnlist.nature"
 	"version"		"3"
 }
