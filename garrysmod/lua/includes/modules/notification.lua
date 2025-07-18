@@ -2,7 +2,8 @@
 surface.CreateFont( "GModNotify", {
 	font	= "Arial",
 	size	= 21,
-	weight	= 0
+	weight	= 0,
+	extended = true
 } )
 
 NOTIFY_GENERIC	= 0

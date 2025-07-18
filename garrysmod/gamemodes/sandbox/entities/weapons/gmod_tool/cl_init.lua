@@ -26,19 +26,22 @@ SWEP.InfoBoxHeight = 0
 surface.CreateFont( "GModToolName", {
 	font = "Roboto Bk",
 	size = 80,
-	weight = 1000
+	weight = 1000,
+	extended = true
 } )
 
 surface.CreateFont( "GModToolSubtitle", {
 	font = "Roboto Bk",
 	size = 24,
-	weight = 1000
+	weight = 1000,
+	extended = true
 } )
 
 surface.CreateFont( "GModToolHelp", {
 	font = "Roboto Bk",
 	size = 17,
-	weight = 1000
+	weight = 1000,
+	extended = true
 } )
 
 --[[---------------------------------------------------------
