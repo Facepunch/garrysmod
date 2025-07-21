@@ -413,20 +413,29 @@ function CalculateRank( server )
 	return recommended;
 }
 
-// Generate a flag from sevrer name if the server doesn't have it set.
+// Gmod's flag16 icons
+var flagicons = [ "ad", "ae", "af", "ag", "ai", "al", "am", "an", "ao", "ar", "as", "at", "au", "aw", "ax", "az", "ba", "bb", "bd", "be", "bf", "bg", "bh", "bi", "bj", "bm", "bn", "bo", "br", "bs", "bt", "bv", "bw", "by", "bz", "ca", "catalonia", "cc", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm", "cn", "co", "cr", "cs", "cu", "cv", "cx", "cy", "cz", "de", "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg", "eh", "england", "er", "es", "et", "europeanunion", "fam", "fi", "fj", "fk", "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gh", "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gs", "gt", "gu", "gw", "gy", "hk", "hm", "hn", "hr", "ht", "hu", "id", "ie", "il", "in", "io", "iq", "ir", "is", "it", "jm", "jo", "jp", "ke", "kg", "kh", "ki", "km", "kn", "kp", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li", "lk", "lr", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me", "mg", "mh", "mk", "ml", "mm", "mn", "mo", "mp", "mq", "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "nf", "ng", "ni", "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph", "pk", "pl", "pm", "pn", "pr", "ps", "pt", "pw", "py", "qa", "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "scotland", "sd", "se", "sg", "sh", "si", "sj", "sk", "sl", "sm", "sn", "so", "sr", "st", "sv", "sy", "sz", "tc", "td", "tf", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr", "tt", "tv", "tw", "tz", "ua", "ug", "um", "us", "uy", "uz", "va", "vc", "ve", "vg", "vi", "vn", "vu", "wales", "wf", "ws", "ye", "yt", "za", "zm", "zw" ];
+// Special remapping cases
+var locationremap = { "eu": "europeanunion", "uk": "gb", "rus": "ru", "usa": "us", "en": "gb", "eng": "gb", "ger": "de" };
+// Valid sv_location list = remaps plus flag16. Any sv_locations not on the list are filtered and fallback to secondary methods such as extraction from server name.
+var svlocations = Object.keys( locationremap ).concat( flagicons );
+
+// Generate a flag from server name if the server doesn't have it set.
 // This is a temporary measure and should not be relied on, you should use sv_location
-var prefixes = { ru: "ru", rus: "ru", fr: "fr", usa: "us", uk: "gb", en: "gb", eng: "gb", ger: "de", pl: "pl", dk: "dk", eu: "eu" };
+var prefixes = [ "ru", "rus", "fr", "usa", "us", "uk", "en", "eng", "ger", "pl", "dk", "eu", "au" ];
 function GenerateFlag( server )
 {
-	for ( var key in prefixes )
+	for ( var index in prefixes )
 	{
-		var s = server.name.toLowerCase().indexOf( "[" + key + "]" );
+		var key = prefixes[ index ];
+		var search = "[" + key + "]";
+		var s = server.name.toLowerCase().indexOf( search );
 		if ( s == -1 ) continue;
-		server.name = server.name.replace( server.name.substring( s, s + key.length + 2 ), "" ).trim();
-		return prefixes[ key ];
+		server.name = server.name.replace( server.name.substring( s, s + search.length ), "" ).trim();
+		return key;
 	}
 
-	return "";
+	return false;
 }
 
 function UpdateInfiniteScroll( elem )
@@ -491,7 +500,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	}
 
 	// Validate sv_location
-	if ( loc && !loc.match( /^[a-zA-Z]+$/ ) )
+	if ( loc && ( !loc.match( /^[a-zA-Z]+$/ ) || svlocations.indexOf( loc.toLowerCase() ) == -1 ) )
 	{
 		loc = "";
 	}
@@ -520,7 +529,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	};
 
 	if ( !data.flag ) data.flag = GenerateFlag( data );
-	if ( data.flag == "eu" ) data.flag = "europeanunion"; // ew
+	if ( locationremap[ data.flag ] !== undefined ) data.flag = locationremap[ data.flag ];
 
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
