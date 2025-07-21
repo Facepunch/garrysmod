@@ -7,6 +7,7 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 	local PostProcess = list.Get( "PostProcess" )
 
 	if ( PostProcess ) then
+		-- Category localization support for old addons
 		local TranslateNames = {
 			["Effects"] = "#effects_pp",
 			["Overlay"] = "#overlay_pp",

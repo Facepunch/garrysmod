@@ -10,6 +10,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 	-- Add this list into the tormoil
 	local SpawnableEntities = list.Get( "SpawnableEntities" )
 	if ( SpawnableEntities ) then
+		-- Category localization support for old addons
 		local TranslateNames = {
 			["Editors"] = "#spawnmenu.category.editors",
 			["Fun + Games"] = "#spawnmenu.category.fun_games",

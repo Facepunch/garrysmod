@@ -6,6 +6,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 	-- Add this list into the tormoil
 	local Vehicles = list.Get( "Vehicles" )
 	if ( Vehicles ) then
+		-- Category localization support for old addons
 		local TranslateNames = {
 			["Chairs"] = "#spawnmenu.category.chairs",
 			["Other"] = "#spawnmenu.category.other"

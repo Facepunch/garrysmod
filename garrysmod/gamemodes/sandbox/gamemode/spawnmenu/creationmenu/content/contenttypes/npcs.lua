@@ -7,6 +7,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 	-- Categorize them
 	local Categories = {}
 
+	-- Category localization support for old addons
 	local TranslateNames = {
 		["Animals"] = "#spawnmenu.category.animals",
 		["Combine"] = "#spawnmenu.category.combine",
