@@ -54,7 +54,18 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	function ws_save:Load( filename )
 
+		-- Early out for workshop saves
+		if ( string.StartsWith( filename, "content/4000" ) ) then
+			RunConsoleCommand( "gm_load", filename )
+			return
+		end
+
 		local saveFile = file.Open( filename, "rb", "GAME" )
+		if ( !saveFile ) then -- Somehow the file doesn't exist?
+			RunConsoleCommand( "gm_load", filename )
+			return
+		end
+
 		saveFile:Seek( 4 )
 		local mapFile = saveFile:ReadLine():TrimRight( "\n" )
 
