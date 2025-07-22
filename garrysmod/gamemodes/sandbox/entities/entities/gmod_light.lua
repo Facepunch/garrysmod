@@ -26,6 +26,7 @@ function ENT:Initialize()
 
 	if ( CLIENT ) then
 
+		self.dlight = DynamicLight( self:EntIndex() )
 		self.PixVis = util.GetPixelVisibleHandle()
 
 	end
@@ -60,35 +61,28 @@ function ENT:Think()
 
 		if ( !self:GetOn() ) then return end
 
-		local noworld = self:GetLightWorld()
-		local dlight = DynamicLight( self:EntIndex(), noworld )
+		local dlight = self.dlight
+		if ( !dlight ) then return end
 
-		if ( dlight ) then
+		dlight.pos = self:GetPos()
+		dlight.r, dlight.g, dlight.b = self:GetColor4Part()
 
-			local c = self:GetColor()
+		local size = self:GetLightSize()
+		local brght = self:GetBrightness()
 
-			local size = self:GetLightSize()
-			local brght = self:GetBrightness()
-			-- Clamp for multiplayer
-			if ( !game.SinglePlayer() ) then
-				size = math.Clamp( size, 0, 1024 )
-				brght = math.Clamp( brght, 0, 6 )
-			end
-
-			dlight.Pos = self:GetPos()
-			dlight.r = c.r
-			dlight.g = c.g
-			dlight.b = c.b
-			dlight.Brightness = brght
-			dlight.Decay = size * 5
-			dlight.Size = size
-			dlight.DieTime = CurTime() + 1
-
-			dlight.noworld = noworld
-			dlight.nomodel = self:GetLightModels()
-
+		-- Clamp for multiplayer
+		if ( !game.SinglePlayer() ) then
+			size = math.Clamp( size, 0, 1024 )
+			brght = math.Clamp( brght, 0, 6 )
 		end
 
+		dlight.size = size
+		dlight.decay = size * 5
+		dlight.brightness = brght
+
+		dlight.dietime = CurTime() + 1
+		dlight.noworld = self:GetLightWorld()
+		dlight.nomodel = self:GetLightModels()
 	end
 
 end
@@ -98,6 +92,7 @@ function ENT:GetOverlayText()
 end
 
 local matLight = Material( "sprites/light_ignorez" )
+local colLight, vecLight = Color( 255, 255, 255, 255 ), Vector( 0, 0, 0 )
 function ENT:DrawEffects()
 
 	if ( !self:GetOn() ) then return end
@@ -105,17 +100,27 @@ function ENT:DrawEffects()
 	local LightPos = self:GetPos()
 
 	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )
-	if ( !Visibile || Visibile < 0.1 ) then return end
-
-	local c = self:GetColor()
-	local Alpha = 255 * Visibile
-	local up = self:GetAngles():Up()
+	if ( !Visibile or Visibile < 0.1 ) then return end
 
 	render.SetMaterial( matLight )
-	render.DrawSprite( LightPos - up * 2, 8, 8, Color( 255, 255, 255, Alpha ) )
-	render.DrawSprite( LightPos - up * 4, 8, 8, Color( 255, 255, 255, Alpha ) )
-	render.DrawSprite( LightPos - up * 6, 8, 8, Color( 255, 255, 255, Alpha ) )
-	render.DrawSprite( LightPos - up * 5, 64, 64, Color( c.r, c.g, c.b, 64 ) )
+
+	local Alpha = 255 * Visibile
+	colLight:SetUnpacked( 255, 255, 255, Alpha )
+
+	local up = self:GetUp()
+	up:Mul( 2 )
+
+	for i = 1, 3 do
+		LightPos:Sub( up )
+		render.DrawSprite( LightPos, 8, 8, colLight )
+	end
+
+	local r, g, b = self:GetColor4Part()
+	colLight:SetUnpacked( r, g, b, 64 )
+
+	up:Mul( 0.5 )
+	LightPos:Add( up )
+	render.DrawSprite( LightPos, 64, 64, colLight )
 
 end
 
