@@ -166,7 +166,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	if ( IsValid( player ) ) then
 		table.insert( tab, player )
 	else
-		table.insert( tab, language.GetPhrase("chat_console") .. " ")
+		table.insert( tab, language.GetPhrase("chat_console"))
 	end
 
 	local filter_context = TEXT_FILTER_GAME_CONTENT
