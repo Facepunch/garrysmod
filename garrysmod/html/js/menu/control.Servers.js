@@ -111,21 +111,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			lua.Run( "PingServer( %s )", server.address );
 		}, 10000 );
 
-		//
-		// ng-dblclick doesn't work properly in engine, so we fake it!
-		//
-		if ( server.DoubleClick )
-		{
-			$scope.JoinServer( server );
-			return;
-		}
-
-		server.DoubleClick = true;
-
-		setTimeout( function()
-		{
-			server.DoubleClick = false;
-		}, 500 );
 	}
 
 	$scope.SelectGamemode = function( gm )
