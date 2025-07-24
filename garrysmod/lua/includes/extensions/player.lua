@@ -261,45 +261,46 @@ function meta:HasGodMode()
 
 end
 
+local tPlayersSteamID64 = {}
+local tPlayersSteamID32 = {}
+local tPlayersAccountID = {}
+local tPlayersUserID = {}
+
+local function insertPlayer( ent )
+    if not ent:IsPlayer() then return end
+
+    tPlayersSteamID64[ent:SteamID64()] = ent
+    tPlayersSteamID32[ent:SteamID()] = ent
+    tPlayersAccountID[ent:AccountID()] = ent
+	tPlayersUserID[ent:UserID()] = ent
+
+end
+
+local function removePlayer( ent )
+    if not ent:IsPlayer() then return end
+
+    tPlayersSteamID64[ent:SteamID64()] = nil
+    tPlayersSteamID32[ent:SteamID()] = nil
+    tPlayersAccountID[ent:AccountID()] = nil
+	tPlayersUserID[ent:UserID()] = nil
+end
+
+hook.Add("OnEntityCreated", "player.Search", insertPlayer)
+hook.Add("EntityRemoved", "player.Search", removePlayer)
+
 -- These are totally in the wrong place.
 function player.GetByAccountID( ID )
-	for _, pl in player.Iterator() do
-		if ( pl:AccountID() == ID ) then
-			return pl
-		end
-	end
-
-	return false
+	return tPlayersAccountID[ID] or false
 end
 
 function player.GetByUniqueID( ID )
-	for _, pl in player.Iterator() do
-		if ( pl:UniqueID() == ID ) then
-			return pl
-		end
-	end
-
-	return false
+	return tPlayersUserID[ID] or false
 end
 
 function player.GetBySteamID( ID )
-	ID = string.upper( ID )
-
-	for _, pl in player.Iterator() do
-		if ( pl:SteamID() == ID ) then
-			return pl
-		end
-	end
-
-	return false
+	return tPlayersSteamID32[ID] or false
 end
 
 function player.GetBySteamID64( ID )
-	for _, pl in player.Iterator() do
-		if ( pl:SteamID64() == ID ) then
-			return pl
-		end
-	end
-
-	return false
+	return tPlayersSteamID64[ID] or false
 end
