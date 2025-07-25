@@ -1083,6 +1083,8 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 		Constraint:SetPhysConstraintObjects( Phys1, Phys1 )
 		Constraint:Spawn()
 		Constraint:Activate()
+		Constraint:Fire( "Scale", 0 )
+        Constraint:Fire( "Activate" )
 
 	onFinishConstraint()
 
