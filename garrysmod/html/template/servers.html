@@ -44,7 +44,14 @@
 					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass" ng-tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/>
 
 					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">
-						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" ng-src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )" loading="lazy"/>
+						<span ng-repeat="(flag, whatever) in CurrentGamemode.flags" ng-show="flag != 'unknown'" class="flag {{FilterFlagClass( flag )}}" ng-click="FilterFlag( flag, this );" >
+							<label>{{IfElse( flag == "europeanunion", "EU", flag.toUpperCase() )}}</label>
+							<img ng-src='asset://garrysmod/materials/flags16/{{flag}}.png' onerror="MissingFlag( this )" loading="lazy"/>
+						</span>
+						<span ng-if="CurrentGamemode.flags['unknown']" class="flag noflag {{FilterFlagClass( 'unknown' )}}" ng-click="FilterFlag( 'unknown', this );" >
+							<label>Unknown</label>
+							<img ng-src="img/unk_flag.png" loading="lazy"/>
+						</span>
 					</div>
 				</li>
 			</ul>
@@ -134,7 +141,9 @@
 
 							<name>
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
-								<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag" loading="lazy"/>
+								<span class="flag {{IfElse( server.flag == 'unknown', 'noflag', '' )}}">
+									<img ng-if="server.flag != 'unknown'" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" loading="lazy"/>
+								</span>
 								<img class="passworded" src='img/server-passworded.png' ng-show="server.pass" loading="lazy"/>
 								<span>{{ServerName(server)}}
 									<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
