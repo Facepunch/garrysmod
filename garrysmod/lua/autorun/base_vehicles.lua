@@ -53,19 +53,25 @@ AddVehicle( {
 	}
 }, "Pod" )
 
-AddVehicle( {
-	Name = "#spawnmenu.vehicle.jalopy",
-	Model = "models/vehicle.mdl",
-	Class = "prop_vehicle_jeep",
-	Category = Category,
+if ( IsMounted( "ep2" ) ) then
+	AddVehicle( {
+		Name = "#spawnmenu.seat.jalopy",
+		Model = "models/nova/jalopy_seat.mdl",
+		Class = "prop_vehicle_prisoner_pod",
+		Category = Category,
 
-	Author = "VALVe",
-	Information = "The muscle car from Episode 2",
+		Author = "VALVe",
+		Information = "A seat from VALVe's Jalopy",
 
-	KeyValues = {
-		vehiclescript = "scripts/vehicles/jalopy.txt"
-	}
-}, "Jalopy" )
+		KeyValues = {
+			vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+			limitview = "0"
+		},
+		Members = {
+			HandleAnimation = HandleRollercoasterAnimation,
+		}
+	}, "Seat_Jalopy" )
+end
 
 Category = "#spawnmenu.category.chairs"
 
