@@ -18,3 +18,11 @@ function ents.FindByClassAndParent( classname, entity )
 	return out
 
 end
+
+function ents.FindInCube( center, radius )
+
+	local rvec = Vector( radius, radius, radius )
+
+	return ents.FindInBox( center - rvec, center + rvec )
+
+end
