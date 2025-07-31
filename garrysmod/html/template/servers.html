@@ -41,7 +41,8 @@
 					<input ng-model="SVFilterMaxPing" type="number" class="smalltextbox" placeholder="2000"/><br/>
 					<input type="checkbox" id="sv_notfull" ng-model="SVFilterNotFull"/><label for="sv_notfull" ng-tranny="'svfltr_not_full'"></label><br>
 					<input type="checkbox" id="sv_notempty" ng-model="SVFilterHasPly"/><label for="sv_notempty" ng-tranny="'svfltr_has_players'"></label><br>
-					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass" ng-tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/>
+					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass" ng-tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/><br>
+					<input type="checkbox" id="sv_outdated" ng-model="SVFilterHideOutdated"/><label for="sv_outdated" ng-tranny="'svfltr_outdated'"></label>
 
 					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">
 						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" ng-src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )" loading="lazy"/>
