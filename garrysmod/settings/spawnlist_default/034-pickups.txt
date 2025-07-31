@@ -158,6 +158,6 @@
 			"model"		"models/items/currencypack_small.mdl"
 		}
 	}
-	"name"		"Pickups"
+	"name"		"#spawnmenu.spawnlist.pickups"
 	"version"		"3"
 }
