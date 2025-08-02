@@ -67,5 +67,6 @@ end
 --
 list.Set( "NPC", "npc_tf2_ghost", {
 	Name = "Example NPC",
-	Class = "npc_tf2_ghost"
+	Class = "npc_tf2_ghost",
+	IconOverride = "entities/npc_mossman.png"
 } )
