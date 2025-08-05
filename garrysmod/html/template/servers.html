@@ -33,15 +33,15 @@
 					<input type="text" ng-model="GMSearch" class="gm_search" ng-tranny="'gmsearch_placeholder'" /><br/>
 				</li>
 				<li class="sb_filters" ng-show="CurrentGamemode != null">
-					<label ng-tranny="'svfltr_ply_limit'"></label><br/>
-					<input ng-model="SVFilterPlyMin" type="number" class="smalltextbox" placeholder="0`"/>
+					<label for="SVFilterPlyMin" ng-tranny="'svfltr_ply_limit'"></label><br/>
+					<input id="SVFilterPlyMin" ng-model="SVFilterPlyMin" type="number" class="smalltextbox" placeholder="0" min="0" max="128" step="8"/>
 					&nbsp;-&nbsp;
-					<input ng-model="SVFilterPlyMax" type="number" class="smalltextbox" placeholder="128"/><br/>
-					<label ng-tranny="'svfltr_ping_limit'"></label><br/>
-					<input ng-model="SVFilterMaxPing" type="number" class="smalltextbox" placeholder="2000"/><br/>
+					<input ng-model="SVFilterPlyMax" type="number" class="smalltextbox" placeholder="128" min="0" max="128" step="8"/><br/>
+					<label for="SVFilterMaxPing" ng-tranny="'svfltr_ping_limit'"></label><br/>
+					<input id="SVFilterMaxPing" ng-model="SVFilterMaxPing" type="number" class="smalltextbox" placeholder="2000" min="0" max="2500" step="20"/><br/>
 					<input type="checkbox" id="sv_notfull" ng-model="SVFilterNotFull"/><label for="sv_notfull" ng-tranny="'svfltr_not_full'"></label><br>
 					<input type="checkbox" id="sv_notempty" ng-model="SVFilterHasPly"/><label for="sv_notempty" ng-tranny="'svfltr_has_players'"></label><br>
-					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass" ng-tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/><br>
+					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass"><span ng-tranny="'svfltr_no_password'"></span> <img class="passworded" src='img/server-passworded.png'/></label><br>
 					<input type="checkbox" id="sv_outdated" ng-model="SVFilterHideOutdated"/><label for="sv_outdated" ng-tranny="'svfltr_outdated'"></label>
 
 					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">

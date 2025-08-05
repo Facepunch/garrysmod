@@ -625,8 +625,13 @@ DIV.page DIV.options UL LI.sb_filters
 DIV.page DIV.options UL LI.sb_filter_sep
 {
 	border-top: 1px solid white;
+	box-shadow: 1px 1px 1px black;
 	margin-right: 42px;
 	margin-bottom: 24px;
+}
+DIV.page DIV.options UL LI.sb_filters .passworded
+{
+	vertical-align: text-top;
 }
 .gmfilter_rev
 {
