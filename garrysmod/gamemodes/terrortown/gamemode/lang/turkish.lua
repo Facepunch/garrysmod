@@ -75,14 +75,14 @@ L.equip_help_cost = "Satın aldığınız her ekipman parçası 1 krediye mal ol
 
 L.equip_help_carry = "Yalnızca yeriniz olduğunda bir şeyler satın alabilirsiniz."
 L.equip_carry = "Bu ekipmanı taşıyabilirsiniz."
-L.equip_carry_own = "Bu öğeyi zaten taşıyorsunuz."
+L.equip_carry_own = "Bu ögeyi zaten taşıyorsunuz."
 L.equip_carry_slot = "{slot} yuvasında zaten bir silah taşıyorsun."
 
-L.equip_help_stock = "Belirli öğelerden her rauntta yalnızca bir tane satın alabilirsiniz."
+L.equip_help_stock = "Belirli ögelerden her rauntta yalnızca bir tane satın alabilirsiniz."
 L.equip_stock_deny = "Bu ürün artık stokta yok."
 L.equip_stock_ok = "Bu ürün stokta mevcut."
 
-L.equip_custom = "Bu sunucu tarafından eklenen özel öğedir."
+L.equip_custom = "Bu sunucu tarafından eklenen özel ögedir."
 
 L.equip_spec_name = "Ad"
 L.equip_spec_type = "Tür"
@@ -288,8 +288,8 @@ L.disg_turned_on = "Kılık değiştirme etkinleştirildi!"
 L.disg_turned_off = "Kılık değiştirme devre dışı."
 
 -- Equipment item descriptions
-L.item_passive = "Pasif etki öğesi"
-L.item_active = "Aktif kullanım öğesi"
+L.item_passive = "Pasif etki ögesi"
+L.item_active = "Aktif kullanım ögesi"
 L.item_weapon = "Silah"
 
 L.item_armor = "Vücut Zırhı"
@@ -325,7 +325,7 @@ L.c4_desc = "Güçlü zaman ayarlı patlayıcı."
 
 L.c4_arm = "C4'ü kur"
 L.c4_arm_timer = "Zamanlayıcı"
-L.c4_arm_seconds = "Patlamaya saniye kaldı:"
+L.c4_arm_seconds = "Patlamaya:"
 L.c4_arm_attempts = "Etkisiz hale getirme girişimlerinde, 6 telden {num} tanesi kesildiğinde anında patlamaya neden olur."
 
 L.c4_remove_title = "Kaldırma"
@@ -638,7 +638,7 @@ Bunlar senin yoldaşların
  Ekipmanınızı almak için {menukey} tuşuna basın!]]
 
 -- Various other text
-L.name_kick = "Rauntta bir oyuncu ismini değiştirdiği için otomatik olarak atıldı."
+L.name_kick = "Rauntta bir oyuncu adını değiştirdiği için otomatik olarak atıldı."
 
 L.idle_popup = [[{num} saniye boyunca boştaydın ve sonuç olarak yalnızca İzleyici moduna geçtin. Bu moddayken, yeni bir raunt başladığında oyuna başlamayacaksın.
 
@@ -682,7 +682,7 @@ L.tip10 = "Hain veya Dedektifseniz, sağ üstteki kırmızı mesajlara dikkat ed
 
 L.tip11 = "Hain veya Dedektif olarak, siz ve yoldaşlarınız iyi performans gösterirseniz ekstra ekipman kredisi ile ödüllendirileceğinizi unutmayın. Harcamayı unutmayın!"
 
-L.tip12 = "Dedektiflerin DNA Tarayıcısı, silahlardan ve öğelerden DNA örnekleri toplamak ve daha sonra bunları kullanan oyuncunun yerini bulmak için tarama yapmak için kullanılabilir. Bir cesetten veya etkisiz hale getirilmiş bir C4'ten numune alabildiğinizde kullanışlıdır!"
+L.tip12 = "Dedektiflerin DNA Tarayıcısı, silahlardan ve ögelerden DNA örnekleri toplamak ve daha sonra bunları kullanan oyuncunun yerini bulmak için tarama yapmak için kullanılabilir. Bir cesetten veya etkisiz hale getirilmiş bir C4'ten numune alabildiğinizde kullanışlıdır!"
 
 L.tip13 = "Öldürdüğünüz birine yakın olduğunuzda, DNA'nızın bir kısmı cesedin üzerinde kalır. Bu DNA, mevcut konumunuzu bulmak için bir Dedektifin DNA Tarayıcısı ile kullanılabilir. Birini bıçakladıktan sonra cesedi saklasan iyi olur!"
 
@@ -734,7 +734,7 @@ L.tip36 = "{helpkey} altında bulunan öğretici, oyunun en önemli ince ayrınt
 
 L.tip37 = "Puan tablosunda, yaşayan bir oyuncunun adına tıklayıp 'şüpheli' veya 'arkadaş' gibi bir etiket seçebilirsiniz. Bu etiket, nişangâhınızın altındaysa görünecektir."
 
-L.tip38 = "Yerleştirilebilir ekipman öğelerinin çoğu (C4, Radyo gibi) ikincil ateş kullanılarak duvarlara yapıştırılabilir."
+L.tip38 = "Yerleştirilebilir ekipman ögelerinin çoğu (C4, Radyo gibi) ikincil ateş kullanılarak duvarlara yapıştırılabilir."
 
 L.tip39 = "Etkisiz hale getirilirken bir hata nedeniyle patlayan C4, zamanlayıcısında sıfıra ulaşan C4'ten daha küçük bir patlamaya sahiptir."
 
@@ -791,16 +791,16 @@ L.ev_sui_using   = "{victim}, {tool} kullanarak kendini öldürdü"
 
 L.ev_fall        = "{victim} ölümüne düştü"
 L.ev_fall_pushed = "{victim}, {attacker} onları ittikten sonra ölümüne düştü"
-L.ev_fall_pushed_using = "{victim}, {attacker} onları itmek için {trap} kullandıktan sonra ölümüne düştü "
+L.ev_fall_pushed_using = "{victim}, {attacker} onları itmek için {trap} kullandıktan sonra ölümüne düştü"
 
 L.ev_shot        = "{victim} {attacker} tarafından vuruldu"
-L.ev_shot_using  = "{victim} bir {weapon} kullanarak {attacker} tarafından vuruldu"
+L.ev_shot_using  = "{victim} bir {weapon} kullanılarak {attacker} tarafından vuruldu"
 
 L.ev_drown       = "{victim}, {attacker} tarafından boğuldu"
 L.ev_drown_using = "{victim}, {attacker} tarafından tetiklenen {trap} tarafından boğuldu"
 
 L.ev_boom        = "{victim}, {attacker} tarafından patlatıldı"
-L.ev_boom_using  = "{victim}, {trap} kullanılarak {attacker} tarafından havaya uçuruldu "
+L.ev_boom_using  = "{victim}, {trap} kullanılarak {attacker} tarafından havaya uçuruldu"
 
 L.ev_burn        = "{victim} {attacker} tarafından kızartıldı"
 L.ev_burn_using  = "{victim}, {attacker} nedeniyle {trap} tarafından yakıldı"
@@ -812,7 +812,7 @@ L.ev_slash       = "{victim}, {attacker} tarafından bıçaklandı"
 L.ev_slash_using = "{victim}, {trap} kullanılarak {attacker} tarafından kesildi"
 
 L.ev_tele        = "{victim} {attacker} tarafından ışınlanarak öldürüldü"
-L.ev_tele_using  = "{victim}, {attacker} tarafından ayarlanan {trap} tarafından atomize edildi"
+L.ev_tele_using  = "{victim}, {attacker} tarafından ayarlanan {trap} ile atomize edildi"
 
 L.ev_goomba      = "{victim}, {attacker} ağır cüssesiyle ezildi"
 
@@ -824,7 +824,7 @@ L.ev_other_using = "{victim}, {trap} kullanılarak {attacker} tarafından öldü
 
 -- Other events
 L.ev_body        = "{victim} cesedini {finder} buldu"
-L.ev_c4_plant    = "C4'ü {player} kurdu"
+L.ev_c4_plant    = "{player} C4 kurdu"
 L.ev_c4_boom     = "{player} tarafından kurulan C4 patladı"
 L.ev_c4_disarm1  = "{player}, {owner} tarafından kurulan C4'ü etkisiz hale getirdi"
 L.ev_c4_disarm2  = "{player}, {owner} tarafından kurulan C4'ü etkisiz hale getiremedi"
@@ -867,7 +867,7 @@ L.aw_all1_text = "bu rauntta masumlar tarafından yapılan her cinayetten soruml
 L.aw_all2_title = "Yalnız Kurt"
 L.aw_all2_text = "bu rauntta bir hain tarafından yapılan her cinayetten sorumluydu."
 
-L.aw_nkt1_title = "Birini Aldım Patron!"
+L.aw_nkt1_title = "Birini İndirdim Patron!"
 L.aw_nkt1_text = "tek bir masumu öldürmeyi başardı. Güzel!"
 
 L.aw_nkt2_title = "İki Kişilik Kurşun"
@@ -1069,9 +1069,9 @@ L.knife_instant = "ANINDA ÖLDÜRME"
 
 L.dna_hud_type = "TÜR"
 L.dna_hud_body = "CESET"
-L.dna_hud_item = "ÖĞE"
+L.dna_hud_item = "ÖGE"
 
-L.binoc_zoom_level = "SEVİYE"
+L.binoc_zoom_level = "DÜZEY"
 L.binoc_body = "CESET ALGILANDI"
 
 L.idle_popup_title = "Boşta"
