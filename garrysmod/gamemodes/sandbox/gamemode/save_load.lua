@@ -77,6 +77,7 @@ if ( SERVER ) then
 		local ply = nil
 		if ( IsValid( Entity( 1 ) ) && ( game.SinglePlayer() || Entity( 1 ):IsListenServerHost() ) ) then ply = Entity( 1 ) end
 		if ( !IsValid( ply ) && #player.GetHumans() == 1 ) then ply = player.GetHumans()[ 1 ] end
+		if ( game.IsDedicated() ) then ply = nil end -- For dedicated servers, we don't want it to latch to some random player
 
 		gmsave.LoadMap( savedata, ply )
 
