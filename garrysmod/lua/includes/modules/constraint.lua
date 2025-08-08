@@ -325,6 +325,7 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 
 	rope:SetPos( Pos )
 	rope:SetKeyValue( "Width", width )
+	rope:SetKeyValue( "TextureScale", "1.6" ) -- Preserve old scaling before 28 July 2025
 
 	if ( isstring( material ) ) then
 		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
