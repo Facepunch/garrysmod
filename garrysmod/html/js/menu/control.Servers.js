@@ -111,7 +111,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			lua.Run( "GetPlayerList( %s )", server.address );
 			lua.Run( "PingServer( %s )", server.address );
 		}, 10000 );
-
 	}
 
 	$scope.SelectGamemode = function( gm )
