@@ -683,10 +683,10 @@
 
 @BaseClass color(180 10 180) base(LightInputs) = Light
 [
-	_light(color255) : "Brightness" : "255 255 255 200"
-	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
-	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
-	style(Choices) : "Appearance" : 0 =
+	_light(color255) : "Color and Brightness" : "255 255 255 200" : "Color (RGB) and Brightness (W) for this light. Last number is the brightness."
+	_lightHDR(color255) : "Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_lightscaleHDR(float) : "HDR Brightness scale" : "1" : "Amount to scale the light by when compiling for HDR."
+	style(Choices) : "Appearance" : 0 : "Preset flashing patterns for the light." =
 	[
 		0 : "Normal"
 		10: "Fluorescent flicker"
@@ -3097,11 +3097,11 @@
 [
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	_light(color255) : "Brightness and Color" : "255 255 255 200" : "The sunlight color. Last number is the brightness."
+	_lightHDR(color255) : "Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_lightscaleHDR(float) : "HDR Brightness Scale" : "1" : "Amount to scale the light by when compiling for HDR."
 	_ambient(color255) : "Ambient Color and Brightness" : "255 255 255 20" : "The ambient color of the map, in the shadows/caves where there is no direct sunlight. Last number is the brightness."
-	_lightHDR(color255) : "Brightness (HDR)" : "-1 -1 -1 1"
-	_lightscaleHDR(float) : "Brightness Scale (HDR)" : "1" : "Amount to scale the light by when compiling for HDR."
-	_ambientHDR(color255) : "Ambient (HDR)" : "-1 -1 -1 1"
-	_AmbientScaleHDR(float) : "Ambient Scale (HDR)" : "1" : "Amount to scale the ambient light by when compiling for hdr."
+	_ambientHDR(color255) : "Ambient Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_AmbientScaleHDR(float) : "HDR Ambient Brightness Scale" : "1" : "Amount to scale the ambient light by when compiling for hdr."
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	SunSpreadAngle(float) : "Sun Spread Angle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
 
@@ -3112,10 +3112,10 @@
 	"A directional light with no falloff. Similar to sunlight in light_environment."
 [
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
-	_light(color255) : "Brightness" : "255 255 255 200"
-	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
-	_lightscaleHDR(float) : "BrightnessScaleHDR" : "0.7" : "Amount to scale the light by when compiling for HDR."
-	SunSpreadAngle(float) : "SpreadAngle" : 0 : "The angular extent of the light for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+	_light(color255) : "Color and Brightness" : "255 255 255 200" : "Color (RGB) and Brightness (W) for this light. Last number is the brightness."
+	_lightHDR(color255) : "Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_lightscaleHDR(float) : "HDR Brightness Scale" : "0.7" : "Amount to scale the light by when compiling for HDR."
+	SunSpreadAngle(float) : "Sun Spread Angle" : 0 : "The angular extent of the light for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
 ]
 
 @PointClass base(Targetname, Angles, Light) lightprop("models/editor/spot.mdl") lightcone() sphere(_fifty_percent_distance) sphere(_zero_percent_distance) = light_spot :
@@ -3954,6 +3954,8 @@
 		0 : "No"
 		1 : "Yes"
 	]
+
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 
 	spawnflags(flags) =
 	[
