@@ -51,38 +51,38 @@
 				<div class="scrollable" style="margin: 10px; bottom: 80px; top: 32px">
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<label ng-Tranny="'server_name'"></label>
-						<input type="text" ng-model="ServerSettings.hostname" />
+						<label for="ServerSettings_hostname" ng-Tranny="'server_name'"></label>
+						<input id="ServerSettings_hostname" type="text" ng-model="ServerSettings.hostname" />
 					</div>
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<input type="checkbox" ng-model="ServerSettings.sv_lan" ng-bind="CheckboxCheck()" />
-						<label ng-Tranny="'lan_server'"></label>
+						<input id="ServerSettings_sv_lan" type="checkbox" ng-model="ServerSettings.sv_lan" ng-bind="CheckboxCheck()" />
+						<label for="ServerSettings_sv_lan" ng-Tranny="'lan_server'"></label>
 					</div>
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<input type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-bind="CheckboxCheck()" />
-						<label ng-Tranny="'p2p_server'"></label>
+						<input id="ServerSettings_p2p_enabled" type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-bind="CheckboxCheck()" />
+						<label for="ServerSettings_p2p_enabled" ng-Tranny="'p2p_server'"></label>
 					</div>
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<input type="checkbox" ng-model="ServerSettings.p2p_friendsonly" id="p2p_friendsonly" />
-						<label ng-Tranny="'p2p_server_friendsonly'"></label>
+						<input id="p2p_friendsonly" type="checkbox" ng-model="ServerSettings.p2p_friendsonly"/>
+						<label for="p2p_friendsonly" ng-Tranny="'p2p_server_friendsonly'"></label>
 					</div>
 
 					<div class='control control-text' ng-repeat="s in ServerSettings.Text" ng-show="MaxPlayers > 1 || s.Singleplayer">
-						<label ng-Tranny="s.text"></label>
-						<input type="text" ng-model="s.Value"/>
+						<label for="ServerSettings_text_{{s.name}}" ng-Tranny="s.text"></label>
+						<input id="ServerSettings_text_{{s.name}}" type="text" ng-model="s.Value"/>
 					</div>
 
 					<div class='control control-numeric' ng-repeat="s in ServerSettings.Numeric" ng-show="MaxPlayers > 1 || s.Singleplayer">
-						<label ng-Tranny="s.text"></label>
-						<input type="text" ng-model="s.Value"/>
+						<label for="ServerSettings_num_{{s.name}}" ng-Tranny="s.text"></label>
+						<input id="ServerSettings_num_{{s.name}}" type="text" ng-model="s.Value"/>
 					</div>
 
 					<div class='control' ng-repeat="s in ServerSettings.CheckBox" ng-show="MaxPlayers > 1 || s.Singleplayer">
-						<input type="checkbox" ng-model="s.Value" />
-						<label ng-Tranny="s.text"></label>
+						<input id="ServerSettings_check_{{s.name}}" type="checkbox" ng-model="s.Value" />
+						<label for="ServerSettings_check_{{s.name}}" ng-Tranny="s.text"></label>
 					</div>
 
 				</div>
