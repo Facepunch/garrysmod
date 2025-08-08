@@ -412,28 +412,36 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		subMenu:AddOption( "#menubar.npcs.noweapon", function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, "" ) end ):SetIcon( "icon16/cross.png" )
 
 		-- Kind of a hack!
+		local CustomIcons = list.Get( "ContentCategoryIcons" )
 		local function addWeps( subm, weps )
 			if ( table.Count( weps ) < 1 ) then return end
 
-			subMenu:AddSpacer()
-			for title, class in SortedPairs( weps ) do
-				subMenu:AddOption( title, function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, class ) end ):SetIcon( "icon16/gun.png" )
+			subm:AddSpacer()
+			for title, info in SortedPairs( weps ) do
+				subm:AddOption( title, function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, info.class ) end ):SetIcon( info.icon )
 			end
 		end
 
 		local weaps = {}
 		for _, class in pairs( obj.weapon ) do
 			if ( class == "" ) then continue end
-			weaps[ language.GetPhrase( class ) ] = class
+			weaps[ language.GetPhrase( class ) ] = { class = class, icon = "icon16/gun.png" }
 		end
 		addWeps( subMenu, weaps )
 
-		local weaps = {}
-		for _, t in pairs( list.Get( "NPCUsableWeapons" ) ) do
-			if ( table.HasValue( obj.weapon, t.class ) ) then continue end
-			weaps[ language.GetPhrase( t.title ) ] = t.class
+		-- Sort the items by name, and group by category
+		local groupedWeps = {}
+		for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+			if ( table.HasValue( obj.weapon, v.class ) ) then continue end
+	
+			local cat = ( v.category or "" ):lower()
+			groupedWeps[ cat ] = groupedWeps[ cat ] or {}
+			groupedWeps[ cat ][ language.GetPhrase( v.title ) ] = { class = v.class, icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
 		end
-		addWeps( subMenu, weaps )
+		for group, items in SortedPairs( groupedWeps ) do
+			subMenu:AddSpacer()
+			addWeps( subMenu, items )
+		end
 
 	end
 	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
