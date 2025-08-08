@@ -237,7 +237,7 @@ L.help_settings = "Ayarlar"
 L.help_settings_tip = "Kullanıcı tarafı ayarları"
 
 -- Settings
-L.set_title_gui = "Arayüz ayarları"
+L.set_title_gui = "Arayüz Ayarları"
 
 L.set_tips      = "İzlerken ekranın alt kısmında oyun ipuçlarını göster"
 
@@ -260,7 +260,7 @@ L.set_cues            = "Bir raunt başladığında veya bittiğinde ses işaret
 L.set_msg_cue         = "Bir bildirim göründüğünde ses işaretini çal"
 
 
-L.set_title_play    = "Oynanış ayarları"
+L.set_title_play    = "Oynanış Ayarları"
 
 L.set_specmode      = "Yalnızca İzleme modu (her zaman izleyici olarak kal)"
 L.set_specmode_tip  = "Yalnızca İzleme modu, yeni bir raunt başladığında yeniden canlanmanı önleyecek, bunun yerine İzleyici olarak kalacaksın."
@@ -463,7 +463,7 @@ SMG.
 Standart HMS cephanesi kullanır.]]
 
 -- DNA scanner
-L.dna_name        = "DNA tarayıcı"
+L.dna_name        = "DNA Tarayıcı"
 L.dna_identify    = "Katilin DNA'sını almak için ceset teşhis edilmelidir."
 L.dna_notfound    = "Hedefte DNA örneği bulunamadı."
 L.dna_limit       = "Depolama sınırına ulaşıldı. Yenilerini eklemek için eski numuneleri kaldırın."
@@ -481,7 +481,7 @@ ve bunları DNA'nın sahibini bulmak için kullanın.
 Katilin DNA'sını almak için taze cesetler üzerinde kullanın
 ve onları takip edin.]]
 
-L.dna_menu_title  = "DNA tarama kontrolleri"
+L.dna_menu_title  = "DNA Tarama Kontrolleri"
 L.dna_menu_sample = "{source} üzerinde bulunan DNA örneği"
 L.dna_menu_remove = "Seçilenleri kaldır"
 L.dna_menu_help1  = "Bunlar topladığın DNA örnekleri."
@@ -500,12 +500,12 @@ L.dna_help_primary   = "DNA örneği almak için {primaryfire}"
 L.dna_help_secondary = "Tarama kontrollerini açmak için {secondaryfire}"
 
 -- Magneto stick
-L.magnet_name     = "Manyeto çubuğu"
+L.magnet_name     = "Manyeto Çubuğu"
 L.magnet_help     = "Cesedi yüzeye tutturmak için {primaryfire}"
 
 -- Grenades and misc
-L.grenade_smoke   = "Duman bombası"
-L.grenade_fire    = "Yakıcı bomba"
+L.grenade_smoke   = "Duman Bombası"
+L.grenade_fire    = "Yakıcı Bomba"
 
 L.unarmed_name    = "Gizlendi"
 L.crowbar_name    = "Levye"
@@ -519,7 +519,7 @@ L.tele_failed     = "Işınlama başarısız oldu."
 L.tele_marked     = "Işınlanma konumu işaretlendi."
 
 L.tele_no_ground  = "Sağlam bir zemin üzerinde durmadan ışınlanamazsın!"
-L.tele_no_crouch  = "Çömelmişken ışınlanamazsın!"
+L.tele_no_crouch  = "Çömelirken ışınlanamazsın!"
 L.tele_no_mark    = "Konum işaretlenmedi. Işınlanmadan önce varış noktasını işaretleyin."
 
 L.tele_no_mark_ground = "Sağlam bir zemin üzerinde durmadan ışınlanamazsın!"
