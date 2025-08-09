@@ -413,6 +413,6 @@
 			"model"		"models/props_phx/facepunch_barrel.mdl"
 		}
 	}
-	"name"		"Builder"
+	"name"		"#spawnmenu.spawnlist.builder"
 	"version"		"3"
 }
