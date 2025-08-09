@@ -58,8 +58,8 @@
 		<div class="button" ng-show="InGame" ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></div>
 		-->
 		<div class="button bigicon" ng-show="InGame" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span ng-Tranny="'back_to_game'"></span></a></div>
-		<div class="button bigicon hidelabel" ng-hide="!ShowFavButton || IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Tranny="'favorite_this_server'"></span></a></div>
-		<div class="button bigicon hidelabel" ng-show="ShowFavButton && !IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Tranny="'unfavorite_this_server'"></span></a></div>
+		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && !IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Tranny="'favorite_this_server'"></span></a></div>
+		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Tranny="'unfavorite_this_server'"></span></a></div>
 	</div>
 	
 	<div class="group right">
