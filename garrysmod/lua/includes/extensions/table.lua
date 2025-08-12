@@ -778,6 +778,27 @@ function table.Flip( tab )
 
 end
 
+function table.SwapRemove( tab, index )
+
+	local res = tab[ index ]
+	local len = #tab
+
+	tab[ index ] = tab[ len ]
+	tab[ len ] = nil
+
+	return res
+
+end
+
+function table.Swap( tab, key1, key2 )
+
+	local tmp = tab[ key1 ]
+
+	tab[ key1 ] = tab[ key2 ]
+	tab[ key2 ] = tmp
+
+end
+
 -- Polyfill for table.move on 32-bit
 -- Don't forget to remove this when it's no longer necessary
 if ( !table.move ) then
