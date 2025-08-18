@@ -116,49 +116,20 @@ function HWBToColor( h, w, b )
 
 end
 
-local hex_to_dec = {}
-for code = 48, 57 do hex_to_dec[ code ] = code - 48 end  -- '0'–'9'
-for code = 65, 70 do hex_to_dec[ code ] = code - 55 end  -- 'A'–'F'
-for code = 97, 102 do hex_to_dec[ code ] = code - 87 end -- 'a'–'f'
 
-function HexToColor( hex )
 
-	local idx = string.byte( hex, 1 ) == 35 and 2 or 1 -- '#' check without allocation
-	local len = #hex - ( idx - 1 )
+function HexToColor(hex, alpha)
+    alpha = alpha or 255
 
-	if ( len == 3 or len == 4 ) then
+    hex = hex:gsub("#", "")
 
-		local r, g, b, a = string.byte( hex, idx, idx + len - 1 )
-		r = hex_to_dec[ r ]
-		g = hex_to_dec[ g ]
-		b = hex_to_dec[ b ]
-		a = a and hex_to_dec[ a ] or 15
+    local r = tonumber(hex:sub(1, 2), 16)
+    local g = tonumber(hex:sub(3, 4), 16)
+    local b = tonumber(hex:sub(5, 6), 16)
 
-		if !( r and g and b and a ) then
-			return error( "invalid hex input: " .. hex )
-		end
-
-		return Color( r * 16 + r, g * 16 + g, b * 16 + b, a * 16 + a )
-
-	elseif ( len == 6 or len == 8 ) then
-
-		local r1, r2, g1, g2, b1, b2, a1, a2 = string.byte( hex, idx, idx + len - 1 )
-		r1, r2 = hex_to_dec[ r1 ], hex_to_dec[ r2 ]
-		g1, g2 = hex_to_dec[ g1 ], hex_to_dec[ g2 ]
-		b1, b2 = hex_to_dec[ b1 ], hex_to_dec[ b2 ]
-		a1, a2 = a1 and hex_to_dec[ a1 ] or 15, a2 and hex_to_dec[ a2 ] or 15
-
-		if !( r1 and r2 and g1 and g2 and b1 and b2 and a1 and a2 ) then
-			return error( "invalid hex input: " .. hex )
-		end
-
-		return Color( r1 * 16 + r2, g1 * 16 + g2, b1 * 16 + b2, a1 * 16 + a2 )
-
-	end
-
-	return error( "invalid hex input: " .. hex )
-
+    return Color(r, g, b, alpha)
 end
+
 
 --[[---------------------------------------------------------
 	Returns color as a string
@@ -425,3 +396,4 @@ function COLOR:AddBlackness( blacknessAdd )
 	ColorCopy( self, HWBToColor( hue, whiteness, blackness ) )
 
 end
+
