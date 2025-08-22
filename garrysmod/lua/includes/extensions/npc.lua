@@ -1,4 +1,4 @@
-local meta = FindMetaTable("NPC")
+local meta = FindMetaTable( "NPC" )
 if ( !meta ) then return end
 
 function meta:HasCapability( cap )

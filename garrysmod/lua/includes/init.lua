@@ -110,6 +110,7 @@ include( "extensions/game.lua" )
 include( "extensions/motionsensor.lua" )
 include( "extensions/weapon.lua" )
 include( "extensions/coroutine.lua" )
+include( "extensions/npc.lua")
 
 if ( CLIENT ) then
 
