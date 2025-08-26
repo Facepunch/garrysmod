@@ -120,9 +120,9 @@ local function MsgKey( k, indent, compact, noPretty )
 	elseif ( IsValidKeyName( k ) ) then
 		MsgC( indent, white, k, red, noPretty and "=" or " = " )
 	elseif noPretty then
-		MsgC( indent, red, "[", yellow, "\"", k, yellow, "\"", red, compact and "]=" or " ]=" )
+		MsgC( indent, red, compact and "[" or "[ ", yellow, "\"", k, yellow, "\"", red, compact and "]=" or " ]=" )
 	else
-		MsgC( indent, red, "[ ", yellow, "\"", k, yellow, "\"", red, compact and "] = " or " ] = " )
+		MsgC( indent, red, compact and "[" or "[ ", yellow, "\"", k, yellow, "\"", red, compact and "] = " or " ] = " )
 	end
 end
 
