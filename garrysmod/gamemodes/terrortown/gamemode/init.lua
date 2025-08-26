@@ -205,10 +205,6 @@ function GM:Initialize()
       ErrorNoHalt("TTT WARNING: sv_alltalk is enabled. Dead players will be able to talk to living players. TTT will now attempt to set sv_alltalk 0.\n")
       RunConsoleCommand("sv_alltalk", "0")
    end
-
-   if not IsMounted("cstrike") then
-      ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
-   end
 end
 
 -- Used to do this in Initialize, but server cfg has not always run yet by that
