@@ -115,6 +115,10 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		subscriptions.Unsubscribe( file.id );
 	}
+	$scope.SubscribeByID = function( fileId )
+	{
+		subscriptions.Subscribe( fileId );
+	}
 	$scope.UninstallAllSubscribed = function()
 	{
 		subscriptions.UnsubscribeAll();

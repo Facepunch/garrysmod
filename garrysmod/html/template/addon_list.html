@@ -246,7 +246,7 @@
 				<div ng-repeat="fileid in PopupMessageFiles" class="button {{IfElse( IsSubscribedID( fileid ), 'subbed', '' )}}">
 					<wstitle ng-click="OpenWorkshopFile( fileid )" id="wsid{{fileid}}" class="wstitle">{{fileid}}</wstitle>
 					<wsbut ng-show="IsSubscribedID( fileid )" class="wssub"><img src="img/tick.png" loading="lazy"/></wsbut>
-					<wsbut ng-hide="IsSubscribedID( fileid )" onclick="subscriptions.Subscribe( {{fileid}} );" class="wssub"><img src="img/plus.png" loading="lazy"></img></wsbut>
+					<wsbut ng-hide="IsSubscribedID( fileid )" ng-click="SubscribeByID( fileid );" class="wssub"><img src="img/plus.png" loading="lazy"></img></wsbut>
 				</div>
 			</div>
 
