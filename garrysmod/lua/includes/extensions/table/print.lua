@@ -43,17 +43,17 @@ end
 
 local gmodObjects = {}
 
-function gmodObjects.Player( v )
-	MsgC( cyan, "Player", white, "( ", purple, v:UserID(), white, " )" )
+function gmodObjects.Player( v, compact )
+	MsgC( cyan, "Player", white, compact and "(" or "( ", purple, v:UserID(), white, compact and ")" or " )" )
 end
 
-function gmodObjects.Entity( v )
-	MsgC( cyan, "Entity", white, "( ", purple, v:EntIndex(), white, " )" )
+function gmodObjects.Entity( v, compact )
+	MsgC( cyan, "Entity", white, compact and "(" or "( ", purple, v:EntIndex(), white, compact and ")" or " )" )
 end
 
 local gmodAxisObjects = { Vector = true, Angle = true }
 
-local function MsgValue( v )
+local function MsgValue( v, compact, noPretty )
 	if isstring( v ) then
 		if v:find( "\n", 1, true ) then
 			MsgC( yellow, "[[", v, "]]" )
@@ -61,38 +61,42 @@ local function MsgValue( v )
 			MsgC( yellow, "\"", v, "\"" )
 		end
 	elseif IsColor( v ) then
+		local separator = noPretty and "," or ", "
+
 		MsgC(
-			cyan, "Color", white, "( ",
-			purple, v.r, red, ", ",
-			purple, v.g, red, ", ",
+			cyan, "Color", white, compact and "(" or "( ",
+			purple, v.r, red, separator,
+			purple, v.g, red, separator,
 			purple, v.b
 		)
 
 		if v.a ~= 255 then
 			MsgC(
-				red, ", ",
+				red, separator,
 				purple, v.a
 			)
 		end
 
-		MsgC( white, " )" )
+		MsgC( white, compact and ")" or " )" )
 	elseif gmodObjects[ type( v ) ] then
-		gmodObjects[ type( v ) ]( v )
+		gmodObjects[ type( v ) ]( v, compact )
 	elseif gmodAxisObjects[ type( v ) ] then
+		local separator = noPretty and "," or ", "
+
 		MsgC(
-			cyan, type( v ), white, "( ",
+			cyan, type( v ), white, compact and "(" or "( ",
 			purple, Round( v[ 1 ] )
 		)
 
 		if v[ 2 ] ~= 0 then
-			MsgC( red, ", ", purple, Round( v[ 2 ] ) )
+			MsgC( red, separator, purple, Round( v[ 2 ] ) )
 		end
 
 		if v[ 3 ] ~= 0 then
-			MsgC( red, ", ", purple, Round( v[ 3 ] ) )
+			MsgC( red, separator, purple, Round( v[ 3 ] ) )
 		end
 
-		MsgC( white, " )" )
+		MsgC( white, compact and ")" or " )" )
 	elseif isfunction( v ) then
 		local info = debug.getinfo( v )
 		local defined = info.linedefined == info.lastlinedefined and info.linedefined or info.linedefined .. "-" .. info.lastlinedefined
@@ -103,26 +107,33 @@ local function MsgValue( v )
 	end
 end
 
-local function MsgKey( indent, k )
+local function MsgKey( k, indent, compact, noPretty )
 	if ( isstring( k ) == false ) then
-		MsgC( indent, red, "[ " )
-		MsgValue( k )
-		MsgC( red, " ] = " )
+		MsgC( indent, red, compact and "[" or "[ " )
+		MsgValue( k, compact, noPretty )
+
+		if noPretty then
+			MsgC( red, compact and "]=" or " ]=" )
+		else
+			MsgC( red, compact and "] = " or " ] = " )
+		end
 	elseif ( IsValidKeyName( k ) ) then
-		MsgC( indent, white, k, red, " = " )
+		MsgC( indent, white, k, red, noPretty and "=" or " = " )
+	elseif noPretty then
+		MsgC( indent, red, "[", yellow, "\"", k, yellow, "\"", red, compact and "]=" or " ]=" )
 	else
-		MsgC( indent, red, "[ ", yellow, "\"", k, yellow, "\"", red, " ] = " )
+		MsgC( indent, red, "[ ", yellow, "\"", k, yellow, "\"", red, compact and "] = " or " ] = " )
 	end
 end
 
-local function tablePrint( tbl, _lvl, _done )
+local function tablePrint( tbl, compact, noPretty, _lvl, _done )
 	local len = 0
 	for _ in pairs( tbl ) do
 		len = len + 1
 	end
 
 	if ( len == 0 ) then
-		return MsgC( red, "{}\n" )
+		return MsgC( red, noPretty and "{}" or "{}\n" )
 	end
 
 	local isSeq = len == #tbl
@@ -149,18 +160,18 @@ local function tablePrint( tbl, _lvl, _done )
 	end
 
 	local iter = isSeq and ipairs or pairs
-	local indent = string.rep( "\t", _lvl )
-	local table_indent = string.rep( "\t", _lvl - 1 )
+	local indent = noPretty and "" or string.rep( "\t", _lvl )
+	local table_indent = noPretty and "" or string.rep( "\t", _lvl - 1 )
 	local i = 1
 
-	MsgC( red, "{\n" )
+	MsgC( red, noPretty and "{" or "{\n" )
 
 	for k, v in iter( tbl ) do
 		if ( isSeq ) then
 			Msg( indent )
 		else
 			k, v = v.k, v.v
-			MsgKey( indent, k )
+			MsgKey( k, indent, compact, noPretty )
 		end
 
 		if ( istable( v ) and IsColor( v ) == false ) then
@@ -168,16 +179,16 @@ local function tablePrint( tbl, _lvl, _done )
 				MsgC( purple, tostring( v ) )
 			else
 				_done[ v ] = true
-				tablePrint( v, _lvl + 1, _done )
+				tablePrint( v, compact, noPretty, _lvl + 1, _done )
 			end
 		else
-			MsgValue( v )
+			MsgValue( v, compact, noPretty )
 		end
 
 		if i == len then
-			Msg( "\n" )
+			if noPretty == false then Msg( "\n" ) end
 		else
-			MsgC( red, ",\n" )
+			MsgC( red, noPretty and "," or ",\n" )
 		end
 
 		i = i + 1
@@ -185,9 +196,9 @@ local function tablePrint( tbl, _lvl, _done )
 
 	MsgC( table_indent, red, "}" )
 
-	if ( _lvl == 1 ) then Msg( "\n" ) end
+	if ( _lvl == 1 and noPretty == false ) then Msg( "\n" ) end
 end
 
-function table.Print( tbl )
-	tablePrint( tbl, 1, { [ tbl ] = true } )
+function table.Print( tbl, compact, noPretty )
+	tablePrint( tbl, compact == true, noPretty == true, 1, { [ tbl ] = true } )
 end
