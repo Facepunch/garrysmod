@@ -357,6 +357,6 @@
 			"model"		"models/props_vehicles/carparts_muffler01a.mdl"
 		}
 	}
-	"name"		"Vehicles"
+	"name"		"#spawnmenu.spawnlist.vehicles"
 	"version"		"3"
 }
