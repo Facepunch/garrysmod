@@ -12,29 +12,32 @@ angular.module( 'tranny', [] )
 
 		var update = function()
 		{
-			var text = strName + " " + strSuffix;
 			
 			if ( !IN_ENGINE )
 			{
-				element.text( text );
-				element.attr( "placeholder", text );
+				set(strName);
 				return;
 			}
 
 			var outStr_old = languageCache[ strName ] || language.Update( strName, function( outStr )
 			{
 				languageCache[ strName ] = outStr;
-				var updatedText = outStr + " " + strSuffix;
-				element.text( updatedText );
-				element.attr( "placeholder", updatedText );
+				set(outStr);
 			} );
 
 			if ( outStr_old )
 			{
 				// Compatibility with Awesomium
 				languageCache[ strName ] = outStr_old;
-				var updatedText = outStr_old + " " + strSuffix;
-				element.text( updatedText );
+				set(outStr_old);
+			}
+		};
+		
+		var set = function(str)
+		{
+			var updatedText = str + " " + strSuffix;
+			element.text( updatedText );
+			if (element[0].placeholder !== undefined) {
 				element.attr( "placeholder", updatedText );
 			}
 		};
