@@ -196,7 +196,7 @@ function GM:OnChatTab( str )
 
 	if ( LastWord == nil ) then return str end
 
-	for k, v in ipairs( player.GetAll() ) do
+	for k, v in player.Iterator() do
 
 		local nickname = v:Nick()
 

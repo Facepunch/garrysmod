@@ -238,6 +238,7 @@ function PANEL:DoChildrenOrder()
 
 	local children = self.ChildNodes:GetChildren()
 	local last = #children
+	if ( last <= 0 ) then return end
 
 	for i = 1, (last - 1) do
 		children[i]:SetLastChild( false )

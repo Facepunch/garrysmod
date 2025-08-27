@@ -1,5 +1,24 @@
 
 --
+-- Hack for debug.getregistry
+--
+local meta = {}
+function meta.__index( self, key )
+	return FindMetaTable( key )
+end
+function meta.__newindex( self, key, value )
+	rawset( self, key, value )
+
+	if ( isstring( key ) and istable( value ) ) then
+		RegisterMetaTable( key, value )
+	end
+end
+
+local tbl = {}
+setmetatable( tbl, meta )
+function debug.getregistry() return tbl end
+
+--
 -- Seed the rand!
 --
 math.randomseed( os.time() )
@@ -13,7 +32,6 @@ Format = string.format
 -- Send C the flags for any materials we want to create
 --
 local C_Material = Material
-
 function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
@@ -27,6 +45,22 @@ function Material( name, words )
 	str = str .. (words:find("ignorez") and "1" or "0")
 
 	return C_Material( name, str )
+
+end
+
+local C_type = type
+function type( v )
+
+	local v_type = C_type( v )
+	if ( v_type != "userdata" ) then return v_type end
+
+	local metatable = getmetatable( v )
+	if ( !metatable ) then return "UserData" end
+
+	local metaName = metatable.MetaName
+	if ( C_type( metaName ) != "string" ) then return "UserData" end
+
+	return metaName
 
 end
 

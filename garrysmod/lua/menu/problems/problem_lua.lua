@@ -17,9 +17,10 @@ function PANEL:Init()
 	self:Dock( TOP )
 	self:DockMargin( 0, 0, 0, 1 )
 
-	self.CopyBtn = self:Add( "DImageButton" )
+	self.CopyBtn = self:Add( "DButton" )
 	self.CopyBtn:SetImage( "icon16/page_copy.png" )
-	self.CopyBtn:SetSize( 16, 16 )
+	self.CopyBtn:SetText( "#spawnmenu.menu.copy" )
+	self.CopyBtn:SizeToContentsX( 4 )
 	self.CopyBtn.DoClick = function( btm )
 		if ( !self.Problem ) then return end
 
@@ -75,12 +76,7 @@ function PANEL:Paint( w, h )
 
 	-- The error count
 	if ( count > 0 ) then
-		local txt = "x" .. count
-		surface.SetFont( "DermaMedium" )
-		local tW, tH = surface.GetTextSize( txt )
-		tW = tW
-
-		draw.SimpleText( txt, "DermaMedium", w - 16 - 16, h / 2, clr, draw.TEXT_ALIGN_RIGHT, draw.TEXT_ALIGN_CENTER )
+		draw.SimpleText( "x" .. count, "DermaMedium", w - 16 - 16, h / 2, clr, draw.TEXT_ALIGN_RIGHT, draw.TEXT_ALIGN_CENTER )
 	end
 
 	-- The error
@@ -269,15 +265,23 @@ function PANEL:ReceivedError( uid, err )
 	pnl:Setup( err )
 
 	if ( shouldSort ) then
-		local sorted = {}
-		for gid, epnl in pairs( self.ErrorPanels ) do
-			sorted[ epnl.Problem.firstOccurence ] = epnl
+		local sortedPanels = {}
+		local count = 0
+
+		for _, panel in pairs( self.ErrorPanels ) do
+			count = count + 1
+			sortedPanels[ count ] = {
+				time = panel.Problem.firstOccurence,
+				panel = panel
+			}
 		end
 
-		local z = 0
-		for sort, spnl in SortedPairs( sorted ) do
-			spnl:SetZPos( z )
-			z = z + 1
+		table.sort( sortedPanels, function( a, b )
+			return a.time < b.time
+		end )
+
+		for i = 1, count do
+			sortedPanels[ i ].panel:SetZPos( i - 1 )
 		end
 	end
 

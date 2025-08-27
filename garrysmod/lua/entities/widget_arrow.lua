@@ -102,7 +102,7 @@ function ENT:GetGrabPos( Pos, Forward )
 	local arrowdir = self:GetAngles():Forward()
 
 	local planepos = self:GetPos()
-	local planenrm = ( eye - planepos ):GetNormal()
+	local planenrm = ( eye - planepos ):GetNormalized()
 
 	local hitpos = util.IntersectRayWithPlane( eye, fwd, planepos, planenrm )
 	if ( !hitpos ) then return end

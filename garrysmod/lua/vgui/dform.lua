@@ -183,6 +183,14 @@ function PANEL:NumSlider( strLabel, strConVar, numMin, numMax, numDecimals )
 	left:SetConVar( strConVar )
 	left:SizeToContents()
 
+	if ( strConVar ) then
+		local cvar = GetConVar( strConVar )
+		if ( cvar ) then
+			local defaultValue = tonumber( cvar:GetDefault() )
+			if ( defaultValue ) then left:SetDefaultValue( defaultValue ) end
+		end
+	end
+
 	self:AddItem( left, nil )
 
 	return left

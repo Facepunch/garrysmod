@@ -18,6 +18,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	$scope.SVFilterHasPly = false;
 	$scope.SVFilterNotFull = false;
 	$scope.SVFilterHidePass = false;
+	$scope.SVFilterHideOutdated = false;
 	$scope.SVFilterMaxPing = 2000;
 	$scope.SVFilterPlyMin = 0;
 	$scope.SVFilterPlyMax = 128;
@@ -81,6 +82,13 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.SelectServer = function( server, event )
 	{
+		if ( server == null )
+		{
+			RootScope.CurrentGamemode.Selected = null;
+			clearInterval( UpdateInterval );
+			return;
+		}
+		
 		if ( event && event.which != 1 )
 		{
 			var txt = server.address;
@@ -103,22 +111,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			lua.Run( "GetPlayerList( %s )", server.address );
 			lua.Run( "PingServer( %s )", server.address );
 		}, 10000 );
-
-		//
-		// ng-dblclick doesn't work properly in engine, so we fake it!
-		//
-		if ( server.DoubleClick )
-		{
-			$scope.JoinServer( server );
-			return;
-		}
-
-		server.DoubleClick = true;
-
-		setTimeout( function()
-		{
-			server.DoubleClick = false;
-		}, 500 );
 	}
 
 	$scope.SelectGamemode = function( gm )
@@ -193,6 +185,20 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		$scope.DoStopRefresh();
 	}
 	$rootScope.JoinServer = $scope.JoinServer;
+	
+	$scope.PasswordInput = function( e, srv )
+	{
+		if ( e.keyCode == 13 )
+			$scope.JoinServer( srv )
+	}
+	$rootScope.PasswordInput = $scope.PasswordInput;
+
+	$scope.PasswordInput = function( e, srv )
+	{
+		if ( e.keyCode == 13 )
+			$scope.JoinServer( srv )
+	}
+	$rootScope.PasswordInput = $scope.PasswordInput;
 
 	$scope.SwitchType = function( type )
 	{
@@ -290,6 +296,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( server.ping > $scope.SVFilterMaxPing ) return false;
 		if ( server.players < $scope.SVFilterPlyMin ) return false;
 		if ( server.players > $scope.SVFilterPlyMax ) return false;
+		if ( server.version_c < 0 && $scope.SVFilterHideOutdated ) return false;
 		if ( server.flag && $scope.CurrentGamemode.FilterFlags[ server.flag ] == false ) return false;
 		if ( $scope.CurrentGamemode.HasPreferFlags && $scope.CurrentGamemode.FilterFlags[ server.flag ] != true ) return false;
 
@@ -388,7 +395,7 @@ function CalculateRank( server )
 	var recommended = server.ping;
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
-	if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
+	//if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
 	if ( server.pass ) recommended += 300; // Password protected, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
 
@@ -515,13 +522,13 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	data.hasmap = DoWeHaveMap( data.map );
 	
-	if ( !IN_ENGINE ) data.lastplayed = Date.now() - Math.random() * 1000000000;
+	if ( !IN_ENGINE && ( Math.random() < 0.5 ) ) data.lastplayed = Date.now() - Math.random() * 1000000000;
 
 	// Generate a user-friendly date that is also as short as possible
 	var actualDate = new Date( data.lastplayed );
 	var pad = function( num ) { return  ( "0" + num ).slice( -2 ); }
-	data.lastplayedStr = pad( actualDate.getDate() ) + "." + pad( actualDate.getMonth() + 1 ) + "." + actualDate.getFullYear();
-	data.lastplayedStr += " " + pad( actualDate.getHours() ) + ":" + pad( actualDate.getMinutes() ); // + ":" + pad( actualDate.getSeconds() );
+	data.lastplayedDate = pad( actualDate.getDate() ) + "." + pad( actualDate.getMonth() + 1 ) + "." + actualDate.getFullYear();
+	data.lastplayedTime = pad( actualDate.getHours() ) + ":" + pad( actualDate.getMinutes() ); // + ":" + pad( actualDate.getSeconds() );
 
 	data.recommended = CalculateRank( data );
 
@@ -567,8 +574,10 @@ function MissingFlag( element )
 	return true;
 }
 
-function ReverseFilter( cat, me )
+function ReverseFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	RootScope.GMCats.forEach( function( category )
 	{
 		RootScope.GMFilterTags[ category ] = true;
@@ -583,8 +592,10 @@ function ReverseFilter( cat, me )
 	UpdateDigest( RootScope, 50 );
 }
 
-function SwitchFilter( cat, me )
+function SwitchFilter( me )
 {
+	cat = me.dataset.cat;
+	
 	if ( me.checked )
 	{
 		RootScope.GMFilterTags[ cat ] = true;

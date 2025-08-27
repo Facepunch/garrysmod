@@ -130,6 +130,8 @@ local function UpdateMaps()
 
 	MapNames[ "ins_" ] = "Insurgency"
 
+	MapNames[ "t_" ] = "Klaus Veen's Treason"
+
 	MapNames[ "l4d_" ] = "Left 4 Dead"
 
 	MapPatterns[ "^c[%d]m" ] = "Left 4 Dead 2"
@@ -224,6 +226,7 @@ local function UpdateMaps()
 	MapNames[ "zm_" ] = "Zombie Survival"
 	MapNames[ "zombiesurvival_" ] = "Zombie Survival"
 	MapNames[ "zs_" ] = "Zombie Survival"
+	MapNames[ "ze_" ] = "Zombie Escape"
 	MapNames[ "coop_" ] = "Cooperative"
 
 	local GamemodeList = engine.GetGamemodes()
@@ -357,7 +360,7 @@ local function RefreshMaps( skip )
 		end
 
 		-- Throw all uncategorised maps into Other
-		Category = Category or "Other"
+		Category = Category or language.GetPhrase( "spawnmenu.category.other" )
 
 		local fav
 

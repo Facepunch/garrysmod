@@ -1,7 +1,7 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		= "#GMOD_ToolGun"
+SWEP.PrintName		= "#gmod_tool"
 SWEP.Author			= "Facepunch"
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
@@ -17,7 +17,6 @@ SWEP.Spawnable		= true
 util.PrecacheModel( SWEP.ViewModel )
 util.PrecacheModel( SWEP.WorldModel )
 
--- Todo, make/find a better sound.
 SWEP.ShootSound = Sound( "Airboat.FireGunRevDown" )
 
 SWEP.Tool = {}

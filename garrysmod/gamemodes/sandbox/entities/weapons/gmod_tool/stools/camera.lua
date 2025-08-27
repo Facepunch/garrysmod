@@ -50,7 +50,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 		end
 
 		ent:SetKey( key )
-		ent.controlkey = key
+		ent.controlkey = key -- Legacy?
 	end
 
 	ent:SetPlayer( ply )
@@ -66,12 +66,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	ent:SetTracking( NULL, Vector( 0 ) )
 	ent:SetLocked( locked )
 
-	if ( toggle == 1 ) then
-		numpad.OnDown( ply, key, "Camera_Toggle", ent )
-	else
-		numpad.OnDown( ply, key, "Camera_On", ent )
-		numpad.OnUp( ply, key, "Camera_Off", ent )
-	end
+	ent:ApplyKeybinds( ply ) -- Trigger the numpad assignments
 
 	if ( IsValid( ply ) ) then
 		ply:AddCleanup( "cameras", ent )
@@ -102,7 +97,7 @@ function TOOL:LeftClick( trace )
 	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
 	if ( !IsValid( ent ) ) then return false end
 
-	undo.Create( "Camera" )
+	undo.Create( "gmod_cameraprop" )
 		undo.AddEntity( ent )
 		undo.SetPlayer( ply )
 	undo.Finish()
@@ -141,10 +136,13 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "camera", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "camera", ConVarsDefault )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.camera.key", Command = "camera_key" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "camera_toggle" } )
+	CPanel:KeyBinder( "#tool.camera.key", "camera_key" )
+
+	CPanel:CheckBox( "#tool.camera.static", "camera_locked" )
+	CPanel:ControlHelp( "#tool.camera.static.help" )
+
+	CPanel:CheckBox( "#tool.toggle", "camera_toggle" )
 
 end

@@ -69,10 +69,10 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 		local text_color = "<color=150,150,150,255>"
 
 		local str = "<font=HudSelectionText>"
-		if ( self.Author != "" ) then str = str .. title_color .. "Author:</color>\t" .. text_color .. self.Author .. "</color>\n" end
-		if ( self.Contact != "" ) then str = str .. title_color .. "Contact:</color>\t" .. text_color .. self.Contact .. "</color>\n\n" end
-		if ( self.Purpose != "" ) then str = str .. title_color .. "Purpose:</color>\n" .. text_color .. self.Purpose .. "</color>\n\n" end
-		if ( self.Instructions != "" ) then str = str .. title_color .. "Instructions:</color>\n" .. text_color .. self.Instructions .. "</color>\n" end
+		if ( self.Author != "" ) then str = str .. title_color .. "#entityinfo.author</color>\t" .. text_color .. self.Author .. "</color>\n" end
+		if ( self.Contact != "" ) then str = str .. title_color .. "#entityinfo.contact</color>\t" .. text_color .. self.Contact .. "</color>\n\n" end
+		if ( self.Purpose != "" ) then str = str .. title_color .. "#entityinfo.purpose</color>\n" .. text_color .. self.Purpose .. "</color>\n\n" end
+		if ( self.Instructions != "" ) then str = str .. title_color .. "#entityinfo.instructions</color>\n" .. text_color .. self.Instructions .. "</color>\n" end
 		str = str .. "</font>"
 
 		self.InfoMarkup = markup.Parse( str, 250 )
@@ -82,7 +82,7 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 	surface.SetTexture( self.SpeechBubbleLid )
 
 	surface.DrawTexturedRect( x, y - 64 - 5, 128, 64 )
-	draw.RoundedBox( 8, x - 5, y - 6, 260, self.InfoMarkup:GetHeight() + 18, Color( 60, 60, 60, alpha ) )
+	draw.RoundedBox( 8, x - 5, y - 5, 260, self.InfoMarkup:GetHeight() + 18, Color( 60, 60, 60, alpha ) )
 
 	self.InfoMarkup:Draw( x + 5, y + 5, nil, nil, alpha )
 

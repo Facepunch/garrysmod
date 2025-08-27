@@ -75,7 +75,7 @@ function TOOL:LeftClick( trace )
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidHoverballModel( model ) ) then return false end
 	if ( !self:GetWeapon():CheckLimit( "hoverballs" ) ) then return false end
 
-	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, nil, nil, nil, key_o )
+	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, key_o )
 	if ( !IsValid( ball ) ) then return false end
 
 	local ang = trace.HitNormal:Angle()
@@ -87,7 +87,7 @@ function TOOL:LeftClick( trace )
 	local Offset = CurPos - NearestPoint
 	ball:SetPos( trace.HitPos + Offset )
 
-	undo.Create( "HoverBall" )
+	undo.Create( "gmod_hoverball" )
 		undo.AddEntity( ball )
 
 		-- Don't weld to world
@@ -219,17 +219,22 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.hoverball.help" } )
+	CPanel:Help( "#tool.hoverball.help" )
+	CPanel:ToolPresets( "hoverball", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "hoverball", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.hoverball.up", "hoverball_keyup", "#tool.hoverball.down", "hoverball_keydn" )
+	CPanel:KeyBinder( "#tool.hoverball.key", "hoverball_keyon" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.hoverball.up", Command = "hoverball_keyup", Label2 = "#tool.hoverball.down", Command2 = "hoverball_keydn" } )
-	CPanel:AddControl( "Numpad", { Label = "#tool.toggle", Command = "hoverball_keyon" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.speed", Command = "hoverball_speed", Type = "Float", Min = 0, Max = 20, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.resistance", Command = "hoverball_resistance", Type = "Float", Min = 0, Max = 10, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.strength", Command = "hoverball_strength", Type = "Float", Min = 0.1, Max = 10, Help = true } )
+	CPanel:NumSlider( "#tool.hoverball.speed", "hoverball_speed", 0, 20 )
+	CPanel:ControlHelp( "#tool.hoverball.speed.help" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 0 } )
+	CPanel:NumSlider( "#tool.hoverball.resistance", "hoverball_resistance", 0, 10 )
+	CPanel:ControlHelp( "#tool.hoverball.resistance.help" )
+
+	CPanel:NumSlider( "#tool.hoverball.strength", "hoverball_strength", 0.1, 10 )
+	CPanel:ControlHelp( "#tool.hoverball.strength.help" )
+
+	CPanel:PropSelect( "#tool.hoverball.model", "hoverball_model", list.Get( "HoverballModels" ), 0 )
 
 end
 

@@ -91,7 +91,7 @@ function TOOL:LeftClick( trace )
 
 	lamp:SetPos( trace.HitPos + LampOffset )
 
-	undo.Create( "Lamp" )
+	undo.Create( "gmod_lamp" )
 		undo.AddEntity( lamp )
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
@@ -237,28 +237,26 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.lamp.desc" } )
+	CPanel:Help( "#tool.lamp.desc" )
+	CPanel:ToolPresets( "lamp", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "lamp", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.lamp.key", "lamp_key" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.key", Command = "lamp_key" } )
+	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170 )
+	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048 )
+	CPanel:NumSlider( "#tool.lamp.brightness", "lamp_brightness", 0, 8 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.fov", Command = "lamp_fov", Type = "Float", Min = 10, Max = 170 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.distance", Command = "lamp_distance", Min = 64, Max = 2048 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.lamp.brightness", Command = "lamp_brightness", Type = "Float", Min = 0, Max = 8 } )
+	CPanel:CheckBox( "#tool.lamp.toggle", "lamp_toggle" )
 
-	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
-
-	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
+	CPanel:ColorPicker( "#tool.lamp.color", "lamp_r", "lamp_g", "lamp_b" )
 
 	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, false, 0.33, 0.33 )
 	MatSelect.Height = 4
-
 	for k, v in pairs( list.Get( "LampTextures" ) ) do
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 0, Models = list.Get( "LampModels" ) } )
+	CPanel:PropSelect( "#tool.lamp.model", "lamp_model", list.Get( "LampModels" ), 0 )
 
 end
 

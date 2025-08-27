@@ -69,15 +69,28 @@ end
 function ENT:Initialize()
 end
 
-function ENT:KeyValue( key, value )
+if ( SERVER ) then
 
-	if ( self:SetNetworkKeyValue( key, value ) ) then
-		return
+	function ENT:KeyValue( key, value )
+
+		if ( self:SetNetworkKeyValue( key, value ) ) then
+			return
+		end
+
+		-- TODO: sunposmethod
+		-- 		0 : "Custom - Use the Sun Normal to position the sun"
+		--		1 : "Automatic - Find a env_sun entity and use that"
+
 	end
 
-	-- TODO: sunposmethod
-	-- 		0 : "Custom - Use the Sun Normal to position the sun"
-	--		1 : "Automatic - Find a env_sun entity and use that"
+
+	function ENT:AcceptInput( name, activator, caller, data )
+
+		if ( self:SetNetworkVarsFromMapInput( name, data ) ) then
+			return true -- Accept the input so the there are no warnings in console with developer 2
+		end
+
+	end
 
 end
 

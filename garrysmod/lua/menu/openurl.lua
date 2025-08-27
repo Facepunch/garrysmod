@@ -63,7 +63,17 @@ function PANEL:Init()
 
 	self.URL = vgui.Create( "DTextEntry", self )
 	self.URL:SetEnabled( false )
+	self.URL:SetHeight( 22 )
 	self.URL:Dock( TOP )
+
+	self.URLCopyBtn = vgui.Create( "DImageButton", self.URL )
+	self.URLCopyBtn:SetImage( "icon16/page_copy.png" )
+	self.URLCopyBtn:SetTooltip( "#spawnmenu.menu.copy" )
+	self.URLCopyBtn:Dock( RIGHT )
+	self.URLCopyBtn:SetWidth( 16 )
+	self.URLCopyBtn:SetStretchToFit( false )
+	self.URLCopyBtn:DockMargin( 0, 0, 2, 0 )
+	self.URLCopyBtn.DoClick = function() SetClipboardText( self.URL:GetText() ) end
 
 	self.CustomPanel = vgui.Create( "DLabel", self )
 	self.CustomPanel:Dock( TOP )
@@ -81,19 +91,21 @@ function PANEL:Init()
 
 	self.Disconnect = vgui.Create( "DButton", self.Buttons )
 	self.Disconnect:SetText( "#openurl.disconnect" )
+	self.Disconnect:SetIcon( "icon16/disconnect.png" )
 	self.Disconnect.DoClick = function() self:DoNope() RunConsoleCommand( "disconnect" ) end
 	self.Disconnect:Dock( LEFT )
-	self.Disconnect:SizeToContents()
-	self.Disconnect:SetWide( self.Disconnect:GetWide() + 10 )
+	self.Disconnect:SizeToContentsX( 4 )
 
 	self.Nope = vgui.Create( "DButton", self.Buttons )
 	self.Nope:SetText( "#openurl.nope" )
+	self.Nope:SetIcon( "icon16/cross.png" )
 	self.Nope.DoClick = function() self:DoNope() end
 	self.Nope:DockMargin( 0, 0, 0, 0 )
 	self.Nope:Dock( RIGHT )
 
 	self.Yes = vgui.Create( "DButton", self.Buttons )
 	self.Yes:SetText( "#openurl.yes" )
+	self.Yes:SetIcon( "icon16/tick.png" )
 	self.Yes.DoClick = function() self:DoYes() end
 	self.Yes:DockMargin( 0, 0, 20, 0 )
 	self.Yes:Dock( RIGHT )

@@ -60,7 +60,8 @@ function TOOL:LeftClick( trace )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.slider.name" )
+			undo.Finish( "#tool.slider.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )
@@ -154,7 +155,8 @@ function TOOL:RightClick( trace )
 			undo.AddEntity( constr )
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 			undo.SetPlayer( ply )
-		undo.Finish()
+			undo.SetCustomUndoText( "Undone #tool.slider.name" )
+		undo.Finish( "#tool.slider.name" )
 
 		ply:AddCount( "ropeconstraints", constr )
 		ply:AddCleanup( "ropeconstraints", constr )
@@ -187,13 +189,13 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.slider.help" } )
+	CPanel:Help( "#tool.slider.help" )
+	CPanel:ToolPresets( "slider", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "slider", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.slider.width", "slider_width", 0, 10 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.slider.width", Command = "slider_width", Type = "Float", Min = 0, Max = 10 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.slider.material", ConVar = "slider_material" } )
+	CPanel:RopeSelect( "slider_material" )
 
-	CPanel:AddControl( "Color", { Label = "#tool.slider.color", Red = "slider_color_r", Green = "slider_color_g", Blue = "slider_color_b" } )
+	CPanel:ColorPicker( "#tool.slider.color", "slider_color_r", "slider_color_g", "slider_color_b" )
 
 end

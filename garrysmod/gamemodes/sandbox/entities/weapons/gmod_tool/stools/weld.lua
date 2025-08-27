@@ -62,7 +62,8 @@ function TOOL:LeftClick( trace )
 			undo.Create( "Weld" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.weld.name" )
+			undo.Finish( "#tool.weld.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )
@@ -203,7 +204,8 @@ function TOOL:RightClick( trace )
 			undo.Create( "Weld" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.weld.name" )
+			undo.Finish( "#tool.weld.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )
@@ -288,11 +290,12 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.weld.help" } )
+	CPanel:Help( "#tool.weld.help" )
+	CPanel:ToolPresets( "weld", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "weld", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "weld_forcelimit", 0, 1000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "weld_nocollide" } )
+	CPanel:CheckBox( "#tool.nocollide", "weld_nocollide" )
 
 end

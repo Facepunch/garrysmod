@@ -15,6 +15,11 @@ end
 
 function PANEL:OnMousePressed( mousecode )
 
+	-- input.SetCursorPos does not work while main menu is open
+	if ( !MENU_DLL and gui.IsGameUIVisible() ) then return end
+
+	if ( mousecode != MOUSE_LEFT and mousecode != MOUSE_RIGHT ) then return end
+
 	self:SetCursor( "none" )
 	self:MouseCapture( true )
 	self.Capturing = true
@@ -59,6 +64,9 @@ function PANEL:Think()
 end
 
 function PANEL:CaptureMouse()
+
+	-- input.SetCursorPos does not work while main menu is open
+	if ( !MENU_DLL and gui.IsGameUIVisible() ) then return 0, 0 end
 
 	local x, y = input.GetCursorPos()
 

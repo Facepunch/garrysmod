@@ -56,6 +56,47 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 end
 
+function PANEL:RopeSelect( strConVar )
+
+	local ctrl = vgui.Create( "RopeMaterial", self )
+	ctrl:SetConVar( strConVar )
+	self:AddPanel( ctrl )
+
+	return ctrl
+
+end
+
+function PANEL:PropSelect( label, strConVar, mdlList, height )
+
+	local PropSelect = vgui.Create( "PropSelect", self )
+
+	PropSelect:SetConVar( strConVar )
+	PropSelect.Label:SetText( label or "" )
+	PropSelect.Height = height or 2
+
+	local firstKey, firstVal = next( mdlList )
+	if ( istable( firstVal ) and isstring( firstVal.model ) ) then
+		-- Special case for Balloon tool
+		local tmp = {}
+		for k, v in SortedPairsByMemberValue( mdlList, "model" ) do
+			tmp[ k ] = v.model:lower() .. ( v.skin or 0 )
+		end
+
+		for k, v in SortedPairsByValue( tmp ) do
+			v = mdlList[ k ]
+			PropSelect:AddModelEx( k, v.model, v.skin or 0 )
+		end
+	else
+		for k, v in SortedPairs( mdlList ) do
+			PropSelect:AddModel( k, v )
+		end
+	end
+
+	self:AddPanel( PropSelect )
+	return PropSelect
+
+end
+
 function PANEL:ToolPresets( group, cvarlist )
 
 	local preset = vgui.Create( "ControlPresets", self )
@@ -109,6 +150,27 @@ function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
 	self:AddPanel( color )
 
 	return color
+
+end
+
+function PANEL:ComboBoxMulti( label, list )
+
+	local labelPnl = vgui.Create( "DLabel", self )
+	labelPnl:SetText( label )
+	labelPnl:SetDark( true )
+
+	local cbox = vgui.Create( "CtrlListBox", self )
+	cbox:SetHeight( 25 )
+	cbox:Dock( TOP )
+	if ( list ) then
+		for k, v in pairs( list ) do
+			cbox:AddOption( k, v )
+		end
+	end
+
+	self:AddItem( labelPnl, cbox )
+
+	return cbox, labelPnl
 
 end
 
@@ -191,7 +253,7 @@ function PANEL:AddControl( control, data )
 	if ( control == "slider" ) then
 
 		local Decimals = 0
-		if ( data.type && string.lower(data.type) == "float" ) then Decimals = 2 end
+		if ( data.type and string.lower(data.type) == "float" ) then Decimals = 2 end
 
 		local ctrl = self:NumSlider( data.label or "Untitled", data.command, data.min or 0, data.max or 100, Decimals )
 
@@ -201,11 +263,6 @@ function PANEL:AddControl( control, data )
 
 		if ( data.default ) then
 			ctrl:SetDefaultValue( data.default )
-		elseif ( data.command ) then
-			local cvar = GetConVar( data.command )
-			if ( cvar ) then
-				ctrl:SetDefaultValue( cvar:GetDefault() )
-			end
 		end
 
 		return ctrl
@@ -357,19 +414,18 @@ function PANEL:AddControl( control, data )
 
 		else
 
-			local ctrl = vgui.Create( "CtrlListBox", self )
+			local left = vgui.Create( "DLabel", self )
+			left:SetText( data.label )
+			left:SetDark( true )
 
+			local ctrl = vgui.Create( "CtrlListBox", self )
+			ctrl:SetHeight( 25 )
+			ctrl:Dock( TOP )
 			if ( data.options ) then
 				for k, v in pairs( data.options ) do
 					ctrl:AddOption( k, v )
 				end
 			end
-
-			local left = vgui.Create( "DLabel", self )
-			left:SetText( data.label )
-			left:SetDark( true )
-			ctrl:SetHeight( 25 )
-			ctrl:Dock( TOP )
 
 			self:AddItem( left, ctrl )
 

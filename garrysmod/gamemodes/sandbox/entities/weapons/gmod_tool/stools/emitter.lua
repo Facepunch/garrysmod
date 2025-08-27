@@ -68,7 +68,7 @@ function TOOL:LeftClick( trace, worldweld )
 	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, scale, { Pos = pos, Angle = ang } )
 	if ( !IsValid( emitter ) ) then return false end
 
-	undo.Create( "Emitter" )
+	undo.Create( "gmod_emitter" )
 		undo.AddEntity( emitter )
 
 		-- Don't weld to world
@@ -184,17 +184,17 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.emitter.desc" } )
+	CPanel:Help( "#tool.emitter.desc" )
+	CPanel:ToolPresets( "emitter", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "emitter", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.emitter.key", "emitter_key" )
+	CPanel:NumSlider( "#tool.emitter.delay", "emitter_delay", 0.01, 2 )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.emitter.key", Command = "emitter_key" } )
+	CPanel:NumSlider( "#tool.emitter.scale", "emitter_scale", 0, 6 )
+	CPanel:ControlHelp( "#tool.emitter.scale.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.delay", Command = "emitter_delay", Type = "Float", Min = 0.01, Max = 2 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.scale", Command = "emitter_scale", Type = "Float", Min = 0, Max = 6, Help = true } )
-
-	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.toggle", Command = "emitter_toggle" } )
-	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.starton", Command = "emitter_starton" } )
+	CPanel:CheckBox( "#tool.emitter.toggle", "emitter_toggle" )
+	CPanel:CheckBox( "#tool.emitter.starton", "emitter_starton" )
 
 	local matselect = CPanel:MatSelect( "emitter_effect", nil, true, 0.25, 0.25 )
 	for k, v in pairs( list.Get( "EffectType" ) ) do

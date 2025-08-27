@@ -14,7 +14,7 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
 
-SWEP.PrintName	= "#GMOD_Camera"
+SWEP.PrintName	= "#gmod_camera"
 SWEP.Author	= "Facepunch"
 
 SWEP.Slot		= 5
@@ -89,7 +89,12 @@ function SWEP:PrimaryAttack()
 	if ( !game.SinglePlayer() && SERVER ) then return end
 	if ( CLIENT && !IsFirstTimePredicted() ) then return end
 
-	self:GetOwner():ConCommand( "jpeg" )
+	if ( CLIENT ) then
+		RunConsoleCommand( "jpeg" )
+	else
+		self:GetOwner():SendLua( [[RunConsoleCommand( "jpeg" )]] )
+	end
+
 
 end
 

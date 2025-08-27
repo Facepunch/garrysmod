@@ -68,7 +68,8 @@ function TOOL:LeftClick( trace )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.rope.name" )
+			undo.Finish( "#tool.rope.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )
@@ -135,7 +136,8 @@ function TOOL:RightClick( trace )
 				undo.AddEntity( constr )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.rope.name" )
+			undo.Finish( "#tool.rope.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )
@@ -178,18 +180,22 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.rope.help" } )
+	CPanel:Help( "#tool.rope.help" )
+	CPanel:ToolPresets( "rope", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "rope", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "rope_forcelimit", 0, 1000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "rope_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.rope.addlength", Command = "rope_addlength", Type = "Float", Min = -500, Max = 500, Help = true } )
+	CPanel:NumSlider( "#tool.rope.addlength", "rope_addlength", -500, 500 )
+	CPanel:ControlHelp( "#tool.rope.addlength.help" )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.rope.rigid", Command = "rope_rigid", Help = true } )
+	CPanel:CheckBox( "#tool.rope.rigid", "rope_rigid" )
+	CPanel:ControlHelp( "#tool.rope.rigid.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.rope.width", Command = "rope_width", Type = "Float", Min = 0, Max = 10 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.rope.material", ConVar = "rope_material" } )
+	CPanel:NumSlider( "#tool.rope.width", "rope_width", 0, 10 )
 
-	CPanel:AddControl( "Color", { Label = "#tool.rope.color", Red = "rope_color_r", Green = "rope_color_g", Blue = "rope_color_b" } )
+	CPanel:RopeSelect( "rope_material" )
+
+	CPanel:ColorPicker( "#tool.rope.color", "rope_color_r", "rope_color_g", "rope_color_b" )
 
 end

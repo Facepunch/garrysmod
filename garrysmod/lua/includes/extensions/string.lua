@@ -343,23 +343,16 @@ end
 function string.ToColor( str )
 
 	local r, g, b, a = string.match( str, "(%d+) (%d+) (%d+) (%d+)" )
-
-	local col = Color( 255, 255, 255, 255 )
-	col.r = tonumber( r ) or 255
-	col.g = tonumber( g ) or 255
-	col.b = tonumber( b ) or 255
-	col.a = tonumber( a ) or 255
-
-	return col
+	return Color( tonumber( r ) or 255, tonumber( g ) or 255, tonumber( b ) or 255, tonumber( a ) or 255 )
 
 end
 
 function string.Comma( number, str )
 
 	if ( str ~= nil and not isstring( str ) ) then
-		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")" )
+		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")", 2 )
 	elseif ( str ~= nil and string.match( str, "%d" ) ~= nil ) then
-		error( "bad argument #2 to 'string.Comma' (non-numerical values expected, got " .. str .. ")" )
+		error( "bad argument #2 to 'string.Comma' (non-numerical values expected, got " .. str .. ")", 2 )
 	end
 
 	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"

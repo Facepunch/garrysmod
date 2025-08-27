@@ -24,7 +24,7 @@
 //		starts another even running at the specified time
 //
 //	StopEvent <event name> <start time>
-//		stops another event that is current running at the specified time
+//		stops another event that is currently running at the specified time
 //
 //	StopAnimation <panel name> <variable> <start time>
 //		stops all animations refering to the specified variable in the specified panel

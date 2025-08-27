@@ -142,6 +142,6 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.inflator.desc" } )
+	CPanel:Help( "#tool.inflator.desc" )
 
 end

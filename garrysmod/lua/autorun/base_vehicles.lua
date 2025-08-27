@@ -53,23 +53,21 @@ AddVehicle( {
 	}
 }, "Pod" )
 
-if ( IsMounted( "ep2" ) ) then
-	AddVehicle( {
-		Name = "#spawnmenu.vehicle.jalopy",
-		Model = "models/vehicle.mdl",
-		Class = "prop_vehicle_jeep",
-		Category = Category,
+AddVehicle( {
+	Name = "#spawnmenu.vehicle.jalopy",
+	Model = "models/vehicle.mdl",
+	Class = "prop_vehicle_jeep",
+	Category = Category,
 
-		Author = "VALVe",
-		Information = "The muscle car from Episode 2",
+	Author = "VALVe",
+	Information = "The muscle car from Episode 2",
 
-		KeyValues = {
-			vehiclescript = "scripts/vehicles/jalopy.txt"
-		}
-	}, "Jalopy" )
-end
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/jalopy.txt"
+	}
+}, "Jalopy" )
 
-Category = "Chairs"
+Category = "#spawnmenu.category.chairs"
 
 local function HandleRollercoasterAnimation( vehicle, player )
 	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER )
@@ -183,25 +181,23 @@ AddVehicle( {
 	}
 }, "Seat_Airboat" )
 
-if ( IsMounted( "ep2" ) ) then
-	AddVehicle( {
-		Name = "#spawnmenu.seat.jalopy",
-		Model = "models/nova/jalopy_seat.mdl",
-		Class = "prop_vehicle_prisoner_pod",
-		Category = Category,
+AddVehicle( {
+	Name = "#spawnmenu.seat.jalopy",
+	Model = "models/nova/jalopy_seat.mdl",
+	Class = "prop_vehicle_prisoner_pod",
+	Category = Category,
 
-		Author = "VALVe",
-		Information = "A seat from VALVe's Jalopy",
+	Author = "VALVe",
+	Information = "A seat from VALVe's Jalopy",
 
-		KeyValues = {
-			vehiclescript = "scripts/vehicles/prisoner_pod.txt",
-			limitview = "0"
-		},
-		Members = {
-			HandleAnimation = HandleRollercoasterAnimation,
-		}
-	}, "Seat_Jalopy" )
-end
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
+	},
+	Members = {
+		HandleAnimation = HandleRollercoasterAnimation,
+	}
+}, "Seat_Jalopy" )
 
 -- PhoeniX-Storms Vehicles
 

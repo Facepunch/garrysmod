@@ -81,8 +81,9 @@ function TOOL:LeftClick( trace )
 		end
 
 		undo.SetPlayer( self:GetOwner() )
+		undo.SetCustomUndoText( "Undone #undo.duplication" )
 
-	undo.Finish()
+	undo.Finish( "#undo.duplication (" .. tostring( table.Count( Ents ) ) ..  ")" )
 
 	return true
 
@@ -139,11 +140,11 @@ if ( CLIENT ) then
 	--
 	function TOOL.BuildCPanel( CPanel, tool )
 
-		CPanel:ClearControls()
+		CPanel:Clear()
 
-		CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
+		CPanel:Help( "#tool.duplicator.desc" )
 
-		CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
+		CPanel:Button( "#tool.duplicator.showsaves", "dupe_show" )
 
 		if ( !tool && IsValid( LocalPlayer() ) ) then tool = LocalPlayer():GetTool( "duplicator" ) end
 		if ( !tool || !tool.CurrentDupeName ) then return end
@@ -151,14 +152,14 @@ if ( CLIENT ) then
 		local info = "Name: " .. tool.CurrentDupeName
 		info = info .. "\nEntities: " .. tool.CurrentDupeEntCount
 
-		CPanel:AddControl( "Label", { Text = info } )
+		CPanel:Help( info )
 
 		if ( tool.CurrentDupeWSIDs && #tool.CurrentDupeWSIDs > 0 ) then
-			CPanel:AddControl( "Label", { Text = "Required workshop content:" } )
+			CPanel:Help( "Required workshop content:" )
 			for _, wsid in pairs( tool.CurrentDupeWSIDs ) do
 				local subbed = ""
 				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " (Subscribed)" end
-				local b = CPanel:AddControl( "Button", { Text = wsid .. subbed } )
+				local b = CPanel:Button( wsid .. subbed )
 				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
 				steamworks.FileInfo( wsid, function( result )
 					if ( !IsValid( b ) ) then return end
@@ -168,7 +169,7 @@ if ( CLIENT ) then
 		end
 
 		if ( tool.CurrentDupeCanSave ) then
-			local b = CPanel:AddControl( "Button", { Text = "#dupes.savedupe", Command = "dupe_save" } )
+			local b = CPanel:Button( "#dupes.savedupe", "dupe_save" )
 			hook.Add( "DupeSaveUnavailable", b, function() b:Remove() end )
 		end
 

@@ -176,11 +176,11 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel, faceEntity )
 
-	CPanel:AddControl( "Header", { Description = "#tool.faceposer.desc" } )
+	CPanel:Help( "#tool.faceposer.desc" )
 
 	if ( !IsValid( faceEntity ) || faceEntity:GetFlexNum() == 0 ) then return end
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "face", ConVarsDefault )
 
 	local QuickFace = vgui.Create( "MatSelect", CPanel )
 	QuickFace:SetItemWidth( 64 )
@@ -335,10 +335,12 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 	CPanel:AddItem( QuickFace )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.faceposer.scale", Command = "faceposer_scale", Type = "Float", Min = -5, Max = 5, Help = true, Default = 1 } ):SetHeight( 16 )
-	CPanel:AddControl( "Button", { Text = "#tool.faceposer.randomize", Command = "faceposer_randomize" } )
+	CPanel:NumSlider( "#tool.faceposer.scale", "faceposer_scale", -5, 5 ):SetHeight( 16 )
+	CPanel:ControlHelp( "#tool.faceposer.scale.help" )
 
-	local filter = CPanel:AddControl( "TextBox", { Label = "#spawnmenu.quick_filter_tool" } )
+	CPanel:Button( "#tool.faceposer.randomize", "faceposer_randomize" )
+
+	local filter = CPanel:TextEntry( "#spawnmenu.quick_filter_tool" )
 	filter:SetUpdateOnType( true )
 
 	-- Group flex controllers by their type..
@@ -349,7 +351,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 		if ( !IsUselessFaceFlex( name ) ) then
 			local group = faceEntity:GetFlexType( i )
 
-			if ( group == name ) then group = "Other" end
+			if ( group == name ) then group = "#spawnmenu.category.other" end
 
 			local min, max = faceEntity:GetFlexBounds( i )
 
@@ -378,7 +380,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 		for id, item in pairs( items ) do
 
-			local ctrl = groupForm:NumSlider( string.NiceName( item.name ), "faceposer_flex" .. item.id, item.min, item.max, 2 )
+			local ctrl = groupForm:NumSlider( string.NiceName( item.name ), "faceposer_flex" .. item.id, item.min, item.max )
 			ctrl:SetDefaultValue( GenerateDefaultFlexValue( faceEntity, item.id ) )
 			ctrl:SetHeight( 11 ) -- This makes the controls all bunched up like how we want
 			ctrl:DockPadding( 0, -6, 0, -4 ) -- Try to make the lower part of the text visible

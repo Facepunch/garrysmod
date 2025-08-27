@@ -189,6 +189,7 @@ function PANEL:AddCategory( name, catName, tItems )
 	local tools = {}
 	for k, v in pairs( tItems ) do
 		local name = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
+		if ( name:StartsWith( "#" ) ) then name = name:sub( 2 ) end
 		tools[ language.GetPhrase( name ) ] = v
 	end
 
@@ -201,6 +202,11 @@ function PANEL:AddCategory( name, catName, tItems )
 
 			spawnmenu.ActivateTool( button.Name )
 
+		end
+		item.DoRightClick = function( button )
+			local menu = DermaMenu()
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( button.Name ) end ):SetIcon( "icon16/page_copy.png" )
+			menu:Open()
 		end
 
 		item.ControlPanelBuildFunction	= v.CPanelFunction

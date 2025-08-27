@@ -52,7 +52,36 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	end
 
-	function ws_save:Load( filename ) RunConsoleCommand( "gm_load", filename ) end
+	function ws_save:Load( filename )
+
+		-- Early out for workshop saves
+		if ( string.StartsWith( filename, "content/4000" ) ) then
+			RunConsoleCommand( "gm_load", filename )
+			return
+		end
+
+		local saveFile = file.Open( filename, "rb", "GAME" )
+		if ( !saveFile ) then -- Somehow the file doesn't exist?
+			RunConsoleCommand( "gm_load", filename )
+			return
+		end
+
+		saveFile:Seek( 4 )
+		local mapFile = saveFile:ReadLine():TrimRight( "\n" )
+
+		if ( mapFile == game.GetMap() ) then
+			RunConsoleCommand( "gm_load", filename )
+		else
+			local msg = string.format( "Loading this save will force a map change to %s. Do you wish to continue?", mapFile )
+
+			Derma_Query( msg,
+				"Please confirm loading this save",
+				"Load", function() RunConsoleCommand( "gm_load", filename ) end,
+				"Cancel" )
+		end
+
+	end
+
 	function ws_save:Publish( filename, imagename ) RunConsoleCommand( "save_publish", filename, imagename ) end
 
 	HTML:OpenURL( "asset://garrysmod/html/saves.html" )

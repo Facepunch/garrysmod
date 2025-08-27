@@ -80,7 +80,8 @@ function TOOL:LeftClick( trace )
 				if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 				if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.hydraulic.name" )
+			undo.Finish( "#tool.hydraulic.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )
@@ -192,7 +193,8 @@ function TOOL:RightClick( trace )
 			if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
 			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 			undo.SetPlayer( ply )
-		undo.Finish()
+			undo.SetCustomUndoText( "Undone #tool.hydraulic.name" )
+		undo.Finish( "#tool.hydraulic.name" )
 
 		ply:AddCount( "ropeconstraints", constr )
 		ply:AddCleanup( "ropeconstraints", constr )
@@ -227,18 +229,27 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.hydraulic.help" } )
+	CPanel:Help( "#tool.hydraulic.help" )
+	CPanel:ToolPresets( "hydraulic", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "hydraulic", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.hydraulic.controls", "hydraulic_group" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.hydraulic.controls", Command = "hydraulic_group" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.addlength", Command = "hydraulic_addlength", Type = "Float", Min = -1000, Max = 1000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.speed", Command = "hydraulic_speed", Type = "Float", Min = 0, Max = 50, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.hydraulic.fixed", Command = "hydraulic_fixed", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "hydraulic_toggle", Help = true } )
+	CPanel:NumSlider( "#tool.hydraulic.addlength", "hydraulic_addlength", -1000, 1000 )
+	CPanel:ControlHelp( "#tool.hydraulic.addlength.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.width", Command = "hydraulic_width", Type = "Float", Min = 0, Max = 5 } )
-	CPanel:AddControl( "RopeMaterial", { Label = "#tool.hydraulic.material", ConVar = "hydraulic_material" } )
-	CPanel:AddControl( "Color", { Label = "#tool.hydraulic.color", Red = "hydraulic_color_r", Green = "hydraulic_color_g", Blue = "hydraulic_color_b" } )
+	CPanel:NumSlider( "#tool.hydraulic.speed", "hydraulic_speed", 0, 50 )
+	CPanel:ControlHelp( "#tool.hydraulic.speed.help" )
+
+	CPanel:CheckBox( "#tool.hydraulic.fixed", "hydraulic_fixed" )
+	CPanel:ControlHelp( "#tool.hydraulic.fixed.help" )
+
+	CPanel:CheckBox( "#tool.toggle", "hydraulic_toggle" )
+	CPanel:ControlHelp( "#tool.toggle.help" )
+
+	CPanel:NumSlider( "#tool.hydraulic.width", "hydraulic_width", 0, 5 )
+
+	CPanel:RopeSelect( "hydraulic_material" )
+
+	CPanel:ColorPicker( "#tool.hydraulic.color", "hydraulic_color_r", "hydraulic_color_g", "hydraulic_color_b" )
 
 end

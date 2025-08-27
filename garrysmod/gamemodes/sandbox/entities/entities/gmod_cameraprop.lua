@@ -88,8 +88,10 @@ function ENT:SetLocked( locked )
 end
 
 function ENT:OnTakeDamage( dmginfo )
+
 	if ( self.locked ) then return end
 	self:TakePhysicsDamage( dmginfo )
+
 end
 
 function ENT:OnRemove()
@@ -103,6 +105,24 @@ function ENT:OnRemove()
 end
 
 if ( SERVER ) then
+
+	function ENT:ApplyKeybinds( ply )
+
+		if ( self.toggle == 1 ) then
+			numpad.OnDown( ply, self:GetKey(), "Camera_Toggle", self )
+		else
+			numpad.OnDown( ply, self:GetKey(), "Camera_On", self )
+			numpad.OnUp( ply, self:GetKey(), "Camera_Off", self )
+		end
+	
+	end
+	
+	function ENT:OnRestore()
+
+		-- HACK: Restore keybinds on level transitions, which can only happen in single player
+		self:ApplyKeybinds( nil )
+
+	end
 
 	numpad.Register( "Camera_On", function( ply, ent )
 
@@ -178,11 +198,9 @@ function ENT:TrackEntity( ent, lpos )
 		WPos = WPos + ent:GetViewOffset() * 0.85
 	end
 
-	local CamPos = self:GetPos()
-	local Ang = WPos - CamPos
+	local ang = WPos - self:GetPos()
 
-	Ang = Ang:Angle()
-	self:SetAngles( Ang )
+	self:SetAngles( ang:Angle() )
 
 end
 

@@ -47,7 +47,8 @@ function TOOL:LeftClick( trace )
 			undo.Create( "NoCollide" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.nocollide.name" )
+			undo.Finish( "#tool.nocollide.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "nocollide", constr )
@@ -103,6 +104,6 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.nocollide.desc" } )
+	CPanel:Help( "#tool.nocollide.desc" )
 
 end

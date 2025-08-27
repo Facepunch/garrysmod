@@ -26,19 +26,22 @@ SWEP.InfoBoxHeight = 0
 surface.CreateFont( "GModToolName", {
 	font = "Roboto Bk",
 	size = 80,
-	weight = 1000
+	weight = 1000,
+	extended = true
 } )
 
 surface.CreateFont( "GModToolSubtitle", {
 	font = "Roboto Bk",
 	size = 24,
-	weight = 1000
+	weight = 1000,
+	extended = true
 } )
 
 surface.CreateFont( "GModToolHelp", {
 	font = "Roboto Bk",
 	size = 17,
-	weight = 1000
+	weight = 1000,
+	extended = true
 } )
 
 --[[---------------------------------------------------------
@@ -123,7 +126,7 @@ function SWEP:DrawHUD()
 		if ( v.stage && v.stage != self:GetStage() ) then continue end
 		if ( v.op && v.op != toolObject:GetOperation() ) then continue end
 
-		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. name
+		local txt = "#tool." .. mode .. "." .. name
 		if ( name == "info" ) then txt = toolObject:GetHelpText() end
 
 		TextTable.text = txt

@@ -68,6 +68,7 @@ function PANEL:SetUp( _barsize_, _canvassize_ )
 
 	self.BarSize = _barsize_
 	self.CanvasSize = math.max( _canvassize_ - _barsize_, 1 )
+	self.Scroll = math.Clamp( self:GetScroll(), 0, self.CanvasSize )
 
 	self:SetEnabled( _canvassize_ > _barsize_ )
 

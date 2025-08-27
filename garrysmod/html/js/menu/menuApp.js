@@ -1,10 +1,9 @@
 
-var IN_ENGINE = navigator.userAgent.indexOf( "Valve Source Client" ) != -1;
-var IS_SPAWN_MENU = false
+var IS_SPAWN_MENU = false;
 
-var App = angular.module( 'MenuApp', [ 'tranny', 'ui' ] );
+var App = angular.module( 'MenuApp', [ 'ngRoute', 'tranny' ] );
 
-App.config( function( $routeProvider, $locationProvider )
+App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
 	$routeProvider.when('/', { templateUrl: 'template/main.html' } );
 	$routeProvider.when('/addons/', { templateUrl: 'template/addon_list.html' } );
@@ -13,30 +12,13 @@ App.config( function( $routeProvider, $locationProvider )
 	$routeProvider.when('/demos/', { templateUrl: 'template/demos.html' } );
 	$routeProvider.when('/saves/', { templateUrl: 'template/saves.html' } );
 	$routeProvider.when('/dupes/', { templateUrl: 'template/dupes.html' } );
-} );
 
-function UpdateDigest( scope, timeout )
-{
-	if ( !scope ) return;
-	if ( scope.DigestUpdate ) return;
-
-	scope.DigestUpdate = setTimeout( function()
-	{
-		scope.DigestUpdate = 0;
-		scope.$digest();
-
-	}, timeout );
-}
-
-//We already have a limitTo filter built-in to angular,
-//let's make a startFrom filter
-App.filter( 'startFrom', function()
-{
-	return function( input, start )
-	{
-		if ( !input ) return input;
-
-		start = +start; //parse to int
-		return input.slice( start );
-	}
+	$controllerProvider.register( 'MenuController', MenuController );
+	$controllerProvider.register( 'ControllerMain', ControllerMain );
+	$controllerProvider.register( 'ControllerNewGame', ControllerNewGame );
+	$controllerProvider.register( 'ControllerServers', ControllerServers );
+	$controllerProvider.register( 'ControllerAddons', ControllerAddons );
+	$controllerProvider.register( 'ControllerDupes', ControllerDupes );
+	$controllerProvider.register( 'ControllerSaves', ControllerSaves );
+	$controllerProvider.register( 'ControllerDemos', ControllerDemos );
 } );

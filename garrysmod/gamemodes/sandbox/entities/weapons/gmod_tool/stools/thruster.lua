@@ -86,7 +86,7 @@ function TOOL:LeftClick( trace )
 	local min = thruster:OBBMins()
 	thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
 
-	undo.Create( "Thruster" )
+	undo.Create( "gmod_thruster" )
 		undo.AddEntity( thruster )
 
 		-- Don't weld to world
@@ -222,26 +222,25 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.thruster.desc" } )
+	CPanel:Help( "#tool.thruster.desc" )
+	CPanel:ToolPresets( "thruster", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "thruster", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.thruster.forward", "thruster_keygroup", "#tool.thruster.back", "thruster_keygroup_back" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.thruster.forward", Command = "thruster_keygroup", Label2 = "#tool.thruster.back", Command2 = "thruster_keygroup_back" } )
+	CPanel:NumSlider( "#tool.thruster.force", "thruster_force", 1, 10000 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.thruster.force", Command = "thruster_force", Type = "Float", Min = 1, Max = 10000 } )
-
-	local combo = CPanel:AddControl( "ListBox", { Label = "#tool.thruster.effect" } )
+	local combo = CPanel:ComboBoxMulti( "#tool.thruster.effect" )
 	for k, v in pairs( list.Get( "ThrusterEffects" ) ) do
 		combo:AddOption( k, { thruster_effect = v.thruster_effect } )
 	end
 
-	CPanel:AddControl( "ListBox", { Label = "#tool.thruster.sound", Options = list.Get( "ThrusterSounds" ) } )
+	CPanel:ComboBoxMulti( "#tool.thruster.sound", list.Get( "ThrusterSounds" ) )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.toggle", Command = "thruster_toggle" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.collision", Command = "thruster_collision" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.damagable", Command = "thruster_damageable" } )
+	CPanel:CheckBox( "#tool.thruster.toggle", "thruster_toggle" )
+	CPanel:CheckBox( "#tool.thruster.collision", "thruster_collision" )
+	CPanel:CheckBox( "#tool.thruster.damagable", "thruster_damageable" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.thruster.model", ConVar = "thruster_model", Height = 0, Models = list.Get( "ThrusterModels" ) } )
+	CPanel:PropSelect( "#tool.thruster.model", "thruster_model", list.Get( "ThrusterModels" ), 0 )
 
 end
 
@@ -278,11 +277,8 @@ list.Set( "ThrusterModels", "models/props_c17/TrapPropeller_Engine.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/FurnitureSink001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament001.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trashcan_indoor001b.mdl", {} )
-
-if ( IsMounted( "cstrike" ) ) then
-	list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
-	list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
-end
+list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
+list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
 
 --PHX
 list.Set( "ThrusterModels", "models/props_phx2/garbage_metalcan001a.mdl", {} )

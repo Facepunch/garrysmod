@@ -25,7 +25,7 @@ SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
 SWEP.AutoSwitchFrom		= false
 
-SWEP.PrintName			= "#GMOD_ManhackGun"
+SWEP.PrintName			= "#manhack_welder"
 SWEP.Slot				= 3
 SWEP.SlotPos			= 1
 SWEP.DrawAmmo			= false
@@ -96,7 +96,7 @@ function SWEP:PrimaryAttack()
 	end
 
 	if ( owner:IsPlayer() ) then
-		undo.Create( "Manhack" )
+		undo.Create( "npc_manhack" )
 			undo.AddEntity( weld )
 			undo.AddEntity( ent )
 			undo.SetPlayer( owner )
@@ -150,7 +150,7 @@ function SWEP:SecondaryAttack()
 	end
 
 	if ( owner:IsPlayer() ) then
-		undo.Create( "Rollermine" )
+		undo.Create( "npc_rollermine" )
 			undo.AddEntity( weld )
 			undo.AddEntity( ent )
 			undo.SetPlayer( owner )

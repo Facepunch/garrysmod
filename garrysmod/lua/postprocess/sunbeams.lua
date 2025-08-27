@@ -57,17 +57,20 @@ list.Set( "PostProcess", "#sunbeams_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#sunbeams_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#sunbeams_pp.enable", Command = "pp_sunbeams" } )
+		CPanel:Help( "#sunbeams_pp.desc" )
+		CPanel:CheckBox( "#sunbeams_pp.enable", "pp_sunbeams" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "sunbeams" }
-		params.Options[ "#preset.default" ] = { pp_sunbeams = "0", pp_sunbeams_darken = "0.95", pp_sunbeams_multiply = "1", pp_sunbeams_sunsize = "0.075" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		local options = {
+			pp_sunbeams = "0",
+			pp_sunbeams_darken = "0.95",
+			pp_sunbeams_multiply = "1",
+			pp_sunbeams_sunsize = "0.075"
+		}
+		CPanel:ToolPresets( "sunbeams", options )
 
-		CPanel:AddControl( "Slider", { Label = "#sunbeams_pp.multiply", Command = "pp_sunbeams_multiply", Type = "Float", Min = "0", Max = "1" } )
-		CPanel:AddControl( "Slider", { Label = "#sunbeams_pp.darken", Command = "pp_sunbeams_darken", Type = "Float", Min = "0", Max = "1" } )
-		CPanel:AddControl( "Slider", { Label = "#sunbeams_pp.size", Command = "pp_sunbeams_sunsize", Type = "Float", Min = "0.01", Max = "0.25" } )
+		CPanel:NumSlider( "#sunbeams_pp.multiply", "pp_sunbeams_multiply", 0, 1 )
+		CPanel:NumSlider( "#sunbeams_pp.darken", "pp_sunbeams_darken", 0, 1 )
+		CPanel:NumSlider( "#sunbeams_pp.size", "pp_sunbeams_sunsize", 0.01, 0.25 )
 
 	end
 

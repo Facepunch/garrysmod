@@ -196,19 +196,19 @@ function OnMenuFailedToLoad()
 	local btn_srv = frame:Add( "DButton" )
 	btn_srv:Dock( TOP )
 	btn_srv:DockMargin( 0, 0, 0, 5 )
-	btn_srv:SetText( "Open legacy server browser" )
+	btn_srv:SetText( "#find_mp_game" )
 	btn_srv:SetConsoleCommand( "gamemenucommand", "OpenServerBrowser" )
 
 	local btn_opt = frame:Add( "DButton" )
 	btn_opt:Dock( TOP )
 	btn_opt:DockMargin( 0, 0, 0, 5 )
-	btn_opt:SetText( "Open Settings" )
+	btn_opt:SetText( "#options" )
 	btn_opt:SetConsoleCommand( "gamemenucommand", "OpenOptionsDialog" )
 
 	local btn_exit = frame:Add( "DButton" )
 	btn_exit:Dock( TOP )
 	btn_exit:DockMargin( 0, 0, 0, 5 )
-	btn_exit:SetText( "Exit the game" )
+	btn_exit:SetText( "#quit" )
 	btn_exit.DoClick = function() RunGameUICommand( "quit" ) end
 end
 

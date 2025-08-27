@@ -88,7 +88,7 @@ function TOOL:LeftClick( trace, attach )
 
 	balloon:SetPos( Pos )
 
-	undo.Create( "Balloon" )
+	undo.Create( "gmod_balloon" )
 		undo.AddEntity( balloon )
 
 		if ( attach ) then
@@ -136,6 +136,11 @@ if ( SERVER ) then
 
 		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return NULL end
 
+		if ( !isnumber( r ) ) then r = 255 end
+		if ( !isnumber( g ) ) then g = 255 end
+		if ( !isnumber( b ) ) then b = 255 end
+		if ( !isnumber( force ) ) then force = 0 end
+
 		local balloon = ents.Create( "gmod_balloon" )
 		if ( !IsValid( balloon ) ) then return NULL end
 
@@ -146,8 +151,6 @@ if ( SERVER ) then
 		DoPropSpawnedEffect( balloon )
 
 		duplicator.DoGenericPhysics( balloon, ply, Data )
-
-		force = math.Clamp( force, -1E34, 1E34 )
 
 		balloon:SetColor( Color( r, g, b, 255 ) )
 		balloon:SetForce( force )
@@ -218,15 +221,17 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.balloon.help" } )
+	CPanel:Help( "#tool.balloon.help" )
+	CPanel:ToolPresets( "balloon", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "balloon", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.balloon.ropelength", "balloon_ropelength", 5, 1000 )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.balloon.ropelength", Type = "Float", Command = "balloon_ropelength", Min = 5, Max = 1000 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.balloon.force", Type = "Float", Command = "balloon_force", Min = -1000, Max = 2000, Help = true } )
-	CPanel:AddControl( "Color", { Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b" } )
+	CPanel:NumSlider( "#tool.balloon.force", "balloon_force", -1000, 2000 )
+	CPanel:ControlHelp( "#tool.balloon.force.help" )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model", ConVar = "balloon_model", Height = 0, ModelsTable = list.Get( "BalloonModels" ) } )
+	CPanel:ColorPicker( "#tool.balloon.color", "balloon_r", "balloon_g", "balloon_b" )
+
+	CPanel:PropSelect( "#tool.balloon.model", "balloon_model", list.Get( "BalloonModels" ), 0 )
 
 end
 

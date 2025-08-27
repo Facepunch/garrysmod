@@ -92,7 +92,8 @@ function TOOL:LeftClick( trace )
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.axis.name" )
+			undo.Finish( "#tool.axis.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )
@@ -172,7 +173,8 @@ function TOOL:RightClick( trace )
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.axis.name" )
+			undo.Finish( "#tool.axis.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )
@@ -219,13 +221,19 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.axis.help" } )
+	CPanel:Help( "#tool.axis.help" )
+	CPanel:ToolPresets( "axis", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "axis", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "axis_forcelimit", 0, 50000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "axis_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "axis_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "axis_hingefriction", Type = "Float", Min = 0, Max = 200, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide", Help = true } )
+	CPanel:NumSlider( "#tool.torquelimit", "axis_torquelimit", 0, 50000 )
+	CPanel:ControlHelp( "#tool.torquelimit.help" )
+
+	CPanel:NumSlider( "#tool.hingefriction", "axis_hingefriction", 0, 200 )
+	CPanel:ControlHelp( "#tool.hingefriction.help" )
+
+	CPanel:CheckBox( "#tool.nocollide", "axis_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide.help" )
 
 end

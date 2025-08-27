@@ -255,3 +255,15 @@ function math.Factorial( num )
 
 	return res
 end
+
+--[[---------------------------------------------------------
+	Name: IsNearlyEqual( a, b, tolerance )
+	Desc: Checks if two floating point numbers are nearly equal
+-----------------------------------------------------------]]
+function math.IsNearlyEqual( a, b, tolerance )
+	if ( tolerance == nil ) then
+		tolerance = 1e-8
+	end
+
+	return math.abs( a - b ) <= tolerance
+end

@@ -215,8 +215,8 @@ else
 		local Panel = controlpanel.Get( "User_Cleanup" )
 		if ( IsValid( Panel ) ) then
 			Panel:Clear()
-			Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
-			Panel:Button( "#CleanupAll", "gmod_cleanup" )
+			Panel:Help( "#spawnmenu.utilities.cleanup.help" )
+			Panel:Button( "#spawnmenu.utilities.cleanup.all", "gmod_cleanup" )
 
 			for key, val in SortedPairs( cleanup_types_s ) do
 				Panel:Button( key, "gmod_cleanup", val )
@@ -226,8 +226,8 @@ else
 		local AdminPanel = controlpanel.Get( "Admin_Cleanup" )
 		if ( IsValid( AdminPanel ) ) then
 			AdminPanel:Clear()
-			AdminPanel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
-			AdminPanel:Button( "#CleanupAll", "gmod_admin_cleanup" )
+			AdminPanel:Help( "#spawnmenu.utilities.cleanup.help" )
+			AdminPanel:Button( "#spawnmenu.utilities.cleanup.all", "gmod_admin_cleanup" )
 
 			for key, val in SortedPairs( cleanup_types_s ) do
 				AdminPanel:Button( key, "gmod_admin_cleanup", val )

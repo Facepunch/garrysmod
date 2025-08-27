@@ -121,15 +121,14 @@ frame_blend.CompleteFrame = function()
 	matFSB:SetFloat( "$alpha", 1.0 )
 	matFSB:SetTexture( "$basetexture", texMB0 )
 
-	local OldRT = render.GetRenderTarget()
-	render.SetRenderTarget( texMB1 )
+	render.PushRenderTarget( texMB1 )
 		render.SetMaterial( matFSB )
 		render.DrawScreenQuad()
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
-	render.SetRenderTarget( texMB0 )
+	render.PushRenderTarget( texMB0 )
 		render.Clear( 0, 0, 0, 255, true, true )
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 
@@ -153,7 +152,6 @@ frame_blend.BlendFrame = function()
 		render.UpdateScreenEffectTexture()
 	render.PopRenderTarget()
 
-	local delta = ( NumFramesTaken - padding ) / ( frames - padding * 2 )
 	local curve = FrameCurve( NumFramesTaken - padding, frames-padding * 2 )
 	if ( !curve ) then return end
 
@@ -161,11 +159,10 @@ frame_blend.BlendFrame = function()
 
 	matFB:SetFloat( "$alpha", curve )
 
-	local OldRT = render.GetRenderTarget()
-	render.SetRenderTarget( texMB0 )
+	render.PushRenderTarget( texMB0 )
 		render.SetMaterial( matFB )
 		render.DrawScreenQuad()
-	render.SetRenderTarget( OldRT )
+	render.PopRenderTarget()
 
 end
 
@@ -196,18 +193,15 @@ list.Set( "PostProcess", "#frame_blend_pp", {
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc" } )
-		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc2" } )
+		CPanel:Help( "#frame_blend_pp.desc" )
+		CPanel:Help( "#frame_blend_pp.desc2" )
 
-		CPanel:AddControl( "CheckBox", { Label = "#frame_blend_pp.enable", Command = "pp_fb" } )
+		CPanel:CheckBox( "#frame_blend_pp.enable", "pp_fb" )
 
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "frame_blend" }
-		params.Options[ "#preset.default" ] = { pp_fb_frames = "16", pp_fb_shutter = "0.5" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		CPanel:ToolPresets( "frame_blend", { pp_fb_frames = "16", pp_fb_shutter = "0.5" } )
 
-		CPanel:AddControl( "Slider", { Label = "#frame_blend_pp.frames", Command = "pp_fb_frames", Type = "Int", Min = "3", Max = "64" } )
-		CPanel:AddControl( "Slider", { Label = "#frame_blend_pp.shutter", Command = "pp_fb_shutter", Type = "Float", Min = "0", Max = "0.99" } )
+		CPanel:NumSlider( "#frame_blend_pp.frames", "pp_fb_frames", 3, 64, 0 )
+		CPanel:NumSlider( "#frame_blend_pp.shutter", "pp_fb_shutter", 0, 0.99 )
 
 	end
 

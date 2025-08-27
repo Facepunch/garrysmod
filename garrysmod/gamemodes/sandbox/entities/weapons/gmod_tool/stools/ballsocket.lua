@@ -53,7 +53,8 @@ function TOOL:LeftClick( trace )
 			undo.Create( "BallSocket" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.ballsocket.name" )
+			undo.Finish( "#tool.ballsocket.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )
@@ -91,12 +92,16 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.ballsocket.help" } )
+	CPanel:Help( "#tool.ballsocket.help" )
+	CPanel:ToolPresets( "ballsocket", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "ballsocket", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:NumSlider( "#tool.forcelimit", "ballsocket_forcelimit", 0, 50000 )
+	CPanel:ControlHelp( "#tool.forcelimit.help" )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "ballsocket_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	--CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "ballsocket_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "ballsocket_nocollide", Help = true } )
+	--CPanel:NumSlider( "#tool.torquelimit", "ballsocket_torquelimit", 0, 50000 )
+	--CPanel:ControlHelp( "#tool.torquelimit.help" )
+
+	CPanel:CheckBox( "#tool.nocollide", "ballsocket_nocollide" )
+	CPanel:ControlHelp( "#tool.nocollide.help" )
 
 end

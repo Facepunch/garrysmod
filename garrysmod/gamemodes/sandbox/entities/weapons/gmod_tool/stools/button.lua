@@ -55,7 +55,7 @@ function TOOL:RightClick( trace, worldweld )
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )
 
-	undo.Create( "Button" )
+	undo.Create( "gmod_button" )
 		undo.AddEntity( button )
 
 		if ( worldweld && trace.Entity != NULL ) then
@@ -171,17 +171,17 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#tool.button.desc" } )
+	CPanel:Help( "#tool.button.desc" )
+	CPanel:ToolPresets( "button", ConVarsDefault )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "button", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:KeyBinder( "#tool.button.key", "button_keygroup" )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.button.key", Command = "button_keygroup" } )
+	CPanel:TextEntry( "#tool.button.text", "button_description" )
 
-	CPanel:AddControl( "TextBox", { Label = "#tool.button.text", Command = "button_description", MaxLenth = "20" } )
+	CPanel:CheckBox( "#tool.button.toggle", "button_toggle" )
+	CPanel:ControlHelp( "#tool.button.toggle.help" )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.button.toggle", Command = "button_toggle", Help = true } )
-
-	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 0, Models = list.Get( "ButtonModels" ) } )
+	CPanel:PropSelect( "#tool.button.model", "button_model", list.Get( "ButtonModels" ), 0 )
 
 end
 
