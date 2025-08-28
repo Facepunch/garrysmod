@@ -27,9 +27,9 @@ else
 		Name: Draw
 		Desc: Draw it!
 	-----------------------------------------------------------]]
-	function ENT:Draw()
-		self:DrawModel()
-	end
+	local Entity = FindMetaTable( "Entity" )
+
+	ENT.Draw = Entity.DrawModel
 
 	--[[---------------------------------------------------------
 		Name: DrawTranslucent
