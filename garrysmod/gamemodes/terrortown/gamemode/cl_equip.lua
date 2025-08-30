@@ -502,7 +502,7 @@ local function ReceiveBoughtItem()
 
    local id
    if is_item then
-      local exponent = net.ReadUInt(bitsRequired(bitsRequired(EQUIP_MAX)))
+      local exponent = net.ReadUInt(bitsRequired(math.log(EQUIP_MAX) / math.log(2)))
       id = 2 ^ exponent
    else
       id = net.ReadString()

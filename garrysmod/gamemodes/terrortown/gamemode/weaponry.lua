@@ -423,8 +423,8 @@ local function OrderEquipment(ply, cmd, args)
                          -- since we only network one item here, convert the bitflag equipment id
                          -- into a power of two exponent before networking it
 
-                         local exponent = math.log(math.abs(id)) / math.log(2)
-                         net.WriteUInt(exponent, bitsRequired(bitsRequired(EQUIP_MAX)))
+                         local exponent = math.log(id) / math.log(2)
+                         net.WriteUInt(exponent, bitsRequired(math.log(EQUIP_MAX) / math.log(2)))
                       else
                          net.WriteString(id)
                       end
