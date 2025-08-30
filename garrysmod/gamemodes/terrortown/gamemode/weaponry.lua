@@ -337,6 +337,8 @@ function GM:TTTCanOrderEquipment(ply, id, is_item)
    return true
 end
 
+local bitsRequired = util.BitsRequired
+
 -- Equipment buying
 local function OrderEquipment(ply, cmd, args)
    if not IsValid(ply) or #args != 1 then return end
@@ -349,7 +351,7 @@ local function OrderEquipment(ply, cmd, args)
    -- it's an item if the arg is an id instead of an ent name
    local id = args[1]
    local is_item = tonumber(id)
-   
+
    if not hook.Run("TTTCanOrderEquipment", ply, id, is_item) then return end
 
    -- we use weapons.GetStored to save time on an unnecessary copy, we will not
@@ -416,9 +418,13 @@ local function OrderEquipment(ply, cmd, args)
                    function()
                       if not IsValid(ply) then return end
                       net.Start("TTT_BoughtItem")
-                      net.WriteBit(is_item)
+                      net.WriteBool(is_item)
                       if is_item then
-                         net.WriteUInt(id, 16)
+                         -- since we only network one item here, convert the bitflag equipment id
+                         -- into a power of two exponent before networking it
+
+                         local exponent = math.log(id) / math.log(2)
+                         net.WriteUInt(exponent, bitsRequired(math.log(EQUIP_MAX) / math.log(2)))
                       else
                          net.WriteString(id)
                       end

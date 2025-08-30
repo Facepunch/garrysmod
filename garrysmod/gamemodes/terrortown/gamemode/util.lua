@@ -292,8 +292,9 @@ function IsRagdoll(ent)
 end
 
 local band = bit.band
+local tobit = bit.tobit
 function util.BitSet(val, bit)
-   return band(val, bit) == bit
+   return band(val, bit) == tobit(bit)
 end
 
 if CLIENT then
@@ -357,13 +358,28 @@ end
 -- Like string.FormatTime but simpler (and working), always a string, no hour
 -- support
 function util.SimpleTime(seconds, fmt)
-	if not seconds then seconds = 0 end
+   if not seconds then seconds = 0 end
 
-    local ms = (seconds - math.floor(seconds)) * 100
-    seconds = math.floor(seconds)
-    local s = seconds % 60
-    seconds = (seconds - s) / 60
-    local m = seconds % 60
+   local ms = (seconds - math.floor(seconds)) * 100
+   seconds = math.floor(seconds)
+   local s = seconds % 60
+   seconds = (seconds - s) / 60
+   local m = seconds % 60
 
-    return string.format(fmt, m, s, ms)
+   return string.format(fmt, m, s, ms)
+end
+
+-- Returns the number of bits required to network an integer
+function util.BitsRequired(num, signed)
+   local bits, max = 0, 1
+   while max <= num do
+      bits = bits + 1
+      max = max + max
+   end
+
+   if signed then
+      bits = math.min(bits + 1, 32)
+   end
+
+   return bits
 end
