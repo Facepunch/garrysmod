@@ -14,6 +14,12 @@ TRADIO = {}
 -- delay: The delay between sound repetitions. If set to a table, randomizes the delay within the range {min, max}.
 -- ampl: The sound level. See https://wiki.facepunch.com/gmod/Enums/SNDLVL
 --
+-- If serial = true, you can nest multiple sound tables within the sound table.
+-- This will cause the radio to choose a random sound from the first table,
+-- then on the next repetition, choose a random sound from the next table,
+-- and so on. See footsteps (lines 57-67) for an example of this.
+--
+--
 -- If you want to add custom sounds to the radio, use TRADIO.AddNewSound in a shared lua file.
 -- For example:
 --   TRADIO.AddNewSound("glock", {
@@ -51,10 +57,6 @@ TRADIO.Sounds = {
    footsteps = {
       name = "radio_button_steps",
       sound = {
-         -- If serial = true, you can nest multiple sound tables within the sound table.
-         -- This will cause the radio to choose a random sound from the first table,
-         -- then on the next repetition, choose a random sound from the next table,
-         -- and so on.
          {Sound("player/footsteps/concrete1.wav"), Sound("player/footsteps/concrete2.wav")},
          {Sound("player/footsteps/concrete3.wav"), Sound("player/footsteps/concrete4.wav")}
       },

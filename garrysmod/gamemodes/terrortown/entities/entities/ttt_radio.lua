@@ -171,8 +171,8 @@ if SERVER then
 
       local radio = Entity(eidx)
       if not IsValid(radio) then return end
-      if (radio:GetOwner() != ply) then return end
-      if (radio:GetClass() != "ttt_radio") then return end
+      if radio:GetOwner() != ply then return end
+      if radio:GetClass() != "ttt_radio" then return end
 
       if not TRADIO.Sounds[snd] then
          print("Received radio sound not in table from", ply)
