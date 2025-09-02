@@ -40,8 +40,6 @@ local function CreateSoundBoard(parent)
    grid:SetSpaceX(m)
    grid:SetSpaceY(m)
 
-   grid:SetPaintBackground(true)
-
    for ri, snd in ipairs(sorder) do
       local but = grid:Add("DButton")
       but:SetSize(bw, bh)
