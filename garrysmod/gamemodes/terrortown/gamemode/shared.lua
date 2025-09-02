@@ -84,6 +84,7 @@ COLOR_OLIVE  = Color(100, 100, 0, 255)
 include("util.lua")
 include("lang_shd.lua") -- uses some of util
 include("equip_items_shd.lua")
+include("radio_shd.lua")
 
 function DetectiveMode() return GetGlobalBool("ttt_detective", false) end
 function HasteMode() return GetGlobalBool("ttt_haste", false) end
