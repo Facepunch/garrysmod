@@ -9,7 +9,7 @@ TRADIO = {}
 --
 -- name: The name of the sound shown in the T menu. Can be localized.
 -- sound: The sound to be played, or a table of sounds to pick from randomly.
--- serial: If true, pick from the sound table in sequential order instead of randomly.
+-- serial: If true, play through the sound table in sequential order instead of randomly.
 -- times: The number of times to repeat the sound. If set to a table, randomizes the number of times within the range {min, max}.
 -- delay: The delay between sound repetitions. If set to a table, randomizes the delay within the range {min, max}.
 -- ampl: The sound level. See https://wiki.facepunch.com/gmod/Enums/SNDLVL
@@ -86,7 +86,6 @@ TRADIO.Sounds = {
          Sound("General.StopBurning")
       },
       serial = true,
-      times = 2,
       delay = 4,
    },
 
@@ -97,7 +96,6 @@ TRADIO.Sounds = {
          Sound("ambient/levels/labs/electric_explosion4.wav")
       },
       serial = true,
-      times = 2,
       delay = 1
    },
 

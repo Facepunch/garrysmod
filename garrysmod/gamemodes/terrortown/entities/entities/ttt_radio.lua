@@ -111,15 +111,20 @@ function ENT:PlaySound(snd)
    local sndlist = soundData.sound
    local ampl = soundData.ampl
 
+   local serial = soundData.serial
    local times = soundData.times
-   if times then
-      times = istable(times) and math.random(times[1], times[2]) or times
+   if serial or times then
+      local num = istable(sndlist) and #sndlist or 1
+
+      if times then
+         times = istable(times) and math.random(times[1], times[2]) or times
+      else
+         times = num
+      end
 
       if times > 1 then
          local delay = soundData.delay
-         local serial = soundData.serial
          local idx = 1
-         local num = istable(sndlist) and #sndlist or 1
 
          local t = 0
          for i = 1, times do
