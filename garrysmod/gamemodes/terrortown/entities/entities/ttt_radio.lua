@@ -106,6 +106,8 @@ function ENT:PlaySound(snd)
    local soundData = TRADIO.Sounds[snd]
    if not soundData then return end
 
+   if hook.Run("TTTRadioPlaySound", self, snd, soundData) == true then return end
+
    local sndlist = soundData.sound
    local ampl = soundData.ampl
 
