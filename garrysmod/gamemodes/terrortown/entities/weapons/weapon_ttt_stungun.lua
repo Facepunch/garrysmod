@@ -57,13 +57,15 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    cone = sights and (cone * 0.9) or cone
 
    local bullet = {}
-   bullet.Num    = numbul
-   bullet.Src    = self:GetOwner():GetShootPos()
-   bullet.Dir    = self:GetOwner():GetAimVector()
-   bullet.Spread = Vector( cone, cone, 0 )
-   bullet.Tracer = 4
-   bullet.Force  = 5
-   bullet.Damage = dmg
+   bullet.Num       = numbul
+   bullet.Src       = self:GetOwner():GetShootPos()
+   bullet.Dir       = self:GetOwner():GetAimVector()
+   bullet.Spread    = Vector( cone, cone, 0 )
+   bullet.Tracer    = 4
+   bullet.Force     = 5
+   bullet.Damage    = dmg
+   bullet.Attacker  = self:GetOwner()
+   bullet.Inflictor = self
 
    bullet.Callback = function(att, tr, dmginfo)
                         if SERVER or (CLIENT and IsFirstTimePredicted()) then

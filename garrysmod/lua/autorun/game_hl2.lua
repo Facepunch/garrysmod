@@ -126,6 +126,7 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	--ADD_ITEM( "xen_plantlight", -16 )
 
 	ADD_NPC_WEAPON( "weapon_357_hl1" )
+	ADD_NPC_WEAPON( "weapon_mp5_hl1" )
 	ADD_NPC_WEAPON( "weapon_glock_hl1" )
 	ADD_NPC_WEAPON( "weapon_shotgun_hl1" )
 end

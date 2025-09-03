@@ -102,7 +102,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		$scope.SelectMap( m );
 
 		$scope.StartGame();
-
 	}
 
 	$scope.FavMap = function( m )
