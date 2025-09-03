@@ -9,7 +9,7 @@ TRADIO = {}
 --
 -- name: The name of the sound shown in the T menu. Can be localized.
 -- sound: The sound to be played, or a table of sounds to pick from randomly.
--- serial: If true, pick from the sound table in order instead of randomly.
+-- serial: If true, pick from the sound table in sequential order instead of randomly.
 -- times: The number of times to repeat the sound. If set to a table, randomizes the number of times within the range {min, max}.
 -- delay: The delay between sound repetitions. If set to a table, randomizes the delay within the range {min, max}.
 -- ampl: The sound level. See https://wiki.facepunch.com/gmod/Enums/SNDLVL
@@ -17,7 +17,7 @@ TRADIO = {}
 -- If serial = true, you can nest multiple sound tables within the sound table.
 -- This will cause the radio to choose a random sound from the first table,
 -- then on the next repetition, choose a random sound from the next table,
--- and so on. See footsteps (lines 57-67) for an example of this.
+-- and so on. See footsteps (lines 70-80) for an example of this.
 --
 --
 -- If you want to add custom sounds to the radio, use TRADIO.AddNewSound in a shared lua file.
@@ -52,6 +52,19 @@ TRADIO.Sounds = {
       name = "radio_button_expl",
       sound = Sound("BaseExplosionEffect.Sound")
    },
+   beeps = {
+      name = "radio_button_c4",
+      sound = Sound("weapons/c4/c4_beep1.wav"),
+      delay = 0.75,
+      times = {8, 12},
+      ampl = 70
+   },
+   hstation = {
+      name = "radio_button_heal",
+      sound = Sound("items/medshot4.wav"),
+      delay = 2,
+      times = {4, 8}
+   },
 
    -- Serial Sounds
    footsteps = {
@@ -77,12 +90,15 @@ TRADIO.Sounds = {
       delay = 4,
    },
 
-   beeps = {
-      name = "radio_button_c4",
-      sound = Sound("weapons/c4/c4_beep1.wav"),
-      delay = 0.75,
-      times = {8, 12},
-      ampl = 70
+   teleport = {
+      name = "radio_button_tele",
+      sound = {
+         Sound("ambient/levels/labs/teleport_mechanism_windup1.wav"),
+         Sound("ambient/levels/labs/electric_explosion4.wav")
+      },
+      serial = true,
+      times = 2,
+      delay = 1
    },
 
    -- Gun Sounds
@@ -138,6 +154,22 @@ TRADIO.Sounds = {
       delay = 0.055,
       times = {6, 12},
       ampl = 90
+   },
+
+   glock = {
+      name = "radio_button_glock",
+      sound = Sound("Weapon_Glock.single"),
+      delay = 0.1,
+      times = {4, 8},
+      ampl = 90
+   },
+
+   sipistol = {
+      name = "radio_button_sipist",
+      sound = Sound("Weapon_USP.SilencedShot"),
+      delay = {0.38, 0.76},
+      times = {2, 4},
+      ampl = 50
    }
 }
 

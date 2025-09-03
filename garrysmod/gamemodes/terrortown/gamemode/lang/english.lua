@@ -138,6 +138,10 @@ L.radio_button_huge    = "H.U.G.E burst"
 L.radio_button_c4      = "C4 beeping"
 L.radio_button_burn    = "Burning"
 L.radio_button_steps   = "Footsteps"
+L.radio_button_glock   = "Glock shots"
+L.radio_button_sipist  = "Silenced shots"
+L.radio_button_tele    = "Teleport"
+L.radio_button_heal    = "Healing"
 
 
 -- Intro screen shown after joining

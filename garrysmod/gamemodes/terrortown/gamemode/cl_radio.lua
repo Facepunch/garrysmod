@@ -6,7 +6,8 @@ local TryTranslation = LANG.TryTranslation
 TRADIO.SoundOrder = {
    "scream", "burning", "explosion", "footsteps",
    "pistol", "shotgun", "mac10", "deagle",
-   "m16", "rifle", "huge", "beeps"
+   "m16", "rifle", "huge", "glock",
+   "beeps", "sipistol", "teleport", "hstation"
 };
 
 local function PlayRadioSound(snd)
