@@ -23,7 +23,8 @@ function ENT:PressedShouldDraw( widget ) return widget == self end
 
 function ENT:OverlayRender()
 
-	local fwd = self:GetAngles():Forward()
+	local angles = self:GetAngles()
+	local fwd = angles:Forward()
 	local size = self:GetSize()
 
 	local c = self:GetColor()
@@ -34,14 +35,15 @@ function ENT:OverlayRender()
 		c.b = c.b * 0.5
 	end
 
-	local ang = self:GetAngles().roll - 90
+	local pos = self:GetPos()
+	local ang = angles.roll - 90
 
 	render.DepthRange( 0, 0.01 )
 	render.SetMaterial( matDiscAlpha )
-	render.DrawQuadEasy( self:GetPos(), fwd, size, size, Color( c.r, c.g, c.b, c.a * 0.2 ), ang )
+	render.DrawQuadEasy( pos, fwd, size, size, Color( c.r, c.g, c.b, c.a * 0.2 ), ang )
 	render.DepthRange( 0, 1 )
 	render.SetMaterial( matDisc )
-	render.DrawQuadEasy( self:GetPos(), fwd, size, size, Color( c.r, c.g, c.b, c.a ), ang )
+	render.DrawQuadEasy( pos, fwd, size, size, c, ang )
 	render.DepthRange( 0, 1 )
 
 end
@@ -53,11 +55,13 @@ function ENT:TestCollision( startpos, delta, isbox, extents )
 
 	local fwd = self:GetAngles():Forward()
 	local size = self:GetSize() * 0.5
+	local pos = self:GetPos()
 
-	local hitpos = util.IntersectRayWithPlane( startpos, delta:GetNormalized(), self:GetPos(), fwd )
+	local hitpos = util.IntersectRayWithPlane( startpos, delta:GetNormalized(), pos, fwd )
 	if ( !hitpos ) then return end
 
-	local dist = self:GetPos():Distance( hitpos )
+	local dist = pos:DistToSqr( hitpos )
+	size = size * size
 	if ( dist > size ) then return end
 	if ( dist < size * 0.9 ) then return end
 
@@ -81,9 +85,6 @@ function ENT:DragThink( pl, mv, dist )
 end
 
 function ENT:ArrowDragged( pl, mv, dist )
-
-	-- MsgN( dist )
-
 end
 
 function ENT:GetGrabPos( Pos, Forward )
