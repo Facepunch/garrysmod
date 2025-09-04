@@ -756,6 +756,6 @@
 			"model"		"models/xqm/trianglelong3.mdl"
 		}
 	}
-	"name"		"Airplane Props"
+	"name"		"#spawnmenu.spawnlist.airplane_props"
 	"version"		"3"
 }
