@@ -25,24 +25,6 @@ function MenuController( $scope, $rootScope )
 
 	gScope.Gamemode = '';
 
-	$scope.ToggleGamemodes = function()
-	{
-		$( '.popup:not(.gamemode_list)' ).hide();
-		$( '.gamemode_list' ).toggle();
-	}
-
-	$scope.ToggleLanguage = function()
-	{
-		$( '.popup:not(.language_list)' ).hide();
-		$( '.language_list' ).toggle();
-	}
-
-	$scope.ToggleGames = function()
-	{
-		$( '.popup:not(.games_list)' ).hide();
-		$( '.games_list' ).toggle();
-	}
-
 	$scope.TogglePopup = function( name )
 	{
 		$( '.popup:not('+name+')' ).hide();
