@@ -139,7 +139,7 @@ L.radio_button_c4      = "C4 bip sesi"
 L.radio_button_burn    = "Yanma sesi"
 L.radio_button_steps   = "Adım sesi"
 L.radio_button_glock   = "Glock atışları"
-L.radio_button_sipist  = "Susturuculu silah atışları"
+L.radio_button_sipist  = "Susturuculu silah"
 L.radio_button_tele    = "Işınlanma"
 L.radio_button_heal    = "Sağlık edinimi"
 
