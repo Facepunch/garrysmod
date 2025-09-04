@@ -138,7 +138,10 @@ L.radio_button_huge    = "H.U.G.E. patlaması"
 L.radio_button_c4      = "C4 bip sesi"
 L.radio_button_burn    = "Yanma sesi"
 L.radio_button_steps   = "Adım sesi"
-
+L.radio_button_glock   = "Glock atışları"
+L.radio_button_sipist  = "Susturuculu silah"
+L.radio_button_tele    = "Işınlanma"
+L.radio_button_heal    = "Sağlık edinimi"
 
 -- Intro screen shown after joining
 L.intro_help     = "Oyunda yeniyseniz, talimatlar için F1'e basın!"
