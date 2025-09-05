@@ -6,6 +6,90 @@ include ( "panel/scriptedpanels.lua" )
 
 local meta = FindMetaTable( "Panel" )
 
+--
+-- Panel index accessor
+--
+local VGUIGetHoveredPanel = vgui.GetHoveredPanel
+local GetPanelTable = meta.GetTable
+local GetPos = meta.GetPos
+
+local g_PanelsTables = {}
+
+function meta:__index( key )
+
+	--
+	-- Panel-specialized values
+	--
+	if ( key == "Hovered" ) then
+		return VGUIGetHoveredPanel() == self or GetPanelTable( self ).Hovered
+	end
+
+	if ( key == "x" or key == "X" ) then
+
+		local x = GetPos( self )
+		return x
+
+	end
+
+	if ( key == "y" or key == "Y" ) then
+
+		local _, y = GetPos( self )
+		return y
+
+	end
+
+	--
+	-- Search the panel table
+	--
+	local pnl_tbl = g_PanelsTables[self]
+
+	if ( !pnl_tbl ) then
+
+		pnl_tbl = GetPanelTable( self )
+
+		-- If table isn't yet installed, looking in the metatable
+		if ( !pnl_tbl ) then
+			return meta[key]
+		end
+
+		g_PanelsTables[self] = pnl_tbl
+
+	end
+
+	local value = pnl_tbl[key]
+
+	-- Look in the table
+	if ( value != nil ) then
+		return value
+	end
+
+	-- Look in the metatable
+	value = meta[key]
+
+	return value
+
+end
+
+--
+-- GC
+--
+local IsPanelValid = meta.IsValid
+
+local function Timer_PanelsTablesGC()
+
+	for pnl in pairs( g_PanelsTables ) do
+
+		if ( !IsPanelValid( pnl ) ) then
+			g_PanelsTables[pnl] = nil
+		end
+
+	end
+
+end
+
+timer.Create( "PanelsTables_GC", 30, 0, Timer_PanelsTablesGC )
+
+
 AccessorFunc( meta, "m_strCookieName", "CookieName" )
 
 meta.SetFGColorEx = meta.SetFGColor
