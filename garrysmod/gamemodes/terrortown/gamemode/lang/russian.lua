@@ -138,6 +138,10 @@ L.radio_button_huge    = "H.U.G.E"
 L.radio_button_c4      = "Пиканье С4"
 L.radio_button_burn    = "Горение"
 L.radio_button_steps   = "Шаги"
+L.radio_button_glock   = "Glock"
+L.radio_button_sipist  = "Глушитель"
+L.radio_button_tele    = "Телепортация"
+L.radio_button_heal    = "Лечение"
 
 
 -- Intro screen shown after joining
