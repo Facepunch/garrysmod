@@ -246,7 +246,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			{
 				document.getElementById( "p2p_friendsonly" ).disabled = true;
 			}
-			$scope.ServerSettings.p2p_friendsonly = false;
 			UpdateDigest( $scope, 50 );
 		}
 		else if ( document.getElementById( "p2p_friendsonly" ) !== null )

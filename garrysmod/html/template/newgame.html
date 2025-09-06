@@ -65,7 +65,7 @@
 						<label for="ServerSettings_p2p_enabled" ng-Tranny="'p2p_server'"></label>
 					</div>
 
-					<div class='control' ng-show="MaxPlayers > 1">
+					<div class='control' ng-show="MaxPlayers > 1 && ServerSettings.p2p_enabled">
 						<input id="p2p_friendsonly" type="checkbox" ng-model="ServerSettings.p2p_friendsonly"/>
 						<label for="p2p_friendsonly" ng-Tranny="'p2p_server_friendsonly'"></label>
 					</div>
