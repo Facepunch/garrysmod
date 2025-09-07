@@ -50,7 +50,7 @@
 
 				<div class="scrollable" style="margin: 10px; bottom: 80px; top: 32px">
 
-					<div class='control' ng-show="MaxPlayers > 1">
+					<div class='control control-text' ng-show="MaxPlayers > 1">
 						<label for="ServerSettings_hostname" ng-Tranny="'server_name'"></label>
 						<input id="ServerSettings_hostname" type="text" ng-model="ServerSettings.hostname" />
 					</div>
@@ -65,7 +65,7 @@
 						<label for="ServerSettings_p2p_enabled" ng-Tranny="'p2p_server'"></label>
 					</div>
 
-					<div class='control' ng-show="MaxPlayers > 1 && ServerSettings.p2p_enabled">
+					<div class='control control-sub' ng-show="MaxPlayers > 1">
 						<input id="p2p_friendsonly" type="checkbox" ng-model="ServerSettings.p2p_friendsonly"/>
 						<label for="p2p_friendsonly" ng-Tranny="'p2p_server_friendsonly'"></label>
 					</div>
