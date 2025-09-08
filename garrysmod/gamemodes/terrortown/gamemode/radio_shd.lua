@@ -63,7 +63,7 @@ TRADIO.Sounds = {
       name = "radio_button_heal",
       sound = Sound("items/medshot4.wav"),
       delay = 2,
-      times = {4, 8}
+      times = {3, 5}
    },
 
    -- Serial Sounds
