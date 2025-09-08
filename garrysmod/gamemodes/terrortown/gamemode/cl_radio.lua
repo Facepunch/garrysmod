@@ -22,7 +22,7 @@ local function ButtonClickPlay(s) PlayRadioSound(s.snd) end
 local columns = 4
 local rows = 5
 
-local bh, bw = 50, 100
+local bh, bw = 50, 120
 local m = 5
 
 local function CreateSoundBoard(parent)
@@ -78,4 +78,5 @@ function TRADIO.CreateMenu(parent)
 
    return wrap
 end
+
 
