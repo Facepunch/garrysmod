@@ -221,8 +221,7 @@ gamesettings .control-numeric LABEL
 
 gamesettings .control input[type=text]
 {
-	width: 96%; /* fallback for Awesomium, doesn't support calc() */
-	width: calc(100% - 8px);
+	width: 100%;
 	padding: 4px;
 }
 
@@ -236,7 +235,6 @@ gamesettings .control-numeric
 gamesettings .control-numeric input[type=text]
 {
 	width: 44px;
-	margin-right: 8px;
 	padding: 2px;
 	float: right;
 	height: 20px;
