@@ -221,7 +221,8 @@ function UpdateServerSettings()
 	local array = {
 		hostname = GetConVarString( "hostname" ),
 		sv_lan = GetConVarString( "sv_lan" ),
-		p2p_enabled = GetConVarString( "p2p_enabled" )
+		p2p_enabled = GetConVarString( "p2p_enabled" ),
+		p2p_friendsonly = GetConVarString( "p2p_friendsonly" )
 	}
 
 	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
