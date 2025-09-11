@@ -8,6 +8,7 @@ TRADIO = {}
 -- or how the sound is played on the server:
 --
 -- name: The name of the sound shown in the T menu. Can be localized.
+-- name_params: The parameters to use when localizing the name, if any.
 -- sound: The sound to be played, or a table of sounds to pick from randomly.
 -- serial: If true, play through the sound table in sequential order instead of randomly.
 -- times: The number of times to repeat the sound. If set to a table, randomizes the number of times within the range {min, max}.
