@@ -87,5 +87,3 @@ function TRADIO.CreateMenu(parent)
 
    return wrap
 end
-
-
