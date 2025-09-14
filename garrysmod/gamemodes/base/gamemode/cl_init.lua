@@ -155,18 +155,18 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 
 	if ( bPlayerIsDead ) then
 		table.insert( tab, Color( 255, 30, 40 ) )
-		table.insert( tab, language.GetPhrase("chat_dead") .. " " )
+		table.insert( tab, language.GetPhrase( "chat_dead" ) .. " " )
 	end
 
 	if ( bTeamOnly ) then
 		table.insert( tab, Color( 30, 160, 40 ) )
-		table.insert( tab, language.GetPhrase("chat_team") .. " " )
+		table.insert( tab, language.GetPhrase( "chat_team" ) .. " " )
 	end
 
 	if ( IsValid( player ) ) then
 		table.insert( tab, player )
 	else
-		table.insert( tab, language.GetPhrase("chat_console") )
+		table.insert( tab, language.GetPhrase( "chat_console" ) )
 	end
 
 	local filter_context = TEXT_FILTER_GAME_CONTENT
@@ -734,4 +734,5 @@ end
 
 function GM:VehicleMove( ply, vehicle, mv )
 end
+
 
