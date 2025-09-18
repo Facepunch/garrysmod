@@ -66,9 +66,9 @@
 			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSeverity > 0, 'severity' + ProblemSeverity, '' )}}">{{ProblemCount}}</number>
 		</div>
 		<div class="button smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png' loading="lazy"><span></span></div>
-		<div class="button smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Tranny="'games'"></span></div>
-		<div class="button smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></div>
-		<div class="button bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></div>
+		<div class="button smallicon hidelabel" ng-click="TogglePopup('.games_list')"><img ng-src='img/games.png'><span ng-Tranny="'games'"></span></div>
+		<div class="button smallicon" ng-click="TogglePopup('.language_list')"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></div>
+		<div class="button bigicon" ng-click="TogglePopup('.gamemode_list')"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></div>
 	</div>
 
 </div>
