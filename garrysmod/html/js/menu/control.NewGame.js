@@ -125,31 +125,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 	$scope.IsFavMap = function( m )
 	{
-		for ( var i = 0; i < gScope.MapList.length; i++ )
-		{
-			if ( gScope.MapList[i][ "category" ] == "Favourites" )
-			{
-				var obj = gScope.MapList[i][ "maps" ]
-				for ( var map in obj )
-				{
-					if ( m == ( obj[ map ] ) ) return true
-				}
-			}
-		}
-
-		return false;
-	}
-
-	$scope.FavMapHover = function( m )
-	{
-		if ( this.IsFavMap( m ) ) return "faviconremove";
-		return "faviconadd";
-	}
-
-	$scope.FavMapClass = function( m )
-	{
-		if ( this.IsFavMap( m ) ) return "favtoggle_always";
-		return "favtoggle";
+		return gScope.MapListFav[m.toLowerCase()] || false;
 	}
 
 	$scope.StartGame = function()
