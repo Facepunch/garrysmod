@@ -6,14 +6,40 @@ var IN_ENGINE		= navigator.userAgent.indexOf( "Valve Source Client" ) != -1;
 function UpdateDigest( scope, timeout )
 {
 	if ( !scope ) return;
-	if ( scope.DigestUpdate ) return;
 
+	var parentHasPendingUpdate = ParentHasDigestScheduled( scope );
+	
+	if ( scope.DigestUpdate ) 
+	{
+		if ( parentHasPendingUpdate )  // Cancel scope's pending digest if parent already has one scheduled
+		{
+			clearTimeout( scope.DigestUpdate );
+			scope.DigestUpdate = 0;
+		}
+		return;
+	}
+	if ( parentHasPendingUpdate ) return; // Don't schedule new digest if scope's parent already has one scheduled
+	
 	scope.DigestUpdate = setTimeout( function()
 	{
 		scope.DigestUpdate = 0;
 		scope.$digest();
 
 	}, timeout );
+}
+
+function ParentHasDigestScheduled( scope )
+{
+	// When a scope performs digest, it handles child scopes too. 
+	// So checking if a parent already has a digest scheduled allows avoiding redundant digests.
+	
+	if ( scope == scope.$root ) return false; // already at root, no parents to check
+	
+	var parentScope = scope.$parent;
+	
+	if ( parentScope.DigestUpdate ) return true;
+	
+	return ParentHasDigestScheduled( parentScope );
 }
 
 // We already have a limitTo filter built-in to angular,
