@@ -1,5 +1,6 @@
 
 var languageCache = {};
+var languageCurrent = "";
 
 angular.module( 'tranny', [] )
 
@@ -49,7 +50,11 @@ angular.module( 'tranny', [] )
 
 		scope.$on( 'languagechanged', function()
 		{
-			languageCache = {};
+			if ( languageCurrent != gScope.Language ) 
+			{
+				languageCurrent = gScope.Language;
+				languageCache = {};
+			}
 			update();
 		} );
 
