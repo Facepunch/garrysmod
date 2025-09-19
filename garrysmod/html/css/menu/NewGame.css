@@ -180,6 +180,15 @@ gamesettings select
 	margin-right: 10px;
 }
 
+gamesettings .scrollable
+{
+	overflow-y: scroll;
+	
+	margin: 10px;
+	margin-right: 0px; /* make room for scrollbar */
+	padding-right: 2px;
+}
+
 gamesettings .control
 {
 	margin-top: 8px;

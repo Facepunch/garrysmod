@@ -272,20 +272,16 @@ UL.language_list LI:hover
 
 ::-webkit-scrollbar
 {
-	width: 12px;
-	background-color: #FAFAFA;
+	width: 8px;
+	height: 8px;
+	background-color: rgb( 250, 250, 250 );
 	border-radius: 1px;
 }
 
 ::-webkit-scrollbar-thumb
 {
-	background: -webkit-linear-gradient(left, transparent 2px, #B4B4B4 2px, #B4B4B4 10px, transparent 10px);
-	border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover 
-{
-	background: -webkit-linear-gradient(left, transparent 2px, #999999 2px, #999999 10px, transparent 10px);
+	background-color: rgb( 180, 180, 180);
+	border-radius: 2px;
 }
 
 .popup
