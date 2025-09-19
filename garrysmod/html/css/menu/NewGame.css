@@ -1,8 +1,10 @@
 
-UL.category LI.mapicon IMG.thumbnail
+UL.category LI.mapicon DIV.thumbnail
 {
 	width: 128px;
 	height: 128px;
+	display: inline-block;
+	background-size: cover;
 }
 UL.category LI.mapicon IMG.favtoggle
 {
