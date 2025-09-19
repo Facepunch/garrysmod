@@ -180,9 +180,29 @@ gamesettings select
 	margin-right: 10px;
 }
 
+gamesettings .scrollable
+{
+	overflow-y: scroll;
+	
+	margin: 10px;
+	margin-right: 0px; /* make room for scrollbar */
+	padding-right: 2px;
+}
+
 gamesettings .control
 {
 	margin-top: 8px;
+}
+
+gamesettings .control:first-child
+{
+	margin-top: 6px;
+}
+
+gamesettings .control-sub
+{
+	margin-top: 4px;
+	margin-left: 18px;
 }
 
 gamesettings .control LABEL
@@ -191,11 +211,18 @@ gamesettings .control LABEL
 	color: #666;
 }
 
-gamesettings .control:not(.control-numeric) LABEL
+gamesettings .control:not(.control-numeric):not(.control-text) LABEL
 {
 	position: relative;
 	top: -2px;
 }
+
+gamesettings .control-text LABEL
+{
+	margin-bottom: 2px;
+	display: block;
+}
+
 gamesettings .control-numeric LABEL
 {
 	line-height: 20px;
@@ -217,7 +244,6 @@ gamesettings .control-numeric
 gamesettings .control-numeric input[type=text]
 {
 	width: 44px;
-	margin-right: 8px;
 	padding: 2px;
 	float: right;
 	height: 20px;
