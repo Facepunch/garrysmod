@@ -27,15 +27,24 @@ App.filter( 'mapFilter', function() {
 
 function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
-	for ( var i = 0; i < gScope.MapList.length; i++ )
+	if ( !$scope.CurrentCategory && $rootScope.LastCategory )
 	{
-		if ( gScope.MapList[i][ "category" ] == "Favourites" )
+		$scope.CurrentCategory = $rootScope.LastCategory;
+	} 
+	else if ( !$scope.CurrentCategory )
+	{
+		// Use Favourites or Sandbox as a default category, if none set
+		$scope.CurrentCategory = "Sandbox";
+		if ( Object.keys(gScope.MapListFav).length > 0 )
 		{
-			if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Favourites";
+			$scope.CurrentCategory = "Favourites";
 		}
+		$rootScope.LastCategory = $scope.CurrentCategory;
+		UpdateDigest( $scope, 50 );
+		
+		// Get last category/map from game
+		lua.Run( "LoadLastMap()" );
 	}
-
-	if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Sandbox";
 
 	$scope.Players =
 	[
@@ -71,7 +80,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	if ( !$rootScope.LastCategory )		$rootScope.LastCategory = $scope.CurrentCategory;
 
 	lua.Run( "UpdateServerSettings()" );
-	lua.Run( "LoadLastMap()" );
 
 	rootScope = $rootScope;
 	scope = $scope;
@@ -233,17 +241,17 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 function SetLastMap( map, category )
 {
-	if ( scope )
-	{
-		scope.CurrentCategory = category;
-		UpdateDigest( scope, 50 );
-	}
-
-	if ( rootScope )
+	if ( rootScope && ( rootScope.Map != map || rootScope.LastCategory != category ) )
 	{
 		rootScope.Map = map;
 		rootScope.LastCategory = category;
 		UpdateDigest( rootScope, 50 );
+	}
+	
+	if ( scope && scope.CurrentCategory != category )
+	{
+		scope.CurrentCategory = category;
+		UpdateDigest( scope, 50 );
 	}
 
 	setTimeout( function() {
