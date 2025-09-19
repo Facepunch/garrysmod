@@ -2,20 +2,31 @@
 -- TODO: Hack. Move to where color is defined?
 TYPE_COLOR = 255
 
+-- TODO: Temp hack, remove meta
+local MAX_EDICT_BITS = 13
+
 net.Receivers = {}
+net.ReceiversConfigTime = {}
+
+CreateConVar("sv_net_time", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "The time in seconds between each net message a player can send.")
+CreateConVar("sv_net_protect", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Whether or not to protect the net messages from spam.")
 
 --
 -- Set up a function to receive network messages
 --
-function net.Receive( name, func )
+function net.Receive( name, func, iTime )
 
 	net.Receivers[ name:lower() ] = func
 
+	if SERVER and iTime then
+		net.ReceiversConfigTime[name:lower()] = iTime
+	end
 end
 
 --
 -- A message has been received from the network..
 --
+
 function net.Incoming( len, client )
 
 	local i = net.ReadHeader()
@@ -30,6 +41,34 @@ function net.Incoming( len, client )
 	-- len includes the 16 bit int which told us the message name
 	--
 	len = len - 16
+
+	if SERVER and GetConVar("sv_net_protect"):GetBool() then
+		net.ReceiversProtectionSpam = net.ReceiversProtectionSpam or {}
+
+		local sSteamID64 = client:SteamID64()
+		if net.ReceiversProtectionSpam[sSteamID64] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] and net.ReceiversProtectionSpam[sSteamID64][strName:lower()] > CurTime() then
+			return
+		end
+
+		local iTime = net.ReceiversConfigTime and isnumber(net.ReceiversConfigTime[strName:lower()]) and net.ReceiversConfigTime[strName:lower()] or GetConVar("sv_net_time"):GetFloat()
+
+		net.ReceiversProtectionSpam[sSteamID64] = net.ReceiversProtectionSpam[sSteamID64] or {}
+		net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = CurTime() + iTime
+
+		local sTimerName = ("NetProtectionSpam_%s:%s"):format(sSteamID64, strName:lower())
+
+		if not timer.Exists(sTimerName) then
+			timer.Create(sTimerName, iTime, 1, function()
+				if net.ReceiversProtectionSpam[sSteamID64] then
+					net.ReceiversProtectionSpam[sSteamID64][strName:lower()] = nil
+
+					if table.Count(net.ReceiversProtectionSpam[sSteamID64]) == 0 then
+						net.ReceiversProtectionSpam[sSteamID64] = nil
+					end
+				end
+			end)
+		end
+	end
 
 	func( len, client )
 
