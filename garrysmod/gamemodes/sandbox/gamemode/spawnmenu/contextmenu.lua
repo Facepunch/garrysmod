@@ -229,7 +229,13 @@ function CreateContextMenu()
 
 end
 
+local contextMenuLastOpen = 0
+
 function GM:OnContextMenuOpen()
+
+	-- Already open (toggle)
+	if ( g_ContextMenu and g_ContextMenu:IsVisible() ) then return end
+	contextMenuLastOpen = SysTime()
 
 	-- Let the gamemode decide whether we should open or not..
 	if ( !hook.Call( "ContextMenuOpen", self ) ) then return end
@@ -244,6 +250,8 @@ function GM:OnContextMenuOpen()
 end
 
 function GM:OnContextMenuClose()
+
+	if ( SysTime() - contextMenuLastOpen < 0.200 ) then return end
 
 	if ( IsValid( g_ContextMenu ) ) then g_ContextMenu:Close() end
 	hook.Call( "ContextMenuClosed", self )

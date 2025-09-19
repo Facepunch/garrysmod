@@ -256,7 +256,13 @@ end
 hook.Add( "OnGamemodeLoaded", "CreateSpawnMenu", CreateSpawnMenu )
 concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
 
+local spawnMenuLastOpen = 0
+
 function GM:OnSpawnMenuOpen()
+
+	-- Already open (toggle)
+	if ( g_SpawnMenu and g_SpawnMenu:IsVisible() ) then return end
+	spawnMenuLastOpen = SysTime()
 
 	-- Let the gamemode decide whether we should open or not..
 	if ( !hook.Call( "SpawnMenuOpen", self ) ) then return end
@@ -271,6 +277,8 @@ function GM:OnSpawnMenuOpen()
 end
 
 function GM:OnSpawnMenuClose()
+
+	if ( SysTime() - spawnMenuLastOpen < 0.200 ) then return end
 
 	if ( IsValid( g_SpawnMenu ) ) then g_SpawnMenu:Close() end
 	hook.Call( "SpawnMenuClosed", self )
