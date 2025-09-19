@@ -56,12 +56,12 @@
 					</div>
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<input id="ServerSettings_sv_lan" type="checkbox" ng-model="ServerSettings.sv_lan" ng-bind="CheckboxCheck()" />
+						<input id="ServerSettings_sv_lan" type="checkbox" ng-model="ServerSettings.sv_lan" ng-change="CheckboxCheck()" />
 						<label for="ServerSettings_sv_lan" ng-Tranny="'lan_server'"></label>
 					</div>
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<input id="ServerSettings_p2p_enabled" type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-bind="CheckboxCheck()" />
+						<input id="ServerSettings_p2p_enabled" type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-change="CheckboxCheck()" />
 						<label for="ServerSettings_p2p_enabled" ng-Tranny="'p2p_server'"></label>
 					</div>
 
