@@ -26,9 +26,3 @@ function InvalidateInternalEntityCache( isPly )
 	if ( isPly ) then PlayerCache = nil end
 
 end
-
-local function InvalidateInternalEntityCacheOld( ent )
-
-	InvalidateInternalEntityCache( ent:IsPlayer() )
-
-end
