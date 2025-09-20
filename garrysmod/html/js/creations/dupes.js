@@ -101,9 +101,9 @@ function WindowResized()
 	dupe.UpdatePageNav();
 
 	// Refresh HTML
-	dupe.DigestUpdate = setTimeout( function()
+	dupe.DigestUpdateResize = setTimeout( function()
 	{
-		self.DigestUpdate = 0;
+		self.DigestUpdateResize = 0;
 		Scope.Go( 0 );
 	}, 500 )
 }

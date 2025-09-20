@@ -312,17 +312,24 @@ WorkshopFiles.prototype.ReceiveImage = function( id, url )
 
 WorkshopFiles.prototype.Changed = function()
 {
+	
+	if ( !IS_SPAWN_MENU ) // Game menu works with the common.js UpdateDigest
+	{
+		UpdateDigest( this.Scope, 10 );
+		return;
+	}
+	
 	this.Scope.$digest();
 
 	// An update is queued - so chill
-	if ( this.DigestUpdate ) return;
+	if ( this.DigestUpdateResize ) return;
 
 	var self = this;
 
 	// Update the digest in 10ms
-	this.DigestUpdate = setTimeout( function()
+	this.DigestUpdateResize = setTimeout( function()
 	{
-		self.DigestUpdate = 0;
+		self.DigestUpdateResize = 0;
 		self.Scope.$digest();
 	}, 10 )
 }
