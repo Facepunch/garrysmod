@@ -77,9 +77,9 @@
 				</div>
 
 				<div class='add_fav_server' ng-show="ServerType == 'favorite'">
-					Add a server to favorites
+					<span ng-tranny="'favorite_add'"></span>
 					<input type="text" ng-model="FindServerString" placeholder="127.0.0.1"/>
-					<button ng-click="FindServersAtAddress();">Find servers at given address</button>
+					<button ng-click="FindServersAtAddress();" ng-tranny="'favorite_button'"></button>
 
 					<div class="found_servers serverlist" ng-show="FoundServers.length > 0">
 						<div ng-repeat="server in FoundServers" class="server">
