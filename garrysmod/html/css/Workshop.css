@@ -106,7 +106,7 @@ workshopicon author, workshopicon votes, workshopicon size
 	text-overflow: ellipsis;
 	font-family: "Arial";
 	color: #333;
-	background-color: rgba( 255, 255, 255, 1 );
+	background-color: #fff;
 	border-radius: 4px 0 0 0;
 	padding: 3px 6px;
 
@@ -281,7 +281,7 @@ controls control.disabled
 }
 .ugc_settings_button:hover
 {
-	background: #2691FF;
+	background: #4f9ded;
 }
 
 .ugc_settings

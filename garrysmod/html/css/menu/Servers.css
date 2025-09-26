@@ -40,7 +40,7 @@
 
 .gamemode .name tag
 {
-	background: #1a8cff;
+	background: #2387ed;
 	color: #fff;
 	padding: 1px 12px;
 	padding-bottom: 2px;
@@ -267,7 +267,7 @@ H1 small
 
 .serverlist .header
 {
-	background-color: #6af;
+	background-color: #2387ed;
 	position: absolute;
 	border-radius: 4px 4px 0 0;
 	padding: 4px;
@@ -350,14 +350,24 @@ A.bglink
 {
 	color: white;
 	font-weight: bold;
-	background-color: #5AF;
+	background-color: #2387ed;
 	padding: 8px 10px;
-	border-radius: 2px;
+	border-radius: 3px;
 	display: inline-block;
 	font-size: 14px;
 	margin-top: 4px;
 
 	position: absolute; /*hack to make it appear over the search bar*/
+}
+
+A.bglink:hover
+{
+	background-color: #4f9ded;
+}
+
+A.bglink img
+{
+	vertical-align: middle;
 }
 
 .serverinfo
@@ -380,7 +390,7 @@ A.bglink
 	right: 1px;
 	border-radius: 4px;
 	cursor: pointer;
-	background: #2387ED;
+	background: #1a8cff;
 	background-image: url(../../img/cross.png);
 	background-repeat: no-repeat;
 	background-position: center;
@@ -388,7 +398,7 @@ A.bglink
 }
 .serverinfo .closebtn:hover
 {
-	background-color: #2691FF;
+	background-color: #4f9ded;
 }
 
 .serverinfo name
@@ -488,7 +498,7 @@ DIV.installgamemode
 	line-height: 26px;
 	font-size: 24px;
 	font-weight: bold;
-	background-color: #5AF;
+	background-color: #2387ed;
 	text-align: center;
 	color: white;
 	padding: 5px;
@@ -499,13 +509,13 @@ DIV.installgamemode
 	border: 2px solid white;
 	z-index: 100;
 	cursor: pointer;
-	background: #5AF url( '../../img/gm_install32.png' ) no-repeat 6px center;
+	background: #2387ed url( '../../img/gm_install32.png' ) no-repeat 6px center;
 	padding-left: 36px;
 }
 
 DIV.installgamemode:hover
 {
-	background-color: #7CF;
+	background-color: #4f9ded;
 }
 
 SPAN.installgamemode
@@ -516,13 +526,13 @@ SPAN.installgamemode
 	bottom: 0px;
 	border-radius: 0 4px 4px 0;
 	cursor: pointer;
-	background: #5AF url( '../../img/gm_install16.png' ) no-repeat 13px center;
+	background: #2387ed url( '../../img/gm_install16.png' ) no-repeat 13px center;
 	width: 42px;
 }
 
 SPAN.installgamemode:hover
 {
-	background-color: #7CF;
+	background-color: #4f9ded;
 }
 
 .server_gamemodes
@@ -563,7 +573,8 @@ SPAN.installgamemode:hover
 
 .add_fav_server button
 {
-	background-color: #fff;
+	background-color: #2387ed;
+	color: white;
 	border: none;
 	border-radius: 4px;
 	padding: 4px 8px;
@@ -574,8 +585,7 @@ SPAN.installgamemode:hover
 
 .add_fav_server button:hover
 {
-	background-color: #fff;
-	box-shadow: 0px 0px 20px #fff;
+	background-color: #4f9ded;
 }
 
 .add_fav_server input
@@ -585,6 +595,23 @@ SPAN.installgamemode:hover
 
 	height: 24px;
 	padding: 4px;
+	width: 200px;
+}
+
+.add_fav_server div.header
+{
+	display: -webkit-box;
+}
+.add_fav_server div.header span
+{
+	display: -webkit-box;
+	-webkit-box-flex: 1;
+	line-height: 24px;
+}
+.add_fav_server div.header div.fav_inputs
+{
+	display: -webkit-box;
+	-webkit-box-pack: end;
 }
 
 @media screen and (min-width: 1280px)
