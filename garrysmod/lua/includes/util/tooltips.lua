@@ -10,7 +10,8 @@ function RemoveTooltip()
 
 	if ( !IsValid( Tooltip ) ) then return true end
 
-	Tooltip:Close()
+	-- Helper for SetTooltipPanelOverride
+	if ( Tooltip.Close ) then Tooltip:Close() else Tooltip:Remove() end
 	Tooltip = nil
 
 	return true
