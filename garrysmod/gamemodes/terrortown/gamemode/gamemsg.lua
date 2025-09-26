@@ -255,7 +255,7 @@ local function MuteTeam(ply, cmd, args)
 
    -- remove all ifs
    LANG.Msg(ply, MuteModes[t])
-   
+
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -364,7 +364,7 @@ local function RadioCommand(ply, cmd, args)
          name = LANG.NameParam(msg_target)
       end
 
-      if hook.Call("TTTPlayerRadioCommand", GAMEMODE, ply, msg_name, msg_target) then
+      if hook.Run("TTTPlayerRadioCommand", ply, msg_name, msg_target) then
          return
       end
 

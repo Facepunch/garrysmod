@@ -85,9 +85,9 @@ function GM:PlayerSpawn(ply)
    ply:UnSpectate()
 
    -- ye olde hooks
-   hook.Call("PlayerLoadout", GAMEMODE, ply)
-   hook.Call("PlayerSetModel", GAMEMODE, ply)
-   hook.Call("TTTPlayerSetColor", GAMEMODE, ply)
+   hook.Run("PlayerLoadout", ply)
+   hook.Run("PlayerSetModel", ply)
+   hook.Run("TTTPlayerSetColor", ply)
 
    ply:SetupHands()
 

@@ -248,11 +248,11 @@ function GM:PlayerSpawn( pl, transiton )
 	-- If we are in transition, do not touch player's weapons
 	if ( !transiton ) then
 		-- Call item loadout function
-		hook.Call( "PlayerLoadout", GAMEMODE, pl )
+		hook.Run( "PlayerLoadout", pl )
 	end
 
 	-- Set player model
-	hook.Call( "PlayerSetModel", GAMEMODE, pl )
+	hook.Run( "PlayerSetModel", pl )
 
 	pl:SetupHands()
 
@@ -312,7 +312,7 @@ function GM:PlayerSelectTeamSpawn( TeamID, pl )
 	for i = 0, 6 do
 
 		ChosenSpawnPoint = table.Random( SpawnPoints )
-		if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == 6 ) ) then
+		if ( hook.Run( "IsSpawnpointSuitable", pl, ChosenSpawnPoint, i == 6 ) ) then
 			return ChosenSpawnPoint
 		end
 
@@ -462,7 +462,7 @@ function GM:PlayerSelectSpawn( pl, transiton )
 	-- This is needed for single player maps.
 	for k, v in pairs( self.SpawnPoints ) do
 
-		if ( v:HasSpawnFlags( 1 ) && hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, v, true ) ) then
+		if ( v:HasSpawnFlags( 1 ) && hook.Run( "IsSpawnpointSuitable", pl, v, true ) ) then
 			return v
 		end
 
@@ -478,7 +478,7 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		if ( IsValid( ChosenSpawnPoint ) && ChosenSpawnPoint:IsInWorld() ) then
 			if ( ( ChosenSpawnPoint == pl:GetVar( "LastSpawnpoint" ) || ChosenSpawnPoint == self.LastSpawnPoint ) && Count > 1 ) then continue end
 
-			if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == Count ) ) then
+			if ( hook.Run( "IsSpawnpointSuitable", pl, ChosenSpawnPoint, i == Count ) ) then
 
 				self.LastSpawnPoint = ChosenSpawnPoint
 				pl:SetVar( "LastSpawnpoint", ChosenSpawnPoint )
@@ -846,7 +846,7 @@ end
 function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
-concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber( args[ 1 ] ) ) end )
+concommand.Add( "changeteam", function( pl, cmd, args ) hook.Run( "PlayerRequestTeam", pl, tonumber( args[ 1 ] ) ) end )
 
 --[[---------------------------------------------------------
 	Name: gamemode:HandlePlayerArmorReduction()

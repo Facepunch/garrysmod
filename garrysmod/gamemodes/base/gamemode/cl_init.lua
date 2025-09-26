@@ -606,7 +606,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 		local hands = Player:GetHands()
 		if ( IsValid( hands ) && IsValid( hands:GetParent() ) ) then
 
-			if ( not hook.Call( "PreDrawPlayerHands", self, hands, ViewModel, Player, Weapon ) ) then
+			if ( not hook.Run( "PreDrawPlayerHands", hands, ViewModel, Player, Weapon ) ) then
 
 				if ( Weapon.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
 				hands:DrawModel()
@@ -614,7 +614,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 
 			end
 
-			hook.Call( "PostDrawPlayerHands", self, hands, ViewModel, Player, Weapon )
+			hook.Run( "PostDrawPlayerHands", hands, ViewModel, Player, Weapon )
 
 		end
 

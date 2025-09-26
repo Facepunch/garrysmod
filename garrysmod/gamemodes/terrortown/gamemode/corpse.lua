@@ -88,7 +88,7 @@ local function IdentifyBody(ply, rag)
          end
          SCORE:HandleBodyFound(ply, deadply)
       end
-      hook.Call( "TTTBodyFound", GAMEMODE, ply, deadply, rag )
+      hook.Run( "TTTBodyFound", ply, deadply, rag )
       CORPSE.SetFound(rag, true)
    end
 

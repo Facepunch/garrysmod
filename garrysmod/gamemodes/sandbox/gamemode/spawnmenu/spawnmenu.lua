@@ -266,14 +266,14 @@ function GM:OnSpawnMenuOpen()
 	spawnMenuLastOpen = SysTime()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( !hook.Call( "SpawnMenuOpen", self ) ) then return end
+	if ( !hook.Run( "SpawnMenuOpen" ) ) then return end
 
 	if ( IsValid( g_SpawnMenu ) ) then
 		g_SpawnMenu:Open()
 		menubar.ParentTo( g_SpawnMenu )
 	end
 
-	hook.Call( "SpawnMenuOpened", self )
+	hook.Run( "SpawnMenuOpened" )
 
 end
 
@@ -282,7 +282,7 @@ function GM:OnSpawnMenuClose()
 	if ( spawnmenu_toggle:GetBool() && SysTime() - spawnMenuLastOpen < 0.180 ) then return end
 
 	if ( IsValid( g_SpawnMenu ) ) then g_SpawnMenu:Close() end
-	hook.Call( "SpawnMenuClosed", self )
+	hook.Run( "SpawnMenuClosed" )
 
 end
 
