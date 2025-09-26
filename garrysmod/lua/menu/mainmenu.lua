@@ -510,7 +510,6 @@ function FindServersAtAddress( inputStr )
 			end
 
 			//if ( #output == #addresses ) then
-
 				local json = util.TableToJSON( output )
 				pnlMainMenu:Call( "ReceiveFoundServers(" .. json .. ")" )
 			//end

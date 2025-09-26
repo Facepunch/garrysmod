@@ -1,6 +1,6 @@
 
 local Tooltip = nil
-local TooltippedPanel = nil
+--local TooltippedPanel = nil
 
 --[[---------------------------------------------------------
 	Name: ChangeTooltip
@@ -59,7 +59,7 @@ function ChangeTooltip( panel )
 	end
 
 	Tooltip:OpenForPanel( PositionPanel )
-	TooltippedPanel = panel
+	--TooltippedPanel = panel
 
 end
 
