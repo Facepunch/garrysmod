@@ -21,6 +21,17 @@ function PANEL:Init()
 	JS_Language( self.HTML )
 	JS_Utility( self.HTML )
 	JS_Workshop( self.HTML )
+	self.HTML:AddFunction( "lua", "Run", function( param, ... )
+		local args = { ... }
+		for id, arg in pairs( args ) do
+			if ( isstring( arg ) ) then
+				args[ id ] = "\"" .. string.JavascriptSafe( arg ) .. "\""
+			end
+		end
+
+		RunString( param:format( unpack( args ) ) )
+	end )
+	self.HTML:AddFunction( "lua", "PlaySound", function( param ) surface.PlaySound( param ) end )
 
 	-- Detect whenther the HTML engine is even there
 	self.menuLoaded = false
@@ -33,7 +44,6 @@ function PANEL:Init()
 	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" )
 	self.HTML:SetKeyboardInputEnabled( true )
 	self.HTML:SetMouseInputEnabled( true )
-	self.HTML:SetAllowLua( true )
 	self.HTML:RequestFocus()
 
 	ws_dupe.HTML = self.HTML
