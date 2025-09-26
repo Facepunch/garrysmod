@@ -394,43 +394,57 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	end
 
 	icon.OpenMenuExtra = function( self, menu )
-		local weapon = table.Random( obj.weapon ) or ""
-		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+		local creatorOption = menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
 			RunConsoleCommand( "gmod_tool", "creator" )
 			RunConsoleCommand( "creator_type", "2" )
 			RunConsoleCommand( "creator_name", obj.spawnname )
-		end ):SetIcon( "icon16/brick_add.png" )
+			RunConsoleCommand( "creator_override", "" )
+		end )
+		creatorOption:SetIcon( "icon16/brick_add.png" )
 
 		-- Quick access to spawning NPCs with a spcific weapon without the need to change gmod_npcweapon
 		if ( table.IsEmpty( obj.weapon ) ) then return end
 
-		local subMenu, swg = menu:AddSubMenu( "#spawnmenu.menu.spawn_with_weapon" )
+		local creatorMenu = creatorOption:AddSubMenu()
+
+		local wepMenu, swg = menu:AddSubMenu( "#spawnmenu.menu.spawn_with_weapon" )
 		swg:SetIcon( "icon16/gun.png" )
 
-		subMenu:AddOption( "#menubar.npcs.noweapon", function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, "" ) end ):SetIcon( "icon16/cross.png" )
-
-		-- Kind of a hack!
-		local CustomIcons = list.Get( "ContentCategoryIcons" )
-		local function addWeps( subm, weps )
+		local function addWeps( menu1, menu2, weps )
 			if ( table.Count( weps ) < 1 ) then return end
 
-			subm:AddSpacer()
+			menu1:AddSpacer()
 			for title, info in SortedPairs( weps ) do
-				subm:AddOption( title, function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, info.class ) end ):SetIcon( info.icon )
+				menu1:AddOption( title, function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, info.class ) end ):SetIcon( info.icon )
+			end
+
+			menu2:AddSpacer()
+			for title, info in SortedPairs( weps ) do
+				menu2:AddOption( title, function()
+					RunConsoleCommand( "gmod_tool", "creator" )
+					RunConsoleCommand( "creator_type", "2" )
+					RunConsoleCommand( "creator_name", obj.spawnname )
+					RunConsoleCommand( "creator_override", info.class )
+				end ):SetIcon( info.icon )
 			end
 		end
 
+		-- Default weapons
 		local weaps = {}
 		for _, class in pairs( obj.weapon ) do
 			if ( class == "" ) then continue end
 			weaps[ language.GetPhrase( class ) ] = { class = class, icon = "icon16/gun.png" }
 		end
-		addWeps( subMenu, weaps )
+		addWeps( wepMenu, creatorMenu, weaps )
 
-		-- Sort the items by name, and group by category
+		-- After the default weapons for consistency with other menus that do this
+		weaps = { [ "#menubar.npcs.noweapon" ] = { class = "none", icon = "icon16/cross.png" } }
+		addWeps( wepMenu, creatorMenu, weaps )
+
+		-- Custom weapons, sorted the items by name, and group by category
 		local groupedWeps = {}
+		local CustomIcons = list.Get( "ContentCategoryIcons" )
 		for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
 			if ( table.HasValue( obj.weapon, v.class ) ) then continue end
 	
@@ -439,8 +453,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 			groupedWeps[ cat ][ language.GetPhrase( v.title ) ] = { class = v.class, icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
 		end
 		for group, items in SortedPairs( groupedWeps ) do
-			subMenu:AddSpacer()
-			addWeps( subMenu, items )
+			addWeps( wepMenu, creatorMenu, items )
 		end
 
 	end
