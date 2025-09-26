@@ -136,7 +136,9 @@ local function SandboxSettings( pnl )
 		table.insert( ConVarsLimits, {
 			command = "sbox_max" .. str,
 			default = cvar:GetDefault(),
-			label = language.GetPhrase( "max_" .. str )
+			label = language.GetPhrase( "max_" .. str ),
+			min = 0,
+			max = math.max( 200, cvar:GetDefault() * 1.4 )
 		} )
 	end
 
@@ -158,7 +160,7 @@ local function SandboxSettings( pnl )
 	pnl:CheckBox( "#bone_manipulate_others", "sbox_bonemanip_misc" )
 
 	for id, t in SortedPairsByMemberValue( ConVarsLimits, "label" ) do
-		pnl:NumSlider( t.label, t.command, 0, 200, 0 ):SetHeight( 16 ) -- This makes the controls all bunched up like how we want
+		pnl:NumSlider( t.label, t.command, t.min, t.max, 0 ):SetHeight( 16 ) -- This makes the controls all bunched up like how we want
 	end
 
 end
