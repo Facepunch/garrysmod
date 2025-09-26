@@ -499,7 +499,12 @@ function FindServersAtAddress( inputStr )
 		serverlist.PingServer( addr, function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, ... )
 
 			if ( !name ) then
-				table.insert( output, { name = "Server at " .. addr .. " did not respond", address = addr, ping = 2000, favorite = false, players = 0, maxplayers = 0, botplayers = 0, map = "", gamemode = "" } )
+				table.insert( output, {
+					name = language.GetPhrase("server_noresponse"):format(addr),
+					address = addr, ping = 2000, favorite = false,
+					players = 0, maxplayers = 0, botplayers = 0,
+					map = "", gamemode = ""
+				} )
 			else
 				name = string.JavascriptSafe( name )
 				map = string.JavascriptSafe( map )
