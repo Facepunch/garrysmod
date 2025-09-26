@@ -286,6 +286,12 @@ function GM:OnSpawnMenuClose()
 
 end
 
+hook.Add( "OnPauseMenuShow", "CloseSpawnMenuWhenInMainMenu", function()
+	-- If the main menu is open, close the spawn menu & context menu
+	if ( g_SpawnMenu:IsVisible() ) then g_SpawnMenu:Close() end
+	if ( g_ContextMenu:IsVisible() ) then g_ContextMenu:Close() end
+end )
+
 --[[---------------------------------------------------------
 	Name: HOOK SpawnMenuKeyboardFocusOn
 		Called when text entry needs keyboard focus

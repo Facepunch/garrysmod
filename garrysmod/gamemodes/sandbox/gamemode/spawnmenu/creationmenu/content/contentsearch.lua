@@ -79,6 +79,8 @@ function PANEL:SetSearchType( stype, hookname )
 
 		if ( g_SpawnMenu:IsVisible() ) then return hook.Run( "OnSpawnMenuClose" ) end
 
+		if ( gui.IsGameUIVisible() ) then return end
+
 		hook.Run( "OnSpawnMenuOpen" )
 		hook.Run( "OnTextEntryGetFocus", self.Search )
 
