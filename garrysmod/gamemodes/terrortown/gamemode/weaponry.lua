@@ -178,7 +178,7 @@ end
 
 function GM:UpdatePlayerLoadouts()
    for _, ply in player.Iterator() do
-      hook.Call("PlayerLoadout", GAMEMODE, ply)
+      hook.Run("PlayerLoadout", ply)
    end
 end
 
@@ -431,7 +431,7 @@ local function OrderEquipment(ply, cmd, args)
                       net.Send(ply)
                    end)
 
-      hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, is_item)
+      hook.Run("TTTOrderedEquipment", ply, id, is_item)
    end
 end
 concommand.Add("ttt_order_equipment", OrderEquipment)

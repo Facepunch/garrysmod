@@ -148,7 +148,7 @@ function GM:HUDDrawTargetID()
 
    local L = GetLang()
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTPropSpec" ) then
+   if hook.Run( "HUDShouldDraw", "TTTPropSpec" ) then
       DrawPropSpecLabels(client)
    end
 

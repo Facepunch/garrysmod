@@ -310,7 +310,7 @@ local function WinChecker()
       if CurTime() > GetGlobalFloat("ttt_round_end", 0) then
          EndRound(WIN_TIMELIMIT)
       else
-         local win = hook.Call("TTTCheckForWin", GAMEMODE)
+         local win = hook.Run("TTTCheckForWin")
          if win != WIN_NONE then
             EndRound(win)
          end
@@ -327,7 +327,7 @@ local function NameChangeKick()
    if GetRoundState() == ROUND_ACTIVE then
       for _, ply in ipairs(player.GetHumans()) do
          if ply.spawn_nick then
-            if ply.has_spawned and ply.spawn_nick != ply:Nick() and not hook.Call("TTTNameChangeKick", GAMEMODE, ply) then
+            if ply.has_spawned and ply.spawn_nick != ply:Nick() and not hook.Run("TTTNameChangeKick", ply) then
                local t = GetConVar("ttt_namechange_bantime"):GetInt()
                local msg = "Changed name during a round"
                if t > 0 then
@@ -442,7 +442,7 @@ function PrepareRound()
    -- Check playercount
    if CheckForAbort() then return end
 
-   local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
+   local delay_round, delay_length = hook.Run("TTTDelayRoundStartForVote")
 
    if delay_round then
       delay_length = delay_length or 30
@@ -468,7 +468,7 @@ function PrepareRound()
 
    -- New look. Random if no forced model set.
    GAMEMODE.playermodel = GAMEMODE.force_plymodel == "" and GetRandomPlayerModel() or GAMEMODE.force_plymodel
-   GAMEMODE.playercolor = hook.Call("TTTPlayerColor", GAMEMODE, GAMEMODE.playermodel)
+   GAMEMODE.playercolor = hook.Run("TTTPlayerColor", GAMEMODE.playermodel)
 
    if CheckForAbort() then return end
 
@@ -762,7 +762,7 @@ function EndRound(type)
 
    -- server plugins might want to start a map vote here or something
    -- these hooks are not used by TTT internally
-   hook.Call("TTTEndRound", GAMEMODE, type)
+   hook.Run("TTTEndRound", type)
 
    ents.TTT.TriggerRoundStateOutputs(ROUND_POST, type)
 end

@@ -143,7 +143,7 @@ function LANG.SetActiveLanguage(lang_name)
 
       -- some interface elements will want to know so they can update themselves
       if old_name != lang_name then
-         hook.Call("TTTLanguageChanged", GAMEMODE, old_name, lang_name)
+         hook.Run("TTTLanguageChanged", old_name, lang_name)
       end
    else
       MsgN(Format("The language '%s' does not exist on this server. Falling back to English...", lang_name))

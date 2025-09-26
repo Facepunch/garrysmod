@@ -21,7 +21,7 @@ function ENT:DoSetup( ply, spec )
 	self:SetOwner( ply )
 
 	-- Which hands should we use? Let the gamemode decide
-	hook.Call( "PlayerSetHandsModel", GAMEMODE, spec or ply, self )
+	hook.Run( "PlayerSetHandsModel", spec or ply, self )
 
 	-- Attach them to the viewmodel
 	local vm = ( spec or ply ):GetViewModel( 0 )

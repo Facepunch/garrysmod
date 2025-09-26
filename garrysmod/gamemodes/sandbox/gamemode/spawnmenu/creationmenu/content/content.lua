@@ -55,7 +55,7 @@ end
 
 function PANEL:CallPopulateHook( HookName )
 
-	hook.Call( HookName, GAMEMODE, self, self.ContentNavBar.Tree, self.OldSpawnlists )
+	hook.Run( HookName, self, self.ContentNavBar.Tree, self.OldSpawnlists )
 
 end
 
@@ -91,7 +91,7 @@ local function CreateContentPanel()
 	ctrl.OldSpawnlists = ctrl.ContentNavBar.Tree:AddNode( "#spawnmenu.category.browse", "icon16/cog.png" )
 
 	ctrl:EnableModify()
-	hook.Call( "PopulatePropMenu", GAMEMODE )
+	hook.Run( "PopulatePropMenu" )
 	ctrl:CallPopulateHook( "PopulateContent" )
 
 	ctrl.OldSpawnlists:MoveToFront()

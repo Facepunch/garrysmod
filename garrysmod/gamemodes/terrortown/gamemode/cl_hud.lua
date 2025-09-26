@@ -318,48 +318,48 @@ end
 function GM:HUDPaint()
    local client = LocalPlayer()
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTargetID" ) then
-       hook.Call( "HUDDrawTargetID", GAMEMODE )
+   if hook.Run( "HUDShouldDraw", "TTTTargetID" ) then
+       hook.Run( "HUDDrawTargetID" )
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTMStack" ) then
+
+   if hook.Run( "HUDShouldDraw", "TTTMStack" ) then
        MSTACK:Draw(client)
    end
 
    if (not client:Alive()) or client:Team() == TEAM_SPEC then
-      if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTSpecHUD" ) then
+      if hook.Run( "HUDShouldDraw", "TTTSpecHUD" ) then
           SpecHUDPaint(client)
       end
 
       return
    end
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTRadar" ) then
+   if hook.Run( "HUDShouldDraw", "TTTRadar" ) then
        RADAR:Draw(client)
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTButton" ) then
+
+   if hook.Run( "HUDShouldDraw", "TTTTButton" ) then
        TBHUD:Draw(client)
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTWSwitch" ) then
+
+   if hook.Run( "HUDShouldDraw", "TTTWSwitch" ) then
        WSWITCH:Draw(client)
    end
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTVoice" ) then
+   if hook.Run( "HUDShouldDraw", "TTTVoice" ) then
        VOICE.Draw(client)
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTDisguise" ) then
+
+   if hook.Run( "HUDShouldDraw", "TTTDisguise" ) then
        DISGUISE.Draw(client)
    end
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTPickupHistory" ) then
-       hook.Call( "HUDDrawPickupHistory", GAMEMODE )
+   if hook.Run( "HUDShouldDraw", "TTTPickupHistory" ) then
+       hook.Run( "HUDDrawPickupHistory" )
    end
 
    -- Draw bottom left info panel
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTInfoPanel" ) then
+   if hook.Run( "HUDShouldDraw", "TTTInfoPanel" ) then
        InfoPaint(client)
    end
 end

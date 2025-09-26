@@ -127,11 +127,11 @@ local function RoundStateChange(o, n)
    -- players, which hooking code may not expect
    if n == ROUND_PREP then
       -- can enter PREP from any phase due to ttt_roundrestart
-      hook.Call("TTTPrepareRound", GAMEMODE)
+      hook.Run("TTTPrepareRound")
    elseif (o == ROUND_PREP) and (n == ROUND_ACTIVE) then
-      hook.Call("TTTBeginRound", GAMEMODE)
+      hook.Run("TTTBeginRound")
    elseif (o == ROUND_ACTIVE) and (n == ROUND_POST) then
-      hook.Call("TTTEndRound", GAMEMODE)
+      hook.Run("TTTEndRound")
    end
 
    -- whatever round state we get, clear out the voice flags

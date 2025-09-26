@@ -334,7 +334,7 @@ end
 local reason = "Karma too low"
 function KARMA.CheckAutoKick(ply)
    if ply:GetBaseKarma() <= config.kicklevel:GetInt() then
-      if hook.Call("TTTKarmaLow", GAMEMODE, ply) == false then
+      if hook.Run("TTTKarmaLow", ply) == false then
          return
       end
       ServerLog(ply:Nick() .. " autokicked/banned for low karma.\n")
