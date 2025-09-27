@@ -751,6 +751,6 @@
 			"model"		"models/mechanics/solid_steel/type_f_6_20.mdl"
 		}
 	}
-	"name"		"Wheels and Frames"
+	"name"		"#spawnmenu.spawnlist.wheels_and_frames"
 	"version"		"3"
 }
