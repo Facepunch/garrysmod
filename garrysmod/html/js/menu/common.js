@@ -2,18 +2,45 @@
 // Must be loaded after menu/menuApp.js, creations/dupes.js, creations/saves.js
 
 var IN_ENGINE		= navigator.userAgent.indexOf( "Valve Source Client" ) != -1;
+var IS_AWESOMIUM 	= navigator.userAgent.toLowerCase().indexOf("awesomium") != -1;
 
 function UpdateDigest( scope, timeout )
 {
 	if ( !scope ) return;
-	if ( scope.DigestUpdate ) return;
 
+	var parentHasPendingUpdate = ParentHasDigestScheduled( scope );
+	
+	if ( scope.DigestUpdate ) 
+	{
+		if ( parentHasPendingUpdate )  // Cancel scope's pending digest if parent already has one scheduled
+		{
+			clearTimeout( scope.DigestUpdate );
+			scope.DigestUpdate = 0;
+		}
+		return;
+	}
+	if ( parentHasPendingUpdate ) return; // Don't schedule new digest if scope's parent already has one scheduled
+	
 	scope.DigestUpdate = setTimeout( function()
 	{
 		scope.DigestUpdate = 0;
 		scope.$digest();
 
 	}, timeout );
+}
+
+function ParentHasDigestScheduled( scope )
+{
+	// When a scope performs digest, it handles child scopes too. 
+	// So checking if a parent already has a digest scheduled allows avoiding redundant digests.
+	
+	if ( scope == scope.$root ) return false; // already at root, no parents to check
+	
+	var parentScope = scope.$parent;
+	
+	if ( parentScope.DigestUpdate ) return true;
+	
+	return ParentHasDigestScheduled( parentScope );
 }
 
 // We already have a limitTo filter built-in to angular,
@@ -44,29 +71,36 @@ App.config( function( $routeProvider, $compileProvider, $locationProvider, $cont
 	// AngularJS 1.8.2 doesn't apply 'href' on <a> unless ng-href is present. This breaks hover styles in Awesomium compared to 1.1.2.
 	// So we're copying the htmlAnchorDirective from https://github.com/angular/angular.js/blob/master/src/ng/directive/a.js
 	// and re-adding an empty href where needed.
-	$compileProvider.directive( 'a', function( $compile )
+	if ( IS_AWESOMIUM )
 	{
-		return {
-			restrict: 'E',
-			compile: function( element, attr )
-			{
-				if ( attr.href || attr.xlinkHref ) return;
-				
-				return function( scope, element )
+		$compileProvider.directive( 'a', function( $compile )
+		{
+			return {
+				restrict: 'E',
+				compile: function( element, attr )
 				{
-					if ( element[0].nodeName.toLowerCase() !== 'a') return;
+					if ( attr.href || attr.xlinkHref ) return;
+					
+					return function( scope, element )
+					{
+						if ( element[0].nodeName.toLowerCase() !== 'a') return;
 
-					if ( !attr.href && !attr.ngHref ) element.attr( "href", "" ); // Re-add an empty href. see above comment.
+						if ( !attr.href && !attr.ngHref ) element.attr( "href", "" ); // Re-add an empty href. see above comment.
 
-					var href = toString.call( element.prop( 'href' ) ) === '[object SVGAnimatedString]' ? 'xlink:href' : 'href';
-					element.on( 'click', function( event ) {
-						if ( !element.attr( href ) ) event.preventDefault();
-					} );
-				};
-			}
-		};
-	} );
+						var href = toString.call( element.prop( 'href' ) ) === '[object SVGAnimatedString]' ? 'xlink:href' : 'href';
+						element.on( 'click', function( event ) {
+							if ( !element.attr( href ) ) event.preventDefault();
+						} );
+					};
+				}
+			};
+		} );
+	}
+
 
 	// Disable debug info for "a significant performance boost" https://docs.angularjs.org/api/ng/provider/$compileProvider#debugInfoEnabled
 	$compileProvider.debugInfoEnabled( false ); //Comment out for debugging
+	// Additional directives not needed. Disabling them improves performance.
+	$compileProvider.commentDirectivesEnabled( false );
+	$compileProvider.cssClassDirectivesEnabled( false );
 } );

@@ -27,15 +27,24 @@ App.filter( 'mapFilter', function() {
 
 function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
-	for ( var i = 0; i < gScope.MapList.length; i++ )
+	if ( !$scope.CurrentCategory && $rootScope.LastCategory )
 	{
-		if ( gScope.MapList[i][ "category" ] == "Favourites" )
+		$scope.CurrentCategory = $rootScope.LastCategory;
+	} 
+	else if ( !$scope.CurrentCategory )
+	{
+		// Use Favourites or Sandbox as a default category, if none set
+		$scope.CurrentCategory = "Sandbox";
+		if ( Object.keys(gScope.MapListFav).length > 0 )
 		{
-			if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Favourites";
+			$scope.CurrentCategory = "Favourites";
 		}
+		$rootScope.LastCategory = $scope.CurrentCategory;
+		UpdateDigest( $scope, 50 );
+		
+		// Get last category/map from game
+		lua.Run( "LoadLastMap()" );
 	}
-
-	if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Sandbox";
 
 	$scope.Players =
 	[
@@ -71,7 +80,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	if ( !$rootScope.LastCategory )		$rootScope.LastCategory = $scope.CurrentCategory;
 
 	lua.Run( "UpdateServerSettings()" );
-	lua.Run( "LoadLastMap()" );
 
 	rootScope = $rootScope;
 	scope = $scope;
@@ -111,45 +119,16 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 	$scope.MapIcon = function( m, cat )
 	{
-		// BSP version 21
-		if ( /*cat == "Left 4 Dead 2" || cat == "Portal 2" || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" ||*/ cat == "INFRA" )
-		{
-			return "img/incompatible.png"
-		}
+		if ( cat == "INFRA" ) return "img/incompatible.png"; // BSP version 21
 
-		// Hopefully this also improves performance of the first click on "Start new game".
-		if ( !IN_ENGINE || $scope.CurrentCategory != cat ) return "img/downloading.png"
+		if ( !IN_ENGINE ) return "img/downloading.png";
 
 		return "asset://mapimage/" + m;
 	}
 
 	$scope.IsFavMap = function( m )
 	{
-		for ( var i = 0; i < gScope.MapList.length; i++ )
-		{
-			if ( gScope.MapList[i][ "category" ] == "Favourites" )
-			{
-				var obj = gScope.MapList[i][ "maps" ]
-				for ( var map in obj )
-				{
-					if ( m == ( obj[ map ] ) ) return true
-				}
-			}
-		}
-
-		return false;
-	}
-
-	$scope.FavMapHover = function( m )
-	{
-		if ( this.IsFavMap( m ) ) return "faviconremove";
-		return "faviconadd";
-	}
-
-	$scope.FavMapClass = function( m )
-	{
-		if ( this.IsFavMap( m ) ) return "favtoggle_always";
-		return "favtoggle";
+		return gScope.MapListFav[m.toLowerCase()] || false;
 	}
 
 	$scope.StartGame = function()
@@ -229,45 +208,32 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		if ( oldSvLan != $scope.ServerSettings.sv_lan && $scope.ServerSettings.sv_lan == true && $scope.ServerSettings.p2p_enabled == true )
 		{
 			$scope.ServerSettings.p2p_enabled = false;
-			UpdateDigest( $scope, 50 );
 		}
 		else if ( oldp2p != $scope.ServerSettings.p2p_enabled && $scope.ServerSettings.p2p_enabled == true && $scope.ServerSettings.sv_lan == true )
 		{
 			$scope.ServerSettings.sv_lan = false;
-			UpdateDigest( $scope, 50 );
 		}
 
 		oldp2p = $scope.ServerSettings.p2p_enabled;
 		oldSvLan = $scope.ServerSettings.sv_lan;
-
-		if ( !$scope.ServerSettings.p2p_enabled )
-		{
-			if ( document.getElementById( "p2p_friendsonly" ) !== null )
-			{
-				document.getElementById( "p2p_friendsonly" ).disabled = true;
-			}
-			UpdateDigest( $scope, 50 );
-		}
-		else if ( document.getElementById( "p2p_friendsonly" ) !== null )
-		{
-			document.getElementById( "p2p_friendsonly" ).disabled = false;
-		}
+		
+		document.getElementById( "p2p_friendsonly" ).disabled = !$scope.ServerSettings.p2p_enabled;
 	}
 }
 
 function SetLastMap( map, category )
 {
-	if ( scope )
-	{
-		scope.CurrentCategory = category;
-		UpdateDigest( scope, 50 );
-	}
-
-	if ( rootScope )
+	if ( rootScope && ( rootScope.Map != map || rootScope.LastCategory != category ) )
 	{
 		rootScope.Map = map;
 		rootScope.LastCategory = category;
 		UpdateDigest( rootScope, 50 );
+	}
+	
+	if ( scope && scope.CurrentCategory != category )
+	{
+		scope.CurrentCategory = category;
+		UpdateDigest( scope, 50 );
 	}
 
 	setTimeout( function() {

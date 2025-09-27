@@ -18,13 +18,13 @@
 
 			<div class="scrollable" style="margin: 0px; top: 0px; left: 200px">
 
-				<ul class="category" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0 || CurrentCategory != category.category" ng-show="CurrentCategory == category.category">
+				<ul class="category" ng-repeat="category in MapList | orderBy:'order' track by category.category" ng-if="CurrentCategory == category.category">
 
 					<li>{{category.category}} <small>{{CountFiltered(category.maps)}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small></li>
 
-					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'toString()' | mapFilter:SearchText" >
-						<img ng-click="FavMap( map )" class="{{FavMapClass( map )}} {{FavMapHover( map )}}" src="img/empty.png" loading="lazy"/>
-						<img ng-click="SelectMap( map )" ng-dblclick="DblClickMap( map )" ng-src="{{MapIcon( map, category.category )}}" class="thumbnail" loading="lazy"/><br />
+					<li class="icon mapicon {{MapClass( map )}} {{IfElse( IsFavMap( map ), 'favmap', '' )}}" ng-repeat="map in category.maps | orderBy:'toString()' | mapFilter:SearchText">
+						<img ng-click="FavMap( map )" class="favtoggle" src="img/empty.png" loading="lazy"/>
+						<div ng-click="SelectMap( map )" ng-dblclick="DblClickMap( map )" style='background-image: url("{{MapIcon( map, category.category )}}");' class="thumbnail"></div><br />
 						<span>{{map}}</span>
 					</li>
 
@@ -56,12 +56,12 @@
 					</div>
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<input id="ServerSettings_sv_lan" type="checkbox" ng-model="ServerSettings.sv_lan" ng-bind="CheckboxCheck()" />
+						<input id="ServerSettings_sv_lan" type="checkbox" ng-model="ServerSettings.sv_lan" ng-change="CheckboxCheck()" />
 						<label for="ServerSettings_sv_lan" ng-Tranny="'lan_server'"></label>
 					</div>
 
 					<div class='control' ng-show="MaxPlayers > 1">
-						<input id="ServerSettings_p2p_enabled" type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-bind="CheckboxCheck()" />
+						<input id="ServerSettings_p2p_enabled" type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-change="CheckboxCheck()" />
 						<label for="ServerSettings_p2p_enabled" ng-Tranny="'p2p_server'"></label>
 					</div>
 
