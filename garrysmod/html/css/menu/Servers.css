@@ -1,4 +1,3 @@
-@ -1,921 +1,917 @@
 
 .servers
 {
@@ -158,34 +157,22 @@ H1 small
 
 .serverlist name .flag
 {
-	position: relative;
-	top: -2px;
-	display: inline-block;
-	width: 16px;
-	height: 11px;
-	text-align: center;
-	vertical-align: initial;
+	height: 100%;
+	margin-right: 2px;
 }
-
 .serverlist name .flag.noflag
 {
 	visibility: hidden;
 }
-
-.serverlist name .flag img
+.serverlist .noflags name .flag
 {
-	height: 11px;
+	display: none !important;
 }
 
 .serverlist name tag.future
 {
 	background: #e6e6e6;
 	color: #000;
-}
-
-.serverlist name .passworded
-{
-	margin-right: 4px;
 }
 
 .serverlist lastvisited
@@ -722,9 +709,10 @@ input[type=number]::-webkit-inner-spin-button
 	background: #fff;
 	border-radius: 4px;
 	display: inline-block;
-	width: 16px;
-	height: 11px;
+	vertical-align: middle;
+	height: 20px;
 }
+
 .flags_filter .flag.prefer
 {
 	background: #4eda6c;
@@ -750,7 +738,6 @@ input[type=number]::-webkit-inner-spin-button
 	padding: 4px 8px;
 	font-size: 12px;
 	font-weight: bold;
-
 	text-shadow: none;
 	color: black;
 	white-space: pre-line;
@@ -770,11 +757,6 @@ input[type=number]::-webkit-inner-spin-button
 {
 	visibility: visible;
 }
-.flags_filter .flag img
-{
-	height: 11px;
-}
-
 
 @media screen and (max-width: 1024px)
 {
@@ -915,7 +897,7 @@ input[type=number]::-webkit-inner-spin-button
 name .favbutton
 {
 	background: url( '../../img/notfavourite.png' );
-	margin-right: 4px;
+	margin-right: 2px;
 	height: 16px;
 	width: 16px;
 	display: inline-block;

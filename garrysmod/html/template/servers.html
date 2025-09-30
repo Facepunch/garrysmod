@@ -47,11 +47,11 @@
 					<div class="flags_filter" ng-if="CurrentGamemode.hasflags">
 						<span ng-repeat="(flag, whatever) in CurrentGamemode.flags" ng-if="flag != 'unknown'" class="flag {{FilterFlagClass( flag )}}" ng-click="FilterFlag( flag, this );" >
 							<label>{{RegionName(flag)}}</label>
-							<img ng-src='asset://garrysmod/materials/flags16/{{flag}}.png' onerror="MissingFlag( this )" loading="lazy"/>
+							<img ng-src="img/flags72/{{flag}}.png" style="-webkit-mask-image: url('img/flags72/{{flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
 						</span>
 						<span ng-if="CurrentGamemode.flags['unknown']" class="flag noflag {{FilterFlagClass( 'unknown' )}}" ng-click="FilterFlag( 'unknown', this );" >
 							<label ng-tranny="'unknown'"></label>
-							<img ng-src="img/unk_flag.png" loading="lazy"/>
+							<img src="img/twemoji_2754.png" loading="lazy"/>
 						</span>
 					</div>
 				</li>
@@ -96,7 +96,6 @@
 						<div ng-repeat="server in FoundServers" class="server">
 							<name>
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );Refresh();$event.stopPropagation();"></a>
-								<!--<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/> -->
 								<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
 								<span>{{server.name}}</span>
 							</name>
@@ -137,7 +136,7 @@
 						<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
 					</div>
 
-					<div class='body scrollable' onscroll="UpdateInfiniteScroll( this );">
+					<div class='body scrollable {{IfElse( DisplayingAnyFlags(), "", "noflags" )}}' onscroll="UpdateInfiniteScroll( this );">
 
 						<div id="placeholder_pre" style="height: {{CurrentGamemode.server_offset * 22}}px"></div>
 
@@ -147,7 +146,7 @@
 							<name>
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
 								<span class="flag {{IfElse( server.flag == 'unknown', 'noflag', '' )}}">
-									<img ng-if="server.flag != 'unknown'" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" loading="lazy"/>
+									<img ng-src="img/flags72/{{server.flag}}.png" style="-webkit-mask-image: url('img/flags72/{{server.flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
 								</span>
 								<img class="passworded" src='img/server-passworded.png' ng-if="server.pass" loading="lazy"/>
 								<span>{{server.name}}
