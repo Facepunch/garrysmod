@@ -46,11 +46,14 @@
 
 					<div class="flags_filter" ng-if="CurrentGamemode.hasflags">
 						<span ng-repeat="(flag, whatever) in CurrentGamemode.flags" ng-if="flag != 'unknown'" class="flag {{FilterFlagClass( flag )}}" ng-click="FilterFlag( flag, this );" >
-							<label>{{RegionName(flag)}}</label>
+							<span class="flag_name">
+								<div ng-if="Language.toLowerCase() != 'en' && Language.toLowerCase() != 'en-pt'">{{RegionName(flag, Language)}}</div>
+								<div>{{RegionName(flag, "en")}}</div>
+							</span>
 							<img ng-src="img/flags72/{{flag}}.png" style="-webkit-mask-image: url('img/flags72/{{flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
 						</span>
 						<span ng-if="CurrentGamemode.flags['unknown']" class="flag noflag {{FilterFlagClass( 'unknown' )}}" ng-click="FilterFlag( 'unknown', this );" >
-							<label ng-tranny="'unknown'"></label>
+							<span class="flag_name"><div ng-tranny="'unknown'"></div></span>
 							<img src="img/twemoji_2754.png" loading="lazy"/>
 						</span>
 					</div>
