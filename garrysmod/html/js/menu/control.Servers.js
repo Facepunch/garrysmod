@@ -311,20 +311,26 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		return RegionNames[ inLang ][ getRegion ];
 	}
 	
-	$scope.RegionName = function( flag )
+	$scope.RegionName = function( flag, lang )
 	{
 		flag = flag.toUpperCase();
+		lang = lang.toLowerCase();
 		
-		if ( IS_AWESOMIUM ) return flag; // Just use the 2-letter code, as Awesomium doesn't support this function.
+		if ( IS_AWESOMIUM ) // Just use the 2-letter code, as Awesomium doesn't support this function.
+		{
+			if ( lang == "en" ) return flag;
+			return "";
+		}
 		
-		if ( $scope.Language == "en" ) return GetRegionName( flag, "en" ); // English
-
-		var local = GetRegionName( flag, $scope.Language );
 		var eng = GetRegionName( flag, "en" );
 		
-		if ( local == flag || local == eng ) return eng; // If the localised version returns the 2-letter code, or the localised version is the same as English, just use English.
+		if ( lang == "en" ) return eng;
 		
-		return local + "\n" + eng; // Return the localised version, with the English version on a second line
+		var local = GetRegionName( flag, lang );
+		
+		if ( local == eng || local == flag ) return ""; // If the localised version returns the 2-letter code, or the localised version is the same as English, don't use it as English will be displayed anyway.
+		
+		return local; // Return the localised version
 		
 	}
 	

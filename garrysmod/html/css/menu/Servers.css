@@ -722,7 +722,7 @@ input[type=number]::-webkit-inner-spin-button
 	background: #da4e4e;
 }
 
-.flags_filter .flag label
+.flags_filter .flag .flag_name
 {
 	visibility: hidden;
 	display: inline-block;
@@ -736,24 +736,23 @@ input[type=number]::-webkit-inner-spin-button
 	background: inherit;
 	border-radius: 4px;
 	padding: 4px 8px;
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 	text-shadow: none;
 	color: black;
-	white-space: pre-line;
 	text-align: center;
 	width: -webkit-max-content;
 	max-width: 100%;
 }
-.flags_filter .flag label::first-line
+.flags_filter .flag .flag_name div:not(:empty) + div
 {
-	font-size: 15px;
+	font-size: 12px;
 }
-.flags_filter .flag.noflag label
+.flags_filter .flag.noflag .flag_name
 {
 	text-transform: capitalize;
 }
-.flags_filter .flag:hover label
+.flags_filter .flag:hover .flag_name
 {
 	visibility: visible;
 }
