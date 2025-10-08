@@ -396,7 +396,7 @@ function CalculateRank( server )
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	//if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
-	if ( server.pass ) recommended += 300; // Password protected, can't join it
+	if ( server.pass || server.version_c < 0 ) recommended += 300; // Password protected or outdated, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
 
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
