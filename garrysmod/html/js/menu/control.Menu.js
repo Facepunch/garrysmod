@@ -123,7 +123,7 @@ function MenuController( $scope, $rootScope )
 	{
 		if ( !id ) return;
 
-		lua.Run( "steamworks.ViewFile( %s )", String( id ) );
+		gmod.OpenWorkshopFile( String( id ) );
 	}
 
 	$scope.OpenFolder = function( foldername )

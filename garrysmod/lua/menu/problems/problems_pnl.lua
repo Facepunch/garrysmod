@@ -28,8 +28,18 @@ function PANEL:Init()
 	self.Tabs = sheet
 
 	-- Lua errors
-	local luaErrorList = ProblemsFrame:Add( "DScrollPanel" )
-	sheet:AddSheet( "#problems.lua_errors", luaErrorList, "icon16/error.png" )
+	local luaErrorContainer = vgui.Create( "Panel", ProblemsFrame )
+
+	local luaErrorList = luaErrorContainer:Add( "DScrollPanel" )
+	luaErrorList:Dock( FILL )
+
+	local luaStrictMode = luaErrorContainer:Add( "DCheckBoxLabel" )
+	luaStrictMode:Dock( BOTTOM )
+	luaStrictMode:SetText( "#lua_strict" )
+	luaStrictMode:SetConVar( "lua_strict" )
+	luaStrictMode:SetDark( true )
+
+	sheet:AddSheet( "#problems.lua_errors", luaErrorContainer, "icon16/error.png" )
 	self.LuaErrorList = luaErrorList
 
 	-- Generic problems

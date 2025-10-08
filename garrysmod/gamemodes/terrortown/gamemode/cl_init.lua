@@ -8,7 +8,7 @@ surface.CreateFont("TabLarge",    {font = "Tahoma",
                                    size = 13,
                                    weight = 700,
                                    shadow = true, antialias = false})
-surface.CreateFont("Trebuchet22", {font = "Trebuchet MS",
+surface.CreateFont("Trebuchet22", {font = "Tahoma",
                                    size = 22,
                                    weight = 900})
 

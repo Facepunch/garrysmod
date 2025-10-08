@@ -18,7 +18,7 @@ surface.CreateFont("cool_small", {font = "coolvetica",
 surface.CreateFont("cool_large", {font = "coolvetica",
                                   size = 24,
                                   weight = 400})
-surface.CreateFont("treb_small", {font = "Trebuchet18",
+surface.CreateFont("treb_small", {font = "Tahoma",
                                   size = 14,
                                   weight = 700})
 

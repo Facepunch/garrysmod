@@ -23,6 +23,7 @@ AddCSLuaFile("lang_shd.lua")
 AddCSLuaFile("corpse_shd.lua")
 AddCSLuaFile("player_ext_shd.lua")
 AddCSLuaFile("weaponry_shd.lua")
+AddCSLuaFile("radio_shd.lua")
 AddCSLuaFile("cl_radio.lua")
 AddCSLuaFile("cl_radar.lua")
 AddCSLuaFile("cl_tbuttons.lua")
@@ -204,10 +205,6 @@ function GM:Initialize()
    if cvars.Number("sv_alltalk", 0) > 0 then
       ErrorNoHalt("TTT WARNING: sv_alltalk is enabled. Dead players will be able to talk to living players. TTT will now attempt to set sv_alltalk 0.\n")
       RunConsoleCommand("sv_alltalk", "0")
-   end
-
-   if not IsMounted("cstrike") then
-      ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
    end
 end
 

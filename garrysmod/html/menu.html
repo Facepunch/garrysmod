@@ -10,8 +10,6 @@
 	<link rel="stylesheet" type="text/css" href="css/menu/Servers.css" />
 	<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
 
-	<script type="text/javascript" src="js/lua.js"></script>
-
 	<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
 	<script type="text/javascript" src="js/thirdparty/angular.js"></script>
 	<script type="text/javascript" src="js/thirdparty/angular-route.js"></script>
@@ -47,35 +45,31 @@
 
 <div id="NavBar">
 
-	<div class="left" ng-show="ShowBack">
+	<div class="group left">
 
-		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png' loading="lazy"><span ng-Tranny="'back_to_main_menu'" ></span></a>
+		<a href="#/" class="button ui_sound_return" ng-show="ShowBack" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span ng-Tranny="'back_to_main_menu'" ></span></a>
 
 	</div>
 
-	<ul class="right">
-		<li class="bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
-		<li class="smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></li>
-		<li class="smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Tranny="'games'"></span></li>
-		<li class="smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png' loading="lazy"><span></span></li>
-		<li class="smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/error.png'>
+	<div class="group center">
+		<!--
+		<div class="button" ng-show="InGame" ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></div>
+		-->
+		<div class="button bigicon" ng-show="InGame" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span ng-Tranny="'back_to_game'"></span></a></div>
+		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && !IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Tranny="'favorite_this_server'"></span></a></div>
+		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Tranny="'unfavorite_this_server'"></span></a></div>
+	</div>
+	
+	<div class="group right">
+		<div class="button smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/error.png'>
 			<span ng-Tranny="'problems'"></span>
 			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSeverity > 0, 'severity' + ProblemSeverity, '' )}}">{{ProblemCount}}</number>
-		</li>
-	</ul>
-
-	<ul class="center" ng-show="InGame">
-
-		<span ng-show="ShowFavButton">
-			<li class="bigicon hidelabel" ng-hide="IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Tranny="'favorite_this_server'"></span></a></li>
-			<li class="bigicon hidelabel" ng-show="IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Tranny="'unfavorite_this_server'"></span></a></li>
-		</span>
-		<li class="bigicon" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span ng-Tranny="'back_to_game'"></span></a></li>
-		<!--
-		<li ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></li>
-		-->
-
-	</ul>
+		</div>
+		<div class="button smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png' loading="lazy"><span></span></div>
+		<div class="button smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Tranny="'games'"></span></div>
+		<div class="button smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></div>
+		<div class="button bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></div>
+	</div>
 
 </div>
 

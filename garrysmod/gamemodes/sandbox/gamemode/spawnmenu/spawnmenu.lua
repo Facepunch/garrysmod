@@ -1,5 +1,6 @@
 
 local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE }, "Amount of empty space around the Sandbox spawn menu." )
+local spawnmenu_toggle = CreateConVar( "spawnmenu_toggle", "0", { FCVAR_ARCHIVE }, "Tapping Q or C will toggle spawnmenu or contextmenu on and off, without having to hold the button." )
 
 include( "toolmenu.lua" )
 include( "contextmenu.lua" )
@@ -256,7 +257,13 @@ end
 hook.Add( "OnGamemodeLoaded", "CreateSpawnMenu", CreateSpawnMenu )
 concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
 
+local spawnMenuLastOpen = 0
+
 function GM:OnSpawnMenuOpen()
+
+	-- Already open (toggle)
+	if ( spawnmenu_toggle:GetBool() && g_SpawnMenu and g_SpawnMenu:IsVisible() ) then return end
+	spawnMenuLastOpen = SysTime()
 
 	-- Let the gamemode decide whether we should open or not..
 	if ( !hook.Call( "SpawnMenuOpen", self ) ) then return end
@@ -272,10 +279,18 @@ end
 
 function GM:OnSpawnMenuClose()
 
+	if ( spawnmenu_toggle:GetBool() && SysTime() - spawnMenuLastOpen < 0.180 ) then return end
+
 	if ( IsValid( g_SpawnMenu ) ) then g_SpawnMenu:Close() end
 	hook.Call( "SpawnMenuClosed", self )
 
 end
+
+hook.Add( "OnPauseMenuShow", "CloseSpawnMenuWhenInMainMenu", function()
+	-- If the main menu is open, close the spawn menu & context menu
+	if ( g_SpawnMenu:IsVisible() ) then g_SpawnMenu:Close() end
+	if ( g_ContextMenu:IsVisible() ) then g_ContextMenu:Close() end
+end )
 
 --[[---------------------------------------------------------
 	Name: HOOK SpawnMenuKeyboardFocusOn

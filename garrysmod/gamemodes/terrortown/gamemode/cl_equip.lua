@@ -456,7 +456,7 @@ local function ReceiveEquipment()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_items = net.ReadUInt(16)
+   ply.equipment_items = net.ReadInt(util.BitsRequired(EQUIP_MAX, true))
 end
 net.Receive("TTT_Equipment", ReceiveEquipment)
 
@@ -494,10 +494,19 @@ local function ReceiveBought()
 end
 net.Receive("TTT_Bought", ReceiveBought)
 
+local bitsRequired = util.BitsRequired
+
 -- Player received the item he has just bought, so run clientside init
 local function ReceiveBoughtItem()
-   local is_item = net.ReadBit() == 1
-   local id = is_item and net.ReadUInt(16) or net.ReadString()
+   local is_item = net.ReadBool()
+
+   local id
+   if is_item then
+      local exponent = net.ReadUInt(bitsRequired(math.log(EQUIP_MAX) / math.log(2)))
+      id = 2 ^ exponent
+   else
+      id = net.ReadString()
+   end
 
    -- I can imagine custom equipment wanting this, so making a hook
    hook.Run("TTTBoughtItem", is_item, id)

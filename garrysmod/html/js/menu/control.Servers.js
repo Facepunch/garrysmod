@@ -18,6 +18,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	$scope.SVFilterHasPly = false;
 	$scope.SVFilterNotFull = false;
 	$scope.SVFilterHidePass = false;
+	$scope.SVFilterHideOutdated = false;
 	$scope.SVFilterMaxPing = 2000;
 	$scope.SVFilterPlyMin = 0;
 	$scope.SVFilterPlyMax = 128;
@@ -110,22 +111,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			lua.Run( "GetPlayerList( %s )", server.address );
 			lua.Run( "PingServer( %s )", server.address );
 		}, 10000 );
-
-		//
-		// ng-dblclick doesn't work properly in engine, so we fake it!
-		//
-		if ( server.DoubleClick )
-		{
-			$scope.JoinServer( server );
-			return;
-		}
-
-		server.DoubleClick = true;
-
-		setTimeout( function()
-		{
-			server.DoubleClick = false;
-		}, 500 );
 	}
 
 	$scope.SelectGamemode = function( gm )
@@ -311,6 +296,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( server.ping > $scope.SVFilterMaxPing ) return false;
 		if ( server.players < $scope.SVFilterPlyMin ) return false;
 		if ( server.players > $scope.SVFilterPlyMax ) return false;
+		if ( server.version_c < 0 && $scope.SVFilterHideOutdated ) return false;
 		if ( server.flag && $scope.CurrentGamemode.FilterFlags[ server.flag ] == false ) return false;
 		if ( $scope.CurrentGamemode.HasPreferFlags && $scope.CurrentGamemode.FilterFlags[ server.flag ] != true ) return false;
 

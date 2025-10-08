@@ -1,6 +1,4 @@
 
-if ( !IsMounted( "ep2" ) ) then return end
-
 AddCSLuaFile()
 
 SWEP.PrintName = "#weapon_flechettegun"

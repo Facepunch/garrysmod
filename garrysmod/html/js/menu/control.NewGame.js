@@ -97,26 +97,11 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		$rootScope.LastCategory = $scope.CurrentCategory;
 	}
 
-	$scope.DoubleClick = ""
-	$scope.ClickMap = function( m )
+	$scope.DblClickMap = function( m )
 	{
 		$scope.SelectMap( m );
 
-		if ( $scope.DoubleClick == m )
-		{
-			$scope.StartGame();
-			return;
-		}
-
-		//
-		// ng-dblclick doesn't work properly in engine, so we fake it!
-		//
-		$scope.DoubleClick = m;
-
-		setTimeout( function()
-		{
-			$scope.DoubleClick = "";
-		}, 500 )
+		$scope.StartGame();
 	}
 
 	$scope.FavMap = function( m )
@@ -261,7 +246,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			{
 				document.getElementById( "p2p_friendsonly" ).disabled = true;
 			}
-			$scope.ServerSettings.p2p_friendsonly = false;
 			UpdateDigest( $scope, 50 );
 		}
 		else if ( document.getElementById( "p2p_friendsonly" ) !== null )

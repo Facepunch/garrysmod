@@ -75,7 +75,7 @@ local currentGM
 function Call( name, ... )
 
 	if ( !currentGM ) then
-	currentGM = gmod.GetGamemode()
+		currentGM = gmod.GetGamemode()
 	end
 
 	-- If the gamemode function doesn't exist just return false
