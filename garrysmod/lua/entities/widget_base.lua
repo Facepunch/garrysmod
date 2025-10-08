@@ -57,9 +57,11 @@ function ENT:SetSize( size )
 
 	if ( self:GetSize() == size ) then return end
 
+	local sizeVector = Vector( size, size, size )
+
 	self:SetSizeVar( size )
 	self:SetSolid( SOLID_BBOX )
-	self:SetCollisionBounds( Vector( size, size, size ) * -0.5, Vector( size, size, size ) * 0.5 )
+	self:SetCollisionBounds( sizeVector * -0.5, sizeVector * 0.5 )
 
 end
 
@@ -69,7 +71,7 @@ function ENT:GetGrabPos( Pos, Forward )
 	local eye = Pos
 
 	local planepos = self:GetPos()
-	local planenrm = ( eye - planepos ):GetNormal()
+	local planenrm = ( eye - planepos ):GetNormalized()
 
 	return util.IntersectRayWithPlane( eye, fwd, planepos, planenrm )
 
@@ -77,23 +79,30 @@ end
 
 function ENT:PressedThinkInternal( ply, mv )
 
+	local eyePos = ply:EyePos()
+	local aimVector = ply:GetAimVector()
+
 	--
 	-- TODO: We should find out why this happens instead of just preventing it!
 	--
 	if ( !istable( ply.WidgetMove ) ) then
 		ply.WidgetMove = {}
-		ply.WidgetMove.EyePos = ply:EyePos()
-		ply.WidgetMove.EyeVec = ply:GetAimVector()
+		ply.WidgetMove.EyePos = eyePos
+		ply.WidgetMove.EyeVec = aimVector
 	end
 
-	local OldPos = self:GetGrabPos( ply.WidgetMove.EyePos, ply.WidgetMove.EyeVec )
-	local NewPos = self:GetGrabPos( ply:EyePos(), ply:GetAimVector() )
+	local widgetMove = ply.WidgetMove
+	local OldPos = self:GetGrabPos( widgetMove.EyePos, widgetMove.EyeVec )
+	local NewPos = self:GetGrabPos( eyePos, aimVector )
 
 	if ( NewPos && OldPos ) then
 
 		local dist = self:WorldToLocal( OldPos ) - self:WorldToLocal( NewPos )
+		local len = dist:LengthSqr()
+		local minLen = 0.01 * 0.01
+		local maxLen = 512 * 512
 
-		if ( dist:Length() > 0.01 && dist:Length() < 512 ) then
+		if ( len > minLen && len < maxLen ) then
 			self:DragThink( ply, mv, dist )
 		end
 
@@ -102,8 +111,8 @@ function ENT:PressedThinkInternal( ply, mv )
 	self:PressedThink( ply, mv )
 
 	-- Store the (new) old eye positions
-	ply.WidgetMove.EyePos = ply:EyePos()
-	ply.WidgetMove.EyeVec = ply:GetAimVector()
+	widgetMove.EyePos = eyePos
+	widgetMove.EyeVec = aimVector
 
 end
 
@@ -176,33 +185,41 @@ function ENT:Draw()
 
 end
 
+local colDefault = Color( 0, 0, 50, 255 )
+local colHovered = Color( 20, 50, 100, 255 )
+local colPressed = Color( 180, 180, 50, 255 )
+local colHoveredAndPressed = Color( 255, 255, 100, 255 )
+
 function ENT:OverlayRender()
 
-	local col = Color( 0, 0, 50, 255 )
+	local col = colDefault
+	local ply = LocalPlayer()
+	local hovered = ply:GetHoveredWidget()
 
-	if ( self:IsHovered() ) then
-		col = Color( 20, 50, 100, 255 )
-	elseif ( self:SomethingHovered() ) then
-		-- less alpha
+	if ( hovered == self ) then
+		col = colHovered
 	end
 
 	if ( self:IsPressed() ) then
 
-		col = Color( 180, 180, 50, 255 )
+		col = colPressed
 
-		if ( LocalPlayer():GetHoveredWidget() == LocalPlayer():GetPressedWidget() ) then
-			col = Color( 255, 255, 100, 255 )
+		if ( hovered == ply:GetPressedWidget() ) then
+			col = colHoveredAndPressed
 		end
 
 	end
 
-	local vSize = Vector( self:GetSize(), self:GetSize(), self:GetSize() )
+	local size = self:GetSize()
+	local vSize = Vector( size, size, size )
+	local pos = self:GetPos()
+	local angles = self:GetAngles()
 
 	render.SetColorMaterialIgnoreZ()
-	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, ColorAlpha( col, 0.8 ) )
+	render.DrawBox( pos, angles, -vSize, vSize, ColorAlpha( col, 0.8 ) )
 
 	render.SetColorMaterial()
-	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, col )
+	render.DrawBox( pos, angles, -vSize, vSize, col )
 
 end
 
