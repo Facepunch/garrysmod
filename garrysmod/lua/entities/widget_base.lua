@@ -71,7 +71,7 @@ function ENT:GetGrabPos( Pos, Forward )
 	local eye = Pos
 
 	local planepos = self:GetPos()
-	local planenrm = ( eye - planepos ):GetNormal()
+	local planenrm = ( eye - planepos ):GetNormalized()
 
 	return util.IntersectRayWithPlane( eye, fwd, planepos, planenrm )
 
@@ -180,6 +180,9 @@ function ENT:IsPressed()
 end
 
 function ENT:Draw()
+
+	widgets.RenderMe( self )
+
 end
 
 local colDefault = Color( 0, 0, 50, 255 )
