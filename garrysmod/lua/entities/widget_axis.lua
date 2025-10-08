@@ -111,6 +111,9 @@ function ENT:SetPriority( x )
 
 end
 
+function ENT:Draw()
+end
+
 function ENT:OverlayRender()
 end
 
