@@ -424,7 +424,7 @@ local ListSpawnPointsClasses = {
 
     -- L4D Maps
     ["info_survivor_rescue"] = true,
-    --["info_survivor_position"] = true, -- volontairement désactivé
+    --["info_survivor_position"] = true, Removing this one for the time being, c1m4_atrium has one of these in a box under the map
 
     -- NEOTOKYO Maps
     ["info_player_attacker"] = true,
