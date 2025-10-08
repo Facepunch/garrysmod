@@ -50,11 +50,11 @@
 								<div ng-if="Language.toLowerCase() != 'en' && Language.toLowerCase() != 'en-pt'">{{RegionName(flag, Language)}}</div>
 								<div>{{RegionName(flag, "en")}}</div>
 							</span>
-							<img ng-src="img/flags72/{{flag}}.png" style="-webkit-mask-image: url('img/flags72/{{flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
+							<img ng-src="img/twemoji-72x72/flags/{{flag}}.png" style="-webkit-mask-image: url('img/twemoji-72x72/flags/{{flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
 						</span>
 						<span ng-if="CurrentGamemode.flags['unknown']" class="flag noflag {{FilterFlagClass( 'unknown' )}}" ng-click="FilterFlag( 'unknown', this );" >
 							<span class="flag_name"><div ng-tranny="'unknown'"></div></span>
-							<img src="img/twemoji_2754.png" loading="lazy"/>
+							<img src="img/twemoji-72x72/missing_2754.png" loading="lazy"/>
 						</span>
 					</div>
 				</li>
@@ -149,7 +149,7 @@
 							<name>
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
 								<span class="flag {{IfElse( server.flag == 'unknown', 'noflag', '' )}}">
-									<img ng-src="img/flags72/{{server.flag}}.png" style="-webkit-mask-image: url('img/flags72/{{server.flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
+									<img ng-src="img/twemoji-72x72/flags/{{server.flag}}.png" style="-webkit-mask-image: url('img/twemoji-72x72/flags/{{server.flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
 								</span>
 								<img class="passworded" src='img/server-passworded.png' ng-if="server.pass" loading="lazy"/>
 								<span>{{server.name}}
