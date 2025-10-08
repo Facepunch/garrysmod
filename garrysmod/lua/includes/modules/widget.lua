@@ -5,7 +5,7 @@
 --
 
 widgets = {}
-widgets.Entities = {}
+local widgetEntities = {}
 
 --
 -- Holds the currently hovered widget
@@ -21,7 +21,7 @@ widgets.Pressed = nil
 local tr = {}
 local trace = {
 	output = tr,
-	filter = widgets.Entities,
+	filter = widgetEntities,
 	whitelist = true,
 }
 
@@ -99,10 +99,11 @@ end
 ---  Render the widgets!
 ---
 
---
 -- Function stub for backwards compatibility
---
-function widgets.RenderMe() end
+function widgets.RenderMe( ent )
+	-- We do this solely for backwards compatibility
+	ent._WantsWidgetRender = true
+end
 
 local function RenderWidgets()
 
@@ -111,14 +112,16 @@ local function RenderWidgets()
 
 	cam.Start3D( EyePos(), EyeAngles() )
 
-		for _, v in ipairs( widgets.Entities ) do
+		for _, v in ipairs( widgetEntities ) do
 
 			--
 			-- The pressed widget gets to decide what should draw
 			--
 			if ( prsValid && !prs:PressedShouldDraw( v ) ) then continue end
+			if ( !v._WantsWidgetRender ) then continue end
 
 			v:OverlayRender()
+			v._WantsWidgetRender = nil
 
 		end
 
@@ -132,7 +135,7 @@ hook.Add( "OnEntityCreated", "CreateWidgets", function( ent )
 
 		if ( !ent:IsWidget() ) then return end
 
-		table.insert( widgets.Entities, ent )
+		table.insert( widgetEntities, ent )
 		hook.Add( "PlayerTick", "TickWidgets", widgets.PlayerTick )
 
 		if ( CLIENT ) then
@@ -147,14 +150,14 @@ hook.Add( "EntityRemoved", "RemoveWidgets", function( ent )
 
 	if ( !ent:IsWidget() ) then return end
 
-	for k, v in next, widgets.Entities do
+	for k, v in next, widgetEntities do
 		if ( v == ent ) then
-			table.remove( widgets.Entities, k )
+			table.remove( widgetEntities, k )
 			break
 		end
 	end
 
-	if ( #widgets.Entities == 0 ) then
+	if ( #widgetEntities == 0 ) then
 		hook.Remove( "PlayerTick", "TickWidgets" )
 
 		if ( CLIENT ) then
@@ -169,3 +172,4 @@ local ENTITY = FindMetaTable( "Entity" )
 function ENTITY:IsWidget()
 	return self.Widget
 end
+
