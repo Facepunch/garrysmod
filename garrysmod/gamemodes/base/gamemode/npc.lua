@@ -15,6 +15,10 @@ DEATH_NOTICE_FRIENDLY_ATTACKER = 2
 --DEATH_NOTICE_PENETRATION = 8
 function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 
+	if ( !hook.Run( "ShouldAddDeathNotice", attacker, inflictor, victim, flags ) ) then
+		return false
+	end
+
 	net.Start( "DeathNoticeEvent" )
 
 		if ( isstring( attacker ) ) then
@@ -48,6 +52,8 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 		net.WriteUInt( flags, 8 )
 
 	net.Broadcast()
+
+	return true
 
 end
 
