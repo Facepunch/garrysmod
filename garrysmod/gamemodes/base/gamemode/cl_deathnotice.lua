@@ -205,7 +205,7 @@ end
 -----------------------------------------------------------]]
 function GM:AddDeathNotice( attacker, team1, inflictor, victim, team2, flags )
 
-	if ( !hook.Run( "ShouldAddDeathNotice", attacker, inflictor, victim, flags ) ) then
+	if ( hook.Run( "ShouldAddDeathNotice", attacker, inflictor, victim, flags ) == false ) then
 		return
 	end
 

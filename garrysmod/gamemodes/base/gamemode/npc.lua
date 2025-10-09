@@ -15,7 +15,7 @@ DEATH_NOTICE_FRIENDLY_ATTACKER = 2
 --DEATH_NOTICE_PENETRATION = 8
 function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 
-	if ( !hook.Run( "ShouldAddDeathNotice", attacker, inflictor, victim, flags ) ) then
+	if ( hook.Run( "ShouldAddDeathNotice", attacker, inflictor, victim, flags ) == false ) then
 		return false
 	end
 
