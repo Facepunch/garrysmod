@@ -434,14 +434,20 @@ local ListSpawnPointsClasses = {
     ["info_ff_teamspawn"] = true
 }
 
+local SpawnPointsPriority = {}
 function GM:CachePlayerSpawnPoints()
 
     self.LastSpawnPoint = 0
-
 	self.SpawnPoints = {}
+	SpawnPointsPriority = {}
+
 	for _, ent in ipairs(ents.GetAll()) do
 		if ( ListSpawnPointsClasses[ent:GetClass()] ) then
 			self.SpawnPoints[#self.SpawnPoints + 1] = ent
+
+			if ent:HasSpawnFlags(1) then
+				SpawnPointsPriority[#SpawnPointsPriority + 1] = ent
+			end
 		end
 	end
 
@@ -451,6 +457,7 @@ end
 	Name: gamemode:PlayerSelectSpawn( player )
 	Desc: Find a spawn point entity for this player
 -----------------------------------------------------------]]
+local NewSpawnPoints = false
 function GM:PlayerSelectSpawn( pl, transiton )
 
 	-- If we are in transition, do not reset player's position
@@ -469,7 +476,20 @@ function GM:PlayerSelectSpawn( pl, transiton )
 
 		self:CachePlayerSpawnPoints()
 
+		NewSpawnPoints = true
 	end
+
+	if not NewSpawnPoints then
+		for _, ent in ipairs( self.SpawnPoints ) do
+			if ( !IsValid( ent ) ) then
+				self:CachePlayerSpawnPoints()
+
+				break
+			end
+		end
+	end
+
+	NewSpawnPoints = false
 
 	local Count = #self.SpawnPoints
 
@@ -480,13 +500,16 @@ function GM:PlayerSelectSpawn( pl, transiton )
 
 	local ChosenSpawnPoint = nil
 
+	if SpawnPointsPriority and #SpawnPointsPriority > 0 then
+		for _, ent in ipairs( SpawnPointsPriority ) do
+			if ( IsValid( ent ) && ent:HasSpawnFlags( 1 ) && hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ent, true ) ) then
+				return ent
+			end
+		end
+	end
+
 	-- Try to work out the best, random spawnpoint
 	for i = 1, Count do
-
-		local SpawnPointActual = self.SpawnPoints[i]
-		if ( SpawnPointActual:HasSpawnFlags( 1 ) && hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, SpawnPointActual, true ) ) then
-			return SpawnPointActual
-		end
 
 		ChosenSpawnPoint = self.SpawnPoints[math.random(Count)]
 

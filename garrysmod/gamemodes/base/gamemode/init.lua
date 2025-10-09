@@ -23,9 +23,6 @@ end
 	Desc: Called as after the map has been cleaned up
 -----------------------------------------------------------]]
 function GM:PostCleanupMap()
-
-	self:CachePlayerSpawnPoints()
-
 end
 
 --[[---------------------------------------------------------
