@@ -21,7 +21,7 @@
 				<div class="text">
 					<div id="serverName">A really long server name will be here that will be too long to fit on the loading screen</div>
 					<div id="serverMap">gm_hilldirt</div>
-					<div id="serverGamemode"><span>Snadbox</span><img class="hidden" onerror="this.classList.add('hidden');"/></div>
+					<div id="serverGamemode">Snadbox</div>
 				</div>
 			</div>
 
@@ -50,13 +50,10 @@
 			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
 			{
 				var mapImg = "asset://mapimage/" + mapname;
-				var gmImg = "../gamemodes/" + gamemode + "/icon24.png";
 				
 				document.querySelector("#serverName").innerText = servername;
 				document.querySelector("#serverMap").innerText = mapname;
-				document.querySelector("#serverGamemode span").innerText = gamemodeNice;
-				document.querySelector("#serverGamemode img").classList.remove("hidden");
-				document.querySelector("#serverGamemode img").setAttribute( "src", gmImg );
+				document.querySelector("#serverGamemode").innerText = gamemodeNice;
 				document.querySelector("#mapimg").setAttribute( "src", mapImg );
 				document.body.style.backgroundImage = "url('" + mapImg + "')";
 

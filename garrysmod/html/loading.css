@@ -150,17 +150,5 @@ body.dark
 	height: 128px;
 	background: #666;
 	margin-right: 16px;
-}
-.server_info #serverGamemode img
-{
-	vertical-align: text-top;
-	margin-left: 8px;
-	margin-top: 6px;
-	width: 26px;
-	height: 26px;
-}
-
-.server_info #serverGamemode img.hidden
-{
-	display: none;
+	float: left;
 }
