@@ -358,7 +358,7 @@ function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:LoadSpawnPoints()
+	Name: gamemode:CachePlayerSpawnPoints()
 	Desc: Loads all the spawn points from the map
 -----------------------------------------------------------]]
 
@@ -434,7 +434,7 @@ local ListSpawnPointsClasses = {
     ["info_ff_teamspawn"] = true
 }
 
-function GM:LoadSpawnPoints()
+function GM:CachePlayerSpawnPoints()
 
     self.LastSpawnPoint = 0
 
@@ -467,7 +467,7 @@ function GM:PlayerSelectSpawn( pl, transiton )
 	-- in a team based game you'd split up the spawns
 	if not self.SpawnPoints or #self.SpawnPoints == 0 then
 
-		self:LoadSpawnPoints()
+		self:CachePlayerSpawnPoints()
 
 	end
 

@@ -24,7 +24,7 @@ end
 -----------------------------------------------------------]]
 function GM:PostCleanupMap()
 
-	self:LoadSpawnPoints()
+	self:CachePlayerSpawnPoints()
 
 end
 
