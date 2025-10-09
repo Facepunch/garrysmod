@@ -15,10 +15,6 @@ DEATH_NOTICE_FRIENDLY_ATTACKER = 2
 --DEATH_NOTICE_PENETRATION = 8
 function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 
-	if ( hook.Run( "ShouldAddDeathNotice", attacker, inflictor, victim, flags ) == false ) then
-		return false
-	end
-
 	net.Start( "DeathNoticeEvent" )
 
 		if ( isstring( attacker ) ) then
@@ -52,8 +48,6 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 		net.WriteUInt( flags, 8 )
 
 	net.Broadcast()
-
-	return true
 
 end
 
@@ -133,7 +127,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 			local flags = 0
 			if ( ent:IsNPC() and ent:Disposition( attacker ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
 
-			self:SendDeathNotice( attacker, InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
+			hook.Run( "SendDeathNotice", attacker, InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
 
 			return
 		end
@@ -150,7 +144,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	if ( IsValid( Entity( 1 ) ) and ent:IsNPC() and ent:Disposition( Entity( 1 ) ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
 	if ( IsValid( Entity( 1 ) ) and AttackerClass:IsNPC() and AttackerClass:Disposition( Entity( 1 ) ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	self:SendDeathNotice( self:GetDeathNoticeEntityName( AttackerClass ), InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
+	hook.Run( "SendDeathNotice", self:GetDeathNoticeEntityName( AttackerClass ), InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
 
 end
 

@@ -160,9 +160,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker == ply ) then
 
-		local bSent = self:SendDeathNotice( nil, "suicide", ply, 0 )
+		local bSent = hook.Run( "SendDeathNotice", nil, "suicide", ply, 0 )
 
-		if ( bSent ) then
+		if ( bSent != false ) then
 			MsgAll( attacker:Nick() .. " suicided!\n" )
 		end
 
@@ -171,9 +171,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker:IsPlayer() ) then
 
-		local bSent = self:SendDeathNotice( attacker, inflictor:GetClass(), ply, 0 )
+		local bSent = hook.Run( "SendDeathNotice", attacker, inflictor:GetClass(), ply, 0 )
 
-		if ( bSent ) then
+		if ( bSent != false ) then
 			MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 		end
 
@@ -186,9 +186,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	local flags = 0
 	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	local bSent = self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
+	local bSent = hook.Run( "SendDeathNotice", self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
 
-	if ( bSent ) then
+	if ( bSent != false ) then
 		MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 	end
 
