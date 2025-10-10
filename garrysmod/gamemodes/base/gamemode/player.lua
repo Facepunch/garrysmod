@@ -357,161 +357,135 @@ function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 
 end
 
---[[---------------------------------------------------------
-	Name: gamemode:CachePlayerSpawnPoints()
-	Desc: Loads all the spawn points from the map
------------------------------------------------------------]]
+-- List of all known spawnpoint entity classes
+local SpawnPointEntityClasses = {
+	-- Half-Life 2 (Deathmatch) Maps
+	["info_player_start"] = true,
+	["info_player_deathmatch"] = true,
+	["info_player_combine"] = true,
+	["info_player_rebel"] = true,
 
-local ListSpawnPointsClasses = {
-    ["info_player_start"] = true,
-    ["info_player_deathmatch"] = true,
-    ["info_player_combine"] = true,
-    ["info_player_rebel"] = true,
+	-- Portal 2 Coop
+	["info_coop_spawn"] = true,
 
-    -- Portal 2 Coop
-    ["info_coop_spawn"] = true,
+	-- CS Maps
+	["info_player_counterterrorist"] = true,
+	["info_player_terrorist"] = true,
 
-    -- CS Maps
-    ["info_player_counterterrorist"] = true,
-    ["info_player_terrorist"] = true,
+	-- DOD Maps
+	["info_player_axis"] = true,
+	["info_player_allies"] = true,
 
-    -- DOD Maps
-    ["info_player_axis"] = true,
-    ["info_player_allies"] = true,
+	-- (Old) GMod Maps
+	["gmod_player_start"] = true,
 
-    -- (Old) GMod Maps
-    ["gmod_player_start"] = true,
+	-- TF Maps
+	["info_player_teamspawn"] = true,
 
-    -- TF Maps
-    ["info_player_teamspawn"] = true,
+	-- INS Maps
+	["ins_spawnpoint"] = true,
 
-    -- INS Maps
-    ["ins_spawnpoint"] = true,
+	-- AOC Maps
+	["aoc_spawnpoint"] = true,
 
-    -- AOC Maps
-    ["aoc_spawnpoint"] = true,
+	-- Dystopia Maps
+	["dys_spawn_point"] = true,
 
-    -- Dystopia Maps
-    ["dys_spawn_point"] = true,
+	-- PVKII Maps
+	["info_player_pirate"] = true,
+	["info_player_viking"] = true,
+	["info_player_knight"] = true,
 
-    -- PVKII Maps
-    ["info_player_pirate"] = true,
-    ["info_player_viking"] = true,
-    ["info_player_knight"] = true,
+	-- DIPRIP Maps
+	["diprip_start_team_blue"] = true,
+	["diprip_start_team_red"] = true,
 
-    -- DIPRIP Maps
-    ["diprip_start_team_blue"] = true,
-    ["diprip_start_team_red"] = true,
+	-- OB Maps
+	["info_player_red"] = true,
+	["info_player_blue"] = true,
 
-    -- OB Maps
-    ["info_player_red"] = true,
-    ["info_player_blue"] = true,
+	-- SYN Maps
+	["info_player_coop"] = true,
 
-    -- SYN Maps
-    ["info_player_coop"] = true,
+	-- ZPS Maps
+	["info_player_human"] = true,
+	["info_player_zombie"] = true,
 
-    -- ZPS Maps
-    ["info_player_human"] = true,
-    ["info_player_zombie"] = true,
+	-- ZM Maps
+	["info_player_zombiemaster"] = true,
 
-    -- ZM Maps
-    ["info_player_zombiemaster"] = true,
+	-- FOF Maps
+	["info_player_fof"] = true,
+	["info_player_desperado"] = true,
+	["info_player_vigilante"] = true,
 
-    -- FOF Maps
-    ["info_player_fof"] = true,
-    ["info_player_desperado"] = true,
-    ["info_player_vigilante"] = true,
+	-- L4D Maps
+	["info_survivor_rescue"] = true,
+	-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
+	--["info_survivor_position"] = true,
 
-    -- L4D Maps
-    ["info_survivor_rescue"] = true,
-    --["info_survivor_position"] = true, Removing this one for the time being, c1m4_atrium has one of these in a box under the map
+	-- NEOTOKYO Maps
+	["info_player_attacker"] = true,
+	["info_player_defender"] = true,
 
-    -- NEOTOKYO Maps
-    ["info_player_attacker"] = true,
-    ["info_player_defender"] = true,
-
-    -- Fortress Forever Maps
-    ["info_ff_teamspawn"] = true
+	-- Fortress Forever Maps
+	["info_ff_teamspawn"] = true
 }
-
-local SpawnPointsPriority = {}
-function GM:CachePlayerSpawnPoints()
-
-    self.LastSpawnPoint = 0
-	self.SpawnPoints = {}
-	SpawnPointsPriority = {}
-
-	for _, ent in ipairs(ents.GetAll()) do
-		if ( ListSpawnPointsClasses[ent:GetClass()] ) then
-			self.SpawnPoints[#self.SpawnPoints + 1] = ent
-
-			if ent:HasSpawnFlags(1) then
-				SpawnPointsPriority[#SpawnPointsPriority + 1] = ent
-			end
-		end
-	end
-
-end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerSelectSpawn( player )
 	Desc: Find a spawn point entity for this player
 -----------------------------------------------------------]]
-local NewSpawnPoints = false
 function GM:PlayerSelectSpawn( pl, transiton )
 
 	-- If we are in transition, do not reset player's position
 	if ( transiton ) then return end
 
 	if ( self.TeamBased ) then
-
 		local ent = self:PlayerSelectTeamSpawn( pl:Team(), pl )
 		if ( IsValid( ent ) ) then return ent end
-
 	end
 
 	-- Save information about all of the spawn points
 	-- in a team based game you'd split up the spawns
-	if not self.SpawnPoints or #self.SpawnPoints == 0 then
+	if ( !IsTableOfEntitiesValid( self.SpawnPoints ) ) then
+		self.LastSpawnPoint = 0
+		self.HasMasterSpawnPoints = false
 
-		self:CachePlayerSpawnPoints()
+		self.SpawnPoints = {}
+		for _, ent in ipairs( ents.GetAll() ) do
+			if ( SpawnPointEntityClasses[ ent:GetClass() ] ) then
+				self.SpawnPoints[#self.SpawnPoints + 1] = ent
 
-		NewSpawnPoints = true
-	end
-
-	if not NewSpawnPoints then
-		for _, ent in ipairs( self.SpawnPoints ) do
-			if ( !IsValid( ent ) ) then
-				self:CachePlayerSpawnPoints()
-
-				break
+				if ( ent:HasSpawnFlags( 1 ) ) then
+					self.HasMasterSpawnPoints = true
+				end
 			end
 		end
 	end
 
-	NewSpawnPoints = false
-
 	local Count = #self.SpawnPoints
-
 	if ( Count == 0 ) then
 		Msg("[PlayerSelectSpawn] Error! No spawn points!\n")
 		return nil
 	end
 
-	local ChosenSpawnPoint = nil
-
-	if SpawnPointsPriority and #SpawnPointsPriority > 0 then
-		for _, ent in ipairs( SpawnPointsPriority ) do
-			if ( IsValid( ent ) && ent:HasSpawnFlags( 1 ) && hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ent, true ) ) then
+	-- If any of the spawnpoints have a MASTER flag then only use that one.
+	-- This is needed for single player maps.
+	if ( self.HasMasterSpawnPoints ) then
+		for _, ent in ipairs( self.SpawnPoints ) do
+			if ( ent:HasSpawnFlags( 1 ) && hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ent, true ) ) then
 				return ent
 			end
 		end
 	end
 
+	local ChosenSpawnPoint = nil
+
 	-- Try to work out the best, random spawnpoint
 	for i = 1, Count do
 
-		ChosenSpawnPoint = self.SpawnPoints[math.random(Count)]
+		ChosenSpawnPoint = self.SpawnPoints[math.random( Count )]
 
 		if ( IsValid( ChosenSpawnPoint ) && ChosenSpawnPoint:IsInWorld() ) then
 			if ( ( ChosenSpawnPoint == pl:GetVar( "LastSpawnpoint" ) || ChosenSpawnPoint == self.LastSpawnPoint ) && Count > 1 ) then continue end
