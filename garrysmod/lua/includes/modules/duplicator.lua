@@ -474,7 +474,6 @@ end
    Generic function for duplicating stuff
 -----------------------------------------------------------]]
 function GenericDuplicatorFunction( Player, data )
-
 	if ( !IsAllowed( data.Class ) ) then
 		-- MsgN( "duplicator: ", data.Class, " isn't allowed to be duplicated!" )
 		return
@@ -490,6 +489,9 @@ function GenericDuplicatorFunction( Player, data )
 
 	end
 
+	-- Make sure this is allowed
+	if ( IsValid( Player ) && !gamemode.Call( "PlayerSpawnSENT", Player, data.Class ) ) then return end
+
 	local Entity = ents.Create( data.Class )
 	if ( !IsValid( Entity ) ) then return end
 
@@ -503,6 +505,11 @@ function GenericDuplicatorFunction( Player, data )
 	EntityPhysics.Load( data.PhysicsObjects, Entity )
 
 	table.Merge( Entity:GetTable(), data )
+
+	-- Tell the gamemode we just spawned something
+	if ( IsValid( Player ) ) then
+		gamemode.Call( "PlayerSpawnedSENT", Player, Entity )
+	end
 
 	return Entity
 
