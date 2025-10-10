@@ -19,13 +19,6 @@ function GM:InitPostEntity()
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PostCleanupMap()
-	Desc: Called as after the map has been cleaned up
------------------------------------------------------------]]
-function GM:PostCleanupMap()
-end
-
---[[---------------------------------------------------------
 	Name: gamemode:Think()
 	Desc: Called every frame
 -----------------------------------------------------------]]
