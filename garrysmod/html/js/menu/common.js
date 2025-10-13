@@ -2,6 +2,8 @@
 // Must be loaded after menu/menuApp.js, creations/dupes.js, creations/saves.js
 
 var IN_ENGINE		= navigator.userAgent.indexOf( "Valve Source Client" ) != -1;
+var IS_AWESOMIUM 	= navigator.userAgent.toLowerCase().indexOf("awesomium") != -1;
+if ( IS_AWESOMIUM ) document.documentElement.classList.add( "AWESOMIUM" ); 
 
 function UpdateDigest( scope, timeout )
 {
