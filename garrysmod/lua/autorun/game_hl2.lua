@@ -119,13 +119,11 @@ ADD_ITEM( "item_suit", 0 )
 
 ADD_ITEM( "prop_thumper" )
 ADD_ITEM( "combine_mine", -8 )
+ADD_ITEM( "combine_mine", -8, { KeyValues = { Modification = 1 } }, "combine_mine_resistance" )
 ADD_ITEM( "npc_grenade_frag", -8 )
 ADD_ITEM( "grenade_helicopter", 4 )
 
 ADD_ITEM( "weapon_striderbuster" )
-
--- Needs duplicator support
---ADD_ITEM( "combine_mine", -8, { KeyValues = { Modification = 1 } }, "combine_mine_resistance" )
 
 -- Weapons
 ADD_WEAPON( "weapon_physcannon" )
