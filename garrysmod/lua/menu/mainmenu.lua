@@ -25,7 +25,7 @@ function PANEL:Init()
 		local args = { ... }
 		for id, arg in pairs( args ) do
 			if ( isstring( arg ) ) then
-				args[ id ] = "\"" .. string.JavascriptSafe( arg ) .. "\""
+				args[ id ] = "[[" .. arg .. "]]"
 			end
 		end
 
