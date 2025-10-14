@@ -1,18 +1,81 @@
 
 local Category = ""
 
+-- This is basically dupliacator.GenericDuplicatorFunction, but calls the relevant hooks
+-- Move this all to commands.lua?
+local function ADD_ITEM_DUPEFUNC( ply, data )
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnSENT", ply, data.Class ) ) then return NULL end
+
+	local ent = ents.Create( data.Class )
+	if ( !IsValid( ent ) ) then return NULL end -- Must've hit edict limit
+
+	-- Remove certain fields we do not want dupes to manipulate
+	data.Model = nil
+
+	-- Restore the keyvalues
+	local entTable = list.GetEntry( "SpawnableEntities", data.EntityName )
+	if ( entTable && entTable.ClassName == data.Class && entTable.KeyValues ) then
+		for k, v in pairs( entTable.KeyValues ) do
+			ent:SetKeyValue( k, v )
+		end
+	end
+
+	duplicator.DoGeneric( ent, data )
+
+	ent:Spawn()
+
+	--duplicator.DoGenericPhysics( ent, ply, data )
+
+	ent:Activate()
+
+	-- For hacked combine mines, they reset their skin
+	if ( data.Skin ) then ent:SetSkin( data.Skin ) end
+
+	if ( IsValid( ply ) ) then
+		ent:SetCreator( ply )
+		gamemode.Call( "PlayerSpawnedSENT", ply, ent )
+	end
+
+	return ent
+end
+
+local function ADD_WEAPON_DUPEFUNC( ply, data )
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnSWEP", ply, data.Class, list.GetEntry( "Weapon", data.Class ) ) ) then return NULL end
+
+	local ent = ents.Create( data.Class )
+	if ( !IsValid( ent ) ) then return NULL end -- Must've hit edict limit
+
+	-- Remove certain fields we do not want dupes to manipulate
+	data.Model = nil
+
+	duplicator.DoGeneric( ent, data )
+
+	ent:Spawn()
+
+	--duplicator.DoGenericPhysics( ent, ply, data )
+
+	ent:Activate()
+
+	if ( IsValid( ply ) ) then
+		ent:SetCreator( ply )
+		gamemode.Call( "PlayerSpawnedSWEP", ply, ent )
+	end
+
+	return ent
+end
+
 local function ADD_ITEM( class, offset, extras, classOverride )
 
 	local base = { PrintName = "#" .. ( classOverride or class ), ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" }
 	list.Set( "SpawnableEntities", classOverride or class, table.Merge( base, extras or {} ) )
-	duplicator.Allow( class )
+	duplicator.RegisterEntityClass( class, ADD_ITEM_DUPEFUNC, "Data" )
 
 end
 
 local function ADD_WEAPON( class )
 
 	list.Set( "Weapon", class, { ClassName = class, PrintName = "#" .. ( class ), Category = Category, Author = "VALVe", Spawnable = true } )
-	duplicator.Allow( class )
+	duplicator.RegisterEntityClass( class, ADD_WEAPON_DUPEFUNC, "Data" )
 
 end
 
