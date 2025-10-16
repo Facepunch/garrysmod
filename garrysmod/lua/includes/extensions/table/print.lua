@@ -160,8 +160,8 @@ local function tablePrint( tbl, compact, noPretty, _lvl, _done )
 	end
 
 	local iter = isSeq and ipairs or pairs
-	local indent = noPretty and "" or string.rep( "\t", _lvl )
-	local table_indent = noPretty and "" or string.rep( "\t", _lvl - 1 )
+	local indent = noPretty and "" or string.rep( "    ", _lvl )
+	local table_indent = noPretty and "" or string.rep( "    ", _lvl - 1 )
 	local i = 1
 
 	MsgC( red, noPretty and "{" or "{\n" )
