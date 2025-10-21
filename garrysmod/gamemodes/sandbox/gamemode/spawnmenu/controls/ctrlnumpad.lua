@@ -79,11 +79,11 @@ function PANEL:PerformLayout()
 	self:SetTall( 70 )
 
 	self.NumPad1:InvalidateLayout( true )
-	self.NumPad1:SetSize( 100, 50 )
+	self.NumPad1:SetSize( 110, 50 )
 
 	if ( self.m_ConVar2 ) then
 		self.NumPad2:InvalidateLayout( true )
-		self.NumPad2:SetSize( 100, 50 )
+		self.NumPad2:SetSize( 110, 50 )
 	end
 
 	if ( !self.m_ConVar2 ) then
