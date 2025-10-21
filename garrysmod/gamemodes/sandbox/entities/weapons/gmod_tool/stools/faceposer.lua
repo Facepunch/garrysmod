@@ -111,8 +111,7 @@ function TOOL:RightClick( trace )
 
 	for i = 0, FlexNum - 1 do
 
-		local Weight = "0.0"
-
+		local Weight = 0
 		if ( !ent:HasFlexManipulatior() ) then
 			Weight = GenerateDefaultFlexValue( ent, i )
 		elseif ( i <= FlexNum ) then
@@ -356,11 +355,12 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 			local min, max = faceEntity:GetFlexBounds( i )
 
 			flexGroups[ group ] = flexGroups[ group ] or {}
-			table.insert( flexGroups[ group ], { name = name, id = i, min = min, max = max } )
+			table.insert( flexGroups[ group ], { name = name, id = i, min = min, max = max, default = GenerateDefaultFlexValue( faceEntity, i ) } )
 		end
 	end
 
 	local flexControllers = {}
+	local moreThanOneGroup = table.Count( flexGroups ) > 1
 	for group, items in pairs( flexGroups ) do
 
 		local groupForm = vgui.Create( "DForm", CPanel )
@@ -370,18 +370,15 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 		groupForm.GetBackgroundColor = function() return color_white end
 
 		function groupForm:Paint( w, h )
-
 			derma.SkinHook( "Paint", "CategoryList", self, w, h )
 			derma.SkinHook( "Paint", "CollapsibleCategory", self, w, h )
-
 		end
 
 		CPanel:AddItem( groupForm )
 
 		for id, item in pairs( items ) do
-
 			local ctrl = groupForm:NumSlider( string.NiceName( item.name ), "faceposer_flex" .. item.id, item.min, item.max )
-			ctrl:SetDefaultValue( GenerateDefaultFlexValue( faceEntity, item.id ) )
+			ctrl:SetDefaultValue( item.default )
 			ctrl:SetHeight( 11 ) -- This makes the controls all bunched up like how we want
 			ctrl:DockPadding( 0, -6, 0, -4 ) -- Try to make the lower part of the text visible
 			ctrl.originalName = item.name
@@ -391,6 +388,34 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 				ctrl:SetEnabled( false )
 				ctrl:SetTooltip( "#tool.faceposer.too_many_flexes" )
 			end
+		end
+
+		-- Per category random/clear
+		if ( moreThanOneGroup ) then
+			local btnContainer = vgui.Create( "Panel", groupForm )
+			btnContainer:SetHeight( 22 )
+
+			local btnRnd = vgui.Create( "DButton", btnContainer )
+			btnRnd:SetText( "#tool.faceposer.randomize" )
+			btnRnd:Dock( FILL )
+			btnRnd.DoClick = function()
+				for id, item in pairs( items ) do
+					local num = math.Rand( item.min, item.max )
+					LocalPlayer():ConCommand( "faceposer_flex" .. item.id .. " " .. string.format( "%.2f", num ) )
+				end
+			end
+
+			local btnClear = vgui.Create( "DButton", btnContainer )
+			btnClear:SetText( "#faceposer.clear" )
+			btnClear:DockMargin( 8, 0, 0, 0 )
+			btnClear:Dock( RIGHT )
+			btnClear.DoClick = function()
+				for id, item in pairs( items ) do
+					LocalPlayer():ConCommand( "faceposer_flex" .. item.id .. " " .. string.format( "%.2f", item.default ) )
+				end
+			end
+
+			groupForm:AddItem( btnContainer )
 		end
 
 		-- HACK: Add some padding to the bottom of the list, because Dock won't
