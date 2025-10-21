@@ -44,8 +44,14 @@
 					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass"><span ng-tranny="'svfltr_no_password'"></span> <img class="passworded" src='img/server-passworded.png'/></label><br>
 					<input type="checkbox" id="sv_outdated" ng-model="SVFilterHideOutdated"/><label for="sv_outdated" ng-tranny="'svfltr_outdated'"></label>
 
-					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">
-						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" ng-src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )" loading="lazy"/>
+					<div class="flags_filter" ng-if="CurrentGamemode.hasflags">
+						<span ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" ng-click="FilterFlag( flag, this );">
+							<img ng-src='asset://garrysmod/materials/flags16/{{flag}}.png' onerror="MissingFlag( this )" loading="lazy"/>
+							<span class="flag_name">
+								<div ng-if="Language.toLowerCase() != 'en' && Language.toLowerCase() != 'en-pt'">{{RegionName(flag, Language)}}</div>
+								<div>{{RegionName(flag, "en")}}</div>
+							</span>
+						</span>
 					</div>
 				</li>
 			</ul>
