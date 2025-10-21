@@ -69,4 +69,8 @@ App.config( function( $routeProvider, $compileProvider, $locationProvider, $cont
 
 	// Disable debug info for "a significant performance boost" https://docs.angularjs.org/api/ng/provider/$compileProvider#debugInfoEnabled
 	$compileProvider.debugInfoEnabled( false ); //Comment out for debugging
+
+	// Additional directives not used. Disabling them improves performance.
+	$compileProvider.commentDirectivesEnabled( false );
+	$compileProvider.cssClassDirectivesEnabled( false );
 } );
