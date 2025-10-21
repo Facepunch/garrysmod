@@ -29,7 +29,7 @@ function TOOL:LeftClick( trace, attach )
 		if ( gmod_npcweapon != "" ) then
 			weapon = gmod_npcweapon
 		else
-			local NPCinfo = list.Get( "NPC" )[ name ]
+			local NPCinfo = list.GetEntry( "NPC", name )
 			weapon = table.Random( NPCinfo and NPCinfo.Weapons or {} ) or ""
 		end
 

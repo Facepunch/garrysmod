@@ -75,7 +75,7 @@ function GM:GetDeathNoticeEntityName( ent )
 	end
 
 	if ( ent:GetClass() == "npc_antlion" and ent:GetModel() == "models/antlion_worker.mdl" ) then
-		return list.Get( "NPC" )[ "npc_antlion_worker" ].Name
+		return list.GetEntry( "NPC", "npc_antlion_worker" ).Name
 	end
 
 	-- Fallback to old behavior
