@@ -55,6 +55,9 @@ function SWEP:DrawHUD()
 	-- Don't draw help for a nonexistant tool!
 	if ( !toolObject ) then return end
 
+	-- Do not draw help when in a vehicle unless allowed
+	if ( LocalPlayer() and IsValid( LocalPlayer():GetVehicle() ) and not LocalPlayer():GetAllowWeaponsInVehicle() ) then return end
+
 	toolObject:DrawHUD()
 
 	if ( !gmod_drawhelp:GetBool() ) then return end
