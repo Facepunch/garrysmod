@@ -32,6 +32,18 @@ local function TryFixPropPosition( ply, ent, hitpos )
 	fixupProp( ply, ent, hitpos, Vector( 0, 0, ent:OBBMins().z ), Vector( 0, 0, ent:OBBMaxs().z ) )
 end
 
+local function GetSpawnTrace( ply )
+	local vStart = ply:GetShootPos()
+	local vForward = ply:EyeAngles():Forward() -- Ignores world clicker
+
+	local trace = {}
+	trace.start = vStart
+	trace.endpos = vStart + ( vForward * 2048 )
+	trace.filter = { ply, ply:GetVehicle() }
+
+	return util.TraceLine( trace )
+end
+
 --[[---------------------------------------------------------
 	Name: CCSpawn
 	Desc: Console Command for a player to spawn different items
@@ -315,15 +327,7 @@ end
 -----------------------------------------------------------]]
 function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 
-	local vStart = ply:GetShootPos()
-	local vForward = ply:GetAimVector()
-
-	local trace = {}
-	trace.start = vStart
-	trace.endpos = vStart + ( vForward * 2048 )
-	trace.filter = ply
-
-	local tr = util.TraceLine( trace )
+	local tr = GetSpawnTrace( ply )
 
 	-- Prevent spawning too close
 	--[[if ( !tr.Hit or tr.Fraction < 0.05 ) then
@@ -596,16 +600,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	if ( !gamemode.Call( "PlayerSpawnNPC", ply, NPCClassName, WeaponName ) ) then return end
 
 	if ( !tr ) then
-
-		local vStart = ply:GetShootPos()
-		local vForward = ply:GetAimVector()
-
-		tr = util.TraceLine( {
-			start = vStart,
-			endpos = vStart + ( vForward * 2048 ),
-			filter = ply
-		} )
-
+		tr = GetSpawnTrace( ply )
 	end
 
 	local NPCData = list.GetEntry( "NPC", NPCClassName )
@@ -821,16 +816,7 @@ function Spawn_SENT( ply, EntityName, tr )
 	if ( !gamemode.Call( "PlayerSpawnSENT", ply, EntityName ) ) then return end
 
 	if ( !tr ) then
-
-		local vStart = ply:EyePos()
-		local vForward = ply:GetAimVector()
-
-		tr = util.TraceLine( {
-			start = vStart,
-			endpos = vStart + ( vForward * 4096 ),
-			filter = ply
-		} )
-
+		tr = GetSpawnTrace( ply )
 	end
 
 	local entity = nil
@@ -995,7 +981,7 @@ function Spawn_Weapon( ply, wepname, tr )
 	if ( !gamemode.Call( "PlayerSpawnSWEP", ply, wepname, swep ) ) then return end
 
 	if ( !tr ) then
-		tr = ply:GetEyeTraceNoCursor()
+		tr = GetSpawnTrace( ply )
 	end
 
 	if ( !tr.Hit ) then return end
@@ -1129,7 +1115,7 @@ function Spawn_Vehicle( ply, vname, tr )
 	if ( !vehicle ) then return end
 
 	if ( !tr ) then
-		tr = ply:GetEyeTraceNoCursor()
+		tr = GetSpawnTrace( ply )
 	end
 
 	local Angles = ply:GetAngles()
