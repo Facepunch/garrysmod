@@ -41,6 +41,9 @@ function CCSpawn( ply, command, arguments )
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
 
+	-- Player is dead, don't allow them to spam stuff
+	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
+
 	local modelName = arguments[ 1 ]
 
 	-- Make sure the model path is valid
@@ -124,6 +127,7 @@ duplicator.RegisterEntityClass( "prop_ragdoll", MakeRagdoll, "Pos", "Ang", "Mode
 function GMODSpawnRagdoll( ply, model, iSkin, strBody )
 
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
+
 	local e = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody )
 
 	if ( IsValid( ply ) ) then
@@ -583,6 +587,9 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
 
+	-- Player is dead, don't allow them to spam stuff
+	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
+
 	if ( !NPCClassName ) then return end
 
 	-- Give the gamemode an opportunity to deny spawning
@@ -803,6 +810,9 @@ function Spawn_SENT( ply, EntityName, tr )
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
 
+	-- Player is dead, don't allow them to spam stuff
+	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
+
 	if ( EntityName == nil ) then return end
 
 	if ( !CanPlayerSpawnSENT( ply, EntityName ) ) then return end
@@ -925,8 +935,10 @@ function CCGiveSWEP( ply, command, arguments )
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
 
-	if ( arguments[1] == nil ) then return end
+	-- Player is dead, don't allow them to spam stuff
 	if ( !ply:Alive() ) then return end
+
+	if ( arguments[1] == nil ) then return end
 
 	-- Make sure this is a SWEP
 	local swep = list.GetEntry( "Weapon", arguments[1] )
@@ -958,6 +970,9 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
+
+	-- Player is dead, don't allow them to spam stuff
+	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
 
 	if ( wepname == nil ) then return end
 
@@ -1103,6 +1118,9 @@ function Spawn_Vehicle( ply, vname, tr )
 
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
+
+	-- Player is dead, don't allow them to spam stuff
+	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
 
 	if ( !vname ) then return end
 
