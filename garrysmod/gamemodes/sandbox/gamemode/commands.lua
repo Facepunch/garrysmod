@@ -633,7 +633,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 		if ( NiceName ) then
 			undo.SetCustomUndoText( "Undone " .. NiceName )
 		end
-	undo.Finish( "#spawnmenu.utilities.undo.npc (" .. tostring( NiceName ) .. ")" )
+	undo.Finish( "#undo.generic.npc (" .. tostring( NiceName ) .. ")" )
 
 	-- And cleanup
 	ply:AddCleanup( "npcs", SpawnedNPC )
@@ -917,7 +917,7 @@ function Spawn_SENT( ply, EntityName, tr )
 		if ( PrintName ) then
 			undo.SetCustomUndoText( "Undone " .. PrintName )
 		end
-	undo.Finish( "#spawnmenu.utilities.undo.entity (" .. tostring( PrintName ) .. ")" )
+	undo.Finish( "#undo.generic.entity (" .. tostring( PrintName ) .. ")" )
 
 	ply:AddCleanup( "sents", entity )
 	entity:SetVar( "Player", ply )
@@ -1027,7 +1027,7 @@ function Spawn_Weapon( ply, wepname, tr )
 		undo.SetPlayer( ply )
 		undo.AddEntity( entity )
 		undo.SetCustomUndoText( "Undone " .. tostring( swep.PrintName ) )
-	undo.Finish( "#spawnmenu.utilities.undo.weapon (" .. tostring( swep.PrintName ) .. ")" )
+	undo.Finish( "#undo.generic.weapon (" .. tostring( swep.PrintName ) .. ")" )
 
 	-- Throw it into SENTs category
 	ply:AddCleanup( "sents", entity )
@@ -1157,7 +1157,7 @@ function Spawn_Vehicle( ply, vname, tr )
 		undo.SetPlayer( ply )
 		undo.AddEntity( Ent )
 		undo.SetCustomUndoText( "Undone " .. vehicle.Name )
-	undo.Finish( "#spawnmenu.utilities.undo.vehicle (" .. tostring( vehicle.Name ) .. ")" )
+	undo.Finish( "#undo.generic.vehicle (" .. tostring( vehicle.Name ) .. ")" )
 
 	ply:AddCleanup( "vehicles", Ent )
 
