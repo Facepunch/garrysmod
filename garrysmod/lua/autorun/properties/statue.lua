@@ -72,8 +72,8 @@ properties.Add( "statue", {
 	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
-
 		if ( !IsValid( ent ) ) then return end
+
 		if ( !IsValid( ply ) ) then return end
 		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return end
@@ -165,11 +165,12 @@ properties.Add( "statue_stop", {
 	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
-
 		if ( !IsValid( ent ) ) then return end
+
 		if ( !IsValid( ply ) ) then return end
 		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		local bones = ent:GetPhysicsObjectCount()
 		if ( bones < 2 ) then return end
