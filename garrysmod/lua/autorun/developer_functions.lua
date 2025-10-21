@@ -14,7 +14,10 @@ local function FindInTable( tab, find, parents, depth )
 
 			if ( k and k:lower():find( find:lower() ) ) then
 
-				Msg( "\t", parents, k, " - (", type( v ), " - ", v, ")\n" )
+				local info = isfunction( v ) and debug.getinfo( v ) or { source = "" }
+				if ( info.source:len() != 0 ) then info.source = " " .. info.source end
+
+				Msg( "\t", parents, k, " - (", type( v ), " - ", v, info.source, ")\n" )
 
 			end
 
@@ -52,7 +55,10 @@ local function FindInHooks( base, name )
 
 					if ( head ) then Msg( "\n\t", b, " hooks:\n" ) head = false end
 
-					Msg( "\t\t", tostring( n ), " - (", tostring( f ), ")\n" )
+					local info = isfunction( f ) and debug.getinfo( f, "S" ) or { source = "" }
+					if ( info.source:len() != 0 ) then info.source = " " .. info.source end
+
+					Msg( "\t\t", tostring( n ), " - (", tostring( f ), info.source, ")\n" )
 
 				end
 
