@@ -118,7 +118,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		RootScope.CurrentGamemode = gm;
 
 		if ( gm ) gm.server_offset = 0;
-		UpdateDigest( RootScope, 50 );
 	}
 
 	$scope.ServerClass = function( sv )
@@ -553,7 +552,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	RootScope.ServerCount[ type ] += 1;
 
-	UpdateDigest( RootScope, 50 );
+	UpdateDigest( RootScope, 100 );
 }
 
 function MissingGamemodeIcon( element )

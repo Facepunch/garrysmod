@@ -25,24 +25,6 @@ function MenuController( $scope, $rootScope )
 
 	gScope.Gamemode = '';
 
-	$scope.ToggleGamemodes = function()
-	{
-		$( '.popup:not(.gamemode_list)' ).hide();
-		$( '.gamemode_list' ).toggle();
-	}
-
-	$scope.ToggleLanguage = function()
-	{
-		$( '.popup:not(.language_list)' ).hide();
-		$( '.language_list' ).toggle();
-	}
-
-	$scope.ToggleGames = function()
-	{
-		$( '.popup:not(.games_list)' ).hide();
-		$( '.games_list' ).toggle();
-	}
-
 	$scope.TogglePopup = function( name )
 	{
 		$( '.popup:not('+name+')' ).hide();
@@ -81,6 +63,7 @@ function MenuController( $scope, $rootScope )
 	// Map List
 	//
 	$rootScope.MapList = [];
+	$rootScope.MapListFav = {};
 	$rootScope.AddonMapList = [];
 	lua.Run( "UpdateMapList()" );
 
@@ -248,7 +231,8 @@ function UpdateAddonMaps( inmaps )
 
 function UpdateMaps( inmaps )
 {
-	var mapList = []
+	var mapList = [];
+	var favList = {};
 
 	for ( k in inmaps )
 	{
@@ -261,6 +245,7 @@ function UpdateMaps( inmaps )
 		{
 			maps.push( inmaps[k][v] );
 			MapIndex[ inmaps[k][v].toLowerCase() ] = true;
+			if ( k == "Favourites" ) favList[ inmaps[k][v].toLowerCase() ] = true;
 		}
 
 		mapList.push(
@@ -272,6 +257,7 @@ function UpdateMaps( inmaps )
 	}
 
 	gScope.MapList = mapList;
+	gScope.MapListFav = favList;
 	UpdateDigest( gScope, 50 );
 }
 
