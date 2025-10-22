@@ -269,10 +269,11 @@ function math.IsNearlyEqual( a, b, tolerance )
 end
 
 -- Returns x with the same sign as y
-function math.copysign(x, y)
-	if y >= 0 then
-		return math.abs(x)
+function math.copysign( x, y )
+	if ( y >= 0 ) then
+		return math.abs( x )
 	else
-		return -math.abs(x)
+		return -math.abs( x )
 	end
 end
+
