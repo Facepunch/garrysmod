@@ -112,13 +112,12 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	$scope.MapIcon = function( m, cat )
 	{
 		// BSP version 21
-		if ( /*cat == "Left 4 Dead 2" || cat == "Portal 2" || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" ||*/ cat == "INFRA" )
+		if ( cat == "INFRA" )
 		{
 			return "img/incompatible.png"
 		}
 
-		// Hopefully this also improves performance of the first click on "Start new game".
-		if ( !IN_ENGINE || $scope.CurrentCategory != cat ) return "img/downloading.png"
+		if ( !IN_ENGINE ) return "img/downloading.png"
 
 		return "asset://mapimage/" + m;
 	}
