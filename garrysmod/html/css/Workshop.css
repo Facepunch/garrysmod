@@ -347,28 +347,34 @@ controls control.disabled
 	min-width: 350px;
 }
 
-.preset_search
-{
-	padding: 2px 4px;
-	box-sizing: border-box;
-	margin-bottom: 8px;
-}
-
 .preset_content
 {
+	max-height: 400px;
+	min-height: 290px;
 	min-width: 500px;
 	margin-bottom: 5px;
 	display: -webkit-box;
 }
-
+.preset_side
+{
+	width: 150px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+.preset_side input[type="text"]
+{
+	padding: 2px 4px;
+	box-sizing: border-box;
+	margin-bottom: 8px;
+	margin-right: 8px;
+	display: block;
+}
 .preset_list
 {
 	background: #eee;
-	width: 150px;
-	max-height: 400px;
-	min-height: 290px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	-webkit-box-flex: 1;
 }
 .preset_list font
 {
