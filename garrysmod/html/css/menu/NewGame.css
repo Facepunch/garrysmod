@@ -125,13 +125,18 @@ gamesettings select
 	cursor: pointer;
 
 	font-weight: bold;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5C5), to(#2C2));
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5C5), to(#22bd22));
 	border: 1px solid #CCC;
 	border-color: #2a2 #2a2 #181;
 	color: white;
 	cursor: pointer;
 	vertical-align: middle;
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown .label:hover
+{
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6d6), to(#3c3));
 }
 
 .dropdown .contents
@@ -280,9 +285,14 @@ gamesettings .control-numeric input[type=text]
 	position: relative;
 }
 
+.controls LI.category:hover
+{
+	background-color: #ccc;
+}
+
 .controls LI.active
 {
-	background-color: #9cf;
+	background-color: #9cf !important;
 	color: #333;
 }
 

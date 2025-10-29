@@ -239,6 +239,10 @@ div.centermessage a:hover
 {
 	background: #ccc;
 }
+div.centermessage a:active
+{
+	background: #b9b9b9;
+}
 
 div.centermessage a.big
 {
@@ -260,6 +264,10 @@ div.centermessage a.warning:hover
 {
 	background: #eb2719;
 }
+div.centermessage a.warning:active
+{
+	background: #a71b11;
+}
 
 div.centermessage a.create
 {
@@ -271,8 +279,13 @@ div.centermessage a.create:hover
 {
 	background: #63bb66;
 }
+div.centermessage a.create:active
+{
+	background: #55a158;
+}
 div.centermessage a.create.disabled
 {
+	color: #ccc;
 	background: #b1b1b1;
 }
 
@@ -295,6 +308,10 @@ div.centermessage .button
 div.centermessage .button:hover
 {
 	background: #e3e3e3;
+}
+div.centermessage .button:active
+{
+	background: #c9c9c9;
 }
 
 div.centermessage div.button

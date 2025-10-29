@@ -333,6 +333,10 @@ controls control.disabled
 {
 	background: #ccc;
 }
+.ugc_settings a:active
+{
+	background: #bbb;
+}
 
 .ugc_settings_cat
 {
@@ -427,6 +431,11 @@ pagination .back, pagination .next
 	background-color: #2387ed;
 	border-radius: 3px;
 	background-position: center center;
+}
+
+pagination .back:hover, pagination .next:hover
+{
+	background-color: #4f9ded;
 }
 
 pagination .next
