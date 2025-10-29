@@ -328,9 +328,12 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	rope:SetKeyValue( "TextureScale", "1.6" ) -- Preserve old scaling before 28 July 2025
 
 	if ( isstring( material ) ) then
-		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
+		-- Check if the material looks right. Do not allow missing materials. Do not allow weird shaders.
+		-- This is not ideal because it is tested on the server, but whatever. Better than checking "RopeMaterials" list.
 		local mat = Material( material )
-		if ( mat && !string.find( mat:GetShader():lower(), "spritecard", nil, true ) && !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
+		local shader = mat:GetShader():lower()
+		local shaderGood = shader == "cable_dx9" or shader == "cable" or shader == "unlitgeneric" or shader == "splinerope"
+		if ( mat and !mat:IsError() and shaderGood ) then
 			rope:SetKeyValue( "RopeMaterial", material )
 		end
 	end
