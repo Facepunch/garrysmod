@@ -1735,8 +1735,8 @@
 	endsize(float) : "Ending particle size" : "50" : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : "15" : "Distance from env_smoketrail at which particles are emitted."
 
-	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
-	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+	//firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
+	//smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
 ]
 
 @PointClass base(Targetname, Parentname) sphere() sphere(inner_radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion :
@@ -5549,7 +5549,7 @@
 												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
 	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
-	disablevertexlighting(choices) : "Disable Vertex Lighting" : 0 =
+	disablevertexlighting(choices) : "Disable Vertex Lighting" : 0 : "Whether to disable vertex lighting for this static prop. Vertex Lighting requires vrad.exe to be ran with -StaticPropLighting parameter." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5885,6 +5885,7 @@
 
 	// Inputs
 	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in inches."
+	input Restore(void) : "Un-shatter the window."
 ]
 
 @SolidClass base(Targetname, Parentname, RenderFields, Shadow) = func_conveyor :
