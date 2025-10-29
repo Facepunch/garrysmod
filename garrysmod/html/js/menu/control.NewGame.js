@@ -229,29 +229,16 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		if ( oldSvLan != $scope.ServerSettings.sv_lan && $scope.ServerSettings.sv_lan == true && $scope.ServerSettings.p2p_enabled == true )
 		{
 			$scope.ServerSettings.p2p_enabled = false;
-			UpdateDigest( $scope, 50 );
 		}
 		else if ( oldp2p != $scope.ServerSettings.p2p_enabled && $scope.ServerSettings.p2p_enabled == true && $scope.ServerSettings.sv_lan == true )
 		{
 			$scope.ServerSettings.sv_lan = false;
-			UpdateDigest( $scope, 50 );
 		}
 
 		oldp2p = $scope.ServerSettings.p2p_enabled;
 		oldSvLan = $scope.ServerSettings.sv_lan;
-
-		if ( !$scope.ServerSettings.p2p_enabled )
-		{
-			if ( document.getElementById( "p2p_friendsonly" ) !== null )
-			{
-				document.getElementById( "p2p_friendsonly" ).disabled = true;
-			}
-			UpdateDigest( $scope, 50 );
-		}
-		else if ( document.getElementById( "p2p_friendsonly" ) !== null )
-		{
-			document.getElementById( "p2p_friendsonly" ).disabled = false;
-		}
+		
+		document.getElementById( "p2p_friendsonly" ).disabled = !$scope.ServerSettings.p2p_enabled;
 	}
 }
 
