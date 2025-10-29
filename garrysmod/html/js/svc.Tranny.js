@@ -2,9 +2,9 @@
 var languageCache = {};
 var languageCurrent = "";
 
-angular.module( 'tranny', [] )
+angular.module( "tranny", [] )
 
-.directive( 'ngTranny', function ( $parse )
+.directive( "ngTranny", function( $parse )
 {
 	return function( scope, element, attrs )
 	{
@@ -14,7 +14,7 @@ angular.module( 'tranny', [] )
 		var update = function()
 		{
 			var text = strName + " " + strSuffix;
-			
+
 			if ( !IN_ENGINE )
 			{
 				updateElement( text );
@@ -39,11 +39,11 @@ angular.module( 'tranny', [] )
 
 		var updateElement = function( str )
 		{
-			if ( 'placeholder' in element[0] ) 
+			if ( "placeholder" in element[0] )
 			{
-				if ( element.attr( "placeholder" ) != str ) 
+				if ( element.attr( "placeholder" ) != str )
 					element.attr( "placeholder", str );
-			} 
+			}
 			else if ( element.text() != str )
 			{
 				element.text( str );
@@ -58,9 +58,9 @@ angular.module( 'tranny', [] )
 			update();
 		} );
 
-		scope.$on( 'languagechanged', function()
+		scope.$on( "languagechanged", function()
 		{
-			if ( languageCurrent != gScope.Language ) 
+			if ( languageCurrent != gScope.Language )
 			{
 				languageCurrent = gScope.Language;
 				languageCache = {};
