@@ -1,35 +1,20 @@
 
+local TranslateNames = {
+	["Animals"] = "#spawnmenu.category.animals",
+	["Combine"] = "#spawnmenu.category.combine",
+	["Humans + Resistance"] = "#spawnmenu.category.humans_resistance",
+	["Zombies + Enemy Aliens"] = "#spawnmenu.category.zombies_aliens",
+	["Other"] = "#spawnmenu.category.other"
+}
+
 hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNode )
 
-	-- Get a list of available NPCs
 	local NPCList = list.Get( "NPC" )
-
-	-- Categorize them
-	local Categories = {}
-
-	-- Category localization support for old addons
-	local TranslateNames = {
-		["Animals"] = "#spawnmenu.category.animals",
-		["Combine"] = "#spawnmenu.category.combine",
-		["Humans + Resistance"] = "#spawnmenu.category.humans_resistance",
-		["Zombies + Enemy Aliens"] = "#spawnmenu.category.zombies_aliens",
-		["Other"] = "#spawnmenu.category.other"
-	}
-
-	for k, v in pairs( NPCList ) do
-
-		local Category = language.GetPhrase( TranslateNames[v.Category] or v.Category or "#spawnmenu.category.other" )
-		if ( !isstring( Category ) ) then Category = tostring( Category ) end
-
-		local Tab = Categories[ Category ] or {}
-		Tab[ k ] = v
-		Categories[ Category ] = Tab
-
-	end
+	local CustomIcons = list.GetForEdit( "ContentCategoryIcons" ) 
 
 	-- Create an icon for each one and put them on the panel
-	local CustomIcons = list.Get( "ContentCategoryIcons" )
-	for CategoryName, v in SortedPairs( Categories ) do
+	local CategorisedList = spawnmenu.GenerateCategoryList( NPCList, false, false, TranslateNames )
+	for CategoryName, Headers in SortedPairs( CategorisedList ) do
 
 		-- Add a node to the tree
 		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/monkey.png" )
@@ -45,15 +30,30 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( false )
 
-			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
+			-- Don't create the "Other" header if it's the only header
+			local other = language.GetPhrase( "#spawnmenu.category.other" )
+			local createOtherHeader = Headers[ other ] and table.Count( Headers ) > 1
 
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
-					nicename	= ent.Name or name,
-					spawnname	= name,
-					material	= ent.IconOverride or "entities/" .. name .. ".png",
-					weapon		= ent.Weapons,
-					admin		= ent.AdminOnly
-				} )
+			for headerName, entList in SortedPairs( Headers ) do
+
+				if ( headerName != other or createOtherHeader ) then
+					local header = vgui.Create( "ContentHeader" )
+					header:SetText( headerName )
+
+					self.PropPanel:Add( header )
+				end
+
+				for name, ent in SortedPairsByMemberValue( entList, "Name" ) do
+
+					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
+						nicename	= ent.Name or name,
+						spawnname	= name,
+						material	= ent.IconOverride or "entities/" .. name .. ".png",
+						weapon		= ent.Weapons,
+						admin		= ent.AdminOnly
+					} )
+
+				end
 
 			end
 

@@ -204,6 +204,58 @@ function SwitchCreationTab( id )
 
 end
 
+--
+-- Internal helper function 
+-- Generates a list of content tabs ordered by their categories and headers
+--
+function GenerateCategoryList( list, checkSpawnable, lowerCaseMembers, translationTable )
+
+	if ( !list ) then return {} end
+
+	local categoryList = {}
+
+	local categoryKeyName = lowerCaseMembers and "category" or "Category"
+	local headerKeyName = lowerCaseMembers and "header" or "Header"
+
+	for name, data in pairs( list ) do
+
+		if ( !checkSpawnable or data.Spawnable ) then
+
+			local category = data[ categoryKeyName ]
+
+			if ( !category ) then
+				category = "#spawnmenu.category.other"
+			elseif translationTable and translationTable[ category ] then
+				category = translationTable[ category ] -- Category localization support for old addons
+			end
+
+			category = language.GetPhrase( category )
+
+			local contentTab = categoryList[ category ]
+
+			if ( !contentTab ) then
+				contentTab = {}
+				categoryList[ category ] = contentTab
+			end
+
+			local header = language.GetPhrase( data[ headerKeyName ] or "#spawnmenu.category.other" )
+			local headerTab = contentTab[ header ]
+
+			if ( !headerTab ) then
+				headerTab = {}
+				contentTab[ header ] = headerTab
+			end
+
+			headerTab[ name ] = data
+
+		end
+
+	end
+
+	return categoryList
+
+end
+
 --[[---------------------------------------------------------
 
 	Spawn lists

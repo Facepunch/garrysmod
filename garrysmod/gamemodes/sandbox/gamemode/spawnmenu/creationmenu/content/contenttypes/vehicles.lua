@@ -1,41 +1,24 @@
 
+local TranslateNames = {
+	["Chairs"] = "#spawnmenu.category.chairs",
+	["Other"] = "#spawnmenu.category.other"
+}
+
 hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, browseNode )
 
-	local Categorised = {}
-
-	-- Add this list into the tormoil
 	local Vehicles = list.Get( "Vehicles" )
-	if ( Vehicles ) then
-		-- Category localization support for old addons
-		local TranslateNames = {
-			["Chairs"] = "#spawnmenu.category.chairs",
-			["Other"] = "#spawnmenu.category.other"
-		}
-
-		for k, v in pairs( Vehicles ) do
-
-			local Category = language.GetPhrase( TranslateNames[v.Category] or v.Category or "#spawnmenu.category.other" )
-			if ( !isstring( Category ) ) then Category = tostring( Category ) end
-			Categorised[ Category ] = Categorised[ Category ] or {}
-
-			v.ClassName = k
-			v.PrintName = v.Name
-			v.ScriptedEntityType = "vehicle"
-			table.insert( Categorised[ Category ], v )
-
-		end
-	end
+	local CustomIcons = list.GetForEdit( "ContentCategoryIcons" )
 
 	--
 	-- Add a tree node for each category
 	--
-	local CustomIcons = list.Get( "ContentCategoryIcons" )
-	for CategoryName, v in SortedPairs( Categorised ) do
+	local CategorisedList = spawnmenu.GenerateCategoryList( Vehicles, false, false, TranslateNames )
+	for CategoryName, Headers in SortedPairs( CategorisedList ) do
 
 		-- Add a node to the tree
 		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/bricks.png" )
 
-			-- When we click on the node - populate it using this function
+		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
 
 			-- If we've already populated it - forget it.
@@ -46,14 +29,29 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( false )
 
-			for k, ent in SortedPairsByMemberValue( v, "PrintName" ) do
+			-- Don't create the "Other" header if it's the only header
+			local other = language.GetPhrase( "#spawnmenu.category.other" )
+			local createOtherHeader = Headers[ other ] and table.Count( Headers ) > 1
 
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
-					nicename	= ent.PrintName or ent.ClassName,
-					spawnname	= ent.ClassName,
-					material	= ent.IconOverride or "entities/" .. ent.ClassName .. ".png",
-					admin		= ent.AdminOnly
-				} )
+			for headerName, vehList in SortedPairs( Headers ) do
+
+				if ( headerName != other or createOtherHeader ) then
+					local header = vgui.Create( "ContentHeader" )
+					header:SetText( headerName )
+
+					self.PropPanel:Add( header )
+				end
+
+				for spawnName, veh in SortedPairsByMemberValue( vehList, "Name" ) do
+
+					spawnmenu.CreateContentIcon( "vehicle", self.PropPanel, {
+						nicename	= veh.PrintName or spawnName,
+						spawnname	= spawnName,
+						material	= veh.IconOverride or "entities/" .. spawnName .. ".png",
+						admin		= veh.AdminOnly
+					} )
+
+				end
 
 			end
 

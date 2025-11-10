@@ -1,37 +1,20 @@
 
+local TranslateNames = {
+	["Effects"] = "#effects_pp",
+	["Overlay"] = "#overlay_pp",
+	["Shaders"] = "#shaders_pp",
+	["Texturize"] = "#texturize_pp"
+}
+
 hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, node )
 
-	-- Get a list of postproceess effects
-	-- and organise them into categories
-	local Categorised = {}
 	local PostProcess = list.Get( "PostProcess" )
-
-	if ( PostProcess ) then
-		-- Category localization support for old addons
-		local TranslateNames = {
-			["Effects"] = "#effects_pp",
-			["Overlay"] = "#overlay_pp",
-			["Shaders"] = "#shaders_pp",
-			["Texturize"] = "#texturize_pp"
-		}
-
-		for k, v in pairs( PostProcess ) do
-
-			local Category = language.GetPhrase( TranslateNames[v.category] or v.category or "#spawnmenu.category.other" )
-			if ( !isstring( Category ) ) then Category = tostring( Category ) end
-			Categorised[ Category ] = Categorised[ Category ] or {}
-
-			v.name = k
-			table.insert( Categorised[ Category ], v )
-
-		end
-
-	end
 
 	--
 	-- Create an entry for each category
 	--
-	for CategoryName, v in SortedPairs( Categorised ) do
+	local CategorisedList = spawnmenu.GenerateCategoryList( PostProcess, false, true, TranslateNames )
+	for CategoryName, Headers in SortedPairs( CategorisedList ) do
 
 		-- Add a node to the tree
 		local node = tree:AddNode( CategoryName, "icon16/picture.png" )
@@ -47,17 +30,31 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( false )
 
-			for k, pp in SortedPairsByMemberValue( v, "PrintName" ) do
+			-- Don't create the "Other" header if it's the only header
+			local other = language.GetPhrase( "#spawnmenu.category.other" )
+			local createOtherHeader = Headers[ other ] and table.Count( Headers ) > 1
 
-				if ( pp.func ) then
-					pp.func( self.PropPanel )
-					continue
+			for headerName, ppList in SortedPairs( Headers ) do
+
+				if ( headerName != other or createOtherHeader ) then
+					local header = vgui.Create( "ContentHeader" )
+					header:SetText( headerName )
+
+					self.PropPanel:Add( header )
 				end
 
-				spawnmenu.CreateContentIcon( "postprocess", self.PropPanel, {
-					name	= pp.name,
-					icon	= pp.icon
-				} )
+				for name, pp in SortedPairsByMemberValue( ppList, "PrintName" ) do
+
+					if ( pp.func ) then
+						pp.func( self.PropPanel )
+					else
+						spawnmenu.CreateContentIcon( "postprocess", self.PropPanel, {
+							name	= name,
+							icon	= pp.icon
+						} )
+					end
+
+				end
 
 			end
 
