@@ -295,7 +295,7 @@
 	ResponseContext(string) : "Response Contexts" : "" : "Response system context(s) for this entity. Format should be: 'key:value,key2:value2,etc'. When this entity speaks, the list of keys & values will be passed to the response rules system."
 ]
 
-@BaseClass base(Targetname, DamageFilter, Shadow, GMODSandbox, GMODModelScale) = Breakable
+@BaseClass base(Targetname, DamageFilter, Shadow, GMODSandbox) = Breakable
 [
 	ExplodeDamage(float) : "Explosion Damage" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage. See also 'Explosion Radius'."
 	ExplodeRadius(float) : "Explosion Radius" : 0 : "If non-zero, when this entity breaks it will create an explosion with a radius of the specified amount. See also 'Explosion Damage'."
@@ -418,20 +418,20 @@
 		9:	"item_box_buckshot"
 		10:	"item_flare_round"
 		11:	"item_box_flare_rounds"
-		12:	"item_ml_grenade"
+		12:	"item_rpg_round"
 		13:	"item_smg1_grenade"
 		14:	"item_box_sniper_rounds"
-		15:	"unused1"
+		//15:	"unused1"
 		16:	"weapon_stunstick"
-		17:	"weapon_ar1"
+		//17:	"weapon_ar1"
 		18:	"weapon_ar2"
-		19:	"unused2"
-		20:	"weapon_ml"
+		//19:	"unused2"
+		//20:	"weapon_ml"
 		21:	"weapon_smg1"
-		22:	"weapon_smg2"
+		//22:	"weapon_smg2"
 		23:	"weapon_slam"
 		24:	"weapon_shotgun"
-		25:	"weapon_molotov"
+		//25:	"weapon_molotov"
 		26:	"item_dynamic_resupply"
 	]
 	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
@@ -531,7 +531,7 @@
 	input SetEnemyFilter(string) : "Changes this NPC's enemy filter to the named filter."
 	input SetHealth(integer) : "Set this NPC's health."
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
-	input physdamagescale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
+	input PhysDamageScale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input Ignite(void) : "Ignite, burst into flames"
 	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
 	input IgniteNumHitboxFires(integer) : "Ignite, with a parameter number of hitbox fires."
@@ -920,7 +920,7 @@
 	spinup(integer) : "Spin up time (0-100)" : 0 : "Pitch fade in time in seconds. 0 means instant."
 	spindown(integer) : "Spin down time (0-100)" : 0 : "Pitch fade in time in seconds. 0 means instant."
 	cspinup(integer) : "Incremental Spinup Count" : 0				// NEEDHELP
-	
+
 	SourceEntityName(target_destination) : "SourceEntityName" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 	preset(choices) :"Dynamic Presets" : 0 : "Various DSP (Digital Signal Processing) effects that can be applied." =
 	[
@@ -2377,7 +2377,7 @@
 	fogstart(string) : "Fog Start" : "500.0" : "Distance at which the skybox fog should start."
 	fogend(string) : "Fog End" : "2000.0" : "Distance at which the skybox fog should be fully opaque."
 	fogmaxdensity(float) : "Fog Max Density [0..1]" : "1" : "How dense the fog will appear, 0 - fully transparent, 1 - fully opaque" // GMOD
-	
+
 	//fogradial(boolean) : "Use Radial Fog?" : 0 : "Use radial fog instead of planar-based fog."
 ]
 
@@ -3108,7 +3108,7 @@
 	targetname(target_source) : "Name (Read notes)" : : "The name that other entities refer to this entity by. Setting this will allow scripts to control this entity, but will also substantially increase filesize of the map."
 ]
 
-@PointClass base(Angles) iconsprite("editor/light_directional.vmt") = light_directional : 
+@PointClass base(Angles) iconsprite("editor/light_directional.vmt") = light_directional :
 	"A directional light with no falloff. Similar to sunlight in light_environment."
 [
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
@@ -3223,16 +3223,16 @@
 	maxweight(float)  : "Maximum Weight"				: "1.0"   : "This is the maximum weight for this lookup"
 	fadeInDuration(float)   : "Lookup Fade In Duration"		: "0.0"	  : "Duration of fade in on when enabled."
 	fadeOutDuration(float)   : "Lookup Fade out Duration"		: "0.0"	  : "Dration of fade out on when disabled."
-	
+
 	// Inputs
 	input SetFadeInDuration(float) : "Sets the 'fadeInDuration' variable, used to fade cc lookup usage when entity is enabled."
 	input SetFadeOutDuration(float) : "Sets the 'fadeOutDuration' variable, used to fade cc lookup usage when entity is disabled."
 ]
-@PointClass base(Targetname, EnableDisable, SpatialEntity) sphere(minfalloff) sphere(maxfalloff) = env_ambient_light : 
+@PointClass base(Targetname, EnableDisable, SpatialEntity) sphere(minfalloff) sphere(maxfalloff) = env_ambient_light :
 	"This entity adds a constant color value to dark areas of the world without affecting brighter areas."
 [
 	color(color255) : "Color (R G B)" : "255 255 255"
-	
+
 	// Inputs
 	input SetColor(color255) : "Sets the color."
 ]
@@ -3250,7 +3250,7 @@
 	filename(string)  : "Lookup Table Filename"			: ""	  : "This is the lookup table filename, relative to the base game folder, where materials/ folder is, including .raw extension. Lookup files can be generated in-game via 'colorcorrectionui' console command."
 	fadeInDuration(float)   : "Lookup Fade In Duration"		: "0.0"	  : "Duration of fade in on when enabled."
 	fadeOutDuration(float)   : "Lookup Fade out Duration"		: "0.0"	  : "Dration of fade out on when disabled."
-	exclusive(choices) : "Exlusive" : 0 : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. There should only be one active exclusive color_correction ent at any time." = 
+	exclusive(choices) : "Exlusive" : 0 : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. There should only be one active exclusive color_correction ent at any time." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5200,7 +5200,7 @@
 @PointClass base(Targetname, Angles) sphere(expradius) studioprop() = physics_cannister :
 	"A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode."
 [
-	model(studio) : "World model" : "models/fire_equipment/w_weldtank.mdl"
+	model(studio) : "World model" : "models/props_c17/canister01a.mdl"
 	spawnflags(flags) =
 	[
 		1 : "Start Asleep" : 0
@@ -5735,7 +5735,7 @@
 	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 ]
 
-@PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
+@PointClass base(BasePropPhysics, GMODModelScale) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage. Health can be overridden on this version."
 [
@@ -5748,7 +5748,7 @@
 	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
 ]
 
-@PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
+@PointClass base(BasePropPhysics, RenderFields, GMODModelScale) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage. "+
 	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+
@@ -5940,12 +5940,12 @@
 		7 : "Particle Snow"
 	]
 
-	particle_name(string) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name(particlesystem) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the closest particle system to the player.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest.\r\n"+
 		"Control point data for each system is: 1 = World position of the particle, 2=Player position/orientation, 3=Density (X component)"
-	particle_name_inner(string) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name_inner(particlesystem) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the middle particle system.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
-	particle_name_outer(string) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name_outer(particlesystem) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the farthest particle system from the player.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
 	particle_dist_inner(float) : "Particle System Distance (Inner)" : "180" : "If using custom particle systems, this will be the distance of the middle one from the player."
 
@@ -5953,7 +5953,7 @@
 	input Alpha(integer) : "Set the particle density (0 - 100)."
 ]
 
-@SolidClass base(Targetname, Parentname) = func_precipitation_blocker : 
+@SolidClass base(Targetname, Parentname) = func_precipitation_blocker :
 	"A brush entity that prevents rain and snow inside its volume."
 [
 ]
@@ -6184,7 +6184,7 @@
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
 	//output OnNext(string) : "Fires when this train picks a new point to move towards (and just after OnStart)."
-	output OnArrivedAtDestinationNode(void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."	
+	output OnArrivedAtDestinationNode(void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
 ]
 
 @SolidClass base(BaseTrain) = func_tanktrain :
@@ -6534,7 +6534,7 @@
 	]
 ]
 
-@SolidClass base(Trigger) = trigger_teleport_relative : 
+@SolidClass base(Trigger) = trigger_teleport_relative :
 	"A trigger volume that teleports entities that touch it. Entities are teleported by Offset from their current position. Useful to get " +
 	"objects out of situations where levels or entities suddenly appear interseting with them."
 [
@@ -6903,7 +6903,7 @@
 	parm10(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
 ]
 
-@PointClass iconsprite("editor/func_instance_parms.vmt") = func_instance_io_proxy : 
+@PointClass iconsprite("editor/func_instance_parms.vmt") = func_instance_io_proxy :
 	"Place one copy of this entity inside of an instance.  Sending messages to entities inside the instance from the Proxy's OnProxyRelay output " +
 	"will allow you to trigger these entities from outside the instance by sending messages to the func_instance.  " +
 	"Send the ProxyRelay message from entities inside the instance to the proxy and you will be able to use these events to send messages to other entities " +
@@ -6922,14 +6922,14 @@
 ]
 
 // GMOD: From Half-Life: Source
-@SolidClass = func_friction : "Surface with a change in friction. Does not apply to players." 
+@SolidClass = func_friction : "Surface with a change in friction. Does not apply to players."
 [
 	modifier(integer) : "Percentage of standard (0 - 100)" : 15
 ]
 
 // GMOD: From CS:GO
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
-	"An entity that precaches skybox materials and swaps them on trigger." 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper :
+	"An entity that precaches skybox materials and swaps them on trigger."
 [
 	SkyboxName(string) : "Skybox Material Name" : "sky_dust"
 	input Trigger(void) : "Swap to this skybox."
@@ -6952,11 +6952,11 @@
 		2 : "Team 2 (ORANGE)"
 		3 : "Team 3 (BLUE)"
 	]
-		
+
 	// Inputs
 	input Enable(void) : "Enable the logic_eventlistener."
 	input Disable(void) : "Disable the logic_eventlistener."
-	
+
 	// Outputs
 	output OnEventFired(void)  : "Fired when the event has been detected."
 ]
@@ -6977,17 +6977,17 @@
 		2 : "Team 2 (ORANGE)"
 		3 : "Team 3 (BLUE)"
 	]
-		
+
 	// Inputs
 	input Enable(void) : "Enable this entity."
 	input Disable(void) : "Disable this entity."
-	
+
 	// Outputs
 	output OnEventFired(void)  : "Fired when the event has been detected."
 ]
 
 // GMOD: From CS:GO
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/axis_helper_thick.mdl") worldtext() = point_worldtext : 
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/axis_helper_thick.mdl") worldtext() = point_worldtext :
 	"An entity that displays a text message oriented in the world, at its origin."
 [
 	message(string) : "Entity Message" : "" : "Text Message. English characters and numbers only! Newline characters are accepted."
@@ -7004,7 +7004,7 @@
 
 	spawnflags(flags) =
 	[
-		1 : "Start hidden" : 0 
+		1 : "Start hidden" : 0
 	]
 
 	rainbow(boolean) : "Rainbow" : 0 : "Override the color to rainbow hues."
@@ -7060,7 +7060,7 @@
 	input Trigger(void) : "Trigger this entity, causing its OnTrigger outputs to fire if it is enabled."
 	input Toggle(void) : "Toggle this entity between enabled and disabled."
 	input CancelPending(void) : "Cancel any events fired by this entity that are currently pending in the I/O event queue."
-	
+
 	// Outputs
 	output OnSpawn(void) : "Fired when this entity is spawned. If this entity is set to only trigger once, it will "+
 		"delete itself after firing this output."
@@ -7108,7 +7108,7 @@
 	input FireRegisteredAsActivator3(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
 	input FireRegisteredAsActivator4(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
 	input RegisterEntity(string) : "Stores an entity to later be used as an activator."
-	
+
 	// Outputs
 	output OnRegisteredActivate1(void) : "Fired to send a message using the registered as the activator."
 	output OnRegisteredActivate2(void) : "Fired to send a message using the registered as the activator."
@@ -7123,18 +7123,18 @@
 [
 	// keys
 	DefaultPlayerStateA(choices) : "Default State A" : 0 :
-	"The default state of A" = 
+	"The default state of A" =
 	[
 		0 : "FALSE"
 		1 : "TRUE"
 	]
 	DefaultPlayerStateB(choices) : "Default State B" : 0 :
-	"The default state of B" = 
+	"The default state of B" =
 	[
 		0 : "FALSE"
 		1 : "TRUE"
 	]
-	
+
 	// Inputs
 	input SetStateATrue(void) : "Set State A to TRUE"
 	input SetStateAFalse(void) : "Set State A to FALSE"
@@ -7151,8 +7151,8 @@
 ]
 
 // GMOD: From Portal 2
-@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewcontrol_multiplayer : 
-	"A camera entity that controls all players' views. While it's active, the players will see out of the camera." 
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewcontrol_multiplayer :
+	"A camera entity that controls all players' views. While it's active, the players will see out of the camera."
 [
 	fov(float) : "Field of view" : "90" : "Player FOV"
 	fov_rate(float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
@@ -7166,7 +7166,7 @@
 		2 : "2 (Portal2 Orange)"
 		3 : "3 (Portal2 Blue)"
 	]
-	
+
 	spawnflags(flags) =
 	[
 		1: "Disable when move finished" : 1
@@ -7180,16 +7180,16 @@
 ]
 
 // GMOD: From Portal 2
-@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewproxy : 
-	"A camera entity that moves the player's view. Use this if you want the player to retain control of where the player looks but want to base the position to be based on the proxy." 
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewproxy :
+	"A camera entity that moves the player's view. Use this if you want the player to retain control of where the player looks but want to base the position to be based on the proxy."
 [
 	spawnflags(flags) =
 	[
 		4: "Freeze Player" : 0
 		32:"Make Player non-solid" : 0
 	]
-	
-	offsettype(choices) : "Offset type " : 0 : "How the player's view moves to the view of the camera." = 
+
+	offsettype(choices) : "Offset type " : 0 : "How the player's view moves to the view of the camera." =
 	[
 		0: "Snap to camera"
 		1: "Ease to camera"
@@ -7209,6 +7209,6 @@
 	// Inputs
 	input Enable(void) : "Enable the view proxy, and start modifying the player's view."
 	input Disable(void) : "Disable the view proxy, and start modifying the player's view."
-	
+
 	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
 ]

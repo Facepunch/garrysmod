@@ -8,7 +8,7 @@
 [
 ]
 
-@SolidClass base(Targetname, Parentname) = func_detail_blocker : 
+@SolidClass base(Targetname, Parentname) = func_detail_blocker :
 	"A brush entity that prevents detail sprites from being placed inside its volume."
 [
 ]
@@ -77,12 +77,12 @@
 	input HDRScale(float) : "Sets the amount by which output will be scaled in HDR mode."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice) studio("models/editor/cone_helper.mdl") = beam_spotlight : 
+@PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice) studio("models/editor/cone_helper.mdl") = beam_spotlight :
 	"An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. "+
 	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests." +
 	"This spotlight is entirely client side, it is not sync'd across clients."
 [
-	spawnflags(Flags) = 
+	spawnflags(Flags) =
 	[
 		1 : "Start On" : 1
 		2 : "No Dynamic Light" : 0
@@ -98,7 +98,7 @@
 	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	HDRColorScale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
-	
+
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
 	input LightOff(void) : "Turn the spotlight off"
@@ -106,7 +106,7 @@
 	input Stop(void) : "Stop the rotator from rotating."
 	input Reverse(void) : "Reverse the direction of rotation of the rotator."
 	input SetColor(color255) : "Sets the color of the spotlight."
-	
+
 	// outputs
 	output OnLightOn(void) : "Fires when light turns on."
 	output OnLightOff(void) : "Fires when light turns off."
@@ -137,7 +137,7 @@
 	output OnCatapulted(void) : "The object has been launched."
 ]
 
-@SolidClass base(Targetname) = func_nav_blocker : "A brush entity that can block nav areas touching its AABB." 
+@SolidClass base(Targetname) = func_nav_blocker : "A brush entity that can block nav areas touching its AABB."
 [
 	input BlockNav(string) : "Starts blocking nav areas."
 	input UnblockNav(void) : "Stops blocking nav areas."
@@ -156,13 +156,13 @@
 	]
 ]
 
-@SolidClass base(Targetname, EnableDisable) = func_nav_avoidance_obstacle : "A brush entity that tells bots to avoid nav areas touching its AABB." 
+@SolidClass base(Targetname, EnableDisable) = func_nav_avoidance_obstacle : "A brush entity that tells bots to avoid nav areas touching its AABB."
 [
 ]
 
 @SolidClass base(Targetname, EnableDisable) = func_nav_avoid : "Influence bots to avoid this region by increasing the pathfinding cost within it."
 [
-	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name." 
+	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name."
 
 	team(choices) : "Team" : -2 : "Which team will avoid this region" =
 	[
@@ -174,7 +174,7 @@
 
 @SolidClass base(Targetname, EnableDisable) = func_nav_prefer : "Influence bots to prefer this region by decreasing the pathfinding cost within it."
 [
-	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name." 
+	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name."
 
 	team(choices) : "Team" : -2 : "Which team will prefer this region" =
 	[
@@ -184,7 +184,7 @@
 	]
 ]
 
-@PointClass base(Targetname) sphere(ball_size, 255, 255, 255, diameter) iconsprite("sprites/sent_ball_hammer.vmt") = sent_ball : 
+@PointClass base(Targetname) sphere(ball_size, 255, 255, 255, diameter) iconsprite("sprites/sent_ball_hammer.vmt") = sent_ball :
 	"An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. "+
 	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests." +
 	"This spotlight is entirely client side, it is not sync'd across clients."
