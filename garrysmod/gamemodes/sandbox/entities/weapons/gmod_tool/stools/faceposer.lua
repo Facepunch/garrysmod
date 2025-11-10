@@ -354,14 +354,15 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 			local min, max = faceEntity:GetFlexBounds( i )
 
-			flexGroups[ group ] = flexGroups[ group ] or {}
-			table.insert( flexGroups[ group ], { name = name, id = i, min = min, max = max, default = GenerateDefaultFlexValue( faceEntity, i ) } )
+			flexGroups[ group ] = flexGroups[ group ] or { sortId = table.Count( flexGroups ), items = {} }
+			table.insert( flexGroups[ group ].items, { name = name, id = i, min = min, max = max, default = GenerateDefaultFlexValue( faceEntity, i ) } )
 		end
 	end
 
 	local flexControllers = {}
 	local moreThanOneGroup = table.Count( flexGroups ) > 1
-	for group, items in pairs( flexGroups ) do
+	for group, groupData in SortedPairsByMemberValue( flexGroups, "sortId" ) do
+		local items = groupData.items
 
 		local groupForm = vgui.Create( "DForm", CPanel )
 		groupForm:SetLabel( string.NiceName( group ) )
@@ -376,7 +377,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 
 		CPanel:AddItem( groupForm )
 
-		for id, item in pairs( items ) do
+		for id, item in SortedPairsByMemberValue( items, "id" ) do
 			local ctrl = groupForm:NumSlider( string.NiceName( item.name ), "faceposer_flex" .. item.id, item.min, item.max )
 			ctrl:SetDefaultValue( item.default )
 			ctrl:SetHeight( 11 ) -- This makes the controls all bunched up like how we want
