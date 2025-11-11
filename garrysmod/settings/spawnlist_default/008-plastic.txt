@@ -2391,6 +2391,6 @@
 			"model"		"models/hunter/geometric/hex025x1.mdl"
 		}
 	}
-	"name"		"Plastic"
+	"name"		"#spawnmenu.spawnlist.plastic"
 	"version"		"3"
 }

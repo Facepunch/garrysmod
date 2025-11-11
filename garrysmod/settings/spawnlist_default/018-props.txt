@@ -3214,6 +3214,6 @@
 			"model"		"models/props_trainstation/trainstation_arch001.mdl"
 		}
 	}
-	"name"		"Props"
+	"name"		"#spawnmenu.spawnlist.props"
 	"version"		"3"
 }
