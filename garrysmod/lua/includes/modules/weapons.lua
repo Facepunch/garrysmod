@@ -63,7 +63,7 @@ function Register( t, name )
 		AdminOnly = t.AdminOnly,
 		ScriptedEntityType = t.ScriptedEntityType,
 		IconOverride = t.IconOverride,
-		Header = t.Header
+		CategoryHeader = t.CategoryHeader
 	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified

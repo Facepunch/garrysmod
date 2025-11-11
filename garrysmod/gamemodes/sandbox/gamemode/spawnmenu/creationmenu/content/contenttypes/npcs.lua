@@ -7,67 +7,26 @@ local TranslateNames = {
 	["Other"] = "#spawnmenu.category.other"
 }
 
+local function AddNPCToCategory( npc, className, propPanel )
+	return spawnmenu.CreateContentIcon( npc.ScriptedEntityType or "npc", propPanel, {
+		nicename	= npc.Name or className,
+		spawnname	= className,
+		material	= npc.IconOverride or "entities/" .. className .. ".png",
+		weapon		= npc.Weapons,
+		admin		= npc.AdminOnly
+	} )
+end
+
 hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNode )
 
-	local NPCList = list.Get( "NPC" )
-	local CustomIcons = list.GetForEdit( "ContentCategoryIcons" ) 
+	local options = {}
 
-	-- Create an icon for each one and put them on the panel
-	local CategorisedList = spawnmenu.GenerateCategoryList( NPCList, false, false, TranslateNames )
-	for CategoryName, Headers in SortedPairs( CategorisedList ) do
+	options.memberSortName = "Name"
+	options.defaultCategoryIcon = "icon16/monkey.png"
+	options.translationMap = TranslateNames
+	options.iconBuildFunc = AddNPCToCategory
 
-		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/monkey.png" )
-
-		-- When we click on the node - populate it using this function
-		node.DoPopulate = function( self )
-
-			-- If we've already populated it - forget it.
-			if ( self.PropPanel ) then return end
-
-			-- Create the container panel
-			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
-			self.PropPanel:SetVisible( false )
-			self.PropPanel:SetTriggerSpawnlistChange( false )
-
-			-- Don't create the "Other" header if it's the only header
-			local other = language.GetPhrase( "#spawnmenu.category.other" )
-			local createOtherHeader = Headers[ other ] and table.Count( Headers ) > 1
-
-			for headerName, entList in SortedPairs( Headers ) do
-
-				if ( headerName != other or createOtherHeader ) then
-					local header = vgui.Create( "ContentHeader" )
-					header:SetText( headerName )
-
-					self.PropPanel:Add( header )
-				end
-
-				for name, ent in SortedPairsByMemberValue( entList, "Name" ) do
-
-					spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
-						nicename	= ent.Name or name,
-						spawnname	= name,
-						material	= ent.IconOverride or "entities/" .. name .. ".png",
-						weapon		= ent.Weapons,
-						admin		= ent.AdminOnly
-					} )
-
-				end
-
-			end
-
-		end
-
-		-- If we click on the node populate it and switch to it.
-		node.DoClick = function( self )
-
-			self:DoPopulate()
-			pnlContent:SwitchPanel( self.PropPanel )
-
-		end
-
-	end
+	spawnmenu.PopulateCreationTabFromList( "NPC", pnlContent, tree, options )
 
 	-- Select the first node
 	local FirstNode = tree:Root():GetChildNode( 0 )

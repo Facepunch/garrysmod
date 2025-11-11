@@ -204,55 +204,181 @@ function SwitchCreationTab( id )
 
 end
 
---
--- Internal helper function 
--- Generates a list of content tabs ordered by their categories and headers
---
-function GenerateCategoryList( list, checkSpawnable, lowerCaseMembers, translationTable )
+local function createCategorizedList( listName, options )
 
-	if ( !list ) then return {} end
+	local memberSortName = options.memberSortName -- The name of the field with the presenting name
+	local translationMap = options.translationMap -- Category localization support for old addons
+	local checkSpawnable = options.checkSpawnable -- Filters out ones that do not have the Spawnable field, or have it set to false
 
-	local categoryList = {}
-
-	local categoryKeyName = lowerCaseMembers and "category" or "Category"
-	local headerKeyName = lowerCaseMembers and "header" or "Header"
-
-	for name, data in pairs( list ) do
+	local dataList = list.Get( listName ) -- Create a copy of the list
+	local categorisedList = {}
+	
+	for className, data in pairs( dataList ) do
 
 		if ( !checkSpawnable or data.Spawnable ) then
 
-			local category = data[ categoryKeyName ]
+			local sortName = data[ memberSortName ]
+			data.SortName = sortName and language.GetPhrase( sortName ) or className
+
+			local category = data[ options.categoryMemberName ]
 
 			if ( !category ) then
 				category = "#spawnmenu.category.other"
-			elseif translationTable and translationTable[ category ] then
-				category = translationTable[ category ] -- Category localization support for old addons
+			elseif translationMap and translationMap[ category ] then
+				category = translationMap[ category ]
 			end
 
 			category = language.GetPhrase( category )
 
-			local contentTab = categoryList[ category ]
+			local categoryTab = categorisedList[ category ]
 
-			if ( !contentTab ) then
-				contentTab = {}
-				categoryList[ category ] = contentTab
+			if ( !categoryTab ) then
+				categoryTab = {}
+				categorisedList[ category ] = categoryTab
 			end
 
-			local header = language.GetPhrase( data[ headerKeyName ] or "#spawnmenu.category.other" )
-			local headerTab = contentTab[ header ]
-
-			if ( !headerTab ) then
-				headerTab = {}
-				contentTab[ header ] = headerTab
-			end
-
-			headerTab[ name ] = data
+			categoryTab[ className ] = data
 
 		end
 
 	end
 
-	return categoryList
+	return categorisedList
+
+end
+
+function PopulateCreationTabFromList( listName, pnlContent, tree, options )
+
+	options = options or {}
+	options.categoryMemberName = options.categoryMemberName or "Category"
+	options.headerMemberName = options.headerMemberName or "CategoryHeader"
+
+	local categorisedList = createCategorizedList( listName, options )
+	local categoryIconsList = list.GetForEdit( "ContentCategoryIcons" )
+
+	local defaultCategoryIcon = options.defaultCategoryIcon
+	local iconBuildFunc = options.iconBuildFunc
+
+	local categoryNodes = {}
+	
+	for _, childNode in ipairs( tree:Root():GetChildNodes() ) do
+		categoryNodes[ childNode:GetText() ] = childNode
+	end
+
+	-- Add a node for each category to the tree
+	for categoryName in SortedPairs( categorisedList ) do
+
+		-- Don't add duplicate nodes
+		if ( categoryNodes[ categoryName ] ) then continue end
+
+		local node = tree:AddNode( categoryName, categoryIconsList[ categoryName ] or defaultCategoryIcon )
+		categoryNodes[ categoryName ] = node
+
+		node.Populate = function( self )
+
+			-- Create the container panel
+			local propPanel = vgui.Create( "ContentContainer", pnlContent )
+			self.PropPanel = propPanel
+			
+			propPanel:SetVisible( false )
+			propPanel:SetTriggerSpawnlistChange( false )
+
+			local categorisedData = categorisedList[ categoryName ]
+			if ( !categorisedData ) then return end -- May no longer have anything due to autorefresh
+
+			local createdHeaders = {}
+			local noHeaderIcons = {}
+			local hasHeaders = false
+
+			for name, data in SortedPairsByMemberValue( categorisedData, "SortName" ) do
+
+				local headerName = data[ options.headerMemberName ]
+				local hasHeader = isstring( headerName )
+
+				headerName = hasHeader and language.GetPhrase( headerName )
+
+				if ( hasHeader and !createdHeaders[ headerName ] ) then
+
+					local header = vgui.Create( "ContentHeader" )
+
+					header:SetText( headerName )
+					propPanel:Add( header )
+
+					createdHeaders[ headerName ] = header
+					hasHeaders = true
+
+				end
+
+				local icon = iconBuildFunc( data, name, propPanel, tree, node )
+
+				if ( icon and !hasHeader ) then
+					noHeaderIcons[ icon ] = icon.m_NiceName
+				end
+
+			end
+
+			-- Move ones without a header to the top
+			if ( hasHeaders and !table.IsEmpty( noHeaderIcons ) ) then
+
+				local children = propPanel.IconList:GetChildren()
+				local pos = 0
+
+				for icon in SortedPairsByValue( noHeaderIcons ) do
+
+					table.RemoveByValue( children, icon )
+
+					pos = pos + 1
+					table.insert( children, pos, icon )
+
+				end
+
+				for zPos, childIcon in ipairs( children ) do
+					childIcon:SetZPos( zPos )
+				end
+
+			end
+
+			return propPanel
+
+		end
+
+		node.RefreshContent = function( self )
+
+			local propPanel = self.PropPanel
+			if ( !IsValid( propPanel ) ) then return end
+
+			local selected = pnlContent.SelectedPanel == propPanel
+
+			-- Get an up-to-date list
+			categorisedList = createCategorizedList( listName, options )
+
+			propPanel:Remove()
+
+			if ( selected ) then
+				pnlContent:SwitchPanel( self:Populate() )
+			end
+
+		end
+
+		-- If we click on the node populate it and switch to it.
+		node.DoClick = function( self )
+
+			self:DoPopulate()
+			pnlContent:SwitchPanel( self.PropPanel )
+
+		end
+
+		node.DoPopulate = function( self )
+
+			if ( !IsValid( self.PropPanel ) ) then
+				self:Populate()
+			end
+
+		end
+
+	end
+
+	return categoryNodes
 
 end
 

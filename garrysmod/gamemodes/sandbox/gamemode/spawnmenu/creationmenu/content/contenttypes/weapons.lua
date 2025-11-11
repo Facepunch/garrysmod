@@ -1,116 +1,24 @@
 
-local function AddCategory( tree, categoryName )
-
-	local CustomIcons = list.GetForEdit( "ContentCategoryIcons" )
-
-	-- Add a node to the tree
-	local node = tree:AddNode( categoryName, CustomIcons[ categoryName ] or "icon16/gun.png" )
-	local CategoryNodes = tree.CategoryNodes
-
-	CategoryNodes[ categoryName ] = node
-
-	node.Populate = function( self )
-
-		local propPanel = vgui.Create( "ContentContainer", tree.pnlContent )
-		propPanel:SetVisible(false)
-		propPanel:SetTriggerSpawnlistChange( false )
-
-		self.WeaponData = {}
-		self.CategoryNodes = CategoryNodes
-		self.PropPanel = propPanel
-
-		-- Generate a new list for auto refresh
-		local headers = spawnmenu.GenerateCategoryList( list.Get( "Weapon" ), true )[ categoryName ]
-		if ( !headers ) then return end
-
-		-- Don't create the "Other" header if it's the only header
-		local other = language.GetPhrase( "#spawnmenu.category.other" )
-		local createOtherHeader = headers[ other ] and table.Count( headers ) > 1
-
-		for headerName, wepList in SortedPairs( headers ) do
-			
-			if ( headerName != other or createOtherHeader ) then
-				local header = vgui.Create( "ContentHeader" )
-				header:SetText( headerName )
-
-				self.PropPanel:Add( header )
-			end
-
-			for className, wep in SortedPairsByMemberValue( wepList, "PrintName" ) do
-
-				node.WeaponData[ className ] = wep
-				node.CategoryNodes[ className ] = node
-
-				spawnmenu.CreateContentIcon( wep.ScriptedEntityType or "weapon", propPanel, {
-					nicename	= wep.PrintName or wep.ClassName,
-					spawnname	= wep.ClassName,
-					material	= wep.IconOverride or ( "entities/" .. wep.ClassName .. ".png" ),
-					admin		= wep.AdminOnly
-				} )
-
-			end
-
-		end
-
-		return propPanel
-
-	end
-
-	-- When we click on the node - populate it using this function
-	node.DoPopulate = function( self )
-
-		-- If we've already populated it - forget it.
-		if ( IsValid( self.PropPanel ) ) then return end
-
-		self:Populate()
-
-	end
-
-	node.Repopulate = function( self )
-
-		local propPanel = self.PropPanel
-		if ( !IsValid( propPanel ) ) then return end
-
-		local selected = tree.pnlContent.SelectedPanel == propPanel
-
-		propPanel:Remove()
-		propPanel = self:Populate()
-
-		if ( selected ) then
-			tree.pnlContent:SwitchPanel( propPanel )
-		end
-
-	end
-
-	-- If we click on the node populate it and switch to it.
-	node.DoClick = function( self )
-
-		self:DoPopulate()
-		tree.pnlContent:SwitchPanel( self.PropPanel )
-
-	end
-
-	node.OnRemove = function( self )
-
-		if ( IsValid( self.PropPanel ) ) then self.PropPanel:Remove() end
-
-	end
-
+local function AddWeaponToCategory( wep, className, propPanel )
+	return spawnmenu.CreateContentIcon( wep.ScriptedEntityType or "weapon", propPanel, {
+		nicename	= wep.PrintName or className,
+		spawnname	= className,
+		material	= wep.IconOverride or ( "entities/" .. className .. ".png" ),
+		admin		= wep.AdminOnly
+	} )
 end
+
+local PopulateOptions = {}
+PopulateOptions.memberSortName = "PrintName"
+PopulateOptions.defaultCategoryIcon = "icon16/gun.png"
+PopulateOptions.checkSpawnable = true
+PopulateOptions.iconBuildFunc = AddWeaponToCategory
 
 hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, browseNode )
 
-	local WeaponList = list.Get( "Weapon" )
-	local CategorisedList = spawnmenu.GenerateCategoryList( WeaponList, true )
-
-	-- Helper
-	tree.CategoryNodes = {}
+	-- Helpers for auto refresh
+	tree.CategoryNodes = spawnmenu.PopulateCreationTabFromList( "Weapon", pnlContent, tree, PopulateOptions )
 	tree.pnlContent = pnlContent
-
-	-- Loop through each category
-	for categoryName in SortedPairs( CategorisedList ) do
-		AddCategory( tree, categoryName )
-	end
 
 	-- Select the first node
 	local FirstNode = tree:Root():GetChildNode( 0 )
@@ -125,39 +33,50 @@ local function AutorefreshWeaponToSpawnmenu( weaponData, className )
 
 	local tree = swepTab.ContentPanel.ContentNavBar.Tree
 	local categoryNodes = tree.CategoryNodes
+
 	if ( !categoryNodes ) then return end
 
-	local populatedNode = categoryNodes[ className ]
-	if ( !IsValid( populatedNode ) ) then return end
-
+	local populatedNode
+	local wepCategoryChanged
 	local wepCategory = language.GetPhrase( weaponData.Category or "#spawnmenu.category.other" )
-	local wepHeader = weaponData.Header and language.GetPhrase( weaponData.Header ) or nil
 
-	local oldData = populatedNode.WeaponData[ className ]
-	local weaponCategoryChanged = oldData.Category != wepCategory
+	for categoryName, node in pairs( categoryNodes ) do
 
-	-- Only update the spawnlist if some data of the weapon actually changed
-	local weaponDataChanged = weaponCategoryChanged ||
-	(oldData.Header != wepHeader) ||
-	(oldData.PrintName != weaponData.PrintName) ||
-	(oldData.Author != weaponData.Author) ||
-	(oldData.Purpose != weaponData.Purpose) ||
-	(oldData.IconOverride != weaponData.IconOverride) ||
-	(oldData.AdminOnly != weaponData.AdminOnly)
+		if ( populatedNode ) then break end
 
-	if ( !weaponDataChanged ) then return end
+		local propPanel = node.PropPanel
+		if ( !IsValid( propPanel ) ) then continue end
 
-	-- If any of the data changed, just nuke the prop panel and repopulate
-	populatedNode:Repopulate()
+		for _, icon in pairs( propPanel.IconList:GetChildren() ) do
 
-	if ( !weaponCategoryChanged ) then return end
+			if ( icon:GetName() != "ContentIcon" ) then continue end
+
+			local spawnName = icon:GetSpawnName()
+
+			if ( spawnName == className ) then
+
+				populatedNode = node
+				wepCategoryChanged = wepCategory != categoryName
+
+				node:RefreshContent()
+
+				break
+
+			end
+
+		end
+
+		-- Leave the empty categories, this only applies to devs anyway
+	end
+
+	if ( !wepCategoryChanged ) then return end
 
 	local newCategoryNode = categoryNodes[ wepCategory ]
 
 	if ( !IsValid( newCategoryNode ) ) then 
-		AddCategory( tree, wepCategory )
+		tree.CategoryNodes = spawnmenu.PopulateCreationTabFromList( "Weapon", tree.pnlContent, tree, PopulateOptions )
 	else
-		newCategoryNode:Repopulate()
+		newCategoryNode:RefreshContent()
 	end
 
 end
