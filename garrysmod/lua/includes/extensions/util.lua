@@ -339,7 +339,7 @@ end
 	Desc: Converts a steamID to a uniqueID
 -----------------------------------------------------------]]
 function util.SteamIDToUniqueID( steamID )
-	if not steamID or not isstring(steamID) then return "" end
+	if ( not steamID or not isstring(steamID) ) then return "" end
 
 	return util.CRC("gm_" .. steamID .. "_gm")
 end
