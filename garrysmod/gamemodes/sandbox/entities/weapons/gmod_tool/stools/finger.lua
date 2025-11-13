@@ -19,6 +19,7 @@ end
 local function HasP2Hands( pEntity )
 	return pEntity:LookupBone( "wrist_A_L" ) != nil || pEntity:LookupBone( "index_1_L" ) != nil
 	|| pEntity:LookupBone( "ffSkel_LeftHand" ) != nil || pEntity:LookupBone( "ffSkel_RightHand" ) != nil
+	|| pEntity:LookupBone( "Hand_L" ) != nil
 end
 
 local TranslateTable_TF2 = {}
@@ -52,6 +53,38 @@ TranslateTable_TF2[ "ValveBiped.Bip01_R_Finger32" ] = "bip_ring_2_R"
 TranslateTable_TF2[ "ValveBiped.Bip01_R_Finger4" ] = "bip_pinky_0_R"
 TranslateTable_TF2[ "ValveBiped.Bip01_R_Finger41" ] = "bip_pinky_1_R"
 TranslateTable_TF2[ "ValveBiped.Bip01_R_Finger42" ] = "bip_pinky_2_R"
+
+local TranslateTable_Outerlight = {}
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger0" ] = "Finger1_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger01" ] = "Finger11_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger02" ] = "Finger12_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger1" ] = "Finger2_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger11" ] = "Finger21_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger12" ] = "Finger22_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger2" ] = "Finger3_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger21" ] = "Finger31_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger22" ] = "Finger32_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger3" ] = "Finger4_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger31" ] = "Finger41_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger32" ] = "Finger42_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger4" ] = "Finger5_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger41" ] = "Finger51_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_L_Finger42" ] = "Finger52_L"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger0" ] = "Finger1_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger01" ] = "Finger11_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger02" ] = "Finger12_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger1" ] = "Finger2_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger11" ] = "Finger21_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger12" ] = "Finger22_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger2" ] = "Finger3_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger21" ] = "Finger31_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger22" ] = "Finger32_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger3" ] = "Finger4_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger31" ] = "Finger41_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger32" ] = "Finger42_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger4" ] = "Finger5_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger41" ] = "Finger51_R"
+TranslateTable_Outerlight[ "ValveBiped.Bip01_R_Finger42" ] = "Finger52_R"
 
 local TranslateTable_Zeno = {}
 TranslateTable_Zeno[ "ValveBiped.Bip01_L_Finger0" ] = "Bip01_L_Finger0"
@@ -297,6 +330,14 @@ local function GetFingerBone( self, fingernum, part, hand )
 	end
 	---- END Zeno BONE LOOKUP ----------------------------------
 
+	---- START Outerlight BONE LOOKUP ----------------------------------
+	TranslatedName = TranslateTable_Outerlight[ Name ]
+	if ( TranslatedName ) then
+		local bone = self:LookupBone( TranslatedName )
+		if ( bone ) then return bone end
+	end
+	---- END Outerlight BONE LOOKUP ----------------------------------
+	
 	---- START FF BONE LOOKUP ----------------------------------
 	TranslatedName = TranslateTable_FF[ Name ]
 	if ( TranslatedName ) then
@@ -439,6 +480,7 @@ function TOOL:GetHandPositions( pEntity )
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "L Hand" ) end -- Insurgency
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "wrist_A_L" ) end -- Portal 2 Egg bot
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "ffSkel_LeftHand" ) end -- Fortress Forever
+	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "Hand_L" ) end -- Outerlight (The Ship & Bloody Good Time)
 
 	local RightHand = pEntity:LookupBone( "ValveBiped.Bip01_R_Hand" )
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "bip_hand_R" ) end
@@ -450,6 +492,7 @@ function TOOL:GetHandPositions( pEntity )
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "R Hand" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "wrist_A_R" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "ffSkel_RightHand" ) end
+	if ( !RightHand ) then RightHand = pEntity:LookupBone( "Hand_R" ) end
 
 	if ( !LeftHand || !RightHand ) then return false end
 
