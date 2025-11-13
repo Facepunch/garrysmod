@@ -334,8 +334,14 @@ function util.Stack()
 end
 
 -- Helper for the following functions. This is not ideal but we cannot change this because it will break existing addons.
-local function GetUniqueID( sid )
-	return util.CRC( "gm_" .. sid .. "_gm" )
+--[[---------------------------------------------------------
+	Name: SteamIDToUniqueID( steamID )
+	Desc: Converts a steamID to a uniqueID
+-----------------------------------------------------------]]
+function util.SteamIDToUniqueID( steamID )
+	if not steamID or not isstring(steamID) then return "" end
+
+	return util.CRC("gm_" .. steamID .. "_gm")
 end
 
 --[[---------------------------------------------------------
