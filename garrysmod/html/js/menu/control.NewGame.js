@@ -3,6 +3,9 @@ var ServerSettings = []
 var scope = null;
 var rootScope = null;
 
+var savedMapName = null
+var savedMapCategory = null
+
 App.filter( 'mapFilter', function() {
 	return function( items, search )
 	{
@@ -27,15 +30,34 @@ App.filter( 'mapFilter', function() {
 
 function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
-	for ( var i = 0; i < gScope.MapList.length; i++ )
+	if ( ( !$rootScope.Map || !$rootScope.LastCategory ) && savedMapName && savedMapCategory )
 	{
-		if ( gScope.MapList[i][ "category" ] == "Favourites" )
+		$rootScope.Map = savedMapName;
+		$rootScope.LastCategory = savedMapCategory;
+	}
+
+	if ( !$scope.CurrentCategory && $rootScope.LastCategory )
+	{
+		$scope.CurrentCategory = $rootScope.LastCategory;
+	}
+	else if ( !$scope.CurrentCategory )
+	{
+		// Use Favourites or Sandbox as a default category, if none set
+		$scope.CurrentCategory = "Sandbox";
+
+		var favMaps = Object.keys( gScope.MapListFav );
+		if ( favMaps.length > 0 )
 		{
-			if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Favourites";
+			$scope.CurrentCategory = "Favourites";
+			if ( !$rootScope.Map ) $rootScope.Map = favMaps[0];
 		}
 	}
 
-	if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Sandbox";
+	// Scroll the selected map into view
+	setTimeout( function() {
+		var elem = document.querySelector( '.mapicon.selected' );
+		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+	}, 100 );
 
 	$scope.Players =
 	[
@@ -71,7 +93,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	if ( !$rootScope.LastCategory )		$rootScope.LastCategory = $scope.CurrentCategory;
 
 	lua.Run( "UpdateServerSettings()" );
-	lua.Run( "LoadLastMap()" );
 
 	rootScope = $rootScope;
 	scope = $scope;
@@ -220,23 +241,8 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 function SetLastMap( map, category )
 {
-	if ( scope )
-	{
-		scope.CurrentCategory = category;
-		UpdateDigest( scope, 50 );
-	}
-
-	if ( rootScope )
-	{
-		rootScope.Map = map;
-		rootScope.LastCategory = category;
-		UpdateDigest( rootScope, 50 );
-	}
-
-	setTimeout( function() {
-		var elem = document.querySelector( '.mapicon.selected' );
-		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
-	}, 100 );
+	savedMapName = map;
+	savedMapCategory = category;
 }
 
 function UpdateServerSettings( sttngs )
