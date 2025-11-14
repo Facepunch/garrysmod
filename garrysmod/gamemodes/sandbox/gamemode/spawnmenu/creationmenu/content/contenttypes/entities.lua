@@ -27,7 +27,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, br
 	options.translationMap = TranslateNames
 	options.iconBuildFunc = AddEntityToCategory
 
-	spawnmenu.PopulateCreationTabFromList( "SpawnableEntities", pnlContent, tree, options )
+	pnlContent:PopulateFromList( "SpawnableEntities", tree, options )
 
 	-- Select the first node
 	local FirstNode = tree:Root():GetChildNode( 0 )

@@ -22,7 +22,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, br
 	options.translationMap = TranslateNames
 	options.iconBuildFunc = AddVehicleToCategory
 
-	spawnmenu.PopulateCreationTabFromList( "Vehicles", pnlContent, tree, options )
+	pnlContent:PopulateFromList( "Vehicles", tree, options )
 
 	-- Select the first node
 	local FirstNode = tree:Root():GetChildNode( 0 )

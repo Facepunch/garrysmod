@@ -17,7 +17,7 @@ PopulateOptions.iconBuildFunc = AddWeaponToCategory
 hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, browseNode )
 
 	-- Helpers for auto refresh
-	tree.CategoryNodes = spawnmenu.PopulateCreationTabFromList( "Weapon", pnlContent, tree, PopulateOptions )
+	tree.CategoryNodes = pnlContent:PopulateFromList( "Weapon", tree, PopulateOptions )
 	tree.pnlContent = pnlContent
 
 	-- Select the first node
@@ -74,7 +74,7 @@ local function AutorefreshWeaponToSpawnmenu( weaponData, className )
 	local newCategoryNode = categoryNodes[ wepCategory ]
 
 	if ( !IsValid( newCategoryNode ) ) then 
-		tree.CategoryNodes = spawnmenu.PopulateCreationTabFromList( "Weapon", tree.pnlContent, tree, PopulateOptions )
+		tree.CategoryNodes = tree.pnlContent:PopulateFromList( "Weapon", tree, PopulateOptions )
 	else
 		newCategoryNode:RefreshContent()
 	end

@@ -26,7 +26,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNod
 	options.translationMap = TranslateNames
 	options.iconBuildFunc = AddNPCToCategory
 
-	spawnmenu.PopulateCreationTabFromList( "NPC", pnlContent, tree, options )
+	pnlContent:PopulateFromList( "NPC", tree, options )
 
 	-- Select the first node
 	local FirstNode = tree:Root():GetChildNode( 0 )

@@ -29,7 +29,7 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 	options.translationMap = TranslateNames
 	options.iconBuildFunc = AddPPToCategory
 
-	spawnmenu.PopulateCreationTabFromList( "PostProcess", pnlContent, tree, options )
+	pnlContent:PopulateFromList( "PostProcess", tree, options )
 
 	-- Select the first node
 	local FirstNode = tree:Root():GetChildNode( 0 )
