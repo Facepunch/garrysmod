@@ -130,6 +130,8 @@ end
 --
 function PANEL:PopulateFromList( listName, tree, options )
 
+	local pnlContent = self
+
 	options = options or {}
 	options.categoryMemberName = options.categoryMemberName or "Category"
 	options.headerMemberName = options.headerMemberName or "CategoryHeader"
@@ -158,7 +160,7 @@ function PANEL:PopulateFromList( listName, tree, options )
 		node.Populate = function( self )
 
 			-- Create the container panel
-			local propPanel = vgui.Create( "ContentContainer", self )
+			local propPanel = vgui.Create( "ContentContainer", pnlContent )
 			self.PropPanel = propPanel
 			
 			propPanel:SetVisible( false )
@@ -222,8 +224,6 @@ function PANEL:PopulateFromList( listName, tree, options )
 			return propPanel
 
 		end
-
-		local pnlContent = self
 		
 		node.RefreshContent = function( self )
 
