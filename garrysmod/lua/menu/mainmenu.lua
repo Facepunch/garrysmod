@@ -678,6 +678,7 @@ timer.Simple( 0, function()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
+	LoadLastMap()
 
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()

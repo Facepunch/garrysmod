@@ -3,6 +3,9 @@ var ServerSettings = []
 var scope = null;
 var rootScope = null;
 
+var savedMapName = null
+var savedMapCategory = null
+
 App.filter( 'mapFilter', function() {
 	return function( items, search )
 	{
@@ -27,24 +30,34 @@ App.filter( 'mapFilter', function() {
 
 function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
+	if ( ( !$rootScope.Map || !$rootScope.LastCategory ) && savedMapName && savedMapCategory )
+	{
+		$rootScope.Map = savedMapName;
+		$rootScope.LastCategory = savedMapCategory;
+	}
+
 	if ( !$scope.CurrentCategory && $rootScope.LastCategory )
 	{
 		$scope.CurrentCategory = $rootScope.LastCategory;
-	} 
+	}
 	else if ( !$scope.CurrentCategory )
 	{
 		// Use Favourites or Sandbox as a default category, if none set
 		$scope.CurrentCategory = "Sandbox";
-		if ( Object.keys(gScope.MapListFav).length > 0 )
+
+		var favMaps = Object.keys( gScope.MapListFav );
+		if ( favMaps.length > 0 )
 		{
 			$scope.CurrentCategory = "Favourites";
+			if ( !$rootScope.Map ) $rootScope.Map = favMaps[0];
 		}
-		$rootScope.LastCategory = $scope.CurrentCategory;
-		UpdateDigest( $scope, 50 );
-		
-		// Get last category/map from game
-		lua.Run( "LoadLastMap()" );
 	}
+
+	// Scroll the selected map into view
+	setTimeout( function() {
+		var elem = document.querySelector( '.mapicon.selected' );
+		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+	}, 100 );
 
 	$scope.Players =
 	[
@@ -228,23 +241,8 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 function SetLastMap( map, category )
 {
-	if ( rootScope && ( rootScope.Map != map || rootScope.LastCategory != category ) )
-	{
-		rootScope.Map = map;
-		rootScope.LastCategory = category;
-		UpdateDigest( rootScope, 50 );
-	}
-	
-	if ( scope && scope.CurrentCategory != category )
-	{
-		scope.CurrentCategory = category;
-		UpdateDigest( scope, 50 );
-	}
-
-	setTimeout( function() {
-		var elem = document.querySelector( '.mapicon.selected' );
-		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
-	}, 100 );
+	savedMapName = map;
+	savedMapCategory = category;
 }
 
 function UpdateServerSettings( sttngs )
