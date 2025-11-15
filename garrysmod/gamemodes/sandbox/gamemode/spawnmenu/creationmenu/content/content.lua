@@ -130,8 +130,6 @@ end
 --
 function PANEL:PopulateFromList( listName, tree, options )
 
-	local pnlContent = self
-
 	options = options or {}
 	options.categoryMemberName = options.categoryMemberName or "Category"
 	options.headerMemberName = options.headerMemberName or "CategoryHeader"
@@ -157,11 +155,11 @@ function PANEL:PopulateFromList( listName, tree, options )
 		local node = tree:AddNode( categoryName, categoryIconsList[ categoryName ] or defaultCategoryIcon )
 		categoryNodes[ categoryName ] = node
 
-		node.Populate = function( self )
+		node.Populate = function( node )
 
 			-- Create the container panel
-			local propPanel = vgui.Create( "ContentContainer", pnlContent )
-			self.PropPanel = propPanel
+			local propPanel = vgui.Create( "ContentContainer", self )
+			node.PropPanel = propPanel
 			
 			propPanel:SetVisible( false )
 			propPanel:SetTriggerSpawnlistChange( false )
@@ -225,12 +223,12 @@ function PANEL:PopulateFromList( listName, tree, options )
 
 		end
 		
-		node.RefreshContent = function( self )
+		node.RefreshContent = function( node )
 
-			local propPanel = self.PropPanel
+			local propPanel = node.PropPanel
 			if ( !IsValid( propPanel ) ) then return end
 
-			local selected = pnlContent.SelectedPanel == propPanel
+			local selected = self.SelectedPanel == propPanel
 
 			-- Get an up-to-date list
 			categorisedList = createCategorizedList( listName, options )
@@ -238,23 +236,23 @@ function PANEL:PopulateFromList( listName, tree, options )
 			propPanel:Remove()
 
 			if ( selected ) then
-				pnlContent:SwitchPanel( self:Populate() )
+				self:SwitchPanel( node:Populate() )
 			end
 
 		end
 
 		-- If we click on the node populate it and switch to it.
-		node.DoClick = function( self )
+		node.DoClick = function( node )
 
-			self:DoPopulate()
-			pnlContent:SwitchPanel( self.PropPanel )
+			node:DoPopulate()
+			self:SwitchPanel( node.PropPanel )
 
 		end
 
-		node.DoPopulate = function( self )
+		node.DoPopulate = function( node )
 
-			if ( !IsValid( self.PropPanel ) ) then
-				self:Populate()
+			if ( !IsValid( node.PropPanel ) ) then
+				node:Populate()
 			end
 
 		end
