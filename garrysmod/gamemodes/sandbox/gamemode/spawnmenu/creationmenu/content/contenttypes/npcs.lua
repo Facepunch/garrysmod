@@ -1,73 +1,32 @@
 
+local TranslateNames = {
+	["Animals"] = "#spawnmenu.category.animals",
+	["Combine"] = "#spawnmenu.category.combine",
+	["Humans + Resistance"] = "#spawnmenu.category.humans_resistance",
+	["Zombies + Enemy Aliens"] = "#spawnmenu.category.zombies_aliens",
+	["Other"] = "#spawnmenu.category.other"
+}
+
+local function AddNPCToCategory( npc, className, propPanel )
+	return spawnmenu.CreateContentIcon( npc.ScriptedEntityType or "npc", propPanel, {
+		nicename	= npc.Name or className,
+		spawnname	= className,
+		material	= npc.IconOverride or "entities/" .. className .. ".png",
+		weapon		= npc.Weapons,
+		admin		= npc.AdminOnly
+	} )
+end
+
 hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNode )
 
-	-- Get a list of available NPCs
-	local NPCList = list.Get( "NPC" )
+	local options = {}
 
-	-- Categorize them
-	local Categories = {}
+	options.memberSortName = "Name"
+	options.defaultCategoryIcon = "icon16/monkey.png"
+	options.translationMap = TranslateNames
+	options.iconBuildFunc = AddNPCToCategory
 
-	-- Category localization support for old addons
-	local TranslateNames = {
-		["Animals"] = "#spawnmenu.category.animals",
-		["Combine"] = "#spawnmenu.category.combine",
-		["Humans + Resistance"] = "#spawnmenu.category.humans_resistance",
-		["Zombies + Enemy Aliens"] = "#spawnmenu.category.zombies_aliens",
-		["Other"] = "#spawnmenu.category.other"
-	}
-
-	for k, v in pairs( NPCList ) do
-
-		local Category = language.GetPhrase( TranslateNames[v.Category] or v.Category or "#spawnmenu.category.other" )
-		if ( !isstring( Category ) ) then Category = tostring( Category ) end
-
-		local Tab = Categories[ Category ] or {}
-		Tab[ k ] = v
-		Categories[ Category ] = Tab
-
-	end
-
-	-- Create an icon for each one and put them on the panel
-	local CustomIcons = list.Get( "ContentCategoryIcons" )
-	for CategoryName, v in SortedPairs( Categories ) do
-
-		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/monkey.png" )
-
-		-- When we click on the node - populate it using this function
-		node.DoPopulate = function( self )
-
-			-- If we've already populated it - forget it.
-			if ( self.PropPanel ) then return end
-
-			-- Create the container panel
-			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
-			self.PropPanel:SetVisible( false )
-			self.PropPanel:SetTriggerSpawnlistChange( false )
-
-			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
-
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
-					nicename	= ent.Name or name,
-					spawnname	= name,
-					material	= ent.IconOverride or "entities/" .. name .. ".png",
-					weapon		= ent.Weapons,
-					admin		= ent.AdminOnly
-				} )
-
-			end
-
-		end
-
-		-- If we click on the node populate it and switch to it.
-		node.DoClick = function( self )
-
-			self:DoPopulate()
-			pnlContent:SwitchPanel( self.PropPanel )
-
-		end
-
-	end
+	pnlContent:PopulateFromList( "NPC", tree, options )
 
 	-- Select the first node
 	local FirstNode = tree:Root():GetChildNode( 0 )
