@@ -64,6 +64,28 @@ function type( v )
 
 end
 
+--
+-- Backwards compatibility for some jit.* functions
+--
+
+-- Stop jit.attach from throwing a halting error
+function jit.attach()
+	return ErrorNoHaltWithStack( "vmevent API disabled" )
+end
+
+-- Recreate the functionality of jit.util.funcuvname by using debug.getupvalue
+function jit.util.funcuvname( fn, index )
+
+	if ( !isfunction( fn ) ) then return error( "bad argument #1 to 'funcuvname' (function expected, got " .. type( fn ) .. ")" ) end
+	if ( debug.getinfo( fn, "S" ).what != "Lua" ) then return error( "bad argument #1 to 'funcuvname' (function expected, got function)" ) end
+	if ( !isnumber( index ) ) then return error( "bad argument #2 to 'funcuvname' (number expected, got " .. type( index ) .. ")" ) end
+
+	local uvname = debug.getupvalue( fn, index + 1 )
+
+	return uvname
+
+end
+
 --[[---------------------------------------------------------
 	IsTableOfEntitiesValid
 -----------------------------------------------------------]]
