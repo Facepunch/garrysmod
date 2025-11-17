@@ -67,10 +67,11 @@ local STORED_TYPE_IDS = {
 
 local OldTypeID = TypeID
 function TypeID( v )
-	local id = STORED_TYPE_IDS[ type( v ) ]
+	local vType = C_type( v )
+	local id = STORED_TYPE_IDS[ vType ]
 	if ( id ) then return id end
 
-	if ( C_type( v ) == "userdata" ) then
+	if ( vType == "userdata" ) then
 		-- Garry's Mod types have their IDs in their metatables
 		local vMeta = getmetatable( v )
 		if ( vMeta ) then
@@ -579,3 +580,4 @@ function GetConVarString( name )
 	local c = GetConVar( name )
 	return ( c and c:GetString() ) or ""
 end
+
