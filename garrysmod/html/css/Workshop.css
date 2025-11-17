@@ -106,7 +106,7 @@ workshopicon author, workshopicon votes, workshopicon size
 	text-overflow: ellipsis;
 	font-family: "Arial";
 	color: #333;
-	background-color: rgba( 255, 255, 255, 1 );
+	background-color: #fff;
 	border-radius: 4px 0 0 0;
 	padding: 3px 6px;
 
@@ -281,7 +281,7 @@ controls control.disabled
 }
 .ugc_settings_button:hover
 {
-	background: #2691FF;
+	background: #4f9ded;
 }
 
 .ugc_settings
@@ -333,6 +333,10 @@ controls control.disabled
 {
 	background: #ccc;
 }
+.ugc_settings a:active
+{
+	background: #bbb;
+}
 
 .ugc_settings_cat
 {
@@ -349,24 +353,32 @@ controls control.disabled
 
 .preset_content
 {
+	max-height: 400px;
+	min-height: 290px;
 	min-width: 500px;
 	margin-bottom: 5px;
+	display: -webkit-box;
 }
-.preset_content input[type=text]
+.preset_side
+{
+	width: 150px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+.preset_side input[type="text"]
 {
 	padding: 2px 4px;
 	box-sizing: border-box;
 	margin-bottom: 8px;
+	margin-right: 8px;
+	display: block;
 }
 .preset_list
 {
 	background: #eee;
-	width: 150px;
-	display: inline-block;
-	max-height: 400px;
-	min-height: 290px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	-webkit-box-flex: 1;
 }
 .preset_list font
 {
@@ -384,10 +396,8 @@ controls control.disabled
 }
 .preset_data
 {
-	width: 345px;
+	-webkit-box-flex: 1;
 	padding-left: 5px;
-	display: inline-block;
-	vertical-align: top;
 	cursor: default;
 }
 
@@ -421,6 +431,11 @@ pagination .back, pagination .next
 	background-color: #2387ed;
 	border-radius: 3px;
 	background-position: center center;
+}
+
+pagination .back:hover, pagination .next:hover
+{
+	background-color: #4f9ded;
 }
 
 pagination .next

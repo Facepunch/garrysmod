@@ -21,6 +21,17 @@ function PANEL:Init()
 	JS_Language( self.HTML )
 	JS_Utility( self.HTML )
 	JS_Workshop( self.HTML )
+	self.HTML:AddFunction( "lua", "Run", function( param, ... )
+		local args = { ... }
+		for id, arg in pairs( args ) do
+			if ( isstring( arg ) ) then
+				args[ id ] = "[[" .. arg .. "]]"
+			end
+		end
+
+		RunString( param:format( unpack( args ) ) )
+	end )
+	self.HTML:AddFunction( "lua", "PlaySound", function( param ) surface.PlaySound( param ) end )
 
 	-- Detect whenther the HTML engine is even there
 	self.menuLoaded = false
@@ -33,7 +44,6 @@ function PANEL:Init()
 	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" )
 	self.HTML:SetKeyboardInputEnabled( true )
 	self.HTML:SetMouseInputEnabled( true )
-	self.HTML:SetAllowLua( true )
 	self.HTML:RequestFocus()
 
 	ws_dupe.HTML = self.HTML
@@ -196,19 +206,19 @@ function OnMenuFailedToLoad()
 	local btn_srv = frame:Add( "DButton" )
 	btn_srv:Dock( TOP )
 	btn_srv:DockMargin( 0, 0, 0, 5 )
-	btn_srv:SetText( "Open legacy server browser" )
+	btn_srv:SetText( "#find_mp_game" )
 	btn_srv:SetConsoleCommand( "gamemenucommand", "OpenServerBrowser" )
 
 	local btn_opt = frame:Add( "DButton" )
 	btn_opt:Dock( TOP )
 	btn_opt:DockMargin( 0, 0, 0, 5 )
-	btn_opt:SetText( "Open Settings" )
+	btn_opt:SetText( "#options" )
 	btn_opt:SetConsoleCommand( "gamemenucommand", "OpenOptionsDialog" )
 
 	local btn_exit = frame:Add( "DButton" )
 	btn_exit:Dock( TOP )
 	btn_exit:DockMargin( 0, 0, 0, 5 )
-	btn_exit:SetText( "Exit the game" )
+	btn_exit:SetText( "#quit" )
 	btn_exit.DoClick = function() RunGameUICommand( "quit" ) end
 end
 
@@ -221,7 +231,8 @@ function UpdateServerSettings()
 	local array = {
 		hostname = GetConVarString( "hostname" ),
 		sv_lan = GetConVarString( "sv_lan" ),
-		p2p_enabled = GetConVarString( "p2p_enabled" )
+		p2p_enabled = GetConVarString( "p2p_enabled" ),
+		p2p_friendsonly = GetConVarString( "p2p_friendsonly" )
 	}
 
 	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
@@ -423,7 +434,7 @@ function GetServers( category, id )
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
 			SendServer( pnlMainMenu, category, id,
-				2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				2000, language.GetPhrase("server_noresponse"):format(address), language.GetPhrase("server_gamemode_unreachable"), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]
@@ -488,7 +499,12 @@ function FindServersAtAddress( inputStr )
 		serverlist.PingServer( addr, function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, ... )
 
 			if ( !name ) then
-				table.insert( output, { name = "Server at " .. addr .. " did not respond", address = addr, ping = 2000, favorite = false, players = 0, maxplayers = 0, botplayers = 0, map = "", gamemode = "" } )
+				table.insert( output, {
+					name = language.GetPhrase("server_noresponse"):format(addr),
+					address = addr, ping = 2000, favorite = false,
+					players = 0, maxplayers = 0, botplayers = 0,
+					map = "", gamemode = ""
+				} )
 			else
 				name = string.JavascriptSafe( name )
 				map = string.JavascriptSafe( map )
@@ -509,7 +525,6 @@ function FindServersAtAddress( inputStr )
 			end
 
 			//if ( #output == #addresses ) then
-
 				local json = util.TableToJSON( output )
 				pnlMainMenu:Call( "ReceiveFoundServers(" .. json .. ")" )
 			//end
@@ -663,6 +678,7 @@ timer.Simple( 0, function()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
+	LoadLastMap()
 
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()

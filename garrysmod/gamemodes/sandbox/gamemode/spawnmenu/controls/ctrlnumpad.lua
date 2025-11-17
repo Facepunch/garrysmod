@@ -56,6 +56,22 @@ function PANEL:SetConVar2( cvar )
 end
 
 --[[---------------------------------------------------------
+	Name: GetValue1
+-----------------------------------------------------------]]
+function PANEL:GetValue1()
+	if ( !self.m_ConVar1 or !IsValid( self.NumPad1 ) ) then return KEY_NONE end
+	return self.NumPad1:GetValue()
+end
+
+--[[---------------------------------------------------------
+	Name: GetValue2
+-----------------------------------------------------------]]
+function PANEL:GetValue2()
+	if ( !self.m_ConVar2 or !IsValid( self.NumPad2 ) ) then return KEY_NONE end
+	return self.NumPad2:GetValue()
+end
+
+--[[---------------------------------------------------------
 	Name: Init
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
@@ -63,11 +79,11 @@ function PANEL:PerformLayout()
 	self:SetTall( 70 )
 
 	self.NumPad1:InvalidateLayout( true )
-	self.NumPad1:SetSize( 100, 50 )
+	self.NumPad1:SetSize( 110, 50 )
 
 	if ( self.m_ConVar2 ) then
 		self.NumPad2:InvalidateLayout( true )
-		self.NumPad2:SetSize( 100, 50 )
+		self.NumPad2:SetSize( 110, 50 )
 	end
 
 	if ( !self.m_ConVar2 ) then

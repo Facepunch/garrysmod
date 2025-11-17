@@ -120,11 +120,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 			if ( !panel or !IsValid( panel.Entity ) ) then return end
 
-			local anims = list.Get( "PlayerOptionsAnimations" )
-
 			local anim = default_animations[ math.random( 1, #default_animations ) ]
-			if ( anims[ playermodel ] ) then
-				anims = anims[ playermodel ]
+
+			local anims = list.GetEntry( "PlayerOptionsAnimations", playermodel )
+			if ( anims ) then
 				anim = anims[ math.random( 1, #anims ) ]
 			end
 
@@ -204,6 +203,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		end
 
 		local function UpdateFromConvars()
+
+			if ( !IsValid( mdl ) ) then return end
 
 			local model = LocalPlayer():GetInfo( "cl_playermodel" )
 			local modelname = player_manager.TranslatePlayerModel( model )

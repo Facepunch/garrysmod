@@ -82,7 +82,7 @@ end
 -- We do this instead of an NW var in order to limit the info to just this ply
 function plymeta:SendEquipment()
    net.Start("TTT_Equipment")
-      net.WriteUInt(self.equipment_items, 16)
+      net.WriteInt(self.equipment_items, util.BitsRequired(EQUIP_MAX, true))
    net.Send(self)
 end
 

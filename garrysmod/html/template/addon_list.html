@@ -112,15 +112,15 @@
 		<div ng-show="Category == 'subscribed'" class="ugc_settings {{IfElse(UGCSettingsOpen, 'active', 'hidden')}}">
 			<div class="ugc_settings_cat">
 				<span ng-Tranny="'addons.filter_by'"></span>
-				<input type="checkbox" ng-model="FilterEnabledOnly" ng-change="HandleFilterChange( 1 )"/><label ng-Tranny="'addons.enabled_only'"></label><br>
-				<input type="checkbox" ng-model="FilterDisabledOnly" ng-change="HandleFilterChange( 0 )"/><label ng-Tranny="'addons.disabled_only'"></label>
+				<input type="checkbox" ng-model="FilterEnabledOnly" ng-change="HandleFilterChange( 1 )" id="FilterEnabledOnly"/><label for="FilterEnabledOnly" ng-Tranny="'addons.enabled_only'"></label><br>
+				<input type="checkbox" ng-model="FilterDisabledOnly" ng-change="HandleFilterChange( 0 )" id="FilterDisabledOnly"/><label for="FilterDisabledOnly" ng-Tranny="'addons.disabled_only'"></label>
 			</div>
 			<div class="ugc_settings_cat">
 				<span ng-Tranny="'addons.sort_by'"></span>
-				<input type="radio" name="sort" value="title" ng-model="UGCSortMethod" ng-change="HandleSortChange()"/><label ng-Tranny="'addons.name'"></label><br>
-				<input type="radio" name="sort" value="size" ng-model="UGCSortMethod" ng-change="HandleSortChange()"/><label ng-Tranny="'addons.size'"></label><br>
-				<input type="radio" name="sort" value="updated" ng-model="UGCSortMethod" ng-change="HandleSortChange()"/><label ng-Tranny="'addons.update_date'"></label><br>
-				<input type="radio" name="sort" value="subscribed" ng-model="UGCSortMethod" ng-change="HandleSortChange()"/><label ng-Tranny="'addons.sub_date'"></label>
+				<input type="radio" name="sort" value="title" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_title"/><label for="UGCSortMethod_title" ng-Tranny="'addons.name'"></label><br>
+				<input type="radio" name="sort" value="size" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_size"/><label for="UGCSortMethod_size" ng-Tranny="'addons.size'"></label><br>
+				<input type="radio" name="sort" value="updated" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_updated"/><label for="UGCSortMethod_updated" ng-Tranny="'addons.update_date'"></label><br>
+				<input type="radio" name="sort" value="subscribed" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_subscribed"/><label for="UGCSortMethod_subscribed" ng-Tranny="'addons.sub_date'"></label>
 			</div>
 			<div class="ugc_settings_cat"><!--<span>Selection:</span>-->
 				<div ng-show="!IsAnySelected()">
@@ -151,22 +151,22 @@
 		</div>
 	</div>
 
-	<div class="modaldialog" ng-show="CreatePresetOpen">
+	<div class="modaldialog" ng-if="CreatePresetOpen">
 		<div class="centermessage left create_preset">
 			<b ng-tranny="'addons.create_preset'"></b>
 			<br/><br/>
 
-			<input type="text" class="preset_name" ng-tranny="'addons.preset_name_placeholder'" ng-model="CreatePresetName"/><br/>
+			<input type="text" class="preset_name" ng-tranny="'addons.preset_name_placeholder'" ng-model="$parent.CreatePresetName"/><br/>
 			<br/>
 
-			<input type="checkbox" ng-model="CreatePresetSaveEnabled"/><label ng-tranny="'addons.preset_save_enabled'"></label><br/>
-			<input type="checkbox" ng-model="CreatePresetSaveDisabled"/><label ng-tranny="'addons.preset_save_disabled'"></label><br/>
+			<input type="checkbox" ng-model="$parent.CreatePresetSaveEnabled" id="CreatePresetSaveEnabled"/><label for="CreatePresetSaveEnabled" ng-tranny="'addons.preset_save_enabled'"></label><br/>
+			<input type="checkbox" ng-model="$parent.CreatePresetSaveDisabled" id="CreatePresetSaveDisabled"/><label for="CreatePresetSaveDisabled" ng-tranny="'addons.preset_save_disabled'"></label><br/>
 			<br/>
 
 			<b ng-Tranny="'addons.preset_new_action'"></b><br/>
-			<input type="radio" name="createpreset_newitems" value="" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_nothing'"></label><br/>
-			<input type="radio" name="createpreset_newitems" value="disable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_disable'"></label><br/>
-			<input type="radio" name="createpreset_newitems" value="enable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_enable'"></label><br/>
+			<input type="radio" name="createpreset_newitems" value="" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_nothing"/><label for="CreatePresetNewAct_nothing" ng-tranny="'addons.action_nothing'"></label><br/>
+			<input type="radio" name="createpreset_newitems" value="disable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_disable"/><label for="CreatePresetNewAct_disable" ng-tranny="'addons.action_disable'"></label><br/>
+			<input type="radio" name="createpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-tranny="'addons.action_enable'"></label><br/>
 			<br/>
 
 			<a ng-click="CreateNewPreset()" ng-tranny="'addons.create_preset'" class="create big {{IfElse( CreatePresetName == '', 'disabled', '' )}}"></a>
@@ -175,22 +175,22 @@
 		</div>
 	</div>
 
-	<div class="modaldialog" ng-show="ImportPresetOpen">
+	<div class="modaldialog" ng-if="ImportPresetOpen">
 		<div class="centermessage left create_preset">
 			<b ng-tranny="'addons.import_preset'"></b>
 			<br/><br/>
 
-			<input type="text" class="preset_name" ng-tranny="'addons.preset_source'" ng-model="ImportPresetSource"/><br/>
+			<input type="text" class="preset_name" ng-tranny="'addons.preset_source'" ng-model="$parent.ImportPresetSource"/><br/>
 			<br/>
 			<br/>
 
-			<input type="text" class="preset_name" ng-tranny="'addons.preset_name_placeholder'" ng-model="CreatePresetName"/><br/>
+			<input type="text" class="preset_name" ng-tranny="'addons.preset_name_placeholder'" ng-model="$parent.CreatePresetName"/><br/>
 			<br/>
 
 			<b ng-Tranny="'addons.preset_new_action'"></b><br/>
-			<input type="radio" name="importpreset_newitems" value="" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_nothing'"></label><br/>
-			<input type="radio" name="importpreset_newitems" value="disable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_disable'"></label><br/>
-			<input type="radio" name="importpreset_newitems" value="enable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_enable'"></label><br/>
+			<input type="radio" name="importpreset_newitems" value="" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_nothing"/><label for="CreatePresetNewAct_nothing" ng-tranny="'addons.action_nothing'"></label><br/>
+			<input type="radio" name="importpreset_newitems" value="disable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_disable"/><label for="CreatePresetNewAct_disable" ng-tranny="'addons.action_disable'"></label><br/>
+			<input type="radio" name="importpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-tranny="'addons.action_enable'"></label><br/>
 			<br/>
 
 			<a ng-click="ImportPreset()" ng-tranny="'addons.import_preset'" class="create {{IfElse( ImportPresetSource == '' || CreatePresetName == '', 'disabled', '' )}}"></a>
@@ -199,31 +199,34 @@
 		</div>
 	</div>
 
-	<div class="modaldialog" ng-show="ImportPresetLoading">
+	<div class="modaldialog" ng-if="ImportPresetLoading">
 		<div class="centermessage left create_preset">
 			<h1 ng-tranny="'dupes.loading'"></h1>
 		</div>
 	</div>
 
-	<div class="modaldialog" ng-show="LoadPresetMenuOpen">
+	<div class="modaldialog" ng-if="LoadPresetMenuOpen">
 		<div class="centermessage left">
 			<b ng-tranny="'addons.load_preset'"></b>
 			<br/><br/>
 
 			<div class="preset_content">
-				<input type="text" ng-model="PresetSearchText" ng-tranny="'addons.filter_preset'"><br/><div class="preset_list">
-					<font ng-repeat="file in PresetList" ng-hide="file.name.toLowerCase().indexOf(PresetSearchText.toLowerCase()) == -1" ng-click="SelectPreset( file.name, file.newAction );" class="{{IfElse( file.name == SelectedPreset, 'active', '' )}}">{{file.name}}</font>
-				</div><!--Space/newline here fucks with alignment, thanks HTML
-			 --><div class="preset_data" ng-show="SelectedPreset">
+				<div class="preset_side">
+					<input type="text" ng-model="$parent.PresetSearchText" ng-tranny="'addons.filter_preset'">
+					<div class="preset_list">
+						<font ng-repeat="file in PresetList" ng-hide="file.name.toLowerCase().indexOf(PresetSearchText.toLowerCase()) == -1" ng-click="SelectPreset( file.name, file.newAction );" class="{{IfElse( file.name == SelectedPreset, 'active', '' )}}">{{file.name}}</font>
+					</div>
+				</div>
+				<div class="preset_data" ng-show="SelectedPreset">
 					<b ng-Tranny="'addons.preset_name'"></b> {{PresetList[ SelectedPreset ].name}}<br>
 					<b ng-Tranny="'addons.preset_enabled'"></b> {{PresetList[ SelectedPreset ].enabled.length}}<br>
 					<b ng-Tranny="'addons.preset_disabled'"></b> {{PresetList[ SelectedPreset ].disabled.length}}<br>
-					<input type="checkbox" ng-model="LoadPresetResub"/><label ng-tranny="'addons.preset_resub_missing'"></label><br/>
+					<input type="checkbox" ng-model="$parent.LoadPresetResub" id="LoadPresetResub"/><label for="LoadPresetResub" ng-tranny="'addons.preset_resub_missing'"></label><br/>
 
 					<br><b ng-Tranny="'addons.preset_new_action'"></b><br>
-					<input type="radio" name="loadpreset_newitems" value="" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_nothing'"></label><br/>
-					<input type="radio" name="loadpreset_newitems" value="disable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_disable'"></label><br/>
-					<input type="radio" name="loadpreset_newitems" value="enable" ng-model="CreatePresetNewAct"/><label ng-tranny="'addons.action_enable'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_nothing"/><label for="CreatePresetNewAct_nothing" ng-tranny="'addons.action_nothing'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="disable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_disable"/><label for="CreatePresetNewAct_disable" ng-tranny="'addons.action_disable'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-tranny="'addons.action_enable'"></label><br/>
 
 					<br>
 					<a ng-click="LoadSelectedPreset()" ng-tranny="'addons.load_preset'" class="create"></a>
@@ -232,11 +235,13 @@
 					<br>
 					<a ng-click="DeletePreset( SelectedPreset )" ng-tranny="'addons.delete_preset'" class="warning"></a>
 				</div>
-			</div><!--Space/newline here fucks with alignment, thanks HTML
-		 --><a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a></div>
+			</div>
+
+			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
+		</div>
 	</div>
 
-	<div class="modaldialog" ng-show="PopupMessageDisplayed">
+	<div class="modaldialog" ng-if="PopupMessageDisplayed">
 		<div class="centermessage">
 			<span ng-tranny="'addons.warning'"></span>
 			<span ng-tranny="PopupMessageDisplayedMessage"></span>
@@ -246,7 +251,7 @@
 				<div ng-repeat="fileid in PopupMessageFiles" class="button {{IfElse( IsSubscribedID( fileid ), 'subbed', '' )}}">
 					<wstitle ng-click="OpenWorkshopFile( fileid )" id="wsid{{fileid}}" class="wstitle">{{fileid}}</wstitle>
 					<wsbut ng-show="IsSubscribedID( fileid )" class="wssub"><img src="img/tick.png" loading="lazy"/></wsbut>
-					<wsbut ng-hide="IsSubscribedID( fileid )" onclick="subscriptions.Subscribe( {{fileid}} );" class="wssub"><img src="img/plus.png" loading="lazy"></img></wsbut>
+					<wsbut ng-hide="IsSubscribedID( fileid )" ng-click="SubscribeByID( fileid );" class="wssub"><img src="img/plus.png" loading="lazy"></img></wsbut>
 				</div>
 			</div>
 

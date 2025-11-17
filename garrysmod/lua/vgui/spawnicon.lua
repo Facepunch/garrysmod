@@ -166,6 +166,8 @@ function PANEL:Copy()
 	copy:CopyBase( self )
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
+	copy.OpenMenuExtra = self.OpenMenuExtra
+	copy:SetTooltip( self:GetTooltip() )
 
 	return copy
 
@@ -205,7 +207,7 @@ function PANEL:InternalAddResizeMenu( menu, callback, label )
 	local function AddSizeOption( submenu, w, h, curW, curH )
 
 		local p = submenu:AddOption( w .. " x " .. h, function() callback( w, h ) end )
-		if ( w == ( curW or 64 ) && h == ( curH or 64 ) ) then p:SetIcon( "icon16/accept.png" ) end
+		if ( w == ( curW or 64 ) && h == ( curH or 64 ) ) then p:SetChecked( true ) end
 
 	end
 

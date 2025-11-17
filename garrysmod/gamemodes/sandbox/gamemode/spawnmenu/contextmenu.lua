@@ -177,7 +177,7 @@ function CreateContextMenu()
 	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
 	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
 
-	for k, v in pairs( list.Get( "DesktopWindows" ) ) do
+	for k, wdgt in pairs( list.Get( "DesktopWindows" ) ) do
 
 		local icon = IconLayout:Add( "DButton" )
 		icon:SetText( "" )
@@ -186,42 +186,40 @@ function CreateContextMenu()
 		icon.WidgetClass = k
 
 		local image = icon:Add( "DImage" )
-		image:SetImage( v.icon )
+		image:SetImage( wdgt.icon )
 		image:SetSize( 64, 64 )
 		image:Dock( TOP )
 		image:DockMargin( 8, 0, 8, 0 )
 
 		local label = icon:Add( "DLabel" )
 		label:Dock( BOTTOM )
-		label:SetText( v.title )
+		label:SetText( wdgt.title )
 		label:SetContentAlignment( 5 )
 		label:SetTextColor( color_white )
 		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 
 		icon.DoClick = function()
 
-			--
-			-- v might have changed using autorefresh so grab it again
-			--
-			local newv = list.Get( "DesktopWindows" )[ k ]
-
 			-- Changing parents causes loss of input and I don't have time to figure out why
 			if ( IsValid( icon.Window ) && icon.Window:GetParent() != g_ContextMenu ) then
 				icon.Window:Remove()
 			end
 
-			if ( newv.onewindow and IsValid( icon.Window ) ) then
+			-- wdgt might have changed using autorefresh, so grab it again
+			local newWdgt = list.GetEntry( "DesktopWindows", k )
+
+			if ( newWdgt.onewindow and IsValid( icon.Window ) ) then
 				icon.Window:Center()
 				return
 			end
 
 			-- Make the window
 			icon.Window = g_ContextMenu:Add( "DFrame" )
-			icon.Window:SetSize( newv.width, newv.height )
-			icon.Window:SetTitle( newv.title )
+			icon.Window:SetSize( newWdgt.width, newWdgt.height )
+			icon.Window:SetTitle( newWdgt.title )
 			icon.Window:Center()
 
-			newv.init( icon, icon.Window )
+			newWdgt.init( icon, icon.Window )
 
 		end
 
@@ -229,7 +227,14 @@ function CreateContextMenu()
 
 end
 
+local spawnmenu_toggle = GetConVar( "spawnmenu_toggle" )
+local contextMenuLastOpen = 0
+
 function GM:OnContextMenuOpen()
+
+	-- Already open (toggle)
+	if ( spawnmenu_toggle:GetBool() && g_ContextMenu and g_ContextMenu:IsVisible() ) then return end
+	contextMenuLastOpen = SysTime()
 
 	-- Let the gamemode decide whether we should open or not..
 	if ( !hook.Call( "ContextMenuOpen", self ) ) then return end
@@ -244,6 +249,8 @@ function GM:OnContextMenuOpen()
 end
 
 function GM:OnContextMenuClose()
+
+	if ( spawnmenu_toggle:GetBool() && SysTime() - contextMenuLastOpen < 0.180 ) then return end
 
 	if ( IsValid( g_ContextMenu ) ) then g_ContextMenu:Close() end
 	hook.Call( "ContextMenuClosed", self )

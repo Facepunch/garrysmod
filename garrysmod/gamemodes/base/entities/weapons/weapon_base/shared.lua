@@ -55,7 +55,7 @@ function SWEP:PrimaryAttack()
 
 	-- Punch the player's view
 	local owner = self:GetOwner()
-	if ( !owner:IsNPC() ) then owner:ViewPunch( Angle( -1, 0, 0 ) ) end
+	if ( IsValid( owner ) and !owner:IsNPC() ) then owner:ViewPunch( Angle( -1, 0, 0 ) ) end
 
 end
 
@@ -79,7 +79,7 @@ function SWEP:SecondaryAttack()
 
 	-- Punch the player's view
 	local owner = self:GetOwner()
-	if ( !owner:IsNPC() ) then owner:ViewPunch( Angle( -10, 0, 0 ) ) end
+	if ( IsValid( owner ) and !owner:IsNPC() ) then owner:ViewPunch( Angle( -10, 0, 0 ) ) end
 
 end
 
@@ -135,6 +135,9 @@ end
 -----------------------------------------------------------]]
 function SWEP:ShootBullet( damage, num_bullets, aimcone, ammo_type, force, tracer )
 
+	-- Effects first, in case the owner dies during firebullets call
+	self:ShootEffects()
+
 	local owner = self:GetOwner()
 
 	local bullet = {}
@@ -146,10 +149,10 @@ function SWEP:ShootBullet( damage, num_bullets, aimcone, ammo_type, force, trace
 	bullet.Force	= force || 1						-- Amount of force to give to phys objects
 	bullet.Damage	= damage
 	bullet.AmmoType = ammo_type || self.Primary.Ammo
+	bullet.Attacker = owner
+	bullet.Inflictor = self
 
 	owner:FireBullets( bullet )
-
-	self:ShootEffects()
 
 end
 
@@ -247,6 +250,9 @@ end
 	Desc: Returns how much of ammo1 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo1()
+	-- Owner cannot have ammo? Such as NPCs.
+	if ( !self:GetOwner().GetAmmoCount ) then return 0 end
+
 	return self:GetOwner():GetAmmoCount( self:GetPrimaryAmmoType() )
 end
 
@@ -255,6 +261,9 @@ end
 	Desc: Returns how much of ammo2 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo2()
+	-- Owner cannot have ammo? Such as NPCs.
+	if ( !self:GetOwner().GetAmmoCount ) then return 0 end
+
 	return self:GetOwner():GetAmmoCount( self:GetSecondaryAmmoType() )
 end
 

@@ -12,10 +12,10 @@ function PANEL:Init()
 	self.JS = {}
 	self.Callbacks = {}
 
-	--
-	-- Implement a console.log - because awesomium doesn't provide it for us anymore.
-	--
-	self:AddFunction( "console", "log", function( param ) self:ConsoleMessage( param ) end )
+	if ( self:GetClassName() != "HtmlPanel" ) then
+		-- Implement a console.log - because awesomium doesn't provide it for us anymore.
+		self:AddFunction( "console", "log", function( param ) self:ConsoleMessage( param ) end )
+	end
 
 end
 
@@ -63,7 +63,7 @@ function PANEL:Call( js )
 	self:QueueJavascript( js )
 end
 
-function PANEL:ConsoleMessage( msg, file, line )
+function PANEL:ConsoleMessage( msg, file, line, severity )
 
 	if ( !isstring( msg ) ) then msg = "*js variable*" end
 
@@ -77,13 +77,22 @@ function PANEL:ConsoleMessage( msg, file, line )
 		end
 
 		MsgC( Color( 255, 160, 255 ), "[HTML] " )
-		MsgC( Color( 255, 255, 255 ), file, ":", line, ": ", msg, "\n" )
+		if ( severity == "debug" ) then
+			MsgC( Color( 160, 160, 160, 255 ), "[Debug] " )
+		elseif ( severity == "warn" ) then
+			MsgC( Color( 255, 255, 90, 255 ), "[Warn]  " )
+		elseif ( severity == "error" ) then
+			MsgC( Color( 255, 90, 90, 255 ), "[Error] " )
+		end
+
+		MsgC( Color( 210, 210, 210 ), file, ":", line, ": " )
+		MsgC( Color( 255, 255, 255 ), msg, "\n" )
 		return
 
 	end
 
 	--
-	-- Handle Lua execution
+	-- Handle old style Lua execution
 	--
 	if ( self.m_bAllowLua && msg:StartsWith( "RUNLUA:" ) ) then
 
@@ -181,4 +190,4 @@ end
 function PANEL:OnChangeTargetURL( url )
 end
 
-derma.DefineControl( "DHTML", "A shape", PANEL, "Awesomium" )
+derma.DefineControl( "DHTML", "A shape", PANEL, "HTML" )

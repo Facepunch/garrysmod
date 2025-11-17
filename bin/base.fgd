@@ -295,7 +295,7 @@
 	ResponseContext(string) : "Response Contexts" : "" : "Response system context(s) for this entity. Format should be: 'key:value,key2:value2,etc'. When this entity speaks, the list of keys & values will be passed to the response rules system."
 ]
 
-@BaseClass base(Targetname, DamageFilter, Shadow, GMODSandbox, GMODModelScale) = Breakable
+@BaseClass base(Targetname, DamageFilter, Shadow, GMODSandbox) = Breakable
 [
 	ExplodeDamage(float) : "Explosion Damage" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage. See also 'Explosion Radius'."
 	ExplodeRadius(float) : "Explosion Radius" : 0 : "If non-zero, when this entity breaks it will create an explosion with a radius of the specified amount. See also 'Explosion Damage'."
@@ -418,20 +418,20 @@
 		9:	"item_box_buckshot"
 		10:	"item_flare_round"
 		11:	"item_box_flare_rounds"
-		12:	"item_ml_grenade"
+		12:	"item_rpg_round"
 		13:	"item_smg1_grenade"
 		14:	"item_box_sniper_rounds"
-		15:	"unused1"
+		//15:	"unused1"
 		16:	"weapon_stunstick"
-		17:	"weapon_ar1"
+		//17:	"weapon_ar1"
 		18:	"weapon_ar2"
-		19:	"unused2"
-		20:	"weapon_ml"
+		//19:	"unused2"
+		//20:	"weapon_ml"
 		21:	"weapon_smg1"
-		22:	"weapon_smg2"
+		//22:	"weapon_smg2"
 		23:	"weapon_slam"
 		24:	"weapon_shotgun"
-		25:	"weapon_molotov"
+		//25:	"weapon_molotov"
 		26:	"item_dynamic_resupply"
 	]
 	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
@@ -531,7 +531,7 @@
 	input SetEnemyFilter(string) : "Changes this NPC's enemy filter to the named filter."
 	input SetHealth(integer) : "Set this NPC's health."
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
-	input physdamagescale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
+	input PhysDamageScale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input Ignite(void) : "Ignite, burst into flames"
 	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
 	input IgniteNumHitboxFires(integer) : "Ignite, with a parameter number of hitbox fires."
@@ -671,12 +671,22 @@
 
 @BaseClass color(0 255 0) = PlayerClass []
 
-@BaseClass color(180 10 180) = Light
+@BaseClass = LightInputs
 [
-	_light(color255) : "Brightness" : "255 255 255 200"
-	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
-	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
-	style(Choices) : "Appearance" : 0 =
+	// Inputs
+	input TurnOn(void) : "Turn the light on."
+	input TurnOff(void) : "The the light off."
+	input Toggle(void) : "Toggle the light's current state."
+	input SetPattern(string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+	input FadeToPattern(string) : "Fades from first value in old pattern, to first value in the new given pattern. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+]
+
+@BaseClass color(180 10 180) base(LightInputs) = Light
+[
+	_light(color255) : "Color and Brightness" : "255 255 255 200" : "Color (RGB) and Brightness (W) for this light. Last number is the brightness."
+	_lightHDR(color255) : "Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_lightscaleHDR(float) : "HDR Brightness scale" : "1" : "Amount to scale the light by when compiling for HDR."
+	style(Choices) : "Appearance" : 0 : "Preset flashing patterns for the light." =
 	[
 		0 : "Normal"
 		10: "Fluorescent flicker"
@@ -705,13 +715,6 @@
 		0 : "Don't affect entity shadow angles"
 		1 : "Affect entity shadow angles"
 	]
-
-	// Inputs
-	input TurnOn(void) : "Turn the light on."
-	input TurnOff(void) : "The the light off."
-	input Toggle(void) : "Toggle the light's current state."
-	input SetPattern(string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
-	input FadeToPattern(string) : "Fades from first value in old pattern, to first value in the new given pattern. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 ]
 
 @BaseClass = Node
@@ -917,7 +920,7 @@
 	spinup(integer) : "Spin up time (0-100)" : 0 : "Pitch fade in time in seconds. 0 means instant."
 	spindown(integer) : "Spin down time (0-100)" : 0 : "Pitch fade in time in seconds. 0 means instant."
 	cspinup(integer) : "Incremental Spinup Count" : 0				// NEEDHELP
-	
+
 	SourceEntityName(target_destination) : "SourceEntityName" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 	preset(choices) :"Dynamic Presets" : 0 : "Various DSP (Digital Signal Processing) effects that can be applied." =
 	[
@@ -1732,8 +1735,8 @@
 	endsize(float) : "Ending particle size" : "50" : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : "15" : "Distance from env_smoketrail at which particles are emitted."
 
-	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
-	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+	//firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
+	//smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
 ]
 
 @PointClass base(Targetname, Parentname) sphere() sphere(inner_radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion :
@@ -2343,6 +2346,8 @@
 
 	output OnGustStart(void) : "Fired when a wind gust begins."
 	output OnGustEnd(void) : "Fired when a wind gust ends."
+
+	input SetWindDir(integer) : "Set the wind direction. (Yaw only)"
 ]
 
 @PointClass base(Angles) size(-16 -16 -16, 16 16 16) color(0 0 255) = sky_camera :
@@ -2372,7 +2377,7 @@
 	fogstart(string) : "Fog Start" : "500.0" : "Distance at which the skybox fog should start."
 	fogend(string) : "Fog End" : "2000.0" : "Distance at which the skybox fog should be fully opaque."
 	fogmaxdensity(float) : "Fog Max Density [0..1]" : "1" : "How dense the fog will appear, 0 - fully transparent, 1 - fully opaque" // GMOD
-	
+
 	//fogradial(boolean) : "Use Radial Fog?" : 0 : "Use radial fog instead of planar-based fog."
 ]
 
@@ -2547,6 +2552,7 @@
 	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
+	IgnoreSolid(boolean) : "Ignore Solid" : "0" : "If set, this spotlight won't try to prevent the beam going through solids."
 
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
@@ -2592,19 +2598,21 @@
 	input DoSpark(void) : "Force a single arc."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_clientcommand :
-	"An entity that issues commands to the client console, as if it was typed in by the player (if activator is a player, or the local player in single player)."
-[
-	// Inputs
-	input Command(string) : "Command to execute."
-]
+// GMOD: These 2 are disabled in GMod, so no point in having them in Hammer
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_servercommand :
-	"An entity that issues commands to the server console."
-[
-	// Inputs
-	input Command(string) : "Command to execute."
-]
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_clientcommand :
+//	"An entity that issues commands to the client console, as if it was typed in by the player (if activator is a player, or the local player in single player)."
+//[
+//	// Inputs
+//	input Command(string) : "Command to execute."
+//]
+
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_servercommand :
+//	"An entity that issues commands to the server console."
+//[
+//	// Inputs
+//	input Command(string) : "Command to execute."
+//]
 
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor :
 	"An entity that relays bonus maps changes."
@@ -2790,7 +2798,7 @@
 @PointClass base(Targetname, Parentname, Angles) studio("models/editor/cone_helper.mdl") line(255 255 255, targetname, cpoint1) line(255 255 255, targetname, cpoint2) line(255 255 255, targetname, cpoint3) line(255 255 255, targetname, cpoint4) line(255 255 255, targetname, cpoint5) line(255 255 255, targetname, cpoint6) line(255 255 255, targetname, cpoint7) line(255 255 255, targetname, cpoint8) line(255 255 255, targetname, cpoint9) line(255 255 255, targetname, cpoint10) line(255 255 255, targetname, cpoint11) line(255 255 255, targetname, cpoint12) line(255 255 255, targetname, cpoint13) line(255 255 255, targetname, cpoint14) line(255 255 255, targetname, cpoint15) line(255 255 255, targetname, cpoint16) line(255 255 255, targetname, cpoint17) line(255 255 255, targetname, cpoint18) line(255 255 255, targetname, cpoint19) line(255 255 255, targetname, cpoint20) line(255 255 255, targetname, cpoint21) line(255 255 255, targetname, cpoint22) line(255 255 255, targetname, cpoint23) line(255 255 255, targetname, cpoint24) line(255 255 255, targetname, cpoint25) line(255 255 255, targetname, cpoint26) line(255 255 255, targetname, cpoint27) line(255 255 255, targetname, cpoint28) line(255 255 255, targetname, cpoint29) line(255 255 255, targetname, cpoint30) line(255 255 255, targetname, cpoint31) line(255 255 255, targetname, cpoint32) line(255 255 255, targetname, cpoint33) line(255 255 255, targetname, cpoint34) line(255 255 255, targetname, cpoint35) line(255 255 255, targetname, cpoint36) line(255 255 255, targetname, cpoint37) line(255 255 255, targetname, cpoint38) line(255 255 255, targetname, cpoint39) line(255 255 255, targetname, cpoint40) line(255 255 255, targetname, cpoint41) line(255 255 255, targetname, cpoint42) line(255 255 255, targetname, cpoint43) line(255 255 255, targetname, cpoint44) line(255 255 255, targetname, cpoint45) line(255 255 255, targetname, cpoint46) line(255 255 255, targetname, cpoint47) line(255 255 255, targetname, cpoint48) line(255 255 255, targetname, cpoint49) line(255 255 255, targetname, cpoint50) line(255 255 255, targetname, cpoint51) line(255 255 255, targetname, cpoint52) line(255 255 255, targetname, cpoint53) line(255 255 255, targetname, cpoint54) line(255 255 255, targetname, cpoint55) line(255 255 255, targetname, cpoint56) line(255 255 255, targetname, cpoint57) line(255 255 255, targetname, cpoint58) line(255 255 255, targetname, cpoint59) line(255 255 255, targetname, cpoint60) line(255 255 255, targetname, cpoint61) line(255 255 255, targetname, cpoint62) line(255 255 255, targetname, cpoint63) = info_particle_system :
 	"An entity that spawns a particle system built using the particle editor."
 [
-	effect_name(string) : "Particle System Name"
+	effect_name(particlesystem) : "Particle System Name"
 	start_active(choices) : "Start Active?" : 0 =
 	[
 		0 : "No"
@@ -3084,30 +3092,30 @@
 	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast, in inches."
 ]
 
-@PointClass base(Angles) iconsprite("editor/light_env.vmt") = light_environment :
+@PointClass base(Angles, LightInputs) iconsprite("editor/light_env.vmt") = light_environment :
 	"Sets the color and angle of the light from the sun and sky."
 [
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	_light(color255) : "Brightness and Color" : "255 255 255 200" : "The sunlight color. Last number is the brightness."
+	_lightHDR(color255) : "Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_lightscaleHDR(float) : "HDR Brightness Scale" : "1" : "Amount to scale the light by when compiling for HDR."
 	_ambient(color255) : "Ambient Color and Brightness" : "255 255 255 20" : "The ambient color of the map, in the shadows/caves where there is no direct sunlight. Last number is the brightness."
-	_lightHDR(color255) : "Brightness (HDR)" : "-1 -1 -1 1"
-	_lightscaleHDR(float) : "Brightness Scale (HDR)" : "1" : "Amount to scale the light by when compiling for HDR."
-	_ambientHDR(color255) : "Ambient (HDR)" : "-1 -1 -1 1"
-	_AmbientScaleHDR(float) : "Ambient Scale (HDR)" : "1" : "Amount to scale the ambient light by when compiling for hdr."
+	_ambientHDR(color255) : "Ambient Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_AmbientScaleHDR(float) : "HDR Ambient Brightness Scale" : "1" : "Amount to scale the ambient light by when compiling for hdr."
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	SunSpreadAngle(float) : "Sun Spread Angle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
 
 	targetname(target_source) : "Name (Read notes)" : : "The name that other entities refer to this entity by. Setting this will allow scripts to control this entity, but will also substantially increase filesize of the map."
 ]
 
-@PointClass base(Angles) iconsprite("editor/light_directional.vmt") = light_directional : 
+@PointClass base(Angles) iconsprite("editor/light_directional.vmt") = light_directional :
 	"A directional light with no falloff. Similar to sunlight in light_environment."
 [
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
-	_light(color255) : "Brightness" : "255 255 255 200"
-	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
-	_lightscaleHDR(float) : "BrightnessScaleHDR" : "0.7" : "Amount to scale the light by when compiling for HDR."
-	SunSpreadAngle(float) : "SpreadAngle" : 0 : "The angular extent of the light for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+	_light(color255) : "Color and Brightness" : "255 255 255 200" : "Color (RGB) and Brightness (W) for this light. Last number is the brightness."
+	_lightHDR(color255) : "Color and Brightness (HDR)" : "-1 -1 -1 1" : "Color and Brightness for HDR map compiles. Leave as '-1 -1 -1 1' to use the SDR values."
+	_lightscaleHDR(float) : "HDR Brightness Scale" : "0.7" : "Amount to scale the light by when compiling for HDR."
+	SunSpreadAngle(float) : "Sun Spread Angle" : 0 : "The angular extent of the light for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
 ]
 
 @PointClass base(Targetname, Angles, Light) lightprop("models/editor/spot.mdl") lightcone() sphere(_fifty_percent_distance) sphere(_zero_percent_distance) = light_spot :
@@ -3215,16 +3223,16 @@
 	maxweight(float)  : "Maximum Weight"				: "1.0"   : "This is the maximum weight for this lookup"
 	fadeInDuration(float)   : "Lookup Fade In Duration"		: "0.0"	  : "Duration of fade in on when enabled."
 	fadeOutDuration(float)   : "Lookup Fade out Duration"		: "0.0"	  : "Dration of fade out on when disabled."
-	
+
 	// Inputs
 	input SetFadeInDuration(float) : "Sets the 'fadeInDuration' variable, used to fade cc lookup usage when entity is enabled."
 	input SetFadeOutDuration(float) : "Sets the 'fadeOutDuration' variable, used to fade cc lookup usage when entity is disabled."
 ]
-@PointClass base(Targetname, EnableDisable, SpatialEntity) sphere(minfalloff) sphere(maxfalloff) = env_ambient_light : 
+@PointClass base(Targetname, EnableDisable, SpatialEntity) sphere(minfalloff) sphere(maxfalloff) = env_ambient_light :
 	"This entity adds a constant color value to dark areas of the world without affecting brighter areas."
 [
 	color(color255) : "Color (R G B)" : "255 255 255"
-	
+
 	// Inputs
 	input SetColor(color255) : "Sets the color."
 ]
@@ -3242,7 +3250,7 @@
 	filename(string)  : "Lookup Table Filename"			: ""	  : "This is the lookup table filename, relative to the base game folder, where materials/ folder is, including .raw extension. Lookup files can be generated in-game via 'colorcorrectionui' console command."
 	fadeInDuration(float)   : "Lookup Fade In Duration"		: "0.0"	  : "Duration of fade in on when enabled."
 	fadeOutDuration(float)   : "Lookup Fade out Duration"		: "0.0"	  : "Dration of fade out on when disabled."
-	exclusive(choices) : "Exlusive" : 0 : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. There should only be one active exclusive color_correction ent at any time." = 
+	exclusive(choices) : "Exlusive" : 0 : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. There should only be one active exclusive color_correction ent at any time." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3946,6 +3954,8 @@
 		0 : "No"
 		1 : "Yes"
 	]
+
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 
 	spawnflags(flags) =
 	[
@@ -5190,7 +5200,7 @@
 @PointClass base(Targetname, Angles) sphere(expradius) studioprop() = physics_cannister :
 	"A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode."
 [
-	model(studio) : "World model" : "models/fire_equipment/w_weldtank.mdl"
+	model(studio) : "World model" : "models/props_c17/canister01a.mdl"
 	spawnflags(flags) =
 	[
 		1 : "Start Asleep" : 0
@@ -5539,7 +5549,7 @@
 												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
 	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
-	disablevertexlighting(choices) : "Disable Vertex Lighting" : 0 =
+	disablevertexlighting(choices) : "Disable Vertex Lighting" : 0 : "Whether to disable vertex lighting for this static prop. Vertex Lighting requires vrad.exe to be ran with -StaticPropLighting parameter." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5725,7 +5735,7 @@
 	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 ]
 
-@PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
+@PointClass base(BasePropPhysics, GMODModelScale) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage. Health can be overridden on this version."
 [
@@ -5738,7 +5748,7 @@
 	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
 ]
 
-@PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
+@PointClass base(BasePropPhysics, RenderFields, GMODModelScale) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage. "+
 	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+
@@ -5783,7 +5793,7 @@
 	]
 	angleOverride(string) : "Override Animation" : "" : "Filled in by the engine via wc_update_entity, do not edit by hand except to clear."
 
-	input StartRagdollBoogie(void) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
+	input StartRagdollBoogie(float) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
 	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"
@@ -5875,6 +5885,7 @@
 
 	// Inputs
 	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in inches."
+	input Restore(void) : "Un-shatter the window."
 ]
 
 @SolidClass base(Targetname, Parentname, RenderFields, Shadow) = func_conveyor :
@@ -5929,17 +5940,20 @@
 		7 : "Particle Snow"
 	]
 
-	particle_name(string) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name(particlesystem) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the closest particle system to the player.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest.\r\n"+
 		"Control point data for each system is: 1 = World position of the particle, 2=Player position/orientation, 3=Density (X component)"
-	particle_name_inner(string) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name_inner(particlesystem) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the middle particle system.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
-	particle_name_outer(string) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name_outer(particlesystem) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the farthest particle system from the player.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
 	particle_dist_inner(float) : "Particle System Distance (Inner)" : "180" : "If using custom particle systems, this will be the distance of the middle one from the player."
+
+	// Inputs
+	input Alpha(integer) : "Set the particle density (0 - 100)."
 ]
 
-@SolidClass base(Targetname, Parentname) = func_precipitation_blocker : 
+@SolidClass base(Targetname, Parentname) = func_precipitation_blocker :
 	"A brush entity that prevents rain and snow inside its volume."
 [
 ]
@@ -6144,7 +6158,21 @@
 	"NOTE: Build your train so that the front of the train is facing down the X axis. " +
 	"When it spawns it will automatically rotate to face the next path_track on the path."
 [
+	ManualSpeedChanges(choices) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times." =
+	[
+		0 : "Off"
+		1 : "On"
+	]
+
+	ManualAccelSpeed(float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
+	ManualDecelSpeed(float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
+
 	// Inputs
+	input SetSpeedDirAccel(float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
+	input TeleportToPathTrack(string) : "Teleport train to the designated path track."
+	input SetSpeedForwardModifier(float) : "Applies the given modifier to all forward speeds. [0, 1]"
+
+	// GMOD: From Portal 2
 	input MoveToPathNode(string) : "Start moving to a destination and stop when you get there. This must be in the same path."
 	input TeleportToPathNode(string) : "Teleport to a destination and stop there. This can be in a new path."
 	input LockOrientation(void) : "Lock the current orientation of the train."
@@ -6155,21 +6183,8 @@
 	// Outputs
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
-	output OnArrivedAtDestinationNode(void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."	
 	//output OnNext(string) : "Fires when this train picks a new point to move towards (and just after OnStart)."
-
-	ManualSpeedChanges(choices) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times." =
-	[
-		0 : "Off"
-		1 : "On"
-	]
-
-	ManualAccelSpeed(float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
-	ManualDecelSpeed(float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
-
-	input SetSpeedDirAccel(float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
-	input TeleportToPathTrack(string) : "Teleport train to the designated path track."
-	input SetSpeedForwardModifier(float) : "Applies the given modifier to all forward speeds. [0, 1]"
+	output OnArrivedAtDestinationNode(void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
 ]
 
 @SolidClass base(BaseTrain) = func_tanktrain :
@@ -6517,6 +6532,13 @@
 	[
 		32: "Preserve angles even when a local landmark is not specified AND only allow clients in vehicles" : 0
 	]
+]
+
+@SolidClass base(Trigger) = trigger_teleport_relative :
+	"A trigger volume that teleports entities that touch it. Entities are teleported by Offset from their current position. Useful to get " +
+	"objects out of situations where levels or entities suddenly appear interseting with them."
+[
+	teleportoffset(vector) : "Offset (X Y Z)" : "0 0 0" : "The offset (in World-Space Coordinates X Y Z) to teleport the entity when the trigger is touched."
 ]
 
 @SolidClass base(Targetname) = trigger_transition :
@@ -6881,7 +6903,7 @@
 	parm10(instance_parm) : "Parm" : : "This is a parameter.  It goes in the form of $variable type."
 ]
 
-@PointClass iconsprite("editor/func_instance_parms.vmt") = func_instance_io_proxy : 
+@PointClass iconsprite("editor/func_instance_parms.vmt") = func_instance_io_proxy :
 	"Place one copy of this entity inside of an instance.  Sending messages to entities inside the instance from the Proxy's OnProxyRelay output " +
 	"will allow you to trigger these entities from outside the instance by sending messages to the func_instance.  " +
 	"Send the ProxyRelay message from entities inside the instance to the proxy and you will be able to use these events to send messages to other entities " +
@@ -6900,14 +6922,14 @@
 ]
 
 // GMOD: From Half-Life: Source
-@SolidClass = func_friction : "Surface with a change in friction. Does not apply to players." 
+@SolidClass = func_friction : "Surface with a change in friction. Does not apply to players."
 [
 	modifier(integer) : "Percentage of standard (0 - 100)" : 15
 ]
 
 // GMOD: From CS:GO
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
-	"An entity that precaches skybox materials and swaps them on trigger." 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper :
+	"An entity that precaches skybox materials and swaps them on trigger."
 [
 	SkyboxName(string) : "Skybox Material Name" : "sky_dust"
 	input Trigger(void) : "Swap to this skybox."
@@ -6930,11 +6952,11 @@
 		2 : "Team 2 (ORANGE)"
 		3 : "Team 3 (BLUE)"
 	]
-		
+
 	// Inputs
 	input Enable(void) : "Enable the logic_eventlistener."
 	input Disable(void) : "Disable the logic_eventlistener."
-	
+
 	// Outputs
 	output OnEventFired(void)  : "Fired when the event has been detected."
 ]
@@ -6955,17 +6977,17 @@
 		2 : "Team 2 (ORANGE)"
 		3 : "Team 3 (BLUE)"
 	]
-		
+
 	// Inputs
 	input Enable(void) : "Enable this entity."
 	input Disable(void) : "Disable this entity."
-	
+
 	// Outputs
 	output OnEventFired(void)  : "Fired when the event has been detected."
 ]
 
 // GMOD: From CS:GO
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/axis_helper_thick.mdl") worldtext() = point_worldtext : 
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/axis_helper_thick.mdl") worldtext() = point_worldtext :
 	"An entity that displays a text message oriented in the world, at its origin."
 [
 	message(string) : "Entity Message" : "" : "Text Message. English characters and numbers only! Newline characters are accepted."
@@ -6982,7 +7004,7 @@
 
 	spawnflags(flags) =
 	[
-		1 : "Start hidden" : 0 
+		1 : "Start hidden" : 0
 	]
 
 	rainbow(boolean) : "Rainbow" : 0 : "Override the color to rainbow hues."
@@ -7038,7 +7060,7 @@
 	input Trigger(void) : "Trigger this entity, causing its OnTrigger outputs to fire if it is enabled."
 	input Toggle(void) : "Toggle this entity between enabled and disabled."
 	input CancelPending(void) : "Cancel any events fired by this entity that are currently pending in the I/O event queue."
-	
+
 	// Outputs
 	output OnSpawn(void) : "Fired when this entity is spawned. If this entity is set to only trigger once, it will "+
 		"delete itself after firing this output."
@@ -7071,4 +7093,122 @@
 
 	// Outputs
 	output OnFoundEntity(void) : "Fired when FindEntity is input and an entity was found. Passes the found entity as !caller."
+]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname, EnableDisable) size(-8 -8 -8, 8 8 8) = logic_register_activator :
+	"Stores an entity and sends messages with it as the activator\n" +
+	"Useful for keeping track of entities with mangled names due " +
+	"to template spawners and instances."
+[
+	// Inputs
+	input Toggle(void) : "Toggle between enabled and disabled."
+	input FireRegisteredAsActivator1(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator2(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator3(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator4(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input RegisterEntity(string) : "Stores an entity to later be used as an activator."
+
+	// Outputs
+	output OnRegisteredActivate1(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate2(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate3(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate4(void) : "Fired to send a message using the registered as the activator."
+]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname) = logic_coop_manager :
+	"Manages two sets of values and can fire outputs based on the state of those values. " +
+	"Useful in coop where you can have players independently setting states on buttons, switches, etc."
+[
+	// keys
+	DefaultPlayerStateA(choices) : "Default State A" : 0 :
+	"The default state of A" =
+	[
+		0 : "FALSE"
+		1 : "TRUE"
+	]
+	DefaultPlayerStateB(choices) : "Default State B" : 0 :
+	"The default state of B" =
+	[
+		0 : "FALSE"
+		1 : "TRUE"
+	]
+
+	// Inputs
+	input SetStateATrue(void) : "Set State A to TRUE"
+	input SetStateAFalse(void) : "Set State A to FALSE"
+	input ToggleStateA(void) : "Toggle State A"
+	input SetStateBTrue(void) : "Set State B to TRUE"
+	input SetStateBFalse(void) : "Set State B to FALSE"
+	input ToggleStateB(void) : "Toggle State B"
+
+	// Outputs
+	output OnChangeToAllTrue(void) : "Fires when ALL of the values change to TRUE for the first time"
+	output OnChangeToAnyTrue(void) : "Fires when ANY of the values change to tTRUE for the first time"
+	output OnChangeToAllFalse(void) : "Fires when ALL of the values change to FALSE for the first time"
+	output OnChangeToAnyFalse(void) : "Fires when ANY of the values change to FALSE for the first time"
+]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewcontrol_multiplayer :
+	"A camera entity that controls all players' views. While it's active, the players will see out of the camera."
+[
+	fov(float) : "Field of view" : "90" : "Player FOV"
+	fov_rate(float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
+	target_entity(target_destination): "Target Entity" : "" : "Entity to move to. (End of move will match origin and angles)."
+	interp_time(float) : "Seconds to reach target entity" : "1.0" : "Amount of time it should take to reach the target entity's origin and angles."
+	target_team(choices) : "Target Team" : -1 : "Which team (or all) to allow to touch this trigger." =
+	[
+		-1 : "All Teams"
+		0 : "0 (Spectators)"
+		1 : "1"
+		2 : "2 (Portal2 Orange)"
+		3 : "3 (Portal2 Blue)"
+	]
+
+	spawnflags(flags) =
+	[
+		1: "Disable when move finished" : 1
+		2: "Set FOV" : 0
+	]
+
+	// Inputs
+	input Enable(void) : "Enable the point_viewcontrol_multiplayer, and start controlling the players' view."
+	input Disable(void) : "Disable the point_viewcontrol_multiplayer, and stop controlling the players' view."
+	input StartMovement(void) : "Start the movement to the target entity."
+]
+
+// GMOD: From Portal 2
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewproxy :
+	"A camera entity that moves the player's view. Use this if you want the player to retain control of where the player looks but want to base the position to be based on the proxy."
+[
+	spawnflags(flags) =
+	[
+		4: "Freeze Player" : 0
+		32:"Make Player non-solid" : 0
+	]
+
+	offsettype(choices) : "Offset type " : 0 : "How the player's view moves to the view of the camera." =
+	[
+		0: "Snap to camera"
+		1: "Ease to camera"
+		2: "Keep offset"
+	]
+
+	proxy(target_destination) : "Proxy Entity" : : "Name of the entity that the camera uses to translate the view."
+	proxyattachment(target_destination) : "Attachment Point" : : "Use this attachment on the proxy's parent for position and orientation."
+
+	tiltfraction(float) : "Tilt Fraction" : "0.5" : "How much the angle of the proxy affects the angle of the view. 0.0 will keep the players view angles unmodified. 1.0 will add in the whole tilt from the proxy."
+
+	usefakeacceleration(boolean) : "Use Fake Acceleration" : 0 : "If the player maintains an offset from the proxy apply fake acceleration on the player based on the movement of the proxy."
+	skewaccelerationforward(boolean) : "Skew Acceleration Forward" : 1 : "If this is set fake acceleration will be more noticeable in the direction of the proxy."
+	accelerationscalar(float) : "Acceleration Scalar" : "1.0" : "Multiply the fake acceleration by this ammount."
+	easeanglestocamera(boolean) : "Ease Angles To Camera" : 0 : "Move the player's angles to the camera - this will stop them from looking around."
+
+	// Inputs
+	input Enable(void) : "Enable the view proxy, and start modifying the player's view."
+	input Disable(void) : "Disable the view proxy, and start modifying the player's view."
+
+	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
 ]

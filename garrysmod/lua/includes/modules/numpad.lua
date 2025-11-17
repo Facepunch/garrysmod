@@ -18,6 +18,7 @@ local math			= math
 local IsValid		= IsValid
 local type			= type
 local ErrorNoHaltWithStack = ErrorNoHaltWithStack
+local KEY_NONE		= KEY_NONE
 
 module( "numpad" )
 
@@ -174,6 +175,8 @@ end
 function OnDown( ply, key, name, ... )
 
 	if ( !key || key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnDown' (number expected, got ", type( key ), ")" ) return end
+	if ( key == KEY_NONE ) then return end
+
 	keys_in[ key ] = keys_in[ key ] or {}
 
 	local impulse = {}
@@ -192,6 +195,8 @@ end
 function OnUp( ply, key, name, ... )
 
 	if ( !key || key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnUp' (number expected, got ", type( key ), ")" ) return end
+	if ( key == KEY_NONE ) then return end
+
 	keys_out[ key ] = keys_out[ key ] or {}
 
 	local impulse = {}

@@ -98,14 +98,16 @@ function SWEP:FirePulse(force_fwd, force_up)
    local num = 6
 
    local bullet = {}
-   bullet.Num    = num
-   bullet.Src    = self:GetOwner():GetShootPos()
-   bullet.Dir    = self:GetOwner():GetAimVector()
-   bullet.Spread = Vector( cone, cone, 0 )
-   bullet.Tracer = 1
-   bullet.Force  = force_fwd / 10
-   bullet.Damage = 1
+   bullet.Num        = num
+   bullet.Src        = self:GetOwner():GetShootPos()
+   bullet.Dir        = self:GetOwner():GetAimVector()
+   bullet.Spread     = Vector( cone, cone, 0 )
+   bullet.Tracer     = 1
+   bullet.Force      = force_fwd / 10
+   bullet.Damage     = 1
    bullet.TracerName = "AirboatGunHeavyTracer"
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
 
    local owner = self:GetOwner()
    local fwd = force_fwd / num
@@ -135,7 +137,7 @@ local CHARGE_FORCE_UP_MIN = 100
 local CHARGE_FORCE_UP_MAX = 350
 function SWEP:ChargedAttack()
    local charge = math.Clamp(self:GetCharge(), 0, 1)
-   
+
    self.IsCharging = false
    self:SetCharge(0)
 
@@ -191,7 +193,7 @@ function SWEP:Think()
          return true
       end
 
-      
+
       if SERVER and self:GetCharge() < 1 and self.NextCharge < CurTime() then
          self:SetCharge(math.min(1, self:GetCharge() + CHARGE_AMOUNT))
 
@@ -209,20 +211,15 @@ if CLIENT then
       local nxt = self:GetNextPrimaryFire()
       local charge = self.dt.charge
 
+      if nxt < CurTime() or CurTime() % 0.5 < 0.2 or charge > 0 then
+         -- draw crosshair
+         BaseClass.DrawHUD(self, true, 5)
+      end
+
       if LocalPlayer():IsTraitor() then
          surface.SetDrawColor(255, 0, 0, 255)
       else
          surface.SetDrawColor(0, 255, 0, 255)
-      end
-
-      if nxt < CurTime() or CurTime() % 0.5 < 0.2 or charge > 0 then
-         local length = 10
-         local gap = 5
-
-         surface.DrawLine( x - length, y, x - gap, y )
-         surface.DrawLine( x + length, y, x + gap, y )
-         surface.DrawLine( x, y - length, x, y - gap )
-         surface.DrawLine( x, y + length, x, y + gap )
       end
 
       if nxt > CurTime() and charge == 0 then
@@ -234,7 +231,7 @@ if CLIENT then
          surface.DrawLine(bx, y - w, bx, y + w)
 
          bx = x - 30
-         surface.DrawLine(bx, y - w, bx, y + w) 
+         surface.DrawLine(bx, y - w, bx, y + w)
       end
 
       if charge > 0 then

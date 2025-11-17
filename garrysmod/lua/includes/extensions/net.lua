@@ -2,9 +2,6 @@
 -- TODO: Hack. Move to where color is defined?
 TYPE_COLOR = 255
 
--- TODO: Temp hack, remove meta
-local MAX_EDICT_BITS = 13
-
 net.Receivers = {}
 
 --
@@ -75,6 +72,8 @@ end
 --
 -- Read/Write a player to the stream
 --
+
+-- TODO: Replace with MAX_PLAYER_BITS
 local maxplayers_bits = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
 
 function net.WritePlayer( ply )

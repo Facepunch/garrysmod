@@ -164,14 +164,7 @@ local function CallDetective(ply, cmd, args)
 end
 concommand.Add("ttt_call_detective", CallDetective)
 
-local function bitsRequired(num)
-   local bits, max = 0, 1
-   while max <= num do
-      bits = bits + 1
-      max = max + max
-   end
-   return bits
-end
+local bitsRequired = util.BitsRequired
 
 local plyBits = bitsRequired(game.MaxPlayers()) -- first game.MaxPlayers() of entities are for players.
 
@@ -260,7 +253,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       net.WriteUInt(rag:EntIndex(), 16) -- 16 bits
       net.WriteUInt(owner, plyBits) -- 128 max players. ( 8 bits )
       net.WriteString(nick)
-      net.WriteUInt(eq, bitsRequired(EQUIP_MAX)) -- Equipment ( default: 3 bits )
+      net.WriteInt(eq, bitsRequired(EQUIP_MAX, true)) -- Equipment ( default: 4 bits )
       net.WriteUInt(role, 2) -- ( 2 bits )
       net.WriteUInt(c4, bitsRequired(C4_WIRE_COUNT)) -- 0 -> 2^bits ( default c4: 3 bits )
       net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits )
@@ -282,7 +275,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
 
       net.WriteString(words)
 
-      -- 93 + string data + plyBits * (3 + #kill_entids)
+      -- 94 + string data + plyBits * (3 + #kill_entids)
 
    -- If found by detective, send to all, else just the finder
    if ply:IsActiveDetective() then

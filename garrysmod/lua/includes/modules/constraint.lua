@@ -5,7 +5,7 @@ if ( SERVER ) then
 	-- use the convar. The higher you set it the more accurate physics will be.
 	-- This is set to 4 by default, since we are a physics mod.
 
-	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE }, "Improves physics accuracy at the expense of performance." )
+	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE }, "Additional solver iterations make constraint systems more stable." )
 
 end
 
@@ -32,8 +32,9 @@ hook.Add( "EntityRemoved", "Constraint Library - ConstraintRemoved", function( e
 	-- Remove this constraint from Entity.Constraints table of the constrained entities
 	if ( ent:IsConstraint() || constraintClasses[ ent:GetClass() ] ) then
 		for i = 1, 6 do
-			if ( IsValid( ent[ "Ent" .. i ] ) ) then
-				table.RemoveByValue( ent[ "Ent" .. i ].Constraints, ent )
+			local entX = ent[ "Ent" .. i ]
+			if ( IsValid( entX ) and entX.Constraints ) then
+				table.RemoveByValue( entX.Constraints, ent )
 			end
 		end
 	end
@@ -324,11 +325,15 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 
 	rope:SetPos( Pos )
 	rope:SetKeyValue( "Width", width )
+	rope:SetKeyValue( "TextureScale", "1.6" ) -- Preserve old scaling before 28 July 2025
 
 	if ( isstring( material ) ) then
-		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
+		-- Check if the material looks right. Do not allow missing materials. Do not allow weird shaders.
+		-- This is not ideal because it is tested on the server, but whatever. Better than checking "RopeMaterials" list.
 		local mat = Material( material )
-		if ( mat && !string.find( mat:GetShader():lower(), "spritecard", nil, true ) && !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
+		local shader = mat:GetShader():lower()
+		local shaderGood = shader == "cable_dx9" or shader == "cable" or shader == "unlitgeneric" or shader == "splinerope"
+		if ( mat and !mat:IsError() and shaderGood ) then
 			rope:SetKeyValue( "RopeMaterial", material )
 		end
 	end
@@ -975,7 +980,7 @@ local function MotorControl( pl, motor, onoff, dir )
 
 	local activate = false
 
-	if ( motor.toggle == 1 ) then
+	if ( motor.toggle == 1 || motor.toggle == true ) then
 
 		-- Toggle mode, only do something when the key is pressed
 		-- if the motor is off, turn it on, and vice-versa.

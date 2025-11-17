@@ -81,6 +81,7 @@ function MenuController( $scope, $rootScope )
 	// Map List
 	//
 	$rootScope.MapList = [];
+	$rootScope.MapListFav = {};
 	$rootScope.AddonMapList = [];
 	lua.Run( "UpdateMapList()" );
 
@@ -123,7 +124,7 @@ function MenuController( $scope, $rootScope )
 	{
 		if ( !id ) return;
 
-		lua.Run( "steamworks.ViewFile( %s )", String( id ) );
+		gmod.OpenWorkshopFile( String( id ) );
 	}
 
 	$scope.OpenFolder = function( foldername )
@@ -248,7 +249,8 @@ function UpdateAddonMaps( inmaps )
 
 function UpdateMaps( inmaps )
 {
-	var mapList = []
+	var mapList = [];
+	var favList = {};
 
 	for ( k in inmaps )
 	{
@@ -261,6 +263,7 @@ function UpdateMaps( inmaps )
 		{
 			maps.push( inmaps[k][v] );
 			MapIndex[ inmaps[k][v].toLowerCase() ] = true;
+			if ( k == "Favourites" ) favList[ inmaps[k][v].toLowerCase() ] = true;
 		}
 
 		mapList.push(
@@ -272,6 +275,7 @@ function UpdateMaps( inmaps )
 	}
 
 	gScope.MapList = mapList;
+	gScope.MapListFav = favList;
 	UpdateDigest( gScope, 50 );
 }
 

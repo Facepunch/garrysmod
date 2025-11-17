@@ -1,26 +1,14 @@
 --- Traitor radio controls
 
-TRADIO = {}
+local GetTranslation = LANG.GetTranslation
+local GetPTranslation = LANG.GetParamTranslation
+local TryTranslation = LANG.TryTranslation
 
-local sound_names = {
-   scream   ="radio_button_scream",
-   explosion="radio_button_expl",
-   pistol   ="radio_button_pistol",
-   m16      ="radio_button_m16",
-   deagle   ="radio_button_deagle",
-   mac10    ="radio_button_mac10",
-   shotgun  ="radio_button_shotgun",
-   rifle    ="radio_button_rifle",
-   huge     ="radio_button_huge",
-   beeps    ="radio_button_c4",
-   burning  ="radio_button_burn",
-   footsteps="radio_button_steps"
-};
-
-local smatrix = {
-   {"scream", "burning", "explosion", "footsteps"},
-   {"pistol", "shotgun", "mac10", "deagle"},
-   {"m16", "rifle", "huge", "beeps"}
+TRADIO.SoundOrder = {
+   "scream", "burning", "explosion", "footsteps",
+   "pistol", "shotgun", "mac10", "deagle",
+   "m16", "rifle", "huge", "glock",
+   "beeps", "sipistol", "teleport", "hstation"
 };
 
 local function PlayRadioSound(snd)
@@ -32,36 +20,43 @@ end
 
 local function ButtonClickPlay(s) PlayRadioSound(s.snd) end
 
+local columns = 4
+local rows = 5
+
+local bh, bw = 50, 120
+local m = 5
+
 local function CreateSoundBoard(parent)
-   local b = vgui.Create("DPanel", parent)
+   local b = vgui.Create("DScrollPanel", parent)
 
-   --b:SetPaintBackground(false)
+   local sorder = TRADIO.SoundOrder
+   local ver = math.min(math.ceil(#sorder / columns), rows)
+   local sbar = ver == rows and b:GetVBar():GetWide() or 0
 
-   local bh, bw = 50, 100
-   local m = 5
-   local ver = #smatrix
-   local hor = #smatrix[1]
-
-   local x, y = 0, 0
-   for ri, row in ipairs(smatrix) do
-      local rj = ri - 1 -- easier for computing x,y
-      for rk, snd in ipairs(row) do
-         local rl = rk - 1
-         y = (rj * m) + (rj * bh)
-         x = (rl * m) + (rl * bw)
-
-         local but = vgui.Create("DButton", b)
-         but:SetPos(x, y)
-         but:SetSize(bw, bh)
-         but:SetText(LANG.GetTranslation(sound_names[snd]))
-         but.snd = snd
-         but.DoClick = ButtonClickPlay
-      end
-   end
-
-   b:SetSize(bw * hor + m * (hor - 1), bh * ver + m * (ver - 1))
+   b:SetSize(bw * columns + m * (columns - 1) + sbar, bh * ver + m * (ver - 1))
    b:SetPos(m, 25)
    b:CenterHorizontal()
+
+   local grid = vgui.Create("DIconLayout", b)
+   grid:Dock(FILL)
+   grid:SetSpaceX(m)
+   grid:SetSpaceY(m)
+
+   for ri, snd in ipairs(sorder) do
+      local but = grid:Add("DButton")
+      but:SetSize(bw, bh)
+
+      local name = TRADIO.Sounds[snd].name
+      local name_params = TRADIO.Sounds[snd].name_params
+      local translated = TryTranslation(name)
+      if name_params and name != translated then
+         translated = GetPTranslation(name, name_params)
+      end
+      but:SetText(translated)
+
+      but.snd = snd
+      but.DoClick = ButtonClickPlay
+   end
 
    return b
 end
@@ -77,15 +72,13 @@ function TRADIO.CreateMenu(parent)
 
    local dhelp = vgui.Create("DLabel", wrap)
    dhelp:SetFont("TabLarge")
-   dhelp:SetText(LANG.GetTranslation("radio_help"))
+   dhelp:SetText(GetTranslation("radio_help"))
    dhelp:SetTextColor(COLOR_WHITE)
 
    if IsValid(client.radio) then
-
-      local board = CreateSoundBoard(wrap)
-
+      CreateSoundBoard(wrap)
    elseif client:HasWeapon("weapon_ttt_radio") then
-      dhelp:SetText(LANG.GetTranslation("radio_notplaced"))
+      dhelp:SetText(GetTranslation("radio_notplaced"))
    end
 
    dhelp:SizeToContents()
@@ -94,4 +87,3 @@ function TRADIO.CreateMenu(parent)
 
    return wrap
 end
-
