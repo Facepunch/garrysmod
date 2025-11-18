@@ -292,6 +292,6 @@
 			"model"		"models/Items/item_item_crate.mdl"
 		}
 	}
-	"name"		"Items and Weapons"
+	"name"		"#spawnmenu.spawnlist.items_and_weapons"
 	"version"		"3"
 }

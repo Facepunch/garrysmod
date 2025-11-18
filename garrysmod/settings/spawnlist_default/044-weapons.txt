@@ -211,6 +211,6 @@
 			"model"		"models/weapons/w_snip_ssg08.mdl"
 		}
 	}
-	"name"		"Weapons"
+	"name"		"#spawnmenu.spawnlist.weapons"
 	"version"		"3"
 }
