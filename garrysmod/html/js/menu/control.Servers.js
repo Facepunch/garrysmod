@@ -389,21 +389,19 @@ function FormatVersion( ver )
 }
 
 // Calculates the default server ranking
+var pingCutoff = 150;
 function CalculateRank( server )
 {
-	var recommended = server.ping;
+	// Ping cutoff at pingCutoff, anything under that is equally "good"
+	var recommended = 54; // Starts at 54 because 50 is rank5, so 5 people would need to be on at least for rank5
+	if ( server.ping > pingCutoff ) recommended += ( server.ping - pingCutoff );
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	//if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
 	if ( server.pass || server.version_c < 0 ) recommended += 300; // Password protected or outdated, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
 
-	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
-	if ( server.players >= 4 ) recommended -= 10;
-	if ( server.players >= 8 ) recommended -= 15;
-	if ( server.players >= 16 ) recommended -= 15;
-	if ( server.players >= 32 ) recommended -= 10;
-	if ( server.players >= 64 ) recommended -= 10;
+	recommended -= server.players; // More players is better
 
 	return recommended;
 }
