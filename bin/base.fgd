@@ -5579,7 +5579,7 @@
 	lightmapresolutiony(integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes)"
 ]
 
-@BaseClass base(Parentname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, RenderFields, GMODLightOrigin, Shadow) = prop_dynamic_base
+@BaseClass base(Parentname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, RenderFields, GMODModelScale, GMODLightOrigin, Shadow) = prop_dynamic_base
 [
 	solid(choices) : "Collisions" : 6 =
 	[

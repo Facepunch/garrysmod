@@ -400,7 +400,7 @@
 	output OnPhysGunDrop(void) : "Released by Gravity Gun"
 ]
 
-@NPCClass base(BaseNPC) studio() = npc_missiledefense : "Missile Defense"
+@NPCClass base(BaseNPC) studio("models/props_citizen_tech/missile_defense.mdl") = npc_missiledefense : "Missile Defense"
 [
 ]
 
@@ -4357,12 +4357,6 @@
 	input EnableGun(bool) : "Enables or disables the airboat gun and associated crosshair."
 	input InputStartRotorWashForces(void) : "The airboat will start to be blown around by the helicopter rotor wash."
 	input InputStopRotorWashForces(void) : "The airboat will no longer be blown around by the helicopter rotor wash."
-]
-
-@PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_cannon :
-	"Driveable studiomodel cannon."
-[
-
 ]
 
 @PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_crane :
