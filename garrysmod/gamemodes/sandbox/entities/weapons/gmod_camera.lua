@@ -84,6 +84,7 @@ end
 function SWEP:PrimaryAttack()
 
 	self:DoShootEffect()
+	self:SetNextPrimaryFire( CurTime() + 0.75 )
 
 	-- If we're multiplayer this can be done totally clientside
 	if ( !game.SinglePlayer() && SERVER ) then return end
