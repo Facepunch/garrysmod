@@ -28,6 +28,8 @@ local function ADD_ITEM_DUPEFUNC( ply, data )
 
 	ent:Activate()
 
+	ent.EntityName = data.EntityName
+
 	-- For hacked combine mines, they reset their skin
 	if ( data.Skin ) then ent:SetSkin( data.Skin ) end
 
@@ -55,6 +57,8 @@ local function ADD_WEAPON_DUPEFUNC( ply, data )
 	--duplicator.DoGenericPhysics( ent, ply, data )
 
 	ent:Activate()
+
+	ent.EntityName = data.EntityName
 
 	if ( IsValid( ply ) ) then
 		ent:SetCreator( ply )

@@ -72,6 +72,9 @@ function GM:GetDeathNoticeEntityName( ent )
 	elseif ( ent:IsNPC() ) then
 		local npcTable = list.GetEntry( "NPC", ent.NPCName )
 		if ( npcTable and npcTable.Name ) then return npcTable.Name end
+	elseif ( ent.EntityName ) then
+		local sentTable = list.GetEntry( "SpawnableEntities", ent.EntityName )
+		if ( sentTable and sentTable.PrintName ) then return sentTable.PrintName end
 	end
 
 	if ( ent:GetClass() == "npc_antlion" and ent:GetModel() == "models/antlion_worker.mdl" ) then
