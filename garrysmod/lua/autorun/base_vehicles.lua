@@ -17,7 +17,7 @@ AddVehicle( {
 
 	-- Optional information
 	Author = "VALVe",
-	Information = "The regular old jeep",
+	Information = "The regular old jeep from Half-Life 2 coasts",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jeep_test.txt"
@@ -31,7 +31,7 @@ AddVehicle( {
 	Category = Category,
 
 	Author = "VALVe",
-	Information = "Airboat from Half-Life 2",
+	Information = "Airboat from Half-Life 2 canals",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/airboat.txt"
@@ -45,7 +45,7 @@ AddVehicle( {
 	Category = Category,
 
 	Author = "VALVe",
-	Information = "The prisoner pod",
+	Information = "The prisoner pod from Half-Life 2 citadel",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
@@ -60,7 +60,7 @@ AddVehicle( {
 	Category = Category,
 
 	Author = "VALVe",
-	Information = "The muscle car from Episode 2",
+	Information = "The muscle car from Half-Life 2: Episode 2",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jalopy.txt"
