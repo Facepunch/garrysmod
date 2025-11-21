@@ -91,7 +91,7 @@
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );Refresh();$event.stopPropagation();"></a>
 								<!--<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/> -->
 								<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
-								<span>{{ServerName(server)}}</span>
+								<span>{{server.name}}</span>
 							</name>
 							<ping>{{server.ping}}</ping>
 							<players>{{server.players}} / {{server.maxplayers}}</players>
@@ -141,7 +141,7 @@
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
 								<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-if="server.flag" loading="lazy"/>
 								<img class="passworded" src='img/server-passworded.png' ng-if="server.pass" loading="lazy"/>
-								<span>{{ServerName(server)}}
+								<span>{{server.name}}
 									<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-if="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
 								</span>
 							</name>
@@ -211,3 +211,4 @@
 		</div>
 
 	</div>
+

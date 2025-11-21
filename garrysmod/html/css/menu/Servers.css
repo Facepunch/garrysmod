@@ -410,6 +410,7 @@ A.bglink img
 	overflow: hidden;
 	width: 100%;
 	letter-spacing: -1px;
+	user-select: text;
 }
 
 .serverinfo button
