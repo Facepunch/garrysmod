@@ -17,12 +17,21 @@ local function User_Cleanup( pnl )
 
 end
 
+local function LoadInConvarDefaults( cvars )
+	for k, v in pairs( cvars ) do
+		local convar = GetConVar( k )
+		if ( convar and convar:GetDefault():len() != 0 ) then
+			cvars[ k ] = convar:GetDefault()
+		end
+	end
+end
+
 local function ServerSettings( pnl )
 
 	pnl:Help( "#utilities.serversettings" )
 
 	local ConVarsDefault = {
-		hostname = "Garry's Mod",
+		hostname = "My Garry's Mod Server",
 		-- sv_password = "", -- Can't be read by addons/servers
 		sv_kickerrornum = "0",
 		sv_allowcslua = "0",
@@ -40,6 +49,7 @@ local function ServerSettings( pnl )
 		g_ragdoll_maxcount = "32",
 		sv_timeout = "65"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_server", ConVarsDefault )
 
 	pnl:TextEntry( "#utilities.hostname", "hostname" )
@@ -90,6 +100,7 @@ local function SandboxClientSettings( pnl )
 		cl_showhints = "1",
 		spawnmenu_toggle = "0",
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_sandbox_cl", ConVarsDefault )
 
 	pnl:NumSlider( "#utilities.max_results", "sbox_search_maxresults", 1024, 8192, 0 )
@@ -126,6 +137,7 @@ local function SandboxSettings( pnl )
 		sbox_bonemanip_player = "0",
 		sbox_bonemanip_misc = "0"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 
 	local ConVarsLimits = {}
 	for id, str in pairs( cleanup.GetTable() ) do
@@ -179,6 +191,7 @@ local function PhysgunSettings( pnl )
 		physgun_rotation_sensitivity = "0.05",
 		physgun_wheelspeed = "10"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_physgun", ConVarsDefault )
 
 	pnl:CheckBox( "#utilities.physgun_halo", "physgun_halo" )
@@ -207,6 +220,7 @@ local function PhysgunSVSettings( pnl )
 		physgun_timeToArrive = "0.05",
 		physgun_timeToArriveRagdoll = "0.1"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_physgun_sv", ConVarsDefault )
 
 	pnl:CheckBox( "#utilities.physgun_limited", "physgun_limited" )

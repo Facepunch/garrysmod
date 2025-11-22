@@ -14,12 +14,10 @@ App.config( function( $routeProvider, $compileProvider, $locationProvider, $cont
 } );
 
 var CreationScope		= null;
-var CreationLocation	= null;
 
 function CSaves( $scope, $timeout, $location )
 {
 	CreationScope		= $scope;
-	CreationLocation	= $location;
 
 	CreationScope.MyCategories =
 	[

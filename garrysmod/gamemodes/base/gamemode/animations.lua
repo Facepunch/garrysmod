@@ -146,10 +146,9 @@ function GM:HandlePlayerDriving( ply, plyTable )
 	local pVehicle = ply:GetVehicle()
 
 	if ( !pVehicle.HandleAnimation && pVehicle.GetVehicleClass ) then
-		local c = pVehicle:GetVehicleClass()
-		local t = list.Get( "Vehicles" )[ c ]
-		if ( t && t.Members && t.Members.HandleAnimation ) then
-			pVehicle.HandleAnimation = t.Members.HandleAnimation
+		local listEntr = list.GetEntry( "Vehicles", pVehicle:GetVehicleClass() )
+		if ( listEntr && listEntr.Members && listEntr.Members.HandleAnimation ) then
+			pVehicle.HandleAnimation = listEntr.Members.HandleAnimation
 		else
 			pVehicle.HandleAnimation = true -- Prevent this if block from trying to assign HandleAnimation again.
 		end

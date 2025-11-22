@@ -75,6 +75,7 @@ if ( SERVER ) then
 		if ( !IsValidDynamiteModel( model ) ) then return NULL end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
+		if ( !IsValid( dynamite ) ) then return NULL end
 
 		duplicator.DoGeneric( dynamite, Data )
 		dynamite:SetPos( pos ) -- Backwards compatible for addons directly calling this function

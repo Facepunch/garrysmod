@@ -48,7 +48,8 @@ function SWEP:SetWeaponHoldType( t )
 	self.ActivityTranslate[ ACT_MP_RELOAD_STAND ]				= index + 6
 	self.ActivityTranslate[ ACT_MP_RELOAD_CROUCH ]				= index + 6
 	self.ActivityTranslate[ ACT_MP_JUMP ]						= index + 7
-	self.ActivityTranslate[ ACT_RANGE_ATTACK1 ]					= index + 8
+	self.ActivityTranslate[ ACT_RANGE_ATTACK1 ]					= index + 8 -- Is this right? Is this for NPCs?
+	self.ActivityTranslate[ ACT_MP_SWIM_IDLE ]					= index + 8
 	self.ActivityTranslate[ ACT_MP_SWIM ]						= index + 9
 
 	-- "normal" jump animation doesn't exist

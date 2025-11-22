@@ -30,6 +30,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_breen",
 	Category = Category,
+	SpawnFlags = 131072, -- SF_BREEN_GMOD_SPAWNMENU, makes him be a combine for NPC relationships
 	Weapons = { "" }
 } )
 
@@ -232,10 +233,6 @@ AddNPC( {
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
-
-//game.AddParticles( "particles/grub_blood.pcf" )
-//game.AddParticles( "particles/antlion_gib_02.pcf" )
-//game.AddParticles( "particles/antlion_worker.pcf" )
 
 AddNPC( {
 	Class = "npc_antlionguard",

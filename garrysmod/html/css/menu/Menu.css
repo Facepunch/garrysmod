@@ -118,25 +118,6 @@ UL.category LI.icon
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
 }
 
-.btn-back
-{
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#05C));
-	border: 1px solid #CCC;
-	border-color: #05C #05C #003580;
-	color: white;
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
-	border-radius: 3px;
-	cursor: pointer;
-	vertical-align: middle;
-	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-	height: 24px;
-}
-
-.btn-back:hover
-{
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
-}
-
 DIV.gridicon
 {
 	position: relative;

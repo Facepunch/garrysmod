@@ -1,6 +1,7 @@
 
 local table 	= table
 local pairs		= pairs
+local istable		= istable
 
 module( "list" )
 

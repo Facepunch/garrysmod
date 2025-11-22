@@ -72,6 +72,8 @@ end
 --
 -- Read/Write a player to the stream
 --
+
+-- TODO: Replace with MAX_PLAYER_BITS
 local maxplayers_bits = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
 
 function net.WritePlayer( ply )

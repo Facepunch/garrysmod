@@ -219,7 +219,7 @@ function ENT:SetRagdoll( ragdoll )
 		local controller = self:GetController()
 		if ( !IsValid( controller ) ) then return end
 
-		local builder = list.Get( "SkeletonConvertor" )[ buildername ]
+		local builder = list.GetEntry( "SkeletonConvertor", buildername )
 		local scale = self:GetScale()
 		local rotation = self:GetAngles()
 		local center = self:GetPos()

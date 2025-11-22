@@ -25,7 +25,7 @@ function PANEL:Init()
 		local args = { ... }
 		for id, arg in pairs( args ) do
 			if ( isstring( arg ) ) then
-				args[ id ] = "\"" .. string.JavascriptSafe( arg ) .. "\""
+				args[ id ] = "[[" .. arg .. "]]"
 			end
 		end
 
@@ -678,6 +678,7 @@ timer.Simple( 0, function()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
+	LoadLastMap()
 
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()

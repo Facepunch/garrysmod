@@ -7,6 +7,16 @@ var ServerTypes = {};
 var FirstTime = true;
 var UpdateInterval = undefined;
 
+function StripWeirdSymbols( name )
+{
+	// Weird symbols
+	var ret = name.replace( /[\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
+
+	// Emojis
+	ret = ret.replace( /\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDD10-\uDFFF]/g, "" );
+	return ret;
+}
+
 function ControllerServers( $scope, $element, $rootScope, $location )
 {
 	RootScope = $rootScope;
@@ -118,7 +128,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		RootScope.CurrentGamemode = gm;
 
 		if ( gm ) gm.server_offset = 0;
-		UpdateDigest( RootScope, 50 );
 	}
 
 	$scope.ServerClass = function( sv )
@@ -158,14 +167,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !gm ) return "Unknown Gamemode";
 
 		if ( gm.info && gm.info.title )
-			return gm.info.title.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
+			return StripWeirdSymbols( gm.info.title );
 
-		return gm.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
-	}
-
-	$scope.ServerName = function( server )
-	{
-		return server.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
+		return StripWeirdSymbols( gm.name );
 	}
 
 	$scope.JoinServer = function( srv )
@@ -465,7 +469,7 @@ function CalculateRank( server )
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	//if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
-	if ( server.pass ) recommended += 300; // Password protected, can't join it
+	if ( server.pass || server.version_c < 0 ) recommended += 300; // Password protected or outdated, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
 
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
@@ -573,7 +577,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	var data =
 	{
 		ping:			parseInt( ping ),
-		name:			name.trim(),
+		name:			StripWeirdSymbols( name.trim() ),
 		desc:			desc,
 		map:			map,
 		players:		parseInt( players ) - parseInt( botplayers ),
@@ -632,7 +636,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	RootScope.ServerCount[ type ] += 1;
 
-	UpdateDigest( RootScope, 50 );
+	UpdateDigest( RootScope, 100 );
 }
 
 function MissingGamemodeIcon( element )

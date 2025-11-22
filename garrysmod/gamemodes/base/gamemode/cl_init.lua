@@ -155,18 +155,18 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 
 	if ( bPlayerIsDead ) then
 		table.insert( tab, Color( 255, 30, 40 ) )
-		table.insert( tab, "*DEAD* " )
+		table.insert( tab, language.GetPhrase( "chat.dead" ) .. " " )
 	end
 
 	if ( bTeamOnly ) then
 		table.insert( tab, Color( 30, 160, 40 ) )
-		table.insert( tab, "(TEAM) " )
+		table.insert( tab, language.GetPhrase( "chat.team" ) .. " " )
 	end
 
 	if ( IsValid( player ) ) then
 		table.insert( tab, player )
 	else
-		table.insert( tab, "Console" )
+		table.insert( tab, language.GetPhrase( "chat.console" ) )
 	end
 
 	local filter_context = TEXT_FILTER_GAME_CONTENT

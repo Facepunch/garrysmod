@@ -52,7 +52,7 @@ function GM:CanTool( ply, trace, mode, tool, button )
 
 	-- The jeep spazzes out when applying something
 	-- todo: Find out what it's reacting badly to and change it in _physprops
-	if ( mode == "physprop" && trace.Entity:IsValid() && trace.Entity:GetClass() == "prop_vehicle_jeep" ) then
+	if ( mode == "physprop" && trace.Entity:IsValid() && ( trace.Entity:GetClass() == "prop_vehicle_jeep" || trace.Entity:GetClass() == "prop_vehicle_apc" ) ) then
 		return false
 	end
 

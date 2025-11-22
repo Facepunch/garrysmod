@@ -341,6 +341,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		lua.Run( "ListAddonPresets()" );
 		$scope.LoadPresetMenuOpen = true;
 		$scope.LoadPresetResub = false;
+		$scope.SelectedPreset = undefined;
+		$scope.PresetSearchText = "";
 	}
 	$scope.SelectPreset = function( preset, newAction )
 	{

@@ -30,6 +30,7 @@ function TOOL:LeftClick( trace )
 
 	-- Don't do jeeps (crash protection until we get it fixed)
 	if ( iNum == 0 && trace.Entity:GetClass() == "prop_vehicle_jeep" ) then return false end
+	if ( iNum == 0 && trace.Entity:GetClass() == "prop_vehicle_apc" ) then return false end
 
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end

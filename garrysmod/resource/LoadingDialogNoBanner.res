@@ -78,6 +78,26 @@
 		//"keyboardFocusColor_override"	"0 0 0 255"
 		//"blinkFgColor_override"			"0 0 0 255"
 	}
+	"CopyButton"
+	{
+		"ControlName"			"Button"
+		"fieldName"				"CopyButton"
+		"xpos"					"256"
+		"ypos"					"31"
+		"wide"					"66"
+		"tall"					"24"
+		"autoResize"			"0"
+		"pinCorner"				"0"
+		"visible"				"0"
+		"enabled"				"1"
+		"tabPosition"			"0"
+		"labelText"				"#GameUI_Copy"
+		"textAlignment"			"west"
+		"dulltext"				"0"
+		"brighttext"			"0"
+		"command"				"Copy"
+		"Default"				"0"
+	}
 	"Divider1"
 	{
 		"ControlName"		"Divider"

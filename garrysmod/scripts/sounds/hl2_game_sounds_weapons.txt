@@ -1570,3 +1570,42 @@
 	"wave"	"weapons/tripwire/mine_activate.wav"
 }
 
+// Missile Defense
+
+"NPC_MissileDefense.Attack"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"  "SNDLVL_100dB"
+	"pitch"	"85,90"
+
+	"rndwave"
+	{
+		"wave"	"weapons/ar1/ar1_dist1.wav"
+		"wave"	"weapons/ar1/ar1_dist2.wav"
+	}
+}
+
+"NPC_MissileDefense.Reload"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"  "SNDLVL_GUNFIRE"
+	"pitch"	"95,105"
+
+	"rndwave"
+	{
+		"wave"	"weapons/ak47/ak47_boltpull.wav"
+		//"wave"	"vehicles/tank_readyfire1.wav"
+	}
+}
+
+"NPC_MissileDefense.Turn"
+{
+	"channel"	"CHAN_AUTO"
+	"soundlevel"  "SNDLVL_GUNFIRE"
+	"pitch"	"95,105"
+
+	"rndwave"
+	{
+		"wave"	"npc/turret_wall/turret_loop1.wav"
+	}
+}

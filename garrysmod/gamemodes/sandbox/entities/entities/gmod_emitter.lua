@@ -65,9 +65,7 @@ function ENT:Think()
 	--
 	-- Find our effect table
 	--
-	local Effect = self:GetEffect()
-
-	local EffectTable = list.Get( "EffectType" )[ Effect ]
+	local EffectTable = list.GetEntry( "EffectType", self:GetEffect() )
 	if ( !EffectTable ) then return end
 
 	local Angle = self:GetAngles()

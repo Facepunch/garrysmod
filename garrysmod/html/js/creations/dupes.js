@@ -14,12 +14,10 @@ App.config( function( $routeProvider, $compileProvider, $locationProvider, $cont
 } );
 
 var CreationScope		= null;
-var CreationLocation	= null;
 
 function CDupes( $scope, $timeout, $location )
 {
 	CreationScope		= $scope;
-	CreationLocation	= $location;
 
 	CreationScope.MyCategories =
 	[
@@ -87,10 +85,7 @@ function SetDupeSaveState( b )
 //
 function ShowLocalDupes()
 {
-	// No extra slash at the end so its always different from the real path and thus a redirection will always happen
-	CreationLocation.path( "/list/local/" );
-
-	CreationScope.$apply();
+	Scope.Switch( 'local', 0 );
 }
 
 

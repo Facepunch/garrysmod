@@ -100,7 +100,7 @@ local function AutorefreshWeaponToSpawnmenu( weapon, name )
 	local tree = swepTab.ContentPanel.ContentNavBar.Tree
 	if ( !tree.Categories ) then return end
 
-	local newCategory = weapon.Category or "#spawnmenu.category.other"
+	local newCategory = language.GetPhrase( weapon.Category or "#spawnmenu.category.other" )
 
 	-- Remove from previous category..
 	for cat, catPnl in pairs( tree.Categories ) do
