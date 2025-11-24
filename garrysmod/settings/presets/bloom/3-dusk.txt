@@ -1,4 +1,4 @@
-"#bloom_pp.dusk"
+"#presets.dusk"
 {
 	"pp_bloom_color"		"5.000000"
 	"pp_bloom_color_b"		"5"

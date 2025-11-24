@@ -1,4 +1,4 @@
-"#bloom_pp.bad_eyes"
+"#presets.bad_eyes"
 {
 	"pp_bloom_color"		"1.000000"
 	"pp_bloom_color_b"		"255"

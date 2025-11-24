@@ -1,4 +1,4 @@
-"#colormod_pp.trinity_dies"
+"#presets.trinity_dies"
 {
 	"pp_colormod"		"1"
 	"pp_colormod_addb"		"0"
