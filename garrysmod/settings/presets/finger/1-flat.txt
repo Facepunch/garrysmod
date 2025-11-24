@@ -1,4 +1,4 @@
-"Flat"
+"#preset.flat"
 {
 	"finger_0"		"-4.2 -29.2"
 	"finger_1"		"0.0 -2.1"

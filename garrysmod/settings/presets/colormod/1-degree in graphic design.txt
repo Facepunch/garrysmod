@@ -1,4 +1,4 @@
-"Degree in Graphic Design"
+"#colormod_pp.degree_in_graphic_design"
 {
 	"pp_colormod"		"1"
 	"pp_colormod_addb"		"0"

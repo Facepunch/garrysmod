@@ -1,4 +1,4 @@
-"Radioactive Man"
+"#preset.radioactive_man"
 {
 	"Fog_Color"		"0.000000 255.000000 13.000000"
 	"fog_colorskybox"		"0.000000 255.000000 13.000000"

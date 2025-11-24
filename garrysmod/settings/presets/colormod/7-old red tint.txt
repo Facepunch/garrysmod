@@ -1,4 +1,4 @@
-"Old Red Tint"
+"#colormod_pp.old_red_tint"
 {
 	"pp_colormod"		"1"
 	"pp_colormod_addb"		"0"

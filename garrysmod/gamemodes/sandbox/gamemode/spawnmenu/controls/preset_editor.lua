@@ -114,7 +114,7 @@ function PANEL:OnPresetSelected( item )
 
 	local name = item:GetValue( 1 )
 
-	self.txtRename:SetText( name )
+	self.txtRename:SetText( language.GetPhrase( name ) )
 	for id, pnl in ipairs( self.txtRename:GetParent():GetChildren() ) do pnl:SetEnabled( true ) end
 
 	self.pnlDetails:Clear()

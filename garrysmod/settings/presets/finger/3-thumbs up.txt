@@ -1,4 +1,4 @@
-"Thumbs Up"
+"#preset.thumbs_up"
 {
 	"finger_0"		"2.1 -20.8"
 	"finger_1"		"-50.0 -14.6"
