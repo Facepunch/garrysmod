@@ -1,4 +1,4 @@
-"#presets.cartoon_land"
+"#preset.cartoon_land"
 {
 	"pp_colormod"		"1"
 	"pp_colormod_addb"		"0"

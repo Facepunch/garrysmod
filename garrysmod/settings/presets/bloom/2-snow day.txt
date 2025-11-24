@@ -1,4 +1,4 @@
-"#presets.snow_day"
+"#preset.snow_day"
 {
 	"pp_bloom_color"		"0.000000"
 	"pp_bloom_color_b"		"240"

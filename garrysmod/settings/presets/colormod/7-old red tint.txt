@@ -1,4 +1,4 @@
-"#presets.old_red_tint"
+"#preset.old_red_tint"
 {
 	"pp_colormod"		"1"
 	"pp_colormod_addb"		"0"

@@ -1,4 +1,4 @@
-"#presets.black_and_white"
+"#preset.black_and_white"
 {
 	"pp_colormod"		"1"
 	"pp_colormod_addb"		"0"

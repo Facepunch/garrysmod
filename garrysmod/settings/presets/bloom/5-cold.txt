@@ -1,4 +1,4 @@
-"#presets.cold"
+"#preset.cold"
 {
 	"pp_bloom_color"		"0.000000"
 	"pp_bloom_color_b"		"255"
