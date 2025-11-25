@@ -88,11 +88,11 @@ local HitgroupToPlayerAnimEvent = {
 	Desc: Called when a player is hurt.
 -----------------------------------------------------------]]
 function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
-	local hitgroup = victim:LastHitGroup() -- defaults to HITGROUP_GENERIC 
+	local hitgroup = player:LastHitGroup() -- defaults to HITGROUP_GENERIC 
 	local actOverride = hitgroup == HITGROUP_STOMACH and ACT_MP_GESTURE_FLINCH_STOMACH or ACT_INVALID -- this is needed because there's no flinch anim event for stomach 
 	local animEvent = HitgroupToPlayerAnimEvent[hitgroup] or PLAYERANIMEVENT_FLINCH_CHEST 
 	
-	victim:DoCustomAnimEvent(animEvent,actOverride) 
+	player:DoCustomAnimEvent(animEvent,actOverride) 
 end
 
 --[[---------------------------------------------------------
@@ -195,3 +195,4 @@ end
 -----------------------------------------------------------]]
 function GM:PostUndo( undo, count )
 end
+
