@@ -71,11 +71,28 @@ end
 function GM:EntityTakeDamage( ent, info )
 end
 
+local HitgroupToPlayerAnimEvent = {
+	[HITGROUP_HEAD]      = PLAYERANIMEVENT_FLINCH_HEAD,
+	[HITGROUP_LEFTARM]   = PLAYERANIMEVENT_FLINCH_LEFTARM,
+	[HITGROUP_RIGHTARM]  = PLAYERANIMEVENT_FLINCH_RIGHTARM,
+	[HITGROUP_LEFTLEG]   = PLAYERANIMEVENT_FLINCH_LEFTLEG,
+	[HITGROUP_RIGHTLEG]  = PLAYERANIMEVENT_FLINCH_RIGHTLEG,
+	[HITGROUP_STOMACH]   = PLAYERANIMEVENT_FLINCH_CHEST,
+	[HITGROUP_CHEST]     = PLAYERANIMEVENT_FLINCH_CHEST,
+	[HITGROUP_GEAR]      = PLAYERANIMEVENT_FLINCH_CHEST,
+	[HITGROUP_GENERIC]   = PLAYERANIMEVENT_FLINCH_CHEST,
+    } 
+
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerHurt( )
 	Desc: Called when a player is hurt.
 -----------------------------------------------------------]]
 function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
+	local hitgroup = victim:LastHitGroup() -- defaults to HITGROUP_GENERIC 
+	local actOverride = hitgroup == HITGROUP_STOMACH and ACT_MP_GESTURE_FLINCH_STOMACH or ACT_INVALID -- this is needed because there's no flinch anim event for stomach 
+	local animEvent = HitgroupToPlayerAnimEvent[hitgroup] or PLAYERANIMEVENT_FLINCH_CHEST 
+	
+	victim:DoCustomAnimEvent(animEvent,actOverride) 
 end
 
 --[[---------------------------------------------------------
