@@ -1088,6 +1088,10 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 		Constraint:Spawn()
 		Constraint:Activate()
 
+		-- Make sure the internal axis is set on spawn, not on first activation
+		Constraint:Fire( "Scale", 0 )
+		Constraint:Fire( "Activate" )
+
 	onFinishConstraint()
 
 	LocalAxis = Phys1:WorldToLocal( WPos2 )
