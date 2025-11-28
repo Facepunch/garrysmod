@@ -1678,4 +1678,3 @@ function GetAllConstrainedEntities( ent, result )
 	return results
 
 end
-
