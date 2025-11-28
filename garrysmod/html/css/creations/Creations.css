@@ -20,6 +20,11 @@ A
 	text-decoration: none;
 }
 
+A:not(:disabled)
+{
+	cursor: pointer;
+}
+
 DIV.page
 {
 	position: absolute;
