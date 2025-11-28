@@ -1083,8 +1083,10 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 		Constraint:SetPhysConstraintObjects( Phys1, Phys1 )
 		Constraint:Spawn()
 		Constraint:Activate()
+
+		-- Make sure the internal axis is set on spawn, not on first activation
 		Constraint:Fire( "Scale", 0 )
-        Constraint:Fire( "Activate" )
+		Constraint:Fire( "Activate" )
 
 	onFinishConstraint()
 
@@ -1676,3 +1678,4 @@ function GetAllConstrainedEntities( ent, result )
 	return results
 
 end
+
