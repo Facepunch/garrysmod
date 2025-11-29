@@ -1381,6 +1381,6 @@
 			"model"		"models/props_wasteland/wood_fence02a.mdl"
 		}
 	}
-	"name"		"Construction Props"
+	"name"		"#spawnmenu.spawnlist.construction_props"
 	"version"		"3"
 }
