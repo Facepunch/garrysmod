@@ -1,0 +1,5 @@
+Twemoji graphics sourced from Twemoji 16.0.1 https://github.com/jdecked/twemoji
+
+Twemoji's graphics are licensed under CC-BY 4.0 https://github.com/jdecked/twemoji/blob/main/LICENSE-GRAPHICS https://creativecommons.org/licenses/by/4.0/
+
+Graphics are unmodified from the source, other than renaming.
