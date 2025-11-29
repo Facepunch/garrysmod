@@ -1,4 +1,4 @@
-"#preset.really_sunny"
+"#preset.bloom.really_sunny"
 {
 	"pp_bloom_color"		"3.136000"
 	"pp_bloom_color_b"		"255"

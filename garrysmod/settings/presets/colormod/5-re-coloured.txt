@@ -1,4 +1,4 @@
-"#preset.re_coloured"
+"#preset.colormod.re_coloured"
 {
 	"pp_colormod"		"1"
 	"pp_colormod_addb"		"0"

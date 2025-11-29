@@ -1,4 +1,4 @@
-"#preset.blowing"
+"#preset.face.blowing"
 {
 	"faceposer_flex0"		"1.000000"
 	"faceposer_flex1"		"1.000000"

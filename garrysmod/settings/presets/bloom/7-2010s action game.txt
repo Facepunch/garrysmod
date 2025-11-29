@@ -1,4 +1,4 @@
-"#preset.2010s_action_game"
+"#preset.bloom.2010s_action_game"
 {
 	"pp_bloom_sizex"		"17.00"
 	"pp_bloom_darken"		"0.50"

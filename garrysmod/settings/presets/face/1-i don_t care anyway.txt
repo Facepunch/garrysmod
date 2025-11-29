@@ -1,4 +1,4 @@
-"#preset.i_dont_care_anyway"
+"#preset.face.i_dont_care_anyway"
 {
 	"faceposer_flex0"		"0.018677"
 	"faceposer_flex1"		"0.998291"

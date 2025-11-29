@@ -1,4 +1,4 @@
-"#preset.quite_annoyed"
+"#preset.face.quite_annoyed"
 {
 	"faceposer_flex0"		"1"
 	"faceposer_flex1"		"1"

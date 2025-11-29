@@ -1,4 +1,4 @@
-"#preset.cant_believe_it"
+"#preset.face.cant_believe_it"
 {
 	"faceposer_flex0"		"1.000000"
 	"faceposer_flex1"		"1.000000"

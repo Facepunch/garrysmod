@@ -1,4 +1,4 @@
-"#preset.heaven"
+"#preset.fog.heaven"
 {
 	"Fog_Color"		"249.000000 255.000000 243.000000"
 	"fog_colorskybox"		"249.000000 255.000000 243.000000"
