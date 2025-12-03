@@ -82,7 +82,7 @@
 	margin-left: -1px;
 }
 
-#NavBar .button SPAN, UL.gamemode_list LI SPAN, UL.language_list LI SPAN
+#NavBar .button SPAN, UL.gamemode_list LI SPAN
 {
 	color: #333;
 	position: relative;
@@ -91,7 +91,7 @@
 	padding-right: 10px;
 }
 
-#NavBar .button IMG, UL.gamemode_list LI IMG, UL.language_list LI IMG
+#NavBar .button IMG, UL.gamemode_list LI IMG
 {
 	position: absolute;
 	left: 5px;
@@ -254,10 +254,11 @@ UL.language_list
 UL.language_list LI
 {
 	display: inline-block;
-	width: 26px;
-	height: 24px;
-	padding: 0;
+	width: auto; 
+	height: auto;
+	padding: 5px;
 	background-color: transparent;
+	position: static;
 }
 
 UL.language_list LI IMG
@@ -268,6 +269,43 @@ UL.language_list LI IMG
 UL.language_list LI:hover
 {
 	background-color: #fff;
+}
+
+UL.language_list LI .lang_name
+{
+	visibility: hidden;
+	display: inline-block;
+	box-sizing: border-box;
+	pointer-events: none;
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0%);
+	margin-bottom: 8px;
+	background: white;
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-size: 15px;
+	font-weight: bold;
+	text-shadow: none;
+	color: black;
+	text-align: center;
+	width: -webkit-max-content;
+	max-width: 100%;
+	white-space: normal;
+	text-transform: capitalize;
+}
+UL.language_list LI .lang_name div:not(:empty) + div
+{
+	font-size: 12px;
+}
+UL.language_list LI:hover .lang_name
+{
+	visibility: visible;
+}
+html.AWESOMIUM UL.language_list LI .lang_name
+{
+	display: none !important;
 }
 
 ::-webkit-scrollbar
@@ -297,7 +335,6 @@ UL.language_list LI:hover
 	list-style: none;
 	margin: 3px;
 	/*cursor: pointer;*/
-	display: none;
 }
 
 UL.games_list.popup LI
