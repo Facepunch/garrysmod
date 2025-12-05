@@ -146,7 +146,7 @@ end
 --[[---------------------------------------------------------
 	Simple mechanism for calling the die functions.
 -----------------------------------------------------------]]
-local function DoDieFunction( ent, bFullUpdate )
+local function DoDieFunction( ent )
 
 	if ( !ent.OnDieFunctions ) then return end
 
