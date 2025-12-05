@@ -5,11 +5,17 @@ g_ServerURL		= ""
 g_MaxPlayers	= ""
 g_SteamID		= ""
 
+local colGrey	= Color( 30, 30, 30, 255 )
+local matBlank	= Material( "vgui/white" )
+
 local PANEL = {}
 
 function PANEL:Init()
 
 	self:SetSize( ScrW(), ScrH() )
+
+	self.BGColor = colGrey
+	self.BGMaterial = matBlank
 
 end
 
@@ -44,10 +50,12 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:Paint()
+function PANEL:Paint( w, h )
 
-	surface.SetDrawColor( 30, 30, 30, 255 )
-	surface.DrawRect( 0, 0, self:GetWide(), self:GetTall() )
+	surface.SetDrawColor( self.BGColor )
+	surface.SetMaterial( self.BGMaterial )
+
+	surface.DrawTexturedRect( 0, 0, w, h )
 
 	if ( self.JavascriptRun && IsValid( self.HTML ) && !self.HTML:IsLoading() ) then
 
@@ -67,7 +75,7 @@ function PANEL:RunJavascript( str )
 
 end
 
-function PANEL:OnActivate()
+function PANEL:OnActivate( transition )
 
 	g_ServerName	= ""
 	g_MapName		= ""
@@ -75,7 +83,14 @@ function PANEL:OnActivate()
 	g_MaxPlayers	= ""
 	g_SteamID		= ""
 
-	self:ShowURL( GetDefaultLoadingHTML() )
+	if ( transition ) then -- Singleplayer level transitions
+		self.BGColor = Color( 255, 255, 255, 255 )
+		self.BGMaterial = engine.GetLastFrame()
+
+		self:ShowURL( "about:blank" )
+	else
+		self:ShowURL( GetDefaultLoadingHTML() )
+	end
 
 	self.NumDownloadables = 0
 	self.CheckedSingleplayer = false
@@ -84,6 +99,9 @@ function PANEL:OnActivate()
 end
 
 function PANEL:OnDeactivate()
+
+	self.BGColor = colGrey
+	self.BGMaterial = matBlank
 
 	if ( IsValid( self.HTML ) ) then self.HTML:Remove() end
 	self.LoadedURL = nil
