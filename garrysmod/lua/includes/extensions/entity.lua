@@ -148,22 +148,14 @@ end
 -----------------------------------------------------------]]
 local function DoDieFunction( ent, bFullUpdate )
 
-	-- Full update. The entity didn't actually die.
-	if ( bFullUpdate ) then return end
-
 	if ( !ent.OnDieFunctions ) then return end
 
 	for name, data in pairs( ent.OnDieFunctions ) do
 
 		-- Functions aren't saved - so this could be nil if we loaded a game.
-		if ( data.Function ) then
+		if ( data && data.Function ) then
 
-			local success
-			success = ProtectedCall( data.Function, ent, unpack( data.Args ) )
-
-			if ( !success ) then
-				ErrorNoHalt( "Unsuccessful \'", name, "\' DieFunction\n" )
-			end
+			ProtectedCall( data.Function, ent, unpack( data.Args ) )
 
 		end
 
