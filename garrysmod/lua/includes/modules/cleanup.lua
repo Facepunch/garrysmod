@@ -57,6 +57,21 @@ if ( SERVER ) then
 	saverestore.AddSaveHook( "CleanupTable", Save )
 	saverestore.AddRestoreHook( "CleanupTable", Restore )
 
+	-- This is so as to automatically clear NULLs in the cleanup lists
+	-- in case the entities are being removed by other than cleanup means
+	local function DieFunction_HandleOutOfCleanupRemoval( ent, pCleanupTypeTable )
+
+		for i, entStored in ipairs( pCleanupTypeTable ) do
+
+			if ( ent == entStored ) then
+				table.remove( pCleanupTypeTable, i )
+				break
+			end
+
+		end
+
+	end
+
 	function Add( pl, type, ent )
 
 		if ( !ent ) then return end
@@ -71,6 +86,7 @@ if ( SERVER ) then
 		if ( !IsValid( ent ) ) then return end
 
 		table.insert( cleanup_list[ id ][ type ], ent )
+		ent:CallOnRemove( "HandleOutOfCleanupRemoval", DieFunction_HandleOutOfCleanupRemoval, cleanup_list[ id ][ type ] )
 
 	end
 
@@ -83,6 +99,7 @@ if ( SERVER ) then
 				for key, ent in pairs( TypeTable ) do
 
 					if ( ent == from ) then
+						if ( IsValid( to ) ) then to:CallOnRemove( "HandleOutOfCleanupRemoval", DieFunction_HandleOutOfCleanupRemoval, TypeTable ) end
 						TypeTable[ key ] = to
 						ActionTaken = true
 					end
