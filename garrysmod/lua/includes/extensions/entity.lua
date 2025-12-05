@@ -146,16 +146,24 @@ end
 --[[---------------------------------------------------------
 	Simple mechanism for calling the die functions.
 -----------------------------------------------------------]]
-local function DoDieFunction( ent )
+local function DoDieFunction( ent, bFullUpdate )
 
-	if ( !ent or !ent.OnDieFunctions ) then return end
+	-- Full update. The entity didn't actually die.
+	if ( bFullUpdate ) then return end
 
-	for k, v in pairs( ent.OnDieFunctions ) do
+	if ( !ent.OnDieFunctions ) then return end
+
+	for name, data in pairs( ent.OnDieFunctions ) do
 
 		-- Functions aren't saved - so this could be nil if we loaded a game.
-		if ( v && v.Function ) then
+		if ( data.Function ) then
 
-			v.Function( ent, unpack( v.Args ) )
+			local success
+			success = ProtectedCall( data.Function, ent, unpack( data.Args ) )
+
+			if ( !success ) then
+				ErrorNoHalt( "Unsuccessful \'", name, "\' DieFunction\n" )
+			end
 
 		end
 
