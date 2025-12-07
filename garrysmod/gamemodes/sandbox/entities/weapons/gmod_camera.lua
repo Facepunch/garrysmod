@@ -84,7 +84,6 @@ end
 function SWEP:PrimaryAttack()
 
 	self:DoShootEffect()
-	self:SetNextPrimaryFire( CurTime() + 0.75 )
 
 	-- If we're multiplayer this can be done totally clientside
 	if ( !game.SinglePlayer() && SERVER ) then return end
@@ -160,6 +159,9 @@ function SWEP:ShouldDropOnDie() return false end
 -- The effect when a weapon is fired successfully
 --
 function SWEP:DoShootEffect()
+
+	if ( self.NextShootEffect && self.NextShootEffect > CurTime() ) then return end
+	self.NextShootEffect = CurTime() + 0.75
 
 	local owner = self:GetOwner()
 
