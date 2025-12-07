@@ -57,20 +57,64 @@ if ( SERVER ) then
 	saverestore.AddSaveHook( "CleanupTable", Save )
 	saverestore.AddRestoreHook( "CleanupTable", Restore )
 
-	-- This is so as to automatically clear NULLs in the cleanup lists
-	-- in case the entities are being removed by other than cleanup means
-	local function DieFunction_HandleOutOfCleanupRemoval( ent, pCleanupTypeTable )
+	local g_bPerformingCleanup = false
+	local g_Cleanupables = {}
+	local g_iOutOfCleanupRemovals = 0
 
-		for i, entStored in ipairs( pCleanupTypeTable ) do
+	local function CleanupLists_CollectGarbage()
 
-			if ( ent == entStored ) then
-				table.remove( pCleanupTypeTable, i )
-				break
+		timer.Pause( "CleanupLists_CollectGarbage" )
+		g_iOutOfCleanupRemovals = 0
+
+		for _, playerCleanupTable in pairs( cleanup_list ) do
+
+			for _, cleanupTypeTable in pairs( playerCleanupTable ) do
+
+				local i = 1
+				local ent = cleanupTypeTable[ i ]
+
+				while ( ent ) do
+
+					if ( !IsValid( ent ) or ent:IsMarkedForDeletion() ) then
+
+						table.remove( cleanupTypeTable, i )
+						g_Cleanupables[ ent ] = nil
+						ent = cleanupTypeTable[ i ] -- Indexes got shifted, checking this position once more
+
+					else
+
+						i = i + 1
+						ent = cleanupTypeTable[ i ]
+
+					end
+
+				end
+
 			end
 
 		end
 
 	end
+
+	timer.Create( "CleanupLists_CollectGarbage", 3, 0, CleanupLists_CollectGarbage )
+	timer.Pause( "CleanupLists_CollectGarbage" )
+
+	hook.Add( "EntityRemoved", "CleanupListsGarbageWatcher", function( ent )
+
+		if ( g_bPerformingCleanup ) then
+			g_Cleanupables[ ent ] = nil
+			return
+		end
+
+		if ( g_Cleanupables[ ent ] ) then
+			g_iOutOfCleanupRemovals = g_iOutOfCleanupRemovals + 1
+		end
+
+		if ( g_iOutOfCleanupRemovals >= 30 ) then
+			timer.UnPause( "CleanupLists_CollectGarbage" )
+		end
+
+	end )
 
 	function Add( pl, type, ent )
 
@@ -86,7 +130,7 @@ if ( SERVER ) then
 		if ( !IsValid( ent ) ) then return end
 
 		table.insert( cleanup_list[ id ][ type ], ent )
-		ent:CallOnRemove( "HandleOutOfCleanupRemoval", DieFunction_HandleOutOfCleanupRemoval, cleanup_list[ id ][ type ] )
+		g_Cleanupables[ ent ] = true
 
 	end
 
@@ -99,7 +143,8 @@ if ( SERVER ) then
 				for key, ent in pairs( TypeTable ) do
 
 					if ( ent == from ) then
-						if ( IsValid( to ) ) then to:CallOnRemove( "HandleOutOfCleanupRemoval", DieFunction_HandleOutOfCleanupRemoval, TypeTable ) end
+						if ( IsValid( to ) ) then g_Cleanupables[ to ] = true end
+						g_Cleanupables[ from ] = nil
 						TypeTable[ key ] = to
 						ActionTaken = true
 					end
@@ -125,6 +170,8 @@ if ( SERVER ) then
 
 			local count = 0
 
+			g_bPerformingCleanup = true
+
 			for key, val in pairs( cleanup_list[ id ] ) do
 
 				for _, ent in pairs( val ) do
@@ -138,6 +185,8 @@ if ( SERVER ) then
 
 			end
 
+			g_bPerformingCleanup = false
+
 			-- Send tooltip command to client
 			if ( count > 0 ) then
 				pl:SendLua( "hook.Run('OnCleanup','all')" )
@@ -150,11 +199,15 @@ if ( SERVER ) then
 		if ( !IsType( args[1] ) ) then return end
 		if ( !cleanup_list[id][ args[1] ] ) then return end
 
+		g_bPerformingCleanup = true
+
 		for key, ent in pairs( cleanup_list[id][ args[1] ] ) do
 
 			if ( IsValid( ent ) ) then ent:Remove() end
 
 		end
+
+		g_bPerformingCleanup = false
 
 		table.Empty( cleanup_list[id][ args[1] ] )
 
@@ -168,6 +221,8 @@ if ( SERVER ) then
 		if ( IsValid( pl ) && !pl:IsAdmin() ) then return end
 
 		if ( !args[ 1 ] ) then
+
+			g_bPerformingCleanup = true
 
 			for key, ply in pairs( cleanup_list ) do
 
@@ -185,6 +240,8 @@ if ( SERVER ) then
 
 			end
 
+			g_bPerformingCleanup = false
+
 			game.CleanUpMap( false, nil, function()
 				-- Send tooltip command to client
 				if ( IsValid( pl ) ) then pl:SendLua( "hook.Run('OnCleanup','all')" ) end
@@ -195,6 +252,8 @@ if ( SERVER ) then
 		end
 
 		if ( !IsType( args[ 1 ] ) ) then return end
+
+		g_bPerformingCleanup = true
 
 		for key, ply in pairs( cleanup_list ) do
 
@@ -211,6 +270,8 @@ if ( SERVER ) then
 			end
 
 		end
+
+		g_bPerformingCleanup = false
 
 		-- Send tooltip command to client
 		if ( IsValid( pl ) ) then pl:SendLua( string.format( "hook.Run('OnCleanup',%q)", args[1] ) ) end
