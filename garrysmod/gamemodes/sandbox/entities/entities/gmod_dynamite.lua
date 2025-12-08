@@ -42,7 +42,7 @@ end
 function ENT:OnTakeDamage( dmginfo )
 
 	local inflictor = dmginfo:GetInflictor()
-	if ( inflictor:IsValid() and inflictor:GetClass() == "gmod_dynamite" ) then return end
+	if ( IsValid( inflictor ) and inflictor:GetClass() == "gmod_dynamite" ) then return end
 
 	self:TakePhysicsDamage( dmginfo )
 
@@ -79,3 +79,4 @@ function ENT:Explode( delay, ply )
 	end
 
 end
+
