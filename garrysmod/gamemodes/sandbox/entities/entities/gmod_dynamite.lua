@@ -79,4 +79,3 @@ function ENT:Explode( delay, ply )
 	end
 
 end
-
