@@ -1,5 +1,6 @@
 
 local string = string
+local string_sub = string.sub
 local math = math
 
 --[[---------------------------------------------------------
@@ -323,14 +324,16 @@ end
 
 function string.StartsWith( str, start )
 
-	return string.sub( str, 1, string.len( start ) ) == start
+	local n = #start
+    return n == 0 or string_sub(str, n) == suffix
 
 end
 string.StartWith = string.StartsWith
 
 function string.EndsWith( str, endStr )
 
-	return endStr == "" or string.sub( str, -string.len( endStr ) ) == endStr
+    local n = #endStr
+    return n == 0 or string_sub(str, -n) == endStr
 
 end
 
@@ -442,3 +445,4 @@ function string.NiceName( name )
 	return ret
 
 end
+
