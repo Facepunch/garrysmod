@@ -84,7 +84,6 @@ end
 local totable = string.ToTable
 local string_sub = string.sub
 local string_find = string.find
-local string_len = string.len
 function string.Explode( separator, str, withpattern )
 	if ( separator == "" ) then return totable( str ) end
 	if ( withpattern == nil ) then withpattern = false end
@@ -92,7 +91,7 @@ function string.Explode( separator, str, withpattern )
 	local ret = {}
 	local current_pos = 1
 
-	for i = 1, string_len( str ) do
+	for i = 1, #str do
 		local start_pos, end_pos = string_find( str, separator, current_pos, not withpattern )
 		if ( not start_pos ) then break end
 		ret[ i ] = string_sub( str, current_pos, start_pos - 1 )
