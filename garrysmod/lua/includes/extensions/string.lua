@@ -325,7 +325,7 @@ end
 function string.StartsWith( str, start )
 
 	local n = #start
-    return n == 0 or string_sub(str, n) == start
+    return n == 0 or string_sub(str, 1, n) == start
 
 end
 string.StartWith = string.StartsWith
@@ -445,5 +445,3 @@ function string.NiceName( name )
 	return ret
 
 end
-
-
