@@ -99,7 +99,7 @@ if ( SERVER ) then
 else
 
 	local buffer = ""
-	net.Receive( "GModSave", function( len, client )
+	net.Receive( "GModSave", function()
 		local done = net.ReadBool()
 		local showsave = net.ReadBool()
 

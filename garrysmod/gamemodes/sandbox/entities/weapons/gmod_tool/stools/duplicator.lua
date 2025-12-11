@@ -186,7 +186,7 @@ if ( CLIENT ) then
 	-- Received by the client to alert us that we have something copied
 	-- This allows us to enable the save button in the spawn menu
 	--
-	net.Receive( "CopiedDupe", function( len, client )
+	net.Receive( "CopiedDupe", function()
 
 		local canSave = net.ReadUInt( 1 )
 		if ( canSave == 1 ) then

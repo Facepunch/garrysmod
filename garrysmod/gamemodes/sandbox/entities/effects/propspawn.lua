@@ -36,7 +36,7 @@ function EFFECT:Think()
 	if ( !IsValid( self.ParentEntity ) ) then return false end
 
 	local PPos = self.ParentEntity:GetPos()
-	self:SetPos( PPos + ( EyePos() - PPos ):GetNormal() )
+	self:SetPos( PPos + ( EyePos() - PPos ):GetNormalized() )
 
 	if ( self.LifeTime > CurTime() ) then
 		return true
@@ -119,7 +119,7 @@ end
 function EFFECT:StartClip( model, spd )
 
 	local mn, mx = model:GetRenderBounds()
-	local Up = ( mx - mn ):GetNormal()
+	local Up = ( mx - mn ):GetNormalized()
 	local Bottom = model:GetPos() + mn
 	local Top = model:GetPos() + mx
 

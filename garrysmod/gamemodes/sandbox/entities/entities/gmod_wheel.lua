@@ -116,9 +116,9 @@ function ENT:Forward( onoff, mul )
 
 	end
 
-	Motor:Fire( "Scale", Speed, 0 )
+	Motor:Fire( "Scale", Speed )
 	Motor.forcescale = Speed
-	Motor:Fire( "Activate", "", 0 )
+	Motor:Fire( "Activate" )
 
 	return true
 
@@ -159,7 +159,7 @@ function ENT:SetTorque( torque )
 
 	local Motor = self:GetMotor()
 	if ( !IsValid( Motor ) ) then return end
-	Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale, 0 )
+	Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale )
 
 	self:SetOverlayText( "Torque: " .. math.floor( torque ) )
 
@@ -194,7 +194,7 @@ function ENT:Use( activator, caller, type, value )
 			Motor.direction = 1
 		end
 
-		Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale, 0 )
+		Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale )
 		self:SetDirection( Motor.direction )
 
 		self:DoDirectionEffect()

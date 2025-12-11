@@ -87,27 +87,27 @@ function SWEP:OpenEnt(hitEnt)
       if openable == OPEN_DOOR or openable == OPEN_ROT then
          local unlock = CrowbarCanUnlock(openable)
          if unlock then
-            hitEnt:Fire("Unlock", nil, 0)
+            hitEnt:Fire("Unlock")
          end
 
          if unlock or hitEnt:HasSpawnFlags(256) then
             if openable == OPEN_ROT then
-               hitEnt:Fire("OpenAwayFrom", self:GetOwner(), 0)
+               hitEnt:Fire("OpenAwayFrom", self:GetOwner())
             end
-            hitEnt:Fire("Toggle", nil, 0)
+            hitEnt:Fire("Toggle")
          else
             return OPEN_NO
          end
       elseif openable == OPEN_BUT then
          if CrowbarCanUnlock(openable) then
-            hitEnt:Fire("Unlock", nil, 0)
-            hitEnt:Fire("Press", nil, 0)
+            hitEnt:Fire("Unlock")
+            hitEnt:Fire("Press")
          else
             return OPEN_NO
          end
       elseif openable == OPEN_NOTOGGLE then
          if CrowbarCanUnlock(openable) then
-            hitEnt:Fire("Open", nil, 0)
+            hitEnt:Fire("Open")
          else
             return OPEN_NO
          end

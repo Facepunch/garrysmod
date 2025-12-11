@@ -258,7 +258,7 @@ function ENT:Explode(tr)
       phexp:SetKeyValue("radius", r_outer)
       phexp:SetKeyValue("spawnflags", "19")
       phexp:Spawn()
-      phexp:Fire("Explode", "", 0)
+      phexp:Fire("Explode")
 
 
       -- few fire bits to ignite things

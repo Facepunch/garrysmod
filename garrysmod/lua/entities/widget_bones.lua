@@ -64,7 +64,7 @@ local widget_bone = {
 		if ( !pp ) then return end
 
 		local pos = self:GetPos()
-		local fwd = ( pp - pos ):GetNormal()
+		local fwd = ( pp - pos ):GetNormalized()
 		local ang = fwd:Angle()
 		local len = self:GetSize() / 2
 		local w = len * 0.2
