@@ -25,7 +25,7 @@ function PANEL:Init()
 		local args = { ... }
 		for id, arg in pairs( args ) do
 			if ( isstring( arg ) ) then
-				args[ id ] = "[[" .. arg .. "]]"
+				args[ id ] = string.format( "%q", arg )
 			end
 		end
 
