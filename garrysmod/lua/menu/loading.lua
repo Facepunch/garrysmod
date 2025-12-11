@@ -51,6 +51,25 @@ function PANEL:Paint( w, h )
 
 	surface.DrawTexturedRect( 0, 0, w, h )
 
+	if ( self.ShowBubble ) then -- HL2-like "LOADING" in middle of screen
+
+		local panelH = h * 0.0667
+		local panelW = panelH * 2.625
+		local panelX = ( w - panelW ) / 2
+		local panelY = ( h - panelH ) / 2
+		local cornerRadius = math.max( 8, math.floor( panelH * 0.15 ) )
+
+		draw.RoundedBox( cornerRadius, panelX, panelY, panelW, panelH, Color( 0, 0, 0, 128 ) )
+
+		surface.SetFont( "HudDefault" )
+		local text = "#GameUI_LoadingGame"
+		local tw, th = surface.GetTextSize( text )
+		surface.SetTextColor( 255, 255, 255, 255 )
+		surface.SetTextPos( panelX + ( panelW - tw ) / 2, panelY + ( panelH - th ) / 2 )
+		surface.DrawText( text )
+
+	end
+
 	if ( self.JavascriptRun && IsValid( self.HTML ) && !self.HTML:IsLoading() ) then
 
 		self:RunJavascript( self.JavascriptRun )
@@ -75,6 +94,8 @@ function PANEL:OnActivate( transition )
 		self.BGColor = Color( 255, 255, 255, 255 )
 		self.BGMaterial = engine.GetLastFrame()
 
+		self.ShowBubble = true
+
 		self:ShowURL( "about:blank" )
 	else
 		self:ShowURL( GetDefaultLoadingHTML() )
@@ -90,6 +111,8 @@ function PANEL:OnDeactivate()
 
 	self.BGColor = colGrey
 	self.BGMaterial = matBlank
+
+	self.ShowBubble = false
 
 	if ( IsValid( self.HTML ) ) then self.HTML:Remove() end
 	self.LoadedURL = nil
