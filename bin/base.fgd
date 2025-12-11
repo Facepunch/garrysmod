@@ -3671,7 +3671,7 @@
 		8: "Maintenance area"
 	]
 	_minlight(string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
-	min_use_angle(float) : "Use Look-At Limit" : "0.0" : "Limit the minimum usable look-at-angle. -1 is looking directly away, 0 is looking perpendicular, 1 is looking directly at."
+	min_use_angle(float) : "Use Look-At Limit" : "0.8" : "Limit the minimum usable look-at-angle. -1 is looking directly away, 0 is looking perpendicular, 1 is looking directly at."
 ]
 
 @SolidClass base(Targetname, Parentname, Origin, Angles, Global, Button, EnableDisable) = func_rot_button :
