@@ -8,6 +8,12 @@ include( "creationmenu.lua" )
 
 local PANEL = {}
 
+AccessorFunc( PANEL, "m_bHangOpen", "HangOpen" )
+
+-- For backwards compatibility. Why were these ever named like this?
+PANEL.HangOpen = PANEL.SetHangOpen
+PANEL.HangingOpen = PANEL.GetHangOpen
+
 function PANEL:Init()
 
 	self:Dock( FILL )
@@ -26,7 +32,7 @@ function PANEL:Init()
 	self.CreateMenu = vgui.Create( "CreationMenu", self.HorizontalDivider )
 	self.HorizontalDivider:SetLeft( self.CreateMenu )
 
-	self.m_bHangOpen = false
+	self:SetHangOpen( false )
 
 	self:SetMouseInputEnabled( true )
 
@@ -73,41 +79,17 @@ function PANEL:GetCreationMenu()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnClick
------------------------------------------------------------]]
 function PANEL:OnMousePressed()
 
 	self:Close()
 
 end
 
---[[---------------------------------------------------------
-	Name: HangOpen
------------------------------------------------------------]]
-function PANEL:HangOpen( bHang )
-
-	self.m_bHangOpen = bHang
-
-end
-
---[[---------------------------------------------------------
-	Name: HangingOpen
------------------------------------------------------------]]
-function PANEL:HangingOpen()
-
-	return self.m_bHangOpen
-
-end
-
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Open()
 
 	RestoreCursorPosition()
 
-	self.m_bHangOpen = false
+	self:SetHangOpen( false )
 
 	-- If the context menu is open, try to close it..
 	if ( IsValid( g_ContextMenu ) && g_ContextMenu:IsVisible() ) then
@@ -134,13 +116,10 @@ function PANEL:Open()
 
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Close()
 
-	if ( self.m_bHangOpen ) then
-		self.m_bHangOpen = false
+	if ( self:GetHangOpen() ) then
+		self:SetHangOpen( false )
 		return
 	end
 
@@ -178,7 +157,7 @@ function PANEL:StartKeyFocus( pPanel )
 
 	self.m_pKeyFocus = pPanel
 	self:SetKeyboardInputEnabled( true )
-	self:HangOpen( true )
+	self:SetHangOpen( true )
 
 end
 
@@ -288,8 +267,15 @@ end
 
 hook.Add( "OnPauseMenuShow", "CloseSpawnMenuWhenInMainMenu", function()
 	-- If the main menu is open, close the spawn menu & context menu
-	if ( g_SpawnMenu:IsVisible() ) then g_SpawnMenu:Close() end
-	if ( g_ContextMenu:IsVisible() ) then g_ContextMenu:Close() end
+	if ( IsValid( g_SpawnMenu ) and g_SpawnMenu:IsVisible() ) then
+		g_SpawnMenu:SetHangOpen( false )
+		g_SpawnMenu:Close()
+	end
+
+	if ( IsValid( g_ContextMenu ) and g_ContextMenu:IsVisible() ) then
+		g_ContextMenu:SetHangOpen( false )
+		g_ContextMenu:Close()
+	end
 end )
 
 --[[---------------------------------------------------------

@@ -12,7 +12,7 @@ function PANEL:Init()
 	self:SetWorldClicker( true )
 
 	self.Canvas = vgui.Create( "DCategoryList", self )
-	self.m_bHangOpen = false
+	self:SetHangOpen( false )
 
 	self:Dock( FILL )
 
