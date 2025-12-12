@@ -33,13 +33,32 @@ function meta:CheckLimit( str )
 
 end
 
+local function CleanInvalidEntities( uid )
+	for countType, entities in pairs( g_SBoxObjects[ uid ] or {} ) do
+		for k, v in pairs( entities ) do
+			if ( !IsValid( v ) ) then entities[ k ] = nil end
+		end
+
+		-- Clear the table for this "count type" if its empty
+		if ( !next( entities ) ) then g_SBoxObjects[ uid ][ countType ] = nil end
+	end
+
+	if ( !next( g_SBoxObjects[ uid ] ) ) then g_SBoxObjects[ uid ] = nil end
+end
+
+local function QueueUpdateCleanup( uid, countType )
+	timer.Create( "SBoxCountUpdate_" .. countType .. "_" .. uid, 0, 1, function()
+		CleanInvalidEntities( uid )
+	end )
+end
+
 local function QueueUpdateCounts( ply, countType )
 	-- Instead of running ply:GetCount for each deletion or creation immediately,
 	-- we use a timer to batch them together in the next frame.
 	-- This helps immenseley when a lot of entities are being removed or created at once.
-	timer.Create( "SBoxCountUpdate_" .. countType .. "_" .. ply:UserID(), 0, 1, function()
-		if ( IsValid( ply ) ) then ply:GetCount( countType ) end
-		-- TODO: If player is not valid, clean up g_SBoxObjects here?
+	local key = ply:UniqueID()
+	timer.Create( "SBoxCountUpdate_" .. countType .. "_" .. key, 0, 1, function()
+		if ( IsValid( ply ) ) then ply:GetCount( countType ) else CleanInvalidEntities( key ) end
 	end )
 end
 
@@ -100,7 +119,7 @@ function meta:AddCount( str, ent )
 		-- Update count on deletion
 		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, countType, uid )
 			if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
-			if ( !IsValid( ply ) ) then return end
+			if ( !IsValid( ply ) ) then QueueUpdateCleanup( uid, countType ) return end
 
 			QueueUpdateCounts( ply, countType )
 		end, self, str, key )
