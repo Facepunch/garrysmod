@@ -161,7 +161,7 @@ function SWEP:ShouldDropOnDie() return false end
 function SWEP:DoShootEffect()
 
 	if ( self.NextShootEffect && self.NextShootEffect > CurTime() ) then return end
-	self.NextShootEffect = CurTime() + 0.75
+	self.NextShootEffect = CurTime() + 0.4
 
 	local owner = self:GetOwner()
 
