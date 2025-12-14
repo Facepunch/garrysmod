@@ -3,6 +3,9 @@ var ServerSettings = []
 var scope = null;
 var rootScope = null;
 
+var savedMapName = null
+var savedMapCategory = null
+
 App.filter( 'mapFilter', function() {
 	return function( items, search )
 	{
@@ -27,15 +30,34 @@ App.filter( 'mapFilter', function() {
 
 function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
-	for ( var i = 0; i < gScope.MapList.length; i++ )
+	if ( ( !$rootScope.Map || !$rootScope.LastCategory ) && savedMapName && savedMapCategory )
 	{
-		if ( gScope.MapList[i][ "category" ] == "Favourites" )
+		$rootScope.Map = savedMapName;
+		$rootScope.LastCategory = savedMapCategory;
+	}
+
+	if ( !$scope.CurrentCategory && $rootScope.LastCategory )
+	{
+		$scope.CurrentCategory = $rootScope.LastCategory;
+	}
+	else if ( !$scope.CurrentCategory )
+	{
+		// Use Favourites or Sandbox as a default category, if none set
+		$scope.CurrentCategory = "Sandbox";
+
+		var favMaps = Object.keys( gScope.MapListFav );
+		if ( favMaps.length > 0 )
 		{
-			if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Favourites";
+			$scope.CurrentCategory = "Favourites";
+			if ( !$rootScope.Map ) $rootScope.Map = favMaps[0];
 		}
 	}
 
-	if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Sandbox";
+	// Scroll the selected map into view
+	setTimeout( function() {
+		var elem = document.querySelector( '.mapicon.selected' );
+		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+	}, 100 );
 
 	$scope.Players =
 	[
@@ -71,7 +93,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	if ( !$rootScope.LastCategory )		$rootScope.LastCategory = $scope.CurrentCategory;
 
 	lua.Run( "UpdateServerSettings()" );
-	lua.Run( "LoadLastMap()" );
 
 	rootScope = $rootScope;
 	scope = $scope;
@@ -97,26 +118,11 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		$rootScope.LastCategory = $scope.CurrentCategory;
 	}
 
-	$scope.DoubleClick = ""
-	$scope.ClickMap = function( m )
+	$scope.DblClickMap = function( m )
 	{
 		$scope.SelectMap( m );
 
-		if ( $scope.DoubleClick == m )
-		{
-			$scope.StartGame();
-			return;
-		}
-
-		//
-		// ng-dblclick doesn't work properly in engine, so we fake it!
-		//
-		$scope.DoubleClick = m;
-
-		setTimeout( function()
-		{
-			$scope.DoubleClick = "";
-		}, 500 )
+		$scope.StartGame();
 	}
 
 	$scope.FavMap = function( m )
@@ -140,31 +146,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 	$scope.IsFavMap = function( m )
 	{
-		for ( var i = 0; i < gScope.MapList.length; i++ )
-		{
-			if ( gScope.MapList[i][ "category" ] == "Favourites" )
-			{
-				var obj = gScope.MapList[i][ "maps" ]
-				for ( var map in obj )
-				{
-					if ( m == ( obj[ map ] ) ) return true
-				}
-			}
-		}
-
-		return false;
-	}
-
-	$scope.FavMapHover = function( m )
-	{
-		if ( this.IsFavMap( m ) ) return "faviconremove";
-		return "faviconadd";
-	}
-
-	$scope.FavMapClass = function( m )
-	{
-		if ( this.IsFavMap( m ) ) return "favtoggle_always";
-		return "favtoggle";
+		return gScope.MapListFav[m.toLowerCase()] || false;
 	}
 
 	$scope.StartGame = function()
@@ -244,52 +226,23 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		if ( oldSvLan != $scope.ServerSettings.sv_lan && $scope.ServerSettings.sv_lan == true && $scope.ServerSettings.p2p_enabled == true )
 		{
 			$scope.ServerSettings.p2p_enabled = false;
-			UpdateDigest( $scope, 50 );
 		}
 		else if ( oldp2p != $scope.ServerSettings.p2p_enabled && $scope.ServerSettings.p2p_enabled == true && $scope.ServerSettings.sv_lan == true )
 		{
 			$scope.ServerSettings.sv_lan = false;
-			UpdateDigest( $scope, 50 );
 		}
 
 		oldp2p = $scope.ServerSettings.p2p_enabled;
 		oldSvLan = $scope.ServerSettings.sv_lan;
-
-		if ( !$scope.ServerSettings.p2p_enabled )
-		{
-			if ( document.getElementById( "p2p_friendsonly" ) !== null )
-			{
-				document.getElementById( "p2p_friendsonly" ).disabled = true;
-			}
-			$scope.ServerSettings.p2p_friendsonly = false;
-			UpdateDigest( $scope, 50 );
-		}
-		else if ( document.getElementById( "p2p_friendsonly" ) !== null )
-		{
-			document.getElementById( "p2p_friendsonly" ).disabled = false;
-		}
+		
+		document.getElementById( "p2p_friendsonly" ).disabled = !$scope.ServerSettings.p2p_enabled;
 	}
 }
 
 function SetLastMap( map, category )
 {
-	if ( scope )
-	{
-		scope.CurrentCategory = category;
-		UpdateDigest( scope, 50 );
-	}
-
-	if ( rootScope )
-	{
-		rootScope.Map = map;
-		rootScope.LastCategory = category;
-		UpdateDigest( rootScope, 50 );
-	}
-
-	setTimeout( function() {
-		var elem = document.querySelector( '.mapicon.selected' );
-		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
-	}, 100 );
+	savedMapName = map;
+	savedMapCategory = category;
 }
 
 function UpdateServerSettings( sttngs )

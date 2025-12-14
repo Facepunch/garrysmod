@@ -29,7 +29,9 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_breen",
-	Category = Category
+	Category = Category,
+	SpawnFlags = 131072, -- SF_BREEN_GMOD_SPAWNMENU, makes him be a combine for NPC relationships
+	Weapons = { "" }
 } )
 
 AddNPC( {
@@ -39,7 +41,8 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_eli",
-	Category = Category
+	Category = Category,
+	Weapons = { "" }
 } )
 
 AddNPC( {
@@ -50,12 +53,14 @@ AddNPC( {
 -- Did you know that this MAN can shoot annabelle like he's been doing it his whole life?
 AddNPC( {
 	Class = "npc_kleiner",
-	Category = Category
+	Category = Category,
+	Weapons = { "" }
 } )
 
 AddNPC( {
 	Class = "npc_mossman",
-	Category = Category
+	Category = Category,
+	Weapons = { "" }
 } )
 
 -- I don't trust these Vorts, but I'll let em stay in this category until they mess up
@@ -123,7 +128,8 @@ AddNPC( {
 
 AddNPC( {
 	Class = "npc_magnusson",
-	Category = Category
+	Category = Category,
+	Weapons = { "" }
 } )
 
 if ( IsMounted( "lostcoast" ) ) then
@@ -227,10 +233,6 @@ AddNPC( {
 	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
-
-//game.AddParticles( "particles/grub_blood.pcf" )
-//game.AddParticles( "particles/antlion_gib_02.pcf" )
-//game.AddParticles( "particles/antlion_worker.pcf" )
 
 AddNPC( {
 	Class = "npc_antlionguard",

@@ -90,7 +90,7 @@ game_sounds_manifest
 
 	// Episode 2
 	"precache_file"		"scripts/sounds/game_sounds_addendum_ep2.txt"
-	"precache_file"		"scripts/game_sounds_ambient_generic_ep2.txt"
+	"precache_file"		"scripts/sounds/game_sounds_ambient_generic_ep2.txt"
 	"precache_file"		"scripts/game_sounds_physics_ep2.txt"
 	"precache_file"		"scripts/sounds/game_sounds_vehicles_ep2.txt"
 	"precache_file"		"scripts/sounds/game_sounds_weapons_ep2.txt"

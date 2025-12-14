@@ -186,7 +186,7 @@ div.modaldialog
 	background: rgba( 0, 0, 0, 0.5 );
 	width: 100%;
 	height: 100%;
-	display: block;
+	display: -webkit-box;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -195,13 +195,9 @@ div.modaldialog
 
 div.centermessage
 {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
 	background: white;
 	border-radius: 5px;
+	margin: auto;
 
 	padding: 20px;
 	max-width: 500px;
@@ -243,6 +239,10 @@ div.centermessage a:hover
 {
 	background: #ccc;
 }
+div.centermessage a:active
+{
+	background: #b9b9b9;
+}
 
 div.centermessage a.big
 {
@@ -264,6 +264,10 @@ div.centermessage a.warning:hover
 {
 	background: #eb2719;
 }
+div.centermessage a.warning:active
+{
+	background: #a71b11;
+}
 
 div.centermessage a.create
 {
@@ -275,8 +279,13 @@ div.centermessage a.create:hover
 {
 	background: #63bb66;
 }
+div.centermessage a.create:active
+{
+	background: #55a158;
+}
 div.centermessage a.create.disabled
 {
+	color: #ccc;
 	background: #b1b1b1;
 }
 
@@ -299,6 +308,10 @@ div.centermessage .button
 div.centermessage .button:hover
 {
 	background: #e3e3e3;
+}
+div.centermessage .button:active
+{
+	background: #c9c9c9;
 }
 
 div.centermessage div.button

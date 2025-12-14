@@ -41,7 +41,8 @@ end
 
 function ENT:OnTakeDamage( dmginfo )
 
-	if ( dmginfo:GetInflictor():GetClass() == "gmod_dynamite" ) then return end
+	local inflictor = dmginfo:GetInflictor()
+	if ( IsValid( inflictor ) and inflictor:GetClass() == "gmod_dynamite" ) then return end
 
 	self:TakePhysicsDamage( dmginfo )
 

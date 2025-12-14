@@ -84,8 +84,6 @@ function meta:PhysgunUnfreeze()
 
 		end
 
-
-
 		return UnfrozenObjects
 
 	end
@@ -122,7 +120,7 @@ function meta:UnfreezePhysicsObjects()
 			if ( IsValid( v.phys ) && !v.phys:IsMoveable() ) then
 
 				-- We need to freeze/unfreeze all physobj's in jeeps to stop it spazzing
-				if ( v.ent:GetClass() == "prop_vehicle_jeep" ) then
+				if ( v.ent:GetClass() == "prop_vehicle_jeep" || v.ent:GetClass() == "prop_vehicle_apc" ) then
 
 					-- How many physics objects we have
 					local objects = v.ent:GetPhysicsObjectCount()
@@ -185,10 +183,19 @@ function meta:GetEyeTrace()
 		self.LastPlayerTrace = framenum
 	end
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self ) )
-	self.PlayerTrace = tr
+	local tracePlayer = self.PlayerTrace
 
-	return tr
+	if ( !tracePlayer ) then
+		tracePlayer = {}
+		self.PlayerTrace = tracePlayer
+	end
+
+	local trdata = util.GetPlayerTrace( self )
+	trdata.output = tracePlayer
+
+	util.TraceLine( trdata )
+
+	return tracePlayer
 end
 
 --[[---------------------------------------------------------
@@ -206,8 +213,17 @@ function meta:GetEyeTraceNoCursor()
 		self.LastPlayerAimTrace = framenum
 	end
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward() ) )
-	self.PlayerAimTrace = tr
+	local tracePlayerAim = self.PlayerAimTrace
 
-	return tr
+	if ( !tracePlayerAim ) then
+		tracePlayerAim = {}
+		self.PlayerAimTrace = tracePlayerAim
+	end
+
+	local trdata = util.GetPlayerTrace( self, self:EyeAngles():Forward() )
+	trdata.output = tracePlayerAim
+
+	util.TraceLine( trdata )
+
+	return tracePlayerAim
 end

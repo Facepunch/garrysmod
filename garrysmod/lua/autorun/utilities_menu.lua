@@ -17,12 +17,21 @@ local function User_Cleanup( pnl )
 
 end
 
+local function LoadInConvarDefaults( cvars )
+	for k, v in pairs( cvars ) do
+		local convar = GetConVar( k )
+		if ( convar and convar:GetDefault():len() != 0 ) then
+			cvars[ k ] = convar:GetDefault()
+		end
+	end
+end
+
 local function ServerSettings( pnl )
 
 	pnl:Help( "#utilities.serversettings" )
 
 	local ConVarsDefault = {
-		hostname = "Garry's Mod",
+		hostname = "My Garry's Mod Server",
 		-- sv_password = "", -- Can't be read by addons/servers
 		sv_kickerrornum = "0",
 		sv_allowcslua = "0",
@@ -40,6 +49,7 @@ local function ServerSettings( pnl )
 		g_ragdoll_maxcount = "32",
 		sv_timeout = "65"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_server", ConVarsDefault )
 
 	pnl:TextEntry( "#utilities.hostname", "hostname" )
@@ -49,7 +59,7 @@ local function ServerSettings( pnl )
 	pnl:CheckBox( "#utilities.allowcslua", "sv_allowcslua" )
 
 	pnl:CheckBox( "#utilities.sticktoground", "sv_sticktoground" )
-	pnl:ControlHelp( "#utilities.sticktoground.help" )
+	pnl:ControlHelp( "#utilities.sticktoground.help" ):DockMargin( 32, 4, 32, 8 ) -- 4 extra on top
 
 	pnl:CheckBox( "#utilities.epickupallowed", "sv_playerpickupallowed" )
 	pnl:CheckBox( "#utilities.falldamage", "mp_falldamage" )
@@ -88,7 +98,9 @@ local function SandboxClientSettings( pnl )
 		cl_drawcameras = "1",
 		cl_drawthrusterseffects = "1",
 		cl_showhints = "1",
+		spawnmenu_toggle = "0",
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_sandbox_cl", ConVarsDefault )
 
 	pnl:NumSlider( "#utilities.max_results", "sbox_search_maxresults", 1024, 8192, 0 )
@@ -103,6 +115,9 @@ local function SandboxClientSettings( pnl )
 	pnl:CheckBox( "#menubar.drawing.cameras", "cl_drawcameras" )
 	pnl:CheckBox( "#menubar.drawing.thrusters", "cl_drawthrusterseffects" )
 	pnl:CheckBox( "#menubar.drawing.hints", "cl_showhints" )
+
+	pnl:CheckBox( "#utilities.spawnmenu_toggle", "spawnmenu_toggle" )
+	pnl:ControlHelp( "#utilities.spawnmenu_toggle.help" ):DockMargin( 32, 4, 32, 8 ) -- 4 extra on top
 
 end
 
@@ -122,6 +137,7 @@ local function SandboxSettings( pnl )
 		sbox_bonemanip_player = "0",
 		sbox_bonemanip_misc = "0"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 
 	local ConVarsLimits = {}
 	for id, str in pairs( cleanup.GetTable() ) do
@@ -132,7 +148,9 @@ local function SandboxSettings( pnl )
 		table.insert( ConVarsLimits, {
 			command = "sbox_max" .. str,
 			default = cvar:GetDefault(),
-			label = language.GetPhrase( "max_" .. str )
+			label = language.GetPhrase( "max_" .. str ),
+			min = 0,
+			max = math.max( 200, cvar:GetDefault() * 1.4 )
 		} )
 	end
 
@@ -154,7 +172,7 @@ local function SandboxSettings( pnl )
 	pnl:CheckBox( "#bone_manipulate_others", "sbox_bonemanip_misc" )
 
 	for id, t in SortedPairsByMemberValue( ConVarsLimits, "label" ) do
-		pnl:NumSlider( t.label, t.command, 0, 200, 0 ):SetHeight( 16 ) -- This makes the controls all bunched up like how we want
+		pnl:NumSlider( t.label, t.command, t.min, t.max, 0 ):SetHeight( 16 ) -- This makes the controls all bunched up like how we want
 	end
 
 end
@@ -173,6 +191,7 @@ local function PhysgunSettings( pnl )
 		physgun_rotation_sensitivity = "0.05",
 		physgun_wheelspeed = "10"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_physgun", ConVarsDefault )
 
 	pnl:CheckBox( "#utilities.physgun_halo", "physgun_halo" )
@@ -201,10 +220,11 @@ local function PhysgunSVSettings( pnl )
 		physgun_timeToArrive = "0.05",
 		physgun_timeToArriveRagdoll = "0.1"
 	}
+	LoadInConvarDefaults( ConVarsDefault )
 	pnl:ToolPresets( "util_physgun_sv", ConVarsDefault )
 
 	pnl:CheckBox( "#utilities.physgun_limited", "physgun_limited" )
-	pnl:ControlHelp( "#utilities.physgun_limited.help" )
+	pnl:ControlHelp( "#utilities.physgun_limited.help" ):DockMargin( 32, 4, 32, 8 ) -- 4 extra on top
 
 	pnl:NumSlider( "#utilities.physgun_maxrange", "physgun_maxrange", 128, 8192, 0 )
 	pnl:NumSlider( "#utilities.physgun_tpdist", "physgun_teleportdistance", 0, 10000, 0 )

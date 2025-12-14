@@ -241,16 +241,16 @@
 "Splash.Large"
 {
 	"decals/splash1_subrect" "1"
-	"decals/splash2_subrect" "1"
-	"decals/splash3_subrect" "1"
+//	"decals/splash2_subrect" "1" // GMOD: They are identical, so why have them
+//	"decals/splash3_subrect" "1"
 }
 
 // Currently a model version of these decals don't exist.
 "Splash.Small"
 {
 	"decals/splash1_subrect" "1"
-	"decals/splash1_subrect" "1"
-	"decals/splash1_subrect" "1"
+//	"decals/splash1_subrect" "1" // GMOD
+//	"decals/splash1_subrect" "1"
 }
 
 // Currently a model version of this decal doesn't exit.

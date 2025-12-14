@@ -75,6 +75,7 @@ if ( SERVER ) then
 		if ( !IsValidDynamiteModel( model ) ) then return NULL end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
+		if ( !IsValid( dynamite ) ) then return NULL end
 
 		duplicator.DoGeneric( dynamite, Data )
 		dynamite:SetPos( pos ) -- Backwards compatible for addons directly calling this function
@@ -150,7 +151,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo( "model" )
 	if ( !IsValidDynamiteModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl:lower() ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 

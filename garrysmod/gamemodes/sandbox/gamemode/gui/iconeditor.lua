@@ -543,7 +543,7 @@ function PANEL:SetIcon( icon )
 	end
 
 	-- Keep the spawnmenu open
-	g_SpawnMenu:HangOpen( true )
+	g_SpawnMenu:SetHangOpen( true )
 
 end
 

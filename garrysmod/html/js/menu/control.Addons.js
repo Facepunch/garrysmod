@@ -115,6 +115,10 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		subscriptions.Unsubscribe( file.id );
 	}
+	$scope.SubscribeByID = function( fileId )
+	{
+		subscriptions.Subscribe( fileId );
+	}
 	$scope.UninstallAllSubscribed = function()
 	{
 		subscriptions.UnsubscribeAll();
@@ -337,6 +341,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		lua.Run( "ListAddonPresets()" );
 		$scope.LoadPresetMenuOpen = true;
 		$scope.LoadPresetResub = false;
+		$scope.SelectedPreset = undefined;
+		$scope.PresetSearchText = "";
 	}
 	$scope.SelectPreset = function( preset, newAction )
 	{

@@ -44,7 +44,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, stack, addonti
 		first	= SysTime(),
 		last	= SysTime(),
 		times	= 1,
-		title	= addontitle,
+		--title	= addontitle,
 		x		= 32,
 		text	= text,
 		iserr   = true
@@ -60,10 +60,28 @@ hook.Add( "OnPauseMenuBlockedTooManyTimes", "TellAboutShiftEsc", function()
 		first	= SysTime(),
 		last	= SysTime(),
 		times	= 1,
-		title	= "",
 		x		= 32,
 		text	= "#permission.main_menu_blocked",
 		iserr   = false
+	}
+
+end )
+
+hook.Add( "OnProblemReceived", "TellAboutShiftEsc", function( problem )
+
+	-- Only for highest severity problems
+	if ( problem.severity != 2 ) then return end
+
+	-- Strip off everything after a new line
+	local shortdesc = string.match( problem.text, "([^\n]+)" ) or problem.text
+
+	Errors[ "internal_problem" ] = {
+		first	= SysTime(),
+		last	= SysTime(),
+		times	= 1,
+		x		= 32,
+		text	= string.format( language.GetPhrase( "#errors.problem" ), shortdesc ),
+		iserr   = true
 	}
 
 end )

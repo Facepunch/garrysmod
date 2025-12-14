@@ -186,7 +186,7 @@ if ( CLIENT ) then
 	-- Received by the client to alert us that we have something copied
 	-- This allows us to enable the save button in the spawn menu
 	--
-	net.Receive( "CopiedDupe", function( len, client )
+	net.Receive( "CopiedDupe", function()
 
 		local canSave = net.ReadUInt( 1 )
 		if ( canSave == 1 ) then
@@ -225,12 +225,17 @@ if ( CLIENT ) then
 		local ply = LocalPlayer()
 		if ( !IsValid( ply ) || !self.CurrentDupeMins || !self.CurrentDupeMaxs ) then return end
 
-		local tr = LocalPlayer():GetEyeTrace()
+		local tr = self:GetWeapon():DoToolTrace()
+		if ( !tr ) then return end
 
 		local pos = tr.HitPos
 		pos.z = pos.z - self.CurrentDupeMins.z
 
-		local ang = LocalPlayer():GetAngles()
+		local ang = ply:GetAngles()
+		if ( IsValid( ply:GetVehicle() ) ) then
+			ang = ang + ply:LocalEyeAngles()
+			ang.y = ang.y - 90 -- Hacky
+		end
 		ang.p = 0
 		ang.r = 0
 

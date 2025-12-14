@@ -141,6 +141,7 @@ function SWEP:DealDamage()
 		dmginfo:SetAttacker( attacker )
 
 		dmginfo:SetInflictor( self )
+		dmginfo:SetWeapon( self )
 
 		local dmg = self.HitDamage
 

@@ -1,4 +1,7 @@
 
+-- Makes stuff easier to parse visually
+local offColor = Color( 220, 220, 220 )
+
 local function FindInTable( tab, find, parents, depth )
 
 	depth = depth or 0
@@ -14,7 +17,11 @@ local function FindInTable( tab, find, parents, depth )
 
 			if ( k and k:lower():find( find:lower() ) ) then
 
-				Msg( "\t", parents, k, " - (", type( v ), " - ", v, ")\n" )
+				local info = isfunction( v ) and debug.getinfo( v ) or { source = "" }
+				if ( info.source:len() != 0 ) then info.source = " " .. info.source end
+
+				Msg( "   ", parents, k, string.rep( " ", math.Clamp( 32 - ( parents:len() + k:len() ), 1, 32 ) ) )
+				MsgC( offColor, "(", type( v ), " - ", v, info.source, ")\n" )
 
 			end
 
@@ -48,11 +55,16 @@ local function FindInHooks( base, name )
 
 			for n, f in pairs( t ) do
 
-				if ( !name or tostring( n ):lower():find( tostring( name ):lower() ) ) then
+				local nameStr = tostring( n )
+				if ( !name or nameStr:lower():find( tostring( name ):lower() ) ) then
 
-					if ( head ) then Msg( "\n\t", b, " hooks:\n" ) head = false end
+					if ( head ) then Msg( "\n   ", b, " hooks:\n" ) head = false end
 
-					Msg( "\t\t", tostring( n ), " - (", tostring( f ), ")\n" )
+					local info = isfunction( f ) and debug.getinfo( f, "S" ) or { source = "" }
+					if ( info.source:len() != 0 ) then info.source = " " .. info.source end
+
+					Msg( "\t", nameStr, string.rep( " ", math.Clamp( 32 - nameStr:len(), 1, 32 ) ) )
+					MsgC( offColor, "(", tostring( f ), info.source, ")\n" )
 
 				end
 
@@ -93,19 +105,19 @@ local function Find( ply, command, arguments )
 
 		Msg( "Finding '", arguments[1], "' hooks ",
 			( arguments[2] and "with name '" .. arguments[2] .. "' " or "" ),
-			( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n\n"
+			( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n"
 		)
 		FindInHooks( arguments[1], arguments[2] )
 
 	else
 
-		Msg( "Finding '", arguments[1], "' ", ( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n\n" )
+		Msg( "Finding '", arguments[1], "' ", ( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n" )
 		FindInTable( _G, arguments[1] )
 		--FindInTable( debug.getregistry(), arguments[1] )
 
 	end
 
-	Msg( "\n\n" )
+	Msg( "\n" )
 
 	if ( SERVER and IsValid( ply ) and ply:IsPlayer() and ply:IsListenServerHost() ) then
 		RunConsoleCommand( command .. "_cl", arguments[1], arguments[2] )

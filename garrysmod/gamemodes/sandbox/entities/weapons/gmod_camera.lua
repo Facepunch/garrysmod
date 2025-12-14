@@ -89,7 +89,12 @@ function SWEP:PrimaryAttack()
 	if ( !game.SinglePlayer() && SERVER ) then return end
 	if ( CLIENT && !IsFirstTimePredicted() ) then return end
 
-	self:GetOwner():ConCommand( "jpeg" )
+	if ( CLIENT ) then
+		RunConsoleCommand( "jpeg" )
+	else
+		self:GetOwner():SendLua( [[RunConsoleCommand( "jpeg" )]] )
+	end
+
 
 end
 
@@ -154,6 +159,9 @@ function SWEP:ShouldDropOnDie() return false end
 -- The effect when a weapon is fired successfully
 --
 function SWEP:DoShootEffect()
+
+	if ( self.NextShootEffect && self.NextShootEffect > CurTime() ) then return end
+	self.NextShootEffect = CurTime() + 0.4
 
 	local owner = self:GetOwner()
 

@@ -10,13 +10,21 @@ BODY
 
 #container
 {
-	position: fixed;
+	position: absolute;
 	text-align: center;
 	left: 50%;
 	top: 45%;
 	margin-top: -120px;
 	margin-left: -150px;
 	width: 300px;
+}
+
+#logo
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1.25em;
 }
 
 .progressbar
@@ -28,11 +36,6 @@ BODY
 	padding: 1px;
 	background-color: rgba( 0, 0, 0, 0.6 );
 	float: right;
-}
-
-.reflection
-{
-	-webkit-box-reflect: below -1px -webkit-gradient(linear, left top, left bottom, from(transparent), from(rgba(0, 0, 0, 0.0)), to(rgba(255, 255, 255, 0.5)));
 }
 
 .progressbar .inner
@@ -67,11 +70,6 @@ BODY
 		-webkit-transform: rotateZ(0deg);
 	}
 
-	50%
-	{
-		-webkit-transform: rotateZ(180deg);
-	}
-
 	100%
 	{
 		-webkit-transform: rotateZ(360deg);
@@ -80,18 +78,14 @@ BODY
 
 .walk
 {
-	-webkit-animation-name: walk;
-	-webkit-animation-duration: 10.0s;
-	-webkit-animation-iteration-count: infinite;
-	-webkit-animation-timing-function: linear;
-	-webkit-perspective: 6000px;
+	-webkit-animation: walk 10s linear infinite;
 	text-align: center;
 	background-color: #fe7;
 	width: 24px;
 	height: 24px;
 	color: #999;
 	font-size: 16px;
-	font-family: arial;
+	font-family: arial, sans-serif;
 	font-weight: bold;
 	border-radius: 3px;
 	display: inline-block;
@@ -124,12 +118,13 @@ body.dark
 {
 	display: inline-block;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	background-image: -webkit-gradient( linear, 0 0, 90% 0, 100% 0, from( ), to( rgba( 0, 0, 0, 0 ) ), to( rgba( 0, 0, 0, 0 ) ) );
 	background-image: -webkit-linear-gradient( left, rgba( 0, 0, 0, 0.4 ) 0%, rgba( 0, 0, 0, 0.03 ) 75%, rgba( 0, 0, 0, 0 ) 100% );
 	padding: 20px;
 	padding-right: 180px;
 	visibility: hidden;
 	white-space: nowrap;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 .server_info.visible
 {
@@ -139,14 +134,21 @@ body.dark
 {
 	display: inline-block;
 	vertical-align: top;
+	max-width: 100%;
 
 	line-height: 42px;
 	font-size: xx-large;
 }
-.server_info img
+.server_info .text > div
+{
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.server_info #mapimg
 {
 	width: 128px;
 	height: 128px;
 	background: #666;
 	margin-right: 16px;
+	float: left;
 }

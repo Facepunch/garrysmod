@@ -5,7 +5,7 @@ if ( SERVER ) then
 	-- use the convar. The higher you set it the more accurate physics will be.
 	-- This is set to 4 by default, since we are a physics mod.
 
-	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE }, "Improves physics accuracy at the expense of performance." )
+	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE }, "Additional solver iterations make constraint systems more stable." )
 
 end
 
@@ -325,11 +325,15 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 
 	rope:SetPos( Pos )
 	rope:SetKeyValue( "Width", width )
+	rope:SetKeyValue( "TextureScale", "1.6" ) -- Preserve old scaling before 28 July 2025
 
-	if ( isstring( material ) ) then
-		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
+	if ( isstring( material ) and material != "" ) then
+		-- Check if the material looks right. Do not allow missing materials. Do not allow weird shaders.
+		-- This is not ideal because it is tested on the server, but whatever. Better than checking "RopeMaterials" list.
 		local mat = Material( material )
-		if ( mat && !string.find( mat:GetShader():lower(), "spritecard", nil, true ) && !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
+		local shader = mat:GetShader():lower()
+		local shaderGood = shader == "cable_dx9" or shader == "cable_dx8" or shader == "cable" or shader == "unlitgeneric" or shader == "splinerope"
+		if ( mat and !mat:IsError() and shaderGood ) then
 			rope:SetKeyValue( "RopeMaterial", material )
 		end
 	end
@@ -1083,6 +1087,10 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 		Constraint:SetPhysConstraintObjects( Phys1, Phys1 )
 		Constraint:Spawn()
 		Constraint:Activate()
+
+		-- Make sure the internal axis is set on spawn, not on first activation
+		Constraint:Fire( "Scale", 0 )
+		Constraint:Fire( "Activate" )
 
 	onFinishConstraint()
 

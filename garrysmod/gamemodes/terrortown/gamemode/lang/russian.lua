@@ -128,16 +128,20 @@ L.radio_notplaced = "Чтобы воспроизводить звуки, Рад�
 -- Radio soundboard buttons
 L.radio_button_scream  = "Крик"
 L.radio_button_expl    = "Взрыв"
-L.radio_button_pistol  = "Пистолет"
-L.radio_button_m16     = "M16"
-L.radio_button_deagle  = "Deagle"
-L.radio_button_mac10   = "МАС10"
-L.radio_button_shotgun = "Дробовик"
-L.radio_button_rifle   = "Винтовка"
-L.radio_button_huge    = "H.U.G.E"
+L.radio_button_pistol  = "Выстрелы пистолета"
+L.radio_button_m16     = "Выстрелы M16"
+L.radio_button_deagle  = "Выстрелы Deagle"
+L.radio_button_mac10   = "Выстрелы МАС10"
+L.radio_button_shotgun = "Выстрелы дробовика"
+L.radio_button_rifle   = "Выстрелы винтовки"
+L.radio_button_huge    = "Выстрелы H.U.G.E"
 L.radio_button_c4      = "Пиканье С4"
 L.radio_button_burn    = "Горение"
 L.radio_button_steps   = "Шаги"
+L.radio_button_glock   = "Выстрелы Glock"
+L.radio_button_sipist  = "Выстрелы глушителя"
+L.radio_button_tele    = "Телепортация"
+L.radio_button_heal    = "Лечение"
 
 
 -- Intro screen shown after joining

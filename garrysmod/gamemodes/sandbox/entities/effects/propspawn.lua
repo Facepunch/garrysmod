@@ -36,7 +36,7 @@ function EFFECT:Think()
 	if ( !IsValid( self.ParentEntity ) ) then return false end
 
 	local PPos = self.ParentEntity:GetPos()
-	self:SetPos( PPos + ( EyePos() - PPos ):GetNormal() )
+	self:SetPos( PPos + ( EyePos() - PPos ):GetNormalized() )
 
 	if ( self.LifeTime > CurTime() ) then
 		return true
@@ -100,26 +100,31 @@ function EFFECT:RenderOverlay( entity )
 
 end
 
-function EFFECT:RenderParent()
+function EFFECT:RenderParent( flags )
+
+	-- Do not draw some things during depth passes
+	local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
 
 	if ( !IsValid( self ) ) then return end
 	if ( !IsValid( self.SpawnEffect ) ) then self.RenderOverride = nil return end
 
 	local bClipping = self.SpawnEffect:StartClip( self, 1 )
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 	render.PopCustomClipPlane()
 	render.EnableClipping( bClipping )
 
-	self.SpawnEffect:RenderOverlay( self )
+	if ( !isDepthPass ) then
+		self.SpawnEffect:RenderOverlay( self )
+	end
 
 end
 
 function EFFECT:StartClip( model, spd )
 
 	local mn, mx = model:GetRenderBounds()
-	local Up = ( mx - mn ):GetNormal()
+	local Up = ( mx - mn ):GetNormalized()
 	local Bottom = model:GetPos() + mn
 	local Top = model:GetPos() + mx
 

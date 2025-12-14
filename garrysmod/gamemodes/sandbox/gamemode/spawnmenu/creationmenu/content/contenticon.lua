@@ -273,7 +273,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 
 	-- Generate a nice tooltip with extra info.
 	local ENTinfo = scripted_ents.Get( obj.spawnname )
-	if ( !ENTinfo ) then ENTinfo = list.Get( "SpawnableEntities" )[ obj.spawnname ] end
+	if ( !ENTinfo ) then ENTinfo = list.GetEntry( "SpawnableEntities", obj.spawnname ) end
 	if ( ENTinfo ) then
 		local extraInfo = ""
 		if ( ENTinfo.Information and ENTinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. ENTinfo.Information end
@@ -321,7 +321,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	local toolTip = language.GetPhrase( obj.nicename )
 
 	-- Generate a nice tooltip with extra info
-	local VehInfo = list.Get( "Vehicles" )[ obj.spawnname ]
+	local VehInfo = list.GetEntry( "Vehicles", obj.spawnname )
 	if ( VehInfo ) then
 		local extraInfo = ""
 		if ( VehInfo.Information and VehInfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. VehInfo.Information end
@@ -375,7 +375,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 
 	-- Generate a nice tooltip with extra info.
 	local NPCinfo = scripted_ents.Get( obj.spawnname )
-	if ( !NPCinfo ) then NPCinfo = list.Get( "NPC" )[ obj.spawnname ] end
+	if ( !NPCinfo ) then NPCinfo = list.GetEntry( "NPC", obj.spawnname ) end
 	if ( NPCinfo ) then
 		local extraInfo = ""
 		if ( NPCinfo.Information and NPCinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. NPCinfo.Information end
@@ -394,46 +394,67 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	end
 
 	icon.OpenMenuExtra = function( self, menu )
-		local weapon = table.Random( obj.weapon ) or ""
-		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+		local creatorOption = menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
 			RunConsoleCommand( "gmod_tool", "creator" )
 			RunConsoleCommand( "creator_type", "2" )
 			RunConsoleCommand( "creator_name", obj.spawnname )
-		end ):SetIcon( "icon16/brick_add.png" )
+			RunConsoleCommand( "creator_override", "" )
+		end )
+		creatorOption:SetIcon( "icon16/brick_add.png" )
 
 		-- Quick access to spawning NPCs with a spcific weapon without the need to change gmod_npcweapon
 		if ( table.IsEmpty( obj.weapon ) ) then return end
 
-		local subMenu, swg = menu:AddSubMenu( "#spawnmenu.menu.spawn_with_weapon" )
+		local creatorMenu = creatorOption:AddSubMenu()
+
+		local wepMenu, swg = menu:AddSubMenu( "#spawnmenu.menu.spawn_with_weapon" )
 		swg:SetIcon( "icon16/gun.png" )
 
-		subMenu:AddOption( "#menubar.npcs.noweapon", function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, "" ) end ):SetIcon( "icon16/cross.png" )
-
-		-- Kind of a hack!
-		local function addWeps( subm, weps )
+		local function addWeps( menu1, menu2, weps )
 			if ( table.Count( weps ) < 1 ) then return end
 
-			subMenu:AddSpacer()
-			for title, class in SortedPairs( weps ) do
-				subMenu:AddOption( title, function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, class ) end ):SetIcon( "icon16/gun.png" )
+			menu1:AddSpacer()
+			for title, info in SortedPairs( weps ) do
+				menu1:AddOption( title, function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, info.class ) end ):SetIcon( info.icon )
+			end
+
+			menu2:AddSpacer()
+			for title, info in SortedPairs( weps ) do
+				menu2:AddOption( title, function()
+					RunConsoleCommand( "gmod_tool", "creator" )
+					RunConsoleCommand( "creator_type", "2" )
+					RunConsoleCommand( "creator_name", obj.spawnname )
+					RunConsoleCommand( "creator_override", info.class )
+				end ):SetIcon( info.icon )
 			end
 		end
 
+		-- Default weapons
 		local weaps = {}
 		for _, class in pairs( obj.weapon ) do
 			if ( class == "" ) then continue end
-			weaps[ language.GetPhrase( class ) ] = class
+			weaps[ language.GetPhrase( class ) ] = { class = class, icon = "icon16/gun.png" }
 		end
-		addWeps( subMenu, weaps )
+		addWeps( wepMenu, creatorMenu, weaps )
 
-		local weaps = {}
-		for _, t in pairs( list.Get( "NPCUsableWeapons" ) ) do
-			if ( table.HasValue( obj.weapon, t.class ) ) then continue end
-			weaps[ language.GetPhrase( t.title ) ] = t.class
+		-- After the default weapons for consistency with other menus that do this
+		weaps = { [ "#menubar.npcs.noweapon" ] = { class = "none", icon = "icon16/cross.png" } }
+		addWeps( wepMenu, creatorMenu, weaps )
+
+		-- Custom weapons, sorted the items by name, and group by category
+		local groupedWeps = {}
+		local CustomIcons = list.Get( "ContentCategoryIcons" )
+		for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+			if ( table.HasValue( obj.weapon, v.class ) ) then continue end
+	
+			local cat = ( v.category or "" ):lower()
+			groupedWeps[ cat ] = groupedWeps[ cat ] or {}
+			groupedWeps[ cat ][ language.GetPhrase( v.title ) ] = { class = v.class, icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
 		end
-		addWeps( subMenu, weaps )
+		for group, items in SortedPairs( groupedWeps ) do
+			addWeps( wepMenu, creatorMenu, items )
+		end
 
 	end
 	icon.OpenMenu = icon.OpenGenericSpawnmenuRightClickMenu
@@ -464,7 +485,7 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 
 	-- Generate a nice tooltip with extra info.
 	local SWEPinfo = weapons.Get( obj.spawnname )
-	if ( !SWEPinfo ) then SWEPinfo = list.Get( "Weapon" )[ obj.spawnname ] end
+	if ( !SWEPinfo ) then SWEPinfo = list.GetEntry( "Weapon", obj.spawnname ) end
 	if ( SWEPinfo ) then
 		local extraInfo = ""
 		-- These 2 really should be one

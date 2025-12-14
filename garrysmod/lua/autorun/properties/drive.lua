@@ -14,7 +14,7 @@ properties.Add( "drive", {
 		if ( !gamemode.Call( "CanDrive", ply, ent ) ) then return false end
 
 		-- We cannot drive these, maybe this should have a custom GetEntityDriveMode?
-		if ( ent:GetClass() == "prop_vehicle_jeep" || ent:GetClass() == "prop_vehicle_jeep_old" ) then return false end
+		if ( ent:GetClass() == "prop_vehicle_jeep" || ent:GetClass() == "prop_vehicle_apc" || ent:GetClass() == "prop_vehicle_jeep_old" ) then return false end
 
 		-- Make sure nobody else is driving this or we can get into really invalid states
 		for id, pl in player.Iterator() do

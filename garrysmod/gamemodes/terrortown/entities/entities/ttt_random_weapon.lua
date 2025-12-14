@@ -12,31 +12,39 @@ function ENT:KeyValue(key, value)
 end
 
 function ENT:Initialize()
-   local weps = ents.TTT.GetSpawnableSWEPs()
-   if weps then
-      local w = weps[math.random(#weps)]
-      local ent = ents.Create(WEPS.GetClass(w))
-      if IsValid(ent) then
-         local pos = self:GetPos()
-         ent:SetPos(pos)
-         ent:SetAngles(self:GetAngles())
-         ent:Spawn()
-         ent:PhysWake()
+   local spawnflags = self:GetSpawnFlags()
 
-         if ent.AmmoEnt and self.AutoAmmo > 0 then
-            for i=1, self.AutoAmmo do
-               local ammo = ents.Create(ent.AmmoEnt)
-               if IsValid(ammo) then
-                  pos.z = pos.z + 3 -- shift every box up a bit
-                  ammo:SetPos(pos)
-                  ammo:SetAngles(VectorRand():Angle())
-                  ammo:Spawn()
-                  ammo:PhysWake()
-               end
+   local weps
+   if spawnflags != 0 then
+      weps = ents.TTT.GetFilteredSpawnableSWEPs(spawnflags)
+   else
+      weps = ents.TTT.GetSpawnableSWEPs()
+   end
+
+   if not weps then return end
+
+   local w = weps[math.random(#weps)]
+   local ent = ents.Create(WEPS.GetClass(w))
+   if IsValid(ent) then
+      local pos = self:GetPos()
+      ent:SetPos(pos)
+      ent:SetAngles(self:GetAngles())
+      ent:Spawn()
+      ent:PhysWake()
+
+      if ent.AmmoEnt and self.AutoAmmo > 0 then
+         for i=1, self.AutoAmmo do
+            local ammo = ents.Create(ent.AmmoEnt)
+            if IsValid(ammo) then
+               pos.z = pos.z + 3 -- shift every box up a bit
+               ammo:SetPos(pos)
+               ammo:SetAngles(VectorRand():Angle())
+               ammo:Spawn()
+               ammo:PhysWake()
             end
          end
       end
-
-      self:Remove()
    end
+
+   self:Remove()
 end

@@ -7,40 +7,51 @@
 	left: 0;
 	right: 0;
 	background-color: rgba( 0, 0, 0, 0.5 );
+	display: -webkit-box;
 }
 
-#NavBar .popup
+#NavBar .group
 {
-	display: none;
+	display: -webkit-box;
 }
 
-#NavBar UL
+#NavBar .group.left
 {
-	display: block;
-	margin: 0;
-	padding: 0;
+	padding-left: 5px;
 }
 
-#NavBar .left
+#NavBar .group.center
 {
+	-webkit-box-pack: end;
+	-webkit-box-flex: 1;
+	margin: 0 10%;
+}
+
+
+#NavBar .button, UL.popup LI
+{
+	display: inline-block;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 4px;
+	height: 40px;
+	padding-left: 35px;
+	position: relative;
+	margin-right: 3px;
+	margin-top: 5px;
+	font-size: 11px;
 	text-align: left;
-	margin-left: 10px;
-	float: left;
-	display: block;
-	margin: 0;
-	padding: 0;
+	font-weight: bold;
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
 }
 
-#NavBar .right
+#NavBar .button:hover
 {
-	float: right;
-	text-align: right;
-	/*width: 350px;*/
-	right: 0;
-	display: block;
-	margin: 0;
-	padding: 0;
-	margin-left: 10%;
+	box-shadow: 0px 0px 20px #fff;
 }
 
 #NavBar .smallicon
@@ -71,66 +82,7 @@
 	margin-left: -1px;
 }
 
-#NavBar UL.center
-{
-	text-align: center;
-	left: 0;
-	right: 0;
-}
-
-#NavBar .right li:hover, #NavBar .center li:hover
-{
-	box-shadow: 0px 0px 20px #fff;
-}
-
-#NavBar LI, UL.popup LI, #NavBar .button
-{
-	display: inline-block;
-	background-color: #fff;
-	border-radius: 4px;
-	height: 40px;
-	padding-left: 35px;
-	position: relative;
-	margin-right: 3px;
-	margin-top: 5px;
-	font-size: 11px;
-	text-align: left;
-	font-weight: bold;
-	cursor: pointer;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#NavBar .button
-{
-	display: block;
-	padding: 4px 5px 0px 5px;
-	height: 36px;
-	margin-left: 5px;
-	vertical-align: top;
-}
-
-#NavBar .button:hover
-{
-	box-shadow: 0px 0px 20px #fff;
-}
-
-#NavBar .button span
-{
-	position: relative;
-	top: -12px;
-	padding: 0px 10px;
-	color: #333;
-}
-
-#NavBar LI
-{
-	display: block;
-	float: right;
-}
-
-#NavBar LI SPAN, UL.gamemode_list LI SPAN, UL.language_list LI SPAN
+#NavBar .button SPAN, UL.gamemode_list LI SPAN, UL.language_list LI SPAN
 {
 	color: #333;
 	position: relative;
@@ -139,11 +91,28 @@
 	padding-right: 10px;
 }
 
-#NavBar LI IMG, UL.gamemode_list LI IMG, UL.language_list LI IMG
+#NavBar .button IMG, UL.gamemode_list LI IMG, UL.language_list LI IMG
 {
 	position: absolute;
 	left: 5px;
 	top: 5px;
+}
+
+#NavBar #BackToMenu
+{
+	padding-right: 5px;
+}
+
+#NavBar #BackToMenu SPAN
+{
+	top: 14px;
+	margin-left: 2px;
+}
+
+#NavBar #BackToMenu IMG
+{
+	margin-left: 0px;
+	margin-top: -1px;
 }
 
 #NavBar number
@@ -366,8 +335,8 @@ UL.games_list.popup LI
 	{
 		display: none;
 	}
-	#NavBar .right
+	#NavBar .group.center
 	{
-		margin-left: 15px;
+		margin: 0px 15px;
 	}
 }
