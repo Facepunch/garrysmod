@@ -373,7 +373,7 @@ local function CleanupInvalidUndos()
 			end
 
 			local allInvalid = true
-			for _, ent in pairs( undoData.Entities ) do
+			for _, ent in pairs( undoData.Entities or {} ) do
 				if ( IsValid( ent ) ) then
 					allInvalid = false
 					break
