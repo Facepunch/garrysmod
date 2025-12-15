@@ -67,7 +67,7 @@ hook.Add( "OnPauseMenuBlockedTooManyTimes", "TellAboutShiftEsc", function()
 
 end )
 
-hook.Add( "OnProblemReceived", "TellAboutShiftEsc", function( problem )
+hook.Add( "OnProblemReceived", "FireProblemNotification", function( problem )
 
 	-- Only for highest severity problems
 	if ( problem.severity != 2 ) then return end
