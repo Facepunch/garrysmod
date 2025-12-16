@@ -179,4 +179,3 @@ function ENT:PostEntityPaste( ply )
 	end
 
 end
-
