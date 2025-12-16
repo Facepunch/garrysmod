@@ -63,7 +63,10 @@ function ENT:Initialize()
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
+
+	local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
+	if ( isDepthPass ) then return end
 
 	if ( halo.RenderedEntity() == self ) then
 		self.AttachedEntity:DrawModel()
