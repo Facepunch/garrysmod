@@ -34,7 +34,9 @@ function meta:CheckLimit( str )
 end
 
 local function CleanInvalidEntities( uid )
-	for countType, entities in pairs( g_SBoxObjects[ uid ] or {} ) do
+	if ( !g_SBoxObjects[ uid ] ) then return end
+
+	for countType, entities in pairs( g_SBoxObjects[ uid ] ) do
 		for k, v in pairs( entities ) do
 			if ( !IsValid( v ) ) then entities[ k ] = nil end
 		end
