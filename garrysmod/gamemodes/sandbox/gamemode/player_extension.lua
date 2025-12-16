@@ -34,16 +34,18 @@ function meta:CheckLimit( str )
 end
 
 local function CleanInvalidEntities( uid )
-	for countType, entities in pairs( g_SBoxObjects[ uid ] or {} ) do
-		for k, v in pairs( entities ) do
-			if ( !IsValid( v ) ) then entities[ k ] = nil end
+	if ( g_SBoxObjects[ uid ] ) then
+		for countType, entities in pairs( g_SBoxObjects[ uid ] ) do
+			for k, v in pairs( entities ) do
+				if ( !IsValid( v ) ) then entities[ k ] = nil end
+			end
+
+			-- Clear the table for this "count type" if its empty
+			if ( !next( entities ) ) then g_SBoxObjects[ uid ][ countType ] = nil end
 		end
 
-		-- Clear the table for this "count type" if its empty
-		if ( !next( entities ) ) then g_SBoxObjects[ uid ][ countType ] = nil end
+		if ( !next( g_SBoxObjects[ uid ] ) ) then g_SBoxObjects[ uid ] = nil end
 	end
-
-	if ( !next( g_SBoxObjects[ uid ] ) ) then g_SBoxObjects[ uid ] = nil end
 end
 
 local function QueueUpdateCleanup( uid, countType )
@@ -175,3 +177,4 @@ if ( SERVER ) then
 	end
 
 end
+
