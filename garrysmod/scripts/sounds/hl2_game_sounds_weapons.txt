@@ -133,7 +133,7 @@
 {
 	"channel"	"CHAN_WEAPON"
 	"volume"	"0.8"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"		"85,95"
 
 	"rndwave"
@@ -164,7 +164,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"			")weapons/ar2/ar2_altfire.wav"
 }
@@ -182,7 +182,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"			")weapons/ar2/npc_ar2_altfire.wav"
 }
@@ -191,7 +191,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"95,105"
 
 //	"wave"			"^weapons/ar2/npc_ar2_fire1.wav"
@@ -714,7 +714,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.55"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,102"
 
 	"wave"		")weapons/pistol/pistol_fire2.wav"
@@ -724,7 +724,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"90,120"
 
 	"wave"		"^weapons/pistol/pistol_fire3.wav"
@@ -752,7 +752,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,105"
 
 	"wave"			"^weapons/smg1/smg1_fireburst1.wav"
@@ -763,7 +763,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.55"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"		")weapons/rpg/rocketfire1.wav"
 }
@@ -772,7 +772,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.55"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"		")weapons/rpg/rocketfire1.wav"
 }
@@ -833,7 +833,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.86"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,101"
 	"rndwave"
 	{
@@ -847,7 +847,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"90,95"
 
 	"wave"			")weapons/shotgun/shotgun_dbl_fire7.wav"
@@ -871,7 +871,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.95"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,101"
 
 	"wave"			")weapons/shotgun/shotgun_fire6.wav"
@@ -909,7 +909,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.55"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"95,105"
 
 	"wave"		")weapons/smg1/smg1_fire1.wav"
@@ -919,7 +919,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.61"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"		")weapons/ar2/ar2_altfire.wav"
 }
@@ -929,7 +929,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"95,105"
 
 	"wave"			"^weapons/smg1/npc_smg1_fire1.wav"
@@ -957,7 +957,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,105"
 
 	"wave"		"^weapons/smg1/smg1_fire1.wav"
@@ -1169,7 +1169,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.93"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"88,93"	
 
 	"rndwave"

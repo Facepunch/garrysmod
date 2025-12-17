@@ -17,7 +17,7 @@ SWEP.Spawnable		= true
 util.PrecacheModel( SWEP.ViewModel )
 util.PrecacheModel( SWEP.WorldModel )
 
-SWEP.ShootSound = Sound( "Airboat.FireGunRevDown" )
+SWEP.ShootSound = Sound( "Toolgun.Single" )
 
 SWEP.Tool = {}
 
