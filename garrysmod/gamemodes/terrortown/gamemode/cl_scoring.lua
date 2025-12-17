@@ -125,9 +125,9 @@ function CLSCORE:BuildEventLogPanel(dpanel)
 
    -- If sortable is off, no background is drawn for the headers which looks
    -- terrible. So enable it, but disable the actual use of sorting.
-   iconcol.Header:SetDisabled(true)
-   timecol.Header:SetDisabled(true)
-   eventcol.Header:SetDisabled(true)
+   iconcol.Header:SetEnabled(false)
+   timecol.Header:SetEnabled(false)
+   eventcol.Header:SetEnabled(false)
 
    self:FillDList(dlist)
 end

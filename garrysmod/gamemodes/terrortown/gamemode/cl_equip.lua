@@ -341,7 +341,7 @@ local function TraitorMenuPopup()
    local dconfirm = vgui.Create("DButton", dinfobg)
    dconfirm:SetPos(0, dih - bh*2)
    dconfirm:SetSize(bw, bh)
-   dconfirm:SetDisabled(true)
+   dconfirm:SetEnabled(false)
    dconfirm:SetText(GetTranslation("equip_confirm"))
 
 
@@ -389,7 +389,7 @@ local function TraitorMenuPopup()
 
                                    can_order = update_preqs(new.item)
 
-                                   dconfirm:SetDisabled(not can_order)
+                                   dconfirm:SetEnabled(can_order)
                                 end
 
    -- select first
@@ -411,14 +411,14 @@ local function TraitorMenuPopup()
 
                             if new:GetPanel() == dequip then
                                can_order = update_preqs(dlist.SelectedPanel.item)
-                               dconfirm:SetDisabled(not can_order)
+                               dconfirm:SetEnabled(can_order)
                             end
                          end
 
    local dcancel = vgui.Create("DButton", dframe)
    dcancel:SetPos(w - 13 - bw, h - bh - 16)
    dcancel:SetSize(bw, bh)
-   dcancel:SetDisabled(false)
+   dcancel:SetEnabled(true)
    dcancel:SetText(GetTranslation("close"))
    dcancel.DoClick = function() dframe:Close() end
 

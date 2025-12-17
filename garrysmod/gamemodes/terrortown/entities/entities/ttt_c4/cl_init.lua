@@ -98,7 +98,7 @@ function ShowC4Config(bomb)
    dgrab:SetPos(m*6, m*5)
    dgrab:SetSize(bw, bh)
    dgrab:SetText(T("c4_remove_pickup"))
-   dgrab:SetDisabled(false)
+   dgrab:SetEnabled(true)
    dgrab.DoClick = function()
                       if not LocalPlayer() or not LocalPlayer():Alive() then return end
 
@@ -112,7 +112,7 @@ function ShowC4Config(bomb)
    ddestroy:SetPos(w - m*4 - bw - m*6, m*5)
    ddestroy:SetSize(bw, bh)
    ddestroy:SetText(T("c4_remove_destroy1"))
-   ddestroy:SetDisabled(false)
+   ddestroy:SetEnabled(true)
    ddestroy.Confirmed = false
    ddestroy.DoClick = function(s)
                          if not LocalPlayer() or not LocalPlayer():Alive() then return end
@@ -213,7 +213,7 @@ function PANEL:OnCursorExited()
 end
 
 function PANEL:DoClick()
-   if self:GetParent():GetDisabled() then return end
+   if not self:GetParent():IsEnabled() then return end
 
    self.IsCut = true
 
@@ -357,7 +357,7 @@ function ShowC4Disarm(bomb)
    dgrab:SetSize(bw, bh)
    dgrab:CenterHorizontal()
    dgrab:SetText(T("c4_remove_pickup"))
-   dgrab:SetDisabled(true)
+   dgrab:SetEnabled(false)
    dgrab.DoClick = function()
                       if (not LocalPlayer():Alive()) then return end
                       RunConsoleCommand("ttt_c4_pickup", bomb:EntIndex())
@@ -369,7 +369,7 @@ function ShowC4Disarm(bomb)
    ddestroy:SetSize(bw, bh)
    ddestroy:CenterHorizontal()
    ddestroy:SetText(T("c4_remove_destroy1"))
-   ddestroy:SetDisabled(true)
+   ddestroy:SetEnabled(false)
    ddestroy.Confirmed = false
    ddestroy.DoClick = function(s)
                          if not LocalPlayer():Alive() then return end
@@ -431,8 +431,8 @@ function ShowC4Disarm(bomb)
                        dstatus:SizeToContents()
                        dstatus:CenterHorizontal()
 
-                       ddestroy:SetDisabled(false)
-                       dgrab:SetDisabled(false)
+                       ddestroy:SetEnabled(true)
+                       dgrab:SetEnabled(true)
                     end
 
    disarm_fail = function()
@@ -441,7 +441,7 @@ function ShowC4Disarm(bomb)
 
    on_wire_cut = function(idx)
                     if IsValid(dbomb) then
-                       dbomb:SetDisabled(true)
+                       dbomb:SetEnabled(false)
                        -- disabled lowers alpha, looks weird here so work around
                        -- that
                        dbomb:SetAlpha(255)

@@ -334,8 +334,8 @@ local function ShowSearchScreen(search_raw)
    dident:SetSize(bw_large, bh)
    dident:SetText(T("search_confirm"))
    local id = search_raw.eidx + search_raw.dtime
-   dident.DoClick = function() RunConsoleCommand("ttt_confirm_death", search_raw.eidx, id) end
-   dident:SetDisabled(client:IsSpec() or (not client:KeyDownLast(IN_WALK)))
+   dident.DoClick = function(s) s:SetEnabled(false) RunConsoleCommand("ttt_confirm_death", search_raw.eidx, id) end
+   dident:SetEnabled(not (client:IsSpec() or (not client:KeyDownLast(IN_WALK))))
 
    local dcall = vgui.Create("DButton", dcont)
    dcall:SetPos(m*2 + bw_large, by)
@@ -344,12 +344,12 @@ local function ShowSearchScreen(search_raw)
    dcall.DoClick = function(s)
                       client.called_corpses = client.called_corpses or {}
                       table.insert(client.called_corpses, search_raw.eidx)
-                      s:SetDisabled(true)
+                      s:SetEnabled(false)
 
                       RunConsoleCommand("ttt_call_detective", search_raw.eidx)
                    end
 
-   dcall:SetDisabled(client:IsSpec() or table.HasValue(client.called_corpses or {}, search_raw.eidx))
+   dcall:SetEnabled(not (client:IsSpec() or table.HasValue(client.called_corpses or {}, search_raw.eidx)))
 
    local dconfirm = vgui.Create("DButton", dcont)
    dconfirm:SetPos(rw - m - bw, by)
