@@ -89,9 +89,9 @@
 
 	"rndwave"
 	{
-			"wave"	"player/pl_burnpain1.wav"
-			"wave"	"player/pl_burnpain2.wav"
-			"wave"	"player/pl_burnpain3.wav"
+		"wave"	"player/pl_burnpain1.wav"
+		"wave"	"player/pl_burnpain2.wav"
+		"wave"	"player/pl_burnpain3.wav"
 	}
 }
 
@@ -118,7 +118,15 @@
 	"volume"	"0.5"
 	"soundlevel"  "SNDLVL_75dB"
 
-	"wave"	"player/general/flesh_burn.wav"
+	// GMOD: This is too long and loud
+	//"wave"	"player/general/flesh_burn.wav"
+
+	"rndwave"
+	{
+		"wave"	"player/pl_burnpain1.wav"
+		"wave"	"player/pl_burnpain2.wav"
+		"wave"	"player/pl_burnpain3.wav"
+	}
 }
 
 "Player.SonicDamage"
