@@ -370,7 +370,7 @@ function SKIN:PaintButton( panel, w, h )
 		return self.tex.Button_Down( 0, 0, w, h )
 	end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Button_Dead( 0, 0, w, h )
 	end
 
@@ -400,7 +400,7 @@ function SKIN:PaintCheckBox( panel, w, h )
 
 	if ( panel:GetChecked() ) then
 
-		if ( panel:GetDisabled() ) then
+		if ( !panel:IsEnabled() ) then
 			self.tex.CheckboxD_Checked( 0, 0, w, h )
 		else
 			self.tex.Checkbox_Checked( 0, 0, w, h )
@@ -408,7 +408,7 @@ function SKIN:PaintCheckBox( panel, w, h )
 
 	else
 
-		if ( panel:GetDisabled() ) then
+		if ( !panel:IsEnabled() ) then
 			self.tex.CheckboxD( 0, 0, w, h )
 		else
 			self.tex.Checkbox( 0, 0, w, h )
@@ -425,7 +425,7 @@ function SKIN:PaintRadioButton( panel, w, h )
 
 	if ( panel:GetChecked() ) then
 
-		if ( panel:GetDisabled() ) then
+		if ( !panel:IsEnabled() ) then
 			self.tex.RadioButtonD_Checked( 0, 0, w, h )
 		else
 			self.tex.RadioButton_Checked( 0, 0, w, h )
@@ -433,7 +433,7 @@ function SKIN:PaintRadioButton( panel, w, h )
 
 	else
 
-		if ( panel:GetDisabled() ) then
+		if ( !panel:IsEnabled() ) then
 			self.tex.RadioButtonD( 0, 0, w, h )
 		else
 			self.tex.RadioButton( 0, 0, w, h )
@@ -463,7 +463,7 @@ function SKIN:PaintTextEntry( panel, w, h )
 
 	if ( panel.m_bBackground ) then
 
-		if ( panel:GetDisabled() ) then
+		if ( !panel:IsEnabled() ) then
 			self.tex.TextBox_Disabled( 0, 0, w, h )
 		elseif ( panel:HasFocus() ) then
 			self.tex.TextBox_Focus( 0, 0, w, h )
@@ -532,13 +532,13 @@ function SKIN:PaintMenuOption( panel, w, h )
 
 	if ( panel:GetRadio() ) then
 		if ( panel:GetChecked() ) then
-			if ( panel:GetDisabled() ) then
+			if ( !panel:IsEnabled() ) then
 				self.tex.RadioButtonD_Checked( 5, h / 2 - 7, 15, 15)
 			else
 				self.tex.RadioButton_Checked( 5, h / 2 - 7, 15, 15)
 			end
 		else
-			if ( panel:GetDisabled() ) then
+			if ( !panel:IsEnabled() ) then
 				self.tex.RadioButtonD( 5, h / 2 - 7, 15, 15)
 			else
 				self.tex.RadioButton( 5, h / 2 - 7, 15, 15)
@@ -603,7 +603,7 @@ function SKIN:PaintWindowCloseButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Window.Close( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
 
@@ -623,7 +623,7 @@ function SKIN:PaintWindowMinimizeButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Window.Mini( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
 
@@ -643,7 +643,7 @@ function SKIN:PaintWindowMaximizeButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Window.Maxi( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
 
@@ -682,7 +682,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintScrollBarGrip( panel, w, h )
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Scroller.ButtonV_Disabled( 0, 0, w, h )
 	end
 
@@ -709,7 +709,7 @@ function SKIN:PaintButtonDown( panel, w, h )
 		return self.tex.Scroller.DownButton_Down( 0, 0, w, h )
 	end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Scroller.DownButton_Dead( 0, 0, w, h )
 	end
 
@@ -732,7 +732,7 @@ function SKIN:PaintButtonUp( panel, w, h )
 		return self.tex.Scroller.UpButton_Down( 0, 0, w, h )
 	end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Scroller.UpButton_Dead( 0, 0, w, h )
 	end
 
@@ -755,7 +755,7 @@ function SKIN:PaintButtonLeft( panel, w, h )
 		return self.tex.Scroller.LeftButton_Down( 0, 0, w, h )
 	end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Scroller.LeftButton_Dead( 0, 0, w, h )
 	end
 
@@ -778,7 +778,7 @@ function SKIN:PaintButtonRight( panel, w, h )
 		return self.tex.Scroller.RightButton_Down( 0, 0, w, h )
 	end
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Scroller.RightButton_Dead( 0, 0, w, h )
 	end
 
@@ -795,7 +795,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintComboDownArrow( panel, w, h )
 
-	if ( panel.ComboBox:GetDisabled() ) then
+	if ( !panel.ComboBox:IsEnabled() ) then
 		return self.tex.Input.ComboBox.Button.Disabled( 0, 0, w, h )
 	end
 
@@ -816,7 +816,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintComboBox( panel, w, h )
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Input.ComboBox.Disabled( 0, 0, w, h )
 	end
 
@@ -846,7 +846,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintNumberUp( panel, w, h )
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Input.UpDown.Up.Disabled( 0, 0, w, h )
 	end
 
@@ -867,7 +867,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintNumberDown( panel, w, h )
 
-	if ( panel:GetDisabled() ) then
+	if ( !panel:IsEnabled() ) then
 		return self.tex.Input.UpDown.Down.Disabled( 0, 0, w, h )
 	end
 
@@ -886,9 +886,9 @@ end
 function SKIN:PaintTreeNode( panel, w, h )
 
 	if ( !panel.m_bDrawLines ) then return end
-	
+
 	local skinColor = self.Colours.Tree.Lines
-	
+
 	surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 
 	if ( panel.m_bLastChild ) then
@@ -923,7 +923,7 @@ end
 
 function SKIN:PaintSliderKnob( panel, w, h )
 
-	if ( panel:GetDisabled() ) then	return self.tex.Input.Slider.H.Disabled( 0, 0, w, h ) end
+	if ( !panel:IsEnabled() ) then	return self.tex.Input.Slider.H.Disabled( 0, 0, w, h ) end
 
 	if ( panel.Depressed ) then
 		return self.tex.Input.Slider.H.Down( 0, 0, w, h )
@@ -961,7 +961,7 @@ function SKIN:PaintNumSlider( panel, w, h )
 
 	-- GetNotchColor() returns SKIN.colNumSliderNotch if custom override is not set
 	local notchColor = panel:GetNotchColor()
-	
+
 	surface.SetDrawColor( notchColor.r, notchColor.g, notchColor.b, notchColor.a )
 	surface.DrawRect( 8, h / 2 - 1, w - 15, 1 )
 
@@ -1006,7 +1006,7 @@ function SKIN:PaintCategoryButton( panel, w, h )
 		elseif ( panel.Depressed || panel.m_bSelected ) then skinColor = self.Colours.Category.LineAlt.Button_Selected
 		elseif ( panel.Hovered ) then skinColor = self.Colours.Category.LineAlt.Button_Hover
 		else skinColor = self.Colours.Category.LineAlt.Button end
-		
+
 		surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 	else
 		local skinColor
@@ -1015,7 +1015,7 @@ function SKIN:PaintCategoryButton( panel, w, h )
 		elseif ( panel.Depressed || panel.m_bSelected ) then skinColor = self.Colours.Category.Line.Button_Selected
 		elseif ( panel.Hovered ) then skinColor = self.Colours.Category.Line.Button_Hover
 		else skinColor = self.Colours.Category.Line.Button end
-	
+
 		surface.SetDrawColor( skinColor.r, skinColor.g, skinColor.b, skinColor.a )
 	end
 

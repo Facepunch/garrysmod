@@ -61,7 +61,7 @@ function PANEL:UpdateColours( skin )
 
 	if ( self:IsActive() ) then
 
-		if ( self:GetDisabled() ) then return self:SetTextStyleColor( skin.Colours.Tab.Active.Disabled ) end
+		if ( !self:IsEnabled() ) then return self:SetTextStyleColor( skin.Colours.Tab.Active.Disabled ) end
 		if ( self:IsDown() ) then return self:SetTextStyleColor( skin.Colours.Tab.Active.Down ) end
 		if ( self.Hovered ) then return self:SetTextStyleColor( skin.Colours.Tab.Active.Hover ) end
 
@@ -69,7 +69,7 @@ function PANEL:UpdateColours( skin )
 
 	end
 
-	if ( self:GetDisabled() ) then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Disabled ) end
+	if ( !self:IsEnabled() ) then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Disabled ) end
 	if ( self:IsDown() ) then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Down ) end
 	if ( self.Hovered ) then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Hover ) end
 
