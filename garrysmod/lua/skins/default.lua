@@ -526,7 +526,7 @@ function SKIN:PaintMenuOption( panel, w, h )
 		surface.DrawRect( 0, 0, w, h )
 	end
 
-	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight ) ) then
+	if ( panel.m_bBackground && panel:IsEnabled() && ( panel.Hovered || panel.Highlight ) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 
