@@ -403,6 +403,7 @@ function CalculateRank( server )
 	if ( server.pass || server.version_c < 0 ) recommended += 300; // Password protected or outdated, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
 
+	if ( server.favorite ) recommended -= 100; // Favourite server
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( server.players >= 4 ) recommended -= 10;
 	if ( server.players >= 8 ) recommended -= 15;
