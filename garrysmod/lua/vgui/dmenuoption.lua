@@ -27,6 +27,32 @@ function PANEL:SetSubMenu( menu )
 
 end
 
+function PANEL:SetDisabled( bDisabled )
+
+	self.m_bDisabled = bDisabled
+
+	if ( bDisabled ) then
+		self:SetMouseInputEnabled( false )
+	else
+		self:SetMouseInputEnabled( true )
+	end
+
+	self:InvalidateLayout()
+
+end
+
+function PANEL:SetEnabled( bEnabled )
+
+	self:SetDisabled( !bEnabled )
+
+end
+
+function PANEL:IsEnabled()
+
+	return !self:GetDisabled()
+
+end
+
 function PANEL:AddSubMenu()
 
 	local SubMenu = DermaMenu( true, self )
@@ -172,3 +198,4 @@ function PANEL:GenerateExample()
 end
 
 derma.DefineControl( "DMenuOption", "Menu Option Line", PANEL, "DButton" )
+
