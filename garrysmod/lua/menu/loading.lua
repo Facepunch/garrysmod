@@ -5,11 +5,17 @@ g_ServerURL		= ""
 g_MaxPlayers	= ""
 g_SteamID		= ""
 
+local colGrey	= Color( 30, 30, 30, 255 )
+local matBlank	= Material( "vgui/white" )
+
 local PANEL = {}
 
 function PANEL:Init()
 
 	self:SetSize( ScrW(), ScrH() )
+
+	self.BGColor = colGrey
+	self.BGMaterial = matBlank
 
 end
 
@@ -44,10 +50,31 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:Paint()
+function PANEL:Paint( w, h )
 
-	surface.SetDrawColor( 30, 30, 30, 255 )
-	surface.DrawRect( 0, 0, self:GetWide(), self:GetTall() )
+	surface.SetDrawColor( self.BGColor )
+	surface.SetMaterial( self.BGMaterial )
+
+	surface.DrawTexturedRect( 0, 0, w, h )
+
+	if ( self.ShowBubble ) then -- HL2-like "LOADING" in middle of screen
+
+		local panelH = h * 0.0667
+		local panelW = panelH * 2.625
+		local panelX = ( w - panelW ) / 2
+		local panelY = ( h - panelH ) / 2
+		local cornerRadius = math.max( 8, math.floor( panelH * 0.15 ) )
+
+		draw.RoundedBox( cornerRadius, panelX, panelY, panelW, panelH, Color( 0, 0, 0, 128 ) )
+
+		surface.SetFont( "HudDefault" )
+		local text = "#GameUI_LoadingGame"
+		local tw, th = surface.GetTextSize( text )
+		surface.SetTextColor( 255, 255, 255, 255 )
+		surface.SetTextPos( panelX + ( panelW - tw ) / 2, panelY + ( panelH - th ) / 2 )
+		surface.DrawText( text )
+
+	end
 
 	if ( self.JavascriptRun && IsValid( self.HTML ) && !self.HTML:IsLoading() ) then
 
@@ -67,7 +94,7 @@ function PANEL:RunJavascript( str )
 
 end
 
-function PANEL:OnActivate()
+function PANEL:OnActivate( transition )
 
 	g_ServerName	= ""
 	g_MapName		= ""
@@ -75,7 +102,16 @@ function PANEL:OnActivate()
 	g_MaxPlayers	= ""
 	g_SteamID		= ""
 
-	self:ShowURL( GetDefaultLoadingHTML() )
+	if ( transition ) then -- Singleplayer level transitions
+		self.BGColor = Color( 255, 255, 255, 255 )
+		self.BGMaterial = engine.GetLastFrame()
+
+		self.ShowBubble = true
+
+		self:ShowURL( "about:blank" )
+	else
+		self:ShowURL( GetDefaultLoadingHTML() )
+	end
 
 	self.NumDownloadables = 0
 	self.CheckedSingleplayer = false
@@ -84,6 +120,11 @@ function PANEL:OnActivate()
 end
 
 function PANEL:OnDeactivate()
+
+	self.BGColor = colGrey
+	self.BGMaterial = matBlank
+
+	self.ShowBubble = false
 
 	if ( IsValid( self.HTML ) ) then self.HTML:Remove() end
 	self.LoadedURL = nil
