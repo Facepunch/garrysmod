@@ -19,6 +19,7 @@ properties.Add( "editentity", {
 
 	Action = function( self, ent )
 
+		if not ( !IsValid( ent ) ) then return end
 		local printName = ent.PrintName
 
 		if ( !isstring( printName ) ) then
@@ -46,3 +47,4 @@ properties.Add( "editentity", {
 
 	end
 } )
+
