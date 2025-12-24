@@ -47,4 +47,3 @@ properties.Add( "editentity", {
 
 	end
 } )
-
