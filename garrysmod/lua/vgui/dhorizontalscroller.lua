@@ -215,4 +215,3 @@ function PANEL:GenerateExample( classname, sheet, w, h )
 end
 
 derma.DefineControl( "DHorizontalScroller", "", PANEL, "Panel" )
-
