@@ -19,6 +19,7 @@ properties.Add( "editentity", {
 
 	Action = function( self, ent )
 
+		if ( !IsValid( ent ) ) then return end
 		local printName = ent.PrintName
 
 		if ( !isstring( printName ) ) then
