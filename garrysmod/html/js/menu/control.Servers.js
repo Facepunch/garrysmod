@@ -13,7 +13,7 @@ function StripWeirdSymbols( name )
 	var ret = name.replace( /[\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
 
 	// Emojis
-	ret = ret.replace( /\p{Extended_Pictographic}(\u200D\p{Extended_Pictographic})*/gu, "" );
+	ret = ret.replace( /([\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF])/g, "" );
 	return ret;
 }
 
@@ -718,4 +718,5 @@ function ReceiveFoundServers( data )
 
 	UpdateDigest( RootScope, 60 );
 }
+
 
