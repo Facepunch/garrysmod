@@ -77,3 +77,21 @@ function ENT:OnRemove()
    end
 end
 
+if SERVER then
+   hook.Add("TTTRadarScan", "TTTDecoy", function(ply, targets)
+      for _, ent in ents.Iterator() do
+         if ent:GetClass() != "ttt_decoy" then continue end
+
+         local pos = ent:GetPos()
+         local role = 3 -- Appear grey for traitors
+
+         -- Decoys appear as innocents for non-traitors
+         if not ply:IsTraitor() then
+            role = ROLE_INNOCENT
+         end
+
+         table.insert(targets, {role=role, pos=pos, ent=ent})
+      end
+   end)
+end
+
