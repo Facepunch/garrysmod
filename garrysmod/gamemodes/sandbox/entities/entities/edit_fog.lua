@@ -91,7 +91,7 @@ hook.Add( "PlayerSpawnedSENT", "CopyOverEditFogSettings", function( ply, ent )
 
 	if ( ent:GetClass() != "edit_fog" ) then return end
 
-	local fogCntrl = ents.FindByClass( "env_fog_controller" )[ 1 ];
+	local fogCntrl = ents.FindByClass( "env_fog_controller" )[ 1 ]
 	if ( !IsValid( fogCntrl ) ) then return end
 
 	ent:SetFogStart( fogCntrl:GetInternalVariable( "fogstart" ) )
