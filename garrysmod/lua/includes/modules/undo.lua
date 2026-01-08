@@ -365,7 +365,11 @@ end
 -----------------------------------------------------------]]
 local function CleanupInvalidUndos()
 	for uniqId, playerUndos in pairs( PlayerUndo ) do
+		local invalidUndos = 0
+		local allUndos = 0
+
 		for undoIndex, undoData in pairs( playerUndos ) do
+			allUndos = allUndos + 1
 
 			-- If the undo has functions, we cannot discard it
 			if ( undoData.Functions and next( undoData.Functions ) ) then
@@ -373,10 +377,11 @@ local function CleanupInvalidUndos()
 			end
 
 			local allInvalid = true
-			for _, ent in pairs( undoData.Entities or {} ) do
+			for entIdx, ent in pairs( undoData.Entities or {} ) do
 				if ( IsValid( ent ) ) then
 					allInvalid = false
-					break
+				else
+					undoData.Entities[ entIdx ] = nil
 				end
 			end
 
@@ -384,14 +389,16 @@ local function CleanupInvalidUndos()
 			if ( not allInvalid ) then continue end
 
 			-- Null out the invalid undo entry
-			playerUndos[ undoIndex ] = nil
+			-- Undone: causes issues somehow
+			--playerUndos[ undoIndex ] = nil
+			invalidUndos = invalidUndos + 1
 
 			-- CallOnRemove already handles this for players on the server
 			--SendUndoneMessage( nil, undoIndex, undoData.Owner )
 		end
 
-		-- If the player has no undos left, remove their entry
-		if ( not next( playerUndos ) ) then PlayerUndo[ uniqId ] = nil end
+		-- If the player has no undos left or they are all invalid, remove their entry
+		if ( not next( playerUndos ) || invalidUndos == allUndos ) then PlayerUndo[ uniqId ] = nil end
 	end
 end
 
