@@ -79,9 +79,7 @@ end
 
 if SERVER then
    hook.Add("TTTRadarScan", "TTTDecoy", function(ply, targets)
-      for _, ent in ents.Iterator() do
-         if ent:GetClass() != "ttt_decoy" then continue end
-
+      for _, ent in ipairs(ents.FindByClass("ttt_decoy")) do
          local pos = ent:GetPos()
          local role = 3 -- Appear grey for traitors
 
