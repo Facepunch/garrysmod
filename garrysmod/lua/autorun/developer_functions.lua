@@ -148,9 +148,10 @@ concommand.Add( "trace", function( ply )
 		//mask = MASK_OPAQUE_AND_NPCS,
 	} )
 
+	tr.Distance = ( tr.HitPos - tr.StartPos ):Length()
+	tr.SurfaceName = util.GetSurfaceData( tr.SurfaceProps ).name
+	if ( IsValid( tr.Entity ) ) then tr.Model = tr.Entity:GetModel() end
 	PrintTable( tr )
-	print( "Dist: ", ( tr.HitPos - tr.StartPos ):Length() )
-	if ( IsValid( tr.Entity ) ) then print( "Model: " .. tr.Entity:GetModel() ) end
 
 	-- Print out the clientside class name
 	ply:SendLua( [[print(Entity(]] .. ply:EntIndex() .. [[):GetEyeTrace().Entity)]] )
