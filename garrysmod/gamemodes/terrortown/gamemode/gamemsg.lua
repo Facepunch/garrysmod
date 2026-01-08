@@ -255,7 +255,6 @@ local function MuteTeam(ply, cmd, args)
 
    -- remove all ifs
    LANG.Msg(ply, MuteModes[t])
-   
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -266,7 +265,7 @@ local LastWordContext = {
    [KILL_SUICIDE] = " *kills self*",
    [KILL_FALL] = " *SPLUT*",
    [KILL_BURN] = " *crackle*"
-};
+}
 
 local function LastWordsMsg(ply, words)
    -- only append "--" if there's no ending interpunction

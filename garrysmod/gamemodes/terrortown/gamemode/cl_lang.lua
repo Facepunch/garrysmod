@@ -218,7 +218,7 @@ local bgcolor = {
    [ROLE_TRAITOR]   = Color(150, 0, 0, 200),
    [ROLE_DETECTIVE] = Color(0, 0, 150, 200),
    [ROLE_INNOCENT]  = Color(0, 50,  0, 200)
-};
+}
 
 -- Table of styles that can take a string and display it in some position,
 -- colour, etc.
@@ -240,7 +240,7 @@ LANG.Styles = {
 
 
    chat_plain = chat.AddText
-};
+}
 
 -- Table mapping message name => message style name. If no message style is
 -- defined, the default style is used. This is the case for the vast majority of
@@ -358,7 +358,7 @@ local styledmessages = {
 
       "drop_no_ammo"
    }
-};
+}
 
 local set_style = LANG.SetStyle
 for style, msgs in pairs(styledmessages) do

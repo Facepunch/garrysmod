@@ -12,7 +12,7 @@ function ScoreInit()
       traitors=0,
       was_traitor=false,
       bonus=0 -- non-kill points to add
-   };
+   }
 end
 
 function ScoreEvent(e, scores)

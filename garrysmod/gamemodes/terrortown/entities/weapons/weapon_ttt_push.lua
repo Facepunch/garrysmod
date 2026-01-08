@@ -14,7 +14,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "newton_desc"
-   };
+   }
 
    SWEP.Icon               = "vgui/ttt/icon_launch"
 end

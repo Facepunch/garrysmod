@@ -41,7 +41,7 @@ local msgcolors = {
    generic_text = COLOR_WHITE,
 
    generic_bg = Color(0, 0, 0, 200)
-};
+}
 
 -- Total width we take up on screen, for other elements to read
 MSTACK.width = msg_width + margin
@@ -144,7 +144,7 @@ local base_spec = {
    font = msgfont,
    xalign = TEXT_ALIGN_CENTER,
    yalign = TEXT_ALIGN_TOP
-};
+}
 
 function MSTACK:Draw(client)
    if next(self.msgs) == nil then return end -- fast empty check

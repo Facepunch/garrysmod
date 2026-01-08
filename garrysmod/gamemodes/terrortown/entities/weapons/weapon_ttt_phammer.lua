@@ -14,7 +14,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "polter_desc"
-   };
+   }
 
    SWEP.Icon               = "vgui/ttt/icon_polter"
 end
@@ -245,7 +245,7 @@ if SERVER then
 end
 
 local function around( val )
-   return math.Round( val * (10 ^ 3) ) / (10 ^ 3);
+   return math.Round( val * (10 ^ 3) ) / (10 ^ 3)
 end
 
 if CLIENT then

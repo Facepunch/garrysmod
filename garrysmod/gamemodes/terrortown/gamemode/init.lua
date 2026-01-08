@@ -172,7 +172,7 @@ function GM:Initialize()
       [OPEN_ROT] = true,
       [OPEN_BUT] = true,
       [OPEN_NOTOGGLE]= true
-   };
+   }
 
    -- More map config ent defaults
    GAMEMODE.force_plymodel = ""
@@ -836,7 +836,7 @@ function SelectRoles()
       [ROLE_INNOCENT] = {},
       [ROLE_TRAITOR] = {},
       [ROLE_DETECTIVE] = {}
-   };
+   }
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 

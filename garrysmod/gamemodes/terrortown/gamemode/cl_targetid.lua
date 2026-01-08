@@ -15,7 +15,7 @@ local ClassHint = {
 
       fmt = function(ent, txt) return GetPTranslation(txt, key_params) end
    }
-};
+}
 
 -- Access for servers to display hints using their own HUD/UI.
 function GM:GetClassHints()

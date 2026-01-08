@@ -16,7 +16,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "dna_desc"
-   };
+   }
 
    SWEP.Icon               = "vgui/ttt/icon_wtester"
 end
@@ -716,7 +716,7 @@ if CLIENT then
 
       RADAR.samples = {
          {pos = target_pos}
-      };
+      }
 
       RADAR.samples_count = 1
 

@@ -148,7 +148,7 @@ CreateConVar("ttt_cl_soundcues", "0", FCVAR_ARCHIVE)
 local cues = {
    Sound("ttt/thump01e.mp3"),
    Sound("ttt/thump02e.mp3")
-};
+}
 local function PlaySoundCue()
    if GetConVar("ttt_cl_soundcues"):GetBool() then
       surface.PlaySound(table.Random(cues))

@@ -17,7 +17,7 @@ if CLIENT then
                                        { usekey = Key("+use", "USE"),
                                          num    = ent:GetStoredHealth() or 0 } )
              end
-   };
+   }
 
 end
 

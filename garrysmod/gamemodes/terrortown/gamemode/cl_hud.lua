@@ -29,19 +29,19 @@ local bg_colors = {
    traitor = Color(200, 25, 25, 200),
    innocent = Color(25, 200, 25, 200),
    detective = Color(25, 25, 200, 200)
-};
+}
 
 local health_colors = {
    border = COLOR_WHITE,
    background = Color(100, 25, 25, 222),
    fill = Color(200, 50, 50, 250)
-};
+}
 
 local ammo_colors = {
    border = COLOR_WHITE,
    background = Color(20, 20, 5, 222),
    fill = Color(205, 155, 0, 255)
-};
+}
 
 
 -- Modified RoundedBox
@@ -88,7 +88,7 @@ local roundstate_string = {
    [ROUND_PREP]   = "round_prep",
    [ROUND_ACTIVE] = "round_active",
    [ROUND_POST]   = "round_post"
-};
+}
 
 -- Returns player's ammo information
 local function GetAmmo(ply)

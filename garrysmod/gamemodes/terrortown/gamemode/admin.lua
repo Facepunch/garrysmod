@@ -200,7 +200,7 @@ local ban_functions = {
    sam = sam and sam.player and sam.player.ban,
 
    gmod   = StandardBan
-};
+}
 
 local function BanningFunction()
    local bantype = string.lower(ttt_bantype:GetString())

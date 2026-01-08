@@ -13,7 +13,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "flare_desc"
-   };
+   }
 
    SWEP.Icon               = "vgui/ttt/icon_flare"
 end
