@@ -345,8 +345,8 @@ rule Rule_HelpMeNag
 //============================================================================================================
 response "Response_LookAtMeImASniperNag"
 {
-	scene "scenes/episode_1/al_c17_01_snipe_nag01.vcd displayfirst
-	scene "scenes/episode_1/al_c17_01_snipe_nag02.vcd
+	scene "scenes/episode_1/al_c17_01_snipe_nag01.vcd" displayfirst
+	scene "scenes/episode_1/al_c17_01_snipe_nag02.vcd"
 }
 
 rule Rule_LookAtMeImASniperNag
