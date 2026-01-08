@@ -64,7 +64,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	inBitRate:SetText( settings.bitrate )
 
 	-- TODO!!!
-	inCodec.OnSelect = function( _, index, value, data ) settings.container = data[1]; settings.video = data[2]; settings.audio = data[3] end
+	inCodec.OnSelect = function( _, index, value, data ) settings.container = data[1] settings.video = data[2] settings.audio = data[3] end
 	inCodec:AddChoice( "webm", { "webm", "vp8", "vorbis" }, true )
 	inCodec:AddChoice( "ogg", { "ogg", "theora", "vorbis" } )
 
@@ -101,7 +101,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	--
 	-- DOF
 	--
-	inDOF.OnSelect = function( _, index, value, data ) settings.dofsteps = data[1]; settings.dofpasses = data[2] end
+	inDOF.OnSelect = function( _, index, value, data ) settings.dofsteps = data[1] settings.dofpasses = data[2] end
 	inDOF:AddChoice( "Off",	{ 0, 0 }, true )
 	inDOF:AddChoice( "Draft (21 Samples)", { 6, 3 } )
 	inDOF:AddChoice( "Good (72 Samples)", { 12, 6 } )

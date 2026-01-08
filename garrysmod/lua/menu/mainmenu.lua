@@ -388,7 +388,7 @@ local function SendServer( pnlMainMenu, category, id,
 	loc = string.JavascriptSafe( loc )
 	gmcat = string.JavascriptSafe( gmcat )
 
-	pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );]],
+	pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" )]],
 		category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid,
 		tostring( isAnon ), netVersion, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
 
@@ -471,7 +471,7 @@ function PingServer( srvAddress )
 		map = string.JavascriptSafe( map )
 		address = string.JavascriptSafe( address )
 
-		pnlMainMenu:Call( string.format( [[UpdateServer( "%s", %i, "%s", "%s", %i, %i, %i, %s );]],
+		pnlMainMenu:Call( string.format( [[UpdateServer( "%s", %i, "%s", "%s", %i, %i, %i, %s )]],
 			address, ping, name, map, players, maxplayers, botplayers, tostring( pass ) ) )
 
 	end )

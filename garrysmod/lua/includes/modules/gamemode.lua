@@ -25,12 +25,12 @@ function Register( t, name, derived )
 
 		if ( CurrentGM.FolderName == name ) then
 			table.Merge( CurrentGM, t )
-			Call( "OnReloaded" );
+			Call( "OnReloaded" )
 		end
 
 		if ( CurrentGM.BaseClass && CurrentGM.BaseClass.FolderName == name ) then
 			table.Merge( CurrentGM.BaseClass, t )
-			Call( "OnReloaded" );
+			Call( "OnReloaded" )
 		end
 
 	end

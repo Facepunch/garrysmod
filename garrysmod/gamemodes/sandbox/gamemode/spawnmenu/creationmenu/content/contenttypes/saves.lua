@@ -85,7 +85,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 	function ws_save:Publish( filename, imagename ) RunConsoleCommand( "save_publish", filename, imagename ) end
 
 	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
-	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
+	HTML:Call( "SetMap( '" .. game.GetMap() .. "' )" )
 
 	return HTML
 
