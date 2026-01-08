@@ -908,7 +908,7 @@
 @PointClass base(Targetname) iconsprite("editor/ambient_generic.vmt") sphere() = ambient_generic : "Universal ambient sound. Use it to play and control a single sound."
 [
 	message(*sound) : "Sound Name" : "" : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
-	radius(string) : "Max Audible Distance" : "1250" : "Maximum distance at which this sound is audible."
+	radius(string) : "Max Audible Distance" : "1250" : "Rough maximum distance at which this sound is audible. This value is never used directly, and is converted to a soundlevel enumeration, which in turn dictates the actual sound attention."
 
 	health(integer) : "Volume" : 10 : "Target sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
 	volstart(integer) : "Start Volume" : 0 : "Starting volume (0-10) for fade in purposes."
