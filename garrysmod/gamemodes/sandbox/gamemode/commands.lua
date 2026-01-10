@@ -394,7 +394,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 
 end
 
-function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipment, SpawnFlagsSaved, NoDropToFloor )
+function Spawn_NPC_Internal( NPCData, ply, Position, Normal, Class, Equipment, SpawnFlagsSaved, NoDropToFloor )
 
 	-- Don't let them spawn this entity if it isn't in our NPC Spawn list.
 	-- We don't want them spawning any entity they like!
@@ -606,7 +606,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	local NPCData = list.GetEntry( "NPC", NPCClassName )
 
 	-- Create the NPC if you can.
-	local SpawnedNPC = InternalSpawnNPC( NPCData, ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
+	local SpawnedNPC = Spawn_NPC_Internal( NPCData, ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
 	if ( !IsValid( SpawnedNPC ) ) then return end
 
 	TryFixPropPosition( ply, SpawnedNPC, tr.HitPos )
@@ -655,7 +655,7 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 		normal = Vector( 0, 0, -1 )
 	end
 
-	local ent = InternalSpawnNPC( NPCData, ply, data.Pos, normal, class, equipment, spawnflags, true )
+	local ent = Spawn_NPC_Internal( NPCData, ply, data.Pos, normal, class, equipment, spawnflags, true )
 	if ( IsValid( ent ) ) then
 
 		local pos = ent:GetPos() -- Hack! Prevents the NPCs from falling through the floor
