@@ -5,7 +5,7 @@ local meta = FindMetaTable( "Player" )
 if ( !meta ) then return end
 
 if ( SERVER ) then
-	g_SBoxObjects = {}
+	g_SBoxObjects = g_SBoxObjects or {}
 end
 
 function meta:CheckLimit( str )
