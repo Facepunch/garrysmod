@@ -67,7 +67,7 @@ hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 	m:AddSpacer()
 
 	m:AddCVar( "#menubar.drawing.hints", "cl_showhints", "1", "0" )
-
+	m:AddCVar( "#menubar.drawing.translate_bodygroup", "gmod_translate_bodygroups", "1", "0" )
 end )
 
 -- AI Options
