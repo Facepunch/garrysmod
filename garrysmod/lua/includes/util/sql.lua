@@ -75,7 +75,6 @@ function sql.QueryValue( query )
 
 	if ( r ) then
 
-		-- The best way to get the first/only value in a table
 		local _, v = next( r )
 		return v
 
