@@ -349,7 +349,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	}
 }
 
-function FinishedServeres( type )
+function FinishedServers( type )
 {
 	RootScope.Refreshing[type] = "false";
 	UpdateDigest( RootScope, 50 );

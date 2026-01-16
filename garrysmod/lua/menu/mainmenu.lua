@@ -442,7 +442,7 @@ function GetServers( category, id )
 		end,
 
 		Finished = function()
-			pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+			pnlMainMenu:Call( "FinishedServers( '" .. category:JavascriptSafe() .. "' )" )
 			Servers[ category ] = {}
 		end,
 
@@ -456,7 +456,7 @@ function GetServers( category, id )
 end
 
 function DoStopServers( category )
-	pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+	pnlMainMenu:Call( "FinishedServers( '" .. category:JavascriptSafe() .. "' )" )
 	ShouldStop[ category ] = true
 	Servers[ category ] = {}
 end
