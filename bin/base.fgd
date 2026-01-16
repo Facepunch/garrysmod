@@ -48,6 +48,7 @@
 	input SetModelScale(float) : "Scales the model by precentage given. 1 = 100%, 0.5 = 50%, 2 = 200%, etc."
 ]
 
+// GMOD Note: This fixes brush model bounds being in world space, which is useful for good parenting.
 @BaseClass = Origin
 [
 	origin(origin) : "Origin (X Y Z)" : : "The position of this entity's center in the world. Rotating entities typically rotate around their origin."
@@ -76,10 +77,14 @@
 	input EnableReceivingFlashlight(void) : "This object may recieve light or shadows from projected textures (flashlights)."
 ]
 
-@BaseClass base(GMODSandbox, ToggleDraw, Shadow) = Studiomodel
+@BaseClass = Skin
 [
-	model(*studio) : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
+]
+
+@BaseClass base(GMODSandbox, ToggleDraw, Shadow, Skin) = Studiomodel
+[
+	model(*studio) : "World model" : "" : "The model this entity should use."
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
@@ -1473,7 +1478,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields) studio() = cycler :
+@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields, Skin) studio() = cycler :
 	"An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
 [
 	spawnflags(flags) =
@@ -1481,7 +1486,6 @@
 		1: "Not Solid" : 0
 	]
 	model(studio) : "Model"
-	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 
 	sequence(integer) : "Sequence" : 0 : "Default animation sequence for the model to be playing after spawning."
 
@@ -1598,16 +1602,9 @@
 	input Activate(void) : "Enable this dispenser."
 ]
 
-@SolidClass base(Targetname, Parentname, Angles) = env_embers :
+@SolidClass base(Targetname, Parentname, Angles, Origin) = env_embers :
 	"An entity used to create a volume in which to spawn fire embers."
 [
-	particletype(choices) : "Ember type" : 0 =
-	[
-		0 : "Normal"
-		1 : "Smooth Fade"
-		2 : "Pulled"
-	]
-
 	density(integer) : "Density (particles per second)" : 50
 	lifetime(integer) : "Particle Lifetime (seconds)" : 4
 	speed(integer) : "Particle Speed (units per second)" : 32
@@ -3909,8 +3906,8 @@
 @BaseClass = BaseFadeProp
 [
 	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)."
-	fademaxdist(float) : "End Fade Dist" : 0 : "Max fade distance at which the prop is visible (0 = don't fade out)"
-	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
+	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum fade distance at which the prop is visible (0 = don't fade out)"
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
 												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
 ]
@@ -5520,24 +5517,24 @@
 
 @BaseClass = prop_detail_base
 [
-	model(*studio) : "World model"
+	model(*studio) : "World model" : "" : "The model this entity should use."
 ]
 
-@BaseClass base(Angles, DXLevelChoice, Shadow) = prop_static_base
+@BaseClass base(Angles, DXLevelChoice, Skin, BaseFadeProp) = prop_static_base
 [
-	model(*studio) : "World Model"
-	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
-	solid(choices) : "Collisions" : 6 =
+	model(*studio) : "World model" : "" : "The model this entity should use."
+	solid(choices) : "Collisions" : 6 : "How the entity should collide with others." =
 	[
 		0: "Not Solid"
 		2: "Use Bounding Box"
 		6: "Use VPhysics"
 	]
-	disableshadows(choices) : "Disable Shadows" : 0 =
+	disableshadows(choices) : "Disable Shadows" : 0 : "Static and dynamic shadow casting from the sun. Not projected textures!" =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
+
 	screenspacefade(choices) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. If 'Yes', the fade distance is the size of the object onscreen, in pixels." =
 	[
 		0 : "No"
@@ -5545,10 +5542,9 @@
 	]
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
-	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
-												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
-												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
+
 	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
+	
 	disablevertexlighting(choices) : "Disable Vertex Lighting" : 0 : "Whether to disable vertex lighting for this static prop. Vertex Lighting requires vrad.exe to be ran with -StaticPropLighting parameter." =
 	[
 		0 : "No"
@@ -5640,7 +5636,6 @@
 @PointClass base(prop_detail_base) studioprop() = prop_detail :
 	"Detail Prop"
 [
-	model(studio) : "World model"
 ]
 
 @PointClass base(prop_static_base) color(255 255 0) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_static :
@@ -5883,6 +5878,12 @@
 		1 : "Tile"
 	]
 
+	error(integer) readonly : "Internal: Shatter Glass Error" : 0 : "This value is generated automatically. If not 0, there was an error generating internal values for this shatter glass. 1 = Multiple faces with glass texture. 2 = Not quad."
+	lowerleft(vector) readonly : "Internal: Lower Left Corner" : : "This value is generated automatically. Do not edit it!"
+	upperleft(vector) readonly : "Internal: Upper Left Corner" : : "This value is generated automatically. Do not edit it!"
+	lowerright(vector) readonly : "Internal: Lower Right Corner" : : "This value is generated automatically. Do not edit it!"
+	upperright(vector) readonly : "Internal: Upper Right Corner" : : "This value is generated automatically. Do not edit it!"
+
 	// Inputs
 	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in inches."
 	input Restore(void) : "Un-shatter the window."
@@ -6073,11 +6074,14 @@
 	[
 		1 : "No Pitch (X-rot)" : 0
 		2 : "No User Control" : 0
+		4 : "Forward Only (User Controls)" : 0
 		8 : "Passable" : 0
 		16 : "Fixed Orientation" : 0
-		128 : "HL1 Train" : 0
+		128 : "HL1 Train (Collisions)" : 0
 		256 : "Use max speed for pitch shifting move sound" : 0
 		512 : "Is unblockable by player" : 0
+		1024 : "Allow Roll (Z-rotation)" : 0
+		32768 : "GoldSrc/Half-Life 1 rotation behavior" : 0
 	]
 
 	target(target_destination) : "First Stop Target" : "" : "The name of the first path_track in the train's path. The train " +

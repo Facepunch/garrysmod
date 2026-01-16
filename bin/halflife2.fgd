@@ -3381,16 +3381,10 @@
 // Items
 //
 //-------------------------------------------------------------------------
-@BaseClass color(0 0 200) base(Targetname, Angles, Shadow, GMODSandbox) sphere(fademindist) sphere(fademaxdist) = Item
+@BaseClass color(0 0 200) base(Targetname, Angles, Shadow, GMODSandbox, BaseFadeProp) sphere(fademindist) sphere(fademaxdist) = Item
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
-
 	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this item. Fires on: Player Touch (whether or not player actually acquires the item), Picked up by +USE, Picked up by Gravity Gun, Punted by Gravity Gun."
-
-	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
-	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
-	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
-												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 
 	spawnflags(Flags) =
 	[
@@ -3546,7 +3540,7 @@
 // Weapons
 //
 //-------------------------------------------------------------------------
-@BaseClass color(0 0 200) base(Targetname, Angles, GMODSandbox) sphere(fademindist) sphere(fademaxdist) = Weapon
+@BaseClass color(0 0 200) base(Targetname, Angles, GMODSandbox, BaseFadeProp) sphere(fademindist) sphere(fademaxdist) = Weapon
 [
 	spawnflags(Flags) =
 	[
@@ -3559,11 +3553,6 @@
 	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
 	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon"
 	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Gravity Gun pickup, Gravity Gun punt."
-
-	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
-	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
-	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
-												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
 ]
 
 @PointClass base(Weapon) studio("models/weapons/w_crowbar.mdl") = weapon_crowbar : "Crowbar" []
@@ -4187,13 +4176,13 @@
 // Vehicles.
 //
 //-------------------------------------------------------------------------
-@BaseClass base(Targetname, Origin, Global, prop_static_base, GMODSandbox) = BaseVehicle
+@BaseClass base(Targetname, Origin, Global, Angles, BaseFadeProp, Studiomodel) = BaseVehicle
 [
-	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt"
-	actionScale(float) : "Scale of action input / framerate" : "1"
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt" : "A file in 'scripts/vehicles/' that defines how the vehicle behaves. Use 'jalopy.txt' if using 'models/vehicle.mdl' (Jalopy) as the model."
+	actionScale(float) : "Scale of action input / framerate" : "1" : "Scale of the speed set by the Action input, which affects the 'vehicle_action' pose parameter for the vehicle's model."
 
 	// Inputs
-	input Action(float) : "Set the speed of the action animation"
+	input Action(float) : "Set the speed of the 'vehicle_action' pose parameter increase rate. Default is 0."
 
 	input TurnOn(void) : "Turn on: Start engine & enable throttle"
 	input TurnOff(void) : "Turn off: Stop engine, disable throttle, engage brakes."
@@ -4205,7 +4194,7 @@
 
 @BaseClass base(BaseVehicle) = BaseDriveableVehicle
 [
-	VehicleLocked(choices) : "Start locked" : 0 =
+	VehicleLocked(choices) : "Start locked" : 0 : "Whether the vehicle starts locked and must be unlocked via 'Unlock' input before it can be accessed." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -4297,6 +4286,26 @@
 @PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_jeep :
 	"Driveable studiomodel jeep."
 [
+	model(studio) : "World model" : "models/buggy.mdl" : "A model to use for the vehicle. It should be specially made model with vehicle support, such as having specific attachments for player view point, wheel positions, etc., and having specific animations for wheen rotation, etc."
+
+	CargoVisible(choices): "Hopper Visible" : 0 : "Is the (Jalopy) striderbuster cargo hopper visible? Model must have bodygroup 2 to show the state visually and have a 'cargo' attachment." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	NoHazardLights(choices): "Disable Hazard Lights" : 0 : "If set, Jalopy will not create blinking Hazard Lights when player exits the vehicle. The model must have 'rearlight_r'/_l and 'headlight_r'/_l attachments for Hazard Lights to work." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	EnableGun(choices) : "Has Gun" : 0 : "Whether the Jeep's gun is enabled or disabled. Model must have Bodygroup 1 for visual toggle of the gun, 'vehicle_weapon_yaw', 'vehicle_weapon_pitch' and 'gun_spin' pose parameters, and attachment named 'Muzzle' for proper support." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
 	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
 
@@ -4307,8 +4316,10 @@
 	input UnlockExit( void ) : "Allows NPC's to exit the vehicle."
 	input EnableRadar( void ) : "Turn on the Jalopy radar"
 	input DisableRadar( void ) : "Turn off the Jalopy radar"
-	input EnableRadarDetectEnemies( void ) : "Enable Jalopy radar to detect Striders and Hunters"
+	input EnableRadarDetectEnemies( void ) : "Enable Jalopy radar's ability to detect Striders and Hunters"
+	input DisableRadarDetectEnemies( void ) : "Disable Jalopy radar's ability to detect Striders and Hunters"
 	input AddBusterToCargo( void ) : "Put a striderbuster in the cargo trigger"
+	input ReleaseBusterFromCargo( void ) : "Release a striderbuster from the cargo trigger, if there is one"
 	input SetCargoHopperVisibility ( bool ) : "Set the strider buster hopper thingy to be visible, or invisible."
 
 	input DisablePhysGun(void) : "Disable Gravity Gun interactions with the jeep."
@@ -4317,18 +4328,8 @@
 	input CreateLinkController(void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
 	input DestroyLinkController(void) : "Destroys the link controller created by CreateLinkController."
 
-
-	CargoVisible(choices): "Hopper Visible" : 0 : "Is the striderbuster cargo hopper visible?" =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-
-	spawnflags(Flags) =
-	[
-		1 : "HUD Locator Precache" : 0
-	]
-
+	input EnableHazardLights(void) : "Enable and create Hazard Lights."
+	input DisableHazardLights(void) : "Disable and destroy Hazard Lights."
 
 	// FIXME: These are going to change!
 	output OnCompanionEnteredVehicle(void) : "Companion has entered the vehicle."
@@ -4348,7 +4349,7 @@
 	"Driveable studiomodel airboat."
 [
 	model(studio) : "World model" : "models/airboat.mdl"
-	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/airboat.txt"
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/airboat.txt" : "A file in 'scripts/vehicles/' that defines how the vehicle behaves."
 	EnableGun(choices) : "Has Gun" : 0 : "Whether the airboat's gun is enabled or disabled." =
 	[
 		0 : "No"
@@ -4371,7 +4372,7 @@
 	"Combine prisoner pod that the player can ride in."
 [
 	model(studio) : "World model" : "models/vehicles/prisoner_pod.mdl"
-	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/prisoner_pod.txt"
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/prisoner_pod.txt" : "A file in 'scripts/vehicles/' that defines how the vehicle behaves."
 
 	input Open(void) : "Plays the pod's open animation and unlocks the pod for entry or exit."
 	input Close(void) : "Plays the pod's close animation and locks the pod for entry or exit."
@@ -4482,7 +4483,7 @@
 	"Generic Choreo vehicle used for magical events."
 [
 	model(studio) : "World model" : "models/vehicles/prisoner_pod.mdl"
-	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/choreo_vehicle.txt"
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/choreo_vehicle.txt" : "A file in 'scripts/vehicles/' that defines how the vehicle behaves."
 
 	input Open(void) : "Plays the vehicle's open animation and unlocks the vehicle for entry or exit."
 	input Close(void) : "Plays the vehicle's close animation and locks the vehicle for entry or exit."
