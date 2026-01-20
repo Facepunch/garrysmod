@@ -3322,8 +3322,8 @@
 	speed(integer) : "Speed" : 100 : "The speed that the brush moves, in inches per second."
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move, in inches."
 	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the brushes, per frame."
-	startsound(sound) : "Sound played when the brush starts moving."
-	stopsound(sound) : "Sound played when the brush stops moving."
+	startsound(sound) : "Start Sound" : "" : "Sound played when the brush starts moving."
+	stopsound(sound) : "Stop Sound" : "" : "Sound played when the brush stops moving."
 
 	// Inputs
 	input Open(void) : "Move the brush to the end position (starting position + (move direction * move distance))."
@@ -3343,8 +3343,8 @@
 	startposition(float) : "Start Position" : 0 : "Position of the water brush when spawned. The range is a value between 0.0 and 1.0, where 0 is the starting position and 1 is the starting position + (move direction * move distance)."
 	speed(integer) : "Speed" : 100 : "The speed that the water brush moves, in inches per second."
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the water brush should move, in inches."
-	startsound(sound) : "Sound played when the water brush starts moving."
-	stopsound(sound) : "Sound played when the water brush stops moving."
+	startsound(sound) : "Start Sound" : "" : "Sound played when the water brush starts moving."
+	stopsound(sound) : "Stop Sound" : "" : "Sound played when the water brush stops moving."
 	WaveHeight(string) : "Wave Height" : "3.0"
 
 	// GMOD: These work
