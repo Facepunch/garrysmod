@@ -119,7 +119,7 @@ local function FireError( str, realm, stack, addontitle, addonid )
 	errorText = string.Replace( errorText, "\t", ( " " ):rep( 12 ) ) -- Ew
 
 	for i, t in pairs( stack ) do
-		if ( !t.Function or t.Function == "" ) then t.Function = language.GetPhrase( "problems.function_error_unknown" ) end
+		if ( !t.Function or t.Function == "" ) then t.Function = "unknown" end
 
 		errorText = errorText .. "\n" .. ("    "):rep( i ) .. i .. ". " .. t.Function .. " - " .. t.File .. ":" .. t.Line
 	end

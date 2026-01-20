@@ -116,7 +116,7 @@ if ( SERVER ) then
 			net.WriteUInt( 0, 1 ) -- Can save
 			net.WriteVector( Dupe.Mins )
 			net.WriteVector( Dupe.Maxs )
-			net.WriteString( "#duplicator.loaded_dupename" )
+			net.WriteString( "#duplicator.dupe_loaded" )
 			net.WriteUInt( table.Count( Dupe.Entities ), 24 )
 			net.WriteUInt( workshopCount, 16 )
 			if ( Dupe.RequiredAddons ) then

@@ -16,7 +16,7 @@ function ws_save:FetchLocal( offset, perpage )
 			file	= "saves/" .. v,
 			name	= v:StripExtension(),
 			preview	= "saves/" .. v:StripExtension() .. ".jpg",
-			description	= language.GetPhrase( "saves.local_mapsave_notice" )
+			description	= language.GetPhrase( "saves.local_description" )
 		}
 
 		table.insert( saves, entry )
@@ -37,7 +37,7 @@ function ws_save:DownloadAndLoad( id )
 
 	steamworks.DownloadUGC( id, function( name )
 
-		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "saves.mapsave_download_failed_notice" ) ) return end
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "ugc.download_failed" ) ) return end
 
 		ws_save:Load( name )
 
@@ -54,7 +54,7 @@ end
 function ws_save:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
 	local info = GetSaveFileDetails( filename )
-	if ( !info ) then return "#saves.mapsave_save_info_failed_notice" end
+	if ( !info ) then return "#ugc_upload.error.save_info" end
 
 	steamworks.Publish( filename, imagename, name, desc, { "save", info.map, chosenTag }, other.Callback, other.WorkshopID, other.ChangeNotes )
 

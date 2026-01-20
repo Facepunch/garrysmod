@@ -16,7 +16,7 @@ function PANEL:Init()
 	self.HTML:OpenURL( "chrome://credits/" )
 	self.HTML:SetOpenLinksExternally( true )
 
-	self:SetTitle( "#openurl.chromium_credits_title" )
+	self:SetTitle( "Chromium Embedded Framework Credits" )
 	self:SetPos( 16, 16 )
 	self:SetSize( 720, 400 )
 	self:SetSizable( true )
