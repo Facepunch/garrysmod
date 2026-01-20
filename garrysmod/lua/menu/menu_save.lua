@@ -16,7 +16,7 @@ function ws_save:FetchLocal( offset, perpage )
 			file	= "saves/" .. v,
 			name	= v:StripExtension(),
 			preview	= "saves/" .. v:StripExtension() .. ".jpg",
-			description	= "Local map save stored on your computer. Local content can be deleted in the main menu."
+			description	= "#saves.local_mapsave_notice"
 		}
 
 		table.insert( saves, entry )
@@ -37,7 +37,7 @@ function ws_save:DownloadAndLoad( id )
 
 	steamworks.DownloadUGC( id, function( name )
 
-		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download save from Steam Workshop!" ) return end
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "#saves.mapsave_download_failed_notice" ) return end
 
 		ws_save:Load( name )
 
@@ -54,7 +54,7 @@ end
 function ws_save:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
 	local info = GetSaveFileDetails( filename )
-	if ( !info ) then return "Couldn't get save information!" end
+	if ( !info ) then return "#saves.mapsave_save_info_failed_notice" end
 
 	steamworks.Publish( filename, imagename, name, desc, { "save", info.map, chosenTag }, other.Callback, other.WorkshopID, other.ChangeNotes )
 

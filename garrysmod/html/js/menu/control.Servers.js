@@ -164,7 +164,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.GamemodeName = function( gm )
 	{
-		if ( !gm ) return "Unknown Gamemode";
+		if ( !gm ) return "#gamemodename_unknown";
 
 		if ( gm.info && gm.info.title )
 			return StripWeirdSymbols( gm.info.title );
@@ -385,7 +385,7 @@ function pad( num ) { return ( num < 10 ? "0" : "" ) + num.toString(); }
 
 function FormatVersion( ver )
 {
-	if ( !ver ) return "Unknown version";
+	if ( !ver ) return "#gameversionname_unknown";
 
 	var y = Math.floor( ver / 10000 );
 	var m = Math.floor( ( ver - y * 10000 ) / 100 );

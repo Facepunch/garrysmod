@@ -434,7 +434,7 @@ function GetServers( category, id )
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
 			SendServer( pnlMainMenu, category, id,
-				2000, language.GetPhrase("server_noresponse"):format(address), language.GetPhrase("server_gamemode_unreachable"), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				2000, language.GetPhrase( "server_noresponse" ):format( address ), language.GetPhrase( "server_gamemode_unreachable" ), language.GetPhrase( "server_no_map" ), 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]

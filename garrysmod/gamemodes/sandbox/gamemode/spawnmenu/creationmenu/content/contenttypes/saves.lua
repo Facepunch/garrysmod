@@ -25,7 +25,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 				file	= "saves/" .. v,
 				name	= v:StripExtension(),
 				preview	= "saves/" .. v:StripExtension() .. ".jpg",
-				description	= "Local map saves stored on your computer. Local content can be deleted in the main menu."
+				description	= language.GetPhrase( "saves.local_mapsave_notice" )
 			}
 
 			table.insert( saves, entry )
@@ -72,12 +72,12 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 		if ( mapFile == game.GetMap() ) then
 			RunConsoleCommand( "gm_load", filename )
 		else
-			local msg = string.format( "Loading this save will force a map change to %s. Do you wish to continue?", mapFile )
+			local msg = string.format( language.GetPhrase( "saves.other_mapsave_message" ), mapFile )
 
 			Derma_Query( msg,
-				"Please confirm loading this save",
-				"Load", function() RunConsoleCommand( "gm_load", filename ) end,
-				"Cancel" )
+				language.GetPhrase( "saves.other_mapsave_title" ),
+				language.GetPhrase( "saves.other_mapsave_load" ), function() RunConsoleCommand( "gm_load", filename ) end,
+				language.GetPhrase( "saves.other_mapsave_cancel" ) )
 		end
 
 	end

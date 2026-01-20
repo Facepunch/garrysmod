@@ -117,7 +117,7 @@ function TOOL:RightClick( trace )
 		net.WriteUInt( 1, 1 )
 		net.WriteVector( Dupe.Mins )
 		net.WriteVector( Dupe.Maxs )
-		net.WriteString( "Unsaved dupe" )
+		net.WriteString( "#duplicator.unsaved_dupename" )
 		net.WriteUInt( table.Count( Dupe.Entities ), 24 )
 		net.WriteUInt( 0, 16 )
 	net.Send( self:GetOwner() )
@@ -149,16 +149,16 @@ if ( CLIENT ) then
 		if ( !tool && IsValid( LocalPlayer() ) ) then tool = LocalPlayer():GetTool( "duplicator" ) end
 		if ( !tool || !tool.CurrentDupeName ) then return end
 
-		local info = "Name: " .. tool.CurrentDupeName
-		info = info .. "\nEntities: " .. tool.CurrentDupeEntCount
+		local info = string.format( language.GetPhrase( "duplicator.dupename_X" ), language.GetPhrase( tool.CurrentDupeName ) or tool.CurrentDupeName )
+		info = info .. string.format( language.GetPhrase( "duplicator.dupeentities_X" ), tool.CurrentDupeEntCount )
 
 		CPanel:Help( info )
 
 		if ( tool.CurrentDupeWSIDs && #tool.CurrentDupeWSIDs > 0 ) then
-			CPanel:Help( "Required workshop content:" )
+			CPanel:Help( "#duplicator.workshop_items_need" )
 			for _, wsid in pairs( tool.CurrentDupeWSIDs ) do
 				local subbed = ""
-				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " (Subscribed)" end
+				if ( steamworks.IsSubscribed( wsid ) ) then subbed = language.GetPhrase( "duplicator.dupe_subscribed_label" ) end
 				local b = CPanel:Button( wsid .. subbed )
 				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
 				steamworks.FileInfo( wsid, function( result )
