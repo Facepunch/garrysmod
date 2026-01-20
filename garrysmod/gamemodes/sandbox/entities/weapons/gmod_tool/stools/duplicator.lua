@@ -158,7 +158,7 @@ if ( CLIENT ) then
 			CPanel:Help( "#duplicator.dupe_required_content" )
 			for _, wsid in pairs( tool.CurrentDupeWSIDs ) do
 				local subbed = ""
-				if ( steamworks.IsSubscribed( wsid ) ) then subbed = language.GetPhrase( "duplicator.subscribed_label" ) end
+				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " " .. language.GetPhrase( "duplicator.subscribed_label" ) end
 				local b = CPanel:Button( wsid .. subbed )
 				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
 				steamworks.FileInfo( wsid, function( result )

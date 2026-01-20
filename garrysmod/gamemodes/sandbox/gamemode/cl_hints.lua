@@ -13,10 +13,10 @@ local function LookupBinding( group )
 	local key = input.LookupBinding( group )
 
 	if ( !key ) then
-		return string.format( language.GetPhrase( "hint_keynotfoundquotations" ), string.lower( group ) )
+		return "'" ..  string.lower( group ) .. " not bound'"
 	end
 
-	return string.format( language.GetPhrase( "hint_keyquotations" ), string.upper( key ) )
+	return "'" ..  string.upper( key ) .. "'"
 
 end
 
