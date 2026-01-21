@@ -72,7 +72,7 @@ end
 function demo:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
 	local info = GetDemoFileDetails( filename )
-	if ( !info ) then return "Couldn't get demo information!" end
+	if ( !info ) then return "#ugc_upload.error.demo_info" end
 
 	steamworks.Publish( filename, imagename, name, desc, { "demo", info.mapname }, other.Callback, other.WorkshopID, other.ChangeNotes )
 

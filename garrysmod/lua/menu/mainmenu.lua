@@ -658,11 +658,11 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 end )
 
-hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
+hook.Add( "LoadGModSaveFailed", "HandleUGCLoadFailure", function( str, wsid )
 	local button2 = nil
-	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "Open map on Steam Workshop" end
+	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "#ugc.open_map" end
 
-	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
+	Derma_Query( str, "#ugc.load_failed", "#dialog.ok", nil, button2, function() steamworks.ViewFile( wsid ) end )
 	gui.ActivateGameUI()
 end )
 
