@@ -16,7 +16,7 @@ function demo:FetchLocal( offset, perpage )
 			file	= "demos/" .. v,
 			name	= v:StripExtension(),
 			preview	= "demos/" .. v:StripExtension() .. ".jpg",
-			description	= language.GetPhrase( "demos.local_demo_notice" )
+			description	= language.GetPhrase( "demos.local_description" )
 		}
 
 		table.insert( saves, entry )
@@ -36,7 +36,7 @@ end
 function demo:DownloadAndPlay( id )
 
 	steamworks.DownloadUGC( id, function( name )
-		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "demos.demo_download_failed_notice" ) ) return end
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "ugc.download_failed" ) ) return end
 
 		self:Play( name )
 
@@ -54,7 +54,7 @@ end
 function demo:DownloadAndToVideo( id )
 
 	steamworks.DownloadUGC( id, function( name )
-		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "demos.demo_download_failed_notice" ) ) return end
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "ugc.download_failed" ) ) return end
 
 		self:ToVideo( name )
 

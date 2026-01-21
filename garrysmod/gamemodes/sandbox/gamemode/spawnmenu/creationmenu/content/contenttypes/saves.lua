@@ -76,7 +76,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 			Derma_Query( msg,
 				language.GetPhrase( "saves.confirm_load_title" ),
-				language.GetPhrase( "saves.load" ), function() RunConsoleCommand( "gm_load", filename ) end,
+				language.GetPhrase( "saves.dialog_load" ), function() RunConsoleCommand( "gm_load", filename ) end,
 				language.GetPhrase( "dialog.cancel" ) )
 		end
 
