@@ -434,7 +434,7 @@ function GetServers( category, id )
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
 			SendServer( pnlMainMenu, category, id,
-				2000, language.GetPhrase("server_noresponse"):format(address), language.GetPhrase("server_gamemode_unreachable"), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				2000, language.GetPhrase( "server_noresponse" ):format( address ), language.GetPhrase( "server_gamemode_unreachable" ), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]
@@ -658,11 +658,11 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 end )
 
-hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
+hook.Add( "LoadGModSaveFailed", "HandleUGCLoadFailure", function( str, wsid )
 	local button2 = nil
-	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "Open map on Steam Workshop" end
+	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "#ugc.open_map" end
 
-	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
+	Derma_Query( str, "#ugc.load_failed", "#dialog.ok", nil, button2, function() steamworks.ViewFile( wsid ) end )
 	gui.ActivateGameUI()
 end )
 

@@ -16,7 +16,7 @@ function ws_dupe:FetchLocal( offset, perpage )
 			file	= "dupes/" .. v,
 			name	= v:StripExtension(),
 			preview	= "dupes/" .. v:StripExtension() .. ".jpg",
-			description	= "Local duplication stored on your computer. Local content can be deleted in the main menu."
+			description	= language.GetPhrase( "dupes.local_description" )
 		}
 
 		table.insert( saves, entry )
