@@ -149,8 +149,8 @@ if ( CLIENT ) then
 		if ( !tool && IsValid( LocalPlayer() ) ) then tool = LocalPlayer():GetTool( "duplicator" ) end
 		if ( !tool || !tool.CurrentDupeName ) then return end
 
-		local info = string.format( language.GetPhrase( "duplicator.dupe_name" ), language.GetPhrase( tool.CurrentDupeName ) or tool.CurrentDupeName )
-		info = info .. "\n" .. string.format( language.GetPhrase( "duplicator.dupe_entities" ), tool.CurrentDupeEntCount )
+		local info = language.GetPhrase( "duplicator.dupe_name" ) .. " " .. language.GetPhrase( tool.CurrentDupeName )
+		info = info .. "\n" .. language.GetPhrase( "duplicator.dupe_entities" ) .. " " .. tool.CurrentDupeEntCount
 
 		CPanel:Help( info )
 
@@ -158,7 +158,7 @@ if ( CLIENT ) then
 			CPanel:Help( "#duplicator.dupe_required_content" )
 			for _, wsid in pairs( tool.CurrentDupeWSIDs ) do
 				local subbed = ""
-				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " " .. language.GetPhrase( "duplicator.subscribed_label" ) end
+				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " (Subscribed)" end
 				local b = CPanel:Button( wsid .. subbed )
 				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
 				steamworks.FileInfo( wsid, function( result )
