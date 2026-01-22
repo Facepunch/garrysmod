@@ -6,13 +6,17 @@
 
 				<ul>
 					<li class="noisy category {{IfElse( category.category == CurrentCategory, 'active', '' )}}" ng-repeat="category in MapList | orderBy:'order'" ng-hide="CountFiltered(category.maps) == 0" ng-click="SwitchCategory(category.category)">
-						<div class='name'>{{category.category}}</div>
+						<div class='name'>
+							<span ng-if="category.category != 'Favourites' && category.category != 'Other'">{{category.category}}</span>
+							<span ng-if="category.category == 'Favourites'" ng-Tranny="'newgame_favorite_maps'"></span>
+							<span ng-if="category.category == 'Other'" ng-Tranny="'spawnmenu.category.other'"></span>
+						</div>
 						<div class='count'>{{CountFiltered(category.maps)}}</div>
 					</li>
 				</ul>
 
 				<div class='search'>
-					<input type="text" class="search" ng-model="SearchText" ng-tranny="'searchbar_placeholer'" autofocus />
+					<input type="text" class="search" ng-model="SearchText" ng-tranny="'searchbar_placeholder'" autofocus />
 				</div>
 			</div>
 
@@ -20,7 +24,12 @@
 
 				<ul class="category" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0 || CurrentCategory != category.category" ng-show="CurrentCategory == category.category">
 
-					<li>{{category.category}} <small>{{CountFiltered(category.maps)}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small></li>
+					<li>
+						<span ng-if="category.category != 'Favourites' && category.category != 'Other'">{{category.category}}</span>
+						<span ng-if="category.category == 'Favourites'" ng-Tranny="'newgame_favorite_maps'"></span>
+						<span ng-if="category.category == 'Other'" ng-Tranny="'spawnmenu.category.other'"></span>
+						<small>{{CountFiltered(category.maps)}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small>
+					</li>
 
 					<li class="icon mapicon {{MapClass( map )}} {{IfElse( IsFavMap( map ), 'favmap', '' )}}" ng-repeat="map in category.maps | orderBy:'toString()' | mapFilter:SearchText">
 						<img ng-click="FavMap( map )" class="favtoggle" src="img/empty.png" loading="lazy"/>

@@ -142,7 +142,7 @@
 								<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-if="server.flag" loading="lazy"/>
 								<img class="passworded" src='img/server-passworded.png' ng-if="server.pass" loading="lazy"/>
 								<span>{{server.name}}
-									<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-if="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
+									<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-if="server.version_c != 0"><ver_str ng-Tranny="server.version_c > 0 ? 'server_ver_new' : 'server_ver_old'"></ver_str>: {{server.version}}</tag>
 								</span>
 							</name>
 							<lastvisited ng-hide="server.lastplayed == 0"><lbl ng-tranny="'server_lastvisit'"></lbl> {{server.lastplayedDate}} <span class='lasttime'>{{server.lastplayedTime}}</span></lastvisited>

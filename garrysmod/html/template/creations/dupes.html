@@ -15,10 +15,10 @@
 				</preview>
 
 				<name>
-					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title || "Loading..."}}</label>
+					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}<span ng-if="!file.info.title" ng-Tranny="'ugc.loading'"></label>
 				</name>
 
-				<author ng-hide="file.local">{{file.info.ownername}}</author>
+				<author ng-hide="file.local">{{file.info.ownername}}<span ng-if="!file.info.ownername" ng-Tranny="'ugc.loading'"></span></author>
 
 				<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
