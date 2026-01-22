@@ -450,7 +450,7 @@ function UpdateServer( address, ping, name, map, players, maxplayers, botplayers
 	if ( server.address != address ) return;
 
 	server.ping = parseInt( ping );
-	server.name = name;
+	server.name = StripWeirdSymbols( name.trim() );
 	server.map = map;
 	server.players = parseInt( players ) - parseInt( botplayers );
 	server.maxplayers = parseInt( maxplayers ) - parseInt( botplayers );
