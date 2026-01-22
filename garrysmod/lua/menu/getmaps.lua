@@ -184,6 +184,8 @@ local function UpdateMaps()
 	MapNames[ "vsh_" ] = "Team Fortress 2" // Versus Saxton Hale
 	MapNames[ "zi_" ] = "Team Fortress 2" // Zombie Invasion
 	MapNames[ "tow_" ] = "Team Fortress 2" // Tug of War
+	MapNames[ "2koth_" ] = "Team Fortress 2" // Double King of the Hill
+	MapNames[ "cppl_" ] = "Team Fortress 2" // Control Points => Payload
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
