@@ -129,7 +129,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 		if ( attacker:IsPlayer() ) then
 
 			local flags = 0
-			if ( ent:IsNPC() and ent:Disposition( attacker ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
+			if ( ent:IsNPC() and ent:Disposition( attacker ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
 
 			self:SendDeathNotice( attacker, InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
 
