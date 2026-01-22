@@ -346,6 +346,6 @@
 			"model"		"models/squad/sf_tubes/sf_tube1x90.mdl"
 		}
 	}
-	"name"		"Super Flat"
+	"name"		"#spawnmenu.spawnlist.super_flat"
 	"version"		"3"
 }
