@@ -11,6 +11,7 @@ if ( CLIENT ) then
 	concommand.Add( "dupe_arm", function( ply, cmd, arg )
 
 		if ( !arg[ 1 ] ) then return end
+		local dupeName = tostring( arg[ 1 ] )
 
 		if ( LastDupeArm > CurTime() and !game.SinglePlayer() ) then ply:ChatPrint( "Please wait a second before trying to load another duplication!" ) return end
 		LastDupeArm = CurTime() + 1
@@ -20,8 +21,8 @@ if ( CLIENT ) then
 		if ( res == false ) then ply:ChatPrint( msg or "Refusing to load dupe, server has blocked usage of the Duplicator tool!" ) return end
 
 		-- Load the dupe (engine takes care of making sure it's a dupe)
-		local dupe = engine.OpenDupe( arg[ 1 ] )
-		if ( !dupe ) then ply:ChatPrint( "Error loading dupe.. (" .. tostring( arg[ 1 ] ) .. ")" ) return end
+		local dupe = engine.OpenDupe( dupeName )
+		if ( !dupe ) then ply:ChatPrint( "Error loading dupe.. (" .. dupeName .. ")" ) return end
 
 		local uncompressed = util.Decompress( dupe.data, 5242880 )
 		if ( !uncompressed ) then ply:ChatPrint( "That dupe seems to be corrupted!" ) return end
@@ -43,6 +44,9 @@ if ( CLIENT ) then
 
 				net.WriteUInt( size, 32 )
 				net.WriteData( dupe.data:sub( start + 1, endbyte + 1 ), size )
+				if ( i == parts ) then
+					net.WriteString( dupeName:sub( 1, 128 ) )
+				end
 			net.SendToServer()
 
 			start = endbyte
@@ -78,6 +82,8 @@ if ( SERVER ) then
 		client.CurrentDupeBuffer[ part ] = datachunk
 
 		if ( part != total ) then return end
+
+		local dupeName = net.ReadString()
 
 		local data = table.concat( client.CurrentDupeBuffer )
 		client.CurrentDupeBuffer = nil
@@ -116,8 +122,9 @@ if ( SERVER ) then
 			net.WriteUInt( 0, 1 ) -- Can save
 			net.WriteVector( Dupe.Mins )
 			net.WriteVector( Dupe.Maxs )
-			net.WriteString( "Loaded dupe" )
+			net.WriteString( dupeName )
 			net.WriteUInt( table.Count( Dupe.Entities ), 24 )
+			net.WriteUInt( table.Count( Dupe.Constraints ), 24 )
 			net.WriteUInt( workshopCount, 16 )
 			if ( Dupe.RequiredAddons ) then
 				for _, wsid in ipairs( Dupe.RequiredAddons ) do
