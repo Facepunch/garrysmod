@@ -344,7 +344,6 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 
 	if ( entity_name == "prop_ragdoll" ) then
 		ang.pitch = -90
-		tr.HitPos = tr.HitPos
 	end
 
 	ent:SetModel( model )

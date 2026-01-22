@@ -146,9 +146,9 @@ function PANEL:SizeToContents()
 
 end
 
-function PANEL:Paint()
+function PANEL:Paint( w, h )
 
-	self:PaintAt( 0, 0, self:GetWide(), self:GetTall() )
+	self:PaintAt( 0, 0, w, h )
 
 end
 
@@ -221,7 +221,7 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-	ctrl:SetImage( "brick/brick_model" )
+	ctrl:SetImage( "gui/tool.png" )
 	ctrl:SetSize( 200, 200 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
