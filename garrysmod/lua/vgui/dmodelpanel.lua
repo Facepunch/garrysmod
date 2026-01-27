@@ -89,7 +89,6 @@ function PANEL:DrawModel()
 		topy = math.max( topy, y1 )
 		rightx = math.min( rightx, x2 )
 		bottomy = math.min( bottomy, y2 )
-		previous = curparent
 	end
 
 	render.ClearDepth( false )
