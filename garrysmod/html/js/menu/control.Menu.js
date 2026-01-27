@@ -25,28 +25,11 @@ function MenuController( $scope, $rootScope )
 
 	gScope.Gamemode = "";
 
-	$scope.ToggleGamemodes = function()
-	{
-		$( ".popup:not(.gamemode_list)" ).hide();
-		$( ".gamemode_list" ).toggle();
-	}
-
-	$scope.ToggleLanguage = function()
-	{
-		$( ".popup:not(.language_list)" ).hide();
-		$( ".language_list" ).toggle();
-	}
-
-	$scope.ToggleGames = function()
-	{
-		$( ".popup:not(.games_list)" ).hide();
-		$( ".games_list" ).toggle();
-	}
+	$scope.PopupOpen = "";
 
 	$scope.TogglePopup = function( name )
 	{
-		$( ".popup:not("+name+")" ).hide();
-		$( name ).toggle();
+		$scope.PopupOpen = ( $scope.PopupOpen == name ? "" : name );
 	}
 
 	$scope.SelectGamemode = function( gm )
@@ -55,7 +38,7 @@ function MenuController( $scope, $rootScope )
 		$scope.GamemodeTitle = gm.title;
 		lua.Run( "RunConsoleCommand( \"gamemode\", %s )", gm.name );
 
-		$( ".gamemode_list" ).hide();
+		$scope.PopupOpen = "";
 	}
 
 	$scope.SelectLanguage = function( lang )
@@ -63,7 +46,7 @@ function MenuController( $scope, $rootScope )
 		$rootScope.Language = lang;
 		lua.Run( "RunConsoleCommand( \"gmod_language\", %s )", lang );
 
-		$( ".language_list" ).hide();
+		$scope.PopupOpen = "";
 	}
 
 	$scope.MenuOption = function( btn, v )
@@ -188,6 +171,43 @@ function MenuController( $scope, $rootScope )
 	util.MotionSensorAvailable( function( available ) {
 		$scope.kinect.available = available;
 	} );
+	
+	
+	var IntlDisplayLangNames = {};
+	var LanguageNames = {};
+	
+	var GetLanguageName = function( getLang, inLang )
+	{
+		if ( !IntlDisplayLangNames[ inLang ] || !LanguageNames[ inLang ] )
+		{
+			try
+			{
+				IntlDisplayLangNames[ inLang ] = new Intl.DisplayNames( [ inLang ], { type: "language", languageDisplay: "standard" } );
+				LanguageNames[ inLang ] = {};
+			}
+			catch ( err ) // Catch cases of invalid 'inLang' gmod_language. Just return the 'getLang' language code.
+			{
+				return getLang.toUpperCase();
+			}
+		}
+
+		if ( !LanguageNames[ inLang ][ getLang ] ) 
+			LanguageNames[ inLang ][ getLang ] = IntlDisplayLangNames[ inLang ].of( getLang );
+		
+		return LanguageNames[ inLang ][ getLang ];
+	}
+	
+	$scope.LanguageName = function( getLang, inLang )
+	{
+		if ( IS_AWESOMIUM ) return ""; // Awesomium doesn't support this function
+		
+		if ( inLang == "en-pt" ) inLang = "en";
+
+		if ( getLang == "en-pt" ) return GetLanguageName( "en", inLang ) + " (Pirate)";
+
+		return GetLanguageName( getLang, inLang );
+	}
+
 }
 
 function SetInGame( bInGame )
@@ -290,13 +310,13 @@ function UpdateLanguages( lang )
 
 	for ( k in lang )
 	{
-		gScope.Languages.push( lang[k].substr( 0, lang[k].length - 4 ) )
+		gScope.Languages.push( lang[k].substr( 0, lang[k].length - 4 ).toLowerCase() )
 	}
 }
 
 function UpdateLanguage( lang )
 {
-	gScope.Language = lang;
+	gScope.Language = lang.toLowerCase();
 	gScope.$broadcast( "languagechanged" );
 	UpdateDigest( gScope, 50 );
 }
