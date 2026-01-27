@@ -69,6 +69,3 @@ list.Set( "NPC", "nb_example", {
 	Name = "#nb_example",
 	Class = "nb_example"
 } )
-
-if ( CLIENT ) then language.Add( "nb_example", "Example NPC" ) end
-
