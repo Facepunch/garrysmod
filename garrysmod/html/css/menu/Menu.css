@@ -351,4 +351,27 @@ loading
 		top: 65px;
 	}
 }
+/* Shared flag styling */
+.flag
+{
+	display: inline-block;
+}
+.flag img
+{
+	background-color: #555;
+	box-sizing: border-box;
+	-webkit-mask-size: cover;
+	-webkit-mask-position: center center;
+	width: auto;
+	height: 138.4615%; 
+	margin-top: -13.8%;
+	margin-bottom: -13.8%;
+	padding: 1px;
 
+}
+.flag.noflag img
+{
+	padding: 5px;
+	background-color: #5a5a5a;
+	-webkit-mask-image: url("../../img/twemoji-72x72/flags/gb.png");
+}
