@@ -288,6 +288,7 @@ if CLIENT then
       }
    end
 
+   -- CallOnClient only works with lua functions
    if game.SinglePlayer() then
       function SWEP:SPLastShoot()
          self:SetLastShootTime()
