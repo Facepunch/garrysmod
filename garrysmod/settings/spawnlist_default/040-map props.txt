@@ -1461,6 +1461,6 @@
 			"model"		"models/props/de_nuke/wall_light.mdl"
 		}
 	}
-	"name"		"Map Props"
+	"name"		"#spawnmenu.spawnlist.map_props"
 	"version"		"3"
 }
