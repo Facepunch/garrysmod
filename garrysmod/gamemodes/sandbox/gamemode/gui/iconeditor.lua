@@ -376,7 +376,7 @@ function PANEL:OnKeyCodePressed(code)
 	if code != KEY_UP && code != KEY_DOWN then return end
 
 	local line = self.AnimList:GetSelectedLine()
-	if !line or isnumber(line) or !IsValid(line) then return end
+	if !line then return end
 	local direction = code == KEY_UP && -1 or 1
 
 	line = self.AnimList:GetLine(line + direction)
@@ -694,4 +694,5 @@ function PANEL:SetFromEntity( ent )
 end
 
 vgui.Register( "IconEditor", PANEL, "DFrame" )
+
 
