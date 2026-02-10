@@ -828,6 +828,8 @@ function Paste( Player, entityList, constraintList )
 				e:RestoreNetworkVars( v.DT )
 			end
 
+			hook.Run( "OnDuplicated", e, v )
+
 			if ( e.OnDuplicated ) then
 				e:OnDuplicated( v )
 			end
