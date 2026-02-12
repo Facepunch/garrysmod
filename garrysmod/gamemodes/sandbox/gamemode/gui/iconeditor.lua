@@ -9,7 +9,6 @@ function PANEL:Init()
 
 	self:SetSize( 762, 502 )
 	self:SetTitle( "#smwidget.icon_editor" )
-	self:SetSizable( true )
 
 	local right = self:Add( "DPropertySheet" )
 	right:Dock( RIGHT )
@@ -694,5 +693,6 @@ function PANEL:SetFromEntity( ent )
 end
 
 vgui.Register( "IconEditor", PANEL, "DFrame" )
+
 
 
