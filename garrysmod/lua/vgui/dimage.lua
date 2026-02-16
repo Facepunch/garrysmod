@@ -148,7 +148,8 @@ end
 
 function PANEL:Paint( w, h )
 
-	self:PaintAt( 0, 0, w, h )
+	-- HACK: Gotta keep these "or"s for legacy addon code
+	self:PaintAt( 0, 0, w or self:GetWide(), h or self:GetTall() )
 
 end
 
