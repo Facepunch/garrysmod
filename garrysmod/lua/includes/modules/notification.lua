@@ -14,15 +14,14 @@ NOTIFY_CLEANUP	= 4
 
 module( "notification", package.seeall )
 
-local NoticeMaterial = {}
-
-NoticeMaterial[ NOTIFY_GENERIC ]	= Material( "vgui/notices/generic" )
-NoticeMaterial[ NOTIFY_ERROR ]		= Material( "vgui/notices/error" )
-NoticeMaterial[ NOTIFY_UNDO ]		= Material( "vgui/notices/undo" )
-NoticeMaterial[ NOTIFY_HINT ]		= Material( "vgui/notices/hint" )
-NoticeMaterial[ NOTIFY_CLEANUP ]	= Material( "vgui/notices/cleanup" )
-
 local Notices = {}
+local NoticeIcon = {}
+
+NoticeIcon[ NOTIFY_GENERIC ]	= "vgui/notices/generic"
+NoticeIcon[ NOTIFY_ERROR ]		= "vgui/notices/error"
+NoticeIcon[ NOTIFY_UNDO ]		= "vgui/notices/undo"
+NoticeIcon[ NOTIFY_HINT ]		= "vgui/notices/hint"
+NoticeIcon[ NOTIFY_CLEANUP ]	= "vgui/notices/cleanup"
 
 local function CreateNotice( msg, length )
 
@@ -47,9 +46,7 @@ end
 function Add( text, icon, length, color )
 
 	local notice = CreateNotice( text, math.max( length or 5, 0 ) )
-
-	icon = icon and Material( icon ) or NoticeMaterial[ NOTIFY_GENERIC ]
-	notice:SetIcon( icon )
+	notice:SetIcon( icon or "vgui/notices/generic" )
 
 	if ( color ) then
 		notice.Label:SetTextColor( color )
@@ -61,10 +58,7 @@ end
 
 function AddLegacy( text, type, length )
 
-	local notice = CreateNotice( text, math.max( length, 0 ) )
-	notice:SetLegacyType( type )
-
-	table.insert( Notices, notice )
+	Add( text, NoticeIcon[ type ], length or 0 )
 
 end
 
@@ -91,10 +85,11 @@ end
 
 function Kill( uid )
 
-	if ( !IsValid( Notices[ uid ] ) ) then return end
+	local notice = Notices[ uid ]
+	if ( !IsValid( notice ) ) then return end
 
-	Notices[ uid ].StartTime = SysTime()
-	Notices[ uid ].Length = 0.8
+	notice.StartTime = SysTime()
+	notice.Length = 0.8
 
 end
 
@@ -223,10 +218,10 @@ function PANEL:SizeToContents()
 
 end
 
-function PANEL:SetIcon( mat )
+function PANEL:SetIcon( icon )
 
 	self.Image = vgui.Create( "DImageButton", self )
-	self.Image:SetMaterial( mat )
+	self.Image:SetMaterial( Material( icon ) )
 	self.Image:SetSize( 32, 32 )
 	self.Image:Dock( LEFT )
 	self.Image:DockMargin( 0, 0, 8, 0 )
@@ -240,7 +235,7 @@ end
 
 function PANEL:SetLegacyType( t )
 
-	self:SetIcon( NoticeMaterial[ t ] )
+	self:SetIcon( NoticeIcon[ t ] )
 
 end
 
