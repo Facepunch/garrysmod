@@ -10,22 +10,40 @@ function PANEL:Init()
 	self:SetSize( 762, 502 )
 	self:SetTitle( "#smwidget.icon_editor" )
 
+	self:SetSizable( true )
+	self:SetMinWidth( 650 )
+	self:SetMinHeight( 270 )
+
 	local left = self:Add( "Panel" )
-	left:Dock( LEFT )
-	left:SetWide( 400 )
+	left:Dock( FILL )
 	self.LeftPanel = left
 
-		local bg = left:Add( "DPanel" )
-		bg:Dock( FILL )
-		bg:DockMargin( 0, 0, 0, 4 )
-		bg.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
+		local previewCont = left:Add( "Panel" )
+		previewCont:Dock( FILL )
+		previewCont:DockMargin( 0, 0, 0, 4 )
 
-		self.SpawnIcon = bg:Add( "SpawnIcon" )
+		self.SpawnIcon = previewCont:Add( "SpawnIcon" )
 		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
 
-		self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
-		self.ModelPanel:Dock( FILL )
+		local previewBG = previewCont:Add( "Panel" )
+		previewBG:DockMargin( 0, 0, 0, 4 )
+		previewBG.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
+		function previewBG.PerformLayout( thisPnl )
+			-- Generic "fit in box" algorithm
+			local icnW, icnH = self.SpawnIcon:GetSize()
+			local scale = math.min( previewCont:GetWide() / icnW,
+									previewCont:GetTall() / icnH )
+
+			thisPnl:SetSize( icnW * scale, icnH * scale )
+			thisPnl:Center()
+		end
+		function previewCont.PerformLayout( thisPnl )
+			previewBG:PerformLayout()
+		end
+
+		self.ModelPanel = previewBG:Add( "DAdjustableModelPanel" )
 		self.ModelPanel.FarZ = 32768
+		self.ModelPanel:Dock( FILL )
 
 		local mat_wireframe = Material( "models/wireframe" )
 		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
@@ -153,9 +171,10 @@ function PANEL:Init()
 		end
 
 	local right = self:Add( "DPropertySheet" )
-	right:Dock( FILL )
+	right:Dock( RIGHT )
 	right:SetPadding( 0 )
 	right:DockMargin( 4, 0, 0, 0 )
+	right:SetWide( 268 )
 	self.PropertySheet = right
 
 	-- Animations
@@ -530,6 +549,7 @@ function PANEL:SetIcon( icon )
 	self.SpawnIcon:SetSize( icon:GetSize() )
 	self.SpawnIcon:InvalidateLayout( true )
 
+	-- Set some default sizes to match the icon's aspect ratio
 	local w, h = icon:GetSize()
 	if ( w / h < 1 ) then
 		self:SetSize( 700, 502 + 400 )
