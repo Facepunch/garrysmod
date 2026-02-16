@@ -34,7 +34,7 @@ properties.Add( "skin", {
 
 		for i = 0, num - 1 do
 
-			local opt = submenu:AddOption( "Skin " .. i )
+			local opt = submenu:AddOption( language.GetPhrase("context.properties.skin"):format(i) )
 			opt:SetRadio( true )
 			opt:SetChecked( target:GetSkin() == i )
 			opt:SetIsCheckable( true )
