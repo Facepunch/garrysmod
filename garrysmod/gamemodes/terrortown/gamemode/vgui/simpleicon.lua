@@ -21,6 +21,7 @@ end
 
 function PANEL:OnMousePressed( mcode )
    if mcode == MOUSE_LEFT then
+      self:OnCursorExited()
       self:DoClick()
       self.animPress:Start(0.1)
    end
