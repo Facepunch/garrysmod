@@ -174,8 +174,8 @@ function TOOL:RightClick( trace )
 		net.WriteVector( Dupe.Maxs )
 		net.WriteString( "#duplicator.dupe_unsaved" )
 		net.WriteUInt( table.Count( Dupe.Entities ), 24 )
-		net.WriteUInt( table.Count( Dupe.Constraints ), 24 )
 		net.WriteUInt( 0, 16 )
+		net.WriteUInt( table.Count( Dupe.Constraints ), 24 )
 	net.Send( self:GetOwner() )
 
 	--
@@ -312,7 +312,6 @@ if ( CLIENT ) then
 
 		tool.CurrentDupeName = net.ReadString()
 		tool.CurrentDupeEntCount = net.ReadUInt( 24 )
-		tool.CurrentDupeConstraintCount = net.ReadUInt( 24 )
 
 		local workshopCount = net.ReadUInt( 16 )
 		local addons = {}
@@ -320,6 +319,8 @@ if ( CLIENT ) then
 			table.insert( addons, net.ReadString() )
 		end
 		tool.CurrentDupeWSIDs = addons
+
+		tool.CurrentDupeConstraintCount = net.ReadUInt( 24 )
 
 		tool:RefreshCPanel()
 
