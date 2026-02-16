@@ -10,154 +10,153 @@ function PANEL:Init()
 	self:SetSize( 762, 502 )
 	self:SetTitle( "#smwidget.icon_editor" )
 
-	local right = self:Add( "DPropertySheet" )
-	right:Dock( RIGHT )
-	right:SetWide(362)
-	right:SetPadding( 0 )
-	right:DockMargin( 4, 0, 0, 0 )
-	self.PropertySheet = right
-
 	local left = self:Add( "Panel" )
-	left:Dock( FILL )
+	left:Dock( LEFT )
+	left:SetWide( 400 )
 	self.LeftPanel = left
 
-	local bg = left:Add( "DPanel" )
-	bg:Dock( FILL )
-	bg:DockMargin( 0, 0, 0, 4 )
-	bg.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
+		local bg = left:Add( "DPanel" )
+		bg:Dock( FILL )
+		bg:DockMargin( 0, 0, 0, 4 )
+		bg.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
 
-	self.SpawnIcon = bg:Add( "SpawnIcon" )
-	--self.SpawnIcon.DoClick = function() self:RenderIcon() end
+		self.SpawnIcon = bg:Add( "SpawnIcon" )
+		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
 
-	self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
-	self.ModelPanel:Dock( FILL )
-	self.ModelPanel.FarZ = 32768
+		self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
+		self.ModelPanel:Dock( FILL )
+		self.ModelPanel.FarZ = 32768
 
-	local mat_wireframe = Material( "models/wireframe" )
-	function self.ModelPanel.PostDrawModel( mdlpnl, ent )
-		if ( self.ShowOriginPnl:GetChecked() ) then
-			render.DrawLine( vector_origin, Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
-			render.DrawLine( vector_origin, Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
-			render.DrawLine( vector_origin, Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
+		local mat_wireframe = Material( "models/wireframe" )
+		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
+			if ( self.ShowOriginPnl:GetChecked() ) then
+				render.DrawLine( vector_origin, Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
+				render.DrawLine( vector_origin, Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
+				render.DrawLine( vector_origin, Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
+			end
+
+			if ( self.ShowBBoxPnl:GetChecked() ) then
+				local mins, maxs = ent:GetRenderBounds()
+				local scale = 1
+				mat_wireframe:SetVector( "$color", Vector( 1, 1, 1 ) )
+				render.SetMaterial( mat_wireframe )
+
+				render.DrawBox( ent:GetPos(), ent:GetAngles(), mins * scale, maxs * scale )
+			end
+
 		end
-
-		if ( self.ShowBBoxPnl:GetChecked() ) then
-			local mins, maxs = ent:GetRenderBounds()
-			local scale = 1
-			mat_wireframe:SetVector( "$color", Vector( 1, 1, 1 ) )
-			render.SetMaterial( mat_wireframe )
-
-			render.DrawBox( ent:GetPos(), ent:GetAngles(), mins * scale, maxs * scale )
-		end
-
-	end
 
 	local controls = left:Add( "Panel" )
 	controls:SetTall( 64 )
 	controls:Dock( BOTTOM )
 
-	local controls_anim = controls:Add( "Panel" )
-	controls_anim:SetTall( 20 )
-	controls_anim:Dock( TOP )
-	controls_anim:DockMargin( 0, 0, 0, 4 )
-	controls_anim:MoveToBack()
+		local controls_anim = controls:Add( "Panel" )
+		controls_anim:SetTall( 20 )
+		controls_anim:Dock( TOP )
+		controls_anim:DockMargin( 0, 0, 0, 4 )
+		controls_anim:MoveToBack()
 
-		self.AnimTrack = controls_anim:Add( "DSlider" )
-		self.AnimTrack:Dock( FILL )
-		self.AnimTrack:SetNotches( 100 )
-		self.AnimTrack:SetTrapInside( true )
-		self.AnimTrack:SetLockY( 0.5 )
+			self.AnimTrack = controls_anim:Add( "DSlider" )
+			self.AnimTrack:Dock( FILL )
+			self.AnimTrack:SetNotches( 100 )
+			self.AnimTrack:SetTrapInside( true )
+			self.AnimTrack:SetLockY( 0.5 )
 
-		self.AnimPause = controls_anim:Add( "DImageButton" )
-		self.AnimPause:SetImage( "icon16/control_pause_blue.png" )
-		self.AnimPause:SetStretchToFit( false )
-		self.AnimPause:SetPaintBackground( true )
-		self.AnimPause:SetIsToggle( true )
-		self.AnimPause:SetToggle( false )
-		self.AnimPause:Dock( LEFT )
-		self.AnimPause:SetWide( 32 )
+			self.AnimPause = controls_anim:Add( "DImageButton" )
+			self.AnimPause:SetImage( "icon16/control_pause_blue.png" )
+			self.AnimPause:SetStretchToFit( false )
+			self.AnimPause:SetPaintBackground( true )
+			self.AnimPause:SetIsToggle( true )
+			self.AnimPause:SetToggle( false )
+			self.AnimPause:Dock( LEFT )
+			self.AnimPause:SetWide( 32 )
 
-	local BestGuess = controls:Add( "DImageButton" )
-	BestGuess:SetImage( "icon32/wand.png" )
-	BestGuess:SetStretchToFit( false )
-	BestGuess:SetPaintBackground( true )
-	BestGuess.DoClick = function() self:BestGuessLayout() end
-	BestGuess:Dock( LEFT )
-	BestGuess:DockMargin( 0, 0, 0, 0 )
-	BestGuess:SetWide( 50 )
-	BestGuess:SetTooltip( "Best Guess" )
+		local BestGuess = controls:Add( "DImageButton" )
+		BestGuess:SetImage( "icon32/wand.png" )
+		BestGuess:SetStretchToFit( false )
+		BestGuess:SetPaintBackground( true )
+		BestGuess.DoClick = function() self:BestGuessLayout() end
+		BestGuess:Dock( LEFT )
+		BestGuess:DockMargin( 0, 0, 0, 0 )
+		BestGuess:SetWide( 50 )
+		BestGuess:SetTooltip( "Best Guess" )
 
-	local FullFrontal = controls:Add( "DImageButton" )
-	FullFrontal:SetImage( "icon32/hand_point_090.png" )
-	FullFrontal:SetStretchToFit( false )
-	FullFrontal:SetPaintBackground( true )
-	FullFrontal.DoClick = function() self:FullFrontalLayout() end
-	FullFrontal:Dock( LEFT )
-	FullFrontal:DockMargin( 2, 0, 0, 0 )
-	FullFrontal:SetWide( 50 )
-	FullFrontal:SetTooltip( "Front" )
+		local FullFrontal = controls:Add( "DImageButton" )
+		FullFrontal:SetImage( "icon32/hand_point_090.png" )
+		FullFrontal:SetStretchToFit( false )
+		FullFrontal:SetPaintBackground( true )
+		FullFrontal.DoClick = function() self:FullFrontalLayout() end
+		FullFrontal:Dock( LEFT )
+		FullFrontal:DockMargin( 2, 0, 0, 0 )
+		FullFrontal:SetWide( 50 )
+		FullFrontal:SetTooltip( "Front" )
 
-	local Above = controls:Add( "DImageButton" )
-	Above:SetImage( "icon32/hand_property.png" )
-	Above:SetStretchToFit( false )
-	Above:SetPaintBackground( true )
-	Above.DoClick = function() self:AboveLayout() end
-	Above:Dock( LEFT )
-	Above:DockMargin( 2, 0, 0, 0 )
-	Above:SetWide( 50 )
-	Above:SetTooltip( "Above" )
+		local Above = controls:Add( "DImageButton" )
+		Above:SetImage( "icon32/hand_property.png" )
+		Above:SetStretchToFit( false )
+		Above:SetPaintBackground( true )
+		Above.DoClick = function() self:AboveLayout() end
+		Above:Dock( LEFT )
+		Above:DockMargin( 2, 0, 0, 0 )
+		Above:SetWide( 50 )
+		Above:SetTooltip( "Above" )
 
-	local Right = controls:Add( "DImageButton" )
-	Right:SetImage( "icon32/hand_point_180.png" )
-	Right:SetStretchToFit( false )
-	Right:SetPaintBackground( true )
-	Right.DoClick = function() self:RightLayout() end
-	Right:Dock( LEFT )
-	Right:DockMargin( 2, 0, 0, 0 )
-	Right:SetWide( 50 )
-	Right:SetTooltip( "Right" )
+		local Right = controls:Add( "DImageButton" )
+		Right:SetImage( "icon32/hand_point_180.png" )
+		Right:SetStretchToFit( false )
+		Right:SetPaintBackground( true )
+		Right.DoClick = function() self:RightLayout() end
+		Right:Dock( LEFT )
+		Right:DockMargin( 2, 0, 0, 0 )
+		Right:SetWide( 50 )
+		Right:SetTooltip( "Right" )
 
-	local Origin = controls:Add( "DImageButton" )
-	Origin:SetImage( "icon32/hand_point_090.png" )
-	Origin:SetStretchToFit( false )
-	Origin:SetPaintBackground( true )
-	Origin.DoClick = function() self:OriginLayout() end
-	Origin:Dock( LEFT )
-	Origin:DockMargin( 2, 0, 0, 0 )
-	Origin:SetWide( 50 )
-	Origin:SetTooltip( "Center" )
+		local Origin = controls:Add( "DImageButton" )
+		Origin:SetImage( "icon32/hand_point_090.png" )
+		Origin:SetStretchToFit( false )
+		Origin:SetPaintBackground( true )
+		Origin.DoClick = function() self:OriginLayout() end
+		Origin:Dock( LEFT )
+		Origin:DockMargin( 2, 0, 0, 0 )
+		Origin:SetWide( 50 )
+		Origin:SetTooltip( "Center" )
 
-	local Render = controls:Add( "DButton" )
-	Render:SetText( "RENDER" )
-	Render.DoClick = function() self:RenderIcon() end
-	Render:Dock( RIGHT )
-	Render:DockMargin( 2, 0, 0, 0 )
-	Render:SetWide( 50 )
-	Render:SetTooltip( "Render Icon" )
+		local Render = controls:Add( "DButton" )
+		Render:SetText( "RENDER" )
+		Render.DoClick = function() self:RenderIcon() end
+		Render:Dock( RIGHT )
+		Render:DockMargin( 2, 0, 0, 0 )
+		Render:SetWide( 50 )
+		Render:SetTooltip( "Render Icon" )
 
-	local Picker = controls:Add( "DImageButton" )
-	Picker:SetImage( "icon32/color_picker.png" )
-	Picker:SetStretchToFit( false )
-	Picker:SetPaintBackground( true )
-	Picker:Dock( RIGHT )
-	Picker:DockMargin( 2, 0, 0, 0 )
-	Picker:SetWide( 50 )
-	Picker:SetTooltip( "Pick a new model from an entity" )
-	Picker.DoClick = function()
+		local Picker = controls:Add( "DImageButton" )
+		Picker:SetImage( "icon32/color_picker.png" )
+		Picker:SetStretchToFit( false )
+		Picker:SetPaintBackground( true )
+		Picker:Dock( RIGHT )
+		Picker:DockMargin( 2, 0, 0, 0 )
+		Picker:SetWide( 50 )
+		Picker:SetTooltip( "Pick a new model from an entity" )
+		Picker.DoClick = function()
 
-		self:SetVisible( false )
+			self:SetVisible( false )
 
-		util.worldpicker.Start( function( tr )
+			util.worldpicker.Start( function( tr )
 
-			self:SetVisible( true )
+				self:SetVisible( true )
 
-			if ( !IsValid( tr.Entity ) ) then return end
+				if ( !IsValid( tr.Entity ) ) then return end
 
-			self:SetFromEntity( tr.Entity )
+				self:SetFromEntity( tr.Entity )
 
-		end )
-	end
+			end )
+		end
 
+	local right = self:Add( "DPropertySheet" )
+	right:Dock( FILL )
+	right:SetPadding( 0 )
+	right:DockMargin( 4, 0, 0, 0 )
+	self.PropertySheet = right
 
 	-- Animations
 
@@ -371,18 +370,18 @@ function PANEL:Init()
 		end
 end
 
-function PANEL:OnKeyCodePressed(code)
-	if code != KEY_UP && code != KEY_DOWN then return end
+function PANEL:OnKeyCodePressed( code )
+	if ( code != KEY_UP && code != KEY_DOWN ) then return end
 
 	local line = self.AnimList:GetSelectedLine()
-	if !line then return end
+	if ( !line ) then return end
 	local direction = code == KEY_UP && -1 or 1
 
-	line = self.AnimList:GetLine(line + direction)
-	if !IsValid(line) then return end
+	line = self.AnimList:GetLine( line + direction )
+	if ( !IsValid( line ) ) then return end
 
 	self.AnimList:ClearSelection()
-	self.AnimList:SelectItem(line)
+	self.AnimList:SelectItem( line )
 end
 
 function PANEL:SetDefaultLighting()
@@ -693,6 +692,3 @@ function PANEL:SetFromEntity( ent )
 end
 
 vgui.Register( "IconEditor", PANEL, "DFrame" )
-
-
-
