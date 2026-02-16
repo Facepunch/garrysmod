@@ -24,7 +24,7 @@ NoticeMaterial[ NOTIFY_CLEANUP ]	= Material( "vgui/notices/cleanup" )
 
 local Notices = {}
 
-local function createNotice( msg, length )
+local function CreateNotice( msg, length )
 
 	local parent = nil
 	if ( GetOverlayPanel ) then parent = GetOverlayPanel() end
@@ -44,12 +44,16 @@ local function createNotice( msg, length )
 
 end
 
-function Add( text, icon, length )
+function Add( text, icon, length, color )
 
-	local notice = createNotice( text, math.max( length or 5, 0 ) )
+	local notice = CreateNotice( text, math.max( length or 5, 0 ) )
 
 	icon = icon and Material( icon ) or NoticeMaterial[ NOTIFY_GENERIC ]
 	notice:SetIcon( icon )
+
+	if ( color ) then
+		notice.Label:SetTextColor( color )
+	end
 
 	return table.insert( Notices, notice )
 
@@ -57,7 +61,7 @@ end
 
 function AddLegacy( text, type, length )
 
-	local notice = createNotice( text, math.max( length, 0 ) )
+	local notice = CreateNotice( text, math.max( length, 0 ) )
 	notice:SetLegacyType( type )
 
 	table.insert( Notices, notice )
@@ -78,7 +82,7 @@ function AddProgress( uid, text, frac )
 
 	end
 
-	notice = createNotice( text, -1 )
+	notice = CreateNotice( text, -1 )
 	notice:SetProgress( frac )
 
 	Notices[ uid ] = notice
