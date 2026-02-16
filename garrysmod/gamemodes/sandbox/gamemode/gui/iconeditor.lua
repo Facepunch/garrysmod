@@ -370,6 +370,20 @@ function PANEL:Init()
 		end
 end
 
+function PANEL:OnKeyCodePressed( code )
+	if ( code != KEY_UP && code != KEY_DOWN ) then return end
+
+	local line = self.AnimList:GetSelectedLine()
+	if ( !line ) then return end
+	local direction = code == KEY_UP && -1 or 1
+
+	line = self.AnimList:GetLine( line + direction )
+	if ( !IsValid( line ) ) then return end
+
+	self.AnimList:ClearSelection()
+	self.AnimList:SelectItem( line )
+end
+
 function PANEL:SetDefaultLighting()
 
 	self.ModelPanel:SetAmbientLight( Color( 255 * 0.3, 255 * 0.3, 255 * 0.3 ) )
@@ -580,7 +594,7 @@ function PANEL:FillAnimations( ent, filter )
 
 		seq = string.lower( seq )
 
-		if ( filter && !string.find( seq, filter, 1, true ) ) then continue end
+		if ( filter && !string.find( seq:lower(), filter:lower(), 1, true ) ) then continue end
 
 		table.insert( sequences, seq )
 	end
