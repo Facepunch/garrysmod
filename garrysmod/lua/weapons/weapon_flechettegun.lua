@@ -62,15 +62,24 @@ function SWEP:PrimaryAttack()
 
 	local owner = self:GetOwner()
 
-	local Forward = owner:GetAimVector()
+	-- Calculate the spawn position
+	local startPos = owner:GetShootPos() - Vector( 0, 0, 0 )
 
-	ent:SetPos( owner:GetShootPos() + Forward * 32 )
+	local fwd = owner:GetAimVector()
+	local targetPos = startPos + fwd * 32
+
+	-- Trace forward and check if the projectile would spawn behind a wall or something
+	local tr = util.TraceLine( { start = startPos, endpos = targetPos, filter = owner } )
+	if ( tr.Hit ) then targetPos = tr.HitPos - fwd * 3 end -- Also move it back a bit so they don't poke out the other side of the wall
+
+	ent:SetPos( targetPos )
+
 	ent:SetAngles( owner:EyeAngles() )
 	ent:SetOwner( owner )
 	ent:Spawn()
 	ent:Activate()
 
-	ent:SetVelocity( Forward * 2000 )
+	ent:SetVelocity( fwd * 2000 )
 
 end
 
