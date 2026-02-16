@@ -97,7 +97,7 @@ function SWEP:PreDrop()
    self:SetCharge(0)
 
    -- OnDrop does not happen on client
-   self:CallOnClient("HideGhost", "")
+   self:CallOnClient("HideGhost")
 end
 
 function SWEP:HideGhost()
