@@ -43,7 +43,7 @@ local function CreateNotice( msg, length )
 
 end
 
-function Add( text, icon, length, color )
+function Add( text, length, icon, color )
 
 	local notice = CreateNotice( text, math.max( length or 5, 0 ) )
 	notice:SetIcon( icon or "vgui/notices/generic" )
@@ -58,7 +58,7 @@ end
 
 function AddLegacy( text, type, length )
 
-	Add( text, NoticeIcon[ type ], length or 0 )
+	Add( text, length or 0, NoticeIcon[ type ] )
 
 end
 
