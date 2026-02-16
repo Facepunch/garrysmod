@@ -1,5 +1,5 @@
 
-local hud_deathnotice_time = CreateConVar( "hud_deathnotice_time", "6", FCVAR_REPLICATED, "Amount of time to show death notice (kill feed) for" )
+local hud_deathnotice_time = CreateConVar( "hud_deathnotice_time", "6", FCVAR_NONE, "Amount of time to show death notice (kill feed) for" )
 local cl_drawhud = GetConVar( "cl_drawhud" )
 
 -- These are our kill icons
