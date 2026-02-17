@@ -463,9 +463,9 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 	--
 	-- Does this NPC have a specified model? If so, use it.
 	--
-	local NPCModel
-	if ( NPCData.Model ) then
-		NPCModel = (type(NPCData.Model) == "string" and NPCData.Model) or ( #NPCData.Model > 0 and NPCData.Model[math.random(#NPCData.Model)] ) or "models/error.mdl"
+	local NPCModel = NPCData.Model
+	if ( istable( NPCModel ) ) then NPCModel = NPCModel[ math.random( #NPCModel ) ] end
+	if ( NPCModel ) then
 		NPC:SetModel( NPCModel )
 	end
 
