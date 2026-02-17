@@ -462,8 +462,10 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 	--
 	-- Does this NPC have a specified model? If so, use it.
 	--
-	if ( NPCData.Model ) then
-		NPC:SetModel( NPCData.Model )
+	local NPCModel = NPCData.Model
+	if ( istable( NPCModel ) ) then NPCModel = NPCModel[ math.random( #NPCModel ) ] end
+	if ( NPCModel ) then
+		NPC:SetModel( NPCModel )
 	end
 
 	--
@@ -558,8 +560,8 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 	-- For those NPCs that set their model/skin in Spawn function
 	-- We have to keep the call above for NPCs that want a model set by Spawn() time
 	-- BAD: They may adversly affect entity collision bounds
-	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
-		NPC:SetModel( NPCData.Model )
+	if ( NPCModel && NPC:GetModel():lower() != NPCModel:lower() ) then
+		NPC:SetModel( NPCModel )
 	end
 	if ( NPCData.Skin ) then
 		NPC:SetSkin( NPCData.Skin )
