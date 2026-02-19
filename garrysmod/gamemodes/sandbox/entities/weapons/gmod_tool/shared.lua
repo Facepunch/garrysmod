@@ -389,4 +389,3 @@ function SWEP:FireAnimationEvent( pos, ang, event, options )
 end
 
 include( "stool.lua" )
-
