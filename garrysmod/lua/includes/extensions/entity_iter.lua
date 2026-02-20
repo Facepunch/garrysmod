@@ -26,14 +26,3 @@ function InvalidateInternalEntityCache( isPly )
 	if ( isPly ) then PlayerCache = nil end
 
 end
-
-local function InvalidateInternalEntityCacheOld( ent )
-
-	InvalidateInternalEntityCache( ent:IsPlayer() )
-
-end
-
--- These are for non-updated servers
--- TODO: Remove me after update is released (past June 2025)
-hook.Add( "OnEntityCreated", "ents.Iterator", InvalidateInternalEntityCacheOld )
-hook.Add( "EntityRemoved", "ents.Iterator", InvalidateInternalEntityCacheOld )
