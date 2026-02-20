@@ -44,8 +44,18 @@
 					<input type="checkbox" id="sv_nopass" ng-model="SVFilterHidePass"/><label for="sv_nopass"><span ng-tranny="'svfltr_no_password'"></span> <img class="passworded" src='img/server-passworded.png'/></label><br>
 					<input type="checkbox" id="sv_outdated" ng-model="SVFilterHideOutdated"/><label for="sv_outdated" ng-tranny="'svfltr_outdated'"></label>
 
-					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">
-						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" ng-src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )" loading="lazy"/>
+					<div class="flags_filter" ng-if="CurrentGamemode.hasflags">
+						<span ng-repeat="(flag, whatever) in CurrentGamemode.flags" ng-if="flag != 'unknown'" class="flag {{FilterFlagClass( flag )}}" ng-click="FilterFlag( flag, this );" >
+							<span class="flag_name">
+								<div ng-if="Language.toLowerCase() != 'en' && Language.toLowerCase() != 'en-pt'">{{RegionName(flag, Language)}}</div>
+								<div>{{RegionName(flag, "en")}}</div>
+							</span>
+							<img ng-src="img/twemoji-72x72/flags/{{flag}}.png" style="-webkit-mask-image: url('img/twemoji-72x72/flags/{{flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
+						</span>
+						<span ng-if="CurrentGamemode.flags['unknown']" class="flag noflag {{FilterFlagClass( 'unknown' )}}" ng-click="FilterFlag( 'unknown', this );" >
+							<span class="flag_name"><div ng-tranny="'unknown'"></div></span>
+							<img src="img/twemoji-72x72/missing_2754.png" loading="lazy"/>
+						</span>
 					</div>
 				</li>
 			</ul>
@@ -89,7 +99,6 @@
 						<div ng-repeat="server in FoundServers" class="server">
 							<name>
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );Refresh();$event.stopPropagation();"></a>
-								<!--<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/> -->
 								<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
 								<span>{{server.name}}</span>
 							</name>
@@ -130,7 +139,7 @@
 						<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
 					</div>
 
-					<div class='body scrollable' onscroll="UpdateInfiniteScroll( this );">
+					<div class='body scrollable {{IfElse( DisplayingAnyFlags(), "", "noflags" )}}' onscroll="UpdateInfiniteScroll( this );">
 
 						<div id="placeholder_pre" style="height: {{CurrentGamemode.server_offset * 22}}px"></div>
 
@@ -139,7 +148,9 @@
 
 							<name>
 								<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
-								<img class="flag" ng-src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-if="server.flag" loading="lazy"/>
+								<span class="flag {{IfElse( server.flag == 'unknown', 'noflag', '' )}}">
+									<img ng-src="img/twemoji-72x72/flags/{{server.flag}}.png" style="-webkit-mask-image: url('img/twemoji-72x72/flags/{{server.flag}}.png');" onerror="MissingFlag( this )" loading="lazy"/>
+								</span>
 								<img class="passworded" src='img/server-passworded.png' ng-if="server.pass" loading="lazy"/>
 								<span>{{server.name}}
 									<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-if="server.version_c != 0"><ver_str ng-Tranny="server.version_c > 0 ? 'server_ver_new' : 'server_ver_old'"></ver_str>: {{server.version}}</tag>
