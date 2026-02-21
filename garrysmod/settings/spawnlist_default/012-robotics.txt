@@ -1,0 +1,611 @@
+"TableToKeyValues"
+{
+	"parentid"		"6"
+	"icon"		"icon16/page_gear.png"
+	"id"		"12"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Normal"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/a1.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/a2.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/a3.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/a4.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/b1.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/b2.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/b3.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/b4.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/c1.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/c2.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/c3.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/c4.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/d1.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/d2.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/d3.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/d4.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/e1.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/e2.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/e3.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/e4.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/f1.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/f2.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/f3.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/g1.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/g2.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/g3.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/g4.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/h1.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/h2.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/h3.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/h4.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/i1.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/i2.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/i3.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/i4.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/j1.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/j2.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/j3.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/j4.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/k1.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/k2.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/k3.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/k4.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/l1.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/l2.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/l3.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/l4.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/m3.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/m4.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/xfoot.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/claw.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/claw2.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/claw_guide2.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/claw_guide2a.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/claw_guide.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/stand.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/claw_hub_8.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/articulating/foot_s.mdl"
+		}
+		"60"
+		{
+			"type"		"header"
+			"text"		"Big"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/a1.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/a2.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/a3.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/a4.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/b1.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/b2.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/b3.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/b4.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/c1.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/c2.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/c3.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/c4.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/d1.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/d2.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/d3.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/d4.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/e1.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/e2.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/e3.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/e4.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/f1.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/f2.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/f3.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/g1.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/g2.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/g3.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/g4.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/h1.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/h2.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/h3.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/h4.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/i1.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/i2.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/i3.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/i4.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/j1.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/j2.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/j3.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/j4.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/k1.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/k2.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/k3.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/k4.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/l1.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/l2.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/l3.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/l4.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/m3.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/m4.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/xfoot.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/clawl.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/claw2l.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/claw_guide2l.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/claw_guide2la.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/articulating/stand.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/roboticslarge/claw_hub_8l.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/robotics/foot.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/articulating/arm_base_b.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/articulating/arm2x20d.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/articulating/arm2x20d2.mdl"
+		}
+	}
+	"name"		"Robotics"
+	"version"		"3"
+}

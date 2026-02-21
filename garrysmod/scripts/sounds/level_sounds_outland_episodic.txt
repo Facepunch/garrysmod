@@ -1,0 +1,3506 @@
+//
+//
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+//
+// VOL_NORM		1.0f
+//
+//-----------------------------------------------------------------------------
+// common attenuation values
+//-----------------------------------------------------------------------------
+//
+// DON'T USE THESE - USE SNDLVL_ INSTEAD!!!
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f
+//	ATTN_IDLE		2.0f
+//	ATTN_STATIC		1.25f 
+//	ATTN_RICOCHET	1.5f
+//	ATTN_GUNFIRE	0.27f
+//
+//	SNDLVL_NONE		= 0,
+//	SNDLVL_25dB		= 25,
+//	SNDLVL_30dB		= 30,
+//	SNDLVL_35dB		= 35,
+//	SNDLVL_40dB		= 40,
+//	SNDLVL_45dB		= 45,
+//	SNDLVL_50dB		= 50,	= 3.9
+//	SNDLVL_55dB		= 55,	= 3.0
+//	SNDLVL_IDLE		= 60,	= 2.0
+//	SNDLVL_TALKING		= 60,	= 2.0
+//	SNDLVL_60dB		= 60,	= 2.0
+//	SNDLVL_65dB		= 65,	= 1.5
+//	SNDLVL_STATIC		= 66,	= 1.25
+//	SNDLVL_70dB		= 70,	= 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_75dB		= 75,	= 0.8
+//	SNDLVL_80dB		= 80,	= 0.7
+//	SNDLVL_85dB		= 85,	= 0.6
+//	SNDLVL_90dB		= 90,	= 0.5
+//	SNDLVL_95dB		= 95,
+//	SNDLVL_100dB	= 100,	= 0.4
+//	SNDLVL_105dB	= 105,
+//	SNDLVL_120dB	= 120,
+//	SNDLVL_130dB	= 130,
+//	SNDLVL_GUNFIRE	= 140, = 0.27
+//	SNDLVL_140dB	= 140,	= 0.2
+//	SNDLVL_150dB	= 150,	= 0.2
+
+//monitorscene
+
+"outland_ep01.TeleconferenceBegin"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_TeleconferenceBegin.wav"
+}
+"outland_ep01.TeleconferenceEnd"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_TeleconferenceEnd.wav"
+}
+
+//HUNTER INTRO SCENE
+
+"outland_ep01.Vort1stHealAlyx"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.500"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"ambient/levels/outland/OL01_Vort1stHealAlyx.wav"
+}
+
+"outland_ep01.Alyx_HandCrawl_Foley"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/Alyx_HandCrawl_Foley.wav"
+}
+
+"outland_ep01.Hunter_Impact01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_Hunter_Impact01.wav"
+}
+
+"outland_ep01.Hunter_Impacts02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_Hunter_Impacts02.wav"
+}
+
+"outland_ep01.Hunter_KickVx"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_Hunter_KickVx.wav"
+}
+
+"outland_ep01.Hunter_PostKickVx02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_Hunter_PostKickVx02.wav"
+}
+
+"outland_ep01.Hunter_PreAttackVx"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_Hunter_PreAttackVx.wav"
+}
+
+
+"outland_ep01.Hunter_PreAttackVx02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_Hunter_PreAttackVx02.wav"
+}
+
+"outland_ep01.HunterDoubleStep"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_HunterDoubleStep.wav"
+}
+
+"outland_ep01.HunterRollAlyx"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+	"wave"			"ambient/levels/outland/OL01_HunterRollAlyx.wav"
+}
+
+"outland_ep01.HunterStep01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_70dB"
+
+	"wave"			"ambient/levels/outland/OL01_HunterStep01.wav"
+}
+
+"outland_ep01.HunterStep02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_HunterStep02.wav"
+}
+
+"outland_ep01.HunterStep03"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_HunterStep03.wav"
+}
+
+"outland_ep01.HunterStep04"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_HunterStep04.wav"
+}
+
+
+"outland_ep01.HunterStep05"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_HunterStep05.wav"
+}
+
+
+"outland_ep01.HunterStep06"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_70dB"
+
+	"wave"			"ambient/levels/outland/OL01_HunterStep06.wav"
+}
+
+
+"outland_ep01.Rock_Crash"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+	"wave"			"ambient/levels/outland/OL01_Rock_Crash.wav"
+}
+
+
+"outland_ep01.Stab_and_Drag"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_Stab_and_Drag.wav"
+}
+
+////
+"outland_01.train_creak_01"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "0"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak01.wav"
+}
+
+
+"outland_01.train_creak_02"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "0"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak02.wav"
+}
+
+
+"outland_01.train_creak_03"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "0"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak03.wav"
+}
+
+
+"outland_01.train_creak_04"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "0"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak04.wav"
+}
+
+
+"outland_01.train_creak_05"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "0"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak05.wav"
+}
+
+
+"outland_01.train_creak_06"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "0"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak06.wav"
+}
+"outland_ep01.VortFreeGordon"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient\levels\outland\OL01_VortFreeGordon.wav"
+}
+
+"outland_ep01.huntersighting01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/ol01_huntersighting01.wav"
+}
+
+"outland_ep01.huntersighting02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/ol01_huntersighting02.wav"
+}
+
+"outland_ep01.huntersighting03"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/ol01_huntersighting03.wav"
+}
+
+"outland_ep01.gate_open"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/ol01a_gate_open.wav"
+}
+
+"outland_ep01.elevatorcar_fall"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol01a_elevatorcar_fall.wav"
+}
+
+"outland_ep01.sled_1st_slip"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/ol01_sled_1st_slip.wav"
+}
+
+"outland_ep01.sledthrufence_impact"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/ol01_sledthrufence_impact.wav"
+}
+
+"outland_ep01.sledthrufencepart01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/ol01_sledthrufencepart01.wav"
+}
+
+"outland_ep01.PortalBlast"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_PortalBlast.wav"
+
+}
+
+"outland_ep01.TrainBridgeCollapse"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_TrainBridgeCollapse.wav"
+}
+
+"outland_ep01.TrainSplash"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/OL01_TrainSplash.wav"
+}
+
+"outland_ep01.vortblastrubble.wav"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol01_vortfreegordon.wav"
+}
+
+
+///////////////////////////////////////////////////////////
+
+"outland_ep02.advisor_transmission"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL06_AdvisorTransmission.wav"
+}
+
+"outland_ep02.transmission_static"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL06a_transmission_begin.wav"
+}
+
+"outland_ep02.farm_podpulse1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast01.wav"
+}
+
+"outland_ep02.farm_podpulse2"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast02.wav"
+}
+
+"outland_ep02.farm_podpulse3"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast03.wav"
+}
+
+"outland_ep02.farm_podpulse4"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast04.wav"
+}
+
+"outland_ep02.farm_podpulse5"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast05.wav"
+}
+
+"outland_ep02.farm_podpulse6"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast06.wav"
+}
+
+"outland_ep02.farm_podpulse_random"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"rndwave"
+	{
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast01.wav"
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast02.wav"
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast03.wav"
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast04.wav"
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast05.wav"
+	"wave"			"ambient/levels/outland/OL07_AdvisorBlast06.wav"
+	}
+}
+
+"outland_ep02.farm_bodyslump"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95,105"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL07_BodyOffConsole.wav"
+}
+
+"outland_ep02.farm_podmoan"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"80,120"
+
+	"soundlevel"	"SNDLVL_120dB"
+	"wave"			"npc/combine_gunship/gunship_moan.wav"
+}
+
+"outland_ep02.farm_podshutdown"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.700000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_80dB"
+
+	"wave"			"ambient/machines/thumper_shutdown1.wav"
+}
+
+"outland_ep02.farm_consolepowerup"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.5"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"		"weapons/physcannon/superphys_chargeup.wav"
+}
+
+"outland_ep02.farm_lighton"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.7"
+	"soundlevel"  "SNDLVL_75dB"
+	"pitch"		"100"
+	"wave"	"buttons/Lever6.wav"
+}
+
+"outland_ep02.cave_siren1_loop"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.7"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/outland/cave_siren_loop1.wav"
+}
+
+"outland_ep02.cave_siren2_loop"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.7"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/outland/cave_siren_loop2.wav"
+}
+
+"outland_ep02.cave_siren3_loop"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.7"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/outland/cave_siren_loop3.wav"
+}
+
+"outland_ep02.cave_siren4_loop"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/outland/cave_siren_loop4.wav"
+}
+
+"outland_03.LiftImpact"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"		"SNDLVL_75db"
+	"volume"		"0.9"
+	"wave"	"ambient/levels/intro/VanImpact1_35_21.wav"
+}
+
+"ep2_outland_03.tunnels_antlions_1"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/prison/inside_battle_antlion2.wav"
+}
+
+"ep2_outland_03.tunnels_antlions_2"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/prison/inside_battle_antlion3.wav"
+}
+
+"ep2_outland_03.tunnels_antlions_3"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/prison/inside_battle_antlion4.wav"
+}
+
+"ep2_outland_03.tunnels_antlions_4"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/prison/inside_battle_antlion5.wav"
+}
+
+"ep2_outland_03.tunnels_antlions_5"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"  "SNDLVL_120dB"
+	"pitch"		"100"
+	"wave"	"ambient/levels/prison/inside_battle_antlion6.wav"
+}
+
+"outland_11.Lift_Move"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"plats/elevator_loop1.wav"
+}
+
+"outland_11.Lift_Start"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.650000"
+	"pitch"			"100"
+
+	"soundlevel"	"SNDLVL_110dB"
+
+	"wave"			"plats/elevator_start1.wav"
+}
+
+"outland_11.Lift_Stop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.350000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"plats/elevator_stop.wav"
+}
+
+"outland_11.SliderGate_Close"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.65"
+	"soundlevel"  "SNDLVL_90dB"
+	"pitch"		"100"
+
+	"wave"			"ambient\levels\outland\OL12a_SliderGate_Close.wav"
+}
+
+"outland_11.SliderGate_Open"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.65"
+	"soundlevel"  "SNDLVL_90dB"
+	"pitch"		"100"
+
+	"wave"			"ambient\levels\outland\OL12a_SliderGate_Open.wav"
+}
+
+"ep2_outland_11.silo_alarm"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.68"
+	"pitch"			"120"
+	"soundlevel"	"SNDLVL_90dB"
+	"wave"			"ambient/alarms/alarm_citizen_loop1.wav"
+}
+
+"ep2_outland_11.leakypipeheavy_1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"ambient/levels/canals/dam_water_loop2.wav"
+}
+
+"ep2_outland_11.leakypipe_1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"ambient/water/leak_1.wav"
+}
+
+"ep2_outland_11.leverdoor_close"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.9"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11_BlastDoor_Close.wav"
+}
+
+"ep2_outland_11.leverdoor_open"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.9"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11BlastDoor_Open.wav"
+}
+
+"ep2_outland_11.leverdoor_latch"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.8"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_90dB"
+	"wave"			"ambient/levels/outland/OL11_BlastDoorLatch.wav"
+}
+
+"ep2_outland_11.garagedoor_close"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.85"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_90dB"
+	"wave"			"ambient/levels/outland/OL11OverheadDoor_Close.wav"
+}
+
+"ep2_outland_11.garagedoor_open"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.85"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_90dB"
+	"wave"			"ambient/levels/outland/OL11_OverheadDoor_Open.wav"
+}
+
+"ep2_outland_11.blastdoors_open_start"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.65"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_Start_Op.wav"
+}
+
+"ep2_outland_11.blastdoors_close_start"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.65"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_Start_Cl.wav"
+}
+
+"ep2_outland_11.blastdoors_close_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.65"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_Loop_Cl.wav"
+}
+
+"ep2_outland_11.blastdoors_open_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.65"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_Loop_Op.wav"
+}
+
+"ep2_outland_11.blastdoors_open_end"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.7"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_End_Op.wav"
+}
+
+"ep2_outland_11.blastdoors_close_end"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.7"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_End_Cl.wav"
+}
+
+
+"ep2_outland_11.launchdoors_close_start"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_120dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_Start_Cl.wav"
+}
+
+"ep2_outland_11.launchdoors_close_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_120dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_Loop_Cl.wav"
+}
+
+"ep2_outland_11.launchdoors_close_end"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_120dB"
+	"wave"			"ambient/levels/outland/OL11SiloDoor_End_Cl.wav"
+}
+
+"ep2_outland_11.hunter_bang_door"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.9"
+	"pitch"			"80,110"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"		"ambient/materials/door_hit1.wav"
+}
+
+"ep2_outland_11.hunter_bang_door_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.8"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"		"ambient/levels/city/ZombiDoorLoop01.wav"
+}
+
+"ep2_outland_11.weld_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.6"
+	"pitch"			"80"
+	"soundlevel"	"SNDLVL_80dB"
+	"wave"		"ambient/levels/outland/OL11_Welding_Loop.wav"
+}
+
+"ep2_outland_11.lamarr_scraping"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.3"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_70dB"
+	"wave"		"*ambient/levels/city/ZombiDoorScrapeLoop01.wav"
+}
+
+"ep2_outland_11.silo_steam_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.8"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_70dB"
+	"wave"		"ambient/gas/cannister_loop.wav"
+}
+
+"ep2_outland_11.borealis_wind_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.3"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_70dB"
+	"wave"		"ambient/levels/canals/windmill_wind_loop1.wav"
+}
+
+"ep2_outland_11.mossman_explosion"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.6"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"		"ambient/explosions/explode_1.wav"
+}
+
+"ep2_outland_11.soldier_voice_suppressing"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_120dB"
+	"wave"		"npc/combine_soldier/vo/suppressing.wav"
+}
+
+"ep2_outland_11.soldier_voice_thereheis"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_120dB"
+	"wave"		"npc/metropolice/vo/thereheis.wav"
+}
+
+
+"ep2_outland.antlion_web_hit"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"95,105"
+	"soundlevel"	"SNDLVL_90db"
+	rndwave
+	{
+		"wave"			"ambient/levels/outland/webdoor_hit3.wav"
+		"wave"			"ambient/levels/outland/webdoor_hit4.wav"
+	}
+}
+
+"ep2_outland.antlion_web_break"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100,110"
+	"soundlevel"	"SNDLVL_90db"
+	rndwave
+	{
+		"wave"			"ambient/levels/outland/webdoor_break1.wav"
+		"wave"			"ambient/levels/outland/webdoor_break4.wav"
+	}
+}
+
+"ep2_outland.magnusson_teleporter_idle"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100,110"
+	"soundlevel"	"SNDLVL_60db"
+	rndwave
+	{
+		"wave"			"ambient/levels/outland/striderbusteridle_loop.wav"
+	}
+}
+
+"ep2_outland.rain_loop1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100,110"
+	"soundlevel"	"SNDLVL_120dB"
+	rndwave
+	{
+		"wave"			"ambient/levels/forest/rain_loop1.wav"
+	}
+}
+
+"outland_ep02.power_unplugged"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"100"
+
+	"soundlevel"	"SNDLVL_90dB"
+
+	"wave"			"ambient/energy/power_off1.wav"
+}
+
+"ep2_outland_08.cit_copter_alarm"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"  "SNDLVL_130dB"
+	"pitch"		"100"
+	"wave"	"ambient/alarms/alarm_citizen_loop1.wav"
+}
+
+
+"ep2_outland_12.StickyBombCreator"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.8"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_70dB"
+	"wave"			"weapons/strider_buster/OL12_StickyBombCreator.wav"
+}
+
+
+"ep2_outland_12.base_gate"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_90db"
+	"wave"			"ambient/levels/outland/ol12chainlinkopen.wav"
+}
+
+"ep2_outland_12.base_alarm_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_150db"
+	"wave"			"ambient/levels/outland/basealarmloop.wav"
+	//"wave"			"ambient/levels/outland/base_raid_siren_loop1.wav"
+}
+
+"ep2_outland_12.base_destroy"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	        "SNDLVL_150db"
+	"wave"			"ambient/levels/outland/ol12_baseexplosion.wav"
+}
+
+"outland_ep02.sliding_traincar"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".8"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_100dB"
+
+	"wave"			"ambient/levels/outland/OL0Sled01.wav"
+}
+
+"outland_ep02.fanspinlong01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_130dB"
+
+	"wave"			"ambient/levels/outland/OL04FanSpinLong01.wav"
+}
+
+"outland_ep02.fanspinlong02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_130dB"
+
+	"wave"			"ambient/levels/outland/OL04FanSpinLong02.wav"
+}
+
+"outland_ep02.fanspinlong03"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_130dB"
+
+	"wave"			"ambient/levels/outland/OL04FanSpinLong03.wav"
+}
+
+"outland_ep02.fanspinlong04"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_130dB"
+
+	"wave"			"ambient/levels/outland/OL04FanSpinLong04.wav"
+}
+
+"outland_ep02.sliding_traincar_02_move"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_140dB"
+
+	"wave"			"ambient/levels/outland/OL03sled02_pt01.wav"
+}
+
+"outland_ep02.sliding_traincar_02_impact"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_150dB"
+
+	"wave"			"ambient/levels/outland/OL03sled02_pt02.wav"
+}
+
+"outland_ep02.sliding_traincar_02_break"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_140dB"
+
+	"wave"			"ambient/levels/outland/OL03sled02_pt03.wav"
+}
+
+"outland_ep02.elevator_start"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_150dB"
+
+	"wave"			"plats/elevator_start1.wav"
+}
+"outland_ep02.elevator_stop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"140"
+	"soundlevel"	"SNDLVL_150dB"
+
+	"wave"			"plats/hall_elev_stop.wav"
+}
+
+"outland_02.rock_slide"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"100"
+
+	"soundlevel"	"SNDLVL_150dB"
+
+	"wave"	"ambient/materials/rock4.wav"
+}
+
+"outland_02.BoulderImpactHard"
+{
+	"soundlevel"		"SNDLVL_150dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"rndwave"
+	{
+		"wave"		"physics/concrete/boulder_impact_hard1.wav"
+		"wave"		"physics/concrete/boulder_impact_hard2.wav"
+		"wave"		"physics/concrete/boulder_impact_hard3.wav"
+		"wave"		"physics/concrete/boulder_impact_hard4.wav"
+	}
+}
+
+"ep2.rocket_launch_switch_open"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"ambient/levels/outland/OL12a_LaunchSwitch_Open.wav"
+
+}
+
+"ep2.rocket_launch_switch_push"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"ambient/levels/outland/OL12a_LaunchSwitch_Push.wav"
+
+}
+
+"outland_10.shieldwall_on"
+{
+	"soundlevel"		"SNDLVL_110dB"
+	"volume"		"1"
+	"pitch"			"100"
+	"wave"			"ambient/levels/outland/combineshieldactivate.wav"
+
+}
+
+"outland_10.shieldwall_off"
+{
+	"soundlevel"		"SNDLVL_110dB"
+	"volume"		"1"
+	"pitch"			"100"
+	"wave"			"ambient/levels/outland/combineshield_deactivate.wav"
+
+}
+
+"outland_10.hunter_doorbreak1"
+{
+	"soundlevel"		"SNDLVL_120dB"
+	"volume"		"1"
+	"pitch"			"100"
+	"wave"			"physics/wood/wood_crate_break4.wav"
+
+}
+
+"outland_10.hunter_doorbreak2"
+{
+	"soundlevel"		"SNDLVL_120dB"
+	"volume"		"1"
+	"pitch"			"100"
+	"wave"			"physics/wood/wood_crate_break5.wav"
+
+}
+
+"outland_10.gunship_crash"
+{
+	"soundlevel"		"SNDLVL_120dB"
+	"volume"		"1"
+	"pitch"			"70"
+	"wave"			"ambient/outro/gunshipcrash.wav"
+
+}
+
+"outland_09.OL09GunGrate_Open"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90db"
+	
+	"wave"		"ambient/levels/outland/OL09_GunGrate_Open.wav"
+}
+
+
+"outland_09.OL09Boxcarspin"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90db"
+	"rndwave"
+	{
+		"wave"		"ambient/levels/outland/OL09Boxcarspin01.wav"
+		"wave"		"ambient/levels/outland/OL09Boxcarspin02.wav"
+		"wave"		"ambient/levels/outland/OL09Boxcarspin03.wav"
+		"wave"		"ambient/levels/outland/OL09Boxcarspin04.wav"
+	}
+}
+
+"outland_09.OL09BigGunDestroyed"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90db"
+	
+	"wave"		"ambient/levels/outland/OL09_BigGunDestroy.wav"
+}
+
+"outland_03.lift_creak"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90db"
+	"rndwave"
+	{
+		"wave"		"ambient/levels/outland/ol03_lift_creak01.wav"
+		"wave"		"ambient/levels/outland/ol03_lift_creak02.wav"
+		"wave"		"ambient/levels/outland/ol03_lift_creak03.wav"
+		"wave"		"ambient/levels/outland/ol03_lift_creak04.wav"
+		"wave"		"ambient/levels/outland/ol03_lift_creak05.wav"
+		"wave"		"ambient/levels/outland/ol03_lift_creak06.wav"
+		"wave"		"ambient/levels/outland/ol03_lift_creak07.wav"		
+	}
+}
+
+"outland_03.lift_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_NORM"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_lift_loop.wav"
+}
+
+"outland_03.lift_loop_mono"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_lift_loop_mono.wav"
+}
+
+"outland_03.lift_start"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_lift_start.wav"
+}
+
+"outland_03.lift_stop"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_lift_stop.wav"
+}
+
+"outland_03.lift_weightimpact"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_lift01_weightimpact.wav"
+}
+
+"outland_03.gatefall_pt01"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03gatefall_pt01.wav"
+}
+
+"outland_03.gatefall_pt02"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03gatefall_pt02.wav"
+}
+
+"outland_03.slidingoverhead_gate"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/OL03_SlidingOverhead_Open.wav"
+}
+
+"outland_03.diesel_engine"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_70dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/machines/diesel_engine_idle1.wav"
+}
+
+"outland_03.bin_move_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient\levels\outland\ol03binmoveloop.wav"
+}
+
+"outland_03.bin_creak_01"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak01.wav"
+}
+
+"outland_03.bin_creak_02"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak02.wav"
+}
+
+"outland_03.bin_creak_03"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak03.wav"
+}
+
+"outland_03.bin_creak_04"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak04.wav"
+}
+
+"outland_03.bin_creak_05"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak05.wav"
+}
+
+"outland_03.bin_creak_06"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_bincreak06.wav"
+}
+
+"outland_03.lift_fall_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol03_2ndlift_fallloop.wav"
+}
+
+"outland_04.vort_remove_extract_fx"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"		"SNDLVL_140db"
+	"volume"		"1"
+	"wave"	"ambient\levels\outland\ol04_vortremovextract.wav"
+}
+
+"outland_04.vort_extract_fx"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+	"wave"			"ambient/levels/outland/OL04_Vort_Extract.wav"
+}
+
+"outland_04.generator_idle"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_60dB"
+	"wave"			"vehicles/airboat/fan_motor_idle_loop1.wav"
+}
+
+"outland_04.gear_on_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_70dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol04_gear_on_loop.wav"
+}
+
+"outland_04.gear_engage_lever"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient\levels\outland\ol04_gearengage_lever.wav"
+}
+
+"outland_04.gearengage"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/caves/ol04_gearengage.wav"
+}
+
+"outland_04.gearloop"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_70dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol04_gearloop.wav"
+}
+
+"outland_04.elevatorgate_up"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel" "SNDLVL_110dB"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient/levels/outland/ol04elevatorgate_up.wav"
+}
+
+"ep02_outro.1stFiringWarning"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/launch/1stFiringWarning.wav"
+}
+
+"ep02_outro.Debris01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/launch/Debris01.wav"
+}
+
+"ep02_outro.Debris02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/launch/Debris02.wav"
+}
+
+"ep02_outro.InteriorTurbulance"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"*ambient/levels/launch/InteriorTurbulance.wav"
+}
+
+"ep02_outro.LaunchVoice"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"*ambient/levels/launch/LaunchVoice.wav"
+}
+
+"ep02_outro.OutsideSiloDoorsOpen"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"*ambient/levels/launch/OutsideSiloDoorsOpen.wav"
+}
+
+"ep02_outro.Rhumble01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"*ambient/levels/launch/Rhumble01.wav"
+}
+
+"ep02_outro.RocketTakeOffBlast"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"*ambient/levels/launch/RocketTakeOffBlast.wav"
+}
+
+"ep02_outro.OL12a_PortalClose"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"*ambient/levels/outland/OL12a_PortalClose.wav"
+}
+
+"ep02_outro.WarningSFX01_Loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/launch/WarningSFX01_Loop.wav"
+}
+
+"ep02_outro.WarningSFX02_Loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/launch/WarningSFX02_Loop.wav"
+}
+
+"outland_06.endgate_open"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_GUNFIRE"
+
+	"wave"			"ambient/levels/outland/ol06_endgate_open.wav"
+}
+
+"outland_12.magnuson_fizzle"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/levels/launch/magnuson_dud1.wav"
+}
+
+
+"outland_10.powerdown1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/energy/powerdown1.wav"
+}
+
+"outland_10.powerdown2"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/energy/powerdown2.wav"
+}
+
+"outland_10.powerup1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/energy/powerup1.wav"
+}
+
+"outland_10.powerup2"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/energy/powerup2.wav"
+}
+
+"outland_05.rubble5"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/levels/streetwar/building_rubble5.wav"
+}
+
+"outland_06.forklift_start"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/levels/outland/forklift_start.wav"
+}
+
+"outland_06.forklift_stop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/levels/outland/forklift_stop.wav"
+}
+
+"outland_06.forklift_down_up_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_120db"
+
+	"wave"			"ambient/levels/outland/forklift_down_up_loop.wav"
+}
+
+"outland_06.bridge_girders_break"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol06_girdersbreak.wav"
+}
+
+"outland_06.bridge_break_pt01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol06bridgebreak_pt01.wav"
+}
+
+"outland_06.bridge_break_pt02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol06bridgebreak_pt02.wav"
+}
+
+"outland_07.advisor_podopen"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol07advisor_podopen.wav"
+}
+
+"outland_07.advisor_reveal"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol07advisorpod_reveal.wav"
+}
+
+"outland_07.advisor_roof"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/outland/ol07advisorthroughroof.wav"
+}
+
+"outland_06a.plug_insert"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"		"PITCH_NORM"
+	"soundlevel"	"SNDLVL_55dB"
+
+	"wave"		"vehicles/Crane/crane_magnet_switchon.wav"
+}
+
+"outland_06a.plug_remove"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.000000"
+	"pitch"			"100"
+
+	"soundlevel"	"SNDLVL_55dB"
+
+	"wave"			"npc/scanner/cbot_discharge1.wav"
+}
+
+"outland_06a.substation_generators"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_70dB"
+
+	"wave"			"ambient/atmosphere/indoor2.wav"
+}
+
+"outland_02.vort_heal_alyx_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_60dB"
+
+	"wave"			"ambient/levels/outland/OL02_VortHealAlyxLoop.wav"
+}
+
+"outland_02.singlechant_1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.700000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_60dB"
+
+	"wave"			"npc\vort\ol02singlechant01.wav"
+}
+
+"outland_02.singlechant_2"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.700000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_60dB"
+
+	"wave"			"npc\vort\ol02singlechant02.wav"
+}
+
+"outland_02.singlechant_3"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.700000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_60dB"
+
+	"wave"			"npc\vort\ol02singlechant03.wav"
+}
+
+"outland_02.vortchant_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.700000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_60dB"
+
+	"wave"			"ambient\levels\outland\ol02_vortchant_loop.wav"
+}
+
+"outland_02.vort_chant_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_60dB"
+
+	"wave"			"npc/vort/VortHealSingle_Loop.wav"
+}
+
+
+//GMan Scene sounds
+
+
+"outland_ep02.GMAN_Full_00_01_03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"*#@ambient/levels/gman/OL02_GMan_Full_00_01_03.wav"
+}
+
+
+"outland_ep02.GMAN_Amb_00_28_09"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"#@ambient/levels/gman/GMAN_Amb_00_28_09.wav"
+}
+
+"outland_ep02.GMAN_Amb_00_42_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.85"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"@ambient/levels/gman/GMAN_Amb_00_42_11.wav"
+}
+
+"outland_ep02.GMAN_Amb_01_00_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_Amb_01_00_11.wav"
+}
+
+
+"outland_ep02.GMAN_Amb_01_22_27"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_Amb_01_22_27.wav"
+}
+
+
+"outland_ep02.GMAN_Amb_01_55_12"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_Amb_01_55_12.wav"
+}
+
+
+"outland_ep02.GMAN_Amb_02_13_28"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+	"wave"			"@ambient/levels/gman/GMAN_Amb_02_13_28.wav"
+}
+
+
+"outland_ep02.GMAN_seg_00_01_03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_00_01_03.wav"
+}
+
+
+"outland_ep02.GMAN_seg_00_21_05"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_00_21_05.wav"
+}
+
+
+"outland_ep02.GMAN_seg_00_28_00"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_00_28_00.wav"
+}
+
+"outland_ep02.GMAN_seg_00_29_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_00_29_16.wav"
+}
+
+
+"outland_ep02.GMAN_seg_00_42_03"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_00_42_03.wav"
+}
+
+
+"outland_ep02.GMAN_seg_01_00_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_00_11.wav"
+}
+
+
+"outland_ep02.GMAN_seg_01_06_17"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_06_17.wav"
+}
+
+
+
+"outland_ep02.GMAN_seg_01_08_14"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_08_14.wav"
+}
+
+
+"outland_ep02.GMAN_seg_01_11_18"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_11_18.wav"
+}
+
+
+"outland_ep02.GMAN_seg_01_22_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_22_16.wav"
+}
+
+
+"outland_ep02.GMAN_seg_01_26_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_26_11.wav"
+}
+
+
+"outland_ep02.GMAN_seg_01_42_19"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_42_19.wav"
+}
+
+
+"outland_ep02.GMAN_seg_01_50_24"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_01_50_24.wav"
+}
+
+
+"outland_ep02.GMAN_seg_02_11_20"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_02_11_20.wav"
+}
+
+
+"outland_ep02.GMAN_seg_02_29_21"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_02_29_21.wav"
+}
+
+
+
+
+"outland_ep02.GMAN_seg_02_35_08"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_02_35_08.wav"
+}
+
+"outland_ep02.GMAN_seg_02_37_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"@ambient/levels/gman/GMAN_seg_02_37_11.wav"
+}
+
+"outland_ep02.GMAN_Signature_ShortHit_11a"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.7"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_90dB"
+
+	"wave"			"ambient\levels\gman\GMan_Sgnature_Shrt.wav"
+}
+
+"outland_ep02.VortHealing_Loop01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"@ambient/levels/gman/VortHealing_Loop01.wav"
+}
+
+"outland_ep02.VortHealing_Loop02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.75"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"@ambient/levels/gman/VortHealing_Loop02.wav"
+}
+
+"outland_10.hunter_3_enter"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"physics/concrete/boulder_impact_hard4.wav"
+}
+
+
+// outland 10a dog vs. strider stuff
+
+"outland_10a.DvS_DogGrabStrider_00_40_24"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogGrabStrider_00_40_24.wav"
+}
+
+"outland_10a.DvS_DogHitStrider_00_27_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogHitStrider_00_27_16.wav"
+}
+
+"outland_10a.DvS_DogHitStrider_00_34_18"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogHitStrider_00_34_18.wav"
+}
+
+"outland_10a.DvS_DogJump_00_06_01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogJump_00_06_01.wav"
+}
+
+"outland_10a.DvS_DogOnLog_00_03_06"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogOnLog_00_03_06.wav"
+}
+
+"outland_10a.DvS_DogRipStrider_00_36_10"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogRipStrider_00_36_10.wav"
+}
+
+"outland_10a.DvS_DogSlamStrider_00_30_07"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogSlamStrider_00_30_07.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_03_22"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_03_22.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_16_00"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_16_00.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_22_00"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_22_00.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_24_24"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_24_24.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_26_29"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_26_29.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_29_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_29_16.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_31_23"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_31_23.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_36_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_36_16.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_39_06"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_39_06.wav"
+}
+
+"outland_10a.DvS_DogVoc_00_45_18"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogVoc_00_45_18.wav"
+}
+
+"outland_10a.DvS_StriderBarf01_00_12_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderBarf01_00_12_16.wav"
+}
+
+"outland_10a.DvS_StriderBarf02_00_13_29"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderBarf02_00_13_29.wav"
+}
+
+
+"outland_10a.DvS_StriderBarf03_00_15_06"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderBarf03_00_15_06.wav"
+}
+
+"outland_10a.DvS_StriderFall_00_47_04"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderFall_00_47_04.wav"
+}
+
+"outland_10a.DvS_StriderVoc_00_18_13"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderVoc_00_18_13.wav"
+}
+
+"outland_10a.DvS_StriderVoc_00_23_24"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderVoc_00_23_24.wav"
+}
+
+"outland_10a.DvS_StriderVoc_00_28_21"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderVoc_00_28_21.wav"
+}
+
+"outland_10a.DvS_StriderVoc_00_35_18"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderVoc_00_35_18.wav"
+}     
+
+"outland_10a.DvS_StriderVoc_00_41_14"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderVoc_00_41_14.wav"
+}  
+
+"outland_10a.DvS_StriderVoc_00_43_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StriderVoc_00_43_16.wav"
+}
+
+"outland_10a.DvS_TreeCrash_00_10_25"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_TreeCrash_00_10_25.wav"
+}
+
+"outland_10a.DvS_StrdrSkew_RockWoodDrt01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StrdrSkew_RockWoodDrt01.wav"
+}
+
+"outland_10a.DvS_StrdrSkew_RockDirt02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StrdrSkew_RockDirt02.wav"
+}
+
+"outland_10a.DvS_StrdrSkew_RockDirt03"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_StrdrSkew_RockDirt03.wav"
+}
+
+"outland_10a.OL10a_Strider_Reveal"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL10a_Strider_Reveal.wav"
+}
+
+"outland_10a.OL10a_DogLiftGate"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/outland/OL10a_DogLiftGate.wav"
+}
+
+"outland_10a.DvS_Tree01Explode"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_Tree01Explode.wav"
+}
+
+"outland_10a.DvS_Rockslide"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_Rockslide.wav"
+}
+
+"outland_10a.DvS_DogFinalFall"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/DvS_DogFinalFall.wav"
+}
+
+"outland_10a.OL10a_Dog_Recover"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/OL10a_Dog_Recover.wav"
+}
+"outland_10a.OL10a_DogClearRiver"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Dog_v_Strider/OL10a_DogClearRiver.wav"
+}
+"outland_07.Explosion_Console_01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.5"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"ambient\explosions\explode_1.wav"
+}
+"outland_07.Explosion_Console_02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.5"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"ambient\explosions\explode_2.wav"
+}
+"outland_07.Explosion_Console_03"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.5"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"ambient\explosions\explode_3.wav"
+}
+"outland_03.Railcar_Ride"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_GUNFIRE"
+
+	"wave"			"ambient\levels\outland\OL03_RailRide.wav"
+}
+"outland_03.Railcar_Impact01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_GUNFIRE"
+
+	"wave"			"ambient\levels\outland\OL03Railcar_Imp01.wav"
+}
+"outland_03.Railcar_Impact02"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_GUNFIRE"
+
+	"wave"			"ambient\levels\outland\OL03Railcar_Imp02.wav"
+}
+"outland_03.Railcar_Whoosh"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_GUNFIRE"
+
+	"wave"			"ambient\levels\outland\OL03_Shaft_SledBy.wav"
+}
+"outland_03.Railcar_Splash"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_GUNFIRE"
+
+	"wave"			"ambient\levels\outland\OL03_ShaftDebrisSplash.wav"
+}
+"outland_03.Railcar_Flame"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_GUNFIRE"
+
+	"wave"			"ambient\levels\outland\OL03_Shaft_FlameBy.wav"
+}
+
+
+"outland_10a.river"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_90db"
+
+	"wave"			")ambient\ambience\WaterLap_loop.wav"
+}
+
+"outland_11.foley.Alyx_Hug_Eli"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\Alyx_Hug_Eli.wav"
+}
+
+"outland_11.foley.Alyx_Pat_Eli"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\Alyx_Pat_Eli.wav"
+}
+
+"outland_11.foley.ALYX_Sit_On_Couch"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\Alyx_Sit_On_Couch.wav"
+}
+
+"outland_11.foley.ELI_Fall_Against_table"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\ELI_Fall_Against_table.wav"
+}
+
+"outland_11.foley.ELI_Grab_Frame"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\ELI_Grab_Frame.wav"
+}
+
+"outland_11.foley.ELI_Hand_Pat"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\ELI_Hand_Pat.wav"
+}
+
+"outland_11.foley.ELI_Place_Frame"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\ELI_Place_Frame.wav"
+}
+
+"outland_11.foley.ELI_Sit_On_Couch"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\ELI_Sit_On_Couch.wav"
+}
+
+"outland_11.foley.Mag_Hands_together"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\Mag_Hands_together.wav"
+}
+
+"outland_11.foley.Vort_Beckon_2x"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".3"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_TALKING"
+
+	"wave"			"foley\Vort_Beckon_2x.wav"
+}
+
+
+// finale sounds
+"outland_12a.OL12_Finale_00_02_19"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_02_19.wav"
+}
+
+"outland_12a.OL12_Finale_00_02_23"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_02_23.wav"
+}
+
+"outland_12a.OL12_Finale_00_04_29"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_04_29.wav"
+}
+
+"outland_12a.OL12_Finale_00_05_20"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_05_20.wav"
+}
+
+"outland_12a.OL12_Finale_00_05_21"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_05_21.wav"
+}
+
+"outland_12a.OL12_Finale_00_07_09"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_07_09.wav"
+}
+
+"outland_12a.OL12_Finale_00_07_13"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_07_13.wav"
+}
+
+"outland_12a.OL12_Finale_00_17_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_17_11.wav"
+}
+
+"outland_12a.OL12_Finale_00_17_17"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_17_17.wav"
+}
+
+"outland_12a.OL12_Finale_00_23_22"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_23_22.wav"
+}
+
+"outland_12a.OL12_Finale_00_25_20"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_25_20.wav"
+}
+
+"outland_12a.OL12_Finale_00_32_10"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_32_10.wav"
+}
+
+"outland_12a.OL12_Finale_00_34_03"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_34_03.wav"
+}
+
+"outland_12a.OL12_Finale_00_38_25"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_38_25.wav"
+}
+
+"outland_12a.OL12_Finale_00_48_10"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_48_10.wav"
+}
+
+"outland_12a.OL12_Finale_00_55_19"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_00_55_19.wav"
+}
+
+"outland_12a.OL12_Finale_01_10_29"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_01_10_29.wav"
+}
+
+"outland_12a.OL12_Finale_01_15_25"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_01_15_25.wav"
+}
+
+"outland_12a.OL12_Finale_01_16_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+
+     "soundlevel"  "SNDLVL_120dB"
+
+	"wave"			"ambient/levels/Finale Segment Conversions/OL12_Finale_01_16_11.wav"
+}
+
+"Padlock.Break"
+{
+	"channel"		"CHAN_BODY"
+	"soundlevel"	"SNDLVL_75dB"
+	"pitch"		"96,104"
+	"volume"	"1.0"
+	"rndwave"
+	{
+		"wave" "physics/plastic/plastic_box_break1.wav"
+		"wave" "physics/plastic/plastic_box_break2.wav"
+	}
+}
+
+"outland_10a.stridersound1"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+        "soundlevel"            "SNDLVL_150dB"
+
+	"wave"			"ambient/levels/streetwar/strider_distant3.wav"
+}
+
+"outland_10a.stridersound2"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"pitch"			"100"
+        "soundlevel"            "SNDLVL_130dB"
+
+	"wave"			"npc/strider/strider_hunt2.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_01_22"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_01_22.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_01_23"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_01_23.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_09_17"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_09_17.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_12_11"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_12_11.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_16_13"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_16_13.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_21_13"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_21_13.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_27_10"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_27_10.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_28_15"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_28_15.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_28_24"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_28_24.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_30_14"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_30_14.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_30_22"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_30_22.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_35_13"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_35_13.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_36_25"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_36_25.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_41_11"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_41_11.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_41_25"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_41_25.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_45_22"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_45_22.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_48_14"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_48_14.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_48_16"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_48_16.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_50_11"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_50_11.wav"
+}
+
+"outland_07.Advisor_BarnScene_00_53_23"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_00_53_23.wav"
+}
+
+"outland_07.Advisor_BarnScene_01_01_15"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_01_01_15.wav"
+}
+
+"outland_07.Advisor_BarnScene_01_02_06"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"0"
+
+	"wave"			"ambient/levels/Advisor_Barn/OL07_Advisor_01_02_06.wav"
+}

@@ -1,0 +1,1196 @@
+criterion "ConceptThrowMedAttractNag" "Concept" "TLK_ALYX_OUTLAND_08_THROWMED" required
+criterion "ConceptTakeDownChopper" "Concept" "TLK_ALYX_OUTLAND_08_TAKEDOWNCHOP" required
+criterion "ConceptNagGoWithMag" "Concept" "TLK_NAG_OUTLAND_11_GOWITHMAG" required
+criterion "ConceptNag06aFindRadio" "Concept" "TLK_LETS_FIND_RADIO_NAG" required
+criterion "ConceptNag06aNotPowered" "Concept" "TLK_RADIO_NOT_POWERED_NAG" required
+criterion "ConceptNag06aUseRadio" "Concept" "TLK_LETS_USE_RADIO_NAG" required
+criterion "IsLookingForRadio" "06a_looking_for_radio" "1" required 
+criterion "NotUsedLookForRadio" "UsedLookForRadio" "!=1" "required" weight 0
+criterion "IsLookingForPower" "06a_looking_for_power" "1" required 
+criterion "NotUsedLookForPower" "UsedLookForPower" "!=1" "required" weight 0
+criterion "ConceptNagFollowGeneric" "Concept" "TLK_NAG_ALYX_FOLLOW_GENERIC" required
+criterion "ConceptNagJoinAlyx04" "Concept" "TLK_JOIN_ALYX_IN_ELEVATOR_NAG" required
+criterion "IsMoveToThumper" "movetothumper_05" "1" required 
+criterion "PlayerWeaponIsShotGun" "enemy" "weapon_shotgun" required
+criterion "IsplayerAlyxInInn" "playerAlyxInInn" "1" required
+
+criterion "PostTransmission" "post_transmission01" "1" "required" weight 1
+
+
+//============================================================================================================
+// Alyx Plus Use Fun
+//============================================================================================================
+response AlyxUseEverywhere
+{
+	scene "scenes/npc/alyx/al_affirm01.vcd" 
+	scene "scenes/npc/alyx/al_affirm03.vcd" 
+	scene "scenes/npc/alyx/al_affirm05.vcd" 
+	scene "scenes/npc/alyx/al_playerstare01-vocal.vcd" 
+	scene "scenes/npc/alyx/al_playerstare02.vcd"
+	scene "scenes/npc/alyx/al_lead_start05.vcd" 
+	scene "scenes/npc/alyx/al_lead_start06.vcd" 
+}
+
+
+rule AlyxUseEverywhere
+{
+	criteria IsAlyx ConceptTalkUse NotUsedAlyxResponse NotInCombat
+        applycontext "UsedAlyxResponse:1:20"
+	response AlyxUseEverywhere
+}
+
+//
+
+response AlyxTalkUse01Post
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/alyx/al_plususe_gettowhiteforest.vcd"   
+	scene "scenes/npc/alyx/al_plususe_getmovingneedus.vcd"   
+	scene "scenes/outland_01/al_rbed_giveupnow.vcd"   
+}
+ 
+rule AlyxTalkUse01Post
+ {
+	criteria		IsAlyx ConceptTalkUse IsMap_ep2_outland_01 NotUsedAlyxResponse NotInCombat PostTransmission
+        applycontext		"UsedAlyxResponse:1:20"
+ 	response		AlyxTalkUse01Post
+ }
+
+
+response AlyxTalkUse01Pre
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_01/al_rbed_plususe04.vcd"   
+	scene "scenes/outland_01/al_rbed_plususe03.vcd"   
+	scene "scenes/outland_01/al_rbed_plususe01.vcd"   
+}
+ 
+rule AlyxTalkUse01Pre
+ {
+	criteria		IsAlyx ConceptTalkUse IsMap_ep2_outland_01 NotUsedAlyxResponse NotInCombat
+        applycontext		"UsedAlyxResponse:1:20"
+ 	response		AlyxTalkUse01Pre
+ }
+
+
+
+criterion "IsplayerPostCannon" "POSTCANNON" "1" required
+response AlyxTalkUse09PostCannon
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/alyx/al_plususe_gettowhiteforest.vcd"   
+	scene "scenes/npc/alyx/al_plususe_getmovingneedus.vcd"   
+}
+ 
+rule AlyxTalkUse09PostCannon
+ {
+	criteria		IsAlyx ConceptTalkUse IsMap_ep2_outland_09 NotUsedAlyxResponse NotInCombat IsplayerPostCannon
+        applycontext		"UsedAlyxResponse:1:20"
+ 	response		AlyxTalkUse09PostCannon
+ }
+
+
+//============================================================================================================
+// Alyx In 10a  Nag to get car
+//============================================================================================================
+criterion "ConceptNagGetCar10a" "Concept" "TLK_OUTLAND_10a_BRINGCAR" required
+response AlyxNagGetCar10a  
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_10/al_str_carnag02.vcd"   
+	scene "scenes/outland_10/al_str_carnag03.vcd"   
+}
+ 
+rule AlyxNagGetCar10a 
+ {
+ 	criteria		IsAlyx ConceptNagGetCar10a
+ 	response		AlyxNagGetCar10a    
+ }
+
+
+response AlyxNagToWhiteForest10a  
+{
+
+	NOREPEAT
+	scene "scenes/outland_10/al_silo_dontgiveup.vcd"  
+	scene "scenes/outland_10/al_silo_seedad.vcd"   respeakdelay 20
+	scene "scenes/outland_10/al_silo_seemag.vcd"   respeakdelay 30
+}
+ 
+rule AlyxNagToWhiteForest10a  
+ {
+ 	criteria		IsAlyx ConceptLeadRetrieve IsMap_ep2_outland_10a 
+ 	response		AlyxNagToWhiteForest10a  
+ }
+
+
+
+
+//============================================================================================================
+// Alyx In 04.  Nag to get on elevator
+//============================================================================================================
+response NagJoinAlyx04  
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_02/al_junc_notwithoutyou.vcd"   
+	scene "scenes/outland_02/al_junc_gettowhiteforest.vcd"   
+	scene "scenes/outland_02/al_junc_nexttome.vcd"   
+}
+ 
+rule NagJoinAlyx04  
+ {
+ 	criteria		IsAlyx ConceptNagJoinAlyx04  
+ 	response		NagJoinAlyx04  
+ }
+
+
+
+//============================================================================================================
+// Alyx In 05.  Adding grimness and removing some energy from the recently healed alyx
+//============================================================================================================
+//commented out the praise, still feels odd.
+response PlayerKilledNPC05
+{
+	NOREPEAT
+//	scene "scenes/npc/Alyx/al_combat_grim_niceshot.vcd"   
+//	scene "scenes/npc/Alyx/al_combat_niceshot02.vcd"   
+}
+ 
+rule PlayerKilledNPC05
+ {
+ 	criteria		IsAlyx ConceptPlayerKilledNPC IsAlyx ConceptPlayerKilledNPC IsMap_ep2_outland_05 PlayerNear AlyxNotPraised  
+        applycontext		"AlyxPraised:1:30"
+ 	response		PlayerKilledNPC05
+ }
+
+
+
+
+
+//this talk danger is specific for this level as it speaks to many enemies and is called when the acid lion spits.
+response AlyxTalkDanger05
+{
+	NOREPEAT
+	scene "scenes/npc/alyx/al_combat_sudden01.vcd"
+	scene "scenes/npc/alyx/al_combat_panic02.vcd"
+	scene "scenes/npc/alyx/al_combat_sudden12.vcd"
+}
+rule AlyxTalkDanger05
+{
+	criteria	IsAlyx ConceptTalkDanger IsMap_ep2_outland_05
+	response	AlyxTalkDanger05
+}
+
+
+criterion IsNotAlyxThumper05PU "AlyxThumper05PU" "!=1" required
+response AlyxMoveToThumper05PU
+{
+	SEQUENTIAL
+	NOREPEAT
+   	scene "scenes/outland_05/al_hatethesethings.vcd"
+   	scene "scenes/outland_05/al_canyon_walkonmyown04.vcd"
+   	scene "scenes/outland_05/al_junc_soweak03.vcd"
+}
+
+rule AlyxMoveToThumper05PU
+{
+	criterion IsAlyx IsMoveToThumper ConceptTalkUse IsMap_ep2_outland_05 IsNotAlyxThumper05PU
+	applycontext	"AlyxThumper05PU:1:20"
+	response AlyxMoveToThumper05PU
+}
+
+response BuryPlusUse05
+{
+}
+
+rule BuryPlusUse05
+{
+	criterion IsAlyx ConceptTalkUse IsMap_ep2_outland_05 
+	response BuryPlusUse05
+}
+
+
+criterion IsNotAlyxThumper05 "AlyxThumper05" "!=1" required
+
+response AlyxMoveToThumper05
+{
+   	scene "scenes/outland_05/al_continue_nag01.vcd"
+   	scene "scenes/outland_05/al_continue_nag02.vcd"
+   	scene "scenes/outland_05/al_continue_nag03.vcd"
+   	scene "scenes/outland_05/al_continue_nag04.vcd"
+   	scene "scenes/outland_05/al_continue_nag05.vcd"
+   	scene "scenes/outland_05/al_continue_nag06.vcd"
+}
+
+rule AlyxMoveToThumper05
+{
+	criterion IsAlyx IsMoveToThumper ConceptTalkLook PlayerNear IsMap_ep2_outland_05 IsNotAlyxThumper05
+	applycontext	"AlyxThumper05:1:20"
+	response AlyxMoveToThumper05
+}
+
+
+
+
+
+
+
+ //=========================
+ // Alyx 09
+ //=======================
+
+criterion "ConceptGetInCar09" "Concept" "TLK_OUTLAND_09_GETINCAR" required
+
+response Alyx_GetInCar09
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/alyx/al_vehicle_combat_playernotincar_nag01.vcd"
+	scene "scenes/npc/alyx/al_vehicle_combat_playernotincar_nag02.vcd"
+	scene "scenes/npc/alyx/al_vehicle_combat_playernotincar_nag03.vcd"
+	scene "scenes/npc/alyx/al_vehicle_combat_playernotincar_nag04.vcd"
+}
+
+rule Alyx_GetInCar09
+{
+	criteria	IsAlyx ConceptGetInCar09
+	response	Alyx_GetInCar09
+}
+
+
+criterion "ConceptAlyxGetInGarage09" "Concept" "TLK_ALYX_09_LEADTOGARAGE" "required"
+response "AlyxGetInGarage09"
+{
+	SEQUENTIAL
+	scene "scenes/outland_09/al_chop_backinsidenag01.vcd"   weapondelay 5
+}
+ 
+rule AlyxGetInGarage09
+{
+	criteria	IsAlyx ConceptGetInGarage09
+	response	AlyxGetInGarage09
+}
+
+
+//========RADAR CACHES==================
+
+criterion "ConceptZombieStuff" "Concept" "TLK_ZOMBIESTUFF" required
+response "AlyxZombieStuff" {
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_09/al_shack_zombies.vcd"
+}
+rule AlyxZombieStuff {
+	criteria IsAlyx ConceptZombieStuff
+	response AlyxZombieStuff
+}
+
+criterion "PlayerPlusUseAlyxCaches" "ContextCache_PlusUse" "1" required
+response "PlusUseAlyxCaches" {
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_09/al_radar_plususe02.vcd" RESPEAKDELAY 10
+	scene "scenes/outland_09/al_radar_plususe01.vcd" RESPEAKDELAY 10
+}
+rule PlusUseAlyxCaches {
+	criteria IsAlyx ConceptTalkUse PlayerPlusUseAlyxCaches
+	response PlusUseAlyxCaches
+}
+
+//============================================================================================================
+// Alyx Generic nags for the player to follow her (close)
+//============================================================================================================
+response Alyx_GenericFollow_Nag_Close
+{
+ scene "scenes/npc/alyx/al_genericfollow_nag_close_01.vcd"
+ scene "scenes/npc/alyx/al_genericfollow_nag_close_02.vcd"
+ scene "scenes/npc/alyx/al_genericfollow_nag_close_03.vcd"
+ scene "scenes/npc/alyx/al_genericfollow_nag_close_04.vcd"
+}
+ 
+rule Alyx_GenericFollow_Nag_Close
+{
+ criteria IsAlyx PlayerWithin800 ConceptNagFollowGeneric
+ response Alyx_GenericFollow_Nag_Close
+}
+ 
+//============================================================================================================
+// Alyx Generic nags for the player to follow her (far)
+//============================================================================================================
+response Alyx_GenericFollow_Nag_Far
+{
+ scene "scenes/npc/alyx/al_genericfollow_nag_far_01.vcd"
+ scene "scenes/npc/alyx/al_genericfollow_nag_far_02.vcd"
+ scene "scenes/npc/alyx/al_genericfollow_nag_far_03.vcd"
+}
+ 
+rule Alyx_GenericFollow_Nag_Far
+{
+ criteria IsAlyx PlayerNotWithin800 ConceptNagFollowGeneric
+ response Alyx_GenericFollow_Nag_Far
+}
+///////combat in 07
+
+
+
+response Alyx_PlayerKilled07
+{
+	scene "scenes/npc/Alyx/al_combat_grim_niceshot.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_niceshooting.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_nice.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_yeah.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_greatshot.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_goodshot.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_niceshooting02.vcd" respeakdelay 30
+
+}
+rule Alyx_PlayerKilled07
+{
+	criteria	IsAlyx ConceptPlayerKilledNPC IsMap_ep2_outland_07 PlayerNotUsingPhysCannon EnemyIsNotClose IsNotInVehicle 
+	response	Alyx_PlayerKilled07
+}
+
+
+
+
+
+//// ADDED FOR 10 
+
+
+// ep_01.al_gotyourback player push
+
+
+//removed for now, should work it back in
+//criterion "ConceptVehicleStarted" "Concept" "TLK_PASSENGER_VEHICLE_STARTED" required
+//criterion "NotAlyxSaidAlyxVehicleStarted" "AlyxSaidAlyxVehicleStarted" "!=1" "required" weight 0
+//response Alyx_InnFirstCarEnter
+//{
+//	scene "scenes/npc/alyx/al_vehicle_player_entered.vcd"
+//}
+//rule Alyx_InnFirstCarEnter
+//{
+//	criteria	IsAlyx ConceptVehicleStarted IsMap_ep2_outland_10 NotAlyxSaidAlyxVehicleStarted
+//        applycontext "AlyxSaidAlyxVehicleStarted:1:0"
+//	response	Alyx_InnFirstCarEnter
+//}
+
+
+// Being fired by level
+//response Alyx_KillHunter
+//{
+//	SEQUENTIAL
+//	scene "scenes/npc/alyx/al_combat_whoanice02.vcd"
+//	scene "scenes/npc/alyx/al_combat_nice.vcd"
+//	scene "scenes/npc/alyx/al_player_killed_hunter.vcd"
+//
+//}
+//rule Alyx_KillHunter
+//{
+//	criteria	IsAlyx ConceptPlayerKilledNPC IsMap_ep2_outland_10 EnemyIsHunter
+//	response	Alyx_KillHunter
+//}
+
+//response Alyx_KillEnemyHunter
+//{
+//	scene "scenes/npc/alyx/al_player_killed_hunter.vcd"
+//
+//}
+//rule Alyx_KillEnemyHunter
+//{
+//	criteria	IsAlyx ConceptAlyxEnemyDead IsMap_ep2_outland_10 EnemyIsHunter
+//	response	Alyx_KillEnemyHunter
+//}
+
+
+
+
+////////////////////////////////////////////
+response AlyxPassengerImpact10
+{
+   	scene "scenes/npc/alyx/al_car_crash04.vcd"  
+   	scene "scenes/npc/alyx/al_car_crash06.vcd"  
+	scene "scenes/npc/Alyx/al_wound08.vcd" 
+	
+}
+
+rule AlyxPassengerImpactCombat10
+{
+	criterion ConceptPassengerImpact IsAlyx InCombat IsMap_ep2_outland_10
+	response AlyxPassengerImpact10
+}
+
+
+rule AlyxPassengerImpactNoCombat10
+{
+	criterion ConceptPassengerImpact IsAlyx NotInCombat IsMap_ep2_outland_10
+	response AlyxPassengerImpact10
+}
+
+
+//////////////////////////////////////////////
+
+
+
+
+
+response Alyx_PlayerKilled10
+{
+	scene "scenes/npc/Alyx/al_combat_grim_niceshot.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_niceshooting.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_nice.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_yeah.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_greatshot.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_grim_goodshot.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_niceshooting02.vcd" respeakdelay 30
+
+}
+rule Alyx_PlayerKilled10
+{
+	criteria	IsAlyx ConceptPlayerKilledNPC IsMap_ep2_outland_10 PlayerNotUsingPhysCannon EnemyIsNotClose EnemyIsNotPoisonHeadcrab  IsNotAmmoVehicle
+	response	Alyx_PlayerKilled10
+}
+
+
+response Alyx_PlayerKilled10Phys
+{
+	scene "scenes/npc/Alyx/al_combat_grim_goodshot.vcd" respeakdelay 30
+	scene "scenes/npc/Alyx/al_combat_niceshot02.vcd" respeakdelay 30
+
+}
+rule Alyx_PlayerKilled10Phys
+{
+	criteria	IsAlyx ConceptPlayerKilledNPC IsMap_ep2_outland_10 PlayerUsingPhysCannon EnemyIsNotPoisonHeadcrab
+	response	Alyx_PlayerKilled10Phys
+}
+
+criterion "NotAlyxSaidAlyx_InnMoreComing" "AlyxSaidAlyx_InnMoreComing" "!=1" "required" weight 0
+response Alyx_InnMoreComing
+{
+	scene "scenes/npc/alyx/al_ambush_morecoming.vcd"
+}
+rule Alyx_InnMoreComing
+{
+	criteria	IsAlyx ConceptTalkAttacking IsMap_ep2_outland_10 NotAlyxSaidAlyx_InnMoreComing NotSeenByPlayer NotSeePlayer InCombatMedium EnemyIsNotPoisonHeadcrab EnemyIsNotHunter
+        applycontext "AlyxSaidAlyx_InnMoreComing:1:0"
+	response	Alyx_InnMoreComing
+}
+
+
+criterion "NotAlyxSaidAlyx_InMoreCombat" "AlyxSaid_InMoreCombat10" "!=1" "required" weight 0
+response Alyx_InMoreCombat10
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/alyx/al_combat_grim_takemout.vcd"
+	scene "scenes/npc/alyx/al_combat_sudden08.vcd"
+	scene "scenes/npc/alyx/ep_01.al_startcombat03.vcd"
+	scene "scenes/npc/alyx/al_combat_sudden12.vcd"
+
+}
+rule Alyx_InMoreCombat10
+{
+	criteria	IsAlyx ConceptTalkAttacking IsMap_ep2_outland_10 InCombat NotAlyxSaidAlyx_InMoreCombat  EnemyIsNotPoisonHeadcrab EnemyIsNotHunter IsplayerAlyxInInn
+        applycontext "AlyxSaid_InMoreCombat10:1:30"
+	response	Alyx_InMoreCombat10
+}
+
+
+
+
+response AlyxEpisodicHideAndReload
+{
+   	scene "scenes/episode_1/al_reload01.vcd" respeakdelay 20
+  	scene "scenes/episode_1/al_reload06.vcd" respeakdelay  20
+  	scene "scenes/episode_1/al_reload07.vcd" respeakdelay  20
+}
+
+rule AlyxEpisodicHideAndReload
+{
+	criteria		IsAlyx ConceptHideAndReload IsMap_ep2_outland_10 EnemyIsNotPoisonHeadcrab
+	response		AlyxEpisodicHideAndReload
+}
+
+
+response PlayerKilledEnemyDemo10
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/Alyx/al_thanksforhelp03.vcd"   
+	scene "scenes/npc/Alyx/al_combat_yeah01.vcd"  
+	scene "scenes/npc/Alyx/al_combat_yeah02.vcd"  
+}
+ 
+rule PlayerKilledEnemyDemo10
+ {
+ 	criteria		IsAlyx ConceptAlyxEnemyDead IsMap_ep2_outland_10 EnemyIsNotPoisonHeadcrab
+ 	response		PlayerKilledEnemyDemo10
+ }
+
+
+response AlyxBlindShot10
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/Alyx/al_gordon_distance.vcd"   
+}
+ 
+rule AlyxBlindShot10
+ {
+ 	criteria		IsAlyx ConceptShot IsMap_ep2_outland_10 NotSeenByPlayer NotSeePlayer EnemyIsNotPoisonHeadcrab  IsplayerAlyxInInn
+ 	response		AlyxBlindShot10
+ }
+
+
+criterion "NotAlyxSaidInnCloseTalk" "AlyxSaidInnCloseTalk" "!=1" "required" weight 0
+response Alyx_InnClose
+{
+	scene "scenes/npc/Alyx/al_ambush_holdemoff.vcd"
+}
+
+rule Alyx_InnClose
+{
+	criteria	IsAlyx ConceptTalkLook PlayerReallyNear IsMap_ep2_outland_10 InCombatMedium NotAlyxSaidInnCloseTalk ContextEnemies
+        applycontext "AlyxSaidInnCloseTalk:1:0"
+	response	Alyx_InnClose
+}
+
+
+criterion "NotAlyxSaidInnHiddenTalk" "AlyxSaidInnHiddenTalk" "!=1" "required" weight 0
+response AlyxGot10
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/Alyx/al_evac_gothim01.vcd"  
+	scene "scenes/outland_10/al_ambush_linesight.vcd"   
+	scene "scenes/outland_10/al_ambush_howyoudoing.vcd"   
+}
+ 
+rule AlyxGot10
+ {
+ 	criteria		IsAlyx ConceptTalkAttacking IsMap_ep2_outland_10 NotSeenByPlayer InCombatMedium EnemyIsNotPoisonHeadcrab NotAlyxSaidInnHiddenTalk EnemyIsNotHunter IsplayerAlyxInInn
+	applycontext		"AlyxSaidInnHiddenTalk:1:15"
+ 	response		AlyxGot10
+ }
+
+
+
+
+//============================================================================================================
+// Alyx In 01.  Fun loving killing machine alyx
+//============================================================================================================
+criterion "IsAlyxSawZombies" "AlyxSawZombies" "1" "required" weight 10
+criterion "NotAlyxSawZombies" "AlyxSawZombies" "!=1" "required" weight 0
+criterion "NotAlyxSawOriginalZombies" "AlyxSawOriginalZombies" "!=1" "required" weight 0
+criterion "NotAlyxOrYouDo" "AlyxOrYouDo" "!=1" "required" weight 0
+criterion "IsButaneWeapon" "playerAmmo" "models/props_explosive/explosive_butane_can.mdl" "required"
+
+response "AlyxSpottedZombieWaking"
+{
+	scene "scenes/npc/Alyx/al_zombie_liveone02.vcd" respeakdelay 180
+	scene "scenes/npc/Alyx/al_zombie_itsalive01.vcd" respeakdelay 180
+}
+rule AlyxSpottedZombieWaking
+{
+	criteria 	IsAlyx ConceptSpottedZombieWakeup  IsMap_ep2_outland_01 NotAlyxSawZombies
+	response	AlyxSpottedZombieWaking
+}
+
+
+
+response AlyxStartCombat01
+{
+	scene "scenes/outland_01/al_rbed_zombies02.vcd" 
+}
+ 
+rule AlyxStartCombat01
+ {
+ 	criteria		IsAlyx ConceptAlyxStartCombat IsMap_ep2_outland_01 EnemyIsZombie NotAlyxSawOriginalZombies
+        applycontext		"AlyxSawZombies:1:10,AlyxSawOriginalZombies:1:0"
+ 	response		 AlyxStartCombat01
+ }
+
+response AlyxOrYouDo
+{
+	NOREPEAT
+	scene "scenes/outland_01/al_rbed_zombies03.vcd" 	
+}
+ 
+rule AlyxOrYouDo
+ {
+ 	criteria		IsAlyx ConceptPlayerKilledNPC IsMap_ep2_outland_01 IsAlyxSawZombies NotAlyxOrYouDo
+        applycontext		"AlyxOrYouDo:1:0"
+ 	response		AlyxOrYouDo
+ }
+
+
+
+
+
+response PlayerButane01
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/alyx/al_combat_boom06.vcd"  
+	scene "scenes/npc/alyx/al_combat_nicemove01.vcd"  
+	
+}
+ 
+rule PlayerButane01
+ {
+ 	criteria		IsAlyx ConceptPlayerKilledNPC IsMap_ep2_outland_01 IsButaneWeapon
+ 	response		PlayerButane01
+ }
+
+response AlyxKilling01
+{	
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/alyx/al_combat_yeah01.vcd"   respeakdelay 30
+	scene "scenes/npc/alyx/al_combat_yeah02.vcd"   respeakdelay 30
+}
+rule AlyxKilling01
+ {
+ 	criteria		IsAlyx ConceptEnemyDead IsMap_ep2_outland_01 NotAlyxSawZombies
+ 	response		AlyxKilling01
+ }
+
+
+/////////////////////////////
+
+
+
+
+
+
+response Alyx_Outland06a_NotPowered
+{
+	scene "scenes/outland_06a/al_radionotpowered_nag.vcd"
+}
+
+rule Alyx_Outland06a_NotPowered
+{
+	criteria	IsAlyx ConceptNag06aNotPowered NoRecentCombatShort ConceptNoEnemies
+	response	Alyx_Outland06a_NotPowered
+}
+
+
+response Alyx_Outland06a_UseRadio
+{
+	scene "scenes/outland_06a/al_letsuseradio_nag.vcd"
+}
+
+rule Alyx_Outland06a_UseRadio
+{
+	criteria	IsAlyx ConceptNag06aUseRadio NoRecentCombatShort ConceptNoEnemies
+	response	Alyx_Outland06a_UseRadio
+}
+
+
+
+response Alyx_Outland06a_FindRadio
+{
+	scene "scenes/outland_06a/al_letsfindradio_nag1.vcd"
+	scene "scenes/outland_06a/al_letsfindradio_nag2.vcd"
+	scene "scenes/outland_06a/al_letsfindradio_nag3.vcd"
+}
+
+rule Alyx_Outland06a_FindRadio
+{
+	criteria	IsAlyx ConceptNag06aFindRadio NoRecentCombatShort ConceptNoEnemies
+	response	Alyx_Outland06a_FindRadio
+}
+
+response Alyx_Outland06a_FindRadioPlusUse
+{
+	norepeat
+	sequential
+	scene "scenes/outland_06a/al_use_findradio1.vcd"
+	scene "scenes/outland_06a/al_use_findradio2.vcd"
+}
+
+rule Alyx_Outland06a_FindRadioPlusUse
+{
+	criteria	IsAlyx IsLookingForRadio ConceptTalkUse NotUsedLookForRadio
+        applycontext "UsedLookForRadio:1:30,UsedAlyxResponse:1:30"
+	response	Alyx_Outland06a_FindRadioPlusUse
+}
+
+response Alyx_Outland06a_FindPowerPlusUse
+{
+	norepeat
+	sequential
+	scene "scenes/outland_06a/al_use_powertotrans1.vcd"
+	scene "scenes/outland_06a/al_use_powertotrans2.vcd"
+}
+
+rule Alyx_Outland06a_FindPowerPlusUse
+{
+	criteria	IsAlyx IsLookingForPower ConceptTalkUse NotUsedLookForPower
+        applycontext "UsedLookForPower:1:30,UsedAlyxResponse:1:30"
+	response	Alyx_Outland06a_FindPowerPlusUse
+}
+
+
+ 
+
+
+
+
+
+
+response Alyx_Outland11_GoWithMag
+{
+	scene "scenes/outland_11/silo_entry_03_nags_01.vcd"
+	scene "scenes/outland_11/silo_entry_03_nags_02.vcd"
+	scene "scenes/outland_11/silo_entry_03_nags_03.vcd"
+	scene "scenes/outland_11/silo_entry_03_nags_04.vcd"
+	scene "scenes/outland_11/silo_entry_03_nags_05.vcd"
+
+}
+
+rule Alyx_Outland11_GoWithMag
+{
+	criteria	IsAlyx ConceptNagGoWithMag
+	response	Alyx_Outland11_GoWithMag
+}
+
+
+//============================================================================================================
+// Alyx Throw medkit attract Nag ep2_outland_08
+//============================================================================================================
+
+response Alyx_Outland08_TakeDownChopper
+{
+	scene "scenes/outland_08/al_chop_nags01.vcd"
+	scene "scenes/outland_08/al_chop_nags02.vcd"
+	scene "scenes/outland_08/al_chop_nags03.vcd"
+
+}
+
+rule Alyx_Outland08_TakeDownChopper
+{
+	criteria	IsAlyx ConceptTakeDownChopper
+	response	Alyx_Outland08_TakeDownChopper
+}
+
+
+response Alyx_Outland08_TakeDownChopperLowHealth
+{
+	scene "scenes/outland_08/al_chop_nag_lowhealth.vcd"
+	scene "scenes/outland_08/al_chop_nags02.vcd"
+	scene "scenes/outland_08/al_chop_nags03.vcd"
+}
+
+rule Alyx_Outland08_TakeDownChopperLowHealth
+{
+	criteria	IsAlyx ConceptTakeDownChopper PlayerWounded
+	response	Alyx_Outland08_TakeDownChopperLowHealth
+}
+
+response Alyx_Outland08_ThrowMedAttractNag
+{
+	scene "scenes/outland_08/al_chop_throwmed01.vcd"
+	scene "scenes/outland_08/al_chop_throwmed02.vcd"
+	scene "scenes/outland_08/al_chop_throwmed03.vcd"
+	scene "scenes/outland_08/al_chop_throwmed04.vcd"
+	scene "scenes/outland_08/al_chop_throwmed05.vcd"
+}
+
+rule Alyx_Outland08_ThrowMedAttractNag
+{
+	criteria	IsAlyx ConceptThrowMedAttractNag
+	response	Alyx_Outland08_ThrowMedAttractNag
+}
+
+//============================================================================================================
+// Alyx Trap Door Nag ep2_outland_09
+//============================================================================================================
+criterion "ConceptTrapDoorNag" "Concept" "TLK_ALYX_OUTLAND_08_TRAPDOOR" required
+
+response Alyx_Outland02_TrapDoorNag
+{
+	scene "scenes/outland_08/al_chop_nagdoor01.vcd"  respeakdelay 10
+	scene "scenes/outland_08/al_chop_nagdoor02.vcd"  respeakdelay 10
+}
+
+rule Alyx_Outland02_TrapDoorNag
+{
+	criteria	IsAlyx ConceptTrapDoorNag 
+	response	Alyx_Outland02_TrapDoorNag
+}
+
+//============================================================================================================
+// Alyx Get the car nag ep2_outland_09
+//============================================================================================================
+criterion "ConceptGetCarNag" "Concept" "TLK_ALYX_OUTLAND_09_GETCAR" required
+
+response Alyx_Outland02_GetCarNag
+{
+	scene "scenes/outland_09/al_nag_getcar_01.vcd"  respeakdelay 10
+	scene "scenes/outland_09/al_nag_getcar_02.vcd"  respeakdelay 10
+}
+
+rule Alyx_Outland02_GetCarNag
+{
+	criteria	IsAlyx ConceptGetCarNag 
+	response	Alyx_Outland02_GetCarNag
+}
+
+
+
+//============================================================================================================
+// Alyx Vort encounter 03
+//============================================================================================================
+criterion "IsSpeechTargetVort" "speechtarget" "npc_vortigaunt" required
+criterion "AlyxVortEncounter01NotPlayed" "AlyxVortEncounter01" "!=1" "required" weight 0
+
+
+response AlyxVortEncounter01
+{
+	scene "scenes/episode_2/al_vort_exchange_01.vcd"  
+}
+
+rule AlyxVortEncounter01
+{
+	criteria	IsAlyx IsSpeechTargetVort PlayerNear ConceptTalkLook   NoRecentCombatShort AlyxVortEncounter01NotPlayed	 NotInCombat
+	applycontext	"AlyxVortEncounter01:1:0"
+	response	AlyxVortEncounter01
+}
+
+
+
+//============================================================================================================
+// Alyx Citadel 01 speech
+//============================================================================================================
+criterion "IsMap_ep1_citadel_01" "map" "ep1_citadel_01" weight 10 "required"
+
+//alyx context for giving you a hint upon hacking a rollermine during the roller training in citadel_01
+response Alyxcitadel01RollermineHint
+{
+	//alyx says a custom line after she hacks her first rollermine
+	//which is commented out so we can emulate this behavior by firing a vcd in the map instead
+	norepeat
+	//scene "scenes/episode_1/al_citadel_01_rollertraining_hacked.vcd"
+	
+}
+
+rule Alyxcitadel01RollermineHint
+{
+	criteria		IsAlyx IsEpisodic ConceptInteractionDone IsMap_ep1_citadel_01
+	response		Alyxcitadel01RollermineHint
+}
+
+//============================================================================================================
+// Alyx Citadel Elevator speech
+//============================================================================================================
+criterion "ConceptElevatorNag" "Concept" "CPT_EP1_CITELEVATORNAG" required
+criterion "GarageAntlionHolesCovered" "AntlionHolesCovered" "1" required
+
+
+
+response "AlyxElevatorNagPlayerToStart"
+{
+	scene "scenes/episode_1/al_cit_elevator_getitmoving01.vcd" nodelay 0 displayfirst speakonce	
+	scene "scenes/episode_1/al_cit_elevator_getitmoving02.vcd" nodelay 0
+	scene "scenes/episode_1/al_cit_elevator_getitmoving03.vcd" nodelay 0
+	scene "scenes/episode_1/al_cit_elevator_getitmoving04.vcd" nodelay 0
+}
+
+rule AlyxElevatorNagPlayerToStart
+{
+	criteria		IsAlyx ConceptElevatorNag
+	response		AlyxElevatorNagPlayerToStart
+}
+
+//==================================================================================================
+// Alyx giving player hints on removing the Sniper in c17_01
+//==================================================================================================
+response Alyxc1701SniperHint
+{
+   	//*wav missing!*scene "scenes/episode_1/al_c17_01_sniper_cantcomewith.vcd"
+   	//scene "scenes/episode_1/al_c17_01_sniper_takeoutsniper.vcd"
+	scene "scenes/episode_1/al_c17_01_sniper_pinneddown.vcd"
+	scene "scenes/episode_1/al_c17_01_sniper_cantgetthru.vcd"
+	//scene "scenes/episode_1/al_c17_01_sniper_heygrabrollermine.vcd"
+	//scene "scenes/episode_1/al_c17_01_sniper_bringmerollermine.vcd"
+}
+
+rule Alyxc1701SniperHint
+{
+	criteria		IsAlyx IsEpisodic ConceptTalkc1701SniperHint
+	response		Alyxc1701SniperHint
+}
+
+response Alyxc1701RollermineHint
+{
+	//the idea is to have alyx talk about rollermines until you hack at least one.
+	// then she'll say her SniperHint lines (above)
+   	//scene "scenes/episode_1/al_c17_01_sniper_cantcomewith.vcd"
+   	//scene "scenes/episode_1/al_c17_01_sniper_takeoutsniper.vcd"
+	//scene "scenes/episode_1/al_c17_01_sniper_pinneddown.vcd"
+	//scene "scenes/episode_1/al_c17_01_sniper_cantgetthru.vcd"
+	scene "scenes/episode_1/al_c17_01_sniper_heygrabrollermine.vcd"
+	scene "scenes/episode_1/al_c17_01_sniper_bringmerollermine.vcd"
+	scene "scenes/episode_1/al_c17_01_sniper_DontWasteRollermine.vcd"
+}
+
+rule Alyxc1701RollermineHint
+{
+	criteria		IsAlyx IsEpisodic ConceptTalkc1701RollermineHint
+	response		Alyxc1701RollermineHint
+}
+
+response Alyxc1701HoldOffRoller
+{
+	//if Alyx is attacking a roller here, she remind again to get it for her
+	scene "scenes/episode_1/al_c17_01_roller_holdingoff.vcd" respeakdelay 12 defaultdelay
+}
+
+rule Alyxc1701HoldOffRoller
+{
+	criteria		IsAlyx IsEpisodic IsMap_ep1_c17_01 EnemyIsRollerMine
+	response		Alyxc1701HoldOffRoller
+}
+
+
+//============================================================================================================
+// Alyx Evac Citizen Speech - spoken when the player arrives escorting a group of citizens.
+//============================================================================================================
+
+response "AlyxEvacCitizen"
+{
+	scene "scenes/episode_1/al_c17_05_evac_cits01.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_cits02.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_cits03.vcd"
+
+}
+rule AlyxEvacCitizen
+{
+	criteria IsAlyx ConceptTalkAlyxEVacCitizen
+        applycontext "Evac05CitizenThanks:1:60"
+	response AlyxEvacCitizen
+}
+
+
+//============================================================================================================
+// Alyx Evac Next group - spoken when the player needs to get another group of citizens.
+//============================================================================================================
+
+criterion "IsWaitForPlayerEvacNextGroup" "concept" "ConceptEvacNextGroup" "required"
+
+response "AlyxEvacNextGroup"
+{
+
+	scene "scenes/episode_1/c17/al_evac_takestand.vcd"  displayfirst
+	scene "scenes/episode_1/al_c17_05_evac_nextgroup01.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_nextgroup02.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_nextgroup03.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_nextgroup04.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_nextgroup05.vcd"
+
+}
+rule AlyxEvacNextGroup
+{
+	criteria IsAlyx ConceptTalkAlyxEvacNextGroup PlayerNear 
+	response AlyxEvacNextGroup
+}
+
+
+//============================================================================================================
+// Alyx Evac Protect - spoken when the player lets evac citizens come to harm
+//============================================================================================================
+//----------------------------------------------------------------------------
+
+response "AlyxEvacProtect"
+{
+	scene "scenes/episode_1/al_c17_05_evac_protect01.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_protect02.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_protect03.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_protect04.vcd"
+	scene "scenes/episode_1/al_c17_05_evac_protect05.vcd"
+
+}
+rule AlyxEvacProtect
+{
+	criteria IsAlyx IsEpisodic ConceptTalkAlyxEvacProtect PlayerNear
+	response AlyxEvacProtect
+}
+
+
+//============================================================================================================
+// Alyx Antlion Holes Covered - spoken when the player covers the holes in the garage.
+//============================================================================================================
+//----------------------------------------------------------------------------
+
+response "GarageAntlionHolesCoveredDeadAntlions"
+{
+	scene "scenes/episode_1/c17/al_garage_hearthink.vcd" speakonce
+
+}
+rule GarageAntlionHolesCoveredDeadAntlions
+{
+	criteria IsAlyx GarageAntlionHolesCovered  NotInCombat
+	response GarageAntlionHolesCoveredDeadAntlions
+}
+
+response "GarageAntlionHolesCoveredLiveAntlions"
+{
+	scene "scenes/episode_1/c17/al_garage_stragglers.vcd" speakonce
+}
+rule GarageAntlionHolesCoveredLiveAntlions
+{
+	criteria IsAlyx GarageAntlionHolesCovered EnemyIsAntLion
+	response GarageAntlionHolesCoveredLiveAntlions
+}
+
+
+//============================================================================================================
+// Alyx Thanking you for not killing all of the citizens you are supposed to be escorting.
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "ConceptTalkEvacCongrats" "Concept" "TLK_ALYX_EVAC_CONGRATS" required
+
+response "EvacCongrats"
+{
+	scene "scenes/episode_1/c17/al_evac_congrat01.vcd" 
+	scene "scenes/episode_1/c17/al_evac_congrat02.vcd" 
+	scene "scenes/episode_1/c17/al_evac_congrat03.vcd" 
+	scene "scenes/episode_1/c17/al_evac_congrat04.vcd" 
+	scene "scenes/episode_1/c17/al_evac_congrat05.vcd" 
+
+}
+rule EvacCongrats
+{
+	criteria IsAlyx ConceptTalkEvacCongrats PlayerNear
+	response EvacCongrats
+}
+
+
+
+//============================================================================================================
+// Alyx Training the player to cover the antlion holes - first time around
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "ConceptAntLionTrainingHint" "AntlionTrainingHint" "1" required
+
+response "AntLionTrainingHints"
+{
+	sequential
+	norepeat
+	scene "scenes/npc/alyx/al_blank.vcd" respeakdelay 30 
+	scene "scenes/episode_1/c17/al_antlions_cutsupply.vcd" respeakdelay 30 
+	scene "scenes/episode_1/c17/al_antlions_keepcontrol.vcd"  respeakdelay 30 
+	scene "scenes/episode_1/c17/al_antlions_runoutbullets.vcd" respeakdelay 30
+
+}
+rule AntLionTrainingHints
+{
+	criteria IsAlyx ConceptAntLionTrainingHint PlayerNear ConceptTalkAttacking
+	response AntLionTrainingHints
+}
+
+
+//============================================================================================================
+// Alyx Congrats to player for covering hole
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "ConceptAntlionGoodWork" "Concept" "AntlionGoodWork" required
+
+response "AntLionTrainingCongrats"
+{
+	scene "scenes/episode_1/c17/al_antlions_plugthatway.vcd" speakonce
+
+}
+rule AntLionTrainingCongrats
+{
+	criteria IsAlyx ConceptAntlionGoodWork PlayerNear  NPCAlert
+	response AntLionTrainingCongrats
+}
+
+//============================================================================================================
+//Alyx plus use and nags while player should follow power line to powerbox for elevator.
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "NotUsedNagLookForPower" "UsedNagLookForPower" "!=1" "required" weight 0
+criterion "IsLookForPower" "al_hint_c1700_LookForPower" "1" "required" weight 10
+criterion "HintLookForPowerNag" "concept" "TLK_FollowWireNag" "required" weight 10
+
+response AlyxC1700aUseLookForPower
+{
+	sequential
+	scene "scenes/episode_1/c17/al_elev_power_nag05.vcd"  
+	scene "scenes/episode_1/c17/al_elev_power_nag03.vcd"  
+	scene "scenes/npc/Alyx/al_nomore.vcd"  
+}
+
+rule AlyxC1700aUseLookForPower
+{
+	criteria IsAlyx ConceptTalkUse IsLookForPower  NotUsedNagLookForPower
+        applycontext "UsedNagLookForPower:1:30,UsedAlyxResponse:1:30"
+	response AlyxC1700aUseLookForPower
+}
+
+
+
+response AlyxC1700aLookForPower
+{	
+	norepeat
+	sequential
+	scene "scenes/episode_1/c17/al_elev_power_nag04.vcd"
+	scene "scenes/episode_1/c17/al_elev_power_nag01.vcd"
+	scene "scenes/episode_1/c17/al_elev_power_nag02.vcd"
+
+}
+
+rule AlyxC1700aLookForPower
+{
+	criteria IsAlyx  HintLookForPowerNag NotUsedNagLookForPower NotInCombat PlayerNear
+        applycontext "UsedNagLookForPower:1:30,UsedAlyxResponse:1:30"
+	response AlyxC1700aLookForPower
+}
+
+
+//============================================================================================================
+//Alyx plus use while waiting for elevator
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "IsWaitingForElevator" "al_hint_c1700_WaitForElevator" "1" "required" weight 10
+response AlyxC1700aUseWaitForElevator
+{
+	sequential
+	norepeat
+	scene "scenes/episode_1/c17/al_elev_almosthere.vcd"  
+	scene "scenes/npc/Alyx/al_nomore.vcd"  
+}
+
+rule AlyxC1700aUseWaitForElevator
+{
+	criteria IsAlyx ConceptTalkUse IsWaitingForElevator NotInCombat NotUsedAlyxResponse
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxC1700aUseWaitForElevator
+}
+
+
+
+response AlyxC1700aUseWaitForElevatorCombat
+{
+	sequential
+	norepeat
+	scene "scenes/episode_1/c17/al_elev_anytime_loud.vcd"  
+	scene "scenes/episode_1/c17/al_elev_anyminute_loud.vcd"  
+}
+
+
+rule AlyxC1700aUseWaitForElevatorCombat
+{
+	criteria IsAlyx ConceptTalkUse IsWaitingForElevator InCombat NotUsedAlyxResponse
+        applycontext "UsedAlyxResponse:1:30"
+	response AlyxC1700aUseWaitForElevatorCombat
+}
+
+ 

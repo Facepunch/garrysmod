@@ -1,0 +1,21 @@
+"PropData.txt"
+{
+
+//=================================================================================
+//		PHOENIX-STORMS PREMIUM PACK
+//=================================================================================
+
+	"Tire.break"
+	{
+		"base"		"Metal.Base"
+		"health"	"50"
+		"breakable_count"	"3"
+	}
+	"Glass.Break"
+	{
+		"base"		"Glass.Base"
+		"health"	"5"
+		"breakable_count"	"5"
+		"breakable_model"	"GlassChunks"
+	}
+}

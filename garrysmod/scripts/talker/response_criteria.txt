@@ -1,0 +1,343 @@
+// Base script
+enumeration "NPCState"
+{
+	"None"		"0"
+	"Idle"		"1"
+	"Alert"		"2"
+	"Combat"	"3"
+	"Scripted"	"4"
+	"PlayDead"	"5"
+	"Dead"		"6"
+}
+
+enumeration disaster
+{
+	"pre"		"1"
+	"post"		"2"
+}
+
+
+response "NullResponse"
+
+// Question / Answer concepts
+criterion "ConceptTalkAnswer" "Concept" "TLK_ANSWER" required weight 1
+criterion "ConceptTalkQuestion" "Concept" "TLK_QUESTION" required // weight 1 implied
+criterion "ConceptTalkAnswerCitizen" "Concept" "TLK_ANSWER_CIT" required weight 1
+criterion "ConceptTalkQuestionCitizen" "Concept" "TLK_QUESTION_CIT" required 
+criterion "ConceptTalkAnswerVort" "Concept" "TLK_ANSWER_VORT" required weight 1
+criterion "ConceptTalkQuestionVort" "Concept" "TLK_QUESTION_VORT" required 
+
+// Ep2
+criterion "ConceptTalkQuestionHello" "Concept" "TLK_HELLO_NPC" required
+criterion "ConceptTalkAnswerHello" "Concept" "TLK_ANSWER_HELLO" required
+
+// General concepts
+criterion "ConceptTalkLook" "Concept" "TLK_LOOK" required
+criterion "ConceptTalkIdle" "Concept" "TLK_IDLE" required
+criterion "ConceptTalkStare" "Concept" "TLK_STARE" required
+
+criterion "NotUsedAlyxResponse" "UsedAlyxResponse" "!=1" "required" weight 0
+criterion "IsUsedAlyxResponse" "UsedAlyxResponse" "1" "required" weight 0
+criterion "NotUsedCitizenResponse" "UsedCitizenResponse" "!=1" "required" weight 0
+criterion "ConceptTalkUse" "Concept" "TLK_USE" required
+criterion "ConceptTalkStartFollow" "Concept" "TLK_STARTFOLLOW" required
+criterion "ConceptTalkStopFollow" "Concept" "TLK_STOPFOLLOW" required
+criterion "ConceptTalkStop" "Concept" "TLK_STOP" required
+criterion "ConceptTalkNoShoot" "Concept" "TLK_NOSHOOT" required
+criterion "ConceptTalkHello" "Concept" "TLK_HELLO" required
+criterion "ConceptTalkPHello" "Concept" "TLK_PHELLO" required
+criterion "ConceptTalkPIdle" "Concept" "TLK_PIDLE" required
+criterion "ConceptTalkPQuestion" "Concept" "TLK_PQUESTION" required
+criterion "ConceptTalkPlayerHurt1" "Concept" "TLK_PLHURT1" required 						//if players health is <= (MaxHealth / 2)
+criterion "ConceptTalkPlayerHurt2" "Concept" "TLK_PLHURT2" required 						//if players health is <= (MaxHealth / 4)
+criterion "ConceptTalkPlayerHurt3" "Concept" "TLK_PLHURT3" required 						//if players health is <= (MaxHealth / 8)
+criterion "ConceptTalkPlayerHurt" "Concept" "TLK_PLHURT" required 						//if players health is < (MaxHealth) - Alyx speaks this one
+criterion "ConceptTalkPlayerPushed" "Concept" "TLK_PLPUSH" required						// when the player pushes an npc
+criterion "ConceptTalkSmell" "Concept" "TLK_SMELL" required
+criterion "ConceptTalkWound" "Concept" "TLK_WOUND" required
+criterion "ConceptTalkMortal" "Concept" "TLK_MORTAL" required
+criterion "ConceptTalkDanger" "Concept" "TLK_DANGER" required
+criterion "ConceptTalkResume" "Concept" "TLK_RESUME" required
+criterion "ConceptTalkHeal" "Concept" "TLK_HEAL" required
+criterion "ConceptTalkTourGuideStayPut" "Concept" "TLK_TGSTAYPUT" required
+criterion "ConceptTalkTourGuideFind" "Concept" "TLK_TGFIND" required
+criterion "ConceptTalkTourGuideSeek" "Concept" "TLK_TGSEEK" required
+criterion "ConceptTalkTourGuideLostYou" "Concept" "TLK_TGLOSTYOU" required
+criterion "ConceptTalkTourGuideCatchUp" "Concept" "TLK_TGCATCHUP" required
+criterion "ConceptTalkTourGuideEndTour" "Concept" "TLK_TGENDTOUR" required
+criterion "ConceptTalkSelected" "Concept" "TLK_SELECTED" required
+criterion "ConceptTalkCommanded" "Concept" "TLK_COMMANDED" required
+criterion "ConceptTalkCommandFailed" "Concept" "TLK_COMMAND_FAILED" required
+criterion "ConceptTalkDenyCommand" "Concept" "TLK_DENY_COMMAND" required
+criterion "ConceptTalkBetrayed" "Concept" "TLK_BETRAYED" required
+criterion "ConceptTalkGiveAmmo" "Concept" "TLK_GIVEAMMO" required
+criterion "ConceptTalkAllyKilled" "Concept" "TLK_ALLY_KILLED" required
+criterion "ConceptSeeCombine" "Concept" "TLK_SEE_COMBINE" required
+criterion "ConceptEnemyDead" "Concept" "TLK_ENEMY_DEAD" required
+criterion "ConceptAlyxEnemyDead" "Concept" "TLK_ALYX_ENEMY_DEAD" required
+criterion "ConceptTalkWatchOut" "Concept" "TLK_WATCHOUT" required
+criterion "ConceptTalkAttacking" "Concept" "TLK_ATTACKING" required
+criterion "ConceptTalkDeath" "Concept" "TLK_DEATH" required
+criterion "ConceptTalkHelpMe" "Concept" "TLK_HELP_ME" required
+criterion "ConceptTalkPlayerPhysAttack" "Concept" "TLK_PLYR_PHYSATK" required
+criterion "ConceptDissolveScream" "Concept" "TLK_DISSOLVESCREAM" required
+criterion "ConceptElectrocuteScream" "Concept" "TLK_ELECTROCUTESCREAM" required
+criterion "ConceptNewWeapon" "Concept" "TLK_NEWWEAPON" required
+criterion "ConceptShot" "Concept" "TLK_SHOT" required
+criterion "ConceptPlayerReload" "Concept" "TLK_PLRELOAD" required
+criterion "ConceptPlayerDead" "Concept" "TLK_PLDEAD" required
+criterion "ConceptHideAndReload" "Concept" "TLK_HIDEANDRELOAD" required
+criterion "ConceptStartCombat" "Concept" "TLK_STARTCOMBAT" required
+criterion "ContextActivityReload" "activity" "ACT_RELOAD" required
+criterion "ContextActivityRangeAttack" "activity" "ACT_RANGE_ATTACK1" required
+criterion "ContextActivityCower" "activity" "ACT_COWER" required
+criterion "ContextActivityRunAim" "activity" "ACT_RUN_AIM" required
+criterion "ContextActivityRun" "activity" "ACT_RUN" required
+criterion "ContextActivityDuckDodge" "activity" "ACT_DUCK_DODG" required
+criterion "ContextActivityIdle" "activity" "ACT_IDLE" required
+
+criterion "ConceptJoinPlayer" "Concept" "TLK_JOINPLAYER" required
+criterion "ConceptTalkRestart" "Concept" "TLK_RESTART_MONOLOG" "required"
+criterion "ConceptEnemyBurning" "Concept" "TLK_ENEMY_BURNING" "required"
+criterion "ConceptManyEnemies" "Concept" "TLK_MANY_ENEMIES" "required"
+criterion "ConceptMobbed" "Concept" "TLK_MOBBED" "required"
+criterion "ConceptThanksMobbed" "Concept" "TLK_PLAYER_KILLED_MOB_NPC" "required"
+
+criterion "ConceptSomeEnemies" "num_enemies" ">2" "required"
+criterion "ConceptMoreThanOneEnemies" "num_enemies" ">1" "required"
+criterion "ConceptNoEnemies" "num_enemies" "=0" "required"
+criterion "ConceptOneorLessEnemy" "num_enemies" "<=1" "required"
+criterion "ConceptFewEnemies" "num_enemies" "<3" "required"
+
+
+
+criterion "ContextEnemies" "num_enemies" "!=0" "required"
+criterion "ContextSomeEnemies" "num_enemies" ">2" "required"
+criterion "ContextMoreThanOneEnemies" "num_enemies" ">1" "required"
+criterion "ContextNoEnemies" "num_enemies" "=0" "required"
+criterion "ContextOneorLessEnemy" "num_enemies" "<=1" "required"
+criterion "ContextFewEnemies" "num_enemies" "<3" "required"
+
+
+
+criterion "ContextKilledMob" "victim_was_mob" "1" "required"
+
+criterion "ContextPlayerKilledEnemy" "victim_was_enemy" "1" "required"
+criterion "ContextPlayerKilledAttacker" "victim_was_attacker" "1" "required"
+criterion "ContextPlayerPuntedGrenade" "punted_grenade" "1" "required"
+
+criterion "ConceptSpottedZombieWakeup" "Concept" "TLK_SPOTTED_ZOMBIE_WAKEUP" "required"
+criterion "ConceptPlayerHeadShot" "Concept" "TLK_PLAYER_HEADSHOT" "required"
+criterion "ConceptDarknessFlashlightExpired" "Concept" "TLK_DARKNESS_FLASHLIGHT_EXPIRED" "required"
+criterion "ConceptDarknessFlashlightOff" "Concept" "TLK_FLASHLIGHT_OFF" "required"
+criterion "ConceptDarknessFlashlightOn" "Concept" "TLK_FLASHLIGHT_ON" "required"
+criterion "ContextPlayer1Shot" "oneshot" "1" "required"
+criterion "ConceptDangerZombineGrenade" "Concept" "TLK_DANGER_ZOMBINE_GRENADE" "required"
+criterion "ConceptPlayerConsecutiveKill" "Concept" "TLK_PLAYER_CONSECUTIVE_KILL" "required"
+criterion "ConceptPlayerKillStreak" "consecutive_player_kills" ">4" "required"
+criterion "ConceptPlayerKilledBarrel" "Concept" "TLK_PLAYER_KILLED_BARREL" "required"
+criterion "ConceptPlayerKillsBarrels" "num_barrels" ">2" "required"
+criterion "AlyxBehavoirisFuncTank" "active_behavior" "FuncTank" "required"
+criterion "AlyxNoWeapon" "weapon" "none" "required"
+criterion "PlayerUsingPhysCannon" "playerweapon"  "weapon_physcannon" required
+criterion "PlayerNotUsingPhysCannon" "playerweapon"  "!=weapon_physcannon" required
+criterion "PlayerUsingMines" "playerweapon"  "weapon_frag" required
+
+
+criterion "ConceptPlayerKilledNPC" "Concept" "TLK_PLAYER_KILLED_NPC" "required"
+criterion "ConceptPlayerWound" "Concept" "TLK_WOUND" "required"
+
+criterion "ConceptSpottedHeadcrabLeavingZombie" "Concept" "TLK_SPOTTED_HEADCRAB_LEAVING_ZOMBIE" "required"
+criterion "ConceptSpotIncHeadcrab" "Concept" "TLK_SPOTTED_INCOMING_HEADCRAB" "required"				// Spoken when headcrab is first seen jumping while illuminated
+criterion "ConceptAllyInBarnacle" "Concept" "TLK_ALLY_IN_BARNACLE" "required"
+
+
+
+
+
+
+
+
+
+//darkness
+criterion "ConceptDarkLostPlayer" "Concept" "TLK_DARKNESS_LOSTPLAYER" "required"				// Spoken 8-15 seconds after Alyx loses player in dark			
+criterion "ConceptDarkFoundPlayer" "Concept" "TLK_DARKNESS_FOUNDPLAYER" "required"				// Spoken when Alyx first spots player after spoken LOSTPLAYER
+criterion "ConceptDarkUnknownWound" "Concept" "TLK_DARKNESS_UNKNOWN_WOUND" "required"				// Spoken when Alyx takes damage in the dark from enemy she can't see
+criterion "ConceptDarkHearSound" "Concept" "TLK_DARKNESS_HEARDSOUND" "required"					// Spoken 1-3 seconds after Alyx hears sound in the dark
+criterion "ConceptDarkLostEnemyByFlashlight" "Concept" "TLK_DARKNESS_LOSTENEMY_BY_FLASHLIGHT" "required"	// Spoken when Alyx loses sight of enemy if player turns off light
+criterion "ConceptDarkFoundEnemyByFlashlight" "Concept" "TLK_DARKNESS_FOUNDENEMY_BY_FLASHLIGHT" "required"	// Spoken when Alyx first spots enemy by flashlight
+criterion "ConceptDarkLostEnemyByFlashlightExpired" "Concept" "TLK_DARKNESS_LOSTENEMY_BY_FLASHLIGHT_EXPIRED" "required"	// Alyx loses sight of enemy by light turning off when battery is out or low
+criterion "ContextInDarkness" "darkness_mode" "1" "required"	// Alyx in Darkness - not if she can see or not.
+
+// Lead behavior
+criterion "ConceptLeadStart" "Concept" "TLK_LEAD_START" required			// Spoken once when the NPC first starts to lead the player
+criterion "ConceptLeadWaitOver" "Concept" "TLK_LEAD_WAITOVER" required			// Spoken when the player arrives at an NPC waiting to lead the player
+criterion "ConceptLeadAttractPlayer" "Concept" "TLK_LEAD_ATTRACTPLAYER" required	// Nag spoken by a NPC waiting to lead the player, trying to attract the player
+criterion "ConceptLeadCatchup" "Concept" "TLK_LEAD_CATCHUP" required			// Spoken by the NPC when the player's lagging behind
+criterion "ConceptLeadComingBack" "Concept" "TLK_LEAD_COMINGBACK" required		// Spoken when the NPC comes back to find a lost player
+criterion "ConceptLeadRetrieve" "Concept" "TLK_LEAD_RETRIEVE" required			// Spoken when the NPC has come back to the player, and is now resuming the lead
+criterion "ConceptLeadArrival" "Concept" "TLK_LEAD_ARRIVAL" required			// Spoken when the leading NPC reaches the target point
+criterion "ConceptLeadSuccess" "Concept" "TLK_LEAD_SUCCESS" required			// Spoken when the player and the leading NPC have both reached the target point
+criterion "ConceptLeadMissingWeapon" "Concept" "TLK_LEAD_MISSING_WEAPON" required	// Spoken when the NPC refuses to lead the player because he's missing a weapon
+criterion "ConceptLeadIdle" "Concept" "TLK_LEAD_IDLE" required				// Spoken when a leading NPC is idling
+
+// Passenger behavior
+criterion "ConceptPassengerImpact" "Concept" "TLK_PASSENGER_IMPACT" required			// Vehicle has impacted an obstacle suddenly
+criterion "ConceptPassengerOverturned" "Concept" "TLK_PASSENGER_OVERTURNED" required		// Vehicle has overturned
+criterion "ConceptPassengerCollisionWarning" "Concept" "TLK_PASSENGER_WARN_COLLISION" required	// Vehicle is about to collide with something
+criterion "ConceptPassengerRequestUpright" "Concept" "TLK_PASSENGER_REQUEST_UPRIGHT" required 	// Ask player to right the vehicle when upside-down
+criterion "ConceptPassengedJostled" "Concept" "TLK_PASSENGER_ERRATIC_DRIVING" required		// Player is driving erratically
+criterion "ConceptPassengedVehicleStarted" "Concept" "TLK_PASSENGER_VEHICLE_STARTED" required		// Vehicle has started moving
+criterion "ConceptPassengedVehicleStopped" "Concept" "TLK_PASSENGER_VEHICLE_STOPPED" required		// Vehicle has stopped moving
+criterion "ConceptPassengedVehiclePunted" "Concept" "TLK_PASSENGER_PUNTED" required		// Vehicle has been punted
+criterion "ConceptAlyxPassengerPlayerOut" "Concept" "TLK_PASSENGER_PLAYER_EXITED" required
+criterion "ConceptPassengerEntered" "Concept" "TLK_PASSENGER_PLAYER_ENTERED" required
+
+
+criterion "ConceptAlyxPassengerEntered" "Concept" "TLK_PASSENGER_FINISH_ENTRANCE" required
+
+
+
+
+criterion "IsInVehicle" "vehicle_inside" "1" required  weight 5
+criterion "IsNotInVehicle" "vehicle_inside" "0" required
+criterion "ConceptPassengerNewRadarContact" "Concept" "TLK_PASSENGER_NEW_RADAR_CONTACT" required	// New contact on the radar
+
+
+criterion "IsNotVehicleTilt" "vehicle_tilt" ">.7" required
+criterion "IsVehicleSlightTilt" "vehicle_tilt" "<.9" required
+
+
+// Citizen responses
+criterion "IsCitizen" "classname" "npc_citizen" "required"
+criterion "ConceptCRPlayerShotGunship" "Concept" "TLK_CITIZEN_RESPONSE_SHOT_GUNSHIP" required
+criterion "ConceptCRPlayerKilledGunship" "Concept" "TLK_CITIZEN_RESPONSE_KILLEd_GUNSHIP" required
+criterion "ConceptCRVitalNPCDied" "Concept" "TLK_VITALNPC_DIED" required
+
+criterion "ConceptFlashlightIlluminated" "Concept" "TLK_FLASHLIGHT_ILLUM" required	// Spoken when the player shines flashlight on me
+
+
+criterion "IsNPCGrenade"  "damageammo" "npc_grenade_frag" required
+criterion "IsAmmoVehicle"  "playerAmmo" "prop_vehicle_jeep" required
+criterion "IsNotAmmoVehicle"  "playerAmmo" "!=prop_vehicle_jeep" required
+criterion "PlayerAlive" "PlayerHealth" ">0" required
+criterion "PlayerDead" "PlayerHealth" "<=0" required
+criterion "PlayerWounded" "playerhealthfrac"	">0,<=.5" required
+criterion "PlayerCouldHeal" "playerhealthfrac"	">0,<=.9" required weight 2
+criterion "NPCAlive" "Health" ">0" required
+criterion "NPCAlert" "NPCState" ">=[NPCState::Idle],<[NPCState::Alert]"
+criterion "NPCIdle" "NPCState" "[NPCState::Idle]" required
+criterion "PlayerNear" "distancetoplayer" "<500" required
+criterion "PlayerReallyNear" "distancetoplayer" "<200" required
+criterion "PlayerNotNear" "distancetoplayer" ">400" required
+criterion "PlayerReallyNotNear" "distancetoplayer" ">150" required  //might use to check alyx not entering car for - wait for me... 
+criterion "PlayerWithin800" "distancetoplayer" "<800" required
+criterion "PlayerNotWithin800" "distancetoplayer" ">800" required
+criterion "SeePlayer" "seeplayer" "1" required
+criterion "SeenByPlayer" "seenbyplayer" "1" required
+criterion "NotSeePlayer" "seeplayer" "!=1" required
+criterion "NotSeenByPlayer" "seenbyplayer" "!=1" required
+criterion "NoRecentCombat" "timesincecombat" ">25" required
+criterion "NoRecentCombatShort" "timesincecombat" ">8" required
+criterion "NotInCombat" "timesincecombat" ">1" required
+//criterion "InCombat" "combat_length" ">0" required // Used for Alyx in EP1?
+criterion "InCombat" "timesincecombat" "<0" required
+criterion "InCombatLong" "combat_length" ">60" required
+criterion "InCombatMedium" "combat_length" ">20" required
+criterion "NoRecentSeenPlayerShort" "timesinceseenplayer" ">12, <=25" required
+criterion "NoRecentSeenPlayer" "timesinceseenplayer" ">25, <=120" required
+criterion "NoRecentSeenPlayerLong" "timesinceseenplayer" ">120" required
+criterion "EnemyIsFar" "distancetoenemy" ">600" required
+criterion "EnemyIsNotClose" "distancetoenemy" ">80" required //  <100 in Ep1
+criterion "EnemyIsNotFar" "distancetoenemy" "<600" required
+criterion "EnemyIsClose" "distancetoenemy" "<80" required
+criterion "EnemyCouleBeDistant" "distancetoenemy" "<1500" required
+criterion "EnemyIsReallyClose" "distancetoenemy" "<20" required // <50 in Ep1
+criterion "RecentCombat" "timesincecombat" ">0, <3" required
+
+criterion "PlayerFallDeath" "Concept" "TLK_PLAYERFELL" required				//Fired by mapper when the player falls to his imminent death
+criterion "GroundShakeSmall" "Concept" "TLK_GROUNDSHAKESMALL" required			//Fired by mapper to have Alyx react to an earthquake, shake or rumble (small)
+criterion "GroundShakeLarge" "Concept" "TLK_GROUNDSHAKELARGE" required			//Fired by mapper to have Alyx react to an earthquake, shake or rumble (small)
+criterion "StartleReact" "Concept" "TLK_STARTLEREACT" required				//Fired by mapper to have Alyx react to a startling event (flinch)
+
+criterion "ShotInLeg" "shotloc" "leg" required weight 0
+criterion "ShotInArm" "shotloc" "arm" required weight 0
+criterion "ShotInGut" "shotloc" "gut" required weight 0
+
+criterion "EnemyIsTurret" "enemy" "npc_turret_floor" required 
+criterion "EnemyIsNotTurret" "enemy" "!=npc_turret_floor" required 
+criterion "EnemyIsHunter" "enemy" "npc_hunter" required weight 50
+criterion "EnemyIsNotHunter" "enemy" "!=npc_hunter" required weight 50
+criterion "EnemyIsMortar" "enemy" "func_tankmortar" required
+criterion "EnemyIsZombie" "enemy" "npc_zombie" required
+criterion "EnemyIsAntLion" "enemy" "npc_antlion" required
+criterion "EnemyIsBarnacle" "enemy" "npc_barnacle" required
+criterion "EnemyIsNotBarnacle" "enemy" "!=npc_barnacle" required
+criterion "EnemyIsPoisonHeadcrab" "enemy" "npc_headcrab_black" required
+criterion "EnemyIsPoisonZombie" "enemy" "npc_poisonzombie" required
+criterion "EnemyIsHeadcrab" "enemy" "npc_headcrab" required
+criterion "EnemyIsRollerMine" "enemy" "npc_rollermine" required
+criterion "EnemyIsStrider" "enemy" "npc_strider" required
+criterion "NoCombatTalk" "NoCombatTalk" "1" required
+criterion "CombatTalk" "NoCombatTalk" "!=1" required
+criterion "NotInPanic" "readiness" "!panic" required
+
+criterion "EnemyIsNotPoisonHeadcrab" "enemy" "!=npc_headcrab_black" required  //since mappers feel the need to stick these lousy things everywhere
+
+criterion "ContextPlayerHeadShot" "headshot" "1" "required"
+
+
+//Vort fix to not conflict with hl2
+criterion "NotUsedVortResponse" "UsedVortResponse" "!=1" "required" weight 0
+criterion "IsVortLabUseDisable" "VortLab_Enable" "0" weight 2 required
+
+
+// Global states
+criterion "IsGordonCriminal" "gordon_precriminal" "0" required
+criterion "IsGordonPreCriminal" "gordon_precriminal" "1" required
+criterion "IsPreDisaster" "disaster" "[disaster::pre]" required weight 2
+criterion "IsPostDisaster" "disaster" "[disaster::post]" required weight 2
+criterion "IsEpisodic" "episodic" "1" required
+
+criterion "IsMap_d3_c17_09" "map" "d3_c17_09" "required"
+
+// Q&A
+criterion "IsSpeechTargetACitizen" "speechtarget" "npc_citizen" required
+criterion "IsSpeechTargetAVort" "speechtarget" "npc_vortigaunt" required
+criterion "IsSpeechTargetAlyx" "speechtarget" "npc_alyx" required
+
+// Alyx criteria
+criterion "ConceptAlyxStartCombat" "Concept" "TLK_STARTCOMBAT" required
+criterion "AlyxGunNotHolstered" "weapon" "weapon_alyxgun" required
+
+
+
+// Episode 2
+
+// Outland02
+criterion "ConceptVortUnderAttack" "Concept" "TLK_VORT_UNDER_ATTACK" required				
+criterion "ConceptVortsNagPlayerAlyxHealOutland02" "Concept" "TLK_OUTLAND_02_VORT_NAG_PLAYER" required
+criterion "IsVortHealingAlyx" "vort_healing_alyx" "1" required
+
+
+//behavoirs
+Criterion "ContextFollowing" "active_behavior" "Follow" required
+Criterion "ContextInAssault" "active_behavior" "Assault" required
+
+criterion "AlyxNotPraised" "AlyxPraised" "!=1" "required" weight 0
+
+
+//Level Definitions with weight of 10
+criterion "IsMap_ep2_outland_11" "map" "ep2_outland_11" weight 10 "required"
+criterion "IsMap_ep2_outland_10a" "map" "ep2_outland_10a" weight 10 "required"
+criterion "IsMap_ep2_outland_10" "map" "ep2_outland_10" weight 10 "required"
+criterion "IsMap_ep2_outland_09" "map" "ep2_outland_09" weight 10 "required"
+criterion "IsMap_ep2_outland_07" "map" "ep2_outland_07" weight 10 "required"
+
+criterion "IsMap_ep2_outland_06a" "map" "ep2_outland_06a" weight 10 "required"
+criterion "IsMap_ep2_outland_05" "map" "ep2_outland_05" weight 10 "required"
+criterion "IsMap_ep3_outland_03" "map" "ep2_outland_03" weight 10 "required"
+criterion "IsMap_ep2_outland_01" "map" "ep2_outland_01" weight 10 "required"
+
+//Odds
+criterion "10PercentChance"  "randomnum"               ">90"   required

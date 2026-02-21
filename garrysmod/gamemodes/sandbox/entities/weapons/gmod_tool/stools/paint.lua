@@ -1,0 +1,168 @@
+
+TOOL.Category = "Render"
+TOOL.Name = "#tool.paint.name"
+
+TOOL.LeftClickAutomatic = true
+TOOL.RightClickAutomatic = true
+TOOL.RequiresTraceHit = true
+
+TOOL.ClientConVar[ "decal" ] = "Blood"
+
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "reload" }
+}
+
+local function PlaceDecal( ply, ent, data )
+
+	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
+	if ( CLIENT ) then return end
+
+	local bone
+	if ( data.bone && data.bone < ent:GetPhysicsObjectCount() ) then bone = ent:GetPhysicsObjectNum( data.bone ) end
+	if ( !IsValid( bone ) ) then bone = ent:GetPhysicsObject() end
+	if ( !IsValid( bone ) ) then bone = ent end
+
+	util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
+
+	local i = ent.DecalCount or 0
+	i = i + 1
+	duplicator.StoreEntityModifier( ent, "decal" .. i, data )
+	ent.DecalCount = i
+
+end
+
+--
+-- Register decal duplicator
+--
+if ( SERVER ) then
+	for i = 1, 32 do
+
+		duplicator.RegisterEntityModifier( "decal" .. i, function( ply, ent, data )
+			timer.Simple( i * 0.05, function() PlaceDecal( ply, ent, data ) end )
+		end )
+
+	end
+end
+
+function TOOL:Reload( trace )
+	if ( !IsValid( trace.Entity ) ) then return false end
+
+	trace.Entity:RemoveAllDecals()
+
+	if ( SERVER ) then
+		for i = 1, 32 do
+			duplicator.ClearEntityModifier( trace.Entity, "decal" .. i )
+		end
+		trace.Entity.DecalCount = nil
+	end
+
+	return true
+end
+
+function TOOL:LeftClick( trace )
+
+	return self:RightClick( trace, true )
+
+end
+
+function TOOL:RightClick( trace, bNoDelay )
+
+	self:GetWeapon():EmitSound( "SprayCan.Paint" )
+	local decal = self:GetClientInfo( "decal" )
+
+	local Pos1 = trace.HitPos + trace.HitNormal
+	local Pos2 = trace.HitPos - trace.HitNormal
+
+	local Bone
+	if ( trace.PhysicsBone && trace.PhysicsBone < trace.Entity:GetPhysicsObjectCount() ) then Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone ) end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity:GetPhysicsObject() end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity end
+
+	Pos1 = Bone:WorldToLocal( Pos1 )
+	Pos2 = Bone:WorldToLocal( Pos2 )
+
+	PlaceDecal( self:GetOwner(), trace.Entity, { Pos1 = Pos1, Pos2 = Pos2, bone = trace.PhysicsBone, decal = decal } )
+
+	if ( bNoDelay ) then
+		self:GetWeapon():SetNextPrimaryFire( CurTime() + 0.05 )
+		self:GetWeapon():SetNextSecondaryFire( CurTime() + 0.05 )
+	else
+		self:GetWeapon():SetNextPrimaryFire( CurTime() + 0.2 )
+		self:GetWeapon():SetNextSecondaryFire( CurTime() + 0.2 )
+	end
+
+	return false
+
+end
+
+game.AddDecal( "Eye", "decals/eye" )
+game.AddDecal( "Dark", "decals/dark" )
+game.AddDecal( "Smile", "decals/smile" )
+game.AddDecal( "Light", "decals/light" )
+game.AddDecal( "Cross", "decals/cross" )
+game.AddDecal( "Nought", "decals/nought" )
+game.AddDecal( "Noughtsncrosses", "decals/noughtsncrosses" )
+
+list.Add( "PaintMaterials", "Eye" )
+list.Add( "PaintMaterials", "Smile" )
+list.Add( "PaintMaterials", "Light" )
+list.Add( "PaintMaterials", "Dark" )
+list.Add( "PaintMaterials", "Blood" )
+list.Add( "PaintMaterials", "YellowBlood" )
+list.Add( "PaintMaterials", "Impact.Metal" )
+list.Add( "PaintMaterials", "Scorch" )
+list.Add( "PaintMaterials", "BeerSplash" )
+list.Add( "PaintMaterials", "ExplosiveGunshot" )
+list.Add( "PaintMaterials", "BirdPoop" )
+list.Add( "PaintMaterials", "PaintSplatPink" )
+list.Add( "PaintMaterials", "PaintSplatGreen" )
+list.Add( "PaintMaterials", "PaintSplatBlue" )
+list.Add( "PaintMaterials", "ManhackCut" )
+list.Add( "PaintMaterials", "FadingScorch" )
+list.Add( "PaintMaterials", "Antlion.Splat" )
+list.Add( "PaintMaterials", "Splash.Large" )
+list.Add( "PaintMaterials", "BulletProof" )
+list.Add( "PaintMaterials", "GlassBreak" )
+list.Add( "PaintMaterials", "Impact.Sand" )
+list.Add( "PaintMaterials", "Impact.BloodyFlesh" )
+list.Add( "PaintMaterials", "Impact.Antlion" )
+list.Add( "PaintMaterials", "Impact.Glass" )
+list.Add( "PaintMaterials", "Impact.Wood" )
+list.Add( "PaintMaterials", "Impact.Concrete" )
+list.Add( "PaintMaterials", "Noughtsncrosses" )
+list.Add( "PaintMaterials", "Nought" )
+list.Add( "PaintMaterials", "Cross" )
+
+function TOOL.BuildCPanel( CPanel )
+
+	-- Remove duplicates.
+	local Options = {}
+	for id, str in ipairs( list.Get( "PaintMaterials" ) ) do
+		if ( !table.HasValue( Options, str ) ) then
+			table.insert( Options, str )
+		end
+	end
+
+	table.sort( Options )
+
+	local listbox = vgui.Create( "DListView" )
+	listbox:SetMultiSelect( false )
+	listbox:AddColumn( "#tool.paint.texture" )
+	listbox:SetTall( 17 + table.Count( Options ) * 17 )
+	listbox:SortByColumn( 1, false )
+	function listbox:OnRowSelected( LineID, Line )
+		for k, v in pairs( Line.data ) do
+			RunConsoleCommand( k, v )
+		end
+	end
+	for k, decal in ipairs( Options ) do
+		local line = listbox:AddLine( decal )
+		line.data = { paint_decal = decal, gmod_tool = "paint" }
+
+		if ( GetConVarString( "paint_decal" ) == tostring( decal ) ) then line:SetSelected( true ) end
+	end
+	CPanel:AddItem( listbox )
+
+end

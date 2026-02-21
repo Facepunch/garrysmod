@@ -1,0 +1,1347 @@
+// HALF-LIFE SPEECH SYSTEM SENTENCES. DO NOT MODIFY THIS FILE! Max of 1023 sentences.
+
+// HUMAN GRUNTS
+HG_GREN0 hgrunt/clik(p120) grenade! clik {Len 1.17}
+HG_GREN1 hgrunt/(t30) clik take!(e75) cover!(s5) clik {Len 0.95}
+HG_GREN2 hgrunt/clik clik oh! shit! clik {Len 1.59}
+HG_GREN3 hgrunt/(p110 t40) clik(p120) get!(e78) down!(t30) clik {Len 0.78}
+HG_GREN4 hgrunt/clik(p110) (t40) of!(e75) god! clik(p110) {Len 0.82}
+HG_GREN5 hgrunt/clik no! clik {Len 0.91}
+HG_GREN6 hgrunt/clik move! clik(p120) {Len 1.04}
+
+// Player Alert
+HG_ALERT0 hgrunt/(t30) squad!, we!(e80) got!(e80) freeman!(t20 p105), clik(p110) {Len 2.14}
+HG_ALERT1 hgrunt/clik(p110) target! clik {Len 1.13}
+HG_ALERT2 hgrunt/clik movement! clik {Len 1.18}
+HG_ALERT3 hgrunt/(t40) shit!(t20), (t50) we! got! hostiles!(p120 t0) clik {Len 2.07}
+HG_ALERT4 hgrunt/(t20) clik(p110) squad!, get!(e80) freeman!, clik(p110) clik {Len 2.37}
+HG_ALERT5 hgrunt/(t20) clik squad!, neutralize!(e90) freeman! clik {Len 2.67}
+HG_ALERT6 hgrunt/(t30) clik clik move!(e75) in! clik(p120) {Len 1.06}
+
+// Monster Alert
+HG_MONST0 hgrunt/clik(p110) (t50) bogies!(t0), my! sector!(t0) clik {Len 2.28}
+HG_MONST1 hgrunt/clik(p110) (t40) clik(p120) we!(e75) got! bogies! clik {Len 1.30}
+HG_MONST2 hgrunt/clik clik (t30) alien!(e85) alert! clik {Len 1.46}
+HG_MONST3 hgrunt/clik clik (t30) alien!(e85) movement!(t0) clik(p120) {Len 1.72}
+
+// Take cover
+HG_COVER0 hgrunt/clik (t30) take! cover!(t0) clik {Len 1.38}
+HG_COVER1 hgrunt/clik (t45) (e75) I!(e80) need!(e80) suppressing!(t20) fire!(t10) clik {Len 1.79}
+HG_COVER2 hgrunt/clik (t45) we! need! backup!(t10) clik {Len 1.58}
+HG_COVER3 hgrunt/clik(p120) (t40) two!(e75) hot!(e80) here! clik {Len 1.14}
+HG_COVER4 hgrunt/clik(p110) (t30) fall!(e80) out! clik clik {Len 1.17}
+HG_COVER5 hgrunt/clik(p120) (t20) clear! this! area! clik {Len 1.69}
+HG_COVER6 hgrunt/clik (t40) god! damn! clik {Len 1.05}
+HG_COVER7 hgrunt/clik (t40) cover!(e75) fire! clik {Len 0.95}
+
+// Throw grenade
+HG_THROW0 hgrunt/clik(p120) (t40) fire!(e90) in!(e90) the!(e60) hole!(e100) clik {Len 1.37}
+HG_THROW1 hgrunt/clik (t30) take!(e75) this!(e100 t0) clik {Len 1.03}
+HG_THROW2 hgrunt/clik (t35) fire in the(e50) hole clik(p120) {Len 1.66}
+HG_THROW3 hgrunt/clik(p110) (t35 e80) squad, stay down clik {Len 1.51}
+ 
+// Taunt
+HG_TAUNT0 hgrunt/clik (t30 e75) uhh, we got heavy fire here clik {Len 2.05}
+HG_TAUNT1 hgrunt/clik(p120) (t40) roger, hold position clik {Len 1.82}
+HG_TAUNT2 hgrunt/clik (t40) we!(e80) will!(e75) kick!(e80) your!(e75) ass! clik {Len 1.55}
+HG_TAUNT3 hgrunt/clik (t40) mister, you(e75) are going down clik {Len 2.28}
+HG_TAUNT4 hgrunt/clik(p120) (t40) you got nothing clik {Len 1.45}
+HG_TAUNT5 hgrunt/clik(p110) (t40) request! backup! clik(p120) clik {Len 1.32}
+
+// Charge
+HG_CHARGE0 hgrunt/clik (t40) go! recon! clik(p120) {Len 1.21}
+HG_CHARGE1 hgrunt/clik(p110) (t40) move!(e75) in! clik {Len 0.84}
+HG_CHARGE2 hgrunt/clik go! clik(p120) {Len 0.91}
+HG_CHARGE3 hgrunt/clik lets! go! clik(p120) {Len 1.37}
+
+// Idle
+HG_IDLE0 hgrunt/gr_idle1 {Len 2.97}
+HG_IDLE1 hgrunt/gr_idle2 {Len 2.50}
+HG_IDLE2 hgrunt/gr_idle3 {Len 2.50}
+
+HG_QUEST0 hgrunt/clik (t25) stay(e80) alert people clik(p120) {Len 1.83}
+HG_QUEST1 hgrunt/clik (t30) radio(e75) check, over clik(p120) {Len 1.65}
+HG_QUEST2 hgrunt/clik (t20) maintain lookout clik(p120) {Len 1.56}
+HG_QUEST3 hgrunt/clik(p110) (t30) squad, quiet(e75) down clik(p120) {Len 1.92}
+HG_QUEST4 hgrunt/clik(p120) (t30) hold position, clik {Len 1.58}
+HG_QUEST5 hgrunt/clik(p120) (t30) sweep(e80) that sector, clik(p120) clik(p120) {Len 1.85}
+HG_QUEST6 hgrunt/clik(p120) (t30) uhh, go tango sweep formation clik(p120) clik(p120) {Len 3.12}
+HG_QUEST7 hgrunt/clik(p120) (t30) echo(e75) mission is go clik(p120) clik(p120) {Len 2.05}
+HG_QUEST8 hgrunt/clik(p110) (t30) fire(e75) team, weapons(e75) check ok clik(p120) clik {Len 2.72}
+HG_QUEST9 hgrunt/clik(p110) (t30) fire(e75) team, objective foxtrot niner clik(p120) {Len 3.20}
+HG_QUEST10 hgrunt/clik (t30) ok(e75) mission, zero(e75) niner clik {Len 2.33}
+HG_QUEST11 hgrunt/clik (t30) squad, stay(e80) alert(e80) four freeman, over clik {Len 3.53}
+
+HG_ANSWER0 hgrunt/clik(p110) (t20) uhh roger(e75) that, clik(p120) clik {Len 1.87}
+HG_ANSWER1 hgrunt/clik(p120) (t10) yessir clik {Len 1.06}
+HG_ANSWER2 hgrunt/clik(p120) (t30) affirmative, sir clik {Len 1.57}
+HG_ANSWER3 hgrunt/clik (t30) negative clik(p120) clik {Len 0.94}
+HG_ANSWER4 hgrunt/clik(p105) (t30) roger clik {Len 0.84}
+HG_ANSWER5 hgrunt/clik(p105) (t30) ok control clik {Len 1.46}
+HG_ANSWER6 hgrunt/clik(p105) (t30) that(e75) is, uhh, affirmative clik {Len 2.31}
+
+HG_CLEAR0 hgrunt/clik(p130) (t30) all(e75) clear sir, clik {Len 1.65}
+HG_CLEAR1 hgrunt/clik (t30) bravo(e75) post, clear clik(p120) {Len 1.70}
+HG_CLEAR2 hgrunt/clik(p110) (t30) delta(e75) team, clear clik(p120) {Len 1.62}
+HG_CLEAR3 hgrunt/clik(p110) (t40) no sign hostiles sir, over clik(p120) {Len 2.62}
+HG_CLEAR4 hgrunt/clik (t30) no(e80) sign objective sir, over clik(p120) {Len 2.77}
+HG_CLEAR5 hgrunt/clik (t30) no(e75) movement this level clik(p120) {Len 1.91}
+HG_CLEAR6 hgrunt/clik(p120) (t28) sir, sector secure, over clik(p120) clik(p120) {Len 2.76}
+HG_CLEAR7 hgrunt/clik(p120) (t30) command(e75) post, team in position, over clik {Len 3.13}
+HG_CLEAR8 hgrunt/clik (t30) recon, in(e75) position, all quiet clik(p120) {Len 2.88}
+HG_CLEAR9 hgrunt/clik(p110) (t30) lookout(e90) post, all quiet, over clik(p110) {Len 2.70}
+HG_CLEAR10 hgrunt/clik (t40) sir, I(e80) here(e75) something clik {Len 1.72}
+HG_CLEAR11 hgrunt/clik(p120) (t30) sir, uhh, zero movement, over clik {Len 3.20}
+HG_CLEAR12 hgrunt/clik (t30) area secure sir, over clik(p120) {Len 2.30}
+
+HG_CHECK0 hgrunt/clik (t30) ok, check(e75) in clik {Len 1.63}
+HG_CHECK1 hgrunt/clik(p110) (t30) squad, are(e80) hostiles clear clik(p120) {Len 2.72}
+HG_CHECK2 hgrunt/clik (t30) check(e80) in people clik {Len 1.40}
+HG_CHECK3 hgrunt/clik (t30) lookout, check(e75) in clik(p110) {Len 1.53}
+HG_CHECK4 hgrunt/clik (t30) recon(e90) team, check(e80) in clik {Len 2.09}
+HG_CHECK5 hgrunt/clik(p130) (t30) movement check, over clik {Len 1.80}
+HG_CHECK6 hgrunt/clik (t30) check your zone, over, clik {Len 2.43}
+HG_CHECK7 hgrunt/clik (t30) everything(e85) ok(e75) there, clik(p130) {Len 1.66}
+
+//narrative
+
+HG_SNOOP1A hgrunt/c2a2_hg_chat1a {Len 2.65}
+HG_SNOOP2A hgrunt/c2a2_hg_chat2a {Len 1.95}
+HG_SNOOP3A hgrunt/c2a2_hg_chat3a {Len 5.04}
+HG_SNOOP4A hgrunt/c2a2_hg_chat4a {Len 4.69}
+HG_SNOOP5A hgrunt/c2a2_hg_chat5a {Len 4.59}
+
+HG_DRAG1A hgrunt/c2a3_hg_1drag {Len 2.17}
+HG_DRAG2A hgrunt/c2a3_hg_2drag {Len 1.84}
+HG_DRAG3A hgrunt/c2a3_hg_3drag {Len 3.48}
+HG_DRAG4A hgrunt/c2a3_hg_4drag {Len 2.64}
+HG_DRAG5A hgrunt/c2a3_hg_5drag {Len 2.19}
+HG_DRAG6A hgrunt/c2a3_hg_laugh {Len 2.94}
+
+HG_SUCKS hgrunt/hg_sucks {Len 6.35}
+HG_CIVVIES hgrunt/hg_civvies {Len 6.73}
+
+// BASE COMPUTER
+// C1A0 intercom\
+C1A0_START dadeda vox_login {Len 11.18}
+
+C1A0_0 dadeda (e95) agent(t0) coomer(t0), report to(e70) topside tactical operations center(e100) {Len 6.60}
+C1A0_1 dadeda inspection team, to(e70) radioactive materials handling bay(e100) {Len 6.15}
+C1A0_2 dadeda (e95) agent sixteen, report to(e70) administration sub level two(e100) {Len 6.28}
+C1A0_3 doop (e95) doctor johnson, please call observation tank one(e100) {Len 5.94}
+C1A0_4 doop (e95 p96) doctor west(t0), please report to(e70) lambda(s0) reactor complex(e100) {Len 6.35}
+C1A0_5 doop (e95) doctor cross, call seven two nine please(e100) {Len 5.32}
+C1A0_6 doop (e95) sargeant(s0) bailey(s0), to(e70) topside checkpoint bravo(e100) {Len 5.45}
+C1A0_7 dadeda (e95) cryogenic safety crew, report status at eleven hundred please(e100) {Len 6.74}
+C1A0_8 dadeda (e95) coded message for captain black, command and(s0 e100 t0) communication center(e100) {Len 6.86}
+C1A0_9 dadeda (e95 p102) sector c(e100) science personnel, report to(e70) anomalous materials test lab(e100) {Len 8.24}
+C1A0_10 doop (e95 p103) doctor freeman, (e95) to(e70) anomalous materials test lab immediately(e100) {Len 7.22}
+C1A0_11 bloop (e95 p98) attention. experimental propulsion lab test fire in(s0 e100 t0) ninety minutes(e100) {Len 7.97}
+C1A0_12 bloop (e95 p98) hydro plant now(s0 e100 t0) operating at(s0 e100 t0) sixty percent(e100) {Len 4.65}
+C1A0_13 bloop (e95) black mesa topside temperature is ninety three degrees(e100) {Len 5.56}
+C1A0_14 bloop (e95) launch officer reports, alpha satellite deploy is(t0 s0 e100) nominal(e100) {Len 6.34}
+C1A0_15 bloop (e95) doctor birdwell reports(e95) superconducting interchange is(t0 s0 e100) activated(e100) {Len 6.12}
+C1A0_16 bloop (e95 p104) attention. report any security violation, to(e70) administration sub level one(e100) {Len 7.60}
+C1A0_17 bloop (e95) attention. service personnel please clear helicopter hangar one(e100) {Len 6.41}
+C1A0_18 bloop (e95) shield inspection(s0) crew reports primary reactor nominal(e100) {Len 5.45}
+C1A0_19 bloop (e95 p98) transportation control reports all systems on time(e100) {Len 6.04}
+C1A0_20 dadeda (e95) doctor victor, report to(e70) supercooled(e100) laser lab please(e100) {Len 6.74}
+C1A0_21 dadeda (e95 p104) sargeant guthrie, report to(e70) topside motorpool immediately(e100) {Len 6.02}
+C1A0_22 deeoo (e95 p98) uranium shipment inspection team, to(e100) sector d(e100) {Len 5.46}
+
+// C1A1 intercom anomalous materials test lab sector c, coolant resevoir facility sector b
+C1A1_0 bizwarn bizwarn bizwarn warning, high energy detonation detected in materials lab {Len 9.03}
+C1A1_1 buzwarn buzwarn attention, security personnel to sector c immediately {Len 6.93}
+C1A1_2 buzwarn buzwarn (p102) warning, unauthorized biological forms detected in sector c {Len 7.69}
+C1A1_3 buzwarn buzwarn (p102) warning, unauthorized biological forms detected in coolant maintenance area {Len 8.44}
+C1A1_4 bizwarn bizwarn bizwarn any damage control team to sector c immediately {Len 7.75}
+C1A1_5 buzwarn buzwarn warning, sector c elevator failure. do not use. {Len 6.81}
+C1A1_6 bizwarn bizwarn bizwarn (p102) biohazard warning in sector b and c(p104) {Len 6.75}
+C1A1_7 buzwarn buzwarn attention. sector c science personnel evacuate area immediately {Len 7.91}
+C1A1_8 buzwarn buzwarn warning, flooding detected on sub level three, sector b {Len 7.46}
+C1A1_9 bizwarn bizwarn bizwarn warning, anomalous energy field detected in administration center {Len 8.67}
+C1A1_10 deeoo deeoo (p104) attention. any sector c science personnel, please report status {Len 7.79}
+C1A1_11 deeoo deeoo (p104) attention. sector c science personnel please report status immediately {Len 8.07}
+
+// C1A2 intercom administration center sector d
+C1A2_0 deeoo (e95) emergency cleanup team to(e70) biological waste processing plant(e100) {Len 6.20}
+C1A2_1 buzwarn buzwarn attention, administration personnel evacuate sector d immediately {Len 7.67}
+C1A2_2 deeoo deeoo attention, security personnel to sector d {Len 5.81}
+C1A2_3 deeoo (e95) service team, check elevator one(s0 e100 t0), (p100) sector c(e100) {Len 5.12}
+C1A2_4 buzwarn buzwarn warning, unauthorized biological forms detected in ventillation system {Len 8.30}
+C1A2_5 deeoo (e95 p103) lieutenant backman and cleanup team, to(e70) sub level three(e100) {Len 5.49}
+C1A2_6 bizwarn bizwarn bizwarn danger, turret defense systems activated, sector d {Len 7.91}
+C1A2_7 deeoo deeoo security officer reports men down in sector d, medical help required {Len 8.79}
+C1A2_8 bizwarn bizwarn bizwarn extreme danger, all turret defense systems activated, sector d {Len 9.24}
+C1A2_9 deeoo (e95) turret repair personnel, to(e70) high security materials storage area(e100) {Len 6.95}
+C1A2_10 deeoo deeoo attention. electric shock hazard detected in administration center {Len 7.72}
+C1A2_11 buzwarn buzwarn. security officer reports medical emergency, administration center {Len 8.31}
+
+// C1A3 intercom high security materials storage area sector d
+C1A3_0 (p130) buzwarn buzwarn (p98 e95) attention. all science personnel report topside for immediate questioning {Len 8.16}
+C1A3_1 (p120) buzwarn buzwarn (e95 p100) all personnel evacuate high security materials storage facility {Len 7.53}
+C1A3_2 bizwarn bizwarn (e95 p98) emergency uranium containment team, to(e100) sector d(e100) {Len 6.84}
+C1A3_3 deeoo (e95) turret maintenance team, to(e70) central command and communication(s0) center(e100) {Len 6.47}
+C1A3_4 (p130) buzwarn buzwarn (p98 e95) military personnel, prosecute kilo india lima with extreme force {Len 7.28}
+C1A3_5 (p130) bizwarn bizwarn bizwarn (e95 p95) attention.  this announcement system now(e100) under military command {Len 7.61}
+C1A3_6 (p130) buzwarn buzwarn (p98 e95) search and destroy force bravo, reports secondary objective terminated {Len 7.87}
+C1A3_7 (p130) buzwarn buzwarn (p98 e95) bravo force reports hotel sierra mike facility is secured {Len 7.27}
+C1A3_8 (p130) bizwarn bizwarn (p100 t15 e95) attention.  all military personnel, atomic biological chemical alert {Len 6.76}
+C1A3_9 (p130) bizwarn bizwarn (p100 t15 e95) attention.  all military personnel, extreme atomic biological chemical alert {Len 7.40}
+C1A3_10 (p110) bizwarn bizwarn bizwarn (e95 p95) attention.  black mesa announcement system now(e100) under military command {Len 8.71}
+
+C1A3_warn (p120) buzwarn buzwarn (p100 t15) attention. security lockout alert. security door will engage. {Len 6.80}
+C1A3_lock (p120) bizwarn bizwarn (p98 t15) security door engaged, five, buzwarn(p130), four, buzwarn(p130), three, buzwarn(p130), two, buzwarn(p130), one, buzwarn(p130), lockout activated {Len 12.08}
+
+// C1A4 intercom experimental propulsion labs silo d
+C1A4_0 buzwarn buzwarn. attention. experimental rocket test fire disengaged. {Len 7.38}
+C1A4_1 deeoo (e95) repair crew report to(e70) track control, sector e(e100) {Len 5.75}
+C1A4_2 deeoo (e95) maintenance team blue(p100 t0 s0 e100), check heat exchange coolant level(e100) {Len 5.55}
+C1A4_3 deeoo (e95) maintenance team green, check voltage(e100) on cable seven two nine(e100) {Len 6.73}
+C1A4_4 (p130) buzwarn buzwarn (p98 e95) medical team to materials storage facility, team bravo reports men down {Len 8.74}
+C1A4_5 (p130) buzwarn buzwarn (p98 e95) alpha force move out, science personnel resistance extreme {Len 6.68}
+C1A4_6 (p130) buzwarn buzwarn (p98 e95) attention. all black mesa security personnel wanted for immediate questioning {Len 8.48}
+C1A4_7 (p130) buzwarn buzwarn (p98 e95) attention. gordon freeman report to military personnel for immediate security check {Len 9.24}
+C1A4_8 buzwarn buzwarn (p102) warning, hostile biological forms detected in track control sector e {Len 8.65}
+
+FUEL_OFF fuel and power must be engaged to activate rocket test fire {Len 6.49}
+
+// C2A1 intercom track control sector e
+C2A1_0 buzwarn buzwarn. warning. track power failure. check lower level power plant. {Len 8.00}
+C2A1_1 deeoo (e95) maintenance team yellow, please(s0 e100) service relay three hundred ninety four(e100) {Len 6.68}
+C2A1_2 (p130) dadeda (p98 e95) attention. gordon freeman report to military personnel for immediate security check {Len 8.72}
+C2A1_3 (p130) buzwarn buzwarn (p98 e95) delta team reports launch control secured {Len 5.51}
+C2A1_4 bizwarn bizwarn bizwarn danger, turret defense systems activated, silo e {Len 7.86}
+C2A1_5 deeoo sector e track control please report status {Len 5.43}
+C2A1_6 (p130) buzwarn buzwarn (p98 e95) echo force reports perimeter breach, sector e {Len 5.79}
+C2A1_7 (p130) buzwarn buzwarn (p98 e95) attention, search and destroy force go to code three. eliminate all biological forms. {Len 10.03}
+C2A1_8 bizwarn bizwarn danger, unauthorized detonation detected in experimental propulsion lab {Len 9.24}
+
+POWER_OFF buzwarn main power is not on {Len 3.51}
+POWER_ON deeoo main power is on {Len 2.93}
+
+// C2A2 intercom launch control silo e
+C2A2_0 buzwarn buzwarn. attention, clear silo e launch area immediately {Len 6.91}
+C2A2_1 deeoo (e95) containment inspection team, to(e70) advanced biological research lab(e100) {Len 7.24}
+C2A2_2 (p130) buzwarn buzwarn (p98 e95) medical team to sector e, echo team has men down {Len 6.67}
+C2A2_3 (p130) buzwarn buzwarn (p98 e95) alert, military personnel authorized to prosecute gordon freeman with extreme force {Len 8.92}
+C2A2_3 (p130) buzwarn buzwarn (p98 e95) alert, military personnel, you are authorized to shoot the renegade on sight {Len 8.92}
+C2A2_4 (p130) buzwarn buzwarn (p98 e95) alert, squad in silo e, freeman may be operating inside your perimeter {Len 8.24}
+C2A2_5 deeoo deeoo launch control train activity detected {Len 5.36}
+C2A2_6 (p130) buzwarn buzwarn (p98 e95) medical team to sector e, echo team squad failed to reach checkpoint {Len 8.27}
+C2A2_7 deeoo deeoo satellite rocket loading bay reports status green {Len 6.31}
+
+C2A2_launch (p50) deeoo deeoo deeoo (p100) satellite launch system activated. five deeoo(p50) four deeoo(p51) three deeoo(p52) two deeoo(p53) one deeoo(p54) launch is go {Len 18.52}
+
+// C2A3 observation tank1, 2. cryogenic system
+// silent
+
+// C2A4 intercom bio waste processing plant. advanced biological research lab
+C2A4_0 buzwarn buzwarn warning. emergency containment system activated {Len 6.02}
+C2A4_1 bizwarn bizwarn. alert. biological containment breach detected {Len 6.63}
+C2A4_2 bizwarn bizwarn. warning, biological sterilization system activated {Len 6.94}
+C2A4_3 (p130) buzwarn buzwarn (p98 e95) attention, hostile alien military force detected, advanced biological research lab {Len 9.84}
+C2A4_4 (p130) buzwarn buzwarn (p98 e95) search and destroy force reports back up required, engaged with extreme resistance {Len 9.30}
+C2A4_5 (p130) buzwarn buzwarn (p98 e95) topside containment force alert, hostile alien military force detected {Len 7.88}
+C2A4_6 deeoo deeoo high power laser status is green {Len 4.82}
+C2A4_7 bizwarn bizwarn, alien containment system failure, use sterilization chamber {Len 7.62}
+C2A4_8 bizwarn bizwarn attention. all topside military personnel clear helicopter hangar four {Len 8.72}
+C2A4_9 bizwarn bizwarn, hostile alien breach, topside checkpoint alpha, checkpoint delta {Len 8.22}
+C2A4_10 (p130) buzwarn buzwarn (p98 e95) alert topside containment force, use any force to prosecute gordon freeman. you are authorized to shoot on sight. {Len 12.78}
+C2A4_11 (p130) buzwarn buzwarn (p98 e95) alert topside containment force, freeman may approach your perimeter {Len 7.18}
+C2A4_12 (p105) gordon, all science personnel will be terminated until you surrender {Len 5.97}
+
+C2A4_ster bizwarn bizwarn sterilization system activated {Len 4.59}
+
+// C2A5 intercom tactical operations center, motorpool, armory, hydro plant, checkpoint alpha/bravo/delta, barracks, hangars
+// silent
+
+// C3A1 intercom central command and communications
+C3A1_0 buzwarn buzwarn warning primary antenna failure detected {Len 5.11}
+C3A1_1 (p130) buzwarn buzwarn (p98 e95) clear topside motorpool for emergency medical helicopter {Len 6.48}
+C3A1_2 (p130) buzwarn buzwarn (p98 e95) warning, topside armory security bypass detected {Len 6.07}
+C3A1_3 bizwarn bizwarn warning, radiation leak detected in primary antenna area {Len 7.32}
+C3A1_4 (p130) buzwarn buzwarn (p98 e95) search and destroy force kilo, central command reports hostile alien force inside perimeter {Len 9.91}
+C3A1_5 (p130) buzwarn buzwarn (p98 e95) message for gordon freeman, you will not escape this time {Len 6.81}
+C3A1_6 (p130) buzwarn buzwarn (p98 e95) attention all units, renegade freeman is now your primary target {Len 6.64}
+C3A1_7 (p130) buzwarn buzwarn (p98 e95) alert remaining containment force, freeman may have experimental weapon {Len 7.33}
+C3A1_8 (p130) buzwarn buzwarn (p98 e95) all personnel evacuate lambda complex, extreme dimensional malfunction detected {Len 8.39}
+C3A1_9 bizwarn bizwarn fire control team to topside armory, checkpoint delta, topside hydro plant {Len 9.90}
+
+// C3A2 intercom lambda reactor complex.main reactor facility. radioactive materials handling bay
+C3A2_0 bizwarn bizwarn warning, cross dimensional power field activity detected {Len 6.93}
+C3A2_1 bizwarn bizwarn warning, unauthorized biological force detected in cross dimensional power field {Len 9.37}
+C3A2_2 (p130) buzwarn buzwarn (p98 e95) all personnel evacuate lambda complex, extreme dimensional malfunction detected {Len 8.39}
+C3A2_3 bizwarn bizwarn bizwarn, unauthorized activity detected in main reactor core {Len 8.40}
+C3A2_4 bizwarn bizwarn, danger, high energy exchange detected in radioactive materials handling bay {Len 9.76}
+C3A2_5 bizwarn bizwarn, biological force detected in primary coolant system {Len 7.02}
+C3A2_6 (p120) bizwarn bizwarn, (p100) lambda complex reports dimensional contamination {Len 5.94}
+C3A2_7 bizwarn bizwarn, lambda complex reports dimensional containment system failure {Len 7.43}
+
+C3A2_target bloop(p150) bloop(p150) satellite target system, engaged {Len 3.96}
+C3A2_portal bizwarn(p80) bizwarn(p80) bizwarn(p80) warning, cross(e80) dimensional portal device power level is one hundred twenty percent {Len 10.68}
+C3A2_core bizwarn bizwarn bizwarn, attention lambda complex personnel, primary core activated {Len 8.60}
+
+
+// countdown
+
+CTR0 zero {Len 0.65}
+CTR1 one second {Len 1.03}
+CTR2 two {Len 0.51}
+CTR3 three seconds {Len 1.09}
+CTR4 four {Len 0.47}
+CTR5 five seconds remaining {Len 1.99}
+CTR6 six {Len 0.55}
+CTR7 seven {Len 0.60}
+CTR8 eight {Len 0.48}
+CTR9 nine {Len 0.60}
+CTR10 ten seconds remaining {Len 1.80}
+CTR11 eleven {Len 0.64}
+CTR12 twelve {Len 0.53}
+CTR13 thirteen {Len 0.77}
+CTR14 fourteen {Len 0.80}
+CTR15 fifteen seconds remaining {Len 2.10}
+CTR16 sixteen {Len 0.84}
+CTR17 seventeen {Len 1.00}
+CTR18 eighteen {Len 0.65}
+CTR19 nineteen {Len 0.78}
+CTR20 twenty seconds remaining {Len 1.88}
+
+// doors, general
+NA0 access denied {Len 1.49}
+NA1 access is denied {Len 1.89}
+NA2 unauthorized access {Len 1.99}
+NA3 illegal access {Len 1.45}
+NA4 this door is locked {Len 1.84}
+NA5 unauthorized access {Len 1.99}
+NA6 entry forbidden {Len 1.44}
+NA7 entry not permitted {Len 1.70}
+NA8 no unauthorized personnel {Len 2.59}
+NA9 you do not have access to this facility {Len 4.64}
+NA10 (p102) sorry, you may not enter {Len 2.53}
+NA11 (p102) sorry, this door is locked {Len 2.61}
+NA12 (p102) please, move away from this area {Len 3.36}
+NA13 (p102) please, move away from door {Len 2.84}
+NA14 (p103) you will not get in {Len 2.04}
+NA15 (p103) entry is not an option {Len 2.38}
+NA16 (p104) will we do this all day {Len 2.41}
+NA17 (p104) move on immediately {Len 1.97}
+NA18 (p105) no, no, and no(p80) {Len 2.76}
+EA0 access granted {Len 1.50}
+EA1 access permitted {Len 1.49}
+EA2 entry granted {Len 1.22}
+EA3 entry permitted {Len 1.21}
+EA4 access authorized {Len 1.87}
+EA5 entry is permitted {Len 1.61}
+EA6 access authorized {Len 1.87}
+EA7 access to facility, granted {Len 3.14}
+EA8 access granted {Len 1.50}
+
+// doors, security lockout
+ND0 security lock is engaged {Len 2.70}
+ND1 secure area, no entry {Len 2.72}
+ND2 security lockout, no entry {Len 3.06}
+ND3 secure door, no entry {Len 2.65}
+ND4 security system in force {Len 2.73}
+ND5 security system armed, no entry {Len 3.57}
+ND6 door is secured {Len 1.75}
+ND7 illegal access, move away {Len 2.70}
+ED0 security lock disengaged {Len 2.57}
+ED1 security clear, proceed {Len 2.41}
+ED2 security lockout, released {Len 2.61}
+ED3 secure override accepted {Len 2.57}
+ED4 security access acknowledged {Len 2.63}
+ED5 security system disengaged {Len 2.69}
+ED6 door security disengaged {Len 2.51}
+
+// blast doors
+NF0 emergency blast door activated {Len 2.99}
+NF1 emergency blast shield activated {Len 3.06}
+NF3 the blast containment shield is down {Len 3.36}
+EF0 emergency blast door, open {Len 2.85}
+EF1 emergency blast shield, deactivated {Len 3.45}
+EF3 blast containment shield is, open {Len 3.28}
+
+// fire door
+NFIRE0 fire containment door is down {Len 3.01}
+EFIRE0 fire containment door, open {Len 2.89}
+
+// chemical door
+NCHEM0 chemical leak containment door activated {Len 3.48}
+ECHEM0 chemical leak containment door, open {Len 3.34}
+
+// radiation door
+NRAD0 radiation containment door activated {Len 3.31}
+ERAD0 radiation containment door, open {Len 3.16}
+
+// generic containment door
+NCON0 emergency containment door engaged {Len 3.16}
+ECON0 emergency containment door disengaged {Len 3.43}
+
+// broken locked door
+NG0 sorry, this door is inoperative {Len 3.07}
+NG1 sorry, door out of service {Len 2.81}
+NG2 door damage detected, please call service personnel {Len 4.93}
+
+// maintenance door
+NH0 no access, maintenance area {Len 3.05}
+NH1 no personnel permitted in maintenance area {Len 3.91}
+EH0 maintenance area access granted {Len 2.88}
+EH1 maintenance area door open {Len 2.42}
+
+// turrets, defensive systems
+
+T0 extreme hazard, defense system is armed in this zone {Len 5.80}
+T1 hazard area, defense system activated {Len 3.93}
+T2 danger, turret perimeter defense system armed {Len 4.16}
+T3 extreme hazard, nearest defense system engaged {Len 4.68}
+T4 danger, base defense turret system may power up {Len 4.94}
+T5 danger, automatic defense system activated {Len 4.25}
+
+// warnings
+
+WE0 warning, high voltage cable {Len 2.69}
+WE1 warning, high power cable {Len 2.54}
+WE2 warning, electric shock hazard {Len 2.75}
+WE3 warning, severe electric shock hazard {Len 3.43}
+
+// danger
+
+DR0 danger, radiation leak detected {Len 3.19}
+DR1 danger, radiation hazard detected {Len 3.42}
+DR2 danger, high radiation level detected {Len 3.84}
+DR3 danger, severe radiation hazard, evacuate area immediately {Len 5.98}
+DR4 danger, safety violation, extreme radiation level detected {Len 5.89}
+
+DC0 danger, chemical leak, area now a high health hazard {Len 5.63}
+DC1 danger, chemical coolant leak, health hazard zone {Len 4.89}
+DC2 danger, chemical containment breach, all personnel evacuate this area {Len 6.70}
+DC3 danger, supercooled chemical leak {Len 3.06}
+DC4 danger, supercooled helium leak {Len 3.17}
+
+DB0 danger, liquid biohazard leak in immediate area {Len 4.96}
+DB1 danger, coolant leak, severe biohazard now in this area {Len 5.87}
+DB2 danger, liquid biohazard released, evacuate area {Len 5.09}
+DB3 danger, biohazard detected in immediate area {Len 4.70}
+
+// training room
+
+TR_A three, two, one, deeoo(p110) {Len 2.81}
+TR_B deeoo(p110) (p102 t20) target system deactivated {Len 2.46}
+
+
+
+// HEV Suit
+
+// powerup
+
+// GMOD: Added the _HL1 bits
+HEV_AAx_HL1 fvox/bell, HEV_logon, powerarmor_on, atmospherics_on,vitalsigns_on, automedic_on, weaponselect_on, munitionview_on, communications_on, safe_day {Len 41.76}
+HEV_A0_HL1 fvox/bell, HEV_logon {Len 11.07}
+
+HEV_A1 fvox/blip blip(p130) powermove_on {Len 3.71}
+HEV_A2 fvox/blip blip powerarmor_on {Len 4.42}
+HEV_A3 fvox/blip blip(p130) atmospherics_on {Len 4.41}
+HEV_A4 fvox/blip blip vitalsigns_on boop, boop, boop {Len 5.28}
+HEV_A5 fvox/blip blip(p130) munitionview_on {Len 3.84}
+HEV_A6 fvox/blip blip communications_on {Len 3.59}
+HEV_A7 fvox/blip blip(p70) weaponselect_on {Len 3.97}
+HEV_A8 fvox/blip blip(p70) automedic_on {Len 3.77}
+HEV_A9 fvox/fuzz power_level_is onehundred percent {Len 4.14}
+HEV_A10 fvox/safe_day, bell {Len 3.66}
+
+// medical
+HEV_DEAD0 fvox/beep beep, beep beep, beep, beep, flatline {Len 6.29}
+HEV_DEAD1 fvox/beep beep, beep beep, beep, flatline {Len 5.82}
+
+HEV_MED0 fvox/(p140) boop, boop, boop, (p100) innsufficient_medical {Len 1.41}
+HEV_MED1 fvox/(p140) boop, boop, boop, (p100) automedic_on {Len 4.92}
+HEV_MED2 fvox/(p140) boop, boop, boop, (p100) administering_medical {Len 4.47}
+
+HEV_HEAL0 fvox/(p140) boop, boop, boop, (p100) wound_sterilized, blip(p130 v50), blip(p130 v40), hiss, morphine_shot {Len 7.03}
+HEV_HEAL1 fvox/(p140) boop, boop, boop, (p100) torniquette_applied, bleeding_stopped {Len 7.03}
+HEV_HEAL2 fvox/(p140) boop, boop, boop, (p100) bleeding_stopped {Len 3.66}
+HEV_HEAL3 fvox/(p140) boop, boop, boop, (p100) blood_plasma {Len 4.02}
+HEV_HEAL4 fvox/(p140) boop, boop, boop, (p100) hiss, antitoxin_shot {Len 4.38}
+HEV_HEAL5 fvox/(p140) boop, boop, boop, (p100) hiss, antidote_shot {Len 4.17}
+HEV_HEAL6 fvox/(p140) boop, boop, boop, (p100) hiss, wound_sterilized {Len 4.16}
+HEV_HEAL7 fvox/(p140) boop, boop, boop, (p100) hiss, morphine_shot {Len 4.16}
+HEV_HEAL8 fvox/(p140) boop, boop, boop, (p100) medical_repaired {Len 4.17}
+
+HEV_DMG0 fvox/(p160) boop, boop, boop, (p100) minor_lacerations {Len 4.09}
+HEV_DMG1 fvox/(p160) boop, boop, boop, (p100) major_lacerations {Len 4.19}
+HEV_DMG2 fvox/(p160) boop, boop, boop, (p100) internal_bleeding {Len 3.64}
+HEV_DMG3 fvox/(p160) boop, boop, boop, (p100) blood_toxins {Len 5.04}
+HEV_DMG4 fvox/(p160) boop, boop, boop, (p100) minor_fracture {Len 3.67}
+HEV_DMG5 fvox/(p160) boop, boop, boop, (p100) major_fracture {Len 3.67}
+HEV_DMG6 fvox/(p160) boop, boop, boop, (p100) blood_loss {Len 3.39}
+HEV_DMG7 fvox/(p140) boop, boop, boop, (p100) seek_medic {Len 3.92}
+
+HEV_HLTH0 fvox/(p120) beep, beep, (p100) health_dropping {Len 4.31}
+HEV_HLTH1 fvox/(p120) beep, beep, (p100) health_dropping2 {Len 3.68}
+HEV_HLTH2 fvox/(p120) beep, beep, beep, (p100) health_critical {Len 4.32}
+HEV_HLTH3 fvox/(p120) beep, beep, beep, (p100) near_death {Len 4.77}
+HEV_HLTH4 fvox/(p140) beep, beep, (p100) health_dropping2, evacuate_area {Len 5.93}
+HEV_HLTH5 fvox/(p140) beep, beep, beep, (p100) health_critical, evacuate_area {Len 6.52}
+HEV_HLTH6 fvox/(p140) beep, beep, beep, (p100) near_death, evacuate_area immediately {Len 8.22}
+
+HEV_SHOCK fvox/(p120) beep, beep, (p100) warning, shock_damage {Len 4.05}
+HEV_FIRE fvox/(p120) beep, beep, (p100) warning, heat_damage {Len 4.77}
+
+// items
+HEV_AIM_ON fvox/blip targetting_system activated {Len 4.02}
+HEV_AIM_OFF fvox/blip targetting_system deactivated {Len 4.27}
+HEV_BATTERY fvox/blip get_battery acquired {Len 3.26}
+HEV_MEDKIT fvox/blip get_medkit(v80) {Len 2.03}
+
+HEV_PISTOL fvox/blip get_pistol acquired {Len 4.45}
+HEV_SHOTGUN fvox/blip get_shotgun {Len 2.26}
+HEV_GRENADE fvox/blip get_grenade acquired {Len 2.88}
+HEV_ASSAULT fvox/blip get_assault acquired {Len 6.42}
+HEV_44PISTOL fvox/blip get_44pistol acquired {Len 3.42}
+HEV_RPG fvox/blip get_rpg acquired {Len 3.56}
+HEV_SATCHEL fvox/blip get_satchel acquired {Len 4.07}
+HEV_TRIPMINE fvox/blip get_tripmine acquired {Len 4.50}
+HEV_HORNET fvox/blip get_alien_wpn {Len 2.88}
+HEV_SQUEEK fvox/blip get_alien_wpn {Len 2.88}
+HEV_EGON fvox/blip get_egon acquired {Len 3.55}
+HEV_GAUSS fvox/blip get_gauss acquired {Len 5.09}
+HEV_XBOW fvox/blip get_crossbow acquired {Len 3.86}
+
+HEV_9MM fvox/blip get_9mmclip acquired {Len 3.08}
+HEV_44AMMO fvox/blip get_44ammo acquired {Len 3.55}
+HEV_BUCKSHOT fvox/blip get_buckshot acquired {Len 3.11}
+HEV_BOLTS fvox/blip get_bolts acquired {Len 4.28}
+HEV_RPGAMMO fvox/blip get_rpgammo acquired {Len 2.76}
+HEV_AGRENADE fvox/blip get_assaultgren acquired {Len 3.02}
+HEV_EGONPOWER fvox/blip get_egonpower acquired {Len 3.11}
+
+// time
+
+//HEV_C1t fvox/bell time_is_now one AM
+//HEV_C13t fvox/bell time_is_now one PM
+
+// power levels
+
+HEV_D00 fvox/fuzz fuzz(p130), power_restored {Len 2.12}
+HEV_D01 fvox/fuzz fuzz(p80), hev_shutdown {Len 4.99}
+
+HEV_0P fvox/fuzz fuzz, power_below five percent {Len 6.35}
+HEV_1P fvox/fuzz fuzz, power_restored(e30), ten percent {Len 2.75}
+HEV_2P fvox/fuzz fuzz, power_restored(e30), fifteen percent {Len 3.15}
+HEV_3P fvox/fuzz fuzz, power_restored(e30), twenty percent {Len 2.99}
+HEV_4P fvox/fuzz fuzz, power_restored(e30), twenty five percent {Len 3.87}
+HEV_5P fvox/fuzz fuzz, power_restored(e30), thirty percent {Len 3.04}
+HEV_6P fvox/fuzz fuzz, power_restored(e30), thirty five percent {Len 3.91}
+HEV_7P fvox/fuzz fuzz, power_restored(e30), fourty percent {Len 3.07}
+HEV_8P fvox/fuzz fuzz, power_restored(e30), fourty five percent {Len 3.95}
+HEV_9P fvox/fuzz fuzz, power_restored(e30), fifty percent {Len 3.17}
+HEV_10P fvox/fuzz fuzz, power_restored(e30), fifty five percent {Len 4.05}
+HEV_11P fvox/fuzz fuzz, power_restored(e30), sixty percent {Len 3.16}
+HEV_12P fvox/fuzz fuzz, power_restored(e30), sixty five percent {Len 4.04}
+HEV_13P fvox/fuzz fuzz, power_restored(e30), seventy percent {Len 3.12}
+HEV_14P fvox/fuzz fuzz, power_restored(e30), seventy five percent {Len 4.00}
+HEV_15P fvox/fuzz fuzz, power_restored(e30), eighty percent {Len 2.88}
+HEV_16P fvox/fuzz fuzz, power_restored(e30), eighty five percent {Len 3.76}
+HEV_17P fvox/fuzz fuzz, power_restored(e30), ninety percent {Len 3.12}
+HEV_18P fvox/fuzz fuzz, power_restored(e30), ninety five percent {Len 4.00}
+HEV_19P fvox/fuzz fuzz, power_level_is onehundred percent {Len 4.62}
+
+// weapon/ammo
+
+HEV_AMO0 fvox/blip ammo_depleted {Len 2.16}
+
+// suit
+
+HEV_V0 fvox/blip, voice_on {Len 3.17}
+HEV_V1 fvox/blip, voice_off {Len 3.06}
+
+HEV_E0 fvox/buzz buzz, armor_gone {Len 2.95}
+HEV_E1 fvox/buzz, armor_gone {Len 2.62}
+HEV_E2 fvox/buzz, hev_critical_fail {Len 4.75}
+HEV_E3 fvox/buzz, hev_general_fail {Len 3.22}
+HEV_E4 fvox/buzz, hev_damage {Len 3.53}
+HEV_E5 fvox/buzz, powermove_overload {Len 4.98}
+
+// time remaining countdown
+
+//HEV_F10t fvox/bell time_remaining ten seconds
+//HEV_F15t fvox/bell time_remaining fifteen seconds
+//HEV_F20t fvox/bell time_remaining twenty seconds
+//HEV_F30t fvox/bell time_remaining thirty seconds
+
+// detections
+
+HEV_DET0 fvox/blip blip blip, biohazard_detected {Len 3.67}
+HEV_DET1 fvox/blip blip blip, chemical_detected {Len 4.33}
+HEV_DET2 fvox/blip blip blip, radiation_detected {Len 5.08}
+HEV_DET3 fvox/blip blip blip, bio_reading {Len 2.93}
+HEV_DET4 fvox/blip blip blip, antitoxin_shot(e50), onehundred percent {Len 3.67}
+HEV_DET5 fvox/blip blip blip, antitoxin_shot(e25) radiation_detected(e50), onehundred percent {Len 5.37}
+
+//HEV_GR0r fvox/range twenty meters(t60)
+//HEV_GR1r fvox/range nineteen meters
+//HEV_GR2r fvox/range eighteen meters
+
+
+// BARNEY
+
+BA_OK0 barney/teamup2 {Len 0.88}
+BA_OK1 barney/dobettertogether {Len 2.30}
+BA_OK2 barney/imwithyou {Len 1.36}
+BA_OK3 barney/teamup1 {Len 2.29}
+BA_OK4 barney/gladtolendhand {Len 2.94}
+BA_OK5 barney/letsgo {Len 0.92}
+BA_OK6 barney/letsmoveit {Len 1.99}
+
+BA_WAIT0 barney/helpothers {Len 2.40}
+BA_WAIT1 barney/iwaithere {Len 1.06}
+BA_WAIT2 barney/slowingyoudown {Len 1.40}
+BA_WAIT3 barney/illwait {Len 1.11}
+BA_WAIT4 barney/seeya {Len 0.61}
+BA_WAIT5 barney/standguard {Len 1.67}
+
+BA_HELLO0 barney/hellonicesuit {Len 0.40}
+BA_HELLO1 barney/howdy {Len 0.86}
+BA_HELLO2 barney/howyoudoing {Len 0.71}
+BA_HELLO3 barney/haybuddy {Len 0.53}
+BA_HELLO4 barney/hayfella {Len 0.27}
+BA_HELLO5 barney/heybuddy {Len 0.53}
+BA_HELLO6 barney/heyfella {Len 0.27}
+
+BA_QUESTION0 barney/beertopside {Len 2.42}
+BA_QUESTION1 barney/wayout {Len 1.60}
+BA_QUESTION2 barney/getanyworse {Len 2.09}
+BA_QUESTION3 barney/gladof38 {Len 2.56}
+BA_QUESTION4 barney/workingonstuff {Len 2.71}
+BA_QUESTION5 barney/wayout {Len 1.60}
+BA_QUESTION6 barney/whatsgoingon {Len 2.01}
+BA_QUESTION7 barney/aintscared {Len 1.16}
+BA_QUESTION8 barney/nodrill {Len 2.11}
+BA_QUESTION9 barney/gettingcloser {Len 1.25}
+BA_QUESTION10 barney/youhearthat {Len 1.86}
+BA_QUESTION11 barney/crewdied {Len 2.37}
+BA_QUESTION12 barney/somethingmoves {Len 2.28}
+BA_QUESTION13 barney/thinking {Len 1.30}
+BA_QUESTION14 barney/missingleg {Len 3.13}
+
+BA_ANSWER0 barney/noway {Len 0.96}
+BA_ANSWER1 barney/ireckon {Len 0.60}
+BA_ANSWER2 barney/soundsright {Len 0.79}
+BA_ANSWER3 barney/yessir {Len 0.43}
+BA_ANSWER4 barney/youbet {Len 0.53}
+BA_ANSWER5 barney/yougotit {Len 0.60}
+BA_ANSWER6 barney/yup {Len 0.41}
+BA_ANSWER7 barney/dontaskme {Len 0.96}
+BA_ANSWER8 barney/dontbet {Len 0.87}
+BA_ANSWER9 barney/dontbuyit {Len 1.21}
+BA_ANSWER10 barney/dontfigure {Len 1.31}
+BA_ANSWER11 barney/dontguess {Len 0.93}
+BA_ANSWER12 barney/hardtosay {Len 0.92}
+BA_ANSWER13 barney/justdontknow {Len 0.99}
+BA_ANSWER14 barney/nope {Len 0.35}
+BA_ANSWER15 barney/nosir {Len 0.55}
+BA_ANSWER16 barney/cantfigure {Len 1.16}
+BA_ANSWER17 barney/maybe {Len 0.47}
+BA_ANSWER18 barney/notelling {Len 1.03}
+BA_ANSWER19 barney/bequiet {Len 1.96}
+BA_ANSWER20 barney/youtalkmuch {Len 1.38}
+BA_ANSWER21 barney/alreadyasked {Len 1.18}
+
+// player is staring at scientist
+BA_STARE0 barney/yup {Len 0.41}
+BA_STARE1 barney/yessir {Len 0.43}
+BA_STARE2 barney/howyoudoing {Len 0.71}
+BA_STARE3 barney/heyfella {Len 0.27}
+
+BA_IDLE0 barney/whatisthat {Len 1.61}
+BA_IDLE1 barney/coldone {Len 2.54}
+BA_IDLE2 barney/guyresponsible {Len 3.40}
+BA_IDLE3 barney/bigmess {Len 2.67}
+BA_IDLE4 barney/luckwillturn {Len 2.03}
+BA_IDLE5 barney/bigplace {Len 2.20}
+BA_IDLE6 barney/targetpractice {Len 3.26}
+BA_IDLE7 barney/badfeeling {Len 2.70}
+BA_IDLE8 barney/ambush {Len 2.42}
+BA_IDLE9 barney/survive {Len 2.36}
+BA_IDLE10 barney/stophere {Len 3.13}
+
+BA_ATTACK0 barney/openfire(e50) {Len 1.49}
+BA_ATTACK1 barney/openfire(s50) {Len 1.49}
+BA_ATTACK2 barney/standback {Len 0.87}
+BA_ATTACK3 barney/whatisthat {Len 1.61}
+BA_ATTACK4 barney/diebloodsucker {Len 1.72}
+BA_ATTACK5 barney/aimforhead {Len 1.69}
+
+BA_HEAR0 barney/hearsomething {Len 0.90}
+BA_HEAR1 barney/icanhear {Len 1.07}
+BA_HEAR2 barney/soundsbad {Len 1.62}
+
+BA_SMELL0 barney/somethingdied {Len 2.78}
+BA_SMELL1 barney/somethingstinky {Len 2.17}
+BA_SMELL2 barney/stench {Len 1.62}
+
+BA_CUREA barney/checkwounds {Len 1.61}
+BA_CUREB barney/youneedmedic {Len 2.09}
+BA_CUREC barney/realbadwound {Len 3.18}
+
+BA_SCARED0 barney/donthurtem {Len 1.19}
+BA_SCARED1 barney/leavealone {Len 2.50}
+
+BA_WOUND0 barney/imhit {Len 2.05}
+BA_WOUND1 barney/hitbad {Len 2.23}
+BA_MORTAL0 barney/imdead {Len 3.90}
+
+//If you shoot Barney:
+BA_SHOT0 barney/ba_whoathere {Len 1.37}
+BA_SHOT1 barney/ba_dotoyou {Len 1.60}
+BA_SHOT2 barney/ba_watchit {Len 1.37}
+BA_SHOT3 barney/ba_whatyou {Len 1.20}
+BA_SHOT4 barney/ba_friends {Len 2.80}
+BA_SHOT5 barney/ba_pissme {Len 1.77}
+
+//When Barney’s really pissed at you:
+BA_MAD0 barney/ba_stepoff {Len 1.37}
+BA_MAD1 barney/ba_iwish {Len 1.49}
+BA_MAD2 barney/ba_uwish {Len 2.72}
+BA_MAD3 barney/ba_somuch {Len 2.62}
+BA_MAD4 barney/ba_endline {Len 1.54}
+BA_MAD5 barney/ba_dontmake {Len 1.77}
+BA_MAD6 barney/ba_tomb {Len 1.66}
+
+//When Barney’s killed something
+BA_KILL0 barney/ba_gotone {Len 0.82}
+BA_KILL1 barney/ba_another {Len 1.54}
+BA_KILL2 barney/ba_buttugly {Len 2.09}
+BA_KILL3 barney/ba_seethat {Len 1.88}
+BA_KILL4 barney/ba_close {Len 1.67}
+BA_KILL5 barney/ba_firepl {Len 2.21}
+BA_KILL6 barney/ba_bring {Len 0.99}
+
+
+//If you use Barney in Hazard Course
+BA_HAZ_OK0 holo/tr_ba_use {Len 1.16}
+
+//If you unuse Barney in Hazard Course
+BA_HAZ_WAIT0 holo/tr_ba_unuse {Len 1.07}
+
+//Barney in Hazard Course
+BA_LIGHTSON holo/tr_ba_lightson {Len 1.88}
+
+//If you use Barney before the disaster
+BA_POK0 barney/ba_post {Len 2.28}
+BA_POK1 barney/ba_duty {Len 2.25}
+BA_POK2 barney/ba_raincheck {Len 1.02}
+BA_POK3 barney/ba_later {Len 2.01}
+
+// if barney can't follow you
+BA_STOP0 barney/stop1 {Len 1.41}
+BA_STOP1 barney/stop2 {Len 3.21}
+BA_STOP2 barney/stop3 {Len 0.00}
+
+//scripted_sentences
+
+//c1a0 scripts
+BA_LATE barney/c1a0_ba_late {Len 2.33}
+BA_HEADDOWN barney/c1a0_ba_headdown {Len 3.37}
+BA_DESK barney/c1a0_ba_desk {Len 16.87}
+BA_BUTTON barney/c1a0_ba_button {Len 2.80}
+BA_HEVNO barney/c1a0_ba_hevno {Len 4.24}
+BA_HEVYES barney/c1a0_ba_hevyes {Len 2.60}
+
+//c1a1 scripts
+BA_GLAD barney/c1a1_ba_glad {Len 6.38}
+
+//c1a2 scripts
+BA_BULLSQUID barney/c1a2_ba_bullsquid {Len 4.99}
+BA_ZOMBIE2 barney/c1a2_ba_2zomb {Len 1.99}
+BA_ZOMBIE4 barney/c1a2_ba_4zomb {Len 1.95}
+BA_CLIMB barney/c1a2_ba_climb {Len 3.12}
+BA_SLEW barney/c1a2_ba_slew {Len 3.88}
+BA_SURFACE barney/c1a2_ba_surface {Len 4.22}
+BA_TOPSIDE barney/c1a2_ba_top {Len 4.32}
+
+//c1a4 scripts
+BA_WHISPER barney/c1a4_ba_wisp {Len 3.02}
+BA_TENTACLE barney/c1a4_ba_octo1 {Len 5.23}
+
+//c2a1 scripts
+BA_HUB1A barney/c2a1_ba_hub1a {Len 13.45}
+BA_HUB2A barney/c2a1_ba_hub2a {Len 4.02}
+BA_AGAIN barney/c2a1_ba_again {Len 8.13}
+
+//c2a2 scripts
+
+BA_LAUNCH barney/c2a2_ba_launch {Len 29.03}
+
+//c2a3 scripts
+
+BA_ASSN barney/c2a3_ba_assn {Len 5.22}
+
+//c2a4 scripts
+BA_LONGNITE barney/c2a4_ba_longnite {Len 8.71}
+BA_STERIL barney/c2a4_ba_steril {Len 1.22}
+BA_TEACH barney/c2a4_ba_teach {Len 10.60}
+
+BA_ARG1A barney/c2a4_ba_arg1a {Len 2.90}
+BA_ARG2A barney/c2a4_ba_arg3a {Len 2.23}
+BA_ARG3A barney/c2a4_ba_arg5a {Len 1.92}
+
+BA_TAU1A barney/c2a4_ba_1tau {Len 1.95}
+BA_TAU3A barney/c2a4_ba_3tau {Len 1.83}
+BA_TAU5A barney/c2a4_ba_5tau {Len 1.73}
+
+BA_ALIVE barney/c2a4_ba_alive {Len 15.49}
+
+//c2a5 scripts
+BA_LETMEOUT barney/c2a5_ba_letout {Len 5.03}
+BA_RPG barney/c2a5_ba_rpg {Len 8.94}
+BA_HELPME barney/c2a5_ba_helpme {Len 9.06}
+BA_SNIPED barney/c2a5_ba_sniped {Len 3.47}
+
+//c3a2 scripts
+BA_SURVEY2A barney/c3a2_ba_2surv {Len 2.88}
+BA_SURVEY4A barney/c3a2_ba_4surv {Len 1.65}
+BA_SURVEY6A barney/c3a2_ba_6surv {Len 4.07}
+BA_SURVEY8A barney/c3a2_ba_8surv {Len 3.70}
+BA_PORTSTAY barney/c3a2_ba_stay {Len 4.88}
+
+
+// SCIENTIST
+
+SC_OK0 scientist/excellentteam {Len 3.59}
+SC_OK1 scientist/fellowscientist {Len 1.97}
+SC_OK2 scientist/fine {Len 1.86}
+SC_OK3 scientist/hopeyouknow {Len 2.10}
+SC_OK4 scientist/leadtheway {Len 1.16}
+SC_OK5 scientist/letsgo {Len 0.66}
+SC_OK6 scientist/yesletsgo {Len 1.14}
+SC_OK7 scientist/yes3 {Len 0.55}
+SC_OK8 scientist/alright {Len 0.87}
+
+SC_WAIT0 scientist/beenaburden {Len 2.06}
+SC_WAIT1 scientist/slowingyou {Len 1.75}
+SC_WAIT2 scientist/reconsider {Len 1.82}
+SC_WAIT3 scientist/whyleavehere {Len 1.50}
+SC_WAIT4 scientist/illwaithere {Len 0.91}
+SC_WAIT5 scientist/istay {Len 0.72}
+SC_WAIT6 scientist/illwait {Len 0.56}
+
+// fail to follow player any more
+SC_STOP0 scientist/stop1 {Len 1.39}
+SC_STOP1 scientist/stop2 {Len 1.68}
+SC_STOP2 scientist/stop3 {Len 2.04}
+SC_STOP3 scientist/stop4 {Len 2.30}
+
+
+// player is staring at scientist
+SC_STARE0 scientist/yees {Len 1.40}
+SC_STARE1 scientist/areyouthink {Len 1.64}
+SC_STARE2 scientist/noidea {Len 3.50}
+
+SC_HELLO0 scientist/hellothere {Len 0.78}
+SC_HELLO1 scientist/freemanalive {Len 3.54}
+SC_HELLO2 scientist/afellowsci {Len 1.33}
+SC_HELLO3 scientist/greetings2 {Len 2.01}
+SC_HELLO4 scientist/hello {Len 2.42}
+SC_HELLO5 scientist/goodtoseeyou {Len 3.11}
+SC_HELLO6 scientist/newhevsuit {Len 4.40}
+SC_HELLO7 scientist/hellofromlab {Len 4.30}
+SC_HELLO8 scientist/inmesstoo {Len 3.63}
+
+SC_ANSWER0 scientist/notsure {Len 1.14}
+SC_ANSWER1 scientist/notcertain {Len 1.28}
+SC_ANSWER2 scientist/perhaps {Len 0.92}
+SC_ANSWER3 scientist/whocansay {Len 1.26}
+SC_ANSWER4 scientist/inconclusive {Len 1.73}
+SC_ANSWER5 scientist/theoretically {Len 0.95}
+SC_ANSWER6 scientist/whyaskme {Len 1.37}
+SC_ANSWER7 scientist/lowervoice {Len 2.00}
+SC_ANSWER8 scientist/ofcourse {Len 1.14}
+SC_ANSWER9 scientist/absolutely {Len 0.99}
+SC_ANSWER10 scientist/yes {Len 0.40}
+SC_ANSWER11 scientist/ibelieveso {Len 0.83}
+SC_ANSWER12 scientist/right {Len 0.44}
+SC_ANSWER13 scientist/imsure {Len 0.67}
+SC_ANSWER14 scientist/positively {Len 0.67}
+SC_ANSWER15 scientist/nodoubt {Len 1.13}
+SC_ANSWER16 scientist/yees {Len 1.40}
+SC_ANSWER17 scientist/ofcoursenot {Len 0.88}
+SC_ANSWER18 scientist/absolutelynot {Len 1.20}
+SC_ANSWER19 scientist/noo {Len 0.91}
+SC_ANSWER20 scientist/idontthinkso {Len 1.62}
+SC_ANSWER21 scientist/completelywrong {Len 1.92}
+SC_ANSWER22 scientist/cantbeserious {Len 1.20}
+SC_ANSWER23 scientist/dontknow {Len 1.11}
+SC_ANSWER24 scientist/ridiculous {Len 1.00}
+SC_ANSWER25 scientist/shutup {Len 0.88}
+SC_ANSWER26 scientist/noguess {Len 1.61}
+SC_ANSWER27 scientist/stopasking {Len 1.67}
+SC_ANSWER28 scientist/justasked {Len 1.82}
+SC_ANSWER29 scientist/repeat {Len 2.95}
+
+SC_QUESTION0 scientist/everseen {Len 3.04}
+SC_QUESTION1 scientist/needsleep {Len 3.95}
+SC_QUESTION2 scientist/areyouthink {Len 1.64}
+SC_QUESTION3 scientist/evergetout {Len 1.82}
+SC_QUESTION4 scientist/rightwayout {Len 1.67}
+SC_QUESTION5 scientist/cantbeworse {Len 1.75}
+SC_QUESTION6 scientist/rescueus {Len 2.62}
+SC_QUESTION7 scientist/fascinating {Len 2.47}
+SC_QUESTION8 scientist/stimulating {Len 3.30}
+SC_QUESTION9 scientist/luckwillchange {Len 3.43}
+SC_QUESTION10 scientist/hearsomething {Len 2.56}
+SC_QUESTION11 scientist/doyousmell {Len 2.09}
+SC_QUESTION12 scientist/uselessphd {Len 2.71}
+SC_QUESTION13 scientist/waithere {Len 2.87}
+SC_QUESTION14 scientist/survival {Len 3.41}
+SC_QUESTION15 scientist/headcrab {Len 4.61}
+SC_QUESTION16 scientist/goodpaper {Len 3.36}
+SC_QUESTION17 scientist/catchone {Len 1.92}
+SC_QUESTION18 scientist/dinner {Len 5.43}
+SC_QUESTION19 scientist/alientrick {Len 3.33}
+SC_QUESTION20 scientist/alienappeal {Len 2.65}
+SC_QUESTION21 scientist/rumorclean {Len 4.93}
+SC_QUESTION22 scientist/nothostile {Len 5.15}
+SC_QUESTION23 scientist/announcer {Len 2.20}
+SC_QUESTION24 scientist/smellburn {Len 1.57}
+SC_QUESTION25 scientist/noidea {Len 3.50}
+SC_QUESTION26 scientist/whatnext {Len 2.96}
+
+SC_IDLE0 scientist/ipredictedthis {Len 2.74}
+SC_IDLE1 scientist/containfail {Len 3.17}
+SC_IDLE2 scientist/chaostheory {Len 2.41}
+SC_IDLE3 scientist/howinteresting {Len 2.87}
+SC_IDLE4 scientist/neverseen {Len 4.72}
+SC_IDLE5 scientist/peculiarmarks {Len 3.84}
+SC_IDLE6 scientist/whoresponsible {Len 2.77}
+SC_IDLE7 scientist/nogrant {Len 2.14}
+SC_IDLE8 scientist/bloodsample {Len 3.51}
+SC_IDLE9 scientist/administrator {Len 4.43}
+SC_IDLE10 scientist/improbable {Len 3.47}
+SC_IDLE11 scientist/organicmatter {Len 4.58}
+SC_IDLE12 scientist/lambdalab {Len 4.15}
+SC_IDLE13 scientist/ihearsomething {Len 0.76}
+
+SC_NOGO scientist/dontgothere {Len 1.34}
+
+SC_MONST0 scientist/seeheadcrab {Len 2.49}
+SC_MONST1 scientist/importantspecies {Len 2.94}
+
+SC_HEAR0 scientist/ihearsomething {Len 0.76}
+SC_HEAR1 scientist/didyouhear {Len 0.66}
+SC_HEAR2 scientist/whatissound {Len 1.69}
+
+SC_SMELL0 scientist/somethingfoul {Len 4.11}
+SC_SMELL1 scientist/odorfromyou {Len 2.51}
+SC_SMELL2 scientist/peculiarodor {Len 2.48}
+SC_SMELL3 scientist/stench {Len 2.09}
+
+SC_WOUND0 scientist/iwounded {Len 3.25}
+SC_WOUND1 scientist/iwounded2 {Len 3.14}
+
+SC_MORTAL0 scientist/iwoundedbad {Len 2.09}
+SC_MORTAL1 scientist/iwounded2 {Len 3.14}
+
+SC_CUREA scientist/youlookbad {Len 1.40}
+SC_CUREB scientist/youwounded {Len 1.67}
+SC_CUREC scientist/youneedmedic {Len 2.67}
+
+SC_HEAL0 scientist/heal1 {Len 2.47}
+SC_HEAL1 scientist/heal2 {Len 1.30}
+SC_HEAL2 scientist/youneedmedic, letstrythis {Len 3.76}
+SC_HEAL3 scientist/youlookbad, holdstill {Len 3.69}
+SC_HEAL4 scientist/youwounded, letstrythis {Len 2.76}
+SC_HEAL5 scientist/heal3 {Len 1.79}
+SC_HEAL6 scientist/heal4 {Len 1.58}
+SC_HEAL7 scientist/heal5 {Len 1.90}
+
+SC_PLFEAR0 scientist/whatyoudoing {Len 1.96}
+SC_PLFEAR1 scientist/canttakemore {Len 1.86}
+SC_PLFEAR2 scientist/madness {Len 2.60}
+SC_PLFEAR3 scientist/noplease {Len 1.20}
+SC_PLFEAR4 scientist/getoutofhere {Len 3.06}
+SC_PLFEAR5 scientist/sorryimleaving {Len 1.38}
+
+SC_FEAR0 scientist/nooo {Len 0.53}
+SC_FEAR1 scientist/startle2 {Len 0.38}
+SC_FEAR2 scientist/startle1 nooo {Len 0.88}
+SC_FEAR3 scientist/dontwantdie {Len 1.75}
+SC_FEAR4 scientist/getoutalive {Len 2.42}
+SC_FEAR5 scientist/startle3 {Len 0.83}
+SC_FEAR6 scientist/startle4 {Len 0.45}
+SC_FEAR7 scientist/startle5 {Len 1.44}
+SC_FEAR8 scientist/startle6 {Len 1.01}
+SC_FEAR9 scientist/startle7 {Len 0.68}
+SC_FEAR10 scientist/startle8 {Len 1.13}
+SC_FEAR11 scientist/startle9 {Len 1.16}
+SC_FEAR12 scientist/startle1 {Len 0.36}
+
+SC_SCREAM0 scientist/sci_fear1 {Len 0.62}
+SC_SCREAM1 scientist/sci_fear2 {Len 0.68}
+SC_SCREAM2 scientist/sci_fear3 {Len 0.40}
+SC_SCREAM3 scientist/sci_fear4 {Len 0.58}
+SC_SCREAM4 scientist/sci_fear5 {Len 0.85}
+SC_SCREAM5 scientist/sci_fear6 {Len 0.50}
+SC_SCREAM6 scientist/sci_fear7 {Len 0.76}
+SC_SCREAM7 scientist/sci_fear8 {Len 0.52}
+SC_SCREAM8 scientist/sci_fear9 {Len 1.11}
+SC_SCREAM9 scientist/sci_fear10 {Len 0.51}
+SC_SCREAM10 scientist/sci_fear11 {Len 1.27}
+SC_SCREAM11 scientist/sci_fear12 {Len 0.70}
+SC_SCREAM12 scientist/sci_fear13 {Len 0.41}
+SC_SCREAM13 scientist/sci_fear14 {Len 0.59}
+SC_SCREAM14 scientist/sci_fear15 {Len 0.43}
+
+SC_SCARED0 scientist/whatyoudoing {Len 1.96}
+SC_SCARED1 scientist/stopattacking {Len 1.60}
+SC_SCARED2 scientist/youinsane {Len 2.61}
+
+// predisaster scientist
+
+SC_PHELLO0 scientist/hellofreeman {Len 3.47}
+SC_PHELLO1 scientist/greetings2 {Len 2.01}
+SC_PHELLO2 scientist/goodtoseeyou {Len 3.11}
+SC_PHELLO3 scientist/greetings {Len 2.25}
+SC_PHELLO4 scientist/hello {Len 2.42}
+SC_PHELLO5 scientist/hellothere {Len 0.78}
+SC_PHELLO6 scientist/freeman {Len 0.48}
+
+SC_PQUEST0 scientist/beverage {Len 3.06}
+SC_PQUEST1 scientist/statusreport {Len 3.59}
+SC_PQUEST2 scientist/tunnelcalc {Len 3.84}
+SC_PQUEST3 scientist/shakeunification {Len 3.62}
+SC_PQUEST4 scientist/correcttheory {Len 3.68}
+SC_PQUEST5 scientist/analysis {Len 3.12}
+SC_PQUEST6 scientist/purereadings {Len 3.15}
+SC_PQUEST7 scientist/newsample {Len 2.31}
+SC_PQUEST8 scientist/perfectday {Len 3.29}
+SC_PQUEST9 scientist/cascade {Len 4.36}
+SC_PQUEST10 scientist/delayagain {Len 3.24}
+SC_PQUEST11 scientist/softethics {Len 3.03}
+SC_PQUEST12 scientist/tunedtoday {Len 3.93}
+SC_PQUEST13 scientist/donuteater {Len 1.89}
+SC_PQUEST14 scientist/seencup {Len 1.85}
+SC_PQUEST15 scientist/hungryyet {Len 1.52}
+SC_PQUEST16 scientist/recalculate {Len 4.14}
+SC_PQUEST17 scientist/checkatten {Len 2.50}
+
+SC_PIDLE0 scientist/hideglasses {Len 2.29}
+SC_PIDLE1 scientist/weartie {Len 3.47}
+SC_PIDLE2 scientist/runtest {Len 3.43}
+SC_PIDLE3 scientist/limitsok {Len 2.17}
+SC_PIDLE4 scientist/asexpected {Len 1.45}
+SC_PIDLE5 scientist/thatsodd {Len 1.24}
+SC_PIDLE6 scientist/allnominal {Len 2.15}
+SC_PIDLE7 scientist/shutdownchart {Len 3.31}
+SC_PIDLE8 scientist/reportflux {Len 2.59}
+SC_PIDLE9 scientist/simulation {Len 3.14}
+SC_PIDLE10 scientist/hopenominal {Len 3.09}
+
+//If you use Scientists in Hazard Course
+SC_HAZ_OK0 holo/tr_sci_use {Len 2.34}
+
+//If you unuse Scientists in Hazard Course
+SC_HAZ_WAIT0 holo/tr_sci_unuse {Len 1.71}
+
+//Scientists in Hazard Course
+SC_GOODWORK holo/tr_sci_goodwork {Len 5.03}
+SC_HARDLYNOTICE holo/tr_sci_hardlynoticed {Len 4.44}
+SC_NEXTSTATION holo/tr_sci_nextstation {Len 3.36}
+
+//If you use Scientists before the disaster
+
+SC_POK0 scientist/sci_alone {Len 3.08}
+SC_POK1 scientist/sci_bother {Len 1.39}
+SC_POK2 scientist/sci_busy {Len 2.57}
+SC_POK3 scientist/sci_aftertest {Len 2.86}
+SC_POK4 scientist/sci_somewhere {Len 2.82}
+
+//narrative audio
+
+SC_1MUMBLE scientist/c1a0_sci_mumble {Len 6.42}
+
+SC_DISA scientist/c1a0_sci_disa {Len 6.78}
+SC_DIS1A scientist/c1a0_sci_dis1a {Len 18.06}
+SC_DIS1B scientist/c1a0_sci_dis1b {Len 4.53}
+SC_DIS1C scientist/c1a0_sci_dis1c {Len 2.78}
+SC_DIS1D scientist/c1a0_sci_dis1d {Len 2.81}
+
+SC_DIS2A scientist/c1a0_sci_dis2a {Len 5.75}
+SC_DIS3A scientist/c1a0_sci_dis3a {Len 2.71}
+SC_DIS4A scientist/c1a0_sci_dis4a {Len 5.36}
+SC_DIS5A scientist/c1a0_sci_dis5a {Len 4.16}
+SC_DIS6A scientist/c1a0_sci_dis6a {Len 10.46}
+SC_DIS7A scientist/c1a0_sci_dis7a {Len 7.11}
+SC_DIS8A scientist/c1a0_sci_dis8a {Len 0.37}
+SC_DIS9A scientist/c1a0_sci_dis9a {Len 4.43}
+SC_DIS10A scientist/c1a0_sci_dis10a {Len 8.03}
+SC_DIS11A scientist/c1a0_sci_dis11a {Len 10.85}
+SC_DIS12A scientist/c1a0_sci_dis12a {Len 4.33}
+SC_DIS13A scientist/c1a0_sci_dis13a {Len 1.57}
+SC_DIS14A scientist/c1a0_sci_dis14a {Len 3.89}
+SC_DIS15A scientist/c1a0_sci_dis15a {Len 8.32}
+SC_DIS16A scientist/c1a0_sci_dis16a {Len 3.16}
+SC_DIS17A scientist/c1a0_sci_dis17a {Len 2.81}
+
+SC_GETAWAY scientist/c1a0_sci_getaway {Len 3.61}
+SC_GMORN scientist/c1a0_sci_gm {Len 1.74}
+SC_BIGDAY scientist/c1a0_sci_bigday {Len 1.36}
+SC_SAMPLE scientist/c1a0_sci_samp {Len 2.54}
+SC_NOTTHAT scientist/c1a0_sci_desk {Len 0.00}
+
+SC_LOCK1A scientist/c1a0_sci_lock1a {Len 5.79}
+SC_LOCK2A scientist/c1a0_sci_lock2a {Len 7.07}
+SC_LOCK3A scientist/c1a0_sci_lock3a {Len 2.45}
+SC_LOCK4A scientist/c1a0_sci_lock4a {Len 4.51}
+SC_LOCK5A scientist/c1a0_sci_lock5a {Len 10.49}
+SC_LOCK6A scientist/c1a0_sci_lock6a {Len 8.13}
+SC_LOCK7A scientist/c1a0_sci_lock7a {Len 5.14}
+SC_LOCK8A scientist/c1a0_sci_lock8a {Len 2.76}
+SC_LOCK9A scientist/c1a0_sci_lock9a {Len 0.00}
+
+SC_CRIT1A scientist/c1a0_sci_crit1a {Len 2.40}
+SC_CRIT2A scientist/c1a0_sci_crit2a {Len 2.57}
+SC_CRIT3A scientist/c1a0_sci_crit3a {Len 2.54}
+
+SC_CTRL1A scientist/c1a0_sci_ctrl1a {Len 4.50}
+SC_CTRL2A scientist/c1a0_sci_ctrl2a {Len 6.48}
+SC_CTRL3A scientist/c1a0_sci_ctrl3a {Len 7.31}
+SC_CTRL4A scientist/c1a0_sci_ctrl4a {Len 3.75}
+
+SC_CONSOLE1A scientist/c1a1_sci_1scan {Len 1.83}
+SC_CONSOLE2A scientist/c1a1_sci_2scan {Len 2.29}
+SC_CONSOLE3A scientist/c1a1_sci_3scan {Len 5.25}
+SC_CONSOLE4A scientist/c1a1_sci_4scan {Len 17.46}
+SC_CONSOLE5A scientist/c1a1_sci_5scan {Len 1.10}
+SC_CONSOLERPT scientist/c1a1_sci_scanrpt {Len 0.00}
+
+//c1a2scripts
+
+SC_ZOMBIE1A scientist/c1a2_sci_1zomb {Len 2.31}
+SC_ZOMBIE3A scientist/c1a2_sci_3zomb {Len 1.07}
+SC_ZOMBIE5A scientist/c1a2_sci_5zomb {Len 0.84}
+SC_ZOMBIE6A scientist/c1a2_sci_6zomb {Len 3.01}
+
+SC_DANGLING scientist/c1a2_sci_dangling {Len 3.83}
+SC_DARKROOM scientist/c1a2_sci_darkroom {Len 5.84}
+SC_ELEVATOR scientist/c1a2_sci_elevator {Len 9.94}
+SC_LOUNGE scientist/c1a2_sci_lounge {Len 10.04}
+SC_TRANSMISSION scientist/c1a2_sci_transm {Len 8.63}
+
+//c1a3 scripts
+SC_1MAN scientist/c1a3_sci_1man {Len 3.40}
+SC_ATLAST scientist/c1a3_sci_atlast {Len 1.13}
+SC_RESCUED scientist/c1a3_sci_rescued {Len 2.65}
+SC_SILO1A scientist/c1a3_sci_silo1a {Len 5.06}
+SC_SILO2A scientist/c1a3_sci_silo2a {Len 2.20}
+SC_TEAM scientist/c1a3_sci_team {Len 1.86}
+SC_THANKGOD scientist/c1a3_sci_thankgod {Len 1.48}
+
+//c1a4 scripts
+SC_TRAINEND scientist/c1a4_sci_trainend {Len 9.80}
+SC_ROCKET scientist/c1a4_sci_rocket {Len 5.76}
+SC_BLIND scientist/c1a4_sci_blind {Len 4.17}
+SC_POWEROFF scientist/c1a4_sci_pwroff {Len 5.53}
+SC_POWERON scientist/c1a4_sci_pwr {Len 5.56}
+SC_GENER scientist/c1a4_sci_gener {Len 7.96}
+SC_TRUST scientist/c1a4_sci_trust {Len 36.33}
+SC_TENT scientist/c1a4_sci_tent {Len 3.81}
+
+//c2a3 scripts
+SC_ICKY scientist/c2a3_sci_icky {Len 17.30}
+SC_TRACK scientist/c2a3_sci_track {Len 29.01}
+
+//c2a4 scripts
+SC_ARG1A scientist/c2a4_sci_arg2a {Len 2.24}
+SC_ARG2A scientist/c2a4_sci_arg4a {Len 3.67}
+
+SC_TAU2A scientist/c2a4_sci_2tau {Len 2.52}
+SC_TAU4A scientist/c2a4_sci_4tau {Len 3.45}
+
+SC_1PSURG scientist/c2a4_sci_scanner {Len 5.71}
+SC_2PSURG scientist/c2a4_sci_sugicaloff {Len 5.62}
+SC_3PSURG scientist/c2a4_sci_surgury {Len 6.80}
+SC_ALLDIE scientist/c2a4_sci_alldie {Len 3.41}
+SC_LETOUT scientist/c2a4_sci_letout {Len 23.23}
+
+//c2a5 scripts
+SC_BOOBIE scientist/c2a5_sci_boobie {Len 17.68}
+SC_LEBUZ scientist/c2a5_sci_lebuz {Len 13.81}
+
+//c3a2 scripts
+
+SC_STRAWS scientist/c3a2_sci_straws {Len 37.99}
+SC_GLUON2A scientist/c3a2_sci_2glu {Len 10.49}
+SC_FLOOD scientist/c3a2_sci_flood {Len 8.78}
+SC_LINGER scientist/c3a2_sci_linger {Len 8.21}
+SC_SURVEY1A scientist/c3a2_sci_1surv {Len 2.33}
+SC_SURVEY3A scientist/c3a2_sci_3surv {Len 26.31}
+SC_SURVEY5A scientist/c3a2_sci_5surv {Len 6.53}
+SC_SURVEY7A scientist/c3a2_sci_7surv {Len 9.34}
+SC_LJUMP scientist/c3a2_sci_ljump {Len 14.76}
+SC_UPHERE scientist/c3a2_sci_uphere {Len 4.82}
+SC_PORTAL scientist/c3a2_sci_portal {Len 13.13}
+SC_PORTOPEN scientist/c3a2_sci_portopen {Len 2.14}
+SC_POSITION scientist/c3a2_sci_position {Len 2.72}
+SC_FOREVER scientist/c3a2_sci_forever {Len 2.39}
+SC_NOTYET scientist/c3a2_sci_notyet {Len 1.11}
+SC_FOOL scientist/c3a2_sci_fool {Len 1.34}
+
+//miscellaneous useful scripts
+SC_LETYOUIN scientist/letyouin {Len 1.45}
+SC_OVERHERE scientist/overhere {Len 1.79}
+
+// outdoor
+WILD0 ambience/(v30) quail1(p103), quail1(t10), quail1(p101) {Len 1.23}
+WILD1 ambience/bee1(v75) {Len 1.18}
+WILD2 ambience/bee2(p105) {Len 1.15}
+WILD3 ambience/hawk1(p98 v30) {Len 0.18}
+WILD4 ambience/hawk1(p105 v20) {Len 0.17}
+WILD5 ambience/(v50 p97) quail1, quail1(t15) {Len 0.75}
+WILD6 ambience/bee1(p98 v50) {Len 1.20}
+WILD7 ambience/bee1(p97) {Len 1.21}
+WILD8 ambience/quail1(p98 v20)) {Len 0.26}
+WILD9 ambience/des_wind1(v50) {Len 3.88}
+WILD10 ambience/des_wind2(v50) {Len 2.86}
+WILD11 ambience/des_wind3(v50) {Len 4.36}
+WILD9 ambience/des_wind1(v40 p105) {Len 3.88}
+WILD10 ambience/des_wind2(v40 p98) {Len 2.86}
+WILD11 ambience/des_wind3(v40 p103) {Len 4.36}
+WILD12 ambience/wren1(v80) {Len 1.13}
+
+// rocket
+ROCKET0 ambience/steamburst1 {Len 1.21}
+ROCKET1 ambience/steamburst1(p80) {Len 1.51}
+ROCKET2 ambience/steamburst1(p120) {Len 1.01}
+ROCKET3 ambience/rocket_groan1 {Len 3.52}
+ROCKET4 ambience/rocket_groan2 {Len 1.45}
+ROCKET5 ambience/rocket_groan3 {Len 2.10}
+ROCKET6 ambience/rocket_groan4 {Len 7.77}
+
+// distant war zone
+FAR_WAR0 ambience/(v50) distantmortar1 {Len 2.06}
+FAR_WAR1 ambience/(v60) distantmortar2 {Len 1.88}
+FAR_WAR2 ambience/(v50) distantmortar3 {Len 2.88}
+FAR_WAR3 ambience/(v15) biggun3 {Len 2.57}
+FAR_WAR4 ambience/(v20) rifle2 {Len 1.72}
+FAR_WAR5 ambience/(v10 p120) jetflyby1 {Len 6.37}
+FAR_WAR6 ambience/(v10) mgun_burst4 {Len 2.71}
+FAR_WAR7 ambience/(v30) distantmortar1 distantmortar3 distantmortar2 {Len 6.81}
+FAR_WAR8 ambience/(v10) biggun2 biggun2 biggun2 {Len 5.82}
+FAR_WAR9 ambience/(v15) mgun_burst1 {Len 3.45}
+FAR_WAR10 ambience/(v20) biggun1 rifle2 {Len 2.76}
+FAR_WAR11 ambience/(v60) distantmortar1 distantmortar1, distantmortar2, distantmortar1 {Len 8.54}
+FAR_WAR12 ambience/(v30) distantmortar2, distantmortar2 distantmortar2 distantmortar2, distantmortar3 distantmortar1 {Len 12.94}
+FAR_WAR13 ambience/(v10) mgun_burst2 {Len 1.78}
+FAR_WAR14 ambience/(v15) mgun_burst3 mgun_burst3 {Len 1.55}
+FAR_WAR15 ambience/(v10) rifle1 rifle1 {Len 2.00}
+FAR_WAR16 ambience/(v10) biggun2, biggun2 biggun2 {Len 6.07}
+
+// near war zone
+NEAR_WAR0 ambience/(v60) mgun_burst3 mgun_burst3 mgun_burst3(v50) {Len 2.32}
+NEAR_WAR1 ambience/(v60) rifle1 rifle2 rifle2 rifle1 rifle1 {Len 6.44}
+NEAR_WAR2 ambience/(v60) alienflyby1 {Len 7.40}
+NEAR_WAR3 ambience/(v60) biggun3 biggun3 biggun3 {Len 7.72}
+NEAR_WAR4 ambience/(v60) mgun_burst4 mgun_burst3 rifle1 mgun_burst4 {Len 7.20}
+NEAR_WAR5 ambience/(v60) jetflyby1 {Len 7.65}
+NEAR_WAR6 ambience/(v60) mgun_burst4 mgun_burst3 {Len 3.48}
+NEAR_WAR7 ambience/distantmortar1 distantmortar3 distantmortar2 {Len 6.81}
+NEAR_WAR8 ambience/(v60) biggun2 biggun2 biggun2 biggun2(v30) {Len 7.76}
+NEAR_WAR9 ambience/(v60) mgun_burst1 mgun_burst1 rifle2 mgun_burst3 {Len 9.38}
+NEAR_WAR10 agrunt/(v40) ag_fire1 ag_fire2 ag_fire2 ag_fire1 {Len 1.65}
+NEAR_WAR11 ambience/distantmortar1 distantmortar1, distantmortar2 {Len 6.24}
+NEAR_WAR12 ambience/(v60) mgun_burst2 mgun_burst2 mgun_burst3 mgun_burst2 {Len 6.11}
+
+
+
+// alien slave
+SLV_IDLE0 aslave/slv_word1 slv_word2 {Len 1.76}
+SLV_IDLE1 aslave/slv_word2 slv_word3(p95) {Len 2.67}
+SLV_IDLE2 aslave/slv_word3 slv_word4 {Len 3.12}
+SLV_IDLE3 aslave/slv_word4 slv_word5 slv_word5(p90) {Len 3.55}
+SLV_IDLE4 aslave/slv_word2(p110) slv_word6 slv_word7 slv_word3 {Len 4.86}
+SLV_IDLE5 aslave/slv_word6 slv_word7 slv_word2 {Len 3.24}
+SLV_IDLE6 aslave/slv_word7 slv_word8 slv_word3 {Len 2.92}
+SLV_IDLE7 aslave/slv_word8 slv_word1 slv_word8 slv_word8(p95) {Len 1.35}
+SLV_IDLE8 aslave/slv_word1(p115) slv_word6 {Len 2.05}
+SLV_IDLE9 aslave/slv_word3 slv_word3(p90) {Len 3.58}
+SLV_IDLE10 aslave/slv_word7(p85) {Len 1.26}
+
+SLV_ALERT0 aslave/(p105) slv_alert1 slv_word2 {Len 1.07}
+SLV_ALERT1 aslave/(p105) slv_word8 slv_word8 slv_word8 slv_word5 {Len 1.40}
+SLV_ALERT2 aslave/(p105) slv_alert4 slv_word4 slv_alert3 {Len 2.27}
+SLV_ALERT3 aslave/(p108) slv_alert1 slv_word5 {Len 1.16}
+SLV_ALERT4 aslave/(p108) slv_word5(p110) slv_word8 slv_word8 {Len 1.20}
+SLV_ALERT5 aslave/(p108) slv_alert4 slv_word7 slv_alert1 {Len 1.64}
+
+//HOLOGRAM
+
+HOLO_3JUMPS holo/tr_holo_3jumps {Len 12.57}
+HOLO_BREAKBOX holo/tr_holo_breakbox {Len 9.50}
+HOLO_BREATH holo/tr_holo_breath {Len 10.90}
+HOLO_BUTTON holo/tr_holo_button {Len 5.52}
+HOLO_CHARGER holo/tr_holo_charger {Len 17.41}
+HOLO_COMMENCING holo/tr_holo_commencing {Len 5.12}
+HOLO_CONGRATS holo/tr_holo_congrats {Len 5.86}
+HOLO_DONE holo/tr_holo_done {Len 9.08}
+HOLO_DROWN holo/tr_holo_drown {Len 15.16}
+HOLO_DUCK holo/tr_holo_duck {Len 9.70}
+HOLO_FALLSHORT holo/tr_holo_fallshort {Len 3.54}
+HOLO_FANTASTIC holo/tr_holo_fantastic {Len 1.02}
+HOLO_FLASHLIGHT holo/tr_holo_flashlight {Len 2.72}
+HOLO_GREATWORK holo/tr_holo_greatwork {Len 4.32}
+HOLO_GRENADE holo/tr_holo_grenade {Len 7.10}
+HOLO_HITALL holo/tr_holo_hitall {Len 13.59}
+HOLO_INJURY holo/tr_holo_injury {Len 1.88}
+HOLO_INTRO holo/tr_holo_intro {Len 14.11}
+HOLO_JDUCK holo/tr_holo_jduck {Len 10.96}
+HOLO_JUMP holo/tr_holo_jump {Len 15.23}
+HOLO_JUMPDOWN holo/tr_holo_jumpdown {Len 12.59}
+HOLO_JUMPGAP holo/tr_holo_jumpgap {Len 7.57}
+HOLO_KEEPTRYING holo/tr_holo_keeptrying {Len 1.65}
+HOLO_LADDER holo/tr_holo_ladder {Len 7.75}
+HOLO_LEADGUARD holo/tr_holo_leadguard {Len 12.61}
+HOLO_LIGHTOFF holo/tr_holo_lightoff {Len 5.11}
+HOLO_LONGJUMP holo/tr_holo_longjump {Len 14.38}
+HOLO_MEDKIT holo/tr_holo_medkit {Len 18.01}
+HOLO_MOVE holo/tr_holo_move {Len 14.04}
+HOLO_NICEJOB holo/tr_holo_nicejob {Len 0.92}
+HOLO_PIPEDUCK holo/tr_holo_pipeduck {Len 16.59}
+HOLO_PULLBOX holo/tr_holo_pullbox {Len 14.68}
+HOLO_PUSHBOX holo/tr_holo_pushbox {Len 9.44}
+HOLO_RADIATION holo/tr_holo_radiation {Len 8.51}
+HOLO_RETRY holo/tr_holo_retry {Len 6.01}
+HOLO_RUNSTART holo/tr_holo_runstart {Len 1.84}
+HOLO_SPINBRIDGE holo/tr_holo_spinbridge {Len 4.36}
+HOLO_STARTLIFT holo/tr_holo_startlift {Len 5.04}
+HOLO_STEAM holo/tr_holo_steam {Len 10.18}
+HOLO_TARGET holo/tr_holo_target {Len 11.97}
+HOLO_TRYAGAIN holo/tr_holo_tryagain {Len 1.84}
+HOLO_USETRAIN holo/tr_holo_usetrain {Len 11.80}
+
+
+//GMAN
+
+//c1a0 narrative
+GM_1MUMBLE gman/gman_mumble1 {Len 2.52}
+GM_2MUMBLE gman/gman_mumble2 {Len 2.27}
+GM_3MUMBLE gman/gman_mumble3 {Len 2.63}
+GM_4MUMBLE gman/gman_mumble4 {Len 3.60}
+GM_5MUMBLE gman/gman_mumble5 {Len 2.74}
+GM_6MUMBLE gman/gman_mumble6 {Len 3.80}
+
+//c5 narrative
+//GM_OFFER gman/gman_offer [long version: what follows is chopped into sections]
+
+
+GM_SUIT gman/gman_suit {Len 16.51}
+GM_NASTY gman/gman_nasty {Len 12.70}
+GM_POTENTIAL gman/gman_potential {Len 20.12}
+GM_STEPIN gman/gman_stepin {Len 13.50}
+GM_OTHERWISE gman/gman_otherwise {Len 13.21}
+GM_1CHOOSE gman/gman_choose1 {Len 1.80}
+GM_2CHOOSE gman/gman_choose2 {Len 1.59}
+GM_WISE gman/gman_wise {Len 5.11}
+GM_REGRET gman/gman_noreg {Len 2.67}
+GM_WONTWORK gman/gman_nowork {Len 3.35}

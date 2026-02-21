@@ -1,0 +1,113 @@
+soundscapes_manifest
+{
+	// Garry's Mod
+	"file"		"scripts/soundscapes/soundscapes_garrysmod.txt"
+
+	// Half-Life 2: Lost Coast
+	"file"		"scripts/soundscapes/soundscapes_lostcoast.txt"
+
+	// Half-Life 1: Source
+	"file"		"scripts/soundscapes/soundscapes_hls.txt"
+
+	// Half-Life 2
+	"file"		"scripts/soundscapes/hl2/soundscapes.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_canals.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_citadel.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_coast.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_elab.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_klab.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_prison.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_streetwar.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_town.txt"
+	"file"		"scripts/soundscapes/hl2/soundscapes_trainyard.txt"
+
+	// Half-Life 2: Deathmatch
+	"file"		"scripts/soundscapes/hl2dm/soundscapes_labs.txt"
+	"file"		"scripts/soundscapes/hl2dm/soundscapes_strike.txt"
+
+	// Half-Life 2: Episode 1
+	"file"		"scripts/soundscapes/episodic/soundscapes_citadel_episodic.txt"
+	"file"		"scripts/soundscapes/episodic/soundscapes_city_episodic.txt"
+
+	// Half-Life 2: Episode 2
+	"file"		"scripts/soundscapes/ep2/soundscapes_outland.txt"
+	"file"		"scripts/soundscapes/ep2/soundscapes_outland2.txt"
+	"file"		"scripts/soundscapes/ep2/soundscapes_silo.txt"
+
+	// Day Of Defeat: Source
+	"file"		"scripts/soundscapes/dod/soundscapes_anzio.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_argentan.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_avalanche.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_colmar.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_dod_colorcorrection.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_dod_palermo.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_donner.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_flash.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_jagd.txt"
+	"file"		"scripts/soundscapes/dod/soundscapes_kalt.txt"
+
+	// Counter Strike: Source
+	"file"		"scripts/soundscapes/cstrike/soundscapes_assault.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_aztec.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_cbble.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_chateau.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_compound.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_dust.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_dust2.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_general.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_havana.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_inferno.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_italy.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_militia.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_nuke.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_office.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_piranesi.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_port.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_prodigy.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_tides.txt"
+	"file"		"scripts/soundscapes/cstrike/soundscapes_train.txt"
+
+	// TF2
+	"file"		"scripts/soundscapes/tf/soundscapes.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_2fort.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_badlands.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_barnblitz.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_cactusvalley.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_cp_coldfront.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_deathpit.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_doublecross.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_dustbowl.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_egypt.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_goldrush.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_gorge.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_granary.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_gravelpit.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_halloween.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_harbor.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_hightower.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_hydro.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_lakeside.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_lumberyard.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_mannworks.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_medieval.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_moonbase.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_mountainlab.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_nightfall.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_nucleus.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_pipeline.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_powerhouse.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_ravine.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_rottenburg.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_sawmill.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_soho.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_thundermountain.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_upward.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_viaduct.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_warehouse.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_well.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_hellfire.txt"
+
+	// Portal
+	"file"		"scripts/soundscapes/portal/soundscapes_testchmb_portal.txt"
+	"file"		"scripts/soundscapes/portal/soundscapes_escape_portal.txt"
+}

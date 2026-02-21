@@ -1,0 +1,874 @@
+
+.servers
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow: auto;
+}
+
+.gamemode
+{
+	margin-right: 5px;
+	margin-bottom: 5px;
+	background-color: #efefef;
+	padding: 5px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+	position: relative;
+	height: 34px;
+	overflow: hidden;
+	background-image: -webkit-linear-gradient(bottom, rgb(230,230,230) 1%, rgb(240,240,240) 99%);
+}
+
+.gamemode:hover
+{
+	background-image: -webkit-linear-gradient(bottom, rgb(250,230,150) 1%, rgb(250,250,150) 99%);
+}
+
+.gamemode .name
+{
+	font-weight: bold;
+	position: absolute;
+	left: 40px;
+	top: 5px;
+	font-size: 20px;
+	white-space: nowrap;
+}
+
+.gamemode .name tag
+{
+	background: #2387ed;
+	color: #fff;
+	padding: 1px 12px;
+	padding-bottom: 2px;
+	margin-left: 10px;
+
+	font-size: 11px;
+	font-weight: normal;
+
+	position: relative;
+	top: -4px;
+}
+
+.gamemode .stats
+{
+	text-align: right;
+	font-size: 11px;
+	color: #555;
+	position: absolute;
+	bottom: 3px;
+	left: 43px;
+}
+
+.gamemode IMG
+{
+	font-weight: bold;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	left: 5px;
+	top: 9px;
+}
+
+H1 small
+{
+	color: #888;
+	font-size: 50%;
+	font-weight: normal;
+	padding-left: 8px;
+}
+
+.serverlist_layout
+{
+	display: -webkit-box;
+	-webkit-box-pack: justify;
+	-webkit-box-align: start;
+	position: absolute;
+	top: 90px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+.serverlist
+{
+	-webkit-box-flex: 1;
+	position: relative;
+	background-color: white;
+	padding: 10px;
+	border-radius: 4px;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.serverlist.found_servers
+{
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	position: relative;
+
+	margin-top: 5px;
+	padding: 1px;
+}
+
+.serverlist ping, .serverlist maxplayers, .serverlist players, .serverlist map, .serverlist rank, .serverlist lastvisited
+{
+	width: 50px;
+	font-size: 11px;
+	overflow: hidden;
+	text-align: center;
+	display: block;
+}
+
+.serverlist name
+{
+	overflow: hidden;
+	white-space: nowrap;
+	font-size: 13px;
+	display: block;
+	margin-right: 3px;
+	-webkit-box-flex: 1;
+	line-height: 17px;
+}
+
+.serverlist name span
+{
+	vertical-align: top;
+}
+
+.serverlist name tag
+{
+	background: #ffcfcf;
+	color: #000;
+	font-size: 10px;
+	font-weight: normal;
+	padding: 1px 10px;
+	margin-left: 5px;
+	margin-top: 2px;
+	vertical-align: top;
+	display: inline-block;
+	line-height: normal;
+}
+
+.serverlist name .flag
+{
+	position: relative;
+	top: -2px;
+}
+
+.serverlist name tag.future
+{
+	background: #e6e6e6;
+	color: #000;
+}
+
+.serverlist name .passworded
+{
+	margin-right: 4px;
+}
+
+.serverlist lastvisited
+{
+	width: auto;
+	padding-right: 5px;
+	text-align: right;
+}
+
+.serverlist map
+{
+	width: 90px;
+	text-align: left;
+}
+
+.serverlist players
+{
+	width: 48px;
+}
+
+.serverlist ping
+{
+	width: 32px;
+}
+
+.serverlist rank
+{
+	width: 64px;
+}
+
+.serverlist .server rank
+{
+	background-image: url( '../../img/rank1.png?1' );
+}
+
+.serverlist .server rank.rank5
+{
+	background-image: url( '../../img/rank5.png?1' );
+}
+
+.serverlist .server rank.rank4
+{
+	background-image: url( '../../img/rank4.png?1' );
+}
+
+.serverlist .server rank.rank3
+{
+	background-image: url( '../../img/rank3.png?1' );
+}
+
+.serverlist .server rank.rank2
+{
+	background-image: url( '../../img/rank2.png?1' );
+}
+
+
+
+.serverlist .server
+{
+	height: 16px;
+	background-color: #E7F0FF;
+	padding: 3px 4px;
+	color: #444;
+	cursor: pointer;
+	display: -webkit-box;
+	-webkit-box-pack: justify;
+	-webkit-box-align: stretch;
+	line-height: 16px;
+}
+
+.serverlist .server:nth-child(odd)
+{
+	background-color: #F1F6FF;
+}
+
+.serverlist .empty
+{
+	color: #777;
+}
+
+.serverlist .missingmap map
+{
+	color: #955;
+}
+
+.serverlist .empty players
+{
+	color: #daa;
+}
+
+.serverlist .server:hover
+{
+	background-color: #B7DDFD;
+}
+
+.serverlist .header
+{
+	background-color: #2387ed;
+	position: absolute;
+	border-radius: 4px 4px 0 0;
+	padding: 4px;
+	font-size: 11px;
+
+	top: 8px;
+	left: 8px;
+	right: 8px;
+	display: -webkit-box;
+	-webkit-box-pack: justify;
+	-webkit-box-align: stretch;
+	line-height: 16px;
+}
+
+.serverlist .body
+{
+	top: 32px;
+	left: 8px;
+	right: 8px;
+	bottom: 8px;
+}
+
+.serverlist .header ping, .serverlist .header maxplayers, .serverlist .header players, .serverlist .header map, .serverlist .header name, .serverlist .header rank
+{
+	font-size: 11px;
+	font-weight: normal;
+	color: #fff;
+	text-align: center;
+	cursor: pointer;
+}
+
+@media screen and (min-width: 1280px)
+{
+	.serverlist .servers ping, .serverlist .servers maxplayers, .serverlist .servers players, .serverlist .servers map, .serverlist .servers rank
+	{
+		font-size: 13px;
+	}
+
+	.serverlist name
+	{
+		font-size: 13px;
+		font-weight: bold;
+	}
+
+	.serverlist map
+	{
+		width: 130px;
+	}
+
+	.serverlist .header name
+	{
+		padding: 0;
+	}
+}
+
+@media screen and (min-width: 1650px)
+{
+	.serverlist map
+	{
+		width: 170px;
+	}
+}
+
+H1.menuheader
+{
+	color: white;
+	margin-bottom: 0;
+	text-shadow: 2px 2px 1px black;
+
+}
+
+H1.menuheader small
+{
+	color: white;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px black;
+}
+
+A.bglink
+{
+	color: white;
+	font-weight: bold;
+	background-color: #2387ed;
+	padding: 8px 10px;
+	border-radius: 3px;
+	display: inline-block;
+	font-size: 14px;
+	margin-top: 4px;
+
+	position: absolute; /*hack to make it appear over the search bar*/
+}
+
+A.bglink:hover
+{
+	background-color: #4f9ded;
+}
+
+A.bglink img
+{
+	vertical-align: middle;
+}
+
+.serverinfo
+{
+	width: 280px;
+	background-color: white;
+	padding: 10px 15px;
+	border-radius: 4px;
+	margin-left: 10px;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.serverinfo .closebtn
+{
+	width: 21px;
+	height: 21px;
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	border-radius: 4px;
+	cursor: pointer;
+	background: #1a8cff;
+	background-image: url(../../img/cross.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 15px;
+}
+.serverinfo .closebtn:hover
+{
+	background-color: #4f9ded;
+}
+
+.serverinfo name
+{
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+	/*white-space: nowrap;*/
+	overflow: hidden;
+	width: 100%;
+	letter-spacing: -1px;
+	user-select: text;
+}
+
+.serverinfo button
+{
+	width: 100%;
+	font-size: 30px;
+}
+
+.serverinfo address
+{
+	text-align: left;
+	font-size: 12px;
+	user-select: text;
+}
+
+.serverinfo subinfo
+{
+	display: block;
+	color: #444;
+}
+
+.serverinfo > div
+{
+	display: table;
+	width: 100%;
+	height: 100%;
+	table-layout: fixed;
+}
+
+.serverinfo div.cell
+{
+	display: table-cell;
+}
+
+.serverinfo header
+{
+	display: table-row;
+	height: 0;
+}
+
+.serverinfo players
+{
+	display: block;
+	height: 100%;
+	background-color: #EEE;
+	border-radius: 4px;
+	overflow: auto;
+}
+
+.serverinfo players .pname
+{
+	max-width: 170px;
+	overflow: hidden;
+}
+
+@media screen and (max-width: 900px)
+{
+	.serverinfo players .pname
+	{
+		max-width: 95px
+	}
+}
+
+.serverinfo footer
+{
+	display: table-row;
+	height: 0;
+	margin-top: 5px;
+}
+
+.serverinfo footer input[type=password]
+{
+	width: 100%;
+	padding: 4px;
+	margin-bottom: 5px;
+}
+
+.activeserver
+{
+	background-color: #FFA !important;
+}
+
+DIV.installgamemode
+{
+	height: 25px;
+	line-height: 26px;
+	font-size: 24px;
+	font-weight: bold;
+	background-color: #2387ed;
+	text-align: center;
+	color: white;
+	padding: 5px;
+	border-radius: 5px;
+	position: absolute;
+	top: 10px;
+	right: 0;
+	border: 2px solid white;
+	z-index: 100;
+	cursor: pointer;
+	background: #2387ed url( '../../img/gm_install32.png' ) no-repeat 6px center;
+	padding-left: 36px;
+}
+
+DIV.installgamemode:hover
+{
+	background-color: #4f9ded;
+}
+
+SPAN.installgamemode
+{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	border-radius: 0 4px 4px 0;
+	cursor: pointer;
+	background: #2387ed url( '../../img/gm_install16.png' ) no-repeat 13px center;
+	width: 42px;
+}
+
+SPAN.installgamemode:hover
+{
+	background-color: #4f9ded;
+}
+
+.server_gamemodes
+{
+	border: 5px solid white;
+
+	position: absolute;
+	top: 64px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+}
+
+.server_gamemodes_inner
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+}
+
+.add_fav_server
+{
+	background-color: #ddd;
+	/*border-radius: 6px;
+	color: black;
+	box-shadow: 0px 0px 14px -3px black;*/
+
+	margin: 0 auto;
+	padding: 5px 10px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	/* top: 16px; */
+}
+
+.add_fav_server button
+{
+	background-color: #2387ed;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 4px 8px;
+	margin-left: 5px;
+
+	height: 24px;
+}
+
+.add_fav_server button:hover
+{
+	background-color: #4f9ded;
+}
+
+.add_fav_server input
+{
+	border: 1px solid #ABADB3;
+	border-radius: 3px;
+
+	height: 24px;
+	padding: 4px;
+	width: 200px;
+}
+
+.add_fav_server div.header
+{
+	display: -webkit-box;
+}
+.add_fav_server div.header span
+{
+	display: -webkit-box;
+	-webkit-box-flex: 1;
+	line-height: 24px;
+}
+.add_fav_server div.header div.fav_inputs
+{
+	display: -webkit-box;
+	-webkit-box-pack: end;
+}
+
+@media screen and (min-width: 1280px)
+{
+	.server_gamemodes
+	{
+		margin: 0 auto;
+		width: 80%;
+		max-width: 1000px;
+	}
+}
+
+.noplayers
+{
+	opacity: 0.4;
+}
+
+/* Server search box */
+.controls .searchbox
+{
+	border-radius: 2px;
+	margin-top: 4px;
+	padding: 7px 10px;
+	height: auto;
+	width: 15%;
+	min-width: 150px;
+	margin-right: 0px;
+}
+
+DIV.page DIV.options UL LI.sb_filters
+{
+	font-size: 16px;
+	/*color: black;
+	text-shadow: none;*/
+	margin-right: 42px;
+	/*padding: 8px 16px;*/
+}
+DIV.page DIV.options UL LI.sb_filter_sep
+{
+	border-top: 1px solid white;
+	box-shadow: 1px 1px 1px black;
+	margin-right: 42px;
+	margin-bottom: 24px;
+}
+DIV.page DIV.options UL LI.sb_filters .passworded
+{
+	vertical-align: text-top;
+}
+.gmfilter_rev
+{
+	cursor: hand;
+	vertical-align: middle;
+	margin-left: 3px;
+	margin-top: -2px;
+}
+
+.small
+{
+	font-size: 16px;
+}
+
+.smalltextbox
+{
+	width: 70px;
+	border-radius: 2px;
+	padding: 2px 10px;
+	text-align: center;
+}
+
+input[type=number]::-webkit-inner-spin-button
+{
+	-webkit-appearance: none; /*Unfortunately padding looks bad in CEF for these*/
+}
+
+.flags_filter
+{
+	margin-top: 5px;
+	background: #9c9c9c;
+	padding: 4px;
+	padding-bottom: 0px; /*Done by the flags*/
+	border-radius: 4px;
+	text-align: center;
+}
+
+.flags_filter .flag
+{
+	cursor: hand;
+	padding: 3px;
+	margin: 0 2px;
+	margin-bottom: 4px;
+	background: #fff;
+	border-radius: 4px;
+}
+.flags_filter .flag.prefer
+{
+	background: #4eda6c;
+}
+.flags_filter .flag.avoid
+{
+	background: #da4e4e;
+}
+
+@media screen and (max-width: 1024px)
+{
+	div.page.server_browser DIV.innerpage
+	{
+		left: 180px;
+	}
+}
+
+@media screen and (min-width: 1367px)
+{
+	div.page.server_browser
+	{
+		margin-right: 50px;
+	}
+}
+
+@media screen and (max-width: 1366px)
+{
+	div.page.server_browser DIV.innerpage
+	{
+		left: 250px;
+		right: 5px;
+	}
+
+	DIV.page.server_browser DIV.options
+	{
+		padding-left: 5px;
+	}
+
+	DIV.page.server_browser DIV.options UL
+	{
+		margin-left: 0px;
+	}
+}
+
+/* just make it not unacceptable */
+@media screen and (max-width: 1000px)
+{
+	DIV.page DIV.innerpage
+	{
+		right: 5px;
+		top: 5px;
+		bottom: 5px;
+	}
+
+	.serverinfo
+	{
+		padding: 5px;
+		width: 150px;
+	}
+
+	.serverlist .header
+	{
+		top: 3px;
+		left: 3px;
+		right: 3px;
+	}
+	.serverlist .body
+	{
+		top: 25px;
+		left: 3px;
+		right: 3px;
+		bottom: 3px;
+	}
+
+	.serverlist name
+	{
+		font-size: 11px;
+		line-height: inherit;
+	}
+	.serverlist .server:not(:hover) lastvisited 
+	{
+		display: none;
+	}
+	.serverlist lastvisited .lasttime
+	{
+		display: none;
+	}
+	.serverlist map
+	{
+		width: 56px;
+	}
+	.serverlist players
+	{
+		width: 46px;
+	}
+	.serverlist ping
+	{
+		width: 18px;
+	}
+	.serverlist rank
+	{
+		width: 16px;
+	}
+	.serverlist .server rank
+	{
+		background-image: url( '../../img/ranksmall1.png' );
+	}
+
+	.serverlist .server rank.rank5
+	{
+		background-image: url( '../../img/ranksmall5.png' );
+	}
+
+	.serverlist .server rank.rank4
+	{
+		background-image: url( '../../img/ranksmall4.png' );
+	}
+
+	.serverlist .server rank.rank3
+	{
+		background-image: url( '../../img/ranksmall3.png' );
+	}
+
+	.serverlist .server rank.rank2
+	{
+		background-image: url( '../../img/ranksmall2.png' );
+	}
+}
+
+@media screen and (max-width: 1650px)
+{
+	.serverlist lastvisited lbl
+	{
+		display: none;
+	}
+}
+
+@media screen and (max-width: 1366px)
+{
+	.serverinfo
+	{
+		width: 215px;
+	}
+}
+
+name .favbutton
+{
+	background: url( '../../img/notfavourite.png' );
+	margin-right: 4px;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+}
+name .favbutton:hover
+{
+	background: url( '../../img/notfavourite_add.png' );
+}
+name .favbutton.favorited
+{
+	background: url( '../../img/favourite.png' );
+}
+name .favbutton.favorited:hover
+{
+	background: url( '../../img/favourite_remove.png' );
+}
+

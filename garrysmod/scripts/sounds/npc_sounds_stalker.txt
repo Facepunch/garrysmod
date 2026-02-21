@@ -1,0 +1,319 @@
+//
+//
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+//
+// VOL_NORM		1.0f
+//
+//-----------------------------------------------------------------------------
+// common attenuation values
+//-----------------------------------------------------------------------------
+//
+// DON'T USE THESE - USE SNDLVL_ INSTEAD!!!
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f
+//	ATTN_IDLE		2.0f
+//	ATTN_STATIC		1.25f 
+//	ATTN_RICOCHET	1.5f
+//	ATTN_GUNFIRE	0.27f
+//
+//	SNDLVL_NONE		= 0,
+//	SNDLVL_25dB		= 25,
+//	SNDLVL_30dB		= 30,
+//	SNDLVL_35dB		= 35,
+//	SNDLVL_40dB		= 40,
+//	SNDLVL_45dB		= 45,
+//	SNDLVL_50dB		= 50,	= 3.9
+//	SNDLVL_55dB		= 55,	= 3.0
+//	SNDLVL_IDLE		= 60,	= 2.0
+//	SNDLVL_TALKING		= 60,	= 2.0
+//	SNDLVL_60dB		= 60,	= 2.0
+//	SNDLVL_65dB		= 65,	= 1.5
+//	SNDLVL_STATIC		= 66,	= 1.25
+//	SNDLVL_70dB		= 70,	= 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_75dB		= 75,	= 0.8
+//	SNDLVL_80dB		= 80,	= 0.7
+//	SNDLVL_85dB		= 85,	= 0.6
+//	SNDLVL_90dB		= 90,	= 0.5
+//	SNDLVL_95dB		= 95,
+//	SNDLVL_100dB	= 100,	= 0.4
+//	SNDLVL_105dB	= 105,
+//	SNDLVL_120dB	= 120,
+//	SNDLVL_130dB	= 130,
+//	SNDLVL_GUNFIRE	= 140, = 0.27
+//	SNDLVL_140dB	= 140,	= 0.2
+//	SNDLVL_150dB	= 150,	= 0.2
+//
+
+
+
+
+"NPC_Stalker.Ambient01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_ambient01.wav"
+}
+
+"NPC_Stalker.screech01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_alert1b.wav"
+}
+
+"NPC_Stalker.screech02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_alert2b.wav"
+}
+
+"NPC_Stalker.screech03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_alert3b.wav"
+}
+
+"NPC_Stalker.screech04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_die1.wav"
+}
+
+"NPC_Stalker.screech05"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_die2.wav"
+}
+
+"NPC_Stalker.screech06"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_die2.wav"
+}
+
+"NPC_Stalker.screech07"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_pain1.wav"
+}
+
+"NPC_Stalker.screech08"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_pain2.wav"
+}
+
+"NPC_Stalker.screech09"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/stalker/stalker_pain3.wav"
+}
+
+"NPC_Stalker.AmbientLaserStart"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.800"
+	"pitch"			"130, 150"
+
+	"soundlevel"	"SNDLVL_100dB"
+
+	"wave"			"npc/stalker/laser_start.wav"
+}
+
+"NPC_Stalker.BurnFlesh"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"95, 115"
+
+	"soundlevel"	"SNDLVL_100dB"
+
+	"wave"			"npc/stalker/laser_flesh.wav"
+}
+
+"NPC_Stalker.BurnWall"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.800"
+	"pitch"			"95, 110"
+
+	"soundlevel"	"SNDLVL_90dB"
+
+	"wave"			"npc/stalker/laser_burn.wav"
+}
+
+"NPC_Stalker.FootstepLeft"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.800"
+	"pitch"			"95, 110"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"rndwave"
+	{
+		"wave"	"npc/stalker/stalker_footstep_left1.wav"
+		"wave"	"npc/stalker/stalker_footstep_left2.wav"
+	}
+}
+
+"NPC_Stalker.FootstepRight"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.800"
+	"pitch"			"95, 110"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"rndwave"
+	{
+		"wave"	"npc/stalker/stalker_footstep_right1.wav"
+		"wave"	"npc/stalker/stalker_footstep_right2.wav"
+	}
+}
+
+"NPC_Stalker.Hit"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.800"
+	"pitch"			"80, 120"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"npc/vort/foot_hit.wav"
+}
+
+"NPC_Stalker.Scream"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.700"
+	"pitch"			"90, 110"
+
+	"soundlevel"	"SNDLVL_100dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/stalker/stalker_alert1b.wav"
+		"wave"	"npc/stalker/stalker_alert2b.wav"
+		"wave"	"npc/stalker/stalker_alert3b.wav"
+	}
+}
+
+"NPC_Stalker.Alert"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.7"
+	"pitch"			"90, 110"
+
+	"soundlevel"		"SNDLVL_100db"
+	"rndwave"
+	{
+		"wave"			"npc/stalker/stalker_alert1b.wav"
+		"wave"			"npc/stalker/stalker_alert2b.wav"
+		"wave"			"npc/stalker/stalker_alert3b.wav"
+	}
+}
+
+"NPC_Stalker.Pain"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.7"
+	"pitch"			"90, 110"
+
+	"soundlevel"		"SNDLVL_90db"
+	"rndwave"
+	{
+		"wave"			"npc/stalker/stalker_pain1.wav"
+		"wave"			"npc/stalker/stalker_pain2.wav"
+		"wave"			"npc/stalker/stalker_pain3.wav"
+	}
+}
+
+"NPC_Stalker.Die"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.7"
+	"pitch"			"90, 110"
+
+	"soundlevel"		"SNDLVL_100db"
+	"rndwave"
+	{
+		"wave"			"npc/stalker/stalker_die1.wav"
+		"wave"			"npc/stalker/stalker_die2.wav"
+	}
+}
+
+
+"NPC_Stalker.ScreamTrainCar"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.95"
+	"pitch"			"105, 125"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/stalker/stalker_scream1.wav"
+		"wave"	"npc/stalker/stalker_scream2.wav"
+		"wave"	"npc/stalker/stalker_scream3.wav"
+		"wave"	"npc/stalker/stalker_scream4.wav"
+		"wave"	"npc/stalker/stalker_alert2b.wav"
+		"wave"	"npc/stalker/stalker_alert3b.wav"
+		"wave"	"npc/stalker/stalker_pain1.wav"
+		"wave"	"npc/stalker/stalker_pain2.wav"
+		"wave"	"npc/stalker/stalker_pain3.wav"
+	}
+}
+

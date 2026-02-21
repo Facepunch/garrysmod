@@ -1,0 +1,416 @@
+"TableToKeyValues"
+{
+	"parentid"		"16"
+	"icon"		"icon16/page.png"
+	"id"		"22"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Foliage"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/bramble001a.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/cattails.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/driftwood_01a.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/driftwood_02a.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/driftwood_03a.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/driftwood_clump_01a.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/driftwood_clump_02a.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/driftwood_clump_03a.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/ivy_01.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/oak_tree01.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/shrub_01a.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_cliff_01a.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_cliff_02a.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_deciduous_01a-lod.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_deciduous_01a.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_deciduous_02a.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_deciduous_03a.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_deciduous_03b.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_poplar_01.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_deciduous_card_01.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props_foliage/tree_deciduous_card_01_skybox.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_001.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_001a.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_001b.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_003a.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_004a.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_004b.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_004c.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/perftest/grass_tuft_004d.mdl"
+		}
+		"31"
+		{
+			"type"		"header"
+			"text"		"Rocks"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground01a.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground01b.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/rock001a.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/bigrock.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground01c.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground01d.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground01e.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground02a.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground02b.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/perftest/rocksground02c.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff01b.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff01c.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff01e.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff01f.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff01g.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff01j.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff01k.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff05a.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff05b.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff05e.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff05f.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff06d.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff06i.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff07b.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff_cluster01b.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff_cluster02a.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff_cluster02b.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff_cluster02c.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff_cluster03a.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff_cluster03b.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockcliff_cluster03c.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite01a.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite01b.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite01c.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite02a.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite02b.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite02c.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite03a.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite03b.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite03c.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite04a.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite04b.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/rockgranite04c.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/rock_riverbed01a.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/rock_riverbed01b.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/rock_riverbed01c.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/rock_riverbed01d.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/rock_riverbed02a.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/rock_riverbed02b.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props_canal/rock_riverbed02c.mdl"
+		}
+	}
+	"name"		"Foliage and Rocks"
+	"version"		"3"
+}

@@ -1,0 +1,154 @@
+
+BODY
+{
+	overflow: hidden;
+	margin: 0px;
+
+	background-position: center;
+	background-size: cover;
+}
+
+#container
+{
+	position: absolute;
+	text-align: center;
+	left: 50%;
+	top: 45%;
+	margin-top: -120px;
+	margin-left: -150px;
+	width: 300px;
+}
+
+#logo
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1.25em;
+}
+
+.progressbar
+{
+	margin: 0 auto;
+	width: 150px;
+	border-radius: 3px;
+	text-align: left;
+	padding: 1px;
+	background-color: rgba( 0, 0, 0, 0.6 );
+	float: right;
+}
+
+.progressbar .inner
+{
+	border-radius: 2px;
+	background-color: rgba( 0, 240, 0, 1.0 );
+	width: 0.2%;
+	height: 11px;
+}
+
+#progress_text
+{
+	position: absolute;
+	width: 500px;
+	right: 170px;
+	bottom: 0px;
+	margin: 0 auto;
+	text-align: right;
+	font-size: 12px;
+	font-family: helvetica;
+	color: rgba( 0, 0, 0, 0.4);
+	letter-spacing: -1px;
+	text-shadow: 0px 0px 3px white;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+@-webkit-keyframes walk
+{
+	0%
+	{
+		-webkit-transform: rotateZ(0deg);
+	}
+
+	100%
+	{
+		-webkit-transform: rotateZ(360deg);
+	}
+}
+
+.walk
+{
+	-webkit-animation: walk 10s linear infinite;
+	text-align: center;
+	background-color: #fe7;
+	width: 24px;
+	height: 24px;
+	color: #999;
+	font-size: 16px;
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	border-radius: 3px;
+	display: inline-block;
+	border: 2px solid #999;
+}
+
+#spambox
+{
+	float: right;
+	overflow: hidden;
+	max-height: 100%;
+}
+
+#background
+{
+	background-image: url( 'img/bg.png' );
+	background-size: 100% 100%;
+	height: 100%;
+}
+body.dark #background
+{
+	background-image: url( 'img/bg_dark.png' );
+}
+body.dark
+{
+	color: #fff;
+}
+
+.server_info
+{
+	display: inline-block;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-image: -webkit-linear-gradient( left, rgba( 0, 0, 0, 0.4 ) 0%, rgba( 0, 0, 0, 0.03 ) 75%, rgba( 0, 0, 0, 0 ) 100% );
+	padding: 20px;
+	padding-right: 180px;
+	visibility: hidden;
+	white-space: nowrap;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+.server_info.visible
+{
+	visibility: visible;
+}
+.server_info .text
+{
+	display: inline-block;
+	vertical-align: top;
+	max-width: 100%;
+
+	line-height: 42px;
+	font-size: xx-large;
+}
+.server_info .text > div
+{
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.server_info #mapimg
+{
+	width: 128px;
+	height: 128px;
+	background: #666;
+	margin-right: 16px;
+	float: left;
+}

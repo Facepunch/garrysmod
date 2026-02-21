@@ -1,0 +1,1048 @@
+// cs_assault soundscape
+// Author: Jess Cliffe, Valve, June 2005
+
+
+
+
+// Outdoor areas utility
+
+"assault.outside"
+{
+	// wind sound
+	"playlooping"
+	{
+		"volume"		"0.6"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short.wav"
+	}
+
+
+	// Wind gusts
+	"playrandom"
+	{
+		"time"		"10,45"
+		"volume"		"0.03,0.04"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+
+	// Planes flying overhead
+	"playrandom"
+	{
+		"time"		"20,60"
+		"volume"		".1,.2"
+		"pitch"		"90,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+		}
+	}
+
+
+	// Truck metal squeaks
+	"playrandom"
+	{
+		"time"		"10,20"
+		"volume"		".03,.08"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/equipment_stress1.wav"
+			"wave"	"ambient/misc/equipment_stress2.wav"
+			"wave"	"ambient/misc/equipment_stress3.wav"
+		}
+	}
+
+
+
+
+
+	"playrandom"
+	{
+		"time"		"3,8"
+		"volume"		"0.15,0.25"
+		"pitch"		"80,100"
+		"soundlevel"  	"SNDLVL_95dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/car1.wav"
+			"wave"	"ambient/misc/car2.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"time"		"15,30"
+		"volume"		"0.08,0.18"
+		"pitch"		"80,100"
+		"soundlevel"  	"SNDLVL_95dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/ambulance1.wav"
+
+		}
+	}
+
+	"playrandom"
+	{
+		"time"		"15,40"
+		"volume"		"0.15,0.20"
+		"pitch"		"80,100"
+		"soundlevel"  	"SNDLVL_95dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/garbage_truck1.wav"
+			"wave"	"ambient/misc/truck_backup1.wav"
+			"wave"	"ambient/misc/truck_drive1.wav"
+			"wave"	"ambient/misc/truck_drive2.wav"
+			"wave"	"ambient/misc/crane_move1.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"time"		"6,20"
+		"volume"		"0.20,0.40"
+		"pitch"		"80,100"
+		"soundlevel"  	"SNDLVL_95dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/carhonk1.wav"
+			"wave"	"ambient/misc/carhonk2.wav"
+			"wave"	"ambient/misc/carhonk3.wav"
+
+		}
+	}
+
+
+
+
+
+
+	"playrandom"
+	{
+		"time"		"15,40"
+		"volume"		"0.08,0.18"
+		"pitch"		"80,100"
+		"soundlevel"  	"SNDLVL_95dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/police1.wav"
+		}
+	}
+
+	"playrandom"
+	{
+
+		"time"		"15,50"
+		"volume"		".06,.15"
+		"pitch"		"70,80"
+
+		"rndwave"
+		{
+		"wave"		"ambient/animal/dog1.wav"
+		"wave"		"ambient/animal/dog2.wav"
+		"wave"		"ambient/animal/dog3.wav"
+		"wave"		"ambient/animal/dog4.wav"
+		"wave"		"ambient/animal/dog5.wav"
+		"wave"		"ambient/animal/dog6.wav"
+		"wave"		"ambient/animal/dog7.wav"
+		}
+
+	}
+
+	"playrandom"
+	{
+		"time"		"20,45"
+		"volume"		"0.04,0.09"
+		"pitch"		"80,100"
+
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/train_pass_far.wav"
+		}
+	}
+}
+
+
+
+// Indoor areas utility
+"assault.inside"
+{
+
+	"playlooping"
+	{
+		"volume"		"0.12"
+		"pitch"		"100"
+		"wave"		"ambient/tones/garage.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.3"
+		"pitch"		"90"
+		"wave"		"ambient/tones/industrial3_loop.wav"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"25,48"
+		"volume"		".08,.12"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/tones/pipes.wav"
+			"wave"	"ambient/tones/pipes2.wav"
+		}
+
+	}
+	
+}
+	
+
+// Util for distant vents
+"assault.vents_distant"
+{
+
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"120"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+
+
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"120"
+		"wave"		"ambient/tones/under2.wav"
+	}
+
+	
+}
+
+
+
+
+// Trash bin with flies
+"assault.flies"
+{
+	"playrandom"
+	{
+		"time"		"1,4"
+		"volume"		".08,.17"
+		"pitch"		"90,110"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/flies1.wav"
+			"wave"	"ambient/animal/flies2.wav"
+			"wave"	"ambient/animal/flies3.wav"
+			"wave"	"ambient/animal/flies4.wav"
+			"wave"	"ambient/animal/flies5.wav"
+		}
+	}
+}
+
+// Steamvents in the alleys
+"assault.steamvent"
+{
+	"playlooping"
+	{
+		"volume"		"0.08"
+		"pitch"		"80"
+		"soundlevel"  	"SNDLVL_70dB"
+		"wave"		"ambient/tones/steam_loop1.wav"
+	}
+}
+
+// Industrial sounds coming from building
+"assault.industrial1"
+{
+	"playrandom"
+	{
+		"time"		"10,20"
+		"volume"		".15,.25"
+		"pitch"		"90,110"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/hydraulic_1.wav"
+			"wave"	"ambient/machines/refrigerator.wav"
+
+		}
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.15"
+		"pitch"		"100"
+		"wave"		"ambient/machines/pump_loop_1.wav"
+	}
+}
+
+
+"assault.industrial2"
+{
+	"playrandom"
+	{
+		"time"		"10,20"
+		"volume"		".15,.25"
+		"pitch"		"90,110"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/steam_release_1.wav"
+			"wave"	"ambient/machines/steam_release_2.wav"
+
+		}
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.20"
+		"pitch"		"100"
+		"wave"		"ambient/machines/refinery_loop_1.wav"
+	}
+}
+
+"assault.industrial3"
+{
+	"playrandom"
+	{
+
+		"time"		"15,40"
+		"volume"		".08,.15"
+		"pitch"		"80,95"
+
+		"rndwave"
+		{
+		"wave"		"ambient/misc/metal_rattle1.wav"
+		"wave"		"ambient/misc/metal_rattle3.wav"
+		"wave"		"ambient/misc/metal_rattle4.wav"
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,30"
+		"volume"		".08,.15"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+		"wave"		"ambient/machines/squeak_2.wav"
+		"wave"		"ambient/machines/squeak_3.wav"
+		"wave"		"ambient/machines/squeak_4.wav"
+		"wave"		"ambient/machines/squeak_5.wav"
+		"wave"		"ambient/machines/squeak_6.wav"
+		"wave"		"ambient/machines/squeak_7.wav"
+		"wave"		"ambient/machines/squeak_8.wav"
+
+		}
+
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.30"
+		"pitch"		"100"
+		"wave"		"ambient/tones/industrial1_loop.wav"
+	}
+}
+
+"assault.industrial4"
+{
+
+
+	"playlooping"
+	{
+		"volume"		"0.20"
+		"pitch"		"80"
+		"wave"		"ambient/tones/industrial2_loop.wav"
+	}
+}
+
+// Transformer box power line
+"assault.powerline"
+{
+	"playlooping"
+	{
+		"volume"		"0.30"
+		"pitch"		"100"
+		"soundlevel"  	"SNDLVL_70dB"
+		"wave"		"ambient/machines/power_transformer_loop_2.wav"
+	}
+}
+
+
+// Fans in vents
+"assault.fan"
+{
+	"playlooping"
+	{
+		"volume"		"0.40"
+		"pitch"		"80"
+		"soundlevel"  	"SNDLVL_70dB"
+		"wave"		"ambient/tones/fan2_loop.wav"
+	}
+}
+
+"assault.humminglight"
+{
+	"playlooping"
+	{
+		"volume"		"0.20"
+		"pitch"		"100"
+		"soundlevel"  	"SNDLVL_70dB"
+		"wave"		"ambient/misc/flour_light.wav"
+	}
+}
+
+
+
+// Air conditioning unit
+"assault.acunit"
+{
+	"playlooping"
+	{
+		"volume"		"0.30"
+		"pitch"		"100"
+		"soundlevel"  	"SNDLVL_70dB"
+		"wave"		"ambient/machines/air_conditioner_loop_1.wav"
+	}
+}
+
+// Alternate air conditioning unit
+"assault.acunit_alt"
+{
+	"playrandom"
+	{
+		"volume"		"0.3,0.4"
+		"time"		"20,35"
+		"pitch"		"90,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/air_conditioner_cycle.wav"
+		}
+	}
+}
+
+
+
+// The upper Belmont train station area
+"assault.uppertracks"
+{
+	"dsp"	"0"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+	}
+
+	"playrandom"
+	{
+		"volume"		"0.06,0.1"
+		"time"		"20,40"
+		"pitch"		"90,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/train_pass_1.wav"
+			"wave"	"ambient/machines/train_pass_2.wav"
+			"wave"	"ambient/machines/train_pass_3.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"time"		"10,20"
+		"volume"		"0.08,0.12"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+	
+	
+
+	
+}
+
+// Rourke Street -- this is the CT spawn street
+
+"assault.rourkestreet"
+{
+	"dsp"	"0"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+	}
+
+	// Position 0: First power line
+	"playsoundscape"
+	{
+		"name"		"assault.powerline"
+		"positionoverride"	"0"
+	}
+
+
+	// Position 1: 2nd power line
+	"playsoundscape"
+	{
+		"name"		"assault.powerline"
+		"positionoverride"	"1"
+	}
+
+	// Position 2: 3nd power line
+	"playsoundscape"
+	{
+		"name"		"assault.powerline"
+		"positionoverride"	"2"
+	}
+
+	// Position 3: Building on left of CT spawn
+	"playsoundscape"
+	{
+		"name"		"assault.industrial1"
+		"ambientpositionoverride"	"3"
+	}
+
+	// Position 4: Small trash can
+	"playsoundscape"
+	{
+		"name"		"assault.flies"
+		"positionoverride"	"4"
+	}
+
+	// Position 5: Building on left of CT spawn
+	"playsoundscape"
+	{
+		"name"		"assault.industrial4"
+		"ambientpositionoverride"	"5"
+	}
+	
+	
+}
+
+// SPM Street -- in front of the T warehouse
+
+"assault.stephenst"
+{
+	"dsp"	"0"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+	}
+
+	// Position 0: Building opposite warehouse
+	"playsoundscape"
+	{
+		"name"		"assault.industrial2"
+		"ambientpositionoverride"	"0"
+	}
+
+	// Position 1: Power line
+	"playsoundscape"
+	{
+		"name"		"assault.powerline"
+		"positionoverride"	"1"
+	}
+
+	// Position 2: Power line
+	"playsoundscape"
+	{
+		"name"		"assault.powerline"
+		"positionoverride"	"2"
+	}
+
+	// Position 3: Power line
+	"playsoundscape"
+	{
+		"name"		"assault.powerline"
+		"positionoverride"	"3"
+	}
+
+	// Position 4: Dumpster
+	"playsoundscape"
+	{
+		"name"		"assault.flies"
+		"positionoverride"	"4"
+	}
+
+	// Position 5: Dumpster
+	"playsoundscape"
+	{
+		"name"		"assault.flies"
+		"positionoverride"	"5"
+	}
+
+	// Position 6: Light on wall in small alley
+	"playsoundscape"
+	{
+		"name"		"assault.humminglight"
+		"positionoverride"	"6"
+		"volume" 	"2"
+
+	}
+
+	// Position 7: Dumpster by garage opening to warehouse
+	"playsoundscape"
+	{
+		"name"		"assault.flies"
+		"positionoverride"	"7"
+	}
+	
+	
+}
+
+
+// Alley closest to the CT spawn
+
+"assault.ctalley"
+{
+	"dsp"	"18"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+	}
+
+	// Position 0: Large AC unit on wall
+	"playsoundscape"
+	{
+		"name"		"assault.acunit"
+		"positionoverride"	"0"
+	}
+
+	// Position 1: Dumpster
+	"playsoundscape"
+	{
+		"name"		"assault.flies"
+		"positionoverride"	"1"
+	}
+
+	// Position 2: Steaming vent
+	"playsoundscape"
+	{
+		"name"		"assault.steamvent"
+		"positionoverride"	"2"
+	}
+	
+	
+}
+
+// Alley on the side of the T warehouse
+
+"assault.talley"
+{
+	"dsp"	"18"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.2"
+		"pitch"		"80"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+	// Position 0: Harper/Wakler Appliance Co building
+	"playsoundscape"
+	{
+		"name"		"assault.industrial3"
+		"ambientpositionoverride"	"0"
+	}
+
+	// Position 1: Steaming vent
+	"playsoundscape"
+	{
+		"name"		"assault.steamvent"
+		"positionoverride"	"1"
+	}
+
+
+	
+	
+}
+
+
+// Building side where the CTs camp
+"assault.building"
+{
+	"dsp"	"0"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"6,12"
+		"volume"		".2,.45"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+	"playrandom"
+	{
+		"time"		"10,20"
+		"volume"		"0.1,0.2"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+	
+	// Position 0: Building opposite warehouse
+	"playsoundscape"
+	{
+		"name"		"assault.industrial2"
+		"ambientpositionoverride"	"0"
+	}	
+
+}
+
+
+
+// Under building parking area near Ct spawn
+
+"assault.parking"
+{
+	"dsp"	"18"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.3"
+		"pitch"		"80"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.1"
+		"pitch"		"90"
+		"wave"		"ambient/wind/wind_tunnel1.wav"
+	}
+
+	// Position 0: Light on wall
+	"playsoundscape"
+	{
+		"name"		"assault.humminglight"
+		"positionoverride"	"0"
+	}
+	
+	
+}
+
+// Large area of the T warehouse
+
+"assault.ware"
+{
+	"dsp"	"4"
+
+	"playsoundscape"
+	{
+		"name" "assault.inside"
+	}
+
+	// Position 0: Light hum
+	"playsoundscape"
+	{
+		"name"		"assault.humminglight"
+		"positionoverride"	"0"
+	}
+
+	// Position 1: Light hum
+	"playsoundscape"
+	{
+		"name"		"assault.humminglight"
+		"positionoverride"	"1"
+	}
+
+	// Position 2: Light hum
+	"playsoundscape"
+	{
+		"name"		"assault.humminglight"
+		"positionoverride"	"2"
+	}
+
+	// Position 3: Light hum
+	"playsoundscape"
+	{
+		"name"		"assault.humminglight"
+		"positionoverride"	"3"
+	}
+
+	// Position 4: Next to the garage door, noise from outside
+	"playsoundscape"
+	{
+		"name"		"assault.outside"
+		"positionoverride"	"4"
+		"volume" 	".2"
+	}
+
+	// Position 5: Next to the vents
+	"playsoundscape"
+	{
+		"name"		"assault.vents_distant"
+		"positionoverride"	"5"
+		"volume" 	".5"
+	}
+	
+	
+}
+
+// Hostage room aka the foreman's office
+
+"assault.hroom"
+{
+	"dsp"	"4"
+
+	"playsoundscape"
+	{
+		"name" "assault.inside"
+		"volume" 	".8"
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/tones/roomtone1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.1"
+		"pitch"		"100"
+		"wave"		"ambient/tones/lab_loop1.wav"
+	}
+
+	// Position 0: Light hum
+	"playsoundscape"
+	{
+		"name"		"assault.humminglight"
+		"positionoverride"	"0"
+		"volume" 	"2"
+	}
+	
+	
+}
+
+
+
+// The vents
+"assault.vents"
+{
+	"dsp"	"2"
+
+	"playsoundscape"
+	{
+		"name" "assault.inside"
+		"volume" 	".2"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"5,12"
+		"volume"		".12,.4"
+		"pitch"		"75,110"
+
+		"rndwave"
+		{
+
+		"wave"	"ambient/misc/metal_str1.wav"
+		"wave"	"ambient/misc/metal_str2.wav"
+		"wave"	"ambient/misc/metal_str3.wav"
+		"wave"	"ambient/misc/metal_str4.wav"
+		"wave"	"ambient/misc/metal_str5.wav"
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"25,60"
+		"volume"		".2,.4"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/tones/pipes.wav"
+			"wave"	"ambient/tones/pipes2.wav"
+
+
+		}
+
+	}
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"120"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+
+
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"120"
+		"wave"		"ambient/tones/under2.wav"
+	}
+
+	// Position 0: A fan in the vents
+	"playsoundscape"
+	{
+		"name"		"assault.fan"
+		"positionoverride"	"0"
+	}
+
+	// Position 1: A fan in the vents
+	"playsoundscape"
+	{
+		"name"		"assault.fan"
+		"positionoverride"	"1"
+	}
+
+
+
+	
+	
+}
+
+// The warehouse roof
+"assault.roof"
+{
+	"dsp"	"0"
+
+	"playsoundscape"
+	{
+		"name" "assault.outside"
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"5,12"
+		"volume"		".12,.4"
+		"pitch"		"75,110"
+
+		"rndwave"
+		{
+
+		"wave"	"ambient/misc/metal_str1.wav"
+		"wave"	"ambient/misc/metal_str2.wav"
+		"wave"	"ambient/misc/metal_str3.wav"
+		"wave"	"ambient/misc/metal_str4.wav"
+		"wave"	"ambient/misc/metal_str5.wav"
+		}
+
+	}
+
+	"playrandom"
+	{
+		"time"		"10,20"
+		"volume"		"0.1,0.14"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+
+	// Position 0: Large AC unit on roof
+	"playsoundscape"
+	{
+		"name"		"assault.acunit"
+		"positionoverride"	"0"
+	}
+	
+	// Position 1: Large AC unit on roof
+	"playsoundscape"
+	{
+		"name"		"assault.acunit_alt"
+		"positionoverride"	"1"
+	}
+
+	// Position 2: Next to the vents
+	"playsoundscape"
+	{
+		"name"		"assault.vents_distant"
+		"positionoverride"	"2"
+		"volume" 	".9"
+	}
+
+	
+	
+}
+
+
+
+
+
+

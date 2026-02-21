@@ -1,0 +1,692 @@
+"TableToKeyValues"
+{
+	"parentid"		"16"
+	"icon"		"icon16/page.png"
+	"id"		"17"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Main Characters"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/mossman.mdl"
+			"tall"		"128"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/alyx.mdl"
+			"tall"		"128"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/Barney.mdl"
+			"tall"		"128"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/breen.mdl"
+			"tall"		"128"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/Eli.mdl"
+			"tall"		"128"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/gman_high.mdl"
+			"tall"		"128"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/Kleiner.mdl"
+			"tall"		"128"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/monk.mdl"
+			"tall"		"128"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/odessa.mdl"
+			"tall"		"128"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/vortigaunt.mdl"
+			"tall"		"128"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/vortigaunt_slave.mdl"
+			"tall"		"128"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/dog.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/Lamarr.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"15"
+		{
+			"type"		"header"
+			"text"		"Citizens"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Female_01.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Female_02.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Female_03.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Female_04.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Female_06.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Female_07.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Male_01.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/male_02.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/male_03.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Male_04.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Male_05.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/male_06.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/male_07.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/male_08.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/male_09.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Group01/Male_Cheaple.mdl"
+		}
+		"32"
+		{
+			"type"		"header"
+			"text"		"Refugees"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Female_01.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Female_02.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Female_03.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Female_04.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Female_06.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Female_07.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Male_01.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/male_02.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/male_03.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Male_04.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/Male_05.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/male_06.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/male_07.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/male_08.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group02/male_09.mdl"
+		}
+		"48"
+		{
+			"type"		"header"
+			"text"		"Rebels"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Female_01.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Female_02.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Female_03.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Female_04.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Female_06.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Female_07.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Male_01.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/male_02.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/male_03.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Male_04.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/Male_05.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/male_06.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/male_07.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/male_08.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03/male_09.mdl"
+		}
+		"64"
+		{
+			"type"		"header"
+			"text"		"Medic Rebels"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Female_01.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Female_02.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Female_03.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Female_04.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Female_06.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Female_07.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Male_01.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/male_02.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/male_03.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Male_04.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/Male_05.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/male_06.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/male_07.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/male_08.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models\Humans/Group03m/male_09.mdl"
+		}
+		"80"
+		{
+			"type"		"header"
+			"text"		"Bad Guys"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/Police.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/Combine_Soldier.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/Combine_Soldier.mdl"
+			"skin"		"1"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/Combine_Soldier_PrisonGuard.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/Combine_Soldier_PrisonGuard.mdl"
+			"skin"		"1"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/Combine_Super_Soldier.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/stalker.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/Combine_Strider.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/gunship.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/combine_dropship.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/Combine_Scanner.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/shield_scanner.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/manhack.mdl"
+			"body"		"B011000000"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/combine_mine01.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/Roller.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/roller_spikes.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/Combine_turrets/Floor_turret.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/Advisor.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/mortarsynth.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/synth.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/soldier_stripped.mdl"
+		}
+		"102"
+		{
+			"type"		"header"
+			"text"		"Fauna"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/ichthyosaur.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/pigeon.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/crow.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/seagull.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/leech.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/barnacle.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/AntLion.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/AntLion.mdl"
+			"skin"		"1"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/AntLion.mdl"
+			"skin"		"2"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/AntLion.mdl"
+			"skin"		"3"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/antlion_guard.mdl"
+		}
+		"114"
+		{
+			"type"		"header"
+			"text"		"Undead Guys"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/headcrabclassic.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/Zombie/Classic.mdl"
+			"body"		"B010000000"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/Zombie/Classic_legs.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/Zombie/Classic_torso.mdl"
+			"body"		"B010000000"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/headcrab.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/Gibs/Fast_Zombie_Torso.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/zombie/fast_torso.mdl"
+			"body"		"B010000000"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/Zombie/Fast.mdl"
+			"body"		"B010000000"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/Gibs/Fast_Zombie_Legs.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/headcrabblack.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/Zombie/Poison.mdl"
+			"body"		"B011111000"
+		}
+		"126"
+		{
+			"type"		"header"
+			"text"		"Dead Guys"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Charple01.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Charple02.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Charple03.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/Humans/Charple04.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/Humans/corpse1.mdl"
+		}
+	}
+	"name"		"Characters"
+	"version"		"3"
+}

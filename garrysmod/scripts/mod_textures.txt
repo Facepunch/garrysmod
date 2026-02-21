@@ -1,0 +1,100 @@
+"sprites/640_hud"
+{
+	TextureData
+	{
+		"death_357"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"."
+		}
+		"death_ar2"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"2"
+		}
+		"death_crossbow_bolt"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"1"
+		}
+		"death_smg1"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"/"
+		}
+		"death_shotgun"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"0"
+		}
+		"death_rpg_missile"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"3"
+		}
+		"death_grenade_frag"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"4"
+		}
+		"death_pistol"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"-"
+		}
+		"death_physics"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"9"
+		}
+		"death_combine_ball"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"8"
+		}
+		"death_smg1_grenade"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"7"
+		}
+		"death_stunstick"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"!"
+		}
+		"death_slam"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"*"
+		}
+		"death_crowbar"
+		{
+				"font"		"HL2MPTypeDeath"
+				"character"	"6"
+		}
+		"voice_player"
+		{
+				"file"		"voice/icntlk_sv"
+				"x"		"0"
+				"y"		"0"
+				"width"		"32"
+				"height"	"32"
+		}
+		"voice_self"
+		{
+				"file"		"voice/icntlk_local"
+				"x"		"0"
+				"y"		"0"
+				"width"		"32"
+				"height"	"32"
+		}
+		"whiteAdditive"
+		{
+				"file"		"vgui/white_additive"
+				"x"			"0"
+				"y"			"0"
+				"width"		"1"
+				"height"	"1"
+		}
+	}
+}

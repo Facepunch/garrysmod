@@ -1,0 +1,49 @@
+"GameInfo"
+{
+	game	"Garry's Mod"
+	title	""
+	title2	""
+	type	multiplayer_only
+
+	"developer" 		"Facepunch Studios"
+	"developer_url"		"http://www.garrysmod.com/"
+	"manual"			"http://wiki.garrysmod.com/"
+
+	// Just to shut up vbsp.exe
+	"GameData"		"garrysmod.fgd"
+	"InstancePath"	"maps/instances/"
+
+	FileSystem
+	{
+		SteamAppId				4000
+		ToolsAppId				211
+
+		SearchPaths
+		{
+			// None of this matters really
+			// Game content mounting is controlled by cfg/mount.cfg, and not here!
+			game+mod			garrysmod/addons/*
+
+			game+mod			garrysmod/garrysmod.vpk
+
+			game				|all_source_engine_paths|sourceengine/hl2_textures.vpk
+			game				|all_source_engine_paths|sourceengine/hl2_sound_vo_english.vpk
+			game				|all_source_engine_paths|sourceengine/hl2_sound_misc.vpk
+			game				|all_source_engine_paths|sourceengine/hl2_misc.vpk
+
+			platform			|all_source_engine_paths|platform/platform_misc.vpk
+
+			mod+mod_write+default_write_path		|gameinfo_path|.
+
+			game+game_write		garrysmod
+
+			gamebin				garrysmod/bin
+
+			game				|all_source_engine_paths|sourceengine
+			platform			|all_source_engine_paths|platform
+
+			game+download		garrysmod/download
+		}
+
+	}
+}

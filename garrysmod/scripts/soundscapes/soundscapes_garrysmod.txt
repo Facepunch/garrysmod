@@ -1,0 +1,92 @@
+"construct.outside"
+{
+	"dsp"	"1"
+
+	//"playsoundscape"
+	//{
+	//	"name"		"ep2_forest.util_birds"
+	//	"volume"	"0.3"
+	//}
+
+	//"playsoundscape"
+	//{
+	//	"name"		"ep2_forest.util_windgusts"
+	//	"volume"	"0.4"
+	//}
+
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"pitch"		"110"
+		"soundlevel" "SNDLVL_30dB"
+		"wave"		"@ambient/construct_tone.wav"
+	}
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"soundlevel" "SNDLVL_30dB"
+		"wave"		"ambient/forest_day.wav"
+	}
+}
+
+"construct.inside"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"pitch"		"70"
+		"soundlevel" "SNDLVL_30dB"
+		"wave"		"ambient/construct_tone.wav"
+	}
+}
+
+"construct.lake"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"		"e3_Techdemo_06"
+		"volume"	"0.6"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"pitch"		"95"
+		"soundlevel" "SNDLVL_30dB"
+		"wave"		"ambient/construct_tone.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"soundlevel" "SNDLVL_30dB"
+		"wave"		"ambient/forest_day.wav"
+	}
+}
+
+"construct.garage"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"pitch"		"90"
+		"soundlevel" "SNDLVL_30dB"
+		"wave"		"ambient/construct_tone.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"100"
+		"soundlevel" "SNDLVL_30dB"
+		"wave"		"ambient/forest_day.wav"
+	}
+}

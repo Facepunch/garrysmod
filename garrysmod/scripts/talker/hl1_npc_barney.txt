@@ -1,0 +1,162 @@
+
+
+response OldBarneyAttack sentence BA_ATTACK
+response OldBarneyMad sentence BA_MAD delay 4 soundlevel "SNDLVL_NORM"
+response OldBarneyShot sentence BA_SHOT delay 4 soundlevel "SNDLVL_NORM"
+response OldBarneyKill sentence BA_KILL delay 4 soundlevel "SNDLVL_NORM"
+response OldBarneyPOk sentence BA_POK delay 2 soundlevel "SNDLVL_NORM"
+
+response "OldBarneyAnswer" sentence "BA_ANSWER" defaultdelay
+response "OldBarneyStare" sentence "BA_STARE" delay "5,7.5"
+response "OldBarneyOk" sentence "BA_OK" defaultdelay
+response "OldBarneyWait" sentence "BA_WAIT" defaultdelay
+response "OldBarneyStop" sentence "BA_STOP" delay "2,2.5"  soundlevel "SNDLVL_NORM"
+response "OldBarneyScared" sentence "BA_SCARED" delay "0,0.4"
+response "OldBarneyCureA" sentence "BA_CUREA"  defaultdelay speakonce
+response "OldBarneyCureB" sentence "BA_CUREB"  defaultdelay speakonce
+response "OldBarneyCureC" sentence "BA_CUREC"  defaultdelay speakonce
+response "OldBarneySmell" sentence "BA_SMELL" defaultdelay respeakdelay "60"
+response "OldBarneyWound" sentence "BA_WOUND"  speakonce defaultdelay
+response "OldBarneyMortal" sentence "BA_MORTAL"  speakonce defaultdelay
+
+response "OldBarneyQuestionPreDisaster" sentence "BA_PQUEST" defaultdelay
+response "OldBarneyQuestionPostDisaster" sentence "BA_QUESTION" defaultdelay
+response "OldBarneyIdlePostDisaster" sentence "BA_IDLE" defaultdelay
+response "OldBarneyHelloPostDisaster" sentence "BA_HELLO" delay "3,3.5" speakonce
+
+criterion "ConceptOldBarneyAttack" "Concept" "BA_ATTACK" required
+criterion "ConceptOldBarneyMad" "Concept" "BA_MAD" required
+criterion "ConceptOldBarneyShot" "Concept" "BA_SHOT" required
+criterion "ConceptOldBarneyKill" "Concept" "BA_KILL" required
+criterion "ConceptOldBarneyPOk" "Concept" "BA_POK" required
+
+criterion "IsOldBarney" "classname" "monster_barney" required
+
+rule OldBarneyAttack
+{
+	criteria IsOldBarney ConceptOldBarneyAttack
+	response OldBarneyAttack
+}
+rule OldBarneyMad
+{
+	criteria IsOldBarney ConceptOldBarneyMad
+	response OldBarneyMad
+}
+rule OldBarneyShot
+{
+	criteria IsOldBarney ConceptOldBarneyShot
+	response OldBarneyShot
+}
+rule OldBarneyKill
+{
+	criteria IsOldBarney ConceptOldBarneyKIll
+	response OldBarneyKill
+}
+rule OldBarneyPOk
+{
+	criteria IsOldBarney ConceptOldBarneyPOk
+	response OldBarneyPOk
+}
+
+rule OldBarneyTlkAnswer
+{
+	criteria		IsOldBarney ConceptTalkAnswer
+	response		OldBarneyAnswer
+}
+rule OldBarneyTlkStare
+{
+	criteria		IsOldBarney ConceptTalkStare
+	response		OldBarneyStare
+}
+
+rule OldBarneyTlkStartFollow
+{
+	criteria		IsOldBarney ConceptTalkStartFollow
+	response		OldBarneyOk
+}
+
+rule OldBarneyTlkStopFollow
+{
+	criteria		IsOldBarney ConceptTalkStopFollow
+	response		OldBarneyWait
+}
+
+rule OldBarneyTlkStop
+{
+	criteria		IsOldBarney ConceptTalkStop
+	response		OldBarneyStop
+}
+
+rule OldBarneyTlkNoShoot
+{
+	criteria		IsOldBarney ConceptTalkNoShoot
+	response		OldBarneyScared
+}
+
+rule OldBarneyPlayerHurt1
+{
+	criteria		IsOldBarney ConceptTalkPlayerHurt1
+	response		OldBarneyCureA
+}
+rule OldBarneyPlayerHurt2
+{
+	criteria		IsOldBarney ConceptTalkPlayerHurt2
+	response		OldBarneyCureB
+}
+rule OldBarneyPlayerHurt3
+{
+	criteria		IsOldBarney ConceptTalkPlayerHurt3
+	response		OldBarneyCureC
+}
+
+rule OldBarneyTlkSmell
+{
+	criteria		IsOldBarney ConceptTalkSmell
+	response		OldBarneySmell
+}
+rule OldBarneyTlkWound
+{
+	criteria		IsOldBarney ConceptTalkWound
+	response		OldBarneyWound
+}
+rule OldBarneyTlkMortal
+{
+	criteria		IsOldBarney ConceptTalkMortal
+	response		OldBarneyMortal
+}
+
+
+// Pre disaster
+rule OldBarneyTlkHelloPre
+{
+	criteria		IsOldBarney ConceptTalkHello IsPreDisaster
+	response		NullResponse
+}
+
+rule OldBarneyTlkQuestionPre
+{
+	criteria		IsOldBarney ConceptTalkQuestion IsPreDisaster
+	response		OldBarneyQuestionPreDisaster
+}
+rule OldBarneyTlkIdlePre
+{
+	criteria		IsOldBarney ConceptTalkIdle IsPreDisaster
+	response		NullResponse
+}
+
+rule OldBarneyTlkHelloPost
+{
+	criteria		IsOldBarney ConceptTalkHello IsPostDisaster
+	response		OldBarneyHelloPostDisaster
+}
+
+rule OldBarneyTlkQuestionPost
+{
+	criteria		IsOldBarney ConceptTalkQuestion IsPostDisaster
+	response		OldBarneyQuestionPostDisaster
+}
+rule OldBarneyTlkIdlePost
+{
+	criteria		IsOldBarney ConceptTalkIdle IsPostDisaster
+	response		OldBarneyIdlePostDisaster
+}

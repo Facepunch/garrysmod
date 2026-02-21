@@ -1,0 +1,40 @@
+
+// strider footsteps are heard practically everywhere in map
+
+"NPC_Strider.FootstepEverywhere"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_140dB"
+	"pitch"	"100"
+	"rndwave"
+	{
+	"wave"	"^npc/strider/strider_step1.wav"
+	"wave"	"^npc/strider/strider_step2.wav"
+	"wave"	"^npc/strider/strider_step3.wav"
+	"wave"	"^npc/strider/strider_step4.wav"
+	"wave"	"^npc/strider/strider_step5.wav"
+	"wave"	"^npc/strider/strider_step6.wav"
+	}
+}
+
+
+"NPC_Strider.StriderWakeup"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_140dB"
+	"pitch"	"100"
+	"wave"	"npc/strider/striderx_alert2.wav"
+}
+
+"NPC_Strider.StriderBusterExplode"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_140dB"
+	"pitch"	"100"
+	"wave"	"weapons/strider_buster/Strider_Buster_detonate.wav"
+}
+
+

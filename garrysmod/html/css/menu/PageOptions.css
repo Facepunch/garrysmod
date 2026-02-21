@@ -1,0 +1,373 @@
+
+DIV.page DIV.options
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 300px;
+	bottom: 0px;
+	padding-top: 50px;
+	padding-left: 50px;
+}
+
+DIV.page DIV.innerpage
+{
+	position: absolute;
+	left: 320px;
+	top: 16px;
+	bottom: 16px;
+	right: 16px;
+	padding: 16px;
+	padding-top: 0;
+}
+
+div.options h2
+{
+	margin-top: 0px;
+}
+
+DIV.page DIV.options UL
+{
+	list-style-type: none;
+	padding: 2px 0px;
+	margin-left: 20px;
+}
+
+DIV.page DIV.options UL LI
+{
+	padding: 0px 16px;
+	margin-bottom: 1px;
+}
+
+DIV.page DIV.options, DIV.page DIV.options A
+{
+	font-size: 23px;
+	letter-spacing: -1.0px;
+	text-decoration: none;
+	color: #fff;
+	font-weight: bold;
+	text-shadow: 2px 2px 1px #000;
+}
+
+DIV.page DIV.options .submenu A, DIV.page DIV.options .submenu LABEL
+{
+	font-size: 17px;
+	letter-spacing: 0px;
+	text-shadow: 1px 1px 1px #000;
+}
+
+DIV.page DIV.options UL.submenu LI
+{
+	padding: 0;
+	margin: 0;
+	margin-bottom: -4px;
+}
+
+DIV.page DIV.options A:hover
+{
+	color: #ffa;
+}
+
+DIV.page DIV.options.active, DIV.page DIV.options A.active
+{
+	color: #ff5;
+}
+
+DIV.page DIV.options .search_bar
+{
+	padding: 2px 4px;
+	box-sizing: border-box;
+	margin-top: 12px;
+	margin-bottom: 8px;
+}
+
+div.ugc_content
+{
+	position: absolute;
+	left: 320px;
+	top: 16px;
+	bottom: 16px;
+	right: 16px;
+	padding: 16px;
+	padding-top: 0;
+}
+
+@media screen and (max-height: 768px)
+{
+	DIV.page DIV.options UL.submenu LI
+	{
+		margin-bottom: -8px;
+	}
+}
+
+@media screen and (max-width: 1024px)
+{
+	div.ugc_content
+	{
+		left: 200px;
+	}
+}
+
+@media screen and (max-width: 1280px)
+{
+	DIV.page DIV.options
+	{
+		width: 250px;
+		font-size: 70%;
+	}
+
+	DIV.page DIV.innerpage
+	{
+		left: 250px;
+	}
+
+	DIV.page DIV.options, DIV.page DIV.options A
+	{
+		font-size: 16px;
+	}
+
+	DIV.page DIV.options UL.submenu LI
+	{
+		margin-bottom: -4px;
+	}
+}
+
+@media screen and (max-height: 580px)
+{
+	DIV.page DIV.options
+	{
+		padding-top: 0px;
+	}
+
+	DIV.page DIV.options UL
+	{
+		padding: 0px;
+	}
+
+	DIV.page DIV.options UL LI
+	{
+		margin-bottom: 0px;
+	}
+
+	DIV.page DIV.options, DIV.page DIV.options A
+	{
+		font-size: 20px;
+		line-height: 19px;
+	}
+}
+
+@media screen and (max-height: 420px)
+{
+	DIV.page DIV.options UL
+	{
+		margin: 0px;
+	}
+
+	DIV.page DIV.options UL li img
+	{
+		display: none;
+	}
+}
+
+@media screen and (max-width: 640px)
+{
+	DIV.page DIV.options
+	{
+		padding-top: 0px;
+		padding-left: 0px;
+	}
+}
+
+
+/* Pop up confirmation message when uninstalling ALL addons, etc */
+
+div.modaldialog
+{
+	background: rgba( 0, 0, 0, 0.5 );
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+}
+
+div.centermessage
+{
+	background: white;
+	border-radius: 5px;
+	margin: auto;
+
+	padding: 20px;
+	max-width: 500px;
+	text-align: center;
+}
+div.centermessage.left
+{
+	text-align: left;
+}
+
+div.centermessage span
+{
+	color: black;
+	display: block;
+	font-size: 20px;
+	margin-bottom: 20px;
+	cursor: default;
+}
+
+div.centermessage label
+{
+	position: relative;
+	top: -2px;
+	cursor: default;
+}
+
+div.centermessage a
+{
+	display: block;
+	color: black;
+	font-size: 16px;
+	border-radius: 4px;
+	background: #ddd;
+	padding: 5px 10px;
+	text-align: center;
+	cursor: default;
+}
+div.centermessage a:hover
+{
+	background: #ccc;
+}
+div.centermessage a:active
+{
+	background: #b9b9b9;
+}
+
+div.centermessage a.big
+{
+	padding: 10px 20px;
+	font-size: 32px;
+}
+div.centermessage a:not(:last-child)
+{
+	margin-bottom: 5px;
+}
+
+div.centermessage a.warning
+{
+	background: #ca1e12;
+	color: white;
+	font-weight: bold;
+}
+div.centermessage a.warning:hover
+{
+	background: #eb2719;
+}
+div.centermessage a.warning:active
+{
+	background: #a71b11;
+}
+
+div.centermessage a.create
+{
+	background: #4CAF50;
+	color: white;
+	font-weight: bold;
+}
+div.centermessage a.create:hover
+{
+	background: #63bb66;
+}
+div.centermessage a.create:active
+{
+	background: #55a158;
+}
+div.centermessage a.create.disabled
+{
+	color: #ccc;
+	background: #b1b1b1;
+}
+
+input.preset_name
+{
+	width: 100%;
+	padding: 3px 5px;
+}
+
+
+div.centermessage .button
+{
+	display: block;
+	color: black;
+	font-size: 16px;
+	border-radius: 4px;
+	background: #ddd;
+	padding: 5px 10px;
+}
+div.centermessage .button:hover
+{
+	background: #e3e3e3;
+}
+div.centermessage .button:active
+{
+	background: #c9c9c9;
+}
+
+div.centermessage div.button
+{
+	margin-bottom: 2px;
+	position: relative;
+	background: #ddd;
+}
+div.centermessage .wstitle
+{
+	text-align: left;
+	width: 100%;
+	display: inline-block;
+	cursor: default;
+	overflow: hidden;
+}
+div.centermessage .wssub
+{
+	width: 55px;
+	height: 28px;
+	/* background: #4CAF50; */
+	display: inline-block;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+div.centermessage wsbut img
+{
+	position: relative;
+	top: 2px;
+	right: 2px;
+}
+div.centermessage wsbut
+{
+	background: #b1b1b1;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+div.centermessage wsbut:hover
+{
+	background: #c1c1c1;
+}
+div.centermessage .subbed wsbut
+{
+	background: #4CAF50;
+}
+/*div.centermessage .subbed wsbut:hover
+{
+	background: #55c55a;
+}*/
+div.centermessage .subbed
+{
+	background: #b2d6b2 !important;
+}
+div.centermessage .subbed:hover
+{
+	background: #cadeca !important;
+}
+

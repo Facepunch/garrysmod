@@ -1,0 +1,48 @@
+
+	<div class="page" ng-controller="ControllerMain">
+
+		<div class="options">
+
+			<ul>
+
+				<li><img ng-src='../gamemodes/{{Gamemode}}/logo.png' /></li>
+				<li>&nbsp;</li>
+				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Tranny="'resume_game'"></a></li>
+				<li ng-show="InGame">&nbsp;</li>
+				<li><a ng-href="#/newgame/" ng-Tranny="'new_game'"></a></li>
+
+				<li><a ng-href="#/servers/" ng-Tranny="'find_mp_game'"></a></li>
+
+				<li>&nbsp;</li>
+				<li><a ng-href="#/addons/" ng-Tranny="'addons'"></a></li>
+				<li><a ng-href="#/dupes/" ng-Tranny="'dupes'"></a></li>
+				<li><a ng-href="#/saves/" ng-Tranny="'saves'"></a></li>
+				<li><a ng-href="#/demos/" ng-Tranny="'demos'"></a></li>
+
+				<li>&nbsp;</li>
+				<li><a ng-click="MenuOption( this, 'OpenOptionsDialog')" ng-Tranny="'options'"></a></li>
+
+				<li>&nbsp;</li>
+				<li ng-show="InGame">
+					<a ng-click="MenuOption( this, 'Disconnect');" ng-Tranny="'disconnect'"></a>
+				</li>
+				<li><a ng-click="MenuOption( this, 'Quit')" ng-Tranny="'quit'"></a></li>
+
+			</ul>
+
+		</div>
+
+		<div class="news" ng-hide="NewsList.length == 0">
+			<div class="news_item" style="{{NewsItemBackground( CurrentNewsItem.HeaderImage )}}" ng-hide="HideNews">
+				<div>
+					<span ng-click="OpenInSteam( CurrentNewsItem.Url )">{{CurrentNewsItem.Title}}</span>
+					<font>{{CurrentNewsItem.SummaryHtml}}</font>
+				</div>
+			</div>
+			<div class='news_buttons'>
+				<div ng-click="ToggleNewsList()" ng-hide="HideNews || AnyNewNewsItems"><img src="../materials/icon16/cross.png"></div>
+				<div class="{{IfElse( NewsItem.Url == CurrentNewsItem.Url, 'selected', '' )}} {{NewsItemClass( NewsItem )}}" ng-repeat="NewsItem in NewsList | orderBy: 'Date'" ng-click="SelectItem(NewsItem)"></div>
+			</div>
+		</div>
+
+	</div>

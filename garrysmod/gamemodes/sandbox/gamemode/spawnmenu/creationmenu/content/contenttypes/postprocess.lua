@@ -1,0 +1,90 @@
+
+hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, node )
+
+	-- Get a list of postproceess effects
+	-- and organise them into categories
+	local Categorised = {}
+	local PostProcess = list.Get( "PostProcess" )
+
+	if ( PostProcess ) then
+		-- Category localization support for old addons
+		local TranslateNames = {
+			["Effects"] = "#effects_pp",
+			["Overlay"] = "#overlay_pp",
+			["Shaders"] = "#shaders_pp",
+			["Texturize"] = "#texturize_pp"
+		}
+
+		for k, v in pairs( PostProcess ) do
+
+			local Category = language.GetPhrase( TranslateNames[v.category] or v.category or "#spawnmenu.category.other" )
+			if ( !isstring( Category ) ) then Category = tostring( Category ) end
+			Categorised[ Category ] = Categorised[ Category ] or {}
+
+			v.name = k
+			table.insert( Categorised[ Category ], v )
+
+		end
+
+	end
+
+	--
+	-- Create an entry for each category
+	--
+	for CategoryName, v in SortedPairs( Categorised ) do
+
+		-- Add a node to the tree
+		local node = tree:AddNode( CategoryName, "icon16/picture.png" )
+
+		-- When we click on the node - populate it using this function
+		node.DoPopulate = function( self )
+
+			-- If we've already populated it - forget it.
+			if ( self.PropPanel ) then return end
+
+			-- Create the container panel
+			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
+			self.PropPanel:SetVisible( false )
+			self.PropPanel:SetTriggerSpawnlistChange( false )
+
+			for k, pp in SortedPairsByMemberValue( v, "PrintName" ) do
+
+				if ( pp.func ) then
+					pp.func( self.PropPanel )
+					continue
+				end
+
+				spawnmenu.CreateContentIcon( "postprocess", self.PropPanel, {
+					name	= pp.name,
+					icon	= pp.icon
+				} )
+
+			end
+
+		end
+
+		-- If we click on the node populate it and switch to it.
+		node.DoClick = function( self )
+
+			self:DoPopulate()
+			pnlContent:SwitchPanel( self.PropPanel )
+
+		end
+
+	end
+
+	-- Select the first node
+	local FirstNode = tree:Root():GetChildNode( 0 )
+	if ( IsValid( FirstNode ) ) then
+		FirstNode:InternalDoClick()
+	end
+
+end )
+
+spawnmenu.AddCreationTab( "#spawnmenu.category.postprocess", function()
+
+	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
+	ctrl:CallPopulateHook( "PopulatePostProcess" )
+	return ctrl
+
+end, "icon16/picture.png", 100 )

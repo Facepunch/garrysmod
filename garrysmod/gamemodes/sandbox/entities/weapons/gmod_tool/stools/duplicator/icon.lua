@@ -1,0 +1,270 @@
+
+hook.Add( "PostRender", "RenderDupeIcon", function()
+
+	--
+	-- g_ClientSaveDupe is set in transport.lua when receiving a dupe from the server
+	--
+	if ( !g_ClientSaveDupe ) then return end
+
+	--
+	-- Remove the global straight away
+	--
+	local Dupe = g_ClientSaveDupe
+	g_ClientSaveDupe = nil
+
+	local FOV = 17
+
+	--
+	-- This is gonna take some cunning to look awesome!
+	--
+	local Size = Dupe.Maxs - Dupe.Mins
+	local Radius = Size:Length() * 0.5
+	local CamDist = Radius / math.sin( math.rad( FOV ) / 2 ) -- Works out how far the camera has to be away based on radius + fov!
+	local Center = LerpVector( 0.5, Dupe.Mins, Dupe.Maxs )
+	local CamPos = Center + Vector( -1, 0, 0.5 ):GetNormalized() * CamDist
+	local EyeAng = ( Center - CamPos ):GetNormalized():Angle()
+
+	--
+	-- The base view
+	--
+	local view = {
+		type	= "3D",
+		origin	= CamPos,
+		angles	= EyeAng,
+		x		= 0,
+		y		= 0,
+		w		= 512,
+		h		= 512,
+		aspect	= 1,
+		fov		= FOV
+	}
+
+	--
+	-- Create a bunch of entities we're gonna use to render.
+	--
+	local entities = {}
+	local i = 0
+	for k, ent in pairs( Dupe.Entities ) do
+
+		if ( ent.Class == "prop_ragdoll" ) then
+
+			entities[ k ] = ClientsideRagdoll( ent.Model or "error.mdl", RENDERGROUP_OTHER )
+
+			if ( istable( ent.PhysicsObjects ) ) then
+
+				for boneid, v in pairs( ent.PhysicsObjects ) do
+
+					local obj = entities[ k ]:GetPhysicsObjectNum( boneid )
+					if ( IsValid( obj ) ) then
+						obj:SetPos( v.Pos )
+						obj:SetAngles( v.Angle )
+					end
+
+				end
+
+				entities[ k ]:InvalidateBoneCache()
+
+			end
+
+		else
+
+			entities[ k ] = ClientsideModel( ent.Model or "error.mdl", RENDERGROUP_OTHER )
+
+		end
+		i = i + 1
+
+	end
+
+	--
+	-- DRAW THE BLUE BACKGROUND
+	--
+	render.SetMaterial( Material( "gui/dupe_bg.png" ) )
+	render.DrawScreenQuadEx( 0, 0, 512, 512 )
+	render.UpdateRefractTexture()
+
+	--
+	-- BLACK OUTLINE
+	-- AWESOME BRUTE FORCE METHOD
+	--
+	render.SuppressEngineLighting( true )
+
+	-- Rendering icon the way we do is kinda bad and will crash the game with too many entities in the dupe
+	-- Try to mitigate that to some degree by not rendering the outline when we are above 800 entities
+	-- 1000 was tested without problems, but we want to give it some space as 1000 was tested in "perfect conditions" with nothing else happening on the map
+	if ( i < 800 ) then
+		local BorderSize	= CamDist * 0.004
+		local Up			= EyeAng:Up() * BorderSize
+		local Right			= EyeAng:Right() * BorderSize
+
+		render.SetColorModulation( 1, 1, 1 )
+		render.SetBlend( 1 )
+		render.MaterialOverride( Material( "models/debug/debugwhite" ) )
+
+		-- Render each entity in a circle
+		for k, v in pairs( Dupe.Entities ) do
+
+			-- Set the skin and bodygroups
+			entities[ k ]:SetSkin( v.Skin or 0 )
+			for bg_k, bg_v in pairs( v.BodyG or {} ) do entities[ k ]:SetBodygroup( bg_k, bg_v ) end
+
+			for j = 0, math.tau, 0.2 do
+
+				view.origin = CamPos + Up * math.sin( j ) + Right * math.cos( j )
+				cam.Start( view )
+
+					render.Model( {
+						model	= v.Model,
+						pos		= v.Pos,
+						angle	= v.Angle
+					}, entities[ k ] )
+
+				cam.End()
+
+			end
+
+		end
+
+		-- Because we just messed up the depth
+		render.ClearDepth()
+		render.SetColorModulation( 0, 0, 0 )
+		render.SetBlend( 1 )
+
+		-- Try to keep the border size consistent with zoom size
+		BorderSize	= CamDist * 0.002
+		Up			= EyeAng:Up() * BorderSize
+		Right		= EyeAng:Right() * BorderSize
+
+		-- Render each entity in a circle
+		for k, v in pairs( Dupe.Entities ) do
+
+			for j = 0, math.tau, 0.2 do
+
+				view.origin = CamPos + Up * math.sin( j ) + Right * math.cos( j )
+				cam.Start( view )
+
+				render.Model( {
+					model	= v.Model,
+					pos		= v.Pos,
+					angle	= v.Angle
+				}, entities[ k ] )
+
+				cam.End()
+
+			end
+
+		end
+	end
+
+	--
+	-- ACUAL RENDER!
+	--
+
+	-- We just fucked the depth up - so clean it
+	render.ClearDepth()
+
+	-- Set up the lighting. This is over-bright on purpose - to make the ents pop
+	render.SetModelLighting( 0, 0, 0, 0 )
+	render.SetModelLighting( 1, 2, 2, 2 )
+	render.SetModelLighting( 2, 3, 2, 0 )
+	render.SetModelLighting( 3, 0.5, 2.0, 2.5 )
+	render.SetModelLighting( 4, 3, 3, 3 ) -- top
+	render.SetModelLighting( 5, 0, 0, 0 )
+	render.MaterialOverride( nil )
+
+	view.origin = CamPos
+	cam.Start( view )
+
+	-- Render each model
+	for k, v in pairs( Dupe.Entities ) do
+
+		render.SetColorModulation( 1, 1, 1 )
+		render.SetBlend( 1 )
+
+		-- EntityMods override this
+		if ( v._DuplicatedColor ) then
+			render.SetColorModulation( v._DuplicatedColor.r / 255, v._DuplicatedColor.g / 255, v._DuplicatedColor.b / 255 )
+			--render.SetBlend( v._DuplicatedColor.a / 255 )
+		end
+		if ( v._DuplicatedMaterial ) then render.MaterialOverride( Material( v._DuplicatedMaterial ) ) end
+
+		if ( istable( v.EntityMods ) ) then
+
+			if ( istable( v.EntityMods.colour ) ) then
+				render.SetColorModulation( v.EntityMods.colour.Color.r / 255, v.EntityMods.colour.Color.g / 255, v.EntityMods.colour.Color.b / 255 )
+				--render.SetBlend( v.EntityMods.colour.Color.a / 255 )
+			end
+
+			if ( istable( v.EntityMods.material ) ) then
+				render.MaterialOverride( Material( v.EntityMods.material.MaterialOverride ) )
+			end
+
+		end
+
+		render.Model( {
+			model	= v.Model,
+			pos		= v.Pos,
+			angle	= v.Angle
+		}, entities[ k ] )
+
+		render.MaterialOverride( nil )
+
+	end
+
+	cam.End()
+
+	-- Enable lighting again (or it will affect outside of this loop!)
+	render.SuppressEngineLighting( false )
+	render.SetColorModulation( 1, 1, 1 )
+	render.SetBlend( 1 )
+
+	--
+	-- Finished with the entities - remove them all
+	--
+	for k, v in pairs( entities ) do
+		v:Remove()
+	end
+
+	--
+	-- This captures a square of the render target, copies it to a jpeg file
+	-- and returns it to us as a (binary) string.
+	--
+	local jpegdata = render.Capture( {
+		format		=	"jpeg",
+		x			=	0,
+		y			=	0,
+		w			=	512,
+		h			=	512,
+		quality		=	95
+	} )
+
+	--
+	-- Try to figure out if any of the models/materials/etc came from some addon
+	--
+	duplicator.FigureOutRequiredAddons( Dupe )
+
+	--
+	-- Encode and compress the dupe
+	--
+	local DupeJSON = util.TableToJSON( Dupe )
+	if ( !isstring( DupeJSON ) ) then
+		MsgN( "There was an error converting the dupe to a json string" )
+	end
+
+	DupeJSON = util.Compress( DupeJSON )
+
+	--
+	-- And save it! (filename is automatic md5 in dupes/)
+	--
+	if ( engine.WriteDupe( DupeJSON, jpegdata ) ) then
+
+		-- Disable the save button!!
+		hook.Run( "DupeSaveUnavailable" )
+		hook.Run( "DupeSaved" )
+
+		MsgN( "Saved!" )
+
+		spawnmenu.SwitchCreationTab( "#spawnmenu.category.dupes" )
+
+	end
+
+end )

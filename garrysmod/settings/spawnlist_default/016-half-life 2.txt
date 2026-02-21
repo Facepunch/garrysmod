@@ -1,0 +1,191 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/hl2.png"
+	"id"		"16"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Effects"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/effects/combineball.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/effects/portalfunnel.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/effects/portalrift.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/effects/splode.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/portalskydome.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/portalball.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/effects/splodearc.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/effects/splodeglass.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stasisvortex.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_combine/stasisshield.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light128x128.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light128x256.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light128x384.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light128x512.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light256x384.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light256x512.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light64x128.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/effects/vol_light64x256.mdl"
+		}
+		"21"
+		{
+			"type"		"header"
+			"text"		"Editor"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/editor/air_node.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/editor/air_node_hint.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/editor/axis_helper.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/editor/axis_helper_thick.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/editor/camera.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/editor/climb_node.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/editor/cone_helper.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/editor/ground_node.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/editor/ground_node_hint.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/editor/node_hint.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/editor/overlay_helper.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/editor/playerstart.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/editor/scriptedsequence.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/editor/spot.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/editor/spot_cone.mdl"
+		}
+	}
+	"name"		"Half-Life 2"
+	"version"		"3"
+}

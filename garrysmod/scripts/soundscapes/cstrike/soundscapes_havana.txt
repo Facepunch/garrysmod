@@ -1,0 +1,490 @@
+"havana.indoors"
+{
+	"dsp"	"0"
+
+	"playlooping"
+	{
+		"volume"		".3"
+		"pitch"		"100"
+		"wave"		"ambient/tones/roomtone1.wav"
+	}
+
+	"playlooping"
+
+
+	{
+		"volume"		".2"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"6,10"
+		"volume"		".07,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood4.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,23"
+		"volume"		"0.05,0.12"
+		"pitch"		"80,90"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/creak1.wav"
+			"wave"	"ambient/misc/creak2.wav"
+			"wave"	"ambient/misc/creak3.wav"
+			"wave"	"ambient/misc/creak4.wav"
+			"wave"	"ambient/misc/creak5.wav"
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"16,33"
+		"volume"		".05,.2"
+		"pitch"		"70,90"
+
+		"rndwave"
+		{
+		"wave"		"ambient/animal/dog1.wav"
+		"wave"		"ambient/animal/dog2.wav"
+		"wave"		"ambient/animal/dog3.wav"
+		"wave"		"ambient/animal/dog4.wav"
+		"wave"		"ambient/animal/dog5.wav"
+		"wave"		"ambient/animal/dog6.wav"
+		"wave"		"ambient/animal/dog7.wav"
+		}
+
+	}
+
+
+	
+
+	
+}
+
+
+
+
+
+
+
+"havana.outdoors"
+{
+	"dsp"	"0"
+	"playlooping"
+
+
+	{
+		"volume"		".6"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+
+	
+
+
+	"playrandom"
+	{
+
+		"time"		"18,35"
+		"volume"		".06,.1"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/hammer1.wav"
+			"wave"	"ambient/misc/hammer2.wav"
+			"wave"	"ambient/misc/hammer3.wav"
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"21,44"
+		"volume"		".3,.4"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/clank1.wav"
+			"wave"	"ambient/misc/clank2.wav"
+			"wave"	"ambient/misc/clank3.wav"
+			"wave"	"ambient/misc/clank4.wav"
+
+		}
+
+	}
+
+
+
+
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.2"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+
+		}
+
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"wood_scape"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"16,50"
+		"volume"		".05,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+		"wave"		"ambient/animal/dog1.wav"
+		"wave"		"ambient/animal/dog2.wav"
+		"wave"		"ambient/animal/dog3.wav"
+		"wave"		"ambient/animal/dog4.wav"
+		"wave"		"ambient/animal/dog5.wav"
+		"wave"		"ambient/animal/dog6.wav"
+		"wave"		"ambient/animal/dog7.wav"
+		}
+
+	}
+
+
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"0"
+		
+
+		
+		
+	}
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"5"
+		
+
+		
+		
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"2"
+		
+
+		
+		
+	}
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"7"
+		
+
+		
+		
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"6"
+		
+
+		
+		
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"1"
+		
+
+		
+		
+	}
+
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"3"
+		
+
+		
+		
+	}
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"	".07"
+		"pitch"		"100"
+		"wave"		"ambient/music/cubanmusic1.wav"
+		"soundlevel"  	"SNDLVL_90dB"
+		"position"	"4"
+	}
+
+
+
+
+
+
+
+
+	"playrandom"
+	{
+
+		"time"		"9,21"
+		"volume"		".07,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+		"wave"	"ambient/misc/shutter1.wav"
+		"wave"	"ambient/misc/shutter2.wav"
+		"wave"	"ambient/misc/shutter3.wav"
+		"wave"	"ambient/misc/shutter4.wav"
+		"wave"	"ambient/misc/shutter5.wav"
+		"wave"	"ambient/misc/shutter6.wav"
+		"wave"	"ambient/misc/shutter7.wav"
+		"wave"	"ambient/misc/shutter8.wav"
+		}
+
+	}
+
+
+	
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+	
+}
+
+
+"wood_scape"
+
+{
+
+	"playrandom"
+	{
+
+		"time"		"7,20"
+		"volume"		".07,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood4.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+
+		}
+
+	}
+
+
+}
+
+
+
+
+
+
+

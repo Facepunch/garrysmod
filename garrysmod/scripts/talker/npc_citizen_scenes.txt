@@ -1,0 +1,1113 @@
+//============================================================================================================
+// Start Citizen outland_12 response rules
+//============================================================================================================
+criterion "IsMap012"	"map" "ep2_outland_12" required
+criterion "IsHunterShootingMags" "playershoot_hunters_hint" "1" required weight 5
+criterion "NotShootHuntersFirst" "WorldShootHuntersFirst" "!=1" "required" 
+criterion "Iscitizen_healthready" "citizen_healthready" "1" "required" weight 2
+criterion "IsNotcitizen_healthready" "citizen_healthready" "!=1" "required" weight 2
+
+
+response RebTalkUse11
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/male01/reb_calmplususe_01.vcd"   
+	scene "scenes/npc/male01/reb_calmplususe_02.vcd"   
+	scene "scenes/npc/male01/reb_calmplususe_03.vcd"   
+	scene "scenes/npc/male01/reb_calmplususe_04.vcd"   
+}
+ 
+rule RebTalkUse11
+ {
+	criteria		IsCitizen ConceptTalkUse IsMap_ep2_outland_11 NotUsedCitizenResponse NotInCombat
+        applycontext		"UsedCitizenResponse:1:20"
+ 	response		RebTalkUse11
+ }
+
+criterion  "IsFemaleSupervisor" "name" "cit_hall_supervisor_1" required
+
+response RebTalkUse11f
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/episode_1/npc/female01/cit_evac_no04.vcd"   
+}
+ 
+rule RebTalkUse11f
+ {
+	criteria		IsCitizen ConceptTalkUse IsMap_ep2_outland_11 NotUsedCitizenResponse NotInCombat IsFemaleSupervisor
+        applycontext		"UsedCitizenResponse:1:20"
+ 	response		RebTalkUse11f
+ }
+
+
+
+
+
+
+response "CitizenShootHunters12"
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_12/reb_huntprompt01.vcd"  
+	scene "scenes/outland_12/reb_packs01.vcd"  
+	scene "scenes/outland_12/reb_packs02.vcd"  
+	scene "scenes/outland_12/reb_packs03.vcd"  
+	scene "scenes/outland_12/reb_packs04.vcd"  
+	scene "scenes/outland_12/reb_huntprompt02.vcd"  
+}
+
+
+rule CitizenShootHunters12
+{
+	criteria	IsCitizen ConceptTalkLook IsMap012 IsHunterShootingMags PlayerNear NotShootHuntersFirst
+	applycontext	"ShootHuntersFirst:1:20"
+	applycontexttoworld
+	response	CitizenShootHunters12
+}
+
+rule CitizenHelloHunters12
+{
+	criteria		IsCitizen ConceptTalkHello IsMap012 PlayerNear SeePlayer NotInPanic IsHunterShootingMags NotShootHuntersFirst
+	applycontext	"ShootHuntersFirst:1:20"
+	applycontexttoworld
+	response		CitizenShootHunters12
+}
+
+
+
+criterion "IsPlayerNeedsCarHint" "playerneedscar_hint"  "1" required
+criterion "NotPlayerNeedsCarHint" "worldPlayerNeedsCarHint" "!=1" required
+
+
+response "PlayerShouldUseCar12"
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_12/reb_battle_needyourcar02.vcd"  
+	scene "scenes/outland_12/reb_battle_needyourcar03.vcd"  
+	scene "scenes/outland_12/reb_battle_needyourcar05.vcd"  
+	scene "scenes/outland_12/reb_battle_needyourcar01.vcd"  
+}
+
+
+rule PlayerShouldUseCar12
+{
+	criteria	IsCitizen ConceptTalkLook IsMap012 IsPlayerNeedsCarHint PlayerNear NotPlayerNeedsCarHint NotInCombat
+	applycontext	"PlayerNeedsCarHint:1:20"
+	applycontexttoworld
+	response	PlayerShouldUseCar12
+}	
+
+
+
+criterion "Isplayerlast_wave_panic" "playerlast_wave_panic" "1" required
+criterion "IsNotplayerlast_wave_panic" "playerlast_wave_panic" "!=1" required
+
+response "CitizenHello12"
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/male01/reb_idles01.vcd"  
+	scene "scenes/npc/male01/reb_idles02.vcd"  
+	scene "scenes/npc/male01/reb_idles06.vcd"  
+	scene "scenes/npc/male01/reb_idles07.vcd"  
+}
+
+rule CitizenHello12
+{
+	criteria		IsCitizen ConceptTalkHello IsMap012 PlayerNear SeePlayer NotInPanic IsNotplayerlast_wave_panic  IsNotcitizen_healthready
+	response		CitizenHello12
+}
+
+
+
+criterion "NotLastWavePanicLook" "worldLastWavePanicLook" "!=1" "required" 
+response "RebelPanicLook12"
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/npc/male01/reb_idles03.vcd"  
+	scene "scenes/npc/male01/reb_idles04.vcd"  
+	scene "scenes/npc/male01/reb_idles05.vcd"  
+	scene "scenes/npc/male01/reb_idles13.vcd"  
+
+}
+
+rule RebelPanicLook12
+{
+	criteria		ConceptTalkLook IsMap012 PlayerNear  Isplayerlast_wave_panic NotLastWavePanicLook ContextActivityIdle
+	applycontext	"LastWavePanicLook:1:30"
+	applycontexttoworld
+	response		RebelPanicLook12
+}
+
+criterion "NotLastWavePanicAssaultLook" "worldLastWavePanicAssaultLook" "!=1" "required" 
+response "RebelPanicAssault12"
+{
+	NOREPEAT
+	scene "scenes/outland_12/reb_lastwave01.vcd"  
+	scene "scenes/outland_12/reb_lastwave02.vcd"  
+	scene "scenes/outland_12/reb_lastwave05.vcd"  
+	scene "scenes/outland_12/reb_lastwave06.vcd"  
+	scene "scenes/outland_12/reb_lastwave07.vcd"  
+}
+
+rule RebelPanicAssault12
+{
+	criteria		ConceptTalkLook IsMap012 PlayerWithin800 Isplayerlast_wave_panic NotLastWavePanicAssaultLook ContextActivityRun
+	applycontext	"LastWavePanicAssaultLook:1:10"
+	applycontexttoworld
+	response		RebelPanicAssault12
+}
+
+
+criterion "NotTalkAttacking12" "worldTalkAttacking12" "!=1" "required" 
+
+response "RebelAttacking12"
+{
+	NOREPEAT
+	scene "scenes/outland_12/reb_lastwave03.vcd"  
+	scene "scenes/outland_12/reb_lastwave04.vcd"  
+	scene "scenes/outland_12/reb_lastwave08.vcd"  
+	scene "scenes/outland_12/reb_lastwave09.vcd"  
+	scene "scenes/outland_12/reb_lastwave10.vcd"  
+	scene "scenes/outland_12/reb_lastwaveannounced02.vcd"  
+	scene "scenes/outland_12/reb_lastwaveannounced03.vcd"  
+	scene "scenes/outland_12/reb_lastwaveannounced05.vcd"  
+	scene "scenes/outland_12/reb_lastwaveannounced06.vcd"  
+	scene "scenes/outland_12/reb_lastwaveannounced07.vcd"  
+	scene "scenes/outland_12/reb_lastwaveannounced09.vcd"  
+	scene "scenes/outland_12/reb_lastwaveannounced11.vcd"  
+	scene "scenes/outland_12/reb_buildingexplo06.vcd"  
+	
+
+}
+
+rule RebelAttacking12
+{
+	criteria		ConceptTalkAttacking IsMap012 PlayerWithin800 NotTalkAttacking12 
+	applycontext	"TalkAttacking12:1:15"
+	applycontexttoworld
+	response		RebelAttacking12
+}
+
+
+
+criterion "NotBareFists12" "worldBareFists12" "!=1" "required" 
+
+
+response "RebelBareFists12"
+{
+	NOREPEAT
+	scene "scenes/outland_12/reb_huntprompt05.vcd"  
+}
+
+rule RebelBareFists12
+{
+	criteria	ConceptTalkAttacking IsMap012 PlayerWithin800 EnemyIsHunter NotBareFists12  NotTalkAttacking12 EnemyCouleBeDistant InCombatMedium
+	applycontext	"BareFists12:1:0,TalkAttacking12:1:20"
+	applycontexttoworld
+	response		RebelBareFists12
+}
+
+
+
+
+criterion "NotSaidHealHere12" "worldSaidHealHere12" "!=1" "required" 
+criterion "NotSaidHealthReady12" "worldSaidHealthReady12" "!=1" "required" 
+criterion "NotSaidMagsHere12" "worldSaidMagsHere12" "!=1" "required" 
+
+response "RebelHealthReady12"
+{
+	scene "scenes/outland_12/reb_healthcall03.vcd"  
+	scene "scenes/outland_12/reb_healthcall04.vcd"  
+}
+
+rule RebelHealthReady12
+{
+	criteria	ConceptTalkLook IsMap012 PlayerNear Iscitizen_healthready NotInCombat NotSaidHealthReady12
+	applycontext	"SaidHealthReady12:1:30"
+	applycontexttoworld
+	response	RebelHealthReady12
+}
+
+
+
+response "RebelHealHere12"
+{
+	scene "scenes/outland_12/reb_healthcall01.vcd"  
+	scene "scenes/outland_12/reb_healthcall02.vcd"  
+}
+
+rule RebelHealHere12
+{
+	criteria	ConceptTalkLook IsMap012 Iscitizen_healthready PlayerReallyNotNear PlayerCouldHeal NotSaidHealHere12 NotSaidHealthReady12
+	applycontext	"SaidHealthReady12:1:30,SaidHealHere12:1:30"
+	applycontexttoworld
+	response	RebelHealHere12
+}
+
+
+response "RebelMagsHere12"
+{
+	scene "scenes/outland_12/reb_ammocall02.vcd"  
+}
+
+rule RebelMagsHere12
+{
+	criteria	ConceptTalkLook IsMap012 Iscitizen_healthready PlayerReallyNotNear PlayerNotUsingPhysCannon NotSaidHealthReady12 NotSaidMagsHere12
+	applycontext	"SaidHealthReady12:1:30,SaidMagsHere12:1:120"
+	applycontexttoworld
+	response	RebelMagsHere12
+}
+
+
+
+response "CitizenHello12Suppress"
+{
+
+}
+
+rule CitizenHello12Suppress
+{
+	criteria		IsCitizen ConceptTalkHello PlayerNear SeePlayer NotInPanic IsMap012
+	response		CitizenHello12Suppress
+}
+
+
+
+//============================================================================================================
+// Start Citizen outland_08 response rules
+//============================================================================================================
+criterion "PlayerNeedsChopperHint" "world08_NotHitCopter" "=1" "required" weight 20
+criterion "NotNaggingGordonEp208" "NaggingGordonEp208" "!=1" "required" 
+criterion "ConceptChopperDamaged" "Concept" "TLK_OUTLAND_08_DAMAGEDCHOPPER" "required"
+criterion "ConceptChopperKilled" "Concept" "TLK_OUTLAND_08_KILLEDCHOPPER" "required"
+
+
+criterion "Is09"	"map" "ep2_outland_09" required
+
+//response testwrong
+//{
+//  sequential
+//	scene "scenes/episode_1/npc/$gender01/cit_evac_no02.vcd"
+//}
+//
+//rule testwrong
+//{
+//	criteria ConceptTalkLook
+//	response testwrong
+//}
+
+//response "ChopperKilled"
+//{
+//	scene "scenes/outland_08/chopper/reb_chop_shipdown.vcd"  speakonce
+//
+//}
+// 
+//rule ChopperKilled
+//{
+//	criteria	IsCitizen ConceptChopperKilled
+//	applycontext	"08_HitCopter:1:0"
+//	response	ChopperKilled
+//}
+
+
+//need non-alyx inside 
+
+criterion "ConceptGetInGarage09" "Concept" "TLK_OUTLAND_09_GETINGARAGE" "required"
+response "CitizenGetInGarage09"
+{
+	SEQUENTIAL
+	scene "scenes/outland_09/reb_chop_alyxinside01.vcd"  respeakdelay 30
+	scene "scenes/outland_09/reb_chop_alyxinside02.vcd"  respeakdelay 30
+	scene "scenes/outland_09/reb_chop_alyxinside03.vcd"  respeakdelay 30
+}
+ 
+rule CitizenGetInGarage09
+{
+	criteria	IsCitizen ConceptGetInGarage09
+	response	CitizenGetInGarage09
+}
+
+
+
+
+response "CitizenChopperHint"
+{
+	SEQUENTIAL
+	norepeat
+	scene "scenes/outland_08/chopper/reb_chop_chopper_hint01.vcd"  respeakdelay 30
+	scene "scenes/outland_08/chopper/reb_chop_chopper_hint03.vcd"  respeakdelay 30
+	scene "scenes/outland_08/chopper/reb_chop_chopper_hint04.vcd"  respeakdelay 30
+	scene "scenes/outland_08/chopper/reb_chop_chopper_hint05.vcd"  respeakdelay 30
+	scene "scenes/outland_08/chopper/reb_chop_chopper_hint06.vcd"  respeakdelay 30
+//	scene "scenes/outland_08/chopper/reb_chop_chopper_hint07.vcd"  respeakdelay 30
+	scene "scenes/outland_08/chopper/reb_chop_chopper_hint08.vcd"  respeakdelay 30
+	scene "scenes/outland_08/chopper/reb_chop_chopper_hint09.vcd"  respeakdelay 30
+
+}
+ 
+rule CitizenChopperHint
+{
+	criteria	IsCitizen ConceptTalkLook PlayerNear NotNaggingGordonEp208  PlayerNeedsChopperHint
+	applycontext	"NaggingGordonEp208:1:10"
+	response	CitizenChopperHint
+}
+
+
+response "ChopperHit"
+{
+	SEQUENTIAL
+	norepeat
+	scene "scenes/outland_08/chopper/rebc_chop_hit01.vcd"  respeakdelay 5
+	scene "scenes/outland_08/chopper/rebc_chop_hit02.vcd"  respeakdelay 5
+	scene "scenes/outland_08/chopper/rebc_chop_hit03.vcd"  respeakdelay 5
+	scene "scenes/outland_08/chopper/rebc_chop_hit04.vcd"  respeakdelay 5
+
+}
+ 
+rule ChopperHit
+{
+	criteria	IsCitizen ConceptChopperDamaged
+	applycontext	"08_HitCopter:1:0"
+	response	ChopperHit
+}
+
+
+
+
+//============================================================================================================
+// End Citizen outland_08 response rules
+//============================================================================================================
+
+//============================================================================================================
+// Start Citizen outland_02 response rules
+//============================================================================================================
+criterion "ConceptFollowSheckley" "Concept" "tlk_follow_sheckley" required
+criterion "IsMap_ep2_outland_02" "map" "ep2_outland_02" weight 20 "required"
+criterion "ConceptOutland_02_wavestart" "Concept" "TLK_outland_02_wavestart" required
+criterion "ConceptOutland_02_waveend" "Concept" "TLK_outland_02_waveend" required
+criterion "IsSheckley" "name" "sheckley" required
+criterion "IsGriggs" "name" "griggs" required
+criterion "IsGriggsDead" "GriggsKilled" "1" required
+criterion "IsSheckleyDead" "SheckleyKilled" "1" required
+criterion "IsGriggsAlive" "GriggsKilled" "!=1" required
+criterion "IsSheckleyAlive" "SheckleyKilled" "!=1" required
+criterion "GordonNoWeapon_Outland02"  "gordon_picked_up_weapon" "!=1" required
+criterion "ConceptTurretTipped" "Concept" "TLK_OUTLAND_02_TURRET_TIPPED" required
+criterion "ConceptGSFollowVortNag02" "Concept" "TLK_FOLLOW_VORT_NAG" required
+criterion "IsWaveActive" "waveactive" "1" required
+criterion "SheckleyAntlionOk" "SheckleyAntlion" "!=1" "required" weight 0
+criterion "GriggsAntlionOk" "GriggsAntlion" "!=1" "required" weight 0
+criterion "IsGunNagWaveDone" "worldGunNagWaveDone" "1" "required" weight 0
+criterion "IsNotGunNagWaveDone" "worldGunNagWaveDone" "!=1" "required" weight 0
+criterion "ContextVortNeedsHelp" "VortNeedsHelp" "1" required
+
+criterion "IsWave01" "wave" "1" required
+criterion "IsWave02" "wave" "2" required
+criterion "IsWave03" "wave" "3" required
+criterion "IsWave04" "wave" "4" required
+criterion "IsWave05" "wave" "5" required
+criterion "IsWave06" "wave" "6" required
+criterion "IsWave07" "wave" "7" required
+criterion "IsWave08" "wave" "8" required
+criterion "IsWave09" "wave" "9" required
+criterion "IsWave10" "wave" "10" required
+criterion "IsWave11" "wave" "11" required
+criterion "IsWave12" "wave" "12" required
+criterion "IsWaveLessThan5" "wave" "<5" required
+
+
+
+response GSFollowVort02
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_02/gs_follow_vort_nag01.vcd"  
+	scene "scenes/outland_02/gs_follow_vort_nag02.vcd"  
+	scene "scenes/outland_02/gs_follow_vort_nag03.vcd"  
+	
+}
+ 
+rule GSFollowVort02
+{ 
+	criteria	ConceptGSFollowVortNag02 IsCitizen IsMap_ep2_outland_02
+	response	GSFollowVort02
+
+}
+
+
+response "TurretDownNagGriggs"
+{
+	scene "scenes/outland_02/griggs_turretdown01.vcd"  
+	scene "scenes/outland_02/griggs_turretdown02.vcd"  
+	
+}
+ 
+rule TurretDownNagGriggs
+{
+	criteria	IsGriggs ConceptTurretTipped IsWaveActive IsMap_ep2_outland_02
+	response	TurretDownNagGriggs
+
+}
+
+response "TurretDownNagSheckley"
+{
+	scene "scenes/outland_02/sheckley_turretdown01.vcd"  
+	scene "scenes/outland_02/sheckley_turretdown02.vcd"  
+	
+}
+ 
+rule TurretDownNagSheckley
+{
+	criteria	IsSheckley ConceptTurretTipped IsWaveActive IsMap_ep2_outland_02
+	response	TurretDownNagSheckley
+
+}
+
+
+
+response "CitizenHealAlyxNag_0utland_02"
+{
+
+	scene "scenes/outland_02/griggs_thosevortswant.vcd" respeakdelay 90
+}
+ 
+rule CitizenHealAlyxNag_0utland_02
+{
+ criteria	IsCitizen ConceptTalkIdle VortsNagPlayerAlyxHealOutland02 IsMap_ep2_outland_02
+ response	CitizenHealAlyxNag_0utland_02
+
+}
+
+
+
+
+
+//===============Antlion Wave Start=============================================================================
+response "Outland_02_WaveStart_01"
+{
+	scene "scenes/outland_02/griggs_incom36.vcd"
+}
+
+rule Outland_02_WaveStart_01
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave01 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_01
+}
+
+response "Outland_02_WaveStart_02"
+{
+	scene "scenes/outland_02/wavestart_02.vcd"
+
+}
+
+rule Outland_02_WaveStart_02
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave02 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_02
+}
+
+response "Outland_02_WaveStart_03"
+{
+	scene "scenes/outland_02/wavestart_03.vcd"
+}
+rule Outland_02_WaveStart_03
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave03 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_03
+}
+
+response "Outland_02_WaveStart_04"
+{
+	scene "scenes/outland_02/wavestart_04.vcd"
+}
+
+rule Outland_02_WaveStart_04
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave04 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_04
+}
+
+response "Outland_02_WaveStart_05"
+{
+	scene "scenes/outland_02/wavestart_05.vcd"
+}
+
+rule Outland_02_WaveStart_05
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave05 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_05
+}
+
+response "Outland_02_WaveStart_06"
+{
+	scene "scenes/outland_02/wavestart_06.vcd"
+}
+
+rule Outland_02_WaveStart_06
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave06 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_06
+}
+
+
+response "Outland_02_WaveStart_07"
+{
+	scene "scenes/outland_02/wavestart_07.vcd"
+}
+
+rule Outland_02_WaveStart_07
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave07 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_07
+}
+
+response "Outland_02_WaveStart_08"
+{
+	scene "scenes/outland_02/wavestart_08.vcd"
+}
+
+rule Outland_02_WaveStart_08
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave08 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_08
+}
+
+
+response "Outland_02_WaveStart_09"
+{
+	scene "scenes/outland_02/wavestart_09.vcd"
+}
+
+rule Outland_02_WaveStart_09
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave09 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_09
+}
+
+
+response "Outland_02_WaveStart_10"
+{
+	scene "scenes/outland_02/wavestart_10.vcd"
+}
+
+rule Outland_02_WaveStart_10
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave10 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_10
+}
+
+
+response "Outland_02_WaveStart_11"
+{
+	scene "scenes/outland_02/wavestart_11.vcd"
+}
+
+rule Outland_02_WaveStart_11
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave11 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_11
+}
+
+response "Outland_02_WaveStart_12"
+{
+	scene "scenes/outland_02/wavestart_12.vcd"
+}
+
+rule Outland_02_WaveStart_12
+{
+	criteria		IsCitizen ConceptOutland_02_wavestart IsWave12 IsGriggsAlive IsSheckleyAlive
+	response		Outland_02_WaveStart_12
+}
+
+
+//===============Antlion Wave End=============================================================================
+
+
+
+response "Outland_02_WaveEnd_02"
+{
+	sequential
+	norepeat
+	scene "scenes/outland_02/griggs_betweenwave_04.vcd"   //no offense quiet until you showed up 
+	scene "scenes/outland_02/waveend_06.vcd" // lets just stay here...
+	scene "scenes/outland_02/waveend_03.vcd"  //- sheckley what...
+	scene "scenes/outland_02/waveend_04.vcd"   // i got 10
+	scene "scenes/outland_02/waveend_05.vcd"  // can't be many more - too early...
+	scene "scenes/outland_02/waveend_07.vcd" // nest must be bigger than we thought! - short
+
+
+}
+rule Outland_02_WaveEnd_02
+{
+	criteria		IsCitizen ConceptOutland_02_waveend IsGriggsAlive IsSheckleyAlive IsGunNagWaveDone
+	response		Outland_02_WaveEnd_02
+}
+
+
+
+response "Outland_02_WaveEnd_02Wav1"
+{
+	sequential
+	norepeat
+	scene "scenes/outland_02/sheckley_betweenwave_02.vcd" // ever see an antlion?
+
+}
+rule Outland_02_WaveEnd_02Wav1
+{
+	criteria		IsCitizen ConceptOutland_02_waveend IsGriggsAlive IsSheckleyAlive  IsNotGunNagWaveDone
+	applycontext		"GunNagWaveDone:1:0"
+	applycontexttoworld
+	response		Outland_02_WaveEnd_02Wav1
+}
+
+response "Outland_02_WaveEnd_02Wav1NoGun"
+{
+	sequential
+	norepeat
+	scene "scenes/outland_02/gs_betweenwave_01.vcd" // ever see an antlion? then gun nag
+
+}
+rule Outland_02_WaveEnd_02Wav1NoGun
+{
+	criteria		IsCitizen ConceptOutland_02_waveend IsGriggsAlive IsSheckleyAlive GordonNoWeapon_Outland02 IsNotGunNagWaveDone
+	applycontext		"GunNagWaveDone:1:0"
+	applycontexttoworld
+	response		Outland_02_WaveEnd_02Wav1NoGun
+}
+
+
+
+
+
+
+
+
+//===============Sheckley start training nag========================================================================
+response "FollowSheckleyNag"
+{
+	SEQUENTIAL
+	scene "scenes/outland_02/Sheckley_trainingnags01.vcd"
+	scene "scenes/outland_02/Sheckley_trainingnags02.vcd"
+	scene "scenes/outland_02/Sheckley_trainingnags03.vcd"
+	scene "scenes/outland_02/Sheckley_trainingnags04.vcd"
+
+	
+}
+
+//rule FollowSheckleyNag
+//{
+//	criteria		IsCitizen ConceptLeadAttractPlayer IsMap_ep2_outland_02
+//	response		FollowSheckleyNag
+//}
+
+rule FollowSheckleyNag
+{
+	criteria		IsCitizen ConceptLeadComingBack 
+	response		FollowSheckleyNag
+}
+
+
+
+//===============Fighting Antlions========================================================================
+//ep_02.griggs_neverseen	
+
+response "CitizenAntLionDangerGriggs012" 
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_02/griggs_neverseen.vcd" 
+	scene "scenes/outland_02/griggs_watchvorts_01.vcd" 
+	scene "scenes/outland_02/griggs_watchvorts_02.vcd" 
+	scene "scenes/outland_02/griggs_watchvorts_04.vcd" 
+	scene "scenes/outland_02/griggs_watchvorts_03.vcd" 
+}
+
+rule CitizenAntLionDangerGriggs012
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 IsGriggs  IsSheckleyAlive GriggsAntlionOk IsWave12
+	applycontext		"GriggsAntlion:1:10"
+	response		CitizenAntLionDangerGriggs012
+}
+
+
+response "CitizenAntLionDangerSheckley012" 
+{
+	SEQUENTIAL
+	NOREPEAT
+	scene "scenes/outland_02/sheckley_watchvorts_01.vcd" 
+	scene "scenes/outland_02/sheckley_watchvorts_02.vcd" 
+	scene "scenes/outland_02/sheckley_watchvorts_03.vcd" 
+	scene "scenes/outland_02/sheckley_watchvorts_04.vcd" 
+}
+
+rule CitizenAntLionDangerSheckley012
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 IsSheckley  IsGriggsAlive SheckleyAntlionOk IsWave12
+	applycontext		"SheckleyAntlion:1:20"
+	response		CitizenAntLionDangerSheckley012
+}
+
+
+response "CitizenAntLionDangerGriggs" 
+{
+	scene "scenes/outland_02/griggs_fightlion_01.vcd" respeakdelay 30
+	scene "scenes/outland_02/griggs_fightlion_02.vcd" respeakdelay 30
+	scene "scenes/outland_02/griggs_fightlion_03.vcd" respeakdelay 30
+	scene "scenes/outland_02/griggs_gosheckley.vcd"   respeakdelay 30
+	scene "scenes/outland_02/griggs_fightlion_04.vcd" respeakdelay 30
+	scene "scenes/outland_02/griggs_fightlion_05.vcd" respeakdelay 30
+	scene "scenes/outland_02/griggs_followme02.vcd"   respeakdelay 30
+	
+
+}
+
+rule CitizenAntLionDangerGriggs
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 IsGriggs  IsSheckleyAlive GriggsAntlionOk
+	applycontext		"GriggsAntlion:1:40"
+	response		CitizenAntLionDangerGriggs
+}
+
+
+
+response "CitizenAntLionDangerSheckley" 
+{
+	scene "scenes/outland_02/sheckley_fightlion_01.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_fightlion_02.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_gogriggs.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_antlions_01.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_antlions_02.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_antlions_03.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_antlions_04.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_antlions_05.vcd"   respeakdelay 30
+
+
+	
+}
+
+rule CitizenAntLionDangerSheckley
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 IsSheckley  IsGriggsAlive SheckleyAntlionOk
+	applycontext		"SheckleyAntlion:1:60"
+	response		CitizenAntLionDangerSheckley
+}
+
+
+
+
+//===============Killing Antlions========================================================================
+
+
+
+
+response "GriggsKilledAntlion" 
+{
+	scene "scenes/outland_02/griggs_killlion_01.vcd"  respeakdelay 30
+	scene "scenes/outland_02/griggs_killlion_02.vcd"  respeakdelay 30
+	scene "scenes/outland_02/griggs_killlion_03.vcd"  respeakdelay 30
+	scene "scenes/outland_02/griggs_killlion_04.vcd"  respeakdelay 30
+
+}
+
+rule GriggsKilledAntlion
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 IsGriggs  IsSheckleyAlive GriggsAntlionOk
+	applycontext		"GriggsAntlion:1:15"
+	response		GriggsKilledAntlion
+
+}
+
+
+response "SheckleyKilledAntlion" 
+{
+	scene "scenes/outland_02/sheckley_killlion_01.vcd"  respeakdelay 30
+	scene "scenes/outland_02/sheckley_killlion_02.vcd"  respeakdelay 30
+	scene "scenes/outland_02/sheckley_killlion_03.vcd"  respeakdelay 30
+	scene "scenes/outland_02/sheckley_antlions_04.vcd"   respeakdelay 30
+	scene "scenes/outland_02/sheckley_antlions_05.vcd"   respeakdelay 30
+
+}
+
+rule SheckleyKilledAntlion
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 IsSheckley  IsGriggsAlive SheckleyAntlionOk
+	applycontext		"SheckleyAntlion:1:40"
+	response		SheckleyKilledAntlion
+}
+
+
+response "SheckleySeesMineDeath" 
+{
+	NoRepeat
+	scene "scenes/outland_02/sheckley_betweenwave_03.vcd"
+	scene "scenes/outland_02/sheckley_yeah_01.vcd"
+
+	
+
+}
+
+rule SheckleySeesMineDeath
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 IsSheckley  ConceptEnemyDead PlayerUsingMines
+	applycontext		"SheckleyAntlion:1:20"
+	response		SheckleySeesMineDeath
+}
+
+
+
+
+///Vort Under Attack
+
+
+response "CitizenVortUnderAttackGriggs" 
+{
+	scene "scenes/outland_02/griggs_vortintrouble.vcd" 
+	scene "scenes/outland_02/griggs_gohelpvort.vcd" 
+	scene "scenes/outland_02/griggs_dochelpvort.vcd"    
+}
+
+
+rule CitizenVortUnderAttackGriggs
+{
+	criteria		IsCitizen ConceptTalkLook IsGriggs ContextVortNeedsHelp
+	response		CitizenVortUnderAttackGriggs
+}
+
+
+response "CitizenVortUnderAttackSheckley" 
+{
+	scene "scenes/outland_02/sheckley_vortintrouble.vcd"    
+	scene "scenes/outland_02/sheckley_gohelpvort.vcd"    
+	scene "scenes/outland_02/sheckley_dochelpvort.vcd"   
+}
+
+
+rule CitizenVortUnderAttackSheckley
+{
+	criteria		IsCitizen ConceptTalkLook IsSheckley ContextVortNeedsHelp
+	response		CitizenVortUnderAttackSheckley
+}
+
+
+//Nag for player to go down and help heal alyx
+
+response "NagPlayerHealAlyxVortSheckley" 
+{
+	scene "scenes/outland_02/sheckley_vortswantyou.vcd"   
+	scene "scenes/outland_02/sheckley_vortscalling.vcd"   
+	scene "scenes/outland_02/sheckley_thosevortswant.vcd"   
+}
+
+
+rule NagPlayerHealAlyxVortSheckley
+{
+	criteria		IsCitizen ConceptVortsNagPlayerAlyxHealOutland02 IsMap_ep2_outland_02 IsSheckley
+	response		NagPlayerHealAlyxVortSheckley
+}
+
+
+response "NagPlayerHealAlyxVortGriggs" 
+{
+	scene "scenes/outland_02/griggs_vortscalling.vcd"   
+	scene "scenes/outland_02/griggs_thosevortswant.vcd"   
+	scene "scenes/outland_02/griggs_vortswantyou.vcd"   
+
+
+}
+
+rule NagPlayerHealAlyxVortGriggs
+{
+	criteria		IsCitizen ConceptVortsNagPlayerAlyxHealOutland02 IsMap_ep2_outland_02 IsGriggs
+	response		NagPlayerHealAlyxVortGriggs
+
+}
+
+response "SheckleyHideAndReload" 
+{
+	scene "scenes/outland_02/sheckley_reloading_01.vcd"   
+	scene "scenes/outland_02/sheckley_reloading_02.vcd"   
+	scene "scenes/outland_02/sheckley_reloading_03.vcd"   
+}
+
+rule SheckleyHideAndReload
+{
+	criteria		IsSheckley ConceptHideAndReload
+	response		SheckleyHideAndReload
+}
+
+
+response "GriggsHideAndReload" 
+{
+	scene "scenes/outland_02/griggs_reloading_01.vcd"   
+}
+
+rule GriggsHideAndReload
+{
+	criteria		IsGriggs ConceptHideAndReload
+	response		GriggsHideAndReload
+}
+
+
+response CitizenOuch02
+{
+	scene "scenes/npc/$gender01/ow01.vcd"
+	scene "scenes/npc/$gender01/no01.vcd"
+	scene "scenes/npc/$gender01/imhurt02.vcd"
+	scene "scenes/npc/$gender01/ow01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled07.vcd"   
+	scene "scenes/npc/$gender01/no01.vcd"
+	scene "scenes/npc/$gender01/no02.vcd"
+	scene "scenes/npc/$gender01/ow01.vcd"
+	scene "scenes/npc/$gender01/imhurt01.vcd"
+	scene "scenes/npc/$gender01/no01.vcd"
+	scene "scenes/npc/$gender01/ow02.vcd"
+}
+
+rule CitizenOuch02
+{
+	criteria	IsCitizen  ConceptTalkWound IsMap_ep2_outland_02
+   response CitizenOuch02
+}
+
+
+
+//============================================================================================================
+// Rules to supress for outland_02
+//============================================================================================================
+
+//Dampen Rules
+response "DampenRules02" 
+{
+}
+
+rule CitizenAntLionDanger02
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion 
+	response		DampenRules02
+}
+
+rule CitizenEnemyDead
+{
+	criteria		IsCitizen ConceptEnemyDead EnemyIsAntLion IsMap_ep2_outland_02
+	response		DampenRules02
+}
+
+
+rule CitizenHello_0utland_02
+{
+	criteria		IsCitizen ConceptTalkHello PlayerNear SeePlayer NotInPanic IsMap_ep2_outland_02
+	response		DampenRules02
+}
+
+rule CitizenTalkStare_0utland_02
+{
+ criteria      IsCitizen ConceptTalkStare IsGordonCriminal NPCIdle NotInPanic IsMap_ep2_outland_02
+ response  	DampenRules02
+}
+
+rule CitizenTalkStare_0utland_02
+{
+ criteria      IsCitizen ConceptTalkStare IsGordonCriminal NPCIdle NotInPanic IsMap_ep2_outland_02
+ response  	DampenRules02
+}
+ 
+rule CitizenTalkPlayerPushed_0utland_02
+{
+	criteria		IsCitizen  ConceptTalkPlayerPushed SeenByPlayer NoRecentCombat IsMap_ep2_outland_02
+	response		DampenRules02
+}
+
+rule CitizenQuestion_0utland_02
+{
+	criteria		IsCitizen ConceptTalkQuestion PlayerAlive NotInPanic IsMap_ep2_outland_02
+	response 		DampenRules02
+}
+
+rule CitizenQuestionAlyx
+{
+	criteria		IsCitizen ConceptTalkQuestion PlayerAlive IsSpeechTargetAlyx NotInPanic AlyxCitizenHelloOkay IsMap_ep2_outland_02
+	response 		DampenRules02
+}
+
+rule CitizenAnswerAlyx
+{
+	criteria		IsCitizen ConceptTalkAnswer PlayerAlive IsSpeechTargetAlyx NotInPanic IsMap_ep2_outland_02
+	response		DampenRules02
+}
+
+rule CitizenAnswerHelloAlyx
+{
+	criteria		IsCitizen ConceptTalkAnswerHello PlayerAlive IsSpeechTargetAlyx NotInPanic IsMap_ep2_outland_02
+	response		DampenRules02
+}
+
+rule CitizenAntLionDangerBury
+{
+	criteria		IsCitizen ConceptTalkAttacking EnemyIsAntLion IsMap_ep2_outland_02 
+	response		DampenRules02
+}
+
+rule CitizenEnemyDeadBury
+{
+	criteria		IsCitizen ConceptEnemyDead EnemyIsAntLion IsMap_ep2_outland_02
+	response		DampenRules02
+}
+
+
+
+//============================================================================================================
+// End Citizen outland_02 response rules
+//============================================================================================================
+
+
+//============================================================================================================
+// Start Magnusson outland_11 response rules
+//============================================================================================================
+criterion "IsMagnusson" "classname" "npc_magnusson" "required"
+criterion "ConceptNagSealSiloDoor" "Concept" "TLK_OUTLAND_11_Seal_Silo_Door" required
+
+response "NagMagnussonSealSiloDoor" 
+{
+	scene "scenes/outland_11/mag_aband_onceagain.vcd"   
+	scene "scenes/outland_11/mag_aband_uptoyou.vcd"   
+	scene "scenes/outland_11/mag_aband_critical.vcd"   
+	scene "scenes/outland_11/mag_aband_onceagain.vcd"   
+	scene "scenes/outland_11/mag_aband_uptoyou.vcd"   
+
+}
+
+rule NagMagnussonSealSiloDoor
+{
+	criteria		ConceptNagSealSiloDoor IsMagnusson
+	response		NagMagnussonSealSiloDoor
+
+}
+
+
+
+criterion "IsMap_ep2_outland_12" "map" "ep2_outland_12" weight 10 "required"
+
+response "StriderKilledCitizen"
+{
+	scene "scenes/outland_12/cit_strider_kill_01.vcd"
+	scene "scenes/outland_12/cit_strider_kill_02.vcd"
+	scene "scenes/outland_12/cit_strider_kill_03.vcd"
+	scene "scenes/outland_12/cit_strider_kill_04.vcd"
+	scene "scenes/outland_12/cit_strider_kill_05.vcd"
+	scene "scenes/outland_12/cit_strider_kill_06.vcd"
+}
+rule StriderKilledCitizen
+{ 
+	criteria		IsCitizen  ConceptPlayerKilledNPC EnemyIsStrider
+	response		StriderKilledCitizen
+}
+
+//criterion "" "Concept" "TLK_PLAYER_KILLED_NPC" "required"
+
+
+

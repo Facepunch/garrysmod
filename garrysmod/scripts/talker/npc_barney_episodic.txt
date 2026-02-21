@@ -1,0 +1,106 @@
+//============================================================================================================
+// Barney criteria
+criterion "IsBarney" "classname" "npc_barney" "required"
+criterion "ConceptTalkBarneyEscort" "Concept" "TLK_BARNEY_ESCORT" required
+criterion "BarneyGetOnTrainGordon" "Concept" "ConceptBarneyGetOnTrainNag" required
+criterion "IsSniperFire" "Concept" "ConceptSniperFire" required
+criterion "FoughtSniper" "SniperAction" "1" required
+criterion "IsMap_ep1_c17_05" "map" "ep1_c17_05" weight 10 "required"
+//============================================================================================================
+
+
+
+//============================================================================================================
+// Barney Escort Speech
+//============================================================================================================
+//----------------------------------------------------------------------------
+
+response "BarneyEscort"
+{
+	scene "scenes/episode_1/barn_c17_05_defendthecitizens.vcd"
+	scene "scenes/episode_1/barn_c17_05_followfreeman.vcd"
+	scene "scenes/episode_1/barn_c17_05_theseareourpeople.vcd"
+	scene "scenes/episode_1/barn_c17_05_thenextgroupisready.vcd"
+	scene "scenes/episode_1/barn_c17_05_runthisgrouptothetrain.vcd"
+	scene "scenes/episode_1/barn_c17_05_keepthemsafe.vcd"
+	scene "scenes/episode_1/barn_c17_05_protectthecitizens.vcd"
+	scene "scenes/episode_1/barn_c17_05_moveemout.vcd"
+	scene "scenes/episode_1/barn_c17_05_takethesefolkstothetrain.vcd"
+	scene "scenes/episode_1/barn_c17_05_takethemtothetrain.vcd"
+	scene "scenes/episode_1/barn_c17_05_theyregettingaboard.vcd"
+	scene "scenes/episode_1/barn_c17_05_followfreeman.vcd"
+
+}
+rule BarneyEscort
+{
+	criteria IsBarney ConceptTalkBarneyEscort
+	response BarneyEscort
+}
+
+
+response "BarneyEscortSniper"
+{
+	scene "scenes/episode_1/c17/ba_gordoniknow.vcd"
+
+}
+rule BarneyEscortSniper
+{
+	criteria IsBarney ConceptTalkBarneyEscort FoughtSniper
+	response BarneyEscortSniper
+}
+
+
+//============================================================================================================
+// Barney Screaming During Sniper Scene
+//============================================================================================================
+//----------------------------------------------------------------------------
+
+response "BarneySniperYell"
+{
+	norepeat
+	scene "scenes/episode_1/c17/ba_duck.vcd" respeakdelay 30
+	scene "scenes/episode_1/c17/ba_getdown.vcd" respeakdelay 30	
+	
+}
+rule BarneySniperYell
+{
+	criteria IsBarney IsSniperFire 
+        applycontext "SniperAction:1:180"
+	response BarneySniperYell
+}
+
+
+
+//============================================================================================================
+// Barney Not Looking Dead While Herding the Citizens
+//============================================================================================================
+//----------------------------------------------------------------------------
+criterion "NotUsedBarneyResponse" "UsedBarneyResponse" "!=1" "required" weight 0
+criterion "IsUsedBarneyResponse" "UsedBarneyResponse" "1" "required" weight 0
+
+
+response "BarneyUseHerdingCitizens"
+{
+	scene "scenes/episode_1/barn_c17_05_defendthecitizens.vcd"
+	scene "scenes/episode_1/barn_c17_05_moveemout.vcd"  
+
+	
+}
+rule BarneyUseHerdingCitizens
+{
+	criteria IsBarney ConceptTalkUse IsMap_ep1_c17_05 NotUsedBarneyResponse 
+	applycontext "UsedBarneyResponse:1:30"
+	response BarneyUseHerdingCitizens
+}
+
+
+response "BarneyUsedHerdingCitizens"
+{
+	scene "scenes/npc/barney/ba_use_default01.vcd" respeakdelay 5
+	  	
+}
+rule BarneyUsedHerdingCitizens
+{
+	criteria IsBarney ConceptTalkUse IsMap_ep1_c17_05 IsUsedBarneyResponse  
+	response BarneyUsedHerdingCitizens
+}

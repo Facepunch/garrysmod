@@ -1,0 +1,423 @@
+//============================================================================================================
+// Alyx
+//============================================================================================================
+
+criterion IsAlyx "classname" "npc_alyx" required
+
+criterion VehicleMoving "vehicle_speed" ">100" required
+criterion VehicleNear "vehicle_distance" "<512" required
+criterion VehicleAlmostNear "vehicle_distance" "<800" required
+criterion VehicleFar  "vehicle_distance" ">512" required
+criterion CanExitVehicle "vehicle_can_exit" "1" required
+criterion CannotExitVehicle "vehicle_can_exit" "0" required
+criterion CanEnterVehicle "vehicle_can_enter" "1" required
+criterion CannotEnterVehicle "vehicle_can_enter" "0" required
+criterion VehicleMovingFast "vehicle_speed" ">200" required
+criterion VehicleMovingFaster "vehicle_speed" ">400" required
+criterion VehicleMovingSlow "vehicle_speed" "<100" required
+criterion IsAlyxImpact "AlyxImpact" "1" required
+criterion IsAlyxCollisionWarning "AlyxCollisionWarning" "1" required
+criterion IsAlyxJostled "AlyxJostled" "1" required
+criterion IsAlyxNotJostled "AlyxJostled" "!=1" required
+
+criterion IsNotAlyxNewRadar "AlyxNewRadar" "!=1" required 
+
+
+response Alyx_NewRadarContact
+{
+	scene "scenes/npc/alyx/al_radar_newdetect01.vcd"
+	scene "scenes/npc/alyx/al_radar_newdetect02.vcd"
+	scene "scenes/npc/alyx/al_radar_newdetect03.vcd"
+	scene "scenes/npc/alyx/al_radar_newdetect04.vcd"
+	scene "scenes/npc/alyx/al_radar_newdetect05.vcd"
+}
+
+rule Alyx_NewRadarContact
+{
+	criteria	IsAlyx IsInVehicle ConceptPassengerNewRadarContact IsNotAlyxNewRadar
+	applycontext	"AlyxNewRadar:1:10"
+	response	Alyx_NewRadarContact
+}
+
+
+
+criterion "NotAlyxWinked" "AlyxWinked" "!=1" "required" weight 0
+response Alyx_InCarFidgetWink
+{
+
+	scene "scenes/npc/Alyx/al_vehicle_wink.vcd" 
+}
+
+rule Alyx_InCarFidgetWink
+{
+	criteria	IsAlyx IsInVehicle ConceptTalkLook NotInCombat  PlayerReallyNear NotAlyxWinked
+	applycontext	"AlyxWinked:1:7200"
+	response	Alyx_InCarFidgetWink
+}
+
+
+//============================================================================================================
+// Player starts the car, with Alyx aboard (In Combat)
+//============================================================================================================
+
+response Alyx_CarStartCombat
+{
+
+	scene "scenes/npc/Alyx/al_car_getgoing02.vcd"  respeakdelay 300
+	scene "scenes/npc/Alyx/al_car_getgoing04.vcd"  respeakdelay 300
+}
+
+rule Alyx_CarStartCombat
+{
+	criteria	IsAlyx IsInVehicle ConceptPassengedVehicleStarted InCombat
+	response	Alyx_CarStartCombat
+}
+
+
+
+
+
+//============================================================================================================
+// Player exits the car, but Alyx does not (In Combat)
+//============================================================================================================
+
+response Alyx_VehiclePlayerOutAlyxStayCombat
+{
+	scene "scenes/npc/alyx/al_vehicle_combat_playerout_02.vcd"
+	scene "scenes/npc/alyx/al_vehicle_combat_playerout_03.vcd"
+	scene "scenes/npc/alyx/al_vehicle_combat_playerout_05.vcd"
+
+}
+
+rule Alyx_VehiclePlayerOutAlyxStayCombat
+{
+	criteria	IsAlyx ConceptAlyxPassengerPlayerOut IsInVehicle CannotExitVehicle InCombat IsNotVehicleTilt
+	response	Alyx_VehiclePlayerOutAlyxStayCombat
+}
+
+//============================================================================================================
+// Player exits the car, but Alyx does not
+//============================================================================================================
+response Alyx_VehiclePlayerOutAlyxStay
+{
+		
+	scene "scenes/npc/alyx/al_car_stayincar01.vcd" respeakdelay 90
+	scene "scenes/npc/alyx/al_car_stayincar02.vcd" respeakdelay 90
+	scene "scenes/npc/alyx/al_car_stayincar03.vcd" respeakdelay 90
+	scene "scenes/npc/alyx/al_car_stayincar04.vcd" respeakdelay 90
+	scene "scenes/npc/alyx/al_car_stayincar05.vcd" respeakdelay 90
+	scene "scenes/npc/alyx/al_car_stayincar06.vcd" respeakdelay 90
+	scene "scenes/npc/alyx/al_car_stayincar07.vcd" respeakdelay 90
+}
+
+rule Alyx_VehiclePlayerOutAlyxStay
+{
+	criteria	IsAlyx ConceptAlyxPassengerPlayerOut IsInVehicle CannotExitVehicle IsNotVehicleTilt
+	response	Alyx_VehiclePlayerOutAlyxStay
+}
+
+
+criterion "NotAlyxWaked" "AlyxWaked" "!=1" "required" weight 0
+response Alyx_VehiclePlayerOutAlyxStayWake
+{
+		
+	scene "scenes/npc/alyx/al_vehicle_playerout_06.vcd"  respeakdelay 90
+}
+
+rule Alyx_VehiclePlayerOutAlyxStayWake
+{
+	criteria	IsAlyx ConceptAlyxPassengerPlayerOut IsInVehicle CannotExitVehicle 10PercentChance NoRecentCombat IsNotVehicleTilt
+	applycontext	"AlyxWaked:1:0"
+	response	Alyx_VehiclePlayerOutAlyxStayWake
+}
+
+//============================================================================================================
+// Player exits the car while at hight rate of speed, Alyx will follow later
+//============================================================================================================
+
+criterion "NotAlyxGordonJumped" "AlyxGordonJumped" "!=1" "required" weight 0
+response Alyx_VehiclePlayerOutFast
+{
+	scene "scenes/npc/alyx/al_gordon_distance.vcd"		
+	scene "scenes/npc/alyx/al_car_startle04.vcd"
+	scene "scenes/npc/alyx/al_car_crash02.vcd"
+
+}
+
+rule Alyx_VehiclePlayerOutFast
+{
+	criteria	IsAlyx ConceptAlyxPassengerPlayerOut IsInVehicle VehicleMovingFaster NotAlyxGordonJumped
+	applycontext	"AlyxGordonJumped:1:120"
+	response	Alyx_VehiclePlayerOutFast
+}
+
+
+
+
+
+//============================================================================================================
+// Alyx nags player to get back in car (combat state is high and she has an enemy)
+//============================================================================================================
+criterion "ConceptPlayerGetInCarCombatNag" "Concept" "TLK_ALYX_PLAYERGETINCAR_COMBAT_NAG" required
+
+response Alyx_PlayerGetInCarCombatNag
+{
+	scene "scenes/npc/alyx/al_vehicle_combat_playernotincar_nag01.vcd" respeakdelay 10
+	scene "scenes/npc/alyx/al_vehicle_combat_playernotincar_nag02.vcd" respeakdelay 10
+	scene "scenes/npc/alyx/al_vehicle_combat_playernotincar_nag03.vcd" respeakdelay 10
+}
+
+rule Alyx_PlayerGetInCarCombatNag
+{
+	criteria	IsAlyx ConceptPlayerGetInCarCombatNag IsInVehicle InCombat
+	response	Alyx_PlayerGetInCarCombatNag
+}
+
+//============================================================================================================
+// Alyx nags player to get back in car (combat state is alert, but no enemies)
+//============================================================================================================
+response Alyx_PlayerGetInCarAlertNag
+{
+	scene "scenes/npc/alyx/al_car_callback02.vcd" respeakdelay 20
+	scene "scenes/npc/alyx/al_car_callback03.vcd" respeakdelay 20
+}
+
+rule Alyx_PlayerGetInCarAlertNag
+{
+	criteria	IsAlyx ConceptPlayerGetInCarCombatNag IsInVehicle NPCAlert
+	response	Alyx_PlayerGetInCarAlertNag
+}
+
+
+// ----------------------------------------------
+// About to collide with something  - removed.
+// ----------------------------------------------
+
+response AlyxPassengerCollisionWarning
+{
+	//scene "scenes/episode_2/al_passenger_warncollision.vcd"
+}
+
+rule AlyxPassengerCollisionWarning
+{
+	criterion ConceptPassengerCollisionWarning IsAlyx
+	applycontext	"AlyxCollisionWarning:1:20"
+	response AlyxPassengerCollisionWarning
+}
+
+// ----------------------------------------------
+// Impacted something heavily
+// ----------------------------------------------
+
+response AlyxPassengerImpactCombat
+{
+   	scene "scenes/episode_2/al_passenger_impact.vcd"
+   	scene "scenes/npc/alyx/al_car_crash04.vcd"  
+   	scene "scenes/npc/alyx/al_car_crash05.vcd"  
+   	scene "scenes/npc/alyx/al_car_crash06.vcd"  
+   	scene "scenes/npc/alyx/al_car_crash07.vcd"  
+	
+}
+
+rule AlyxPassengerImpactCombat
+{
+	criterion ConceptPassengerImpact IsAlyx InCombat
+	response AlyxPassengerImpactCombat
+}
+
+criterion IsNotAlyxRepeatImpact "AlyxRepeatImpact" "!=1" required
+response AlyxPassengerImpactNoCombat
+{
+   	scene "scenes/npc/alyx/al_car_crazy02.vcd"  
+   	scene "scenes/npc/alyx/al_car_laughing06.vcd"  
+   	scene "scenes/npc/alyx/al_car_laughing08.vcd"  
+   	scene "scenes/npc/alyx/al_car_laughing10.vcd"  
+   	scene "scenes/npc/alyx/al_car_crazy04.vcd" 
+   	scene "scenes/npc/alyx/al_car_crazy06.vcd"
+   	scene "scenes/npc/alyx/al_car_crazy07.vcd"
+   	scene "scenes/npc/alyx/al_car_crazy08.vcd"
+
+}
+
+rule AlyxPassengerImpactNoCombat
+{
+	criterion ConceptPassengerImpact IsAlyx NotInCombat IsNotAlyxRepeatImpact IsAlyxNotJostled IsInVehicle
+	applycontext	"AlyxImpact:1:20,AlyxRepeatImpact:1:60"
+	response AlyxPassengerImpactNoCombat
+}
+
+criterion IsNotAlyxDriveMuch1 "AlyxDriveMuch1" "!=1" required
+criterion IsNotAlyxDriveMuch2 "AlyxDriveMuch2" "!=1" required
+
+response AlyxPassengerDriveMuch1
+{
+   	scene "scenes/npc/alyx/al_car_beenawhile.vcd"
+}
+
+rule AlyxPassengerDriveMuch1
+{
+	criterion ConceptPassengerImpact IsAlyx NotInCombat IsAlyxImpact  IsMap_ep2_outland_06a  IsVehicleSlightTilt IsNotAlyxDriveMuch1
+	applycontext	"AlyxDriveMuch1:1:0"
+	response AlyxPassengerDriveMuch1
+}
+
+response AlyxPassengerDriveMuch2
+{
+   	scene "scenes/npc/alyx/al_car_beatsonfoot.vcd"
+}
+
+rule AlyxPassengerDriveMuch2
+{
+	criterion ConceptPassengerImpact IsAlyx NotInCombat IsAlyxImpact  IsVehicleSlightTilt IsNotAlyxDriveMuch2
+	applycontext	"AlyxDriveMuch2:1:0"
+	response AlyxPassengerDriveMuch2
+}
+
+// ----------------------------------------------
+// Player is jostling Alyx in the vehicle
+// ----------------------------------------------
+response AlyxPassengerJostled
+{
+   	scene "scenes/npc/alyx/al_car_crash04.vcd"  
+   	scene "scenes/npc/alyx/al_car_crash06.vcd"  
+	scene "scenes/npc/Alyx/al_wound08.vcd" 
+
+}
+rule AlyxPassengerJostled
+{
+	criteria 	IsAlyx IsInVehicle ConceptPassengedJostled IsAlyxNotJostled IsNotAlyxRepeatImpact NotInCombat
+	applycontext 	"AlyxJostled:1:20"
+	response	"AlyxPassengerJostled"
+}
+
+response AlyxPassengerJostledInCombat
+{
+	scene "scenes/npc/Alyx/al_wound08.vcd" 
+   	scene "scenes/npc/alyx/al_car_crash04.vcd"  
+   	scene "scenes/npc/alyx/al_car_crash06.vcd"  
+
+}
+rule AlyxPassengerJostledInCombat
+{
+	criteria 	IsAlyx IsInVehicle ConceptPassengedJostled IsAlyxNotJostled IsNotAlyxRepeatImpact InCombat
+	applycontext 	"AlyxJostled:1:20"
+	response	"AlyxPassengerJostledInCombat"
+}
+
+
+
+// ----------------------------------------------
+// Vehicle is Punted
+// ----------------------------------------------
+criterion IsNotAlyxPunted "AlyxPunted" "!=1" required
+response AlyxPassengerPunted
+{
+   	scene "scenes/npc/alyx/al_car_comments03.vcd"
+}
+rule AlyxPassengerPunted
+{
+	criteria 	IsAlyx IsInVehicle ConceptPassengedVehiclePunted IsAlyxNotJostled IsNotAlyxRepeatImpact IsNotAlyxPunted NotInCombat
+	applycontext 	"AlyxJostled:1:20,AlyxPunted:1:0"
+	response	"AlyxPassengerPunted"
+}
+
+
+
+// ----------------------------------------------
+// Vehicle is overturned
+// ----------------------------------------------
+
+response AlyxPassengerOverturned
+{
+   	scene "scenes/npc/alyx/al_car_rolled01.vcd"
+   	scene "scenes/npc/alyx/al_car_rolled02.vcd"
+   	scene "scenes/npc/alyx/al_car_rolled03.vcd"
+   	scene "scenes/npc/alyx/al_car_rolled04.vcd"
+   	scene "scenes/npc/alyx/al_car_rolled05.vcd"
+}
+
+rule AlyxPassengerOverturned
+{
+	criterion ConceptPassengerOverturned IsAlyx
+	response AlyxPassengerOverturned
+}
+
+// ----------------------------------------------
+// Ask for being turned upright
+// ----------------------------------------------
+
+response AlyxPassengerRequestUpright
+{
+   	scene "scenes/npc/Alyx/al_passenger_upright_01.vcd"
+   	scene "scenes/npc/alyx/al_car_rolled06.vcd"
+   	scene "scenes/npc/alyx/al_car_rolled07.vcd"
+}
+
+rule AlyxPassengerRequestUpright
+{
+	criterion ConceptPassengerRequestUpright IsAlyx
+	response AlyxPassengerRequestUpright
+}
+
+// ----------------------------------------------
+// Player runs over enemy while in vehicle
+// ----------------------------------------------
+response PlayerKilledNPCWithVehicle
+{
+	SEQUENTIAL
+	scene "scenes/npc/Alyx/al_combat_goodthinking03.vcd" 
+	scene "scenes/npc/Alyx/al_combat_grim_04.vcd" 
+	scene "scenes/npc/Alyx/al_combat_grim_05.vcd" 
+	scene "scenes/npc/Alyx/al_combat_yeah01.vcd" 
+	scene "scenes/npc/Alyx/al_combat_nicemove01.vcd" 
+	scene "scenes/npc/Alyx/brutal02.vcd" 
+	scene "scenes/npc/Alyx/al_laugh03.vcd" 
+}
+rule PlayerKilledNPCWithVehicle
+{
+	criteria 	IsAlyx IsInVehicle ConceptPlayerKilledNPC AlyxNotPraised
+        applycontext 	"AlyxPraised:1:30"
+	response	"PlayerKilledNPCWithVehicle"
+}
+
+
+
+
+// ----------------------------------------------
+// Player is leaving in the vehicle and we need to stop them
+// ----------------------------------------------
+criterion IsNotAlyxRequestEnterDelay "AlyxRequestEnterDelay" "!=1" required
+criterion IsAlyxRequestEnter "AlyxRequestEnter" "1" required
+criterion IsNotAlyxRequestEnterThanks "AlyxRequestEnterThanks" "!=1" required
+
+response AlyxPassengerRequestEnterNear
+{
+
+	scene "scenes/npc/Alyx/al_car_runafter01.vcd"
+	scene "scenes/npc/Alyx/al_car_runafter02.vcd"
+	scene "scenes/npc/Alyx/al_car_runafter03.vcd"
+	scene "scenes/npc/Alyx/al_car_runafter04.vcd"
+	scene "scenes/npc/Alyx/al_car_runafter05.vcd"
+}
+rule AlyxPassengerRequestEnterNear
+{
+	criteria 	IsAlyx IsNotInVehicle ConceptPassengedVehicleStarted VehicleAlmostNear IsNotAlyxRequestEnterDelay PlayerReallyNotNear
+	applycontext 	"AlyxRequestEnter:1:20,AlyxRequestEnterDelay:1:120"
+	response	"AlyxPassengerRequestEnterNear"
+}
+
+response AlyxPassengerRequestEnterNearThanks
+{
+
+	scene "scenes/npc/Alyx/al_car_catchup01.vcd"
+	scene "scenes/npc/Alyx/al_car_catchup02.vcd"
+	scene "scenes/npc/Alyx/al_car_catchup03.vcd"
+	scene "scenes/npc/Alyx/al_car_catchup04.vcd"
+
+}
+rule AlyxPassengerRequestEnterNearThanks
+{
+	criteria 	IsAlyx VehicleNear IsAlyxRequestEnter NotInCombat ConceptAlyxPassengerEntered IsNotAlyxRequestEnterThanks  PlayerReallyNear
+	applycontext 	"AlyxRequestEnterThanks:1:60"
+	response	"AlyxPassengerRequestEnterNearThanks"
+}

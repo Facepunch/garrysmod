@@ -1,0 +1,855 @@
+
+{
+	"Controls": 
+	{
+		"Type": "DocumentCanvas",
+		"Properties": 
+		{
+			"ControlName": "",
+			"Dock": "None",
+			"Position": 
+			{
+				"x": 0,
+				"y": 0
+			},
+			"Size": 
+			{
+				"w": 600,
+				"h": 400
+			},
+			"Margin": 
+			{
+				"left": 0,
+				"top": 0,
+				"right": 0,
+				"bottom": 0
+			}
+		},
+		"Children": 
+		[
+			
+			{
+				"Type": "Button",
+				"Properties": 
+				{
+					"Text": "Start Recording",
+					"Wrap": "false",
+					"Font": "Arial",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Center",
+					"ControlName": "btnStart",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 480,
+						"y": 360
+					},
+					"Size": 
+					{
+						"w": 100,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Dimensions:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 20,
+						"y": 130
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inCodec",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 100,
+						"y": 40
+					},
+					"Size": 
+					{
+						"w": 180,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Codec:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 20,
+						"y": 40
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Bitrate:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 20,
+						"y": 70
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "TextBox",
+				"Properties": 
+				{
+					"Text": "15000",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "inBitRate",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 100,
+						"y": 70
+					},
+					"Size": 
+					{
+						"w": 60,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "FPS:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 20,
+						"y": 160
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "TextBox",
+				"Properties": 
+				{
+					"Text": "30",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "inFPS",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 100,
+						"y": 160
+					},
+					"Size": 
+					{
+						"w": 50,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Quality:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 20,
+						"y": 100
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inQuality",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 100,
+						"y": 100
+					},
+					"Size": 
+					{
+						"w": 150,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inSize",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 100,
+						"y": 130
+					},
+					"Size": 
+					{
+						"w": 150,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inFrameBlend",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 420,
+						"y": 40
+					},
+					"Size": 
+					{
+						"w": 150,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Frame Blending:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 330,
+						"y": 40
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Shutter:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 340,
+						"y": 70
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inFBShutter",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 420,
+						"y": 70
+					},
+					"Size": 
+					{
+						"w": 150,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Depth Of Field:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 330,
+						"y": 130
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inDepthOfField",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 420,
+						"y": 130
+					},
+					"Size": 
+					{
+						"w": 150,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Focus Speed:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 340,
+						"y": 160
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "TextBox",
+				"Properties": 
+				{
+					"Text": "0.5",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "inDOFFocusSpeed",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 420,
+						"y": 160
+					},
+					"Size": 
+					{
+						"w": 50,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "TextBox",
+				"Properties": 
+				{
+					"Text": "0.1",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "inDOFBlurSize",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 420,
+						"y": 190
+					},
+					"Size": 
+					{
+						"w": 50,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Blur Size:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 340,
+						"y": 190
+					},
+					"Size": 
+					{
+						"w": 80,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "View Smoothing:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 330,
+						"y": 240
+					},
+					"Size": 
+					{
+						"w": 130,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inViewSmooth",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 460,
+						"y": 240
+					},
+					"Size": 
+					{
+						"w": 110,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "Label",
+				"Properties": 
+				{
+					"Text": "Position Smoothing:",
+					"Wrap": "false",
+					"Font": "Microsoft Sans Serif",
+					"FontSize": "11",
+					"FontBold": "false",
+					"VerticalAlign": "Center",
+					"HorizontalAlign": "Left",
+					"ControlName": "",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 330,
+						"y": 270
+					},
+					"Size": 
+					{
+						"w": 130,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "ComboBox",
+				"Properties": 
+				{
+					"ControlName": "inPosSmooth",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 460,
+						"y": 270
+					},
+					"Size": 
+					{
+						"w": 110,
+						"h": 20
+					},
+					"Margin": 
+					{
+						"left": 3,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "CheckBoxWithLabel",
+				"Properties": 
+				{
+					"CheckboxText": "Draw View Models",
+					"ControlName": "inDrawViewModel",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 20,
+						"y": 230
+					},
+					"Size": 
+					{
+						"w": 200,
+						"h": 19
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			},
+			
+			{
+				"Type": "CheckBoxWithLabel",
+				"Properties": 
+				{
+					"CheckboxText": "Draw HUD",
+					"ControlName": "inDrawHUD",
+					"Dock": "None",
+					"Position": 
+					{
+						"x": 20,
+						"y": 250
+					},
+					"Size": 
+					{
+						"w": 200,
+						"h": 19
+					},
+					"Margin": 
+					{
+						"left": 0,
+						"top": 0,
+						"right": 0,
+						"bottom": 0
+					}
+				}
+			}
+		]
+	}
+}

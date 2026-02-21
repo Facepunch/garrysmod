@@ -1,0 +1,23 @@
+
+"Event.HostageKilled"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/hosdown.wav"
+}
+
+"Toolgun.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_105dB"
+
+	"rndwave"
+	{
+		"wave"			"weapons/airboat/airboat_gun_lastshot1.wav"
+		"wave"			"weapons/airboat/airboat_gun_lastshot2.wav"
+	}
+}

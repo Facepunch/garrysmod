@@ -1,0 +1,42 @@
+
+// GMOD: Removed "Donner.MainAmbient", "prison.util_control_room", "combine.computer", as they are defined in other files
+
+// Half-Life 2 soundscapes
+
+"color_correction.lobby"
+{
+	"dsp"	"1"
+	
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/drone4LP.wav"
+		"pitch"		"100"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.06"
+		"wave"		"ambient/atmosphere/tone_quiet.wav"
+		"pitch"		"100"
+	}
+
+// position 0 is main control area
+
+	"playsoundscape"
+	{
+		"name"	"prison.util_control_room"
+		"positionoverride" "0"
+		"volume"	"1.0"
+	}
+
+// position 1 is secondary computer console
+
+	"playsoundscape"
+	{
+		"name"	"combine.computer"
+		"volume"	"0.4"
+		"positionoverride"	"1"
+	}
+}
+

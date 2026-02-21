@@ -1,0 +1,1112 @@
+// de_train soundscapes
+// Author: Michael Booth, Turtle Rock Studios, Inc., February 2005
+// NOTE: These sound levels are tuned for two speakers and a subwoofer
+
+
+//------------------------------------------------------------------------------------------
+//
+// Generic outdoors ambience
+//
+"train.Outside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_outdoors_1.wav"
+	}
+
+
+	// wind gusts
+	"playrandom"
+	{
+		"time"		"15,30"
+		"volume"	"0.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+
+	// planes flying overhead
+	"playrandom"
+	{
+		"time"		"60,90"
+		"volume"	".05,.1"
+		"pitch"		"90,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// All dumpsters have flies
+//
+"train.Dumpster"
+{
+	"playrandom"
+	{
+		"time"			"1,4"
+		"volume"		"1.0"
+		"pitch"			"90,110"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/flies1.wav"
+			"wave"	"ambient/animal/flies2.wav"
+			"wave"	"ambient/animal/flies3.wav"
+			"wave"	"ambient/animal/flies4.wav"
+			"wave"	"ambient/animal/flies5.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Traffic driving by
+//
+"train.Traffic"
+{
+	"playrandom"
+	{
+		"time"			"15,25"
+		"volume"		"1.0"
+		"pitch"			"80,100"
+		"soundlevel"  	"SNDLVL_95dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/car1.wav"
+			"wave"	"ambient/misc/car2.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// A Tank of something
+//
+"train.Tank1"
+{
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/machines/refinery_loop_1.wav"
+	}
+	"playrandom"
+	{
+		"time"			"5,15"
+		"volume"		"1.0"
+		"pitch"			"90,110"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/steam_release_1.wav"
+			"wave"	"ambient/machines/steam_release_2.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// A Tank of something else
+//
+"train.Tank2"
+{
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/machines/turbine_loop_1.wav"
+	}
+	"playrandom"
+	{
+		"time"			"5,15"
+		"volume"		"1.0"
+		"pitch"			"90,110"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/steam_release_1.wav"
+			"wave"	"ambient/machines/steam_release_2.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The Terrorists Target: Tanks of Mustard Gas
+//
+"train.BombTarget"
+{
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/machines/deep_boil.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.Birds"
+{
+	"playrandom"
+	{
+		"time"			"6,20"
+		"pitch"			"85,105"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/bird1.wav"
+			"wave"	"ambient/animal/bird2.wav"
+			"wave"	"ambient/animal/bird3.wav"
+			"wave"	"ambient/animal/bird4.wav"
+			"wave"	"ambient/animal/bird5.wav"
+			"wave"	"ambient/animal/bird6.wav"
+			"wave"	"ambient/animal/bird7.wav"
+			"wave"	"ambient/animal/bird8.wav"
+			"wave"	"ambient/animal/bird9.wav"
+			"wave"	"ambient/animal/bird10.wav"
+			"wave"	"ambient/animal/bird11.wav"
+			"wave"	"ambient/animal/bird12.wav"
+			"wave"	"ambient/animal/bird13.wav"
+			"wave"	"ambient/animal/bird14.wav"
+			"wave"	"ambient/animal/bird15.wav"
+			"wave"	"ambient/animal/bird16.wav"
+			"wave"	"ambient/animal/bird17.wav"
+			"wave"	"ambient/animal/bird18.wav"
+			"wave"	"ambient/animal/bird19.wav"
+			"wave"	"ambient/animal/bird20.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+"train.TSpawn"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.Outside"
+	}
+
+	// Position 0: Factory in the distance
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"wave"	"ambient/machines/pump_loop_1.wav"
+	}
+	// traffic in direction of factory
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"train.Traffic"
+	}
+
+
+	// Position 1: Pipes
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_40dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 2: Tree
+	"playsoundscape"
+	{
+		"positionoverride"	"2"	
+		"name"				"train.Birds"
+	}
+
+	
+	// Position 3: Dumpster behind truck
+	"playsoundscape"
+	{
+		"positionoverride"	"3"	
+		"name"				"train.Dumpster"
+	}
+}
+
+
+
+//------------------------------------------------------------------------------------------
+"train.TWalkway"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.Outside"
+	}
+
+	// Position 0: Green dumpster
+	"playsoundscape"
+	{
+		"positionoverride"	"0"	
+		"name"				"train.Dumpster"
+	}
+
+	// Position 1: Just inside the door heading up the stairs
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.1"
+		"soundlevel"  	"SNDLVL_60dB"
+		"wave"			"ambient/atmosphere/indoor1.wav"
+	}
+
+	// Position 2: Transformer
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 3: Pipes
+
+
+	// Position 4: Giant Dumpster
+	"playsoundscape"
+	{
+		"positionoverride"	"4"	
+		"name"				"train.Dumpster"
+	}
+
+	// Position 5: Big tank on the Roof
+	"playlooping"
+	{
+		"position"		"5"	
+		"pitch"			"60"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.BackAlley"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.Outside"
+	}
+
+	// Position 0: Doorway
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/atmosphere/factory_loop_1.wav"
+	}
+	
+	// Position 1: Big white tank
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"90"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/machines/turbine_loop_2.wav"
+	}
+	"playrandom"
+	{
+		"position"		"1"	
+		"time"			"10,20"
+		"volume"		"1.0"
+		"pitch"			"95,110"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/metal_str1.wav"
+			"wave"	"ambient/misc/metal_str2.wav"
+			"wave"	"ambient/misc/metal_str3.wav"
+			"wave"	"ambient/misc/metal_str4.wav"
+			"wave"	"ambient/misc/metal_str5.wav"
+		}
+	}
+
+	// Position 2: Pair of tanks behind chainlink
+	"playsoundscape"
+	{
+		"name"				"train.Tank1"
+		"positionoverride"	"2"
+	}
+
+	// Position 3: Pair of tanks behind chainlink
+	"playsoundscape"
+	{
+		"name"				"train.Tank2"
+		"positionoverride"	"3"
+	}
+
+
+	// Position 4: Dumpster
+	"playrandom"
+	{
+		"position"		"4"	
+		"time"			"1,4"
+		"volume"		"1.0"
+		"pitch"			"90,110"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/flies1.wav"
+			"wave"	"ambient/animal/flies2.wav"
+			"wave"	"ambient/animal/flies3.wav"
+			"wave"	"ambient/animal/flies4.wav"
+			"wave"	"ambient/animal/flies5.wav"
+		}
+	}
+
+	// Position 5: Doorway
+	"playlooping"
+	{
+		"position"		"5"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		//"wave"	"ambient/atmosphere/factory_loop_1.wav"
+	}
+
+	// Position 6: Doorway in dark hall
+	"playlooping"
+	{
+		"position"		"6"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/atmosphere/factory_loop_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.BackCorner"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.Outside"
+	}
+
+	// Position 0: Big pipe
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_45dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+
+	// Position 1: Factory in the distance
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/machines/pump_loop_1.wav"
+	}
+	// traffic
+	"playrandom"
+	{
+		"position"		"1"
+		"time"			"15,25"
+		"volume"		"1.0"
+		"pitch"			"80,100"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/car1.wav"
+			"wave"	"ambient/misc/car2.wav"
+		}
+	}
+
+	// Position 2: Big white tank
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"90"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/machines/turbine_loop_2.wav"
+	}
+	"playrandom"
+	{
+		"position"		"1"	
+		"time"			"10,20"
+		"volume"		"1.0"
+		"pitch"			"95,110"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/metal_str1.wav"
+			"wave"	"ambient/misc/metal_str2.wav"
+			"wave"	"ambient/misc/metal_str3.wav"
+			"wave"	"ambient/misc/metal_str4.wav"
+			"wave"	"ambient/misc/metal_str5.wav"
+		}
+	}
+
+	// Position 3: Doorway in dark hall
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/atmosphere/factory_loop_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.SideAlley"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"pitch"		"100"
+		"wave"		"ambient/tones/garage.wav"
+	}
+
+	// Position 0: Tank
+	"playsoundscape"
+	{
+		"name"				"train.Tank1"
+		"positionoverride"	"0"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.CourtyardA"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.Outside"
+	}
+
+	// Position 0: Big pipe
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"90"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 1: Transformer
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 2: Diesel engine front
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"wave"	"ambient/machines/big_truck.wav"
+	}
+	
+	// Position 3: Birds on the roof
+	"playsoundscape"
+	{
+		"name"				"train.Birds"
+		"positionoverride"	"3"
+	}
+
+
+	// Position 4: Dumpster
+	"playsoundscape"
+	{
+		"name"				"train.Dumpster"
+		"positionoverride"	"4"
+	}
+
+	// Position 5: The bomb target
+	"playsoundscape"
+	{
+		"name"				"train.BombTarget"
+		"positionoverride"	"5"
+	}
+
+	// Position 6: Pipes
+	"playlooping"
+	{
+		"position"		"6"	
+		"pitch"			"90"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		//"wave"			"ambient/waterrun.wav"
+	}
+
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.BombsiteA"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+	// Position 0: The bomb target
+	"playsoundscape"
+	{
+		"name"				"train.BombTarget"
+		"positionoverride"	"0"
+	}
+
+	// Position 1: Dumpster
+	"playsoundscape"
+	{
+		"name"				"train.Dumpster"
+		"positionoverride"	"1"
+	}
+
+	// Position 2: Transformer
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 3: Pipes
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_40dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 4: Tanks
+	"playsoundscape"
+	{
+		"name"				"train.Tank2"
+		"positionoverride"	"4"
+	}
+
+	// Position 5: Tank in the Side Alley
+	"playsoundscape"
+	{
+		"name"				"train.Tank1"
+		"positionoverride"	"5"
+	}
+
+	// Position 6: Pipes in hidey hole near bomb
+	"playlooping"
+	{
+		"position"		"6"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_40dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.CTSpawn"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+	// Position 0: Pipes
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_40dB"
+
+		//"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 1: Under the floor pipes
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		//"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 2: Under the floor pipes
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.1"
+		"soundlevel"  	"SNDLVL_90dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 3: Pipes
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_40dB"
+
+		//"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 5: Tank
+	"playsoundscape"
+	{
+		"name"				"train.Tank1"
+		"positionoverride"	"5"
+	}
+
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.BombsiteBCatwalk"
+{
+	"dsp"	"6"
+
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.25"
+
+		"wave"	"ambient/atmosphere/cargo_hold2.wav"
+	}
+
+	// the positions correspond to each window along the catwalk
+	"playrandom"
+	{
+		"position"		"1"
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_75dB"
+		"time"			"20,40"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/train_pass_1.wav"
+			"wave"	"ambient/machines/train_pass_2.wav"
+			"wave"	"ambient/machines/train_pass_3.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_75dB"
+		"time"			"15,30"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/train_horn_1.wav"
+			"wave"	"ambient/machines/train_horn_2.wav"
+			"wave"	"ambient/machines/train_horn_3.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"position"		"1"
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_75dB"
+		"time"			"20,40"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/train_pass_1.wav"
+			"wave"	"ambient/machines/train_pass_2.wav"
+			"wave"	"ambient/machines/train_pass_3.wav"
+		}
+	}
+
+}
+
+//------------------------------------------------------------------------------------------
+//
+// This is needed because a misnamed soundscape was left in the BSP
+//
+"train.catwalk"
+{
+	"dsp"	"6"
+	"playsoundscape"
+	{
+		"name"	"train.BombsiteBCatwalk"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"train.BombsiteB"
+{
+	"dsp"	"6"
+
+	"playrandom"
+	{
+		"pitch"			"100"
+		"volume"		"0.3"
+		"time"			"20,40"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/train_pass_1.wav"
+			"wave"	"ambient/machines/train_pass_2.wav"
+			"wave"	"ambient/machines/train_pass_3.wav"
+		}
+	}
+	"playrandom"
+	{
+		"pitch"			"100"
+		"volume"		"0.3"
+		"time"			"20,30"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/train_horn_1.wav"
+			"wave"	"ambient/machines/train_horn_2.wav"
+			"wave"	"ambient/machines/train_horn_3.wav"
+		}
+	}
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.25"
+
+		"wave"	"ambient/atmosphere/cargo_hold2.wav"
+	}
+
+
+	// Position 0: The bomb target
+	"playsoundscape"
+	{
+		"name"				"train.BombTarget"
+		"positionoverride"	"0"
+	}
+
+	// Position 1: Dumpster
+	"playsoundscape"
+	{
+		"name"				"train.Dumpster"
+		"positionoverride"	"1"
+	}
+
+	// Position 2: Door
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.BackHall"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+	// Position 0: Tank
+	"playsoundscape"
+	{
+		"name"				"train.Tank1"
+		"positionoverride"	"0"
+	}
+
+	// Position 1: Tank
+	"playsoundscape"
+	{
+		"name"				"train.Tank2"
+		"positionoverride"	"1"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Basic room tone for entire "white brick" area
+//
+"train.BrickRoom"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/indoor1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.Restroom"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.BrickRoom"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.LockerRoom"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.BrickRoom"
+	}
+
+	// Positions are the air conditioning vents
+	// Although there is one for each vent, the system wont play the same wav
+	// from two positions at the same time.  Bummer.
+	// So, we'll use the middle one.
+	"playlooping"
+	{
+		"position"		"2"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_70dB"
+		"wave"			"ambient/machines/air_conditioner_loop_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.BreakRoom"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.BrickRoom"
+	}
+
+	// Position 0: Soda machine
+	"playlooping"
+	{
+		"position"		"0"
+		"volume"		"1.0"
+		"wave"			"ambient/misc/flour_light_loud.wav"
+		"soundlevel"	"SNDLVL_50dB"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.SniperNest"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+
+	// wind gusts (stronger up here on the roof)
+	"playrandom"
+	{
+		"time"		"15,30"
+		"volume"	"0.3"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+
+
+	// Position 0: Large A/C unit
+	"playrandom"
+	{
+		"position"		"0"
+		"pitch"			"100"
+		"volume"		"1.0"
+		"time"			"60,90"
+		"soundlevel" 	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"			"ambient/machines/air_conditioner_cycle.wav"
+		}
+	}
+
+	// Position 1: A/C unit in back
+	"playlooping"
+	{
+		"position"		"1"
+		"volume"		"1.0"
+		"wave"			"ambient/machines/air_conditioner_loop_1.wav"
+		"soundlevel" 	"SNDLVL_60dB"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"train.Middle"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "train.Outside"
+	}
+
+	// Position 0: Dumpster
+	"playsoundscape"
+	{
+		"name"				"train.Dumpster"
+		"positionoverride"	"0"
+	}
+
+	// Position 1: Cylindrical tank
+
+	// Position 2: Water pipes
+	"playlooping"
+	{
+		"position"		"2"
+		"volume"		"1.0"
+		"wave"			"ambient/waterrun.wav"
+		"soundlevel" 	"SNDLVL_50dB"
+	}
+
+	// Position 3: Birds
+	"playsoundscape"
+	{
+		"name"				"train.Birds"
+		"positionoverride"	"3"	
+	}
+}
+

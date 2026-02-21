@@ -1,0 +1,291 @@
+// Phoenix-Storms Premium Sounds.
+"PhxMetal.ImpactHard"
+{
+	"soundlevel"		"SNDLVL_100dB"
+	"pitch"		"95,100"
+	"volume"		"VOL_NORM"
+	"rndwave"
+	{
+		"wave"		"phx/hmetal1.wav"
+		"wave"		"phx/hmetal2.wav"
+		"wave"		"phx/hmetal3.wav"
+
+	}
+}
+
+
+"PhxMetal.ImpactSoft"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"		"SNDLVL_60dB"
+	"pitch"		"95,100"
+	"volume"		"VOL_NORM"
+	"rndwave"
+	{
+		"wave"		"phx/hmetal1.wav"
+		"wave"		"phx/hmetal2.wav"
+		"wave"		"phx/hmetal3.wav"
+	}
+}
+
+"EpicMetal.ImpactHard"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"		"SNDLVL_100dB"
+	"pitch"			"95,100"
+	"volume"		"1"
+	"rndwave"
+	{
+		"wave"		"^phx/EpicMetal_Hard1.wav"
+		"wave"		"^phx/EpicMetal_Hard2.wav"
+		"wave"		"^phx/EpicMetal_Hard3.wav"
+		"wave"		"^phx/EpicMetal_Hard4.wav"
+		"wave"		"^phx/EpicMetal_Hard5.wav"
+		"wave"		"^phx/EpicMetal_Hard6.wav"
+		"wave"		"^phx/EpicMetal_Hard7.wav"
+	}
+}
+
+"EpicMetal.ImpactSoft"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"		"SNDLVL_100dB"
+	"pitch"			"95,100"
+	"volume"		"1"
+	"rndwave"
+	{
+		"wave"		"^phx/EpicMetal_Soft1.wav"
+		"wave"		"^phx/EpicMetal_Soft2.wav"
+		"wave"		"^phx/EpicMetal_Soft3.wav"
+		"wave"		"^phx/EpicMetal_Soft4.wav"
+		"wave"		"^phx/EpicMetal_Soft5.wav"
+		"wave"		"^phx/EpicMetal_Soft6.wav"
+		"wave"		"^phx/EpicMetal_Soft7.wav"
+	}
+}
+
+"EpicMetal_Heavy.ImpactHard"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"		"SNDLVL_100dB"
+	"pitch"			"70"
+	"volume"		"1"
+	"rndwave"
+	{
+		"wave"		"^phx/EpicMetal_Hard1.wav"
+		"wave"		"^phx/EpicMetal_Hard2.wav"
+		"wave"		"^phx/EpicMetal_Hard3.wav"
+		"wave"		"^phx/EpicMetal_Hard4.wav"
+		"wave"		"^phx/EpicMetal_Hard5.wav"
+		"wave"		"^phx/EpicMetal_Hard6.wav"
+		"wave"		"^phx/EpicMetal_Hard7.wav"
+	}
+}
+"EpicMetal_Heavy.ImpactSoft"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"		"SNDLVL_100dB"
+	"pitch"			"70"
+	"volume"		"1"
+	"rndwave"
+	{
+		"wave"		"^phx/EpicMetal_Soft1.wav"
+		"wave"		"^phx/EpicMetal_Soft2.wav"
+		"wave"		"^phx/EpicMetal_Soft3.wav"
+		"wave"		"^phx/EpicMetal_Soft4.wav"
+		"wave"		"^phx/EpicMetal_Soft5.wav"
+		"wave"		"^phx/EpicMetal_Soft6.wav"
+		"wave"		"^phx/EpicMetal_Soft7.wav"
+	}
+}
+
+
+
+"Egg.Crack"
+{
+	"soundlevel"		"SNDLVL_75dB"
+	"pitch"		"95,100"
+	"volume"		"VOL_NORM"
+
+	"wave"		"phx/eggcrack.wav"
+
+}
+
+//NEW THRUSTERS
+
+"Phx.HoverLight"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_150dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Hover00.wav"
+
+}
+"Phx.HoverStandard"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_100dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Hover02.wav"
+
+}
+"Phx.HoverHeavy"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Hover01.wav"
+
+}
+"Phx.Afterburner1"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_100dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Rocket00.wav"
+
+}
+"Phx.Afterburner2"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_70dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Rocket01.wav"
+
+}
+"Phx.Afterburner3"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_120dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Rocket02.wav"
+
+}
+"Phx.Afterburner4"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Rocket03.wav"
+
+}
+"Phx.Afterburner5"
+{
+	"pitch"			"100"
+	"soundlevel"		"SNDLVL_150dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Rocket04.wav"
+
+}
+"Phx.Turbine"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_120dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/Jet00.wav"
+
+}
+"Phx.Alien1"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_100dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/mh1.wav"
+
+}
+"Phx.Alien2"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_100dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/mh2.wav"
+
+}
+"Phx.Jet1"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/jet01.wav"
+
+}
+"Phx.Jet2"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_140dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/jet02.wav"
+	
+}
+"Phx.Jet3"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_120dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/jet03.wav"
+
+}
+"Phx.Jet4"
+{
+	"pitch"			"95,100"
+	"soundlevel"		"SNDLVL_120dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^thrusters/jet04.wav"
+
+}
+"Phx_Rubber_Tire.Strain"
+{
+	"pitch"			"110"
+	"soundlevel"		"SNDLVL_130dB"
+	"volume"		"VOL_NORM"
+
+	"wave"		"^sfx/skidding.wav"
+
+}
+
+//================================================
+//------------------EXPLOSIONS--------------------
+//================================================
+
+
+
+"Explo.ww2bomb"
+{
+	"pitch"			"100"
+	"soundlevel"		"SNDLVL_160dB"
+	"volume"		"1"
+	"channel"		"CHAN_WEAPON"
+
+	"rndwave"
+	{
+		"wave"		"^phx/Explode00.wav"
+		"wave"		"^phx/Explode01.wav"
+		"wave"		"^phx/Explode02.wav"
+		"wave"		"^phx/Explode03.wav"
+		"wave"		"^phx/Explode04.wav"
+		"wave"		"^phx/Explode05.wav"
+		"wave"		"^phx/Explode06.wav"
+	}
+	
+}
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+#
+# These files aren't fully sent to the client because they
+# should never change. Instead we send the CRC of this file
+# so the client can load their version - and we know it's kewl.
+#
+gamemodes\base\gamemode\player_class\player_default.lua
+gamemodes\base\entities\weapons\weapon_base\cl_init.lua
+gamemodes\base\entities\weapons\weapon_base\shared.lua
+gamemodes\base\entities\weapons\weapon_base\ai_translations.lua
+gamemodes\base\entities\weapons\weapon_base\sh_anim.lua
+gamemodes\base\entities\entities\base_point.lua
+gamemodes\base\entities\entities\base_ai\cl_init.lua
+gamemodes\base\entities\entities\base_ai\shared.lua
+gamemodes\base\entities\entities\base_anim.lua
+gamemodes\base\entities\entities\base_entity\cl_init.lua
+gamemodes\base\entities\entities\base_entity\shared.lua
+gamemodes\base\entities\entities\prop_effect.lua
+gamemodes\base\entities\effects\base.lua
+gamemodes\base\entities\effects\dof_node.lua
+gamemodes\base\gamemode\cl_init.lua
+gamemodes\base\gamemode\shared.lua
+gamemodes\base\gamemode\cl_scoreboard.lua
+gamemodes\base\gamemode\cl_targetid.lua
+gamemodes\base\gamemode\cl_hudpickup.lua
+gamemodes\base\gamemode\cl_spawnmenu.lua
+gamemodes\base\gamemode\cl_deathnotice.lua
+gamemodes\base\gamemode\cl_pickteam.lua
+gamemodes\base\gamemode\cl_voice.lua
+gamemodes\base\gamemode\gravitygun.lua
+gamemodes\base\gamemode\player_shd.lua
+gamemodes\base\gamemode\animations.lua
+gamemodes\base\gamemode\obj_player_extend.lua

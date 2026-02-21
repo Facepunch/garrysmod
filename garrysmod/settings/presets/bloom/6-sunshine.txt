@@ -1,0 +1,12 @@
+"Sunshine"
+{
+	"pp_bloom_color"		"1.000000"
+	"pp_bloom_color_b"		"255"
+	"pp_bloom_color_g"		"255"
+	"pp_bloom_color_r"		"255"
+	"pp_bloom_darken"		"0.337000"
+	"pp_bloom_multiply"		"0.120000"
+	"pp_bloom_passes"		"14.000000"
+	"pp_bloom_sizex"		"5.000000"
+	"pp_bloom_sizey"		"5.000000"
+}

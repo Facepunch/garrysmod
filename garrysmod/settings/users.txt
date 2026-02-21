@@ -1,0 +1,23 @@
+"Users"
+{
+	//
+	// This is your users file
+	//
+	// You can use this file to add people as admins on your server
+	// Add them to the relevant section
+	//
+	// If you're a Lua coder you can add your own sections and use them
+	// in your script by doing pl:IsUserGroup( "admin" ) etc
+	//
+
+	"superadmin"
+	{
+		//"garry"			"STEAM_0:1:7099"
+	}
+	
+	"admin"
+	{
+		//"garry"			"STEAM_0:1:7099"
+	}
+
+}

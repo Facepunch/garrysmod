@@ -1,0 +1,86 @@
+"TableToKeyValues"
+{
+	"parentid"		"37"
+	"icon"		"icon16/page.png"
+	"id"		"38"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"The Good Guys"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/player/ct_gign.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/player/ct_sas.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/player/ct_urban.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models//player/ct_gsg9.mdl"
+		}
+		"6"
+		{
+			"type"		"header"
+			"text"		"The Bad Guys"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/player/t_guerilla.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/player/t_leet.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/player/t_phoenix.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models//player/t_arctic.mdl"
+		}
+		"11"
+		{
+			"type"		"header"
+			"text"		"The Dumb Guys"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/Characters/Hostage_01.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/Characters/Hostage_02.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/Characters/hostage_03.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/Characters/hostage_04.mdl"
+		}
+	}
+	"name"		"Characters"
+	"version"		"3"
+}

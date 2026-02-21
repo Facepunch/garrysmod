@@ -1,0 +1,55 @@
+"Weapon_StriderBuster.StickToEntity"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.85"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_NONE"
+
+	"wave"			"weapons/strider_buster/Strider_Buster_stick1.wav"
+}
+
+"Weapon_StriderBuster.Detonate"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.85"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"wave"			"weapons/strider_buster/Strider_Buster_detonate.wav"
+}
+
+"Weapon_StriderBuster.Dud_Detonate"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.4"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"wave"			"weapons/strider_buster/Strider_Buster_detonate.wav"
+}
+
+
+"Weapon_StriderBuster.Dud_Detonate2"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.6"
+	"pitch"			"175"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"wave"			"ambient/explosions/explode_9.wav"
+}
+
+"Weapon_StriderBuster.Ping"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.85"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"wave"			"ambient/levels/outland/StriderBusterArm02.wav"
+}

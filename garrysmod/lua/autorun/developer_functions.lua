@@ -1,0 +1,161 @@
+
+-- Makes stuff easier to parse visually
+local offColor = Color( 220, 220, 220 )
+
+local function FindInTable( tab, find, parents, depth )
+
+	depth = depth or 0
+	parents = parents or ""
+
+	if ( !istable( tab ) ) then return end
+	if ( depth > 3 ) then return end
+	depth = depth + 1
+
+	for k, v in pairs ( tab ) do
+
+		if ( isstring( k ) ) then
+
+			if ( k and k:lower():find( find:lower() ) ) then
+
+				local info = isfunction( v ) and debug.getinfo( v ) or { source = "" }
+				if ( info.source:len() != 0 ) then info.source = " " .. info.source end
+
+				Msg( "   ", parents, k, string.rep( " ", math.Clamp( 32 - ( parents:len() + k:len() ), 1, 32 ) ) )
+				MsgC( offColor, "(", type( v ), " - ", v, info.source, ")\n" )
+
+			end
+
+			-- Recurse
+			if ( istable( v ) and
+				k != "_R" and
+				k != "_E" and
+				k != "_G" and
+				k != "_M" and
+				k != "_LOADED" and
+				k != "__index" ) then
+
+				local NewParents = parents .. k .. "."
+				FindInTable( v, find, NewParents, depth )
+
+			end
+
+		end
+
+	end
+
+end
+
+local function FindInHooks( base, name )
+
+	for b, t in pairs( hook.GetTable() ) do
+
+		local head = true
+
+		if ( istable( t ) and b:lower():find( base:lower() ) ) then
+
+			for n, f in pairs( t ) do
+
+				local nameStr = tostring( n )
+				if ( !name or nameStr:lower():find( tostring( name ):lower() ) ) then
+
+					if ( head ) then Msg( "\n   ", b, " hooks:\n" ) head = false end
+
+					local info = isfunction( f ) and debug.getinfo( f, "S" ) or { source = "" }
+					if ( info.source:len() != 0 ) then info.source = " " .. info.source end
+
+					Msg( "\t", nameStr, string.rep( " ", math.Clamp( 32 - nameStr:len(), 1, 32 ) ) )
+					MsgC( offColor, "(", tostring( f ), info.source, ")\n" )
+
+				end
+
+			end
+
+		end
+
+	end
+
+end
+
+local function UTIL_IsCommandIssuedByServerAdmin( ply )
+	if ( game.SinglePlayer() ) then return true end -- Singleplayer
+	if ( !IsValid( ply ) ) then return SERVER end -- Dedicated server console
+
+	return ply:IsListenServerHost() -- Only if we are a listen server host
+end
+
+--[[---------------------------------------------------------
+	Name: Find
+-----------------------------------------------------------]]
+local function Find( ply, command, arguments )
+
+	if ( !UTIL_IsCommandIssuedByServerAdmin( ply ) ) then return end
+
+	if ( !arguments[1] ) then
+
+		if ( command:StartsWith( "lua_findhooks" ) ) then
+			MsgN( "Usage: lua_findhooks <event name> [hook identifier]" )
+			return
+		end
+
+		MsgN( "Usage: lua_find <text>" )
+		return
+	end
+
+	if ( command:StartsWith( "lua_findhooks" ) ) then
+
+		Msg( "Finding '", arguments[1], "' hooks ",
+			( arguments[2] and "with name '" .. arguments[2] .. "' " or "" ),
+			( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n"
+		)
+		FindInHooks( arguments[1], arguments[2] )
+
+	else
+
+		Msg( "Finding '", arguments[1], "' ", ( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n" )
+		FindInTable( _G, arguments[1] )
+		--FindInTable( debug.getregistry(), arguments[1] )
+
+	end
+
+	Msg( "\n" )
+
+	if ( SERVER and IsValid( ply ) and ply:IsPlayer() and ply:IsListenServerHost() ) then
+		RunConsoleCommand( command .. "_cl", arguments[1], arguments[2] )
+	end
+
+end
+
+if ( SERVER ) then
+	concommand.Add( "lua_find", Find, nil, "Find any variable by name on the server.", FCVAR_DONTRECORD )
+	concommand.Add( "lua_findhooks", Find, nil, "Find hooks by event name and hook identifier on the server.", FCVAR_DONTRECORD )
+else
+	concommand.Add( "lua_find_cl", Find, nil, "Find any variable by name on the client.", FCVAR_DONTRECORD )
+	concommand.Add( "lua_findhooks_cl", Find, nil, "Find hooks by event name and hook identifier on the client.", FCVAR_DONTRECORD )
+end
+
+if ( SERVER ) then
+
+--[[---------------------------------------------------------
+	What am I looking at?
+-----------------------------------------------------------]]
+concommand.Add( "trace", function( ply )
+	if ( !IsValid( ply ) || ( !game.SinglePlayer() && !ply:IsListenServerHost() ) ) then return end
+
+	local tr = util.TraceLine( {
+		start = ply:EyePos(),
+		endpos = ply:EyePos() + ply:GetAimVector() * 30000,
+		filter = ply,
+		--mask = MASK_OPAQUE_AND_NPCS,
+	} )
+
+	local surfData = util.GetSurfaceData( tr.SurfaceProps )
+	tr.Distance = ( tr.HitPos - tr.StartPos ):Length()
+	if ( surfData ) then tr.SurfaceName = surfData.name end
+	if ( IsValid( tr.Entity ) ) then tr.Model = tr.Entity:GetModel() end
+	PrintTable( tr )
+
+	-- Print out the clientside class name
+	ply:SendLua( [[print(Entity(]] .. ply:EntIndex() .. [[):GetEyeTrace().Entity)]] )
+end )
+
+end

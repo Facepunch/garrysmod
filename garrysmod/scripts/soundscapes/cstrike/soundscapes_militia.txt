@@ -1,0 +1,1528 @@
+// cs_militia soundscapes
+// Author: Michael Booth, Turtle Rock Studios, Inc., Januray 2006
+
+
+//------------------------------------------------------------------------------------------
+//
+// Generic outdoors ambience
+//
+"militia.Outside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.9"
+		"pitch"		"100"
+		"wave"		"ambient/nature/woodland_ambient_1.wav"
+	}
+
+	"playrandom"
+	{
+		"time"			"30,60"
+		"pitch"			"90,100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/nature/wind_leaves_mild_gust_1.wav"
+		}
+	}
+}
+
+"militia.OutsideOnRoof"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.9"
+		"pitch"		"100"
+		"wave"		"ambient/nature/woodland_ambient_1.wav"
+	}
+
+	"playrandom"
+	{
+		"time"			"10,20"
+		"pitch"			"90,100"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"time"			"10,20"
+		"pitch"			"90,100"
+		"volume"		"0.2"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+		}
+	}
+}
+
+
+
+//------------------------------------------------------------------------------------------
+//
+// Inside the underground tunnel
+//
+"militia.TunnelTone"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"pitch"		"100"
+		"wave"		"ambient/tones/tunnel_wind_loop.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Generic indoors ambience
+//
+"militia.Inside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"1"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_indoors.wav"
+	}
+
+	"playrandom"
+	{
+		"time"			"10,20"
+		"pitch"			"90,100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Bare lightbulb hum - used for all lightbulbs in the map
+//
+"militia.LightbulbHum"
+{
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_45dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Florescent light hum 
+//
+"militia.FluorescentLightHum"
+{
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.2"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		"wave"	"ambient/machines/fluorescent_hum_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Florescent light hum (2nd version because cant play 2 identical at same time)
+//
+"militia.FluorescentLightHum2"
+{
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.2"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		"wave"	"ambient/machines/fluorescent_hum_2.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Refrigerator hum - used for all refrigerators in the map
+//
+"militia.RefrigeratorHum"
+{
+	"playrandom"
+	{
+		"position"		"0"
+		"pitch"			"100"
+		"volume"		"0.6"
+		"time"			"40,40"
+		"soundlevel" 	"SNDLVL_65dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/refrigerator.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Squeaky ceiling fan
+//
+"militia.CeilingFan"
+{
+	"playrandom"
+	{
+		"time"			"2,2"
+		"pitch"			"100,100"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/squeak_2.wav"
+			"wave"	"ambient/machines/squeak_3.wav"
+			"wave"	"ambient/machines/squeak_4.wav"
+			"wave"	"ambient/machines/squeak_5.wav"
+			"wave"	"ambient/machines/squeak_6.wav"
+			"wave"	"ambient/machines/squeak_8.wav"
+		}
+	}
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.15"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"			"ambient/machines/electrical_hum_2.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// A chirping cricket
+//
+"militia.Cricket"
+{
+	"playrandom"
+	{
+		"time"			"0.8,1.0"
+		"pitch"			"98,102"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/cricket_chirp_1.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// A burrowing/scratching rodent
+//
+"militia.Rodent"
+{
+	"playrandom"
+	{
+		"time"			"3,15"
+		"pitch"			"95,102"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/rodent_scratch_1.wav"
+			"wave"		"ambient/animal/rodent_scratch_short_1.wav"
+			"wave"		"ambient/animal/rodent_scratch_short_2.wav"
+			"wave"		"ambient/animal/rodent_scratch_short_3.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Birdsong
+//
+"militia.Birds"
+{
+	"playrandom"
+	{
+		"time"			"6,20"
+		"pitch"			"85,105"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/bird1.wav"
+			"wave"	"ambient/animal/bird2.wav"
+			"wave"	"ambient/animal/bird3.wav"
+			"wave"	"ambient/animal/bird4.wav"
+			"wave"	"ambient/animal/bird5.wav"
+			"wave"	"ambient/animal/bird6.wav"
+			"wave"	"ambient/animal/bird7.wav"
+			"wave"	"ambient/animal/bird8.wav"
+			"wave"	"ambient/animal/bird9.wav"
+			"wave"	"ambient/animal/bird10.wav"
+			"wave"	"ambient/animal/bird11.wav"
+			"wave"	"ambient/animal/bird12.wav"
+			"wave"	"ambient/animal/bird13.wav"
+			"wave"	"ambient/animal/bird14.wav"
+			"wave"	"ambient/animal/bird15.wav"
+			"wave"	"ambient/animal/bird16.wav"
+			"wave"	"ambient/animal/bird17.wav"
+			"wave"	"ambient/animal/bird18.wav"
+			"wave"	"ambient/animal/bird19.wav"
+			"wave"	"ambient/animal/bird20.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+"militia.CTSpawn"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.Outside"
+	}
+
+	// 0: Inside front APC
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+		"wave"			"ambient/machines/big_truck.wav"
+	}
+	"playrandom"
+	{
+		"position"		"0"	
+		"time"			"4,7"
+		"pitch"			"100,100"
+		"volume"		"0.75"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/cb_radio_chatter_1.wav"
+			"wave"	"ambient/chatter/cb_radio_chatter_2.wav"
+			"wave"	"ambient/chatter/cb_radio_chatter_3.wav"
+		}
+	}
+
+	// 1: Rear APC
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+		"wave"			"ambient/machines/big_truck.wav"
+	}
+
+	// 2: In the trees
+	"playsoundscape"
+	{
+		"positionoverride"	"2"	
+		"name"				"militia.Birds"
+	}
+	"playrandom"
+	{
+		"position"		"2"	
+		"time"			"10,30"
+		"pitch"			"95,105"
+		"volume"		"0.75"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/crow_1.wav"
+			"wave"	"ambient/animal/crow_2.wav"
+		}
+	}
+
+	// 3: In the trees
+	"playsoundscape"
+	{
+		"positionoverride"	"3"	
+		"name"				"militia.Birds"
+	}
+	
+	// 4: Dark corner in fern on other side of fence
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"militia.Cricket"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"militia.CoveredBridge"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name" "militia.Outside"
+	}
+
+	// 0: Under the bridge
+	"playlooping"
+	{
+		"position"		"0"
+		"volume"		"1"
+		"pitch"			"100"
+		"soundlevel"  	"SNDLVL_80dB"
+		"wave"			"ambient/nature/Water_StreamLoop3.wav"
+	}
+
+	// 1: In the trees
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Birds"
+	}
+
+	// 2: In the trees
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.Birds"
+	}
+
+	// 3: In the trees
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Birds"
+	}
+
+	// 4: In the water above the waterfall
+	"playlooping"
+	{
+		"position"	"4"
+		"volume"	"1"
+		"pitch"		"100"
+		"soundlevel"  	"SNDLVL_80dB"
+		"wave"		"ambient/nature/Waterfall_MediumLoop05.wav"
+	}
+
+	// 5: In the trees
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"militia.Birds"
+	}
+
+	// 6: Dark corner against the silos
+	"playsoundscape"
+	{
+		"positionoverride"	"6"
+		"name"				"militia.Cricket"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"militia.CavePassage"
+{
+	"dsp"	"6"
+
+	// area tone
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_tunnel.wav"
+	}
+
+	// 0: Spot in the ceiling
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Rodent"
+	}
+
+	// 1: APC sounds in the spawn
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+		"wave"			"ambient/machines/big_truck.wav"
+	}
+	
+	// 2: stream sounds
+	"playlooping"
+	{
+		"position"	"2"
+		"volume"	"1"
+		"soundlevel"  	"SNDLVL_80dB"
+		"pitch"		"100"
+		"wave"		"ambient/nature/Water_StreamLoop3.wav"
+	}
+	
+}
+
+
+//------------------------------------------------------------------------------------------
+"militia.Stream"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.Outside"
+	}
+
+	// area tone
+	"playlooping"
+	{
+		"volume"	"0.6"
+		"pitch"		"100"
+		"wave"		"ambient/nature/Water_StreamLoop3.wav"
+	}
+
+	// 0: Where the waterfall hits the stream
+	"playlooping"
+	{
+		"position"	"0"
+		"volume"	"1"
+		"pitch"		"100"
+		"soundlevel"  	"SNDLVL_80dB"
+		"wave"		"ambient/nature/Waterfall_MediumLoop05.wav"
+	}
+
+	// 1: In the cattails by the waterfall
+	// TODO
+		
+	// 2: In the logs blocking the far end
+	"playrandom"
+	{
+		"position"		"2"
+		"time"			"3"
+		"pitch"			"100"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/frog_1.wav"
+			"wave"	"ambient/animal/frog_2.wav"
+			"wave"	"ambient/animal/frog_3.wav"
+		}
+	}
+		
+	// 3: Just inside the pipe entrance
+	"playlooping"
+	{
+		"position"		"3"
+		"pitch"			"100"
+		"volume"		"1"
+		"soundlevel" 	"SNDLVL_45dB"
+		"wave"			"ambient/tones/tunnel_wind_loop.wav"
+	}
+	
+	// 4: Top of the waterfall
+	// TODO
+	
+	// 5: In the trees by the silos
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"militia.Birds"
+	}
+
+	// 6: In a dark corner against the silos	
+	"playsoundscape"
+	{
+		"positionoverride"	"6"
+		"name"				"militia.Cricket"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"militia.Tunnel1"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.TunnelTone"
+	}
+
+	// 0: Just outside the pipe (waterfall/stream sounds)
+	"playlooping"
+	{
+		"position"	"0"
+		"volume"	"1"
+		"pitch"		"100"
+		"wave"		"ambient/nature/Water_StreamLoop3.wav"
+	}
+	"playsoundscape"
+	{
+		"volume"					"0.5"
+		"positionoverride"			"0"
+		"ambientpositionoverride"	"0"
+		"name"						"militia.Outside"
+	}
+
+	// 1: Behind locked gate, by the far corner
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Cricket"
+	}
+
+	// 2: Light fixture hum
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 3: Light fixture hum
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.LightbulbHum"
+	}
+	
+	// 4: Just above the ladder exit hole
+	"playsoundscape"
+	{
+		"volume"					"0.5"
+		"positionoverride"			"4"
+		"ambientpositionoverride"	"4"
+		"name"						"militia.Outside"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+// from light fixture just past ladder up to silos to light fixture just BEFORE the ladder up to sideyard)
+"militia.Tunnel2"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.TunnelTone"
+	}
+
+	// 0: Light fixture hum
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 1: In the stream beyond the grate (water sounds)
+	"playlooping"
+	{
+		"position"	"1"
+		"volume"	"1"
+		"pitch"		"100"
+		"soundlevel" 	"SNDLVL_70dB"
+		"wave"		"ambient/weather/water_run1.wav"
+	}
+
+	// 2: Light fixture #4 hum
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.FluorescentLightHum"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// from light fixture just BEFORE ladder up to sideyard to last tunnel corner
+"militia.Tunnel3"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.TunnelTone"
+	}
+
+	// 0 = Light fixture #5 hum
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 1: Just above the ladder exit hole
+	"playsoundscape"
+	{
+		"volume"					"0.5"
+		"positionoverride"			"1"
+		"ambientpositionoverride"	"1"
+		"name"						"militia.Outside"
+	}
+
+	// 2 = In the stream beyond the grate (water sounds)
+	"playlooping"
+	{
+		"position"	"2"
+		"volume"	"1"
+		"pitch"		"100"
+		"soundlevel" 	"SNDLVL_70dB"
+		"wave"		"ambient/waterrun.wav"
+	}
+
+	// 3 = Light fixture #6 hum
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.LightbulbHum"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// the last section of tunnel leading to the hole in the wall
+"militia.TunnelBreach"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.TunnelTone"
+	}
+
+	// 0 = Light fixture #7 hum
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.FluorescentLightHum2"
+	}
+
+	// 1 = Light fixture #8 (beyond the gate) hum 
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.FluorescentLightHum"
+	}
+
+	// 2 = A spot near the far wall beyond the locked gate (crickets, burrowing sounds, etc)
+	"playlooping"
+	{
+		"position"	"2"
+		"volume"	"1"
+		"pitch"		"100"
+		"wave"		"ambient/weather/drip_loop1.wav"
+	}
+
+	// 3 = A spot in one of the dark corners of the area under the shed (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Cricket"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// the dirt basement of the shed
+"militia.UnderTheShed"
+{
+	"dsp"	"6"
+	
+	// no room tone (silence)
+
+	// 0 = A spot in the tunnel in the center of the hole (ambient tunnel sound)
+	"playsoundscape"
+	{
+		"volume"					"0.3"
+		"ambientpositionoverride"	"0"
+		"positionoverride"			"0"
+		"name" "militia.TunnelTone"
+	}
+
+	// 1 = The same cricket spot as TunnelBreach #3
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Cricket"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// in the shed
+"militia.Shed"
+{
+	"dsp"	"20"
+
+	"playsoundscape"
+	{
+		"volume"			"0.4"	
+		"name" "militia.Outside"
+	}
+
+
+	// 0 = The same cricket spot as TunnelBreach #3
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Cricket"
+	}
+
+	// 1 = In the trees beyond the window above the ladder (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Birds"
+	}
+
+	// 2 = In the trees outside the shed door (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.Birds"
+	}
+
+	// 3 = In the trees beside the shed on the other side of the fence (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Birds"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// behind the main house and along the dark side under the deck
+"militia.Backyard"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.Outside"
+	}
+
+	// 0 = In the trees near the shed (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Birds"
+	}
+
+	// 1 = In the trees around the boulder (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Birds"
+	}
+
+	// 2 = The air conditioner by the back stairs
+	"playrandom"
+	{
+		"position"		"2"
+		"pitch"			"100"
+		"volume"		"1.0"
+		"time"			"60,90"
+		"soundlevel" 	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"			"ambient/machines/air_conditioner_cycle.wav"
+		}
+	}
+
+	// 3 = In the tree cards behind the fence and broken down orange car (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Birds"
+	}
+	"playrandom"
+	{
+		"position"		"3"	
+		"time"			"10,30"
+		"pitch"			"95,105"
+		"volume"		"1"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/crow_1.wav"
+			"wave"	"ambient/animal/crow_2.wav"
+		}
+	}
+
+	// 4 = In the dark corner by the small wooden table (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"militia.Cricket"
+	}
+
+	// 5 = In the dark corner by the back door to the kitchen (rodents)
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"militia.Rodent"
+	}
+	
+	// 6 = In the dark corner under the deck stairs on the far side of the house (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"6"
+		"name"				"militia.Cricket"
+	}
+
+	// 7 = In the tree on the side of the house against the cliff (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"7"
+		"name"				"militia.Birds"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// from the area between the garage/silo in front around the side yard
+"militia.SideYard"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.Outside"
+	}
+
+	// 0 = In the tree at the front of the house (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Birds"
+	}
+
+	// 1 = In the trees where you jump up on the hill above the side fence gate (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Birds"
+	}
+
+	// 2 = In the stream (water flowing)
+	"playlooping"
+	{
+		"position"	"2"
+		"volume"	"1"
+		"pitch"		"100"
+		"wave"		"ambient/nature/Water_StreamLoop3.wav"
+	}
+
+	// 3 = In the cab of the blue truck (rodents)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Rodent"
+	}
+	
+	// 4 = In the trees around the boulder in the back yard (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"militia.Birds"
+	}
+
+	// 5 = In the trees beyond the fence to the side (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"militia.Birds"
+	}
+
+	// 6 = In the tunnel entrance (ambient tunnel sounds)
+	"playlooping"
+	{
+		"position"	"6"
+		"volume"	"0.4"
+		"soundlevel"  	"SNDLVL_60dB"
+		"pitch"		"100"
+		"wave"		"ambient/tones/tunnel_wind_loop.wav"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// from the front of the house to the stream rocks
+"militia.FrontYard"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.Outside"
+	}
+
+	// 0 = In the tree at the front of the house (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Birds"
+	}
+
+	// 1 = In the trees on top of the cliff to the left (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Birds"
+	}
+
+	// 2 = In the trees on top of the cliff above the stream (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.Birds"
+	}
+
+	// 3 = In the trees near the silo tunnel entrance (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Birds"
+	}
+
+	// 4 = Down in the tunnel entrance a bit (tunnel ambience)
+	"playlooping"
+	{
+		"position"	"4"
+		"volume"	"0.4"
+		"soundlevel"  	"SNDLVL_60dB"
+		"pitch"		"100"
+		"wave"		"ambient/tones/tunnel_wind_loop.wav"
+	}
+	
+	// 5 = Beyond the rocks in the stream area (waterfall/stream sounds)
+	// fighting with CoveredBridge loops
+//	"playlooping"
+//	{
+//		"position"		"5"
+//		"volume"		"1"
+//		"soundlevel"  	"SNDLVL_80dB"
+//		"pitch"			"100"
+//		"wave"			"ambient/nature/Waterfall_MediumLoop05.wav"
+//	}
+
+	// 6 = In the dark corner where the vines climb the wall near the rope ladder (cricket)
+	// TODO
+
+	// 7 = In the wood pile (cricket, mice)
+	"playsoundscape"
+	{
+		"positionoverride"	"7"
+		"name"				"militia.Rodent"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+// dark entranceway and TV room
+"militia.FirstFloor"
+{
+	"dsp"	"9"
+
+	"playsoundscape"
+	{
+		"name" "militia.Inside"
+	}
+
+	// 0 = In the dark corner behind the cardboard boxes at the front door (crickets, mice, etc)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Cricket"
+	}
+
+	// 1 = Lightbulb hum
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 2 = In the ceiling fan (squeaky fan motor)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.CeilingFan"
+	}
+
+	// 3 = The radio on the TV
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/music/country_rock_am_radio_loop.wav"
+	}
+
+	// 4 = In the dark corner under the stairs (mice, cricket, etc)
+	// TODO
+}
+
+//------------------------------------------------------------------------------------------
+"militia.Kitchen"
+{
+	"dsp"	"9"
+
+	"playsoundscape"
+	{
+		"name" "militia.Inside"
+	}
+
+	// 0 = The fluorescent light over the bar
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.FluorescentLightHum"
+	}
+
+	// 1 = The fluorescent light over the sink
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.FluorescentLightHum2"
+	}
+
+	// 2 = The refrigerator by the microwave (hum)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.RefrigeratorHum"
+	}
+
+	// 3 = The clock
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/machines/TickTock.wav"
+	}
+
+	// 4 = The open fusebox
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_45dB"
+		
+		"wave"	"ambient/machines/60HzHum.wav"
+	}
+
+	// 5 = The furnace
+	"playlooping"
+	{
+		"position"		"5"
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_40dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+
+	// 6 = The lightbulb over the tables
+
+	// 7 = The lightbulb by the door to the garage
+	"playsoundscape"
+	{
+		"positionoverride"	"7"
+		"name"				"militia.LightbulbHum"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"militia.Garage"
+{
+	"dsp"	"19"
+
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.05"
+		"wave"	"ambient/tones/garage.wav"
+	}
+
+	// 0 = The hanging light by the door
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 1 = The hanging light at the far end of the hall
+	//"playsoundscape"
+	//{
+	//	"positionoverride"	"1"
+	//	"name"				"militia.LightbulbHum"
+	//}
+
+	// 2 = The fluorescent light by the van
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.FluorescentLightHum"
+	}
+
+	// 3 = The fluorescent light between the van and car
+
+	// 4 = The fluorescent light by the car
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"militia.FluorescentLightHum2"
+	}
+
+	// 5 = The dark corner under the stairs (crickets)
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"militia.Cricket"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// the 2nd floor of the garage
+"militia.GarageAttic"
+{
+	"dsp"	"9"
+
+	"playsoundscape"
+	{
+		"name" "militia.Inside"
+	}
+
+	// 0 = The dark corner by the big stack of boxes (975, 636, 40) (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Rodent"
+	}
+
+	// 1 = The dark corner of the room (1295, 322, 26) (mice)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Cricket"
+	}
+
+	// 2 = Just outside the vent (outside ambience)
+	"playsoundscape"
+	{
+		"volume"					"0.5"
+		"positionoverride"			"2"
+		"ambientpositionoverride"	"2"
+		"name"						"militia.Outside"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"militia.Bedroom"
+{
+	"dsp"	"9"
+
+	"playsoundscape"
+	{
+		"name" "militia.Inside"
+	}
+
+	// 0 = In the trees around the shed (birdsong)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Birds"
+	}
+
+	// 1 = In the big tree by the side of the deck
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Birds"
+	}
+
+	// 2 = The fluorescent light closest to the hall exit
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.FluorescentLightHum"
+	}
+
+	// 3 = The fluorescent light closest to the bathroom
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.FluorescentLightHum2"
+	}
+
+	// 4 = The radiator
+	// TODO
+}
+
+//------------------------------------------------------------------------------------------
+"militia.Bathroom"
+{
+	"dsp"	"3"
+
+	"playsoundscape"
+	{
+		"name" "militia.Inside"
+	}
+
+	// 0 = The floor drain (drips, etc)
+	"playlooping"
+	{
+		"position"		"0"
+		"volume"		"1"
+		"pitch"			"100"
+		"soundlevel"  	"SNDLVL_50dB"
+		"wave"			"ambient/weather/drip_loop1.wav"
+	}
+
+	// 1 = The toilet (constantly running)
+	"playlooping"
+	{
+		"position"		"1"
+		"volume"		"1"
+		"pitch"			"100"
+		"soundlevel"  	"SNDLVL_50dB"
+		"wave"			"ambient/misc/toilet_refill_loop.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+// the hall and fireplace room
+"militia.Upstairs"
+{
+	"dsp"	"9"
+
+	"playsoundscape"
+	{
+		"name" "militia.Inside"
+	}
+
+	// 0 = Lightbulb nearest the bedroom
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 1 = Lightbulb nearest the stairs
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 2 = Hanging light in fireplace room
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.FluorescentLightHum"
+	}
+
+	// 3 = Light over the workbench
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.LightbulbHum"
+	}
+
+	// 4 = Just outside painted over window (outside ambience)
+	"playsoundscape"
+	{
+		"volume"					"0.5"
+		"positionoverride"			"4"
+		"ambientpositionoverride"	"4"
+		"name"						"militia.Outside"
+	}
+
+	// 5 = In the dark corner by the exit to the deck (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"militia.Rodent"
+	}
+
+	// 6 = In the corner of the ceiling where the roof and chimney meet (bird nest)
+}
+
+//------------------------------------------------------------------------------------------
+// room with the windows and hole in the roof upstairs
+"militia.FrontRoom"
+{
+	"dsp"	"9"
+
+	"playsoundscape"
+	{
+		"name" "militia.Inside"
+	}
+
+	// 0 = In the big tree in the front of the house
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"militia.Birds"
+	}
+
+	// 1 = Just outside the hole in the roof (wind noise)
+	"playsoundscape"
+	{
+		"volume"					"0.75"
+		"positionoverride"			"1"
+		"ambientpositionoverride"	"1"
+		"name"						"militia.Outside"
+	}
+
+	// 2 = In the trees on the cliff to the right
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.Birds"
+	}
+
+	// 3 = In the trees in the front yard near the stream
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Birds"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+// the roof of the house and garage
+"militia.Roof"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "militia.OutsideOnRoof"
+	}
+
+	// 0 = Inside the little roofed “houselet” (bird nest) – putting in chimney since that’s where you hear it from inside.  
+	"playrandom"
+	{
+		"position"		"0"
+		"time"			"5,20"
+		"pitch"			"90,100"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/bird_flapping_1.wav"
+			"wave"	"ambient/animal/bird_flapping_2.wav"
+			"wave"	"ambient/animal/bird_flapping_3.wav"
+		}
+	}
+
+	// 1 = In the big tree in front of the house
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"militia.Birds"
+	}
+
+	// 2 = In the big tree on the side of the house against the deck
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"militia.Birds"
+	}
+
+	// 3 = In the trees on the cliff near the house
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"militia.Birds"
+	}
+
+	// 4 = In the trees
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"militia.Birds"
+	}
+
+	// 5 = In the trees in the side yard
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"militia.Birds"
+	}
+
+	// 6 = In the trees in the front yard
+	"playsoundscape"
+	{
+		"positionoverride"	"6"
+		"name"				"militia.Birds"
+	}
+
+	// 7 = In the stream (water sounds)
+	"playlooping"
+	{
+		"position"	"7"
+		"volume"	"1"
+		"pitch"		"100"
+		"soundlevel"  	"SNDLVL_80dB"
+		"wave"		"ambient/nature/Water_StreamLoop3.wav"
+	}
+}
+

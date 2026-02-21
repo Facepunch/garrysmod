@@ -1,0 +1,235 @@
+"terrortown"
+{
+	"base"		"base"
+	"title"		"Trouble in Terrorist Town"
+	"category"	"pvp"
+	"maps"		"^ttt_"
+	"menusystem"	"1"
+
+	"settings"
+	{
+		1
+		{
+			"name"		"ttt_debug_preventwin"
+			"text"		"prevent_winning"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		2
+		{
+			"name"		"ttt_haste"
+			"text"		"haste_mode"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		5
+		{
+			"name"		"ttt_time_limit_minutes"
+			"text"		"map_time_limit"
+			"type"		"Numeric"
+			"default"	"75"
+		}
+
+		6
+		{
+			"name"		"ttt_firstpreptime"
+			"text"		"initial_waiting_time"
+			"type"		"Numeric"
+			"default"	"60"
+		}
+
+		7
+		{
+			"name"		"ttt_preptime_seconds"
+			"text"		"preparing_time"
+			"type"		"Numeric"
+			"default"	"30"
+		}
+
+		8
+		{
+			"name"		"ttt_posttime_seconds"
+			"text"		"postround_time"
+			"type"		"Numeric"
+			"default"	"30"
+		}
+
+		9
+		{
+			"name"		"ttt_round_limit"
+			"text"		"round_limit"
+			"type"		"Numeric"
+			"default"	"6"
+		}
+
+		10
+		{
+			"name"		"ttt_roundtime_minutes"
+			"text"		"round_time"
+			"type"		"Numeric"
+			"default"	"10"
+		}
+
+		11
+		{
+			"name"		"ttt_haste_starting_minutes"
+			"text"		"haste_round_time"
+			"type"		"Numeric"
+			"default"	"5"
+		}
+
+		12
+		{
+			"name"		"ttt_haste_minutes_per_death"
+			"text"		"haste_kill_time_bonus"
+			"type"		"Numeric"
+			"default"	"0.5"
+		}
+
+		13
+		{
+			"name"		"ttt_postround_dm"
+			"text"		"postround_deathmatch"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		14
+		{
+			"name"		"ttt_traitor_max"
+			"text"		"max_traitors"
+			"type"		"Numeric"
+			"default"	"32"
+		}
+
+		15
+		{
+			"name"		"ttt_traitor_pct"
+			"text"		"traitor_ratio"
+			"type"		"Numeric"
+			"default"	"0.25"
+		}
+
+		16
+		{
+			"name"		"ttt_credits_starting"
+			"text"		"traitor_credits"
+			"type"		"Numeric"
+			"default"	"2"
+		}
+
+		17
+		{
+			"name"		"ttt_detective_max"
+			"text"		"max_detectives"
+			"type"		"Numeric"
+			"default"	"32"
+		}
+
+		18
+		{
+			"name"		"ttt_detective_pct"
+			"text"		"detective_ratio"
+			"type"		"Numeric"
+			"default"	"0.13"
+		}
+
+		19
+		{
+			"name"		"ttt_det_credits_starting"
+			"text"		"detective_credits"
+			"type"		"Numeric"
+			"default"	"1"
+		}
+
+		20
+		{
+			"name"		"ttt_detective_min_players"
+			"text"		"detective_min_players"
+			"type"		"Numeric"
+			"default"	"8"
+		}
+
+		21
+		{
+			"name"		"ttt_detective_karma_min"
+			"text"		"detective_min_karma"
+			"type"		"Numeric"
+			"default"	"600"
+		}
+
+		22
+		{
+			"name"		"ttt_detective_hats"
+			"text"		"detective_hats"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		23
+		{
+			"name"		"ttt_allow_discomb_jump"
+			"text"		"discombob_jumping"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		24
+		{
+			"name"		"ttt_no_nade_throw_during_prep"
+			"text"		"no_preround_grenade_throwing"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		25
+		{
+			"name"		"ttt_teleport_telefrags"
+			"text"		"teleporter_fragging"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		26
+		{
+			"name"		"ttt_ragdoll_pinning"
+			"text"		"ragdoll_pinning"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		27
+		{
+			"name"		"ttt_ragdoll_pinning_innocents"
+			"text"		"innocent_pinning"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		30
+		{
+			"name"		"ttt_namechange_kick"
+			"text"		"kick_for_changing_name"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		31
+		{
+			"name"		"ttt_namechange_bantime"
+			"text"		"name_change_ban_time"
+			"type"		"Numeric"
+			"default"	"10"
+		}
+
+		32
+		{
+			"name"		"ttt_karma"
+			"text"		"karma_system"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+	}
+}

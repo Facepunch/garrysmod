@@ -1,0 +1,1539 @@
+
+// Soundscapes for ep2 outland
+
+
+//----------------------------EPISODE 2 OUTLAND2 ---------------------------------
+
+
+//----------- Outside Portal Storm: citadel portal storm fx -----------
+"ep2_portalstorm_stage_1"
+{
+	"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_outside"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_heavy_wind_and_destruction"
+		"volume"	"0.25"
+	}
+
+	"playrandom"
+	{
+		"time"		"8,20"
+		"volume"	"0.2,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/levels/streetwar/building_rubble1.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble2.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble3.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble4.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble5.wav"	
+		}
+	}
+
+	"playlooping"
+	{
+		"volume"	"1"
+		"wave"		"ambient\levels\outland\OL01Portal_Loop_Stage01.wav"
+		"pitch"		"100"
+		"position"	"0"
+	}
+}
+
+//----------- Outside Portal Storm: citadel portal storm fx while indoors -----------
+"ep2_portalstorm_stage_1_inside"
+{
+	"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_inside"
+		"volume"	".5"
+		"position"	"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_howl_loop1.wav"
+	}
+
+
+	"playrandom"
+	{
+		"time"		"6,11"
+		"volume"	"0.2,0.3"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_snippet1.wav"
+			"wave"	"ambient/wind/wind_snippet2.wav"
+			"wave"	"ambient/wind/wind_snippet3.wav"
+			"wave"	"ambient/wind/wind_snippet4.wav"
+			"wave"	"ambient/wind/wind_snippet5.wav"
+			"wave"	"ambient/materials/shutter8.wav"
+			"wave"	"ambient/materials/metal9.wav"
+		}	
+	}
+
+}
+
+
+//----------- Mines: elevator shaft, cavern, tube -----------
+
+// play outside deserted mine, position 0 is always citadel
+
+"ep2_mines.outside"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"	"ep1.citadel_unstable_outside"
+		"volume"	"0.3"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"volume"	"0.5"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+
+	"playrandom"
+	{
+		"time"		"7,14"
+		"volume"	"0.15,0.3"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_snippet1.wav"
+			"wave"	"ambient/wind/wind_snippet2.wav"
+			"wave"	"ambient/wind/wind_snippet3.wav"
+			"wave"	"ambient/wind/wind_snippet4.wav"
+			"wave"	"ambient/wind/wind_snippet5.wav"
+			"wave"	"ambient/materials/shutter7.wav"
+			"wave"	"ambient/materials/shutter8.wav"
+			"wave"	"ambient/materials/metal_rattle3.wav"
+			"wave"	"ambient/materials/metal9.wav"
+		}	
+	}
+}
+
+// play inside wooden buildings, near mines
+
+"ep2_mines.woodbuilding"
+{
+	"dsp"	"1"
+	"dsp_volume" "1.0"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+
+	"playrandom"
+	{
+		"time"		"10,18"
+		"volume"	"0.2,0.35"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+			"wave"	"ambient/materials/wood_creak6.wav"
+			"wave"	"ambient/materials/shutter7.wav"
+			"wave"	"ambient/materials/shutter8.wav"
+		}
+	
+	}
+		
+}
+
+
+// play in mine tunnel
+
+"ep2_mines.tunnel"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.35"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/cave_outdoor1.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"10, 20"
+		"volume"	"0.45, 0.55"
+		"pitch"		"98,102"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/rock1.wav"
+			"wave"	"ambient/materials/rock2.wav"
+			"wave"	"ambient/materials/rock3.wav"
+			"wave"	"ambient/materials/rock4.wav"
+			"wave"	"ambient/materials/rock5.wav"
+		}	
+	}
+
+	"playrandom"
+	{
+		"time"		"3, 15"
+		"volume"	"0.35,0.6"
+		"pitch"		"50,80"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+			"wave"	"ambient/materials/wood_creak6.wav"
+		}
+		
+	}
+
+}
+
+// play in mine tunnel with pit at position 0
+
+"ep2_mines.tunnel_dropoff"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"name"		"ep2_mines.tunnel"	
+		"volume"	"0.7"
+	}
+	
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep2_caves.dropoff"	
+		"volume"	"0.9"
+	}
+	
+}
+
+// play in vertical elevator shaft
+
+"ep2_mines.elevator_shaft"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/hole_amb3.wav"
+		"pitch"		"100"
+	}
+
+	"playrandom"
+	{
+		"time"		"3, 8"
+		"volume"	"0.35,0.6"
+		"pitch"		"70,80"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+			"wave"	"ambient/materials/wood_creak6.wav"
+		}
+		
+	}
+
+
+	"playrandom"
+	{
+		"time"		"8, 14"
+		"volume"	"0.4, 0.7"
+		"pitch"		"100"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/rock1.wav"
+			"wave"	"ambient/materials/rock2.wav"
+			"wave"	"ambient/materials/rock3.wav"
+			"wave"	"ambient/materials/rock4.wav"
+			"wave"	"ambient/materials/rock5.wav"
+		}
+
+	}
+
+}
+
+// play in large underground mine chambers
+
+"ep2_mines.chamber"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"ambient/atmosphere/Drone2LP.wav"
+		"pitch"		"100"
+	}
+}
+
+// play in mine tunnel with lots of grubs
+
+"ep2_mines.tunnel_nests"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"name"		"ep2_mines.tunnel"	
+		"volume"	"0.7"
+	}
+	
+	 	"playsoundscape"
+	{
+		"name"		"ep2_caves.nests_tunnel"	
+		"volume"	"0.5"
+	}
+	
+}
+
+// play in mine tunnel with some grubs
+
+"ep2_mines.tunnel_grubs"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"name"		"ep2_mines.tunnel"	
+		"volume"	"0.7"
+	}
+	
+	 	"playsoundscape"
+	{
+		"name"		"ep2_caves.quiet_tunnel"	
+		"volume"	"0.5"
+	}
+	
+}
+
+// play in small tunnels with some grubs and fly sounds
+
+"ep2_caves.quiet_tunnel_flies"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"name"		"ep2_caves.quiet_tunnel"	
+		"volume"	"0.7"
+	}
+	
+		"playsoundscape"
+	{
+		"name"		"ep2_caves.util_flies"
+		"volume"	"1.0"
+	}
+	
+}
+
+
+// play in caverns with grubs and water 
+
+"ep2_caves.watery_cavern_grubs"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"name"		"ep2_caves.watery_cavern"	
+		"volume"	"0.7"
+	}
+	
+	 	"playsoundscape"
+	{
+		"name"		"ep2_caves.quiet_tunnel"	
+		"volume"	"0.7"
+	}
+	
+}
+
+// play in large caverns with grubs and water 
+
+"ep2_caves.large_watery_cavern_grubs"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"name"		"ep2_caves.watery_cavern"	
+		"volume"	"0.7"
+	}
+	
+	 	"playsoundscape"
+	{
+		"name"		"ep2_caves.large_tunnel"	
+		"volume"	"0.7"
+	}
+	
+}
+ 
+ 
+// play in large caverns with grubs and water and a tall ceiling or pit at position 0
+
+"ep2_caves.watery_cavern_grubs_dropoff"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"name"		"ep2_caves.watery_cavern"	
+		"volume"	"0.7"
+	}
+	
+	 	"playsoundscape"
+	{
+		"name"		"ep2_caves.quiet_tunnel"	
+		"volume"	"0.7"
+	}
+	
+		 	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep2_caves.dropoff"	
+		"volume"	"0.7"
+	}
+	
+}
+
+// play in large areas with tall ceilings or deep pits and grubs
+
+"ep2_caves.dropoff_grubs"
+{
+	"dsp"	"1"
+	
+ 	"playsoundscape"
+	{
+		"positionoverride" "0"
+		"name"		"ep2_caves.dropoff"	
+		"volume"	"1"
+	}
+	
+	 	"playsoundscape"
+	{
+		"name"		"ep2_caves.quiet_tunnel"	
+		"volume"	"0.5"
+	}
+	
+}
+ 
+//----------- Factory: poison pools, windy bridge, warehouse
+
+// play when on bridge,  position 0 is ALWAYS citadel
+
+"ep2_factory.on_bridge"
+{
+	
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"	"ep1.citadel_unstable_outside"
+		"volume"	"0.5"
+	}
+
+	// wind
+	
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"ambient/wind/wind_rooftop1.wav"
+		"pitch"		"100"
+	}
+
+	"playrandom"
+	{
+		"time"		"5, 15"
+		"volume"	"0.3,0.6"
+		"pitch"		"100,120"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"
+		"rndwave"
+		{
+			"wave"	"ambient/wind/windgust.wav"
+			"wave"  "ambient/wind/windgust_strong.wav"
+		}
+		
+	}
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_metalstress"	
+		"volume"	"0.7"
+	}
+
+}
+
+// play when inside wooden room
+
+"ep2_factory.woodenroom"
+{
+	"dsp"	"1"
+	
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+
+	"playrandom"
+	{
+		"time"		"9,16"
+		"volume"	"0.2,0.45"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+		}
+	}
+
+	"playsoundscape"
+	{
+		"name"	"coast.util_windgusts"
+		"volume" "0.25"
+	}
+}
+
+// play when inside concrete room
+"ep2_factory.concreteroom"
+{
+	"dsp"	"1"
+
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"soundlevel" "SNDLVL_140dB"
+		"wave"		"ambient/atmosphere/underground_hall_loop1.wav"
+	}
+}
+
+// play when outside, near toxic pits, position 0 is ALWAYS citadel, positio 1,2,3 are slime
+
+"ep2_factory.slimepit"
+{
+	"dsp" "1"
+
+	"playlooping"
+	{
+		"volume"	"0.35"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"	"ep1.citadel_unstable_outside"
+		"volume"	"0.4"
+	}
+
+	// This is a burbling slime sound, position 1
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"1"
+		"volume"	"1.0"
+	}
+
+	// This is a burbling slime sound, position 1
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"2"
+		"volume"	"1.0"
+	}
+
+		// This is a burbling slime sound, position 1
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"3"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"coast.util_windgusts"
+		"volume" "0.5"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"coast.util_shackmetal"
+		"volume" "0.5"
+	}
+}
+
+// play on vista, overlooking bridge and factory, position 0 is citadel
+
+"ep2_factory.vista"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"	"ep1.citadel_unstable_outside"
+		"volume"	"0.5"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"coast.util_windgusts"
+		"volume" "0.5"
+	}
+}
+
+
+//----------- Farm: outside advisor room, inside houses, inside advisor barn, advisor room
+
+// sound of crashed advisorpod, position 0
+
+"ep2_util.advisorpod"
+{
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"pitch"		"125"
+		"soundlevel"	"SNDLVL_80dB"
+		"wave"		"ambient/atmosphere/city_rumble_loop1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.05"
+		"wave"		"ambient/gas/steam_loop1.wav"
+		"pitch"		"75"
+		"soundlevel"	"SNDLVL_80dB"
+	}
+}
+
+// play in advisor room, position 0 is computer terminal
+
+"ep2_farm.advisor_room"
+{
+	"dsp"	"1"
+
+
+	"playlooping"
+	{
+		"volume"	"0.55"
+		"pitch"		"150"
+		"wave"		"ambient/atmosphere/Drone4LP.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"d3_citadel.util_hits"
+		"volume"	"1.0"
+	}
+
+	// position 0 is combine computer terminal
+
+	"playsoundscape"
+	{
+		"name"	"combine.computer"
+		"volume"	"1.0"
+		"positionoverride"	"0"
+	}
+
+}
+
+
+// play outside advisor barn. Position 0 is advisor pod
+
+"ep2_farm.courtyard"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_tunnel_windgusts"
+		"volume"	"0.7"
+	}
+
+	//Position 0 - advisor pod
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep2_util.advisorpod"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"volume"	"0.4"
+	}
+}
+
+// play inside barn
+
+"ep2_farm.barn"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.35"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/Drone4LP.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_mines.woodbuilding"
+		"volume"	"1.0"
+	}
+
+}
+
+"ep2_farm.barn_crawlspace"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.45"
+		"pitch"		"130"
+		"wave"		"ambient/atmosphere/Drone4LP.wav"
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"ep2_mines.woodbuilding"
+		"volume"	"1.0"
+	}
+
+}
+
+//----------- Radio arena: Radiotower courtyard, radio room power on
+
+"ep2_util.hunters"
+{
+	"dsp"	"1"
+
+	"playrandom"
+	{
+		"time"		"10, 20"
+		"volume"	"0.05,0.1"
+		"pitch"		"90,110"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"random"
+		"rndwave"
+		{
+			"wave"	"npc/ministrider/hunter_idle3.wav"
+			"wave"	"npc/ministrider/hunter_laugh1.wav"
+			"wave"	"npc/ministrider/hunter_laugh3.wav"
+			"wave"	"npc/ministrider/hunter_scan1.wav"
+			"wave"	"npc/ministrider/hunter_scan2.wav"
+			"wave"	"npc/ministrider/hunter_scan3.wav"
+		}
+	}
+}
+
+// play before combat with hunters, at radio tower, position 0 is citadel
+
+"ep2_radiotower.courtyard_hunters"
+{
+
+/// - begin portal storm
+	"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_outside"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_heavy_wind_and_destruction"
+		"volume"	"0.25"
+	}
+
+	"playrandom"
+	{
+		"time"		"8,20"
+		"volume"	"0.2,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/levels/streetwar/building_rubble1.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble2.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble3.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble4.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble5.wav"	
+		}
+	}
+
+	"playlooping"
+	{
+		"volume"	"1"
+		"wave"		"ambient\levels\outland\OL01Portal_Loop_Stage01.wav"
+		"pitch"		"100"
+		"position"	"0"
+	}
+	/// -end portal storm
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.light_forest"
+		"volume"	"0.3"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_util.hunters"
+		"volume"	"1.0"
+		
+	}
+}
+
+// play in courtyard, after hunter battle, position 0 is citadel
+
+"ep2_radiotower.courtyard_no_hunters"
+
+///	begin portal storm
+{
+		"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_outside"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_heavy_wind_and_destruction"
+		"volume"	"0.25"
+	}
+
+	"playrandom"
+	{
+		"time"		"8,20"
+		"volume"	"0.2,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/levels/streetwar/building_rubble1.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble2.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble3.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble4.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble5.wav"	
+		}
+	}
+
+	"playlooping"
+	{
+		"volume"	"1"
+		"wave"		"ambient\levels\outland\OL01Portal_Loop_Stage01.wav"
+		"pitch"		"100"
+		"position"	"0"
+	}
+	/// end portal storm
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"	"ep1.citadel_unstable_outside"
+		"volume"	"0.4"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.light_forest"
+		"volume"	"0.3"
+	}
+}
+
+// play when in basement room, under radio room
+
+"ep2_radiotower.basement"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"soundlevel"	"SNDLVL_80dB"
+		"wave"		"ambient/atmosphere/indoor2.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"9,16"
+		"volume"	"0.2,0.45"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+		}
+	}
+
+}
+
+// play when in radio building and power is on
+
+"ep2_radiotower.radioroom_power_on"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"	"coast.combine_controlroom_ambience"
+		"volume"	"0.2"
+	}
+
+
+	"playrandom"
+	{
+		"time"		"9,16"
+		"volume"	"0.2,0.45"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+		}
+	}
+}
+
+// play when in radio building and power is off
+
+"ep2_radiotower.radioroom_power_off"
+{
+	"dsp"	"1"
+
+	"playrandom"
+	{
+		"time"		"9,16"
+		"volume"	"0.2,0.45"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+		}
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_util.hunters"
+		"volume"	"0.3"
+	}
+}
+
+
+//----------- Garage: toxic industrial area, car repair garage, turret arena, crane arena
+
+"ep2_industrial.garage"
+{
+	"dsp"	"1"
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"ambient/atmosphere/laundry_amb.wav"
+		"pitch"		"100"
+	}
+}
+
+// play outside near slime, positions 0,1 are slime
+
+"ep2_industrial.courtyard_toxic"
+{
+	"dsp"	"1"
+	// This is a burbling slime sound, position 0
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"0"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"1"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"coast.util_windgusts"
+		"volume" "0.5"
+	}
+}
+
+// play when entering turret room - turret at position 0
+// stop the soundscape when turret destroyed
+
+"ep2_industrial.inside_turret_building"
+{
+	"dsp"	"1"
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/levels/citadel/field_loop1.wav"
+		"pitch"		"100"
+		"position"	"0"
+	}
+}
+
+// play in crane arena, position 0,1,2 are slime
+"ep2_industrial.crane_arena"
+{
+	"dsp"	"1"
+	// This is a burbling slime sound, position 0
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_100db"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"1"
+		"soundlevel"	"SNDLVL_100db"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_toxic_slime"
+		"position"	"2"
+		"soundlevel"	"SNDLVL_100db"
+		"volume"	"1.0"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+
+}
+
+"ep2_industrial.no_slime_crane_arena"
+{
+	"dsp"	"1"
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+
+}
+
+// outland_08 - being chased byu the chopper along the tracks
+"ep2_industrial.traintracks_tunnel"
+{
+	"dsp"	"1"
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"wave"		"ambient/atmosphere/tunnel1.wav"
+		"pitch"		"100"
+	}
+
+}
+
+// outland_08 - being chased byu the chopper along the tracks
+"ep2_industrial.traintracks_chopper"
+{
+	"dsp"	"1"
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"soundlevel"	"SNDLVL_90db"
+		"volume"	"0.7"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"soundlevel"	"SNDLVL_90db"
+		"volume"	"0.3"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+}
+
+// outland_08 - inside the chopper arena
+"ep2_industrial.traintracks_chopperarena"
+{
+	"dsp"	"1"
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"soundlevel"	"SNDLVL_90db"
+		"volume"	"0.7"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"soundlevel"	"SNDLVL_90db"
+		"volume"	"0.4"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+		"pitch"		"100"
+	}
+}
+
+
+//----------- Silo: hallway, general room, tech room, silo room top, silo room lower, silo room engines
+
+"ep2_util.rocket"
+{
+	// hisses, groans, rumbles
+
+	"playlooping"
+	{
+		"volume"	"0.05"
+		"pitch"		"100"
+		"soundlevel"	"SNDLVL_140db"
+		"wave"	"ambient/gas/steam2.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"5,15"
+		"volume"	"0.35,0.45"
+		"pitch"		"50,80"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/fire/gascan_ignite1.wav"
+			"wave"	"ambient/fire/ignite.wav"
+		}
+	}
+
+
+	"playrandom"
+	{
+		"time"		"4,10"
+		"volume"	"0.35,0.45"
+		"pitch"		"70,90"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/shipgroan1.wav"
+			"wave"	"ambient/materials/shipgroan2.wav"
+			"wave"	"ambient/materials/shipgroan3.wav"
+			"wave"	"ambient/materials/shipgroan4.wav"
+			"wave"	"ambient/materials/rustypipes1.wav"
+			"wave"	"ambient/materials/rustypipes2.wav"
+			"wave"	"ambient/materials/icegrind1.wav"
+		}
+	}
+}
+
+
+"ep2_silo.concretehall"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"	"ambient/atmosphere/tunnel1.wav"
+		"pitch"		"100"
+	}
+}
+
+// play in silo, room with tech gear at position 0
+
+"ep2_silo.techroom"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.07"
+		"wave"		"ambient/levels/labs/equipment_beep_loop1.wav"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_90db"
+		"pitch"		"80"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"	"ambient/atmosphere/undercity_loop1.wav"
+		"pitch"		"100"
+	}
+
+}
+
+// play in silo, general concrete room
+
+"ep2_silo.concreteroom"
+{
+	"dsp"	"1"
+	
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"	"ambient/atmosphere/undercity_loop1.wav"
+		"pitch"		"100"
+	}
+
+}
+
+// play at top of silo with missile, position 0 is lab equipment
+
+"ep2_silo.silo_top"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"	"ambient/atmosphere/ambience_base.wav"
+		"pitch"		"100"
+		"position"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep2_util.rocket"
+		"volume"	"0.5"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"		"ambient/levels/labs/equipment_beep_loop1.wav"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_90db"
+		"pitch"		"80"
+	}
+
+
+}
+
+// play at middle of silo, near missle
+
+"ep2_silo.silo_middle"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"wave"	"ambient/atmosphere/ambience_base.wav"
+		"pitch"		"100"
+		"position"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep2_util.rocket"
+		"volume"	"0.7"
+	}
+	
+}
+
+// play at bottom of missile silo, near engines
+"ep2_silo.silo_bottom"
+{
+	"dsp"	"1"
+	
+
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"wave"		"ambient/atmosphere/Drone1LP.wav"
+		"pitch"		"100"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep2_util.rocket"
+		"volume"	"1.0"
+	}
+	
+}
+
+
+//----------- Silobattle: red room scary, open silo windy
+
+// play in silo halls and rooms during battle
+
+"ep2_silobattle.halls"
+{
+	"dsp"	"1"
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"	"ambient/atmosphere/undercity_loop1.wav"
+		"pitch"		"100"
+	}
+
+
+	"playrandom"
+	{
+		"time"	"5,15"
+		"volume"	"0.2,0.4"
+		"pitch"	"80,120"
+		"position"	"random"	
+		"rndwave"
+		{
+			"wave"	"ambient/materials/metal_rattle1.wav"
+			"wave"	"ambient/materials/metal_rattle3.wav"
+			"wave"	"ambient/materials/metal_rattle4.wav"
+			"wave"	"ambient/materials/metal4.wav"
+			"wave"	"ambient/materials/metal5.wav"
+		}
+	}
+
+}
+
+// play in flooded areas of silo
+
+"ep2_silobattle.waterroom"
+{
+	"dsp"	"1"
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"	"ambient/atmosphere/Drone2LP.wav"
+		"pitch"		"100"
+	}
+
+	"playrandom"
+	{
+		"time"	"0.2,1.0"
+		"volume"	"0.05,0.1"
+		"pitch"	"100,120"
+		"position"	"random"	
+		"rndwave"
+		{
+			"wave"	"ambient/water/rain_drip1.wav"
+			"wave"	"ambient/water/rain_drip2.wav"
+			"wave"	"ambient/water/rain_drip3.wav"
+		}
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.02"
+		"wave"	"ambient/water/water_in_boat1.wav"
+		"pitch"		"100"
+	}
+		
+}
+
+// play in upper silo, when doors are open
+
+"ep2_silobattle.silo_open"
+{
+	"dsp"	"1"
+
+	"playrandom"
+	{
+		"time"	"2,10"
+		"volume"	"0.3,0.5"
+		"pitch"	"95,105"
+		"position"	"random"	
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_snippet1.wav"
+			"wave"	"ambient/wind/wind_snippet2.wav"
+		}
+	}
+
+
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"wave"		"ambient/atmosphere/cave_outdoor1.wav"
+		"pitch"		"100"
+	}
+}
+
+// play in upper silo, when doors are shut
+
+"ep2_silobattle.silo_shut"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/atmosphere/elev_shaft1.wav"
+		"pitch"		"100"
+	}
+}
+
+//----------- Whiteforest: training area, prebattle forest, battleground
+
+"ep2_whiteforest.training"
+{
+	"dsp"	"1"
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"wave"		"ambient/atmosphere/plaza_amb.wav"
+		"pitch"		"100"
+	}
+
+	// wind
+	"playrandom"
+	{
+		"time"	"5,15"
+		"volume"	"0.1,0.2"
+		"pitch"	"80,120"
+		"position"	"random"	
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_snippet1.wav"
+			"wave"	"ambient/wind/wind_snippet2.wav"
+		}
+	}
+}
+
+"ep2_whiteforest.pre_battle"
+{
+	"dsp"	"1"
+	// forest light
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.light_forest"
+		"volume"	"1.0"
+	}
+}
+
+"ep2_whiteforest.battle"
+{
+	"dsp"	"1"
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"volume"	"1.0"
+	}
+}
+
+"ep2_whiteforest.post_battle"
+{
+	"dsp"	"1"
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"volume"	"1.0"
+	}
+}

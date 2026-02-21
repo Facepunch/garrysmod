@@ -1,0 +1,1167 @@
+// de_nuke soundscapes
+// Author: Chris Ashton, Turtle Rock Studios, Inc., August 2005
+
+
+//------------------------------------------------------------------------------------------
+//
+// Generic outdoors ambience
+//
+"nuke.outside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/plaza_amb.wav"
+	}
+
+	// wind gusts
+	"playrandom"
+	{
+		"time"		"15,30"
+		"volume"	"0.08"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_med1.wav"
+			"wave"	"ambient/wind/wind_med2.wav"
+		}
+	}
+
+	// planes flying overhead
+	"playrandom"
+	{
+		"time"		"10,50"
+		"volume"	".05,.1"
+		"pitch"		"90,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// Generic roof ambience
+//
+"nuke.roof"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.6"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/plaza_amb.wav"
+	}
+
+	// wind gusts
+	"playrandom"
+	{
+		"time"		"5,10"
+		"volume"	"0.2,0.5"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_med1.wav"
+			"wave"	"ambient/wind/wind_med2.wav"
+		}
+	}
+
+	// planes flying overhead
+	"playrandom"
+	{
+		"time"		"10,50"
+		"volume"	".05,.1"
+		"pitch"		"90,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+		}
+	}
+
+}
+
+//------------------------------------------------------------------------------------------
+//
+// Generic indoors ambience
+//
+"nuke.inside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/indoor1.wav"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// All dumpsters have flies
+//
+"nuke.flies"
+{
+	"playrandom"
+	{
+		"time"			"1,4"
+		"volume"		"1.0"
+		"pitch"			"90,110"
+		"soundlevel"  	"SNDLVL_58dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/flies1.wav"
+			"wave"	"ambient/animal/flies2.wav"
+			"wave"	"ambient/animal/flies3.wav"
+			"wave"	"ambient/animal/flies4.wav"
+			"wave"	"ambient/animal/flies5.wav"
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// A Tank of something
+//
+"nuke.tank"
+{
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/machines/refinery_loop_1.wav"
+	}
+	"playrandom"
+	{
+		"time"			"5,15"
+		"volume"		"1.0"
+		"pitch"			"90,110"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/steam_release_1.wav"
+			"wave"	"ambient/machines/steam_release_2.wav"
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// Bare lightbulb hum - used for all lightbulbs in the map
+//
+"nuke.light"
+{
+	"playlooping"
+	{	
+		"pitch"			"100"
+		"volume"		".5"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/misc/flour_light_loud.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// AC Unit Cycle - used for all AC units in the map
+//
+"nuke.ac"
+{
+	"playrandom"
+	{
+		"pitch"			"100"
+		"volume"		"1"
+		"time"			"20,30"
+		"soundlevel" 	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/air_conditioner_cycle.wav"
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// AC Unit Looping - used for all AC units in the map
+//
+"nuke.acloop"
+{
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"1"
+		"soundlevel" 	"SNDLVL_75dB"
+		"wave"	"ambient/machines/air_conditioner_loop_1.wav"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// A chirping cricket
+"nuke.cricket"
+{
+	"playrandom"
+	{
+		"time"			"0.8,1.0"
+		"pitch"			"98,102"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/cricket_chirp_1.wav"
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// A Small Power Transformer
+"nuke.transformer"
+{
+	"playlooping"
+	{	
+		"pitch"			"100"
+		"volume"		"1"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// A Large Power Transformer
+"nuke.transformerlrg"
+{
+	"playlooping"
+	{	
+		"pitch"			"100"
+		"volume"		"1"
+		"soundlevel"  	"SNDLVL_90dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_2.wav"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+//
+// Birdsong
+//
+"nuke.birds"
+{
+	"playrandom"
+	{
+		"time"			"6,20"
+		"pitch"			"85,105"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/bird1.wav"
+			"wave"	"ambient/animal/bird2.wav"
+			"wave"	"ambient/animal/bird3.wav"
+			"wave"	"ambient/animal/bird4.wav"
+			"wave"	"ambient/animal/bird5.wav"
+			"wave"	"ambient/animal/bird6.wav"
+			"wave"	"ambient/animal/bird7.wav"
+			"wave"	"ambient/animal/bird8.wav"
+			"wave"	"ambient/animal/bird9.wav"
+			"wave"	"ambient/animal/bird10.wav"
+			"wave"	"ambient/animal/bird11.wav"
+			"wave"	"ambient/animal/bird12.wav"
+			"wave"	"ambient/animal/bird13.wav"
+			"wave"	"ambient/animal/bird14.wav"
+			"wave"	"ambient/animal/bird15.wav"
+			"wave"	"ambient/animal/bird16.wav"
+			"wave"	"ambient/animal/bird17.wav"
+			"wave"	"ambient/animal/bird18.wav"
+			"wave"	"ambient/animal/bird19.wav"
+			"wave"	"ambient/animal/bird20.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Pigeons
+//
+"nuke.pigeons"
+{
+	"playrandom"
+	{
+		"time"			"3,10"
+		"pitch"			"100,100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/creatures/pigeon_idle1.wav"
+			"wave"		"ambient/creatures/pigeon_idle2.wav"
+			"wave"		"ambient/creatures/pigeon_idle3.wav"
+			"wave"		"ambient/creatures/pigeon_idle4.wav"
+		}
+	}
+	"playrandom"
+	{
+		"time"			"10,30"
+		"pitch"			"100,100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/bird_flapping_1.wav"
+			"wave"		"ambient/animal/bird_flapping_2.wav"
+			"wave"		"ambient/animal/bird_flapping_3.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Distant Drips
+//
+"nuke.drips"
+{
+	"dsp"	"6"
+
+	"playrandom"
+	{
+		"time"		"5,20"
+		"volume"	"0.2"
+		"pitch"		"90,110"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+"nuke.ctspawn"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	// Position 0: The Tree
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"			"nuke.birds"
+	}
+
+	// Position 1: APC
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		".8"
+		"soundlevel"  	"SNDLVL_75dB"
+		"wave"			"ambient/machines/big_truck.wav"
+	}
+
+	// Position 2: Cooling Tank
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/atmosphere/outdoor2.wav"
+	}
+
+	// Position 3: Overhead AC Unit
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"			"nuke.acloop"
+	}
+
+	// Position 4:small transformer
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"			"nuke.transformer"
+	}
+} 
+
+
+"nuke.ctcourtyard"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	// Position 0: AC Unit
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"			"nuke.acloop"
+	}
+
+	// Position 1: Vent on Main Building
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+
+
+	// Position 2: AC Unit
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.cricket"
+	}
+	
+	// Position 3: Vent on Containment Building
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+}
+
+
+"nuke.ctalley"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	// Position 0: Transformer
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.transformer"
+	}
+
+	// Position 1: Cricket
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.cricket"
+	}
+	
+	// Position 2: Light Fixture
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.flies"
+	}
+}
+
+
+"nuke.middle"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	// Position 0: Cricket by warehouse
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.cricket"
+	}
+
+	// Position 1: Drips by warehouse
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.drips"
+	}
+
+
+	// Position 2: Cricket by main building
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.cricket"
+	}
+	
+	// Position 3: Drips by main buildling
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"nuke.drips"
+	}
+
+	// Position 4: Turbine Generator Building
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_90dB"
+		"wave"			"ambient/machines/laundry_machine1_amb.wav"
+	}
+
+	// Position 5: The Tree in the parking lot
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"nuke.birds"
+	}
+}
+
+"nuke.tentrance"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	// Position 0: Tanks by main building
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.tank"
+	}
+
+	// Position 1: AC on roof of main building
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.acloop"
+	}
+
+
+	// Position 2: trash on the other side of the fence
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.flies"
+	}
+	
+	// Position 3: Large Transformer in power yard
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"nuke.transformerlrg"
+	}
+}
+
+"nuke.talley"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"15,25"
+		"volume"	".1,.3"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/car1.wav"
+			"wave"	"ambient/misc/car2.wav"
+
+		}
+
+	}
+
+	// Position 0: Cricket in bushes
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.cricket"
+	}
+
+	// Position 1: transformer in alley
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.transformer"
+	}
+
+
+	// Position 2: flies by alley dumpster
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.flies"
+	}
+	
+}
+
+"nuke.tspawn"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	// Position 0: Flies in large dumpster
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.flies"
+	}
+
+	// Position 1: ac on the roof
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.acloop"
+	}
+
+
+	// Position 2: large transformers in power yard
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.transformerlrg"
+	}
+
+	// Position 3: security guard radio
+	
+}
+
+"nuke.warehouse"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.outside"
+	}
+
+	// Position 0: Large Pipe
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 1: Pigeons in rafters
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.pigeons"
+	}
+}
+
+"nuke.catwalk"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.roof"
+	}
+
+	"playrandom"
+	{
+		"time"		"5,10"
+		"volume"	".9"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/metal_stress1.wav"
+			"wave"	"ambient/materials/metal_stress2.wav"
+			"wave"	"ambient/materials/metal_stress3.wav"
+			"wave"	"ambient/materials/metal_stress4.wav"
+			"wave"	"ambient/materials/metal_stress5.wav"
+		}
+
+	}
+
+
+	// Position 0: far ac on roof
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.acloop"
+	}
+
+	// Position 1: ac on roof
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.ac"
+	}
+
+	// Position 2: wind gusts at upstairs door
+	"playrandom"
+	{
+		"position"	"2"
+		"time"		"5,15"
+		"volume"	"0.8,1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_snippet4.wav"
+			"wave"	"ambient/wind/wind_snippet5.wav"
+		}
+	}
+}
+
+"nuke.troof"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.roof"
+	}
+
+
+	// Position 0: ac on roof
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.acloop"
+	}
+
+	// Position 1: ac on walkable roof
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.ac"
+	}
+
+	// Position 2: transformer in power yard
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.transformerlrg"
+	}
+
+	// Position 3: white pipes
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 4: large pipes
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"nuke.tank"
+	}
+}
+
+"nuke.ctinside"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.inside"
+	}
+
+	// Position 0: hanging office light
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.light"
+	}
+
+	// Position 2: vent
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.acloop"
+	}
+}
+
+"nuke.ramproom"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.inside"
+	}
+
+	// Position 0: crane
+	"playrandom"
+	{
+		"position"	"0"
+		"time"		"5,10"
+		"volume"	"1"
+		"soundlevel"  	"SNDLVL_75dB"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/cartrap_rope1.wav"
+			"wave"	"ambient/materials/cartrap_rope2.wav"
+			"wave"	"ambient/materials/cartrap_rope3.wav"
+		}
+
+	}
+
+	// Position 1: wall light
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"nuke.light"
+	}
+
+	// Position 2: Large Pipe
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	} 
+}
+
+"nuke.tinside"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.inside"
+	}
+
+	// Position 0: crane
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.light"
+	}
+
+	// Position 1: Large Pipe
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+}
+
+"nuke.computerroom"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.inside"
+	}
+
+	// Position 0: ac vent on the ceiling
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.acloop"
+	}
+
+	// Position 1: wall computers
+	"playrandom"
+	{
+		"position"	"1"
+		"time"		"2"
+		"volume"	".5,.8"
+		"soundlevel"  	"SNDLVL_75dB"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+		"wave"			"ambient/machines/combine_terminal_idle1.wav"
+		"wave"			"ambient/machines/combine_terminal_idle2.wav"
+		"wave"			"ambient/machines/combine_terminal_idle3.wav"
+		"wave"			"ambient/machines/combine_terminal_idle4.wav"
+		}
+
+	}
+
+	// Position 2: light
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"nuke.light"
+	}
+}
+
+"nuke.abomb"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "nuke.inside"
+	}
+
+	// Position 0: light
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.light"
+	}
+
+	// Position 1: wind gusts at upstairs door
+	"playrandom"
+	{
+		"position"	"1"
+		"time"		"5,15"
+		"volume"	"0.5,0.7"
+		"soundlevel"  	"SNDLVL_70dB"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_snippet4.wav"
+			"wave"	"ambient/wind/wind_snippet5.wav"
+		}
+	}
+}
+
+"nuke.vents"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.7"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_tunnel1.wav"
+	}
+
+	// ac
+	"playsoundscape"
+	{
+		"name"				"nuke.ac"
+	}
+}
+
+"nuke.bbomb"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/water/corridor_water.wav"
+	}
+
+	// Position 0: pipes
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  		"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 1: water
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  		"SNDLVL_65dB"
+		"wave"			"ambient/machines/deep_boil.wav"
+	}
+}
+
+"nuke.tunnelentrance"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/tunnel1.wav"
+	}
+
+	// Position 0: pipes
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  		"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 1: light
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"			"nuke.light"
+	} 
+}
+
+"nuke.generatorroom"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/machines/lab_loop1.wav"
+	}
+
+	// Position 0: light
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"			"nuke.light"
+	}
+
+	// Position 1: wall computers
+	"playrandom"
+	{
+		"position"	"1"
+		"time"		"2"
+		"volume"	".5,.8"
+		"soundlevel"  	"SNDLVL_75dB"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+		"wave"			"ambient/machines/combine_terminal_idle1.wav"
+		"wave"			"ambient/machines/combine_terminal_idle2.wav"
+		"wave"			"ambient/machines/combine_terminal_idle3.wav"
+		"wave"			"ambient/machines/combine_terminal_idle4.wav"
+		}
+
+	}
+
+	// Position 2: blue transformer
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"			"nuke.transformer"
+	}
+
+	// Position 3: pipes
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.5"
+		"soundlevel"  		"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}	
+}
+
+"nuke.tunnel"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/underground.wav"
+	}
+
+	// Position 0: light
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"nuke.light"
+	}
+
+	// Position 1: vent
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1"
+		"soundlevel"  		"SNDLVL_65dB"
+		"wave"			"ambient/wind/wind_tunnel1.wav"
+	}
+
+	// Position 2: pipes
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  		"SNDLVL_65dB"
+		"wave"			"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 3: ceiling fan
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"80"
+		"volume"		"0.6"
+		"soundlevel"  		"SNDLVL_65dB"
+		"wave"			"ambient/tones/fan1.wav"
+	}
+}

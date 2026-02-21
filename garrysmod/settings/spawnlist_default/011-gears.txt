@@ -1,0 +1,451 @@
+"TableToKeyValues"
+{
+	"parentid"		"6"
+	"icon"		"icon16/page_gear.png"
+	"id"		"11"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Gears"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/bevel9.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/bevel12.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/bevel24.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/bevel36.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/bevel90_24.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/bevel_12t1.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/bevel_18t1.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/bevel_24t1.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/bevel_36t1.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/bevel_48t1.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/bevel_60t1.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/spur9.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/spur12.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/spur24.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/spur36.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mechanics/medgear.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mechanics/biggear.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x12_small.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x12.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x12_large.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x24_small.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x24.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x24_large.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x6_small.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x6.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear12x6_large.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x12_small.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x12.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x12_large.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x24_small.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x24.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x24_large.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x6_small.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x6.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear16x6_large.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x12_small.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x12.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x12_large.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x24_small.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x24.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x24_large.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x6_small.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x6.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears/gear24x6_large.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_12t1.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_12t2.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_12t3.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_18t1.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_18t2.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_18t3.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_24t1.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_24t2.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_24t3.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_36t1.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_36t2.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_36t3.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_48t1.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_48t2.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_48t3.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_60t1.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_60t2.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/gear_60t3.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/vert_12t1.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/vert_18t1.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/vert_24t1.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/vert_36t1.mdl"
+		}
+		"68"
+		{
+			"type"		"header"
+			"text"		"Teeth"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_20t1.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_20t2.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_20t3.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_40.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_40t1.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_40t2.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_40t3.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_80t1.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_80t2.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/gears2/pinion_80t3.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/rack9.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/rack18.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/rack36.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/gears/rack70.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mechanics/slider1.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mechanics/slider2.mdl"
+		}
+		"85"
+		{
+			"type"		"header"
+			"text"		"Racks"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mechanics/mech1.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mechanics/mech2.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mechanics/mech3.mdl"
+		}
+	}
+	"name"		"Gears"
+	"version"		"3"
+}

@@ -1,0 +1,490 @@
+"NPC_Hunter.FlechetteVolleyWarn"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_120dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/ministrider_preflechette.wav"
+	}
+}
+
+"NPC_Hunter.FlechetteShoot"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_130dB"
+	"pitch"	"98,104"
+	"rndwave"
+	{
+		"wave"	"^npc/ministrider/ministrider_fire1.wav"	
+	}
+}
+
+"NPC_Hunter.FlechetteShootLoop"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_130dB"
+	"pitch"	"PITCH_NORM"
+	"wave"	"^npc/ministrider/hunter_fire_loop3.wav"	
+}
+
+"NPC_Hunter.FlechetteNearmiss"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_120dB"
+	"pitch"			"PITCH_NORM"
+
+	"rndwave"
+	{
+		"wave"	">npc/ministrider/flechetteLtoR01.wav"
+		"wave"	">npc/ministrider/flechetteLtoR02.wav"
+		"wave"	">npc/ministrider/flechetteLtoR03.wav"
+		"wave"	">npc/ministrider/flechetteLtoR04.wav"
+	}
+}
+
+"NPC_Hunter.FlechetteHitBody"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.7"
+	"pitch"			"93,108"
+	"soundlevel"		"SNDLVL_80db"
+
+	"rndwave"
+	{
+		"wave"		"npc/ministrider/flechette_flesh_impact1.wav"
+		"wave"		"npc/ministrider/flechette_flesh_impact2.wav"
+		"wave"		"npc/ministrider/flechette_flesh_impact3.wav"
+		"wave"		"npc/ministrider/flechette_flesh_impact4.wav"
+	}
+}
+
+"NPC_Hunter.FlechettePreExplode"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.6"
+	"pitch"			"93,108"
+	"soundlevel"		"SNDLVL_70db"
+
+	"rndwave"
+	{
+		"wave"		"npc/ministrider/hunter_flechette_preexplode1.wav"
+		"wave"		"npc/ministrider/hunter_flechette_preexplode2.wav"
+		"wave"		"npc/ministrider/hunter_flechette_preexplode3.wav"		}
+}
+
+"NPC_Hunter.FlechetteExplode"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"93,108"
+	"soundlevel"		"SNDLVL_95db"
+
+	"rndwave"
+	{
+		"wave"		"npc/ministrider/flechette_explode1.wav"
+		"wave"		"npc/ministrider/flechette_explode2.wav"
+		"wave"		"npc/ministrider/flechette_explode3.wav"		
+	}
+}
+
+"NPC_Hunter.FlechetteHitWorld"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		".95,1.0"
+	"pitch"			"110,130"
+	"soundlevel"		"SNDLVL_80db"
+
+	"rndwave"
+	{
+		"wave"		"npc/ministrider/flechette_impact_stick1.wav"
+		"wave"		"npc/ministrider/flechette_impact_stick2.wav"
+		"wave"		"npc/ministrider/flechette_impact_stick3.wav"
+		"wave"		"npc/ministrider/flechette_impact_stick4.wav"
+		"wave"		"npc/ministrider/flechette_impact_stick5.wav"
+	}
+}
+
+"NPC_Hunter.Alert"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.9"
+	"soundlevel"  	"SNDLVL_120dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_alert1.wav"
+		"wave"	"npc/ministrider/hunter_alert2.wav"
+		"wave"	"npc/ministrider/hunter_alert3.wav"
+	}
+}
+
+"NPC_Hunter.Angry"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_100dB"
+	"pitch"			"90,115"
+	//"pitch"			"100,115"
+
+	"rndwave"
+	{
+
+		//"wave"	"npc/ministrider/hunter_angry1.wav"
+		"wave"	"npc/ministrider/hunter_angry2.wav"
+		"wave"	"npc/ministrider/hunter_angry3.wav"
+	}
+}
+
+"NPC_Hunter.PreCharge"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_120dB"
+	"pitch"			"90,115"
+	//"pitch"			"100,115"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_charge3.wav"
+		"wave"	"npc/ministrider/hunter_charge4.wav"
+	}
+}
+
+// play when hunters are talking to each other (ie: idle)
+"NPC_Hunter.Idle"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.75"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_idle1.wav"
+		"wave"	"npc/ministrider/hunter_idle2.wav"
+		"wave"	"npc/ministrider/hunter_idle3.wav"
+	}
+}
+
+// play when hunters are doing something cruel - ie: killing citizens or alyx
+"NPC_Hunter.Gloat"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.9"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_laugh1.wav"
+		"wave"	"npc/ministrider/hunter_laugh2.wav"
+		"wave"	"npc/ministrider/hunter_laugh4.wav"
+		"wave"	"npc/ministrider/hunter_laugh5.wav"
+	}
+}
+
+// play when a squad member finds an enemy
+"NPC_Hunter.FoundEnemy"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_foundenemy1.wav"
+		"wave"	"npc/ministrider/hunter_foundenemy2.wav"
+		//"wave"	"npc/ministrider/hunter_foundenemy3.wav"
+	}
+}
+
+// other squad members play in response to the above
+"NPC_Hunter.FoundEnemyAck"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_120dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_foundenemy_ack1.wav"
+		"wave"	"npc/ministrider/hunter_foundenemy_ack2.wav"
+		"wave"	"npc/ministrider/hunter_foundenemy_ack3.wav"
+	}
+}
+
+// play when hunters have been alerted, but can't see player
+"NPC_Hunter.Scan"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.75"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_scan1.wav"
+		//"wave"	"npc/ministrider/hunter_scan2.wav"
+		"wave"	"npc/ministrider/hunter_scan3.wav"
+		"wave"	"npc/ministrider/hunter_scan4.wav"
+	}
+}
+
+"NPC_Hunter.FlankAnnounce"
+{
+   "channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"			"80,120"
+	
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_flank_announce1.wav"
+		"wave"	"npc/ministrider/hunter_flank_announce2.wav"
+	}
+}
+
+"NPC_Hunter.MeleeAnnounce"
+{
+   "channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"			"100,115"
+	
+	"wave"	"npc/ministrider/hunter_prestrike1.wav"
+
+}
+
+"NPC_Hunter.MeleeHit"
+{
+   "channel"		"CHAN_VOICE"
+	"volume"		"0.5"
+	"soundlevel"  	"SNDLVL_100dB"
+	"pitch"			"80,110"
+	
+	"wave"	"npc/ministrider/ministrider_skewer1.wav"
+	
+}
+
+"NPC_Hunter.TackleAnnounce"
+{
+   "channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_120dB"
+	"pitch"			"95,105"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_charge3.wav"
+		"wave"	"npc/ministrider/hunter_charge4.wav"
+	}
+}
+
+"NPC_Hunter.TackleHit"
+{
+   "channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_80dB"
+	"pitch"			"90,100"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/body_medium_impact_hard1.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard2.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard3.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard4.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard5.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard6.wav"
+	}
+}
+
+"NPC_Hunter.ChargeHitEnemy"
+{
+   "channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_80dB"
+	"pitch"			"90,100"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/body_medium_impact_hard1.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard2.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard3.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard4.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard5.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard6.wav"
+	}
+}
+
+"NPC_Hunter.ChargeHitWorld"
+{
+   "channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_80dB"
+	"pitch"			"90,100"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/body_medium_impact_hard1.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard2.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard3.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard4.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard5.wav"
+		"wave"	"npc/ministrider/body_medium_impact_hard6.wav"
+	}
+}
+
+"NPC_Hunter.Pain"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.9"
+	"soundlevel"  	"SNDLVL_100dB"
+	"pitch"			"95,105"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_pain2.wav"
+		"wave"	"npc/ministrider/hunter_pain4.wav"
+	}
+}
+
+"NPC_Hunter.Death"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"90,110"
+	"soundlevel"  	"SNDLVL_100dB"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/hunter_die2.wav"
+		"wave"	"npc/ministrider/hunter_die3.wav"
+	}
+
+}
+
+"NPC_Hunter.FireMinigun"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_130dB"
+	"pitch"	"98,104"
+	"rndwave"
+	{
+		"wave"	"^npc/ministrider/ministrider_fire1.wav"	
+	}
+}
+
+"NPC_Hunter.Footstep"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.9"
+	"soundlevel"	"SNDLVL_90dB"
+	"pitch"	"100"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/ministrider_footstep2.wav"
+		"wave"	"npc/ministrider/ministrider_footstep3.wav"
+		"wave"	"npc/ministrider/ministrider_footstep4.wav"
+	}
+}
+
+"NPC_Hunter.BackFootstep"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.9"
+	"soundlevel"	"SNDLVL_90dB"
+	"pitch"	"100"
+	"rndwave"
+	{
+	"wave"	"npc/ministrider/ministrider_footstep1.wav"
+	"wave"	"npc/ministrider/ministrider_footstep5.wav"
+	}
+}
+
+"NPC_Hunter.PhysicsBlast"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_100dB"
+	"pitch"	"90,105"
+	"wave"	"npc/ministrider/hunter_repulse_blast1.wav"
+}
+
+"NPC_Hunter.BulletShield"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_100dB"
+	"pitch"	"90,105"
+	"wave"	"npc/ministrider/bulletshield1.wav"
+}
+
+"NPC_Hunter.ShieldFlickerOff"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"	"90,105"
+	"rndwave"
+	{
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff1.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff2.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff3.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff4.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff5.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff6.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff7.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff8.wav"
+		"wave"	"npc/ministrider/ministrider_shieldflickeroff9.wav"
+	}
+}
+
+"NPC_Hunter.ShieldOff"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_90dB"
+	"pitch"	"90,105"
+	"wave"	"npc/ministrider/ministrider_shieldoff.wav"
+}
+
+"NPC_Hunter.ShieldOn"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_90dB"
+	"pitch"	"90,105"
+	"wave"	"npc/ministrider/ministrider_shieldon.wav"
+}
+
+"NPC_Hunter.DefendStrider"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.9"
+	"pitch"			"96,104"
+	"soundlevel"		"SNDLVL_100db"
+
+	"rndwave"
+	{
+		"wave"		"npc/ministrider/hunter_defendstrider1.wav"
+		"wave"		"npc/ministrider/hunter_defendstrider2.wav"
+		"wave"		"npc/ministrider/hunter_defendstrider3.wav"
+	}
+}
+
+"NPC_Hunter.HitByVehicle"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"pitch"			"96,104"
+	"soundlevel"		"SNDLVL_110db"
+
+	"rndwave"
+	{
+		"wave"		"physics/body/body_medium_break2.wav"
+		"wave"		"physics/body/body_medium_break3.wav"
+	}
+}

@@ -1,0 +1,172 @@
+
+
+response ScientistPLFear sentence SC_PLFEAR delay 5 soundlevel "SNDLVL_NORM"
+response ScientistFear sentence SC_FEAR delay 5 soundlevel "SNDLVL_NORM"
+response ScientistHeal sentence SC_HEAL delay 2 soundlevel "SNDLVL_NORM"
+response ScientistScream sentence SC_SCREAM delay "3,6" soundlevel "SNDLVL_NORM"
+response ScientistPOk sentence SC_POK delay 2 soundlevel "SNDLVL_NORM"
+
+response "ScientistAnswer" sentence "SC_ANSWER" defaultdelay
+response "ScientistStare" sentence "SC_STARE" delay "5,7.5"
+response "ScientistOk" sentence "SC_OK" defaultdelay
+response "ScientistWait" sentence "SC_WAIT"
+response "ScientistStop" sentence "SC_STOP" delay "2,2.5"  soundlevel "SNDLVL_NORM"
+response "ScientistScared" sentence "SC_SCARED" delay "0,0.4"
+response "ScientistCureA" sentence "SC_CUREA"  defaultdelay speakonce
+response "ScientistCureB" sentence "SC_CUREB"  defaultdelay speakonce
+response "ScientistCureC" sentence "SC_CUREC"  defaultdelay speakonce
+response "ScientistSmell" sentence "SC_SMELL" defaultdelay respeakdelay "60"
+response "ScientistWound" sentence "SC_WOUND"  speakonce defaultdelay
+response "ScientistMortal" sentence "SC_MORTAL"  speakonce defaultdelay
+
+response "ScientistQuestionPreDisaster" sentence "SC_PQUEST" defaultdelay
+response "ScientistQuestionPostDisaster" sentence "SC_QUESTION" defaultdelay
+response "ScientistIdlePreDisaster" sentence "SC_PIDLE" defaultdelay
+response "ScientistIdlePostDisaster" sentence "SC_IDLE" defaultdelay
+response "ScientistHelloPreDisaster" sentence "SC_PHELLO" speakonce defaultdelay
+response "ScientistHelloPostDisaster" sentence "SC_HELLO" delay "3,3.5" speakonce
+
+criterion "ConceptScientistPLFear" "Concept" "SC_PLFEAR" required
+criterion "ConceptScientistFear" "Concept" "SC_FEAR" required
+criterion "ConceptScientistHeal" "Concept" "SC_HEAL" required
+criterion "ConceptScientistScream" "Concept" "SC_SCREAM" required
+criterion "ConceptScientistPOk" "Concept" "SC_POK" required
+
+criterion "IsSittingScientist" "classname" "monster_sitting_scientist"
+criterion "IsNormalScientist" "classname" "monster_scientist"
+
+// Must match one or the other underlying criteria
+criterion "IsScientist" required
+{ 
+	IsSittingScientist 
+	IsNormalScientist 
+} 
+
+rule ScientistPLFear
+{
+	criteria IsScientist ConceptScientistPLFear
+	response ScientistPLFear
+}
+rule ScientistFear
+{
+	criteria IsScientist ConceptScientistFear
+	response ScientistFear
+}
+rule ScientistHeal
+{
+	criteria IsScientist ConceptScientistHeal
+	response ScientistHeal
+}
+rule ScientistScream
+{
+	criteria IsScientist ConceptScientistScream
+	response ScientistScream
+}
+rule ScientistPOk
+{
+	criteria IsScientist ConceptScientistPOk
+	response ScientistPOk
+}
+
+rule ScientistTlkAnswer
+{
+	criteria		IsScientist ConceptTalkAnswer
+	response		ScientistAnswer
+}
+rule ScientistTlkStare
+{
+	criteria		IsScientist ConceptTalkStare
+	response		ScientistStare
+}
+
+rule ScientistTlkStartFollow
+{
+	criteria		IsScientist ConceptTalkStartFollow
+	response		ScientistOk
+}
+
+rule ScientistTlkStopFollow
+{
+	criteria		IsScientist ConceptTalkStopFollow
+	response		ScientistWait
+}
+
+rule ScientistTlkStop
+{
+	criteria		IsScientist ConceptTalkStop
+	response		ScientistStop
+}
+
+rule ScientistTlkNoShoot
+{
+	criteria		IsScientist ConceptTalkNoShoot
+	response		ScientistScared
+}
+
+rule ScientistPlayerHurt1
+{
+	criteria		IsScientist ConceptTalkPlayerHurt1
+	response		ScientistCureA
+}
+rule ScientistPlayerHurt2
+{
+	criteria		IsScientist ConceptTalkPlayerHurt2
+	response		ScientistCureB
+}
+rule ScientistPlayerHurt3
+{
+	criteria		IsScientist ConceptTalkPlayerHurt3
+	response		ScientistCureC
+}
+
+rule ScientistTlkSmell
+{
+	criteria		IsScientist ConceptTalkSmell
+	response		ScientistSmell
+}
+rule ScientistTlkWound
+{
+	criteria		IsScientist ConceptTalkWound
+	response		ScientistWound
+}
+rule ScientistTlkMortal
+{
+	criteria		IsScientist ConceptTalkMortal
+	response		ScientistMortal
+}
+
+
+// Pre disaster
+rule ScientistTlkHelloPre
+{
+	criteria		IsScientist ConceptTalkHello IsPreDisaster
+	response		ScientistHelloPreDisaster
+}
+
+rule ScientistTlkQuestionPre
+{
+	criteria		IsScientist ConceptTalkQuestion IsPreDisaster
+	response		ScientistQuestionPreDisaster
+}
+rule ScientistTlkIdlePre
+{
+	criteria		IsScientist ConceptTalkIdle IsPreDisaster
+	response		ScientistIdlePreDisaster
+}
+
+rule ScientistTlkHelloPost
+{
+	criteria		IsScientist ConceptTalkHello IsPostDisaster
+	response		ScientistHelloPostDisaster
+}
+
+rule ScientistTlkQuestionPost
+{
+	criteria		IsScientist ConceptTalkQuestion IsPostDisaster
+	response		ScientistQuestionPostDisaster
+}
+rule ScientistTlkIdlePost
+{
+	criteria		IsScientist ConceptTalkIdle IsPostDisaster
+	response		ScientistIdlePostDisaster
+}

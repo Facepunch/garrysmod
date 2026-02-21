@@ -1,0 +1,256 @@
+"piranesi.indoor"
+{
+	"dsp"	"18"
+
+	"playlooping"
+	{
+		"volume"		".4"
+		"pitch"		"100"
+		"wave"		"ambient/tones/roomtone2.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		"0.15"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_tunnel1.wav"
+	}
+
+	"playlooping"
+
+
+	{
+		"volume"		".4"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,22"
+		"volume"		".2,.3"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+
+
+	
+
+	
+}
+
+
+
+
+
+
+"piranesi.outdoor"
+{
+	"dsp"	"0"
+	"playlooping"
+
+
+	{
+		"volume"		".6"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"6,13"
+		"volume"		".05,.1"
+		"pitch"		"85,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/bird1.wav"
+			"wave"	"ambient/animal/bird2.wav"
+			"wave"	"ambient/animal/bird3.wav"
+			"wave"	"ambient/animal/bird4.wav"
+			"wave"	"ambient/animal/bird5.wav"
+			"wave"	"ambient/animal/bird6.wav"
+			"wave"	"ambient/animal/bird7.wav"
+			"wave"	"ambient/animal/bird8.wav"
+			"wave"	"ambient/animal/bird9.wav"
+			"wave"	"ambient/animal/bird10.wav"
+			"wave"	"ambient/animal/bird11.wav"
+			"wave"	"ambient/animal/bird12.wav"
+			"wave"	"ambient/animal/bird13.wav"
+			"wave"	"ambient/animal/bird14.wav"
+			"wave"	"ambient/animal/bird15.wav"
+			"wave"	"ambient/animal/bird16.wav"
+			"wave"	"ambient/animal/bird17.wav"
+			"wave"	"ambient/animal/bird18.wav"
+			"wave"	"ambient/animal/bird19.wav"
+			"wave"	"ambient/animal/bird20.wav"
+
+
+		}
+	}
+	
+
+	"playrandom"
+	{
+
+		"time"		"10,25"
+		"volume"		".2,.3"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/clank1.wav"
+			"wave"	"ambient/misc/clank2.wav"
+			"wave"	"ambient/misc/clank3.wav"
+
+
+		}
+
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"10,22"
+		"volume"		".3,.4"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"30,50"
+		"volume"		".04,.1"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/crow.wav"
+			"wave"	"ambient/animal/cow.wav"
+
+
+		}
+
+	}
+
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.2"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+
+		}
+
+	}
+
+	"playlooping"
+	{
+
+		"volume"		"0.8"
+		"pitch"		"100"
+		"wave"		"ambient/tankidle2.wav"
+
+		"soundlevel"  	"SNDLVL_80dB"
+		"position"	"0"
+		// the apcs
+		
+		
+		
+	}
+
+	"playlooping"
+	{
+
+		"volume"		"0.8"
+		"pitch"		"100"
+		"wave"		"ambient/weather/lake_water.wav"
+
+		"soundlevel"  	"SNDLVL_80dB"
+		"position"	"1"
+		// water at t spawn
+		
+		
+		
+	}
+
+	"playrandom"
+	{
+
+		"time"		"8,22"
+		"volume"		".2,.3"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/car1.wav"
+			"wave"	"ambient/misc/car2.wav"
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"2"
+		// cars at gate
+		
+
+		
+		
+	}
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+	
+}
+
+
+
+
+
+
+
+
+
+

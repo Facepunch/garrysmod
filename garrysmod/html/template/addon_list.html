@@ -1,0 +1,264 @@
+<div class="page" ng-controller="ControllerAddons">
+	<div class="options">
+		<ul>
+			<li><h2 ng-tranny="'addons'"></h2></li>
+
+			<li>
+				<a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'"></a>
+				<ul ng-show="Category == 'subscribed'" class="submenu">
+					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+					<li><input type="text" class="search_bar" ng-tranny="'addons.search'" ng-model="SubscriptionSearchText" ng-change="HandleOnSearch()"/></li>
+				</ul>
+			</li>
+
+			<li>&nbsp;</li>
+
+			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+				<ul ng-show="Category == cat">
+					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li>&nbsp;</li>
+
+			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.' + cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+				<ul ng-show="Category == cat">
+					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li>&nbsp;</li>
+
+			<li><a ng-click="OpenWorkshop()" ng-Tranny="'addons.openworkshop'"></a></li>
+		</ul>
+	</div>
+
+	<div class="ugc_content">
+		<h1 class="menuheader">
+			<span ng-Tranny="(Tagged == '' || Tagged == 'Addon') && 'addons.'+Category || 'addons.'+Tagged">...</span>
+			<small ng-Tranny="(Tagged == '' || Tagged == 'Addon') && 'addons.'+Category + '.subtitle' || 'addons.'+Tagged+'.subtitle'">...</small>
+		</h1>
+
+		<workshopcontainer>
+			<workshopmessage ng-show="Loading" ng-Tranny="'addons.loading'">...</workshopmessage>
+			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed' )" ng-Tranny="'addons.none'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed'" ng-Tranny="'addons.disabled'">...</workshopmessage>
+
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" ng-click="ToggleSelect( file, $event )" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{GetAddonClasses( file )}}">
+
+				<preview style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
+					<img src='../{{file.background || "img/downloading.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
+					<disabled></disabled>
+				</preview>
+
+				<name class="{{IfElse( Category == 'subscribed', 'subscription', '' )}}">
+					<label ng-click="OpenWorkshopFile( file.id )">{{file.extra.title || file.info.title}}
+						<span ng-if="!file.extra.title && !file.info.title" ng-Tranny="'ugc.loading'"></span>
+					</label>
+				</name>
+				<author ng-hide="file.local">{{file.info.ownername}}<span ng-if="!file.info.ownername" ng-Tranny="'ugc.loading'"></span></author>
+				<size ng-hide="!file.info.size">{{GetNiceSize( file.info.size )}}</size>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" >+{{file.info.up-file.info.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" class="negative">{{file.info.up-file.info.down|number:0}}</votes>
+				<description>{{GetAddonDescription( file )}}</description>
+				<input type="checkbox" class="checkbox" ng-show="(Category == 'subscribed') && !file.info.floating" ng-model="SelectedItems[ file.id ]" />
+
+				<controls ng-show="!file.info.floating">
+					<left>
+						<control class="{{IfElse( file.info.voted_up, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, true )"><img src='img/thumb-up.png' loading="lazy"/></control>
+						<control class="{{IfElse( file.info.voted_down, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, false )"><img src='img/thumb-down.png' loading="lazy"/></control>
+						<control ng-hide="file.local || file.info.favorite" ng-click="Favorite( file, true )"><img src='img/favourite_addon.png' loading="lazy"/></control>
+						<control ng-hide="file.local || !file.info.favorite" ng-click="Favorite( file, false )"><img src='img/favourite_addon_remove.png' loading="lazy"/></control>
+						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'demos.publish'">..</control>
+						<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'demos.delete'">..</control>
+					</left>
+
+					<right>
+						<control ng-show="IsSubscribed( file ) && IsEnabled( file )" ng-click="Disable( file )" ng-Tranny="'addon.disable'">..</control>
+						<control ng-show="IsSubscribed( file ) && !IsEnabled( file )" ng-click="Enable( file )" ng-Tranny="'addon.enable'">..</control>
+
+						<control ng-hide="IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
+						<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'addon.unsubscribe'">..</control>
+					</right>
+				</controls>
+
+			</workshopicon>
+		</workshopcontainer>
+
+		<center>
+			<pagination ng-hide="Loading || TotalResults == 0">
+				<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
+				<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+
+				<div class="pages">
+					<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+				</div>
+				<span class="pagenum">{{Page}}</span>
+			</pagination>
+		</center>
+
+		<a ng-show="Category == 'subscribed'" class="ugc_settings_button" ng-click="ToggleSettings()">
+			<img src="img/settings.png">
+		</a>
+
+		<div ng-show="Category == 'subscribed'" class="ugc_settings {{IfElse(UGCSettingsOpen, 'active', 'hidden')}}">
+			<div class="ugc_settings_cat">
+				<span ng-Tranny="'addons.filter_by'"></span>
+				<input type="checkbox" ng-model="FilterEnabledOnly" ng-change="HandleFilterChange( 1 )" id="FilterEnabledOnly"/><label for="FilterEnabledOnly" ng-Tranny="'addons.enabled_only'"></label><br>
+				<input type="checkbox" ng-model="FilterDisabledOnly" ng-change="HandleFilterChange( 0 )" id="FilterDisabledOnly"/><label for="FilterDisabledOnly" ng-Tranny="'addons.disabled_only'"></label>
+			</div>
+			<div class="ugc_settings_cat">
+				<span ng-Tranny="'addons.sort_by'"></span>
+				<input type="radio" name="sort" value="title" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_title"/><label for="UGCSortMethod_title" ng-Tranny="'addons.name'"></label><br>
+				<input type="radio" name="sort" value="size" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_size"/><label for="UGCSortMethod_size" ng-Tranny="'addons.size'"></label><br>
+				<input type="radio" name="sort" value="updated" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_updated"/><label for="UGCSortMethod_updated" ng-Tranny="'addons.update_date'"></label><br>
+				<input type="radio" name="sort" value="subscribed" ng-model="UGCSortMethod" ng-change="HandleSortChange()" id="UGCSortMethod_subscribed"/><label for="UGCSortMethod_subscribed" ng-Tranny="'addons.sub_date'"></label>
+			</div>
+			<div class="ugc_settings_cat"><!--<span>Selection:</span>-->
+				<div ng-show="!IsAnySelected()">
+					<a ng-click="SelectAll()" ng-Tranny="'addons.selectall'"></a>
+					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'"></a>
+					<a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'"></a>
+					<a ng-click="DisplayPopupMessage( 'addons.disableall.warning', DisableAllSubscribed )" ng-Tranny="'addons.disableall'"></a>
+					<a ng-click="DisplayPopupMessage( 'addons.uninstallall.warning', UninstallAllSubscribed )" ng-Tranny="'addons.uninstallall'"></a>
+				</div>
+				<div ng-show="IsAnySelected()">
+					<a ng-click="UnselectAll()" ng-Tranny="'addons.unselectall'"></a>
+					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'"></a>
+					<a ng-click="EnableAllSelected();" ng-Tranny="'addons.enable_selected'"></a>
+					<a ng-click="DisableAllSelected();" ng-Tranny="'addons.disable_selected'"></a>
+					<a ng-click="DisplayPopupMessage( 'addons.uninstall_selected.warning', UninstallAllSelected )" ng-Tranny="'addons.uninstall_selected'"></a>
+				</div>
+			</div>
+			<div class="ugc_settings_cat"><!--<span>Presets:</span>-->
+				<a ng-click="OpenCreatePresetMenu()" ng-Tranny="'addons.create_preset'"></a>
+				<a ng-click="OpenLoadPresetMenu()" ng-Tranny="'addons.load_preset'"></a>
+				<a ng-click="OpenImportPresetMenu()" ng-Tranny="'addons.import_preset'"></a>
+			</div>
+
+			<div class="ugc_settings_cat"><!--<span>Stats:</span>-->
+				<span><font ng-Tranny="'addons.total_subscriptions'"></font> {{GetSubscribedCount()}}</span>
+				<span><font ng-Tranny="'addons.total_selected'"></font>  {{GetSelectedCount()}}</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="modaldialog" ng-if="CreatePresetOpen">
+		<div class="centermessage left create_preset">
+			<b ng-tranny="'addons.create_preset'"></b>
+			<br/><br/>
+
+			<input type="text" class="preset_name" ng-tranny="'addons.preset_name_placeholder'" ng-model="$parent.CreatePresetName"/><br/>
+			<br/>
+
+			<input type="checkbox" ng-model="$parent.CreatePresetSaveEnabled" id="CreatePresetSaveEnabled"/><label for="CreatePresetSaveEnabled" ng-tranny="'addons.preset_save_enabled'"></label><br/>
+			<input type="checkbox" ng-model="$parent.CreatePresetSaveDisabled" id="CreatePresetSaveDisabled"/><label for="CreatePresetSaveDisabled" ng-tranny="'addons.preset_save_disabled'"></label><br/>
+			<br/>
+
+			<b ng-Tranny="'addons.preset_new_action'"></b><br/>
+			<input type="radio" name="createpreset_newitems" value="" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_nothing"/><label for="CreatePresetNewAct_nothing" ng-tranny="'addons.action_nothing'"></label><br/>
+			<input type="radio" name="createpreset_newitems" value="disable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_disable"/><label for="CreatePresetNewAct_disable" ng-tranny="'addons.action_disable'"></label><br/>
+			<input type="radio" name="createpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-tranny="'addons.action_enable'"></label><br/>
+			<br/>
+
+			<a ng-click="CreateNewPreset()" ng-tranny="'addons.create_preset'" class="create big {{IfElse( CreatePresetName == '', 'disabled', '' )}}"></a>
+			<hr>
+			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
+		</div>
+	</div>
+
+	<div class="modaldialog" ng-if="ImportPresetOpen">
+		<div class="centermessage left create_preset">
+			<b ng-tranny="'addons.import_preset'"></b>
+			<br/><br/>
+
+			<input type="text" class="preset_name" ng-tranny="'addons.preset_source'" ng-model="$parent.ImportPresetSource"/><br/>
+			<br/>
+			<br/>
+
+			<input type="text" class="preset_name" ng-tranny="'addons.preset_name_placeholder'" ng-model="$parent.CreatePresetName"/><br/>
+			<br/>
+
+			<b ng-Tranny="'addons.preset_new_action'"></b><br/>
+			<input type="radio" name="importpreset_newitems" value="" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_nothing"/><label for="CreatePresetNewAct_nothing" ng-tranny="'addons.action_nothing'"></label><br/>
+			<input type="radio" name="importpreset_newitems" value="disable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_disable"/><label for="CreatePresetNewAct_disable" ng-tranny="'addons.action_disable'"></label><br/>
+			<input type="radio" name="importpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-tranny="'addons.action_enable'"></label><br/>
+			<br/>
+
+			<a ng-click="ImportPreset()" ng-tranny="'addons.import_preset'" class="create {{IfElse( ImportPresetSource == '' || CreatePresetName == '', 'disabled', '' )}}"></a>
+			<hr>
+			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
+		</div>
+	</div>
+
+	<div class="modaldialog" ng-if="ImportPresetLoading">
+		<div class="centermessage left create_preset">
+			<h1 ng-tranny="'dupes.loading'"></h1>
+		</div>
+	</div>
+
+	<div class="modaldialog" ng-if="LoadPresetMenuOpen">
+		<div class="centermessage left">
+			<b ng-tranny="'addons.load_preset'"></b>
+			<br/><br/>
+
+			<div class="preset_content">
+				<div class="preset_side">
+					<input type="text" ng-model="$parent.PresetSearchText" ng-tranny="'addons.filter_preset'">
+					<div class="preset_list">
+						<font ng-repeat="file in PresetList" ng-hide="file.name.toLowerCase().indexOf(PresetSearchText.toLowerCase()) == -1" ng-click="SelectPreset( file.name, file.newAction );" class="{{IfElse( file.name == SelectedPreset, 'active', '' )}}">{{file.name}}</font>
+					</div>
+				</div>
+				<div class="preset_data" ng-show="SelectedPreset">
+					<b ng-Tranny="'addons.preset_name'"></b> {{PresetList[ SelectedPreset ].name}}<br>
+					<b ng-Tranny="'addons.preset_enabled'"></b> {{PresetList[ SelectedPreset ].enabled.length}}<br>
+					<b ng-Tranny="'addons.preset_disabled'"></b> {{PresetList[ SelectedPreset ].disabled.length}}<br>
+					<input type="checkbox" ng-model="$parent.LoadPresetResub" id="LoadPresetResub"/><label for="LoadPresetResub" ng-tranny="'addons.preset_resub_missing'"></label><br/>
+
+					<br><b ng-Tranny="'addons.preset_new_action'"></b><br>
+					<input type="radio" name="loadpreset_newitems" value="" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_nothing"/><label for="CreatePresetNewAct_nothing" ng-tranny="'addons.action_nothing'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="disable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_disable"/><label for="CreatePresetNewAct_disable" ng-tranny="'addons.action_disable'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-tranny="'addons.action_enable'"></label><br/>
+
+					<br>
+					<a ng-click="LoadSelectedPreset()" ng-tranny="'addons.load_preset'" class="create"></a>
+					<a ng-click="CopySelectedPreset()" ng-tranny="'addons.copy_preset'"></a>
+					<br>
+					<br>
+					<a ng-click="DeletePreset( SelectedPreset )" ng-tranny="'addons.delete_preset'" class="warning"></a>
+				</div>
+			</div>
+
+			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
+		</div>
+	</div>
+
+	<div class="modaldialog" ng-if="PopupMessageDisplayed">
+		<div class="centermessage">
+			<span ng-tranny="'addons.warning'"></span>
+			<span ng-tranny="PopupMessageDisplayedMessage"></span>
+			<span ng-tranny="'addons.cannotundo'" ng-show="PopupMessageDisplayedMessage == 'addons.uninstallall.warning' || PopupMessageDisplayedMessage == 'addons.uninstall_selected.warning'"></span>
+
+			<div style="margin-bottom: 5px;">
+				<div ng-repeat="fileid in PopupMessageFiles" class="button {{IfElse( IsSubscribedID( fileid ), 'subbed', '' )}}">
+					<wstitle ng-click="OpenWorkshopFile( fileid )" id="wsid{{fileid}}" class="wstitle">{{fileid}}</wstitle>
+					<wsbut ng-show="IsSubscribedID( fileid )" class="wssub"><img src="img/tick.png" loading="lazy"/></wsbut>
+					<wsbut ng-hide="IsSubscribedID( fileid )" ng-click="SubscribeByID( fileid );" class="wssub"><img src="img/plus.png" loading="lazy"></img></wsbut>
+				</div>
+			</div>
+
+			<a ng-click="ExecutePopupFunction()" ng-tranny="'addons.confirm'" class="{{IfElse( PopupMessageFiles.length > 0, 'create', 'warning' )}} big"></a>
+			<a ng-click="ClosePopupMessage( true )" ng-tranny="'addons.cancel'" ng-show="PopupMessageDisplayedFunc != undefined"></a>
+		</div>
+	</div>
+</div>

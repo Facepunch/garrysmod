@@ -1,0 +1,1206 @@
+// de_inferno soundscapes
+// Author: Michael Booth, Turtle Rock Studios, Inc., April 2005
+
+
+//------------------------------------------------------------------------------------------
+//
+// Generic outdoors ambience
+//
+"inferno.Outside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.6"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Generic indoors ambience
+//
+"inferno.Inside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.75"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_indoors.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Bare lightbulb hum - used for all lightbulbs in the map
+//
+"inferno.LightbulbHum"
+{
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_45dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Refrigerator hum - used for all refridgerators in the map
+//
+"inferno.RefrigeratorHum"
+{
+	"playrandom"
+	{
+		"position"		"0"
+		"pitch"			"100"
+		"volume"		"0.6"
+		"time"			"40,40"
+		"soundlevel" 	"SNDLVL_65dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/refrigerator.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Squeaky ceiling fan
+//
+"inferno.CeilingFan"
+{
+	"playrandom"
+	{
+		"time"			"2,2"
+		"pitch"			"100,100"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/machines/squeak_2.wav"
+			"wave"	"ambient/machines/squeak_3.wav"
+			"wave"	"ambient/machines/squeak_4.wav"
+			"wave"	"ambient/machines/squeak_5.wav"
+			"wave"	"ambient/machines/squeak_6.wav"
+			"wave"	"ambient/machines/squeak_8.wav"
+		}
+	}
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.15"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"			"ambient/machines/electrical_hum_2.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Angry dog growling behind a door
+//
+"inferno.AngryDog"
+{
+	"playrandom"
+	{
+		"time"			"4.4,8"
+		"pitch"			"98,102"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/dog_growl_behind_wall_1.wav"
+			"wave"		"ambient/animal/dog_growl_behind_wall_2.wav"
+			"wave"		"ambient/animal/dog_growl_behind_wall_3.wav"
+			"wave"		"ambient/animal/dog_pant_behind_wall_1.wav"
+			"wave"		"ambient/animal/dog_pant_behind_wall_2.wav"
+			"wave"		"ambient/animal/dog_scratch_behind_wall_1.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// A chirping cricket
+//
+"inferno.Cricket"
+{
+	"playrandom"
+	{
+		"time"			"0.8,1.0"
+		"pitch"			"98,102"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/cricket_chirp_1.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Birdsong
+//
+"inferno.Birds"
+{
+	"playrandom"
+	{
+		"time"			"6,20"
+		"pitch"			"85,105"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_NORM"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/bird1.wav"
+			"wave"	"ambient/animal/bird2.wav"
+			"wave"	"ambient/animal/bird3.wav"
+			"wave"	"ambient/animal/bird4.wav"
+			"wave"	"ambient/animal/bird5.wav"
+			"wave"	"ambient/animal/bird6.wav"
+			"wave"	"ambient/animal/bird7.wav"
+			"wave"	"ambient/animal/bird8.wav"
+			"wave"	"ambient/animal/bird9.wav"
+			"wave"	"ambient/animal/bird10.wav"
+			"wave"	"ambient/animal/bird11.wav"
+			"wave"	"ambient/animal/bird12.wav"
+			"wave"	"ambient/animal/bird13.wav"
+			"wave"	"ambient/animal/bird14.wav"
+			"wave"	"ambient/animal/bird15.wav"
+			"wave"	"ambient/animal/bird16.wav"
+			"wave"	"ambient/animal/bird17.wav"
+			"wave"	"ambient/animal/bird18.wav"
+			"wave"	"ambient/animal/bird19.wav"
+			"wave"	"ambient/animal/bird20.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Pigeons
+//
+"inferno.Pigeons"
+{
+	"playrandom"
+	{
+		"time"			"3,10"
+		"pitch"			"100,100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/creatures/pigeon_idle1.wav"
+			"wave"		"ambient/creatures/pigeon_idle2.wav"
+			"wave"		"ambient/creatures/pigeon_idle3.wav"
+			"wave"		"ambient/creatures/pigeon_idle4.wav"
+		}
+	}
+	"playrandom"
+	{
+		"time"			"30,60"
+		"pitch"			"100,100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/bird_flapping_1.wav"
+			"wave"		"ambient/animal/bird_flapping_2.wav"
+			"wave"		"ambient/animal/bird_flapping_3.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+"inferno.TSpawn"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: The Tree
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 1: Trees outside in skybox
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 2: The fountain
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/nature/water_gently_lapping.wav"
+	}
+	
+	// Position 3: Locked dark door to the right
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.55"
+		"soundlevel"  	"SNDLVL_75dB"
+		"wave"			"ambient/music/flamenco.wav"
+	}
+
+	// Position 4: Dark corner where the cactus is
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"inferno.Cricket"
+	}
+}
+
+
+
+//------------------------------------------------------------------------------------------
+"inferno.FarBackCorner"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Lit window
+
+
+	// Position 1: Big tree
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 2: Smaller tree
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 3: Trees in skybox
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 4: Factory in skybox
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_80dB"
+
+		"wave"	"ambient/machines/pump_loop_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"inferno.BackAlley"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Lit window from FarBackCorner
+
+	// Position 1: Apartment
+
+	// Position 2: Lit window across from openable door
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_70dB"
+		"wave"			"ambient/music/mirame_radio_thru_wall.wav"
+	}
+
+	// Position 3: In the woodpile (mice)
+}
+
+
+//------------------------------------------------------------------------------------------
+"inferno.TSpawnHall"
+{
+	"dsp"	"6"
+
+	// area tone
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_tunnel.wav"
+	}
+
+	// Position 0: Lightbulb
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.LightbulbHum"
+	}
+
+	// Position 1: Dark corner with crickets
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Cricket"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"inferno.BellTowerArea"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Up in the bell tower
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 1: Behind the tower door
+	// TODO
+
+	// Position 2: At the cactus
+	// TODO
+}
+
+
+//------------------------------------------------------------------------------------------
+"inferno.LowerApartment"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Inside"
+	}
+
+	// Position 0: Bulb
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.LightbulbHum"
+	}
+
+	// Position 1: Bulb
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.LightbulbHum"
+	}
+
+	// Position 2: Refrigerator
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.RefrigeratorHum"
+	}
+
+	// Position 3: Clock
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_55dB"
+		"wave"			"ambient/machines/TickTock.wav"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.UpperApartment"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Inside"
+	}
+
+	// Position 0: Bulb
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.LightbulbHum"
+	}
+
+	// Position 1: Ceiling fan
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.CeilingFan"
+	}
+
+	// Position 2: Refrigerator
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.RefrigeratorHum"
+	}
+
+	// Position 3: Bulb
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.LightbulbHum"
+	}
+
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.BridgeApartment"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Inside"
+	}
+
+	// Position 0: Unused
+
+	// Position 1: Ceiling fan in kitchen
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.CeilingFan"
+	}
+
+	// Position 2: Refrigerator
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.RefrigeratorHum"
+	}
+
+	// Position 3: Behind the dark door in the far beck behind the couch
+	// TODO
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.BackHall"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Inside"
+	}
+
+	// Position 0: Lightbulb
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.LightbulbHum"
+	}
+
+	// Position 1: Lightbulb
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.LightbulbHum"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.BalconyAlley"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Trees back in the skybox
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 1: The big tree
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 2: Behind the garden gate
+	// TODO
+
+	// Position 3: Flowerbed
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Cricket"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.ApartmentHalls"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Inside"
+	}
+
+	// Position 0: Lightbulb
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.LightbulbHum"
+	}
+
+	// Position 1: Refrigerator in sniper room
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.RefrigeratorHum"
+	}
+
+	// Position 2: Ceiling fan in sniper room
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.CeilingFan"
+	}
+
+	// Position 3: Old water heater in closet
+	"playlooping"
+	{
+		"position"		"3"
+		"pitch"			"100"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		"wave"			"ambient/machines/gas_loop_1.wav"
+	}
+
+	// Position 4: Behind door across from sniper room
+	"playrandom"
+	{
+		"position"		"4"
+		"time"			"15,15"
+		"pitch"			"100,100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/spanish_radio1.wav"
+			"wave"	"ambient/chatter/spanish_radio2.wav"
+			"wave"	"ambient/chatter/spanish_radio3.wav"
+			"wave"	"ambient/chatter/spanish_radio4.wav"
+			"wave"	"ambient/chatter/spanish_radio5.wav"
+		}
+	}
+	
+	// Position 5: Behind last door on way to BombsiteB
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"inferno.AngryDog"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.SniperBalcony"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Big tree
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 1: Power cable
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 2: Refrigerator
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.RefrigeratorHum"
+	}
+
+	// Position 3: Ceiling fan in sniper room
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.CeilingFan"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.BackBalcony"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: The window
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.AngryDog"
+	}
+
+	// Position 1: Big tree
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 2: Trees in the skybox
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.Birds"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"inferno.MiddleAlley"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Up in the little arches
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Pigeons"	
+	}
+
+	// Position 1: Telephone pole transformer
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 2: Church turret windows
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.Pigeons"	
+	}
+
+	// Position 3: Big tree
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Birds"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.CrawlAlley"
+{
+	"dsp"	"6"
+
+	// area tone
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_tunnel.wav"
+	}
+
+	// Position 0: Crickets in the beams overhead
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 1: The house next door
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.CrawlTunnel"
+{
+	"dsp"	"6"
+
+	// area tone
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_tunnel.wav"
+	}
+
+	// area tone
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_tunnel.wav"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.BombsiteB"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Windows above the apartments
+	// TODO
+
+	// Position 1: Big tree
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 2: Trees in the skybox
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 3: Behind the narrow fence
+	// TODO
+
+	// Position 4: Fenced in area
+	// TODO
+
+	// Position 5: Near the hay bail
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 6: Tree
+	"playsoundscape"
+	{
+		"positionoverride"	"6"
+		"name"				"inferno.Birds"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.CTApartment"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Inside"
+	}
+
+	// Position 0: Refrigerator
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.RefrigeratorHum"
+	}
+
+	// Position 1: Water heater
+	"playlooping"
+	{
+		"position"		"1"
+		"pitch"			"100"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		"wave"			"ambient/machines/gas_loop_1.wav"
+	}
+
+	// Position 2: Lightbulb
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.LightbulbHum"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.BombsiteBTunnel"
+{
+	"dsp"	"6"
+
+	// area tone
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_tunnel.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Dog barking from inside a building
+//
+"inferno.DogBarkingInside"
+{
+	"playrandom"
+	{
+		"time"			"1.7,2.3"
+		"pitch"			"100,100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"		"ambient/animal/dog_med_inside_bark_1.wav"
+			"wave"		"ambient/animal/dog_med_inside_bark_2.wav"
+			"wave"		"ambient/animal/dog_med_inside_bark_3.wav"
+			"wave"		"ambient/animal/dog_med_inside_bark_5.wav"
+			"wave"		"ambient/animal/dog_med_inside_bark_6.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+"inferno.CTTunnel"
+{
+	"dsp"	"6"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/dry_air_short_tunnel.wav"
+	}
+
+	// Position 0: Lit window
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.DogBarkingInside"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.CTSpawn"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Tree by apartment
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Birds"
+	}
+	
+	// Position 1: The APC
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+		"wave"			"ambient/machines/big_truck.wav"
+	}
+	"playrandom"
+	{
+		"position"		"1"	
+		"time"			"4,7"
+		"pitch"			"100,100"
+		"volume"		"0.75"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/cb_radio_chatter_1.wav"
+			"wave"	"ambient/chatter/cb_radio_chatter_2.wav"
+			"wave"	"ambient/chatter/cb_radio_chatter_3.wav"
+		}
+	}
+
+
+	// Position 2: Down the well
+	"playrandom"
+	{
+		"position"		"2"	
+		"time"			"1,2"
+		"pitch"			"100,100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+
+	// Position 3: Trees in the skybox behind the cannon
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 4: Tree across from old blue truck
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 5: Lit window in tunnel area
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"inferno.DogBarkingInside"
+	}
+
+	// Position 6: Flowerbed
+	"playsoundscape"
+	{
+		"positionoverride"	"6"
+		"name"				"inferno.Cricket"
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.TheRuins"
+{
+	"dsp"	"6"
+
+	// special eerie tone
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"pitch"		"100"
+		"wave"		"ambient/tones/tunnel_wind_loop.wav"
+	}
+
+	// Position 0: Scaffolding
+	"playrandom"
+	{
+		"position"		"0"	
+		"time"			"10,30"
+		"pitch"			"100,100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"physics/metal/metal_box_strain1.wav"
+			"wave"	"physics/metal/metal_box_strain2.wav"
+			"wave"	"physics/metal/metal_box_strain3.wav"
+			"wave"	"physics/metal/metal_box_strain4.wav"
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.BombsiteA"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Behind the garden gate
+	"playrandom"
+	{
+		"position"		"0"	
+		"time"			"10,30"
+		"pitch"			"100,100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/animal/horse_1.wav"
+			"wave"	"ambient/animal/horse_2.wav"
+			"wave"	"ambient/animal/horse_3.wav"
+			"wave"	"ambient/animal/horse_4.wav"
+			"wave"	"ambient/animal/horse_5.wav"
+			"wave"	"ambient/animal/horse_6.wav"
+			"wave"	"ambient/animal/horse_eat_1.wav"
+			"wave"	"ambient/animal/horse_eat_2.wav"
+		}
+	}
+
+
+	// Position 1: Trees in the skybox
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Birds"
+	}
+	
+	// Position 2: Fountain
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.3"
+		"soundlevel"  	"SNDLVL_65dB"
+		"wave"			"ambient/nature/water_gently_lapping.wav"
+	}
+	
+	// Position 3: Dark corner
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 4: Fenced off courtyard
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_80dB"
+		"wave"			"ambient/music/latin.wav"
+	}
+
+	// Position 5: Lit window
+}
+
+//------------------------------------------------------------------------------------------
+"inferno.ColumnAlley"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name" "inferno.Outside"
+	}
+
+	// Position 0: Behind the fence
+
+	// Position 1: In the courtyard behind the wall
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_75dB"
+		"wave"			"ambient/music/latin.wav"
+	}
+
+	// Position 2: Arched windows
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.Pigeons"	
+	}
+
+	// Position 3: Tree
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 4: Big tree behind fence
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 5: Woodpile
+}
+

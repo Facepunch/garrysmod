@@ -1,0 +1,290 @@
+// RADIO MESSAGES
+radio.moveout
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/moveout.wav
+}
+
+radio.letsgo
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/letsgo.wav
+}
+
+radio.locknload
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/locknload.wav
+}
+
+radio.go
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/go.wav
+}
+
+
+
+radio.vip
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/vip.wav
+}
+
+Radio.CoverMe
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/ct_coverme.wav
+}
+
+Radio.YouTakeThePoint
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/takepoint.wav
+}
+
+Radio.HoldPosition
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/position.wav
+}
+
+Radio.Regroup
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/regroup.wav
+}
+
+Radio.FollowMe
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/followme.wav
+}
+
+Radio.TakingFire
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/fireassis.wav
+}
+
+Radio.GoGoGo
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/com_go.wav
+}
+
+Radio.TeamFallBack
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/fallback.wav
+}
+
+Radio.StickTogether
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/sticktog.wav
+}
+
+Radio.GetInPosition
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/com_getinpos.wav
+}
+
+Radio.StormFront
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/stormfront.wav
+}
+
+Radio.ReportInTeam
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/com_reportin.wav
+}
+
+Radio.Affirmitive
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/ct_affirm.wav
+}
+
+Radio.Roger
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/roger.wav
+}
+
+Radio.EnemySpotted
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/ct_enemys.wav
+}
+
+Radio.NeedBackup
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/ct_backup.wav
+}
+
+Radio.SectorClear
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/clear.wav
+}
+
+Radio.InPosition
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/ct_inpos.wav
+}
+
+Radio.ReportingIn
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/ct_reportingin.wav
+}
+
+Radio.GetOutOfThere
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/blow.wav
+}
+
+Radio.Negative
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/negative.wav
+}
+
+Radio.EnemyDown
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/enemydown.wav
+}
+
+Radio.FireInTheHole
+{
+	channel		CHAN_VOICE
+	volume		1
+	soundlevel	SNDLVL_75db
+	wave		radio/ct_fireinhole.wav
+}
+
+"Event.BombPlanted"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/bombpl.wav"
+}
+
+"Event.BombDefused"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/bombdef.wav"
+}
+
+"Event.HostageTouched"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/hostagecompromised.wav"
+}
+
+"Event.CTWin"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/ctwin.wav"
+}
+
+"Event.TERWin"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/terwin.wav"
+}
+
+"Event.RoundDraw"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/rounddraw.wav"
+}
+
+"Event.HostageRescued"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/rescued.wav"
+}
+
+"Event.HostageKilled"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/hosdown.wav"
+}

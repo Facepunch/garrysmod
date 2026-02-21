@@ -1,0 +1,425 @@
+"TableToKeyValues"
+{
+	"parentid"		"31"
+	"icon"		"icon16/page.png"
+	"id"		"32"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"RED (standard)"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/player/scout.mdl"
+			"tall"		"128"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/player/soldier.mdl"
+			"tall"		"128"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/player/pyro.mdl"
+			"tall"		"128"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/player/demo.mdl"
+			"tall"		"128"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/player/heavy.mdl"
+			"tall"		"128"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/player/engineer.mdl"
+			"tall"		"128"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/player/medic.mdl"
+			"tall"		"128"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/player/sniper.mdl"
+			"tall"		"128"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/player/spy.mdl"
+			"tall"		"128"
+		}
+		"11"
+		{
+			"type"		"header"
+			"text"		"RED (hardware morphs)"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/scout.mdl"
+			"tall"		"128"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/soldier.mdl"
+			"tall"		"128"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/pyro.mdl"
+			"tall"		"128"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/demo.mdl"
+			"tall"		"128"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/heavy.mdl"
+			"tall"		"128"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/engineer.mdl"
+			"tall"		"128"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/medic.mdl"
+			"tall"		"128"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/sniper.mdl"
+			"tall"		"128"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/spy.mdl"
+			"tall"		"128"
+		}
+		"21"
+		{
+			"type"		"header"
+			"text"		"BLU (standard)"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/player/scout.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/player/soldier.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/player/pyro.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/player/demo.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/player/heavy.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/player/engineer.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/player/medic.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/player/sniper.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/player/spy.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"31"
+		{
+			"type"		"header"
+			"text"		"BLU (hardware morphs)"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/scout.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/soldier.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/pyro.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/demo.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/heavy.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/engineer.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/medic.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/sniper.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/player/hwm/spy.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"41"
+		{
+			"type"		"header"
+			"text"		"Mann vs. Machine robots"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/bots/scout/bot_scout.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/bots/soldier/bot_soldier.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/bots/pyro/bot_pyro.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/bots/demo/bot_demo.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/bots/heavy/bot_heavy.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/bots/engineer/bot_engineer.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/bots/medic/bot_medic.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/bots/sniper/bot_sniper.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/bots/spy/bot_spy.mdl"
+			"skin"		"1"
+			"tall"		"128"
+		}
+		"51"
+		{
+			"type"		"header"
+			"text"		"Mann vs. Machine bosses"
+		}
+		"52"
+		{
+			"skin"		"1"
+			"type"		"model"
+			"model"		"models/bots/scout_boss/bot_scout_boss.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"53"
+		{
+			"skin"		"1"
+			"type"		"model"
+			"model"		"models/bots/soldier_boss/bot_soldier_boss.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"54"
+		{
+			"skin"		"1"
+			"type"		"model"
+			"model"		"models/bots/pyro_boss/bot_pyro_boss.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"55"
+		{
+			"skin"		"1"
+			"type"		"model"
+			"model"		"models/bots/demo_boss/bot_demo_boss.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"56"
+		{
+			"skin"		"1"
+			"type"		"model"
+			"model"		"models/bots/heavy_boss/bot_heavy_boss.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/bots/demo/bot_sentry_buster.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"58"
+		{
+			"type"		"header"
+			"text"		"Halloween"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/bots/merasmus/merasmus.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_halloween/halloween_demoeye.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_halloween/eyeball_projectile.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_halloween/ghost.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_halloween/ghost_no_hat.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+	}
+	"name"		"Characters"
+	"version"		"3"
+}

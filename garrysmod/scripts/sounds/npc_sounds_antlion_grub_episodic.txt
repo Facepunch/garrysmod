@@ -1,0 +1,100 @@
+"NPC_Antlion_Grub.Idle"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.6"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"		"90,120"
+	"rndwave"
+	{
+		"wave"	"npc/antlion_grub/agrub_idle1.wav"
+		"wave"	"npc/antlion_grub/agrub_idle3.wav"
+		"wave"	"npc/antlion_grub/agrub_idle6.wav"
+		"wave"	"npc/antlion_grub/agrub_idle8.wav"
+	}
+}
+
+"NPC_Antlion_Grub.Alert"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_grub/agrub_alert1.wav"
+		"wave"	"npc/antlion_grub/agrub_alert2.wav"
+		"wave"	"npc/antlion_grub/agrub_alert3.wav"
+	}
+}
+
+
+"NPC_Antlion_Grub.Stimulated"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_90dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_grub/agrub_stimulated1.wav"
+		"wave"	"npc/antlion_grub/agrub_stimulated2.wav"
+		"wave"	"npc/antlion_grub/agrub_stimulated3.wav"
+	}
+}
+
+
+"NPC_Antlion_Grub.Die"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_100dB"
+	"pitch"		"90,110"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_grub/agrub_die1.wav"
+		"wave"	"npc/antlion_grub/agrub_die2.wav"
+	}
+}
+
+
+"NPC_Antlion_Grub.Squish"
+{
+  	 "channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_80dB"
+	"pitch"			"100,115"
+	
+	"rndwave"
+	{
+		"wave"	"npc/antlion_grub/agrub_squish1.wav"
+		"wave"	"npc/antlion_grub/agrub_squish2.wav"
+		"wave"	"npc/antlion_grub/agrub_squish3.wav"
+	}
+
+}
+
+"NPC_Antlion_Grub.Explode"
+{
+  	 "channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"  	"SNDLVL_NORM"
+	"pitch"			"100,140"
+	
+	"rndwave"
+	{
+		"wave"	"npc/antlion/antlion_shoot1.wav"
+	}
+
+}
+
+"GrubNugget.Touch"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"1"
+	"soundlevel"  "SNDLVL_75dB"
+
+	"wave"	"items/smallmedkit1.wav"
+}

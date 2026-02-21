@@ -1,0 +1,503 @@
+
+workshopicon
+{
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	margin: 10px;
+	position: relative;
+	overflow: hidden;
+	background-color: #666;
+	background-position: center;
+	-webkit-box-shadow: 0px 0px 1px 1px rgba( 0, 0, 0, 0.3 );
+	border-radius: 3px;
+	border: 3px solid white;
+}
+
+workshopicon preview
+{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+workshopicon disabled
+{
+	opacity: 0;
+
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+workshopicon.disabled disabled
+{
+	opacity: 0.5;
+}
+
+workshopicon controls
+{
+	z-index: 10;
+	bottom: -32px;
+	-webkit-transition: bottom 100ms ease-in 0ms;
+}
+
+workshopicon:hover controls
+{
+	opacity: 1;
+	bottom: 0px;
+	-webkit-transition: bottom 100ms ease-in 200ms;
+}
+
+workshopicon name
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	text-align: left;
+	background-color: rgba( 255, 255, 255, 0.99 );
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	z-index: 10;
+	font-family: "Arial";
+	color: #666;
+	height: 22px;
+}
+workshopicon name label
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 2px;
+
+	padding: 2px 0px 4px 2px;
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+workshopicon name.subscription label
+{
+	right: 24px;
+}
+workshopicon.floating name label
+{
+	right: 2px;
+}
+
+workshopicon author, workshopicon votes, workshopicon size
+{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	text-align: right;
+	font-size: 11px;
+	font-weight: bold;
+	z-index: 10;
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: "Arial";
+	color: #333;
+	background-color: #fff;
+	border-radius: 4px 0 0 0;
+	padding: 3px 6px;
+
+}
+workshopicon size
+{
+	top: 22px;
+	bottom: auto;
+	border-radius: 0 0 0 4px;
+}
+
+workshopicon author, workshopicon size
+{
+	right: 0px;
+	-webkit-transition: right 100ms ease-out 200ms;
+}
+
+workshopicon:hover author, workshopicon:hover size
+{
+	right: -200px;
+	-webkit-transition: right 100ms ease-in 0ms;
+}
+
+workshopicon votes
+{
+	left: 0px;
+	color: #4a4;
+	-webkit-transition: left 100ms ease-out 200ms;
+}
+
+workshopicon votes.negative
+{
+	color: #a44;
+}
+
+workshopicon:hover votes
+{
+	left: -200px;
+	-webkit-transition: left 100ms ease-in 0ms;
+}
+
+workshopicon votes
+{
+	bottom: 0px;
+	right: inherit;
+	border-radius: 0 4px 0 0;
+}
+
+workshopicon description
+{
+	position: absolute;
+	left: 0;
+	top: 0px;
+	bottom: 0px;
+	right: 0;
+	text-align: left;
+	background-color: rgba( 70, 180, 250, 0.95 );
+	font-size: 11px;
+	padding: 32px 8px;
+	color: #fff;
+	cursor: default;
+	word-break: break-word;
+
+	opacity: 0;
+	-webkit-transition: opacity 100ms ease-in 0ms;
+}
+
+workshopicon .checkbox
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	margin: 0;
+	z-index: 32;
+	height: 19px;
+	width: 19px;
+}
+
+workshopicon:hover description
+{
+	display: inherit;
+
+	opacity: 1;
+	-webkit-transition: opacity 50ms ease-in 0ms;
+}
+
+workshopmessage
+{
+	font-size: 48px;
+	font-weight: bolder;
+	color: #999;
+	text-align: center;
+	display: block;
+	margin: 64px;
+}
+
+@media screen and (max-height: 800px)
+{
+	workshopmessage
+	{
+		margin: 16px;
+	}
+}
+
+workshopcontainer
+{
+	position: absolute;
+	left: 0px;
+	top: 64px;
+	bottom: 0px;
+	right: 0px;
+	background-color: white;
+	border-radius: 3px;
+	padding: 8px;
+}
+
+controls
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	padding: 3px;
+	margin: 6px 5px;
+	overflow: display;
+}
+
+controls control
+{
+	font-size: 11px;
+	display: inline-block;
+	background-color: #F5FF80;
+	padding: 2px 4px;
+	border-radius: 2px;
+	cursor: pointer;
+	height: 15px;
+	-webkit-box-shadow: 1px 1px 2px black;
+	position: relative;
+}
+
+controls control IMG
+{
+	padding-top: 3px;
+}
+
+controls control:hover
+{
+	background-color: white;
+}
+
+
+controls control.disabled
+{
+	background-color: #bfbfbf;
+	cursor: default;
+}
+
+.ugc_settings_button
+{
+	height: 44px;
+	width: 44px;
+
+	padding: 6px;
+	background: #2387ed;
+	border-radius: 4px;
+	box-sizing: border-box;
+
+	position: absolute;
+	bottom: 4px;
+	right: 4px;
+	cursor: default;
+}
+.ugc_settings_button:hover
+{
+	background: #4f9ded;
+}
+
+.ugc_settings
+{
+	width: 100%;
+
+	padding: 10px;
+	background: #eee;
+
+	z-index: 128;
+	position: absolute;
+	bottom: 52px;
+	left: 0;
+	box-sizing: border-box;
+
+	visibility: hidden;
+	overflow: hidden;
+}
+.ugc_settings.active
+{
+	visibility: visible;
+}
+
+.ugc_settings span
+{
+	display: block;
+	font-weight: bold;
+}
+.ugc_settings label
+{
+	position: relative;
+	top: -2px;
+}
+
+.ugc_settings a
+{
+	font-weight: bold;
+	color: #000;
+	padding: 4px 15px;
+	background: #ddd;
+	display: block;
+	margin-top: 2px;
+	text-align: center;
+	border-radius: 4px;
+	cursor: default;
+	min-width: 140px;
+}
+.ugc_settings a:hover
+{
+	background: #ccc;
+}
+.ugc_settings a:active
+{
+	background: #bbb;
+}
+
+.ugc_settings_cat
+{
+	vertical-align: top;
+	display: inline-block;
+	padding: 0px 1%;
+	margin: 0 auto;
+}
+
+.create_preset
+{
+	min-width: 350px;
+}
+
+.preset_content
+{
+	max-height: 400px;
+	min-height: 290px;
+	min-width: 500px;
+	margin-bottom: 5px;
+	display: -webkit-box;
+}
+.preset_side
+{
+	width: 150px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+.preset_side input[type="text"]
+{
+	padding: 2px 4px;
+	box-sizing: border-box;
+	margin-bottom: 8px;
+	margin-right: 8px;
+	display: block;
+}
+.preset_list
+{
+	background: #eee;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	-webkit-box-flex: 1;
+}
+.preset_list font
+{
+	display: block;
+	padding: 5px;
+	cursor: default;
+}
+.preset_list font:hover
+{
+	background: #ddd;
+}
+.preset_list font.active
+{
+	background: #ccc;
+}
+.preset_data
+{
+	-webkit-box-flex: 1;
+	padding-left: 5px;
+	cursor: default;
+}
+
+pagination
+{
+	background-color: #fff;
+	border-radius: 4px;
+	margin: 0 auto;
+	padding: 4px 4px;
+	/*white-space: nowrap;*/
+	max-width: 500px;
+	z-index: 64; /* Ensure it is above other elements in case something goes wrong */
+}
+
+@media screen and (max-width: 840px)
+{
+	pagination
+	{
+		margin: 0;
+		margin-right: 48px;
+	}
+}
+
+pagination .back, pagination .next
+{
+	display: block;
+	float: left;
+	background: transparent url('../img/arrow_left.png') no-repeat;
+	width: 48px;
+	height: 36px;
+	background-color: #2387ed;
+	border-radius: 3px;
+	background-position: center center;
+}
+
+pagination .back:hover, pagination .next:hover
+{
+	background-color: #4f9ded;
+}
+
+pagination .next
+{
+	float: right;
+	background-image: url('../img/arrow_right.png');
+}
+
+pagination .pages
+{
+	overflow: hidden;
+	margin-top: 6px;
+}
+
+pagination span.pagenum
+{
+	font-size: 14px;
+}
+pagination a.page
+{
+	opacity: 0.5;
+}
+pagination a.page.active
+{
+	opacity: 1;
+}
+
+workshopicon.installed
+{
+	border-color: #d2fc7b;
+}
+workshopicon.installed name, workshopicon.installed author, workshopicon.installed votes, workshopicon.installed size
+{
+	background: #d2fc7b;
+}
+
+workshopicon.disabled
+{
+	border-color: #cedcb1;
+}
+workshopicon.disabled name, workshopicon.disabled author, workshopicon.disabled votes, workshopicon.disabled size
+{
+	background: #cedcb1;
+}
+
+workshopicon.invalid
+{
+	border-color: #d22;
+}
+workshopicon.invalid name, workshopicon.invalid author, workshopicon.invalid votes, workshopicon.invalid size
+{
+	background: #d22;
+	color: #fff;
+}
+
+workshopicon.invalid.disabled
+{
+	border-color: #922;
+}
+workshopicon.invalid.disabled name, workshopicon.invalid.disabled author, workshopicon.invalid.disabled votes, workshopicon.invalid.disabled size
+{
+	background: #922;
+	color: #fff;
+}
+
