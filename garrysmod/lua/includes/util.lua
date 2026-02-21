@@ -201,6 +201,22 @@ function IncludeCS( filename )
 	return include( filename )
 end
 
+--[[---------------------------------------------------------
+	Compiles and runs the given file with given arguments
+	Returns the return values of the file
+-----------------------------------------------------------]]
+function RunFile( filename, ... )
+
+	local func = CompileFile( filename, true )
+	if ( !func ) then return end
+
+	local rets, n = table.Pack( xpcall( func, ErrorNoHaltWithStack, ... ) )
+	if ( rets[1] == false ) then return end
+
+	return unpack( rets, 2, n )
+
+end
+
 -- Globals
 FORCE_STRING	= 1
 FORCE_NUMBER	= 2
