@@ -55,6 +55,8 @@ end )
 local model_list = nil
 search.AddProvider( function( str )
 
+	local searchTerms = string.Explode( " ", str )
+
 	if ( model_list == nil ) then
 
 		model_list = {}
@@ -66,22 +68,31 @@ search.AddProvider( function( str )
 
 	for k, v in ipairs( model_list ) do
 
-		-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
-		local modelpath = v
-		if ( modelpath:StartsWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
+		if ( IsUselessModel( v ) ) then continue end
 
-		if ( modelpath:find( str, nil, true ) ) then
+		for k2, v2 in ipairs( searchTerms ) do
 
-			if ( IsUselessModel( v ) ) then continue end
+			-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
+			-- We do this for each search term individually, just to avoid edge cases where searching for x.mdl functions differently if it's the last search term or not
+			local modelpath = v
+			if ( modelpath:StartsWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !v2:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
 
-			local entry = {
-				text = v:GetFileFromFilename(),
-				func = function() RunConsoleCommand( "gm_spawn", v ) end,
-				icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
-				words = { v }
-			}
+			if !( modelpath:find( v2, nil, true ) ) then
 
-			table.insert( models, entry )
+				break
+			
+			elseif ( k2 == #searchTerms ) then
+
+				local entry = {
+					text = v:GetFileFromFilename(),
+					func = function() RunConsoleCommand( "gm_spawn", v ) end,
+					icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
+					words = { v }
+				}
+
+				table.insert( models, entry )
+
+			end
 
 		end
 
@@ -112,6 +123,8 @@ end )
 local function AddSearchProvider( listname, ctype, stype )
 	search.AddProvider( function( str )
 
+		local searchTerms = string.Explode( " ", str )
+
 		local results = {}
 		local entities = {}
 
@@ -130,24 +143,32 @@ local function AddSearchProvider( listname, ctype, stype )
 			local name_c = v.ClassName
 			if ( !isstring( name ) && !isstring( name_c ) ) then continue end
 
-			if ( ( isstring( name ) && name:lower():find( str, nil, true ) ) || ( isstring( name_c ) && name_c:lower():find( str, nil, true ) ) ) then
+			for k2, v2 in ipairs( searchTerms ) do
 
-				local contentIconData = {
-					nicename = v.PrintName or v.ClassName,
-					spawnname = v.ClassName,
-					material = "entities/" .. v.ClassName .. ".png",
-					admin = v.AdminOnly
-				}
+				if !( ( isstring( name ) && name:lower():find( v2, nil, true ) ) || ( isstring( name_c ) && name_c:lower():find( v2, nil, true ) ) ) then
+				
+					break
+			
+				elseif ( k2 == #searchTerms ) then
 
-				if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
+					local contentIconData = {
+						nicename = v.PrintName or v.ClassName,
+						spawnname = v.ClassName,
+						material = "entities/" .. v.ClassName .. ".png",
+						admin = v.AdminOnly
+					}
 
-				local entry = {
-					text = v.PrintName or v.ClassName,
-					icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, contentIconData ),
-					words = { v }
-				}
+					if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
 
-				table.insert( results, entry )
+					local entry = {
+						text = v.PrintName or v.ClassName,
+						icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, contentIconData ),
+						words = { v }
+					}
+
+					table.insert( results, entry )
+
+				end
 
 			end
 
