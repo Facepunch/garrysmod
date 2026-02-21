@@ -1,5 +1,5 @@
 ---------------
-	UNUSED HOOK CLEANUP (inspired by sups_performance)
+	UNUSED HOOK CLEANUP (Inspired by a local performance addon i've been progressivley working on over last couple months)
 
 	Removes default GMod hooks that run every frame but are
 	rarely used in normal gameplay: DOF, widgets, frameblend.

@@ -1,5 +1,5 @@
 ---------------
-	SERVER LAG DETECTOR (inspired by sups_performance)
+	SERVER LAG DETECTOR (Inspired by a local performance addon i've been progressivley working on over last couple months)
 
 	Client-side server health monitoring. Watches tickrate
 	and alerts in console when the server is struggling,

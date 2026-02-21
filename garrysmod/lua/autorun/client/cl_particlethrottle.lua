@@ -1,5 +1,5 @@
 ---------------
-	PARTICLE THROTTLE (inspired by sups_performance)
+	PARTICLE THROTTLE (Inspired by a local performance addon i've been progressivley working on over last couple months)
 
 	Dynamically adjusts particle rendering quality based on
 	real-time FPS. During heavy events (lightsaber battles,

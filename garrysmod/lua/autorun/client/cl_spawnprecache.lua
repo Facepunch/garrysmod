@@ -1,5 +1,5 @@
 ---------------
-	SPAWNMENU ICON PRE-CACHER (inspired by sups_performance)
+	SPAWNMENU ICON PRE-CACHER (Inspired by a local performance addon i've been progressivley working on over last couple months)
 
 	Pre-generates model thumbnails in the background after
 	joining a server. Eliminates the stutter when opening

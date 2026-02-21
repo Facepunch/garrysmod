@@ -1,5 +1,5 @@
 ---------------
-	AUTO-PERFORMANCE SCALER (inspired by sups_performance)
+	AUTO-PERFORMANCE SCALER (Inspired by a local performance addon i've been progressivley working on over last couple months)
 
 	Automatically adjusts engine quality settings based on
 	real-time FPS. Prevents stuttering by progressively
