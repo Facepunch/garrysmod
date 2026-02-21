@@ -7,10 +7,225 @@ local isbool = isbool
 local IsValid = IsValid
 local type = type
 local ErrorNoHaltWithStack = ErrorNoHaltWithStack
+local SysTime = SysTime
 
 module( "hook" )
 
 local Hooks = {}
+
+---------------
+	PROFILING SYSTEM
+	Tracks execution time per hook for performance analysis.
+	Enable with: lua_hookprofile 1
+	View with:   lua_hookprofile_dump (console command)
+	API:         hook.GetProfile() -> table
+	             hook.ResetProfile()
+----------------
+local Profiling = false
+local ProfileData = {}		-- [event][name] = { calls, totalTime, maxTime, avgTime, lastTime }
+local ProfileStartTime = 0
+
+function EnableProfiling( enabled )
+	Profiling = enabled
+	if ( enabled ) then
+		ProfileStartTime = SysTime()
+		ProfileData = {}
+	end
+end
+
+function GetProfile()
+	return ProfileData, SysTime() - ProfileStartTime
+end
+
+function ResetProfile()
+	ProfileData = {}
+	ProfileStartTime = SysTime()
+end
+
+-- Internal: record a single hook execution
+local function ProfileRecord( event, name, dt )
+
+	if ( !ProfileData[ event ] ) then
+		ProfileData[ event ] = {}
+	end
+
+	local entry = ProfileData[ event ][ name ]
+	if ( !entry ) then
+		entry = { calls = 0, totalTime = 0, maxTime = 0, avgTime = 0, lastTime = 0 }
+		ProfileData[ event ][ name ] = entry
+	end
+
+	entry.calls = entry.calls + 1
+	entry.totalTime = entry.totalTime + dt
+	entry.lastTime = dt
+	if ( dt > entry.maxTime ) then entry.maxTime = dt end
+	entry.avgTime = entry.totalTime / entry.calls
+
+end
+
+
+---------------
+	HOOK BUDGETING SYSTEM
+	Automatically throttles hooks that exceed their time budget.
+	API: hook.SetBudget( event, name, maxMs )
+	     hook.RemoveBudget( event, name )
+	     hook.GetBudgets() -> table
+	Hooks exceeding budget are skipped for a cooldown period.
+----------------
+local Budgets = {}			-- [event][name] = { maxTime, violations, lastViolation, throttled }
+local BudgetCooldown = 1.0	-- seconds to throttle after budget exceeded
+
+function SetBudget( event, name, maxMs )
+	if ( !Budgets[ event ] ) then Budgets[ event ] = {} end
+	Budgets[ event ][ name ] = {
+		maxTime = maxMs / 1000,		-- convert ms to seconds
+		violations = 0,
+		lastViolation = 0,
+		throttled = false
+	}
+end
+
+function RemoveBudget( event, name )
+	if ( !Budgets[ event ] ) then return end
+	Budgets[ event ][ name ] = nil
+end
+
+function GetBudgets()
+	return Budgets
+end
+
+-- Internal: check if a hook is currently throttled
+local function IsThrottled( event, name )
+
+	if ( !Budgets[ event ] ) then return false end
+
+	local budget = Budgets[ event ][ name ]
+	if ( !budget ) then return false end
+	if ( !budget.throttled ) then return false end
+
+	-- Check if cooldown has expired
+	if ( SysTime() - budget.lastViolation > BudgetCooldown ) then
+		budget.throttled = false
+		return false
+	end
+
+	return true
+
+end
+
+-- Internal: record execution time against budget
+local function BudgetCheck( event, name, dt )
+
+	if ( !Budgets[ event ] ) then return end
+
+	local budget = Budgets[ event ][ name ]
+	if ( !budget ) then return end
+
+	if ( dt > budget.maxTime ) then
+		budget.violations = budget.violations + 1
+		budget.lastViolation = SysTime()
+		budget.throttled = true
+	end
+
+end
+
+
+---------------
+	LAZY HOOK EXECUTION
+	Tracks which events actually fire. Events that haven't
+	fired recently have their hooks moved to a "cold" list
+	and are skipped during hot-path iteration.
+	API: hook.GetColdEvents() -> table
+	     hook.SetColdThreshold( seconds )
+----------------
+local EventLastFired = {}		-- [event] = SysTime
+local ColdThreshold = 10.0		-- seconds before an event is "cold"
+local ColdEvents = {}			-- [event] = true
+
+function GetColdEvents()
+	return ColdEvents
+end
+
+function SetColdThreshold( seconds )
+	ColdThreshold = seconds
+end
+
+-- Internal: mark event as recently fired
+local function MarkEventFired( event )
+
+	EventLastFired[ event ] = SysTime()
+	ColdEvents[ event ] = nil
+
+end
+
+-- Internal: check if event is cold (dormant)
+local function IsEventCold( event )
+
+	local lastFired = EventLastFired[ event ]
+	if ( !lastFired ) then return false end		-- never fired = not cold, could be new
+
+	if ( SysTime() - lastFired > ColdThreshold ) then
+		ColdEvents[ event ] = true
+		return true
+	end
+
+	return false
+
+end
+
+
+---------------
+	HOOK MIDDLEWARE / SAFE RUN (inspired by slib)
+
+	SafeRun: pcall-wrapped hook.Run — one bad addon error
+	         won't crash all other hook listeners.
+	SetMiddleware: wrap an existing hook with pre/post logic
+	               without removing the original handler.
+	API: hook.SafeRun( event, ... ) -> results
+	     hook.SetMiddleware( event, name, middlewareFunc )
+----------------
+local Middlewares = {}
+
+function SafeRun( event, ... )
+
+	local gm = gmod and gmod.GetGamemode() or nil
+
+	local ok, a, b, c, d, e, f = pcall( Call, event, gm, ... )
+
+	if ( !ok ) then
+		ErrorNoHaltWithStack( "[hook.SafeRun] Error in '" .. tostring( event ) .. "': " .. tostring( a ) )
+		return nil
+	end
+
+	return a, b, c, d, e, f
+
+end
+
+function SetMiddleware( event, name, middlewareFunc )
+
+	if ( !isstring( event ) or !isstring( name ) or !isfunction( middlewareFunc ) ) then return end
+
+	if ( !Middlewares[ event ] ) then Middlewares[ event ] = {} end
+	Middlewares[ event ][ name ] = middlewareFunc
+
+	local existingHooks = Hooks[ event ]
+	if ( !existingHooks ) then return end
+
+	local originalFunc = existingHooks[ name ]
+	if ( !originalFunc or !isfunction( originalFunc ) ) then return end
+
+	existingHooks[ name ] = function( ... )
+		local result = { middlewareFunc( ... ) }
+		if ( #result > 0 ) then return unpack( result ) end
+		return originalFunc( ... )
+	end
+
+end
+
+function GetMiddlewares()
+	return Middlewares
+end
+
 
 --[[---------------------------------------------------------
     Name: GetTable
@@ -38,6 +253,9 @@ function Add( event_name, name, func )
 	end
 
 	Hooks[ event_name ][ name ] = func
+
+	-- If a hook is added to a cold event, warm it up
+	ColdEvents[ event_name ] = nil
 
 end
 
@@ -78,11 +296,15 @@ end
 
 
 --[[---------------------------------------------------------
-    Name: Run
+    Name: Call
     Args: string hookName, table gamemodeTable, vararg args
     Desc: Calls hooks associated with the hook name.
+    Enhanced with profiling, budgeting, and lazy execution.
 -----------------------------------------------------------]]
 function Call( name, gm, ... )
+
+	-- Mark this event as recently fired (for lazy execution)
+	MarkEventFired( name )
 
 	--
 	-- Run hooks
@@ -94,12 +316,23 @@ function Call( name, gm, ... )
 
 		for k, v in pairs( HookTable ) do
 
-			if ( isstring( k ) ) then
+			-- Check if this hook is throttled by budgeting
+			if ( IsThrottled( name, k ) ) then
+				-- Skip throttled hooks
+			elseif ( isstring( k ) ) then
 
 				--
 				-- If it's a string, it's cool
 				--
-				a, b, c, d, e, f = v( ... )
+				if ( Profiling ) then
+					local t0 = SysTime()
+					a, b, c, d, e, f = v( ... )
+					local dt = SysTime() - t0
+					ProfileRecord( name, k, dt )
+					BudgetCheck( name, k, dt )
+				else
+					a, b, c, d, e, f = v( ... )
+				end
 
 			else
 
@@ -111,7 +344,15 @@ function Call( name, gm, ... )
 					--
 					-- If the object is valid - pass it as the first argument (self)
 					--
-					a, b, c, d, e, f = v( k, ... )
+					if ( Profiling ) then
+						local t0 = SysTime()
+						a, b, c, d, e, f = v( k, ... )
+						local dt = SysTime() - t0
+						ProfileRecord( name, tostring( k ), dt )
+						BudgetCheck( name, tostring( k ), dt )
+					else
+						a, b, c, d, e, f = v( k, ... )
+					end
 				else
 					--
 					-- If the object has become invalid - remove it

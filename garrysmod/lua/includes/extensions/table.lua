@@ -804,3 +804,190 @@ if ( !table.move ) then
 
 	end
 end
+
+
+--[[---------------------------------------------------------
+	HASH SET UTILITIES
+
+	Convert sequential tables to hash sets for O(1) lookups.
+	Replaces common patterns where table.HasValue is called
+	thousands of times per tick against the same table.
+
+	Usage:
+		local classes = { "npc_combine_s", "npc_zombie", "npc_antlion" }
+		local classSet = table.ToHashSet( classes )
+
+		-- O(1) instead of O(n)
+		if ( table.HasValueFast( classSet, "npc_zombie" ) ) then ... end
+		-- or simply:
+		if ( classSet[ "npc_zombie" ] ) then ... end
+
+-----------------------------------------------------------]]
+
+--[[---------------------------------------------------------
+	Name: table.ToHashSet( tab )
+	Desc: Convert a sequential table to a hash set for O(1) lookups.
+	      Values become keys, all mapped to true.
+-----------------------------------------------------------]]
+function table.ToHashSet( tab )
+
+	local set = {}
+
+	for i = 1, #tab do
+		set[ tab[ i ] ] = true
+	end
+
+	return set
+
+end
+
+--[[---------------------------------------------------------
+	Name: table.HasValueFast( hashset, val )
+	Desc: O(1) value lookup using a hash set created by table.ToHashSet.
+	      Returns true if val is in the set.
+-----------------------------------------------------------]]
+function table.HasValueFast( hashset, val )
+	return hashset[ val ] == true
+end
+
+--[[---------------------------------------------------------
+	Name: table.Unique( tab )
+	Desc: Returns a new sequential table with duplicate values removed.
+	      Preserves order of first occurrence.
+-----------------------------------------------------------]]
+function table.Unique( tab )
+
+	local seen = {}
+	local out = {}
+	local count = 0
+
+	for i = 1, #tab do
+
+		local v = tab[ i ]
+		if ( !seen[ v ] ) then
+			seen[ v ] = true
+			count = count + 1
+			out[ count ] = v
+		end
+
+	end
+
+	return out
+
+end
+
+--[[---------------------------------------------------------
+	Name: table.MapValues( tab, func )
+	Desc: Returns a new table with func applied to every value.
+	      Useful for batch transformations without allocating
+	      intermediate tables in hot paths.
+-----------------------------------------------------------]]
+function table.MapValues( tab, func )
+
+	local out = {}
+
+	for k, v in pairs( tab ) do
+		out[ k ] = func( v, k )
+	end
+
+	return out
+
+end
+
+--[[---------------------------------------------------------
+	Name: table.Filter( tab, func )
+	Desc: Returns a new sequential table containing only values
+	      where func(value, key) returns true.
+-----------------------------------------------------------]]
+function table.Filter( tab, func )
+
+	local out = {}
+	local count = 0
+
+	for k, v in pairs( tab ) do
+		if ( func( v, k ) ) then
+			count = count + 1
+			out[ count ] = v
+		end
+	end
+
+	return out
+
+end
+
+---------------
+	Name: table.SafeForEach( tab, func )
+	Desc: Like pairs() iteration but pcall-wrapped per entry.
+	      One error won't crash the entire loop. Inspired by
+	      slib/HolyLib safe call patterns.
+----------------
+function table.SafeForEach( tab, func )
+
+	local errors = 0
+
+	for k, v in pairs( tab ) do
+		local ok, err = pcall( func, v, k )
+		if ( !ok ) then
+			ErrorNoHaltWithStack( "[SafeForEach] Error at key '" .. tostring( k ) .. "': " .. tostring( err ) )
+			errors = errors + 1
+		end
+	end
+
+	return errors
+
+end
+
+---------------
+	Name: table.ParallelMap( tab, func, callback, budgetMs )
+	Desc: Process a table across multiple frames using the
+	      async scheduler. Calls func(value, key) for each
+	      entry, yielding when the time budget is exceeded.
+	      Calls callback(results) when done.
+	      Requires async_scheduler.lua to be loaded.
+----------------
+function table.ParallelMap( tab, func, callback, budgetMs )
+
+	budgetMs = budgetMs or 2
+
+	-- Build a sequential list of keys for ordered iteration
+	local keys = {}
+	local keyCount = 0
+	for k in pairs( tab ) do
+		keyCount = keyCount + 1
+		keys[ keyCount ] = k
+	end
+
+	local id = "ParallelMap_" .. tostring( tab ) .. "_" .. SysTime()
+
+	if ( !async or !async.Run ) then
+		-- Fallback if async scheduler not loaded
+		local results = {}
+		for i = 1, keyCount do
+			local k = keys[ i ]
+			results[ k ] = func( tab[ k ], k )
+		end
+		if ( callback ) then callback( results ) end
+		return
+	end
+
+	async.Run( id, function( yield )
+		local results = {}
+		local budgetSec = budgetMs / 1000
+		local batchStart = SysTime()
+
+		for i = 1, keyCount do
+			local k = keys[ i ]
+			results[ k ] = func( tab[ k ], k )
+
+			if ( SysTime() - batchStart > budgetSec ) then
+				yield()
+				batchStart = SysTime()
+			end
+		end
+
+		if ( callback ) then callback( results ) end
+	end )
+
+	return id
+
+end
