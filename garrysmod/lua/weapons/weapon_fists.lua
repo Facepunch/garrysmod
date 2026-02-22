@@ -161,6 +161,8 @@ function SWEP:DealDamage()
 
 		dmginfo:SetDamage( istable( dmg ) and math.random( dmg[ 1 ], dmg[ 2 ] ) or dmg )
 
+		dmginfo:SetDamagePosition( tr.HitPos )
+
 		SuppressHostEvents( NULL ) -- Let the breakable gibs spawn in multiplayer on client
 		tr.Entity:TakeDamageInfo( dmginfo )
 		SuppressHostEvents( owner )
@@ -254,3 +256,4 @@ function SWEP:Think()
 	end
 
 end
+
