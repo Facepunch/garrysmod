@@ -446,6 +446,7 @@ Scheme
 				"name"		"Tahoma"
 				"tall"		"26"
 				"weight"	"500"
+				"antialias"	"1"
 			}
 		}
 		"CloseCaption_Italic"
@@ -456,6 +457,7 @@ Scheme
 				"tall"		"26"
 				"weight"	"500"
 				"italic"	"1"
+				"antialias"	"1"
 			}
 		}
 		"CloseCaption_Bold"
@@ -465,6 +467,7 @@ Scheme
 				"name"		"Tahoma"
 				"tall"		"26"
 				"weight"	"900"
+				"antialias"	"1"
 			}
 		}
 		"CloseCaption_BoldItalic"
@@ -475,6 +478,7 @@ Scheme
 				"tall"		"26"
 				"weight"	"900"
 				"italic"	"1"
+				"antialias"	"1"
 			}
 		}
 		// this is the symbol font
