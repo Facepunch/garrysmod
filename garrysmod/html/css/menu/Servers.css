@@ -157,19 +157,22 @@ H1 small
 
 .serverlist name .flag
 {
-	position: relative;
-	top: -2px;
+	height: 100%;
+	margin-right: 2px;
+}
+.serverlist name .flag.noflag
+{
+	visibility: hidden;
+}
+.serverlist .noflags name .flag
+{
+	display: none !important;
 }
 
 .serverlist name tag.future
 {
 	background: #e6e6e6;
 	color: #000;
-}
-
-.serverlist name .passworded
-{
-	margin-right: 4px;
 }
 
 .serverlist lastvisited
@@ -691,21 +694,25 @@ input[type=number]::-webkit-inner-spin-button
 {
 	margin-top: 5px;
 	background: #9c9c9c;
-	padding: 4px;
-	padding-bottom: 0px; /*Done by the flags*/
 	border-radius: 4px;
+	padding: 2px;
 	text-align: center;
+	font-size: 0px;
+	position: relative;
 }
 
 .flags_filter .flag
 {
 	cursor: hand;
 	padding: 3px;
-	margin: 0 2px;
-	margin-bottom: 4px;
+	margin: 2px;
 	background: #fff;
 	border-radius: 4px;
+	display: inline-block;
+	vertical-align: middle;
+	height: 20px;
 }
+
 .flags_filter .flag.prefer
 {
 	background: #4eda6c;
@@ -713,6 +720,41 @@ input[type=number]::-webkit-inner-spin-button
 .flags_filter .flag.avoid
 {
 	background: #da4e4e;
+}
+
+.flags_filter .flag .flag_name
+{
+	visibility: hidden;
+	display: inline-block;
+	pointer-events: none;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0);
+	margin-top: 5px;
+	box-sizing: border-box;
+	background: inherit;
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-size: 15px;
+	font-weight: bold;
+	text-shadow: none;
+	color: black;
+	text-align: center;
+	width: -webkit-max-content;
+	max-width: 100%;
+}
+.flags_filter .flag .flag_name div:not(:empty) + div
+{
+	font-size: 12px;
+}
+.flags_filter .flag.noflag .flag_name
+{
+	text-transform: capitalize;
+}
+.flags_filter .flag:hover .flag_name
+{
+	visibility: visible;
 }
 
 @media screen and (max-width: 1024px)
@@ -854,7 +896,7 @@ input[type=number]::-webkit-inner-spin-button
 name .favbutton
 {
 	background: url( '../../img/notfavourite.png' );
-	margin-right: 4px;
+	margin-right: 2px;
 	height: 16px;
 	width: 16px;
 	display: inline-block;

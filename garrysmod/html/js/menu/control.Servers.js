@@ -270,21 +270,90 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 		if ( $scope.CurrentGamemode.FilterFlags[ flag ] == false )
 		{
-			$scope.CurrentGamemode.FilterFlags[ flag ] = undefined;
+			delete $scope.CurrentGamemode.FilterFlags[ flag ];
 		}
 		else
 		{
 			$scope.CurrentGamemode.FilterFlags[ flag ] = !$scope.CurrentGamemode.FilterFlags[ flag ];
 		}
 
-		// Kinda ugly hack :(
-		$scope.CurrentGamemode.HasPreferFlags = Object.keys( $scope.CurrentGamemode.FilterFlags ).filter( function( key ) { return $scope.CurrentGamemode.FilterFlags[ key ] === true; } ).length > 0;
+		if ( IS_AWESOMIUM )
+		{
+			// Kinda ugly hack :(
+			$scope.CurrentGamemode.HasPreferFlags = Object.keys( $scope.CurrentGamemode.FilterFlags ).filter( function( key ) { return $scope.CurrentGamemode.FilterFlags[ key ] === true; } ).length > 0;
+			return;
+		}
+		
+		$scope.CurrentGamemode.HasPreferFlags = Object.values( $scope.CurrentGamemode.FilterFlags ).includes( true );
+
 	}
 	$scope.FilterFlagClass = function( flag )
 	{
 		if ( $scope.CurrentGamemode.FilterFlags[ flag ] == undefined ) return "";
 		if ( $scope.CurrentGamemode.FilterFlags[ flag ] == true ) return "prefer";
 		return "avoid";
+	}
+	
+	var IntlDisplayNames = {};
+	var RegionNames = {};
+	
+	var GetRegionName = function( getRegion, inLang )
+	{
+		if ( !IntlDisplayNames[ inLang ] || !RegionNames[ inLang ] )
+		{
+			IntlDisplayNames[ inLang ] = new Intl.DisplayNames( [ inLang, "en" ], { type: "region" } );
+			RegionNames[ inLang ] = {};
+		}
+
+		if ( !RegionNames[ inLang ][ getRegion ] ) 
+			RegionNames[ inLang ][ getRegion ] = IntlDisplayNames[ inLang ].of( getRegion );
+		
+		return RegionNames[ inLang ][ getRegion ];
+	}
+	
+	$scope.RegionName = function( flag, lang )
+	{
+		flag = flag.toUpperCase();
+		lang = lang.toLowerCase();
+		
+		if ( IS_AWESOMIUM ) // Just use the 2-letter code, as Awesomium doesn't support this function.
+		{
+			if ( lang == "en" ) return flag;
+			return "";
+		}
+		
+		var eng = GetRegionName( flag, "en" );
+		
+		if ( lang == "en" ) return eng;
+		
+		var local = GetRegionName( flag, lang );
+		
+		if ( local == eng || local == flag ) return ""; // If the localised version returns the 2-letter code, or the localised version is the same as English, don't use it as English will be displayed anyway.
+		
+		return local; // Return the localised version
+		
+	}
+	
+	$scope.DisplayingAnyFlags = function()
+	{
+		// Is the server list showing any servers with flags other than the blank "unknown"?
+		//
+		// CEF 105+ can just do:
+		//   ".serverlist:has(.server .flag:not(.noflag))" for the same as DisplayingAnyFlags() == true
+		//	 ".serverlist:not(:has(.server .flag:not(.noflag)))" for the same as DisplayingAnyFlags() == false
+		//
+		// But Awesomium and CEF 86 require this javascript function
+		
+		if ( !$scope.CurrentGamemode ) return false;
+		
+		if ( !$scope.CurrentGamemode.hasflags ) return false;
+		if ( !$scope.CurrentGamemode.flags[ "unknown" ] ) return true;
+		if ( $scope.CurrentGamemode.FilterFlags[ "unknown" ] === false ) return true;
+		if ( $scope.CurrentGamemode.HasPreferFlags && $scope.CurrentGamemode.FilterFlags[ "unknown" ] != true ) return true;
+		
+		if ( !$scope.filteredServers ) return false;
+
+		return $scope.filteredServers.some( function( svr ) { return svr.flag && svr.flag != "unknown" } ) ;
 	}
 
 	$scope.serverFilter = function( server )
@@ -413,20 +482,29 @@ function CalculateRank( server )
 	return recommended;
 }
 
-// Generate a flag from sevrer name if the server doesn't have it set.
+// Gmod's flag icons
+var flagicons = [ "ad", "ae", "af", "ag", "ai", "al", "am", "ao", "ar", "as", "at", "au", "aw", "ax", "az", "ba", "bb", "bd", "be", "bf", "bg", "bh", "bi", "bj", "bm", "bn", "bo", "br", "bs", "bt", "bv", "bw", "by", "bz", "ca", "cc", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm", "cn", "co", "cr", "cu", "cv", "cx", "cy", "cz", "de", "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg", "eh", "er", "es", "et", "eu", "fi", "fj", "fk", "fm", "fo", "fr", "ga", "gb", "gd", "ge", "gf", "gh", "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gs", "gt", "gu", "gw", "gy", "hk", "hm", "hn", "hr", "ht", "hu", "ic", "id", "ie", "il", "in", "io", "iq", "ir", "is", "it", "jm", "jo", "jp", "ke", "kg", "kh", "ki", "km", "kn", "kp", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li", "lk", "lr", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me", "mg", "mh", "mk", "ml", "mm", "mn", "mo", "mp", "mq", "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "nf", "ng", "ni", "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pe", "pf", "pg", "ph", "pk", "pl", "pm", "pn", "pr", "ps", "pt", "pw", "py", "qa", "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "sd", "se", "sg", "sh", "si", "sj", "sk", "sl", "sm", "sn", "so", "sr", "ss", "st", "sv", "sy", "sz", "tc", "td", "tf", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr", "tt", "tv", "tw", "tz", "ua", "ug", "um", "us", "uy", "uz", "va", "vc", "ve", "vg", "vi", "vn", "vu", "wf", "ws", "xk", "ye", "yt", "za", "zm", "zw" ];
+// Special remapping cases
+var locationremap = { "en":"gb","eng":"gb","uk":"gb", "ger":"de", "rus":"ru", "usa":"us" };
+// Valid sv_location list = remaps plus flag. Any sv_locations not on the list are filtered and fallback to secondary methods such as extraction from server name.
+var svlocations = Object.keys( locationremap ).concat( flagicons );
+
+// Generate a flag from server name if the server doesn't have it set.
 // This is a temporary measure and should not be relied on, you should use sv_location
-var prefixes = { ru: "ru", rus: "ru", fr: "fr", usa: "us", uk: "gb", en: "gb", eng: "gb", ger: "de", pl: "pl", dk: "dk", eu: "eu" };
+var prefixes = [ "au", "br", "cn", "de","ger", "dk", "en","eng","uk", "eu", "fr", "kr", "pl", "ru","rus", "sg", "tr", "usa","us" ];
 function GenerateFlag( server )
 {
-	for ( var key in prefixes )
+	for ( var index in prefixes )
 	{
-		var s = server.name.toLowerCase().indexOf( "[" + key + "]" );
+		var key = prefixes[ index ];
+		var search = "[" + key + "]";
+		var s = server.name.toLowerCase().indexOf( search );
 		if ( s == -1 ) continue;
-		server.name = server.name.replace( server.name.substring( s, s + key.length + 2 ), "" ).trim();
-		return prefixes[ key ];
+		server.name = server.name.replace( server.name.substring( s, s + search.length ), "" ).trim();
+		return key;
 	}
 
-	return "";
+	return false;
 }
 
 function UpdateInfiniteScroll( elem )
@@ -491,7 +569,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	}
 
 	// Validate sv_location
-	if ( loc && !loc.match( /^[a-zA-Z]+$/ ) )
+	if ( loc && ( !loc.match( /^[a-zA-Z]+$/ ) || svlocations.indexOf( loc.toLowerCase() ) == -1 ) )
 	{
 		loc = "";
 	}
@@ -519,8 +597,9 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		favorite:		isFav == "true"
 	};
 
-	if ( !data.flag ) data.flag = GenerateFlag( data );
-	if ( data.flag == "eu" ) data.flag = "europeanunion"; // ew
+	if ( !data.flag ) data.flag = GenerateFlag( data ); // No sv_location, extract from name
+	if ( locationremap[ data.flag ] !== undefined ) data.flag = locationremap[ data.flag ]; // Perform any remaps eg "uk" to "gb"
+	if ( !data.flag ) data.flag = "unknown";
 
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
@@ -574,7 +653,9 @@ function MissingGamemodeIcon( element )
 
 function MissingFlag( element )
 {
-	element.src = "img/unk_flag.png";
+	element.src = "img/twemoji-72x72/missing_2754.png";
+	element.style.webkitMaskImage = "";
+	element.parentElement.classList.add( "noflag" );
 	return true;
 }
 
@@ -708,7 +789,7 @@ function UpdateGamemodeInfo( server, type )
 	{
 		if ( !gi.flags ) gi.flags = {};
 		gi.flags[ server.flag ] = true;
-		gi.hasflags = true;
+		if ( !gi.hasflags && Object.keys( gi.flags ).length > 1 ) gi.hasflags = true;
 	}
 }
 
