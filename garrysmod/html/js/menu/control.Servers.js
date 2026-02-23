@@ -287,6 +287,49 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		return "avoid";
 	}
 
+
+	var IntlDisplayNames = {};
+	var RegionNames = {};
+	
+	var GetRegionName = function( getRegion, inLang )
+	{
+		if ( !IntlDisplayNames[ inLang ] || !RegionNames[ inLang ] )
+		{
+			IntlDisplayNames[ inLang ] = new Intl.DisplayNames( [ inLang, "en" ], { type: "region" } );
+			RegionNames[ inLang ] = {};
+		}
+
+		if ( !RegionNames[ inLang ][ getRegion ] ) 
+			RegionNames[ inLang ][ getRegion ] = IntlDisplayNames[ inLang ].of( getRegion );
+		
+		return RegionNames[ inLang ][ getRegion ];
+	}
+	
+	$scope.RegionName = function( flag, lang )
+	{
+		flag = flag.toUpperCase();
+		lang = lang.toLowerCase();
+		
+		if ( flag == "EUROPEANUNION" ) flag = "EU";
+		
+		if ( IS_AWESOMIUM ) // Just use the 2-letter code, as Awesomium doesn't support this function.
+		{
+			if ( lang == "en" ) return flag;
+			return "";
+		}
+		
+		var eng = GetRegionName( flag, "en" );
+		
+		if ( lang == "en" ) return eng;
+		
+		var local = GetRegionName( flag, lang );
+		
+		if ( local == eng || local == flag ) return ""; // If the localised version returns the 2-letter code, or the localised version is the same as English, don't use it as English will be displayed anyway.
+		
+		return local; // Return the localised version
+		
+	}
+
 	$scope.serverFilter = function( server )
 	{
 		if ( $scope.CurrentGamemode.Search &&
@@ -575,6 +618,7 @@ function MissingGamemodeIcon( element )
 function MissingFlag( element )
 {
 	element.src = "img/unk_flag.png";
+	element.classList.add("noflag");
 	return true;
 }
 
