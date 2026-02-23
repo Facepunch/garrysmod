@@ -1,6 +1,6 @@
 
--- TODO: Hack. Move to where color is defined?
-TYPE_COLOR = 255
+-- TODO: Move to where player is defined?
+TYPE_PLAYER = 46
 
 net.Receivers = {}
 
@@ -51,20 +51,13 @@ end
 --
 function net.WriteEntity( ent )
 
-	if ( !IsValid( ent ) ) then
-		net.WriteUInt( 0, MAX_EDICT_BITS )
-	else
-		net.WriteUInt( ent:EntIndex(), MAX_EDICT_BITS )
-	end
+	net.WriteUInt( IsValid( ent ) and ent:EntIndex() or 0, MAX_EDICT_BITS )
 
 end
 
 function net.ReadEntity()
 
-	local i = net.ReadUInt( MAX_EDICT_BITS )
-	if ( !i ) then return end
-
-	return Entity( i )
+	return Entity( net.ReadUInt( MAX_EDICT_BITS ) )
 
 end
 
@@ -73,15 +66,18 @@ end
 -- Read/Write a player to the stream
 --
 
--- TODO: Replace with MAX_PLAYER_BITS
-local maxplayers_bits = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
+MAX_PLAYER_BITS = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
 
 function net.WritePlayer( ply )
-	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, maxplayers_bits )
+
+	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, MAX_PLAYER_BITS )
+
 end
 
 function net.ReadPlayer()
-	return Entity( net.ReadUInt( maxplayers_bits ) )
+
+	return Entity( net.ReadUInt( MAX_PLAYER_BITS ) )
+
 end
 
 
@@ -89,9 +85,9 @@ end
 -- Read/Write a color to/from the stream
 --
 function net.WriteColor( col, writeAlpha )
-	if ( writeAlpha == nil ) then writeAlpha = true end
+	writeAlpha = writeAlpha or true
 
-	assert( IsColor( col ), "net.WriteColor: color expected, got ".. type( col ) )
+	assert( IsColor( col ), "net.WriteColor: color expected, got " .. type( col ) )
 
 	local r, g, b, a = col:Unpack()
 	net.WriteUInt( r, 8 )
@@ -101,10 +97,11 @@ function net.WriteColor( col, writeAlpha )
 	if ( writeAlpha ) then
 		net.WriteUInt( a, 8 )
 	end
+
 end
 
 function net.ReadColor( readAlpha )
-	if ( readAlpha == nil ) then readAlpha = true end
+	readAlpha = readAlpha or true
 
 	local r, g, b =
 		net.ReadUInt( 8 ),
@@ -184,26 +181,21 @@ end
 
 net.WriteVars =
 {
-	[TYPE_NIL]			= function ( t, v )	net.WriteUInt( t, 8 )								end,
-	[TYPE_STRING]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteString( v )		end,
-	[TYPE_NUMBER]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteDouble( v )		end,
-	[TYPE_TABLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteTable( v )			end,
-	[TYPE_BOOL]			= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteBool( v )			end,
-	[TYPE_ENTITY]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteEntity( v )		end,
-	[TYPE_VECTOR]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteVector( v )		end,
-	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteAngle( v )			end,
-	[TYPE_MATRIX]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteMatrix( v )		end,
-	[TYPE_COLOR]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteColor( v )			end,
+	[TYPE_NIL]			= function ( t, v )	net.WriteUInt( t, 6 )								end,
+	[TYPE_STRING]		= function ( t, v )	net.WriteUInt( t, 6 )	net.WriteString( v )		end,
+	[TYPE_NUMBER]		= function ( t, v )	net.WriteUInt( t, 6 )	net.WriteDouble( v )		end,
+	[TYPE_TABLE]		= function ( t, v )	net.WriteUInt( t, 6 )	net.WriteTable( v )			end,
+	[TYPE_BOOL]			= function ( t, v )	net.WriteUInt( t, 6 )	net.WriteBool( v )			end,
+	[TYPE_ENTITY]		= function ( t, v )	net.WriteUInt( t, 6 )	net.WriteEntity( v )		end,
+	[TYPE_VECTOR]		= function ( t, v )	net.WriteUInt( t, 6 )	net.WriteVector( v )		end,
+	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 6 )	net.WriteAngle( v )			end,
+	[TYPE_MATRIX]		= function ( t, v ) net.WriteUInt( t, 6 )	net.WriteMatrix( v )		end,
+	[TYPE_COLOR]		= function ( t, v ) net.WriteUInt( t, 6 )	net.WriteColor( v )			end,
+	[TYPE_PLAYER]		= function ( t, v ) net.WriteUInt( t, 6 )	net.WritePlayer( v )		end,
 }
 
 function net.WriteType( v )
-	local typeid = nil
-
-	if IsColor( v ) then
-		typeid = TYPE_COLOR
-	else
-		typeid = TypeID( v )
-	end
+	local typeid = IsColor( v ) and TYPE_COLOR or v:IsPlayer() and TYPE_PLAYER or TypeID( v )
 
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
@@ -224,11 +216,12 @@ net.ReadVars =
 	[TYPE_ANGLE]	= function ()	return net.ReadAngle() end,
 	[TYPE_MATRIX]	= function ()	return net.ReadMatrix() end,
 	[TYPE_COLOR]	= function ()	return net.ReadColor() end,
+	[TYPE_PLAYER]	= function ()	return net.ReadPlayer() end,
 }
 
 function net.ReadType( typeid )
 
-	typeid = typeid or net.ReadUInt( 8 )
+	typeid = typeid or net.ReadUInt( 6 )
 
 	local rv = net.ReadVars[ typeid ]
 	if ( rv ) then return rv() end
