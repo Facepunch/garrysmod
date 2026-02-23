@@ -194,8 +194,12 @@ net.WriteVars =
 	[TYPE_PLAYER]		= function ( t, v ) net.WriteUInt( t, 6 )	net.WritePlayer( v )		end,
 }
 
+local function IsValidPlayer( v )
+	return TypeID( v ) == TYPE_ENTITY and v:IsPlayer() or false
+end
+
 function net.WriteType( v )
-	local typeid = IsColor( v ) and TYPE_COLOR or v:IsPlayer() and TYPE_PLAYER or TypeID( v )
+	local typeid = IsColor( v ) and TYPE_COLOR or IsValidPlayer( v ) and TYPE_PLAYER or TypeID( v )
 
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
