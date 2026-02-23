@@ -1,6 +1,7 @@
 
 local COLOR = {}
 COLOR.__index = COLOR
+TYPE_COLOR = 45
 
 --[[---------------------------------------------------------
 	Register our metatable to make it accessible using FindMetaTable
