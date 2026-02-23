@@ -131,7 +131,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 			local flags = 0
 			if ( ent:IsNPC() and ent:Disposition( attacker ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
 
-			self:SendDeathNotice( attacker, InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
+			hook.Run( "SendDeathNotice", attacker, InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
 
 			return
 		end
@@ -148,7 +148,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	if ( IsValid( Entity( 1 ) ) and ent:IsNPC() and ent:Disposition( Entity( 1 ) ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
 	if ( IsValid( Entity( 1 ) ) and AttackerClass:IsNPC() and AttackerClass:Disposition( Entity( 1 ) ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	self:SendDeathNotice( self:GetDeathNoticeEntityName( AttackerClass ), InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
+	hook.Run( "SendDeathNotice", self:GetDeathNoticeEntityName( AttackerClass ), InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
 
 end
 
