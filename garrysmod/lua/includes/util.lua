@@ -32,8 +32,25 @@ Format = string.format
 -- Send C the flags for any materials we want to create
 --
 local C_Material = Material
-function Material( name, words )
+local MaterialCache = {}
 
+local function CacheLRU( id, nocache )
+	if ( nocache ) then return nil end
+	if ( MaterialCache[ id ] ) then
+		MaterialCache[ id ][ 2 ] = SysTime()
+	end
+
+	return MaterialCache[ id ] and MaterialCache[ id ][ 1 ]
+end
+
+function Material( name, words, nocache )
+
+	local id = ("%s%s"):format( name, words and "_" .. words or "" )
+
+	local cached = CacheLRU( id, nocache )
+	if ( cached ) then
+		return cached
+	end
 	if ( !words ) then return C_Material( name ) end
 
 	local str = (words:find("vertexlitgeneric") and "1" or "0")
@@ -44,9 +61,26 @@ function Material( name, words )
 	str = str .. (words:find("smooth") and "1" or "0")
 	str = str .. (words:find("ignorez") and "1" or "0")
 
-	return C_Material( name, str )
+	if ( nocache ) then
+		return C_Material( name, str )
+	end
+
+	MaterialCache[ id ] = {
+		C_Material( name, str ),
+		SysTime()
+	}
+
+	return MaterialCache[ id ][ 1 ]
 
 end
+
+timer.Create( "MaterialCacheClear", 60, 0, function()
+	for id, mat in pairs( MaterialCache ) do
+		if ( mat[ 2 ] < SysTime() - 60 ) then
+			MaterialCache[ id ] = nil
+		end
+	end
+end)
 
 local C_type = type
 function type( v )
