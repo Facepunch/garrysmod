@@ -13,6 +13,8 @@ local RenderEnt = NULL
 function Add( entities, color, blurx, blury, passes, add, ignorez )
 
 	if ( table.IsEmpty( entities ) ) then return end
+	local call = hook.Run("CanAddHalo", entities)
+	if ( call == false ) then return end
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
 
