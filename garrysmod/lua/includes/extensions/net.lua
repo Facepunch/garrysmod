@@ -1,6 +1,6 @@
 
--- TODO: Hack. Move to where color is defined?
-TYPE_COLOR = 255
+-- TODO: Move to where player is defined?
+TYPE_PLAYER = 254
 
 net.Receivers = {}
 
@@ -51,20 +51,13 @@ end
 --
 function net.WriteEntity( ent )
 
-	if ( !IsValid( ent ) ) then
-		net.WriteUInt( 0, MAX_EDICT_BITS )
-	else
-		net.WriteUInt( ent:EntIndex(), MAX_EDICT_BITS )
-	end
+	net.WriteUInt( IsValid( ent ) and ent:EntIndex() or 0, MAX_EDICT_BITS )
 
 end
 
 function net.ReadEntity()
 
-	local i = net.ReadUInt( MAX_EDICT_BITS )
-	if ( !i ) then return end
-
-	return Entity( i )
+	return Entity( net.ReadUInt( MAX_EDICT_BITS ) )
 
 end
 
@@ -73,15 +66,16 @@ end
 -- Read/Write a player to the stream
 --
 
--- TODO: Replace with MAX_PLAYER_BITS
-local maxplayers_bits = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
-
 function net.WritePlayer( ply )
-	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, maxplayers_bits )
+
+	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, MAX_PLAYER_BITS )
+
 end
 
 function net.ReadPlayer()
-	return Entity( net.ReadUInt( maxplayers_bits ) )
+
+	return Entity( net.ReadUInt( MAX_PLAYER_BITS ) )
+
 end
 
 
@@ -89,22 +83,21 @@ end
 -- Read/Write a color to/from the stream
 --
 function net.WriteColor( col, writeAlpha )
-	if ( writeAlpha == nil ) then writeAlpha = true end
 
-	assert( IsColor( col ), "net.WriteColor: color expected, got ".. type( col ) )
+	assert( IsColor( col ), "net.WriteColor: color expected, got " .. type( col ) )
 
 	local r, g, b, a = col:Unpack()
 	net.WriteUInt( r, 8 )
 	net.WriteUInt( g, 8 )
 	net.WriteUInt( b, 8 )
 
-	if ( writeAlpha ) then
+	if ( writeAlpha or writeAlpha == nil ) then
 		net.WriteUInt( a, 8 )
 	end
+
 end
 
 function net.ReadColor( readAlpha )
-	if ( readAlpha == nil ) then readAlpha = true end
 
 	local r, g, b =
 		net.ReadUInt( 8 ),
@@ -112,7 +105,7 @@ function net.ReadColor( readAlpha )
 		net.ReadUInt( 8 )
 
 	local a = 255
-	if ( readAlpha ) then a = net.ReadUInt( 8 ) end
+	if ( readAlpha or readAlpha == nil ) then a = net.ReadUInt( 8 ) end
 
 	return Color( r, g, b, a )
 
@@ -194,16 +187,18 @@ net.WriteVars =
 	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteAngle( v )			end,
 	[TYPE_MATRIX]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteMatrix( v )		end,
 	[TYPE_COLOR]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteColor( v )			end,
+	[TYPE_PLAYER]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WritePlayer( v )		end,
 }
 
-function net.WriteType( v )
-	local typeid = nil
+local function IsValidPlayer( v )
 
-	if IsColor( v ) then
-		typeid = TYPE_COLOR
-	else
-		typeid = TypeID( v )
-	end
+	return TypeID( v ) == TYPE_ENTITY and v:IsPlayer() or false
+
+end
+
+function net.WriteType( v )
+
+	local typeid = IsColor( v ) and TYPE_COLOR or IsValidPlayer( v ) and TYPE_PLAYER or TypeID( v )
 
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
@@ -224,6 +219,7 @@ net.ReadVars =
 	[TYPE_ANGLE]	= function ()	return net.ReadAngle() end,
 	[TYPE_MATRIX]	= function ()	return net.ReadMatrix() end,
 	[TYPE_COLOR]	= function ()	return net.ReadColor() end,
+	[TYPE_PLAYER]	= function ()	return net.ReadPlayer() end,
 }
 
 function net.ReadType( typeid )
