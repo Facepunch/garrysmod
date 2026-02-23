@@ -256,4 +256,3 @@ function SWEP:Think()
 	end
 
 end
-
