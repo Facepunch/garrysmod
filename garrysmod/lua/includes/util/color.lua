@@ -10,49 +10,16 @@ RegisterMetaTable( "Color", COLOR )
 --[[---------------------------------------------------------
 	To easily create a color table
 -----------------------------------------------------------]]
+function Color( r, g, b, a )
 
-local ColorCache = {}
-
-local function CacheLRU( id, nocache )
-	if ( nocache ) then return nil end
-	if ( ColorCache[ id ] ) then
-		ColorCache[ id ][ 2 ] = SysTime()
-	end
-
-	return ColorCache[ id ] and ColorCache[ id ][ 1 ]
-end
-
-function Color( r, g, b, a, nocache )
-	a = tonumber( a or 255 )
-	local id = ("%d_%d_%d_%d"):format( r, g, b, a )
-	local cached = CacheLRU( id, nocache )
-
-	if ( cached ) then
-		return cached
-	end
-
-	local color = setmetatable( {
+	return setmetatable( {
 		r = math.min( tonumber( r ), 255 ),
 		g = math.min( tonumber( g ), 255 ),
 		b = math.min( tonumber( b ), 255 ),
-		a = math.min( a, 255 )
+		a = math.min( tonumber( a or 255 ), 255 )
 	}, COLOR )
 
-	if ( nocache ) then
-		return color
-	end
-
-	ColorCache[ id ] = { color, SysTime() }
-	return ColorCache[ id ][ 1 ]
 end
-
-timer.Create( "ColorCacheClear", 60, 0, function()
-	for id, col in pairs( ColorCache ) do
-		if ( col[ 2 ] < SysTime() - 60 ) then
-			ColorCache[ id ] = nil
-		end
-	end
-end)
 
 --[[---------------------------------------------------------
 	Change the alpha of a color
