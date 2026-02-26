@@ -118,9 +118,7 @@ end
 -----------------------------------------------------------]]
 local gmatch = string.gmatch
 local find = string.find
-local ceil = math.ceil
 local GetTextSize = surface.GetTextSize
-local max = math.max
 function DrawText( text, font, x, y, colour, xalign )
 
 	if ( font == nil ) then font = "DermaDefault" end
@@ -130,22 +128,21 @@ function DrawText( text, font, x, y, colour, xalign )
 
 	local curX = x
 	local curY = y
-	local curString = ""
 
 	surface.SetFont( font )
-	local sizeX, lineHeight = GetTextSize( "\n" )
-	local tabWidth = 50
+	local spaceWidth, lineHeight = GetTextSize( " \n" )
+	local tabWidth = spaceWidth * 4
 
 	for str in gmatch( text, "[^\n]*" ) do
-		if #str > 0 then
-			if find( str, "\t" ) then -- there's tabs, some more calculations required
+		if ( str != "" ) then
+			if ( find( str, "\t" ) ) then -- there's tabs, some more calculations required
 				for tabs, str2 in gmatch( str, "(\t*)([^\t]*)" ) do
-					curX = ceil( ( curX + tabWidth * max( #tabs - 1, 0 ) ) / tabWidth ) * tabWidth
+					curX = curX + #tabs * tabWidth
 
-					if #str2 > 0 then
+					if ( str2 != "" ) then
 						SimpleText( str2, font, curX, curY, colour, xalign )
 
-						local w, _ = GetTextSize( str2 )
+						local w = GetTextSize( str2 )
 						curX = curX + w
 					end
 				end
@@ -157,6 +154,7 @@ function DrawText( text, font, x, y, colour, xalign )
 			curY = curY + ( lineHeight / 2 )
 		end
 	end
+
 end
 
 --[[---------------------------------------------------------
@@ -312,3 +310,4 @@ end
 function NoTexture()
 	surface.SetTexture( tex_white )
 end
+
