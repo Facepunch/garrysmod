@@ -141,21 +141,15 @@ end
 	Name: DrawWorldModel
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
-function SWEP:DrawWorldModel()
+local Entity = FindMetaTable( "Entity" )
 
-	self:DrawModel()
-
-end
+SWEP.DrawWorldModel = Entity.DrawModel
 
 --[[---------------------------------------------------------
 	Name: DrawWorldModelTranslucent
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
-function SWEP:DrawWorldModelTranslucent()
-
-	self:DrawModel()
-
-end
+SWEP.DrawWorldModelTranslucent = Entity.DrawModel
 
 --[[---------------------------------------------------------
 	Name: AdjustMouseSensitivity
