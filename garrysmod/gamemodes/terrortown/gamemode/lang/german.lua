@@ -256,7 +256,6 @@ L.set_fastswmenu_tip  = "Wenn der schnelle Waffenwechsel aktiv ist, wird das Waf
 L.set_wswitch         = "Verhindere das automatische Schließen des Waffenwechselmenüs."
 L.set_wswitch_tip     = "Normalerweise schließt das Waffenwechselmenü automatisch nach ein paar Sekunden, nachdem du zuletzt gescrollet hast. Aktiviere dies, damit es geöffnet bleibt."
 L.set_cues            = "Spiele einen Ton ab, wenn eine Runde beginnt oder endet"
-L.set_msg_cue         = "Spiele einen Ton ab, wenn eine Benachrichtigung erscheint"
 
 L.set_title_play    = "Spieleinstellungen"
 
@@ -1072,3 +1071,6 @@ L.idle_popup_title = "Untätig"
 
 --- 2021-06-07
 L.sb_playervolume = "Lautstärke"
+
+--- 2023-07-28
+L.set_msg_cue = "Spiele einen Ton ab, wenn eine Benachrichtigung erscheint"
