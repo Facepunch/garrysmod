@@ -159,7 +159,7 @@ function CLSCORE:BuildScorePanel(dpanel)
 
    for i = 1, #scorenames do
       local name = scorenames[i]
-	  
+
       if isstring(name) then
          if name == "" then
             -- skull icon column
@@ -201,9 +201,10 @@ function CLSCORE:BuildScorePanel(dpanel)
 
             local skull = vgui.Create("DImage", surv)
             skull:SetMaterial(skull_icon)
-            skull:SetTooltip("Dead")
+            skull:SetTooltip(T("dead"))
             skull:SetKeepAspect(true)
             skull:SetSize(18,18)
+            skull:SetMouseInputEnabled(true)
          end
 
          local points_own   = KillsToPoints(s, was_traitor)
@@ -528,7 +529,7 @@ function CLSCORE:Init(events)
    local starttime = 0
    local traitors, detectives
    local scores, nicks = {}, {}
-   
+
    local game, selected, spawn = false, false, false
    for i = 1, #events do
       local e = events[i]
@@ -616,5 +617,5 @@ net.Receive("TTT_ReportStream", function()
 end)
 
 concommand.Add("ttt_save_events", function()
-	CLSCORE:SaveLog()
+   CLSCORE:SaveLog()
 end)

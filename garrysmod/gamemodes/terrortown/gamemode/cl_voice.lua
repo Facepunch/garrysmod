@@ -6,9 +6,26 @@ local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 local string = string
 
+local LastWordContext = {
+   [KILL_SUICIDE] = "words_suicide",
+   [KILL_FALL] = "words_fall",
+   [KILL_BURN] = "words_burn"
+}
+
 local function LastWordsRecv()
    local sender = net.ReadPlayer()
    local words  = net.ReadString()
+   local death_type = net.ReadUInt(2)
+
+   -- only append "--" if there's no ending interpunction
+   local final = string.match(words, "[\\.\\!\\?]$") != nil
+   local lastWordsStr = words .. (final and " " or "-- ")
+
+   -- add optional context relating to death type
+   if death_type != KILL_NORMAL then
+      local context = LastWordContext[death_type] or ""
+      lastWordsStr = lastWordsStr .. Format("*%s*", GetTranslation(context))
+   end
 
    local was_detective = IsValid(sender) and sender:IsDetective()
    local nick = IsValid(sender) and sender:Nick() or "<Unknown>"
@@ -18,7 +35,7 @@ local function LastWordsRecv()
                 was_detective and Color(50, 200, 255) or Color(0, 200, 0),
                 nick,
                 COLOR_WHITE,
-                ": " .. words)
+                ": " .. lastWordsStr)
 end
 net.Receive("TTT_LastWordsMsg", LastWordsRecv)
 
@@ -82,19 +99,19 @@ local function AddDetectiveText(ply, text)
 end
 
 function GM:OnPlayerChat(ply, text, teamchat, dead)
-   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end 
-   
+   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end
+
    if ply:IsActiveDetective() then
       AddDetectiveText(ply, text)
       return true
    end
-   
+
    local team = ply:Team() == TEAM_SPEC
-   
+
    if team and not dead then
       dead = true
    end
-   
+
    if teamchat and ((not team and not ply:IsSpecial()) or team) then
       teamchat = false
    end
@@ -173,8 +190,8 @@ function RADIO:ShowRadioCommands(state)
          radioframe:SetKeyboardInputEnabled(false)
 
          radioframe:CenterVertical()
-         
-         
+
+
          -- This is not how you should do things
          radioframe.ForceResize = function(s)
                                      local w, label = 0, nil
@@ -440,7 +457,7 @@ local function VoiceNotifyThink(pnl)
    if not (IsValid(pnl) and LocalPlayer() and IsValid(pnl.ply)) then return end
    if not (GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply != LocalPlayer())) then return end
    if LocalPlayer():IsActiveTraitor() && pnl.ply:IsActiveTraitor() then return end
-   
+
    local d = LocalPlayer():GetPos():Distance(pnl.ply:GetPos())
 
    pnl:SetAlpha(math.max(-0.1 * d + 255, 15))
@@ -475,7 +492,7 @@ function GM:PlayerStartVoice( ply )
    local pnl = g_VoicePanelList:Add("VoiceNotify")
    pnl:Setup(ply)
    pnl:Dock(TOP)
-   
+
    local oldThink = pnl.Think
    pnl.Think = function( self )
                   oldThink( self )
