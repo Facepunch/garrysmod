@@ -31,21 +31,20 @@ Format = string.format
 --
 -- Send C the flags for any materials we want to create
 --
-local mat_flags = { 0, 0, 0, 0, 0, 0, 0 }
 local C_Material = Material
 function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
 
-	mat_flags[ 1 ] = string.find( words, "vertexlitgeneric", 1, true ) and 1 or 0
-	mat_flags[ 2 ] = string.find( words, "nocull", 1, true ) and 1 or 0
-	mat_flags[ 3 ] = string.find( words, "alphatest", 1, true ) and 1 or 0
-	mat_flags[ 4 ] = string.find( words, "mips", 1, true ) and 1 or 0
-	mat_flags[ 5 ] = string.find( words, "noclamp", 1, true ) and 1 or 0
-	mat_flags[ 6 ] = string.find( words, "smooth", 1, true ) and 1 or 0
-	mat_flags[ 7 ] = string.find( words, "ignorez", 1, true ) and 1 or 0
-
-	return C_Material( name, table.concat( mat_flags, "" ) )
+	return C_Material( name, string.format("%d%d%d%d%d%d%d",
+		string.find( words, "vertexlitgeneric", 1, true ) and 1 or 0,
+		string.find( words, "nocull", 1, true ) and 1 or 0,
+		string.find( words, "alphatest", 1, true ) and 1 or 0,
+		string.find( words, "mips", 1, true ) and 1 or 0,
+		string.find( words, "noclamp", 1, true ) and 1 or 0,
+		string.find( words, "smooth", 1, true ) and 1 or 0,
+		string.find( words, "ignorez", 1, true ) and 1 or 0)
+	)
 
 end
 
@@ -533,4 +532,5 @@ function GetConVarString( name )
 	local c = GetConVar( name )
 	return ( c and c:GetString() ) or ""
 end
+
 
