@@ -36,15 +36,15 @@ function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
 
-	local str = (words:find("vertexlitgeneric") and "1" or "0")
-	str = str .. (words:find("nocull") and "1" or "0")
-	str = str .. (words:find("alphatest") and "1" or "0")
-	str = str .. (words:find("mips") and "1" or "0")
-	str = str .. (words:find("noclamp") and "1" or "0")
-	str = str .. (words:find("smooth") and "1" or "0")
-	str = str .. (words:find("ignorez") and "1" or "0")
-
-	return C_Material( name, str )
+	return C_Material( name, string.format("%d%d%d%d%d%d%d",
+		string.find( words, "vertexlitgeneric", 1, true ) and 1 or 0,
+		string.find( words, "nocull", 1, true ) and 1 or 0,
+		string.find( words, "alphatest", 1, true ) and 1 or 0,
+		string.find( words, "mips", 1, true ) and 1 or 0,
+		string.find( words, "noclamp", 1, true ) and 1 or 0,
+		string.find( words, "smooth", 1, true ) and 1 or 0,
+		string.find( words, "ignorez", 1, true ) and 1 or 0)
+	)
 
 end
 
@@ -532,3 +532,5 @@ function GetConVarString( name )
 	local c = GetConVar( name )
 	return ( c and c:GetString() ) or ""
 end
+
+
