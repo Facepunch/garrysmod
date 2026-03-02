@@ -191,10 +191,11 @@ function PANEL:AddCategory( name, catName, tItems )
 	local name_category = spawnmenu.GetTools()[tabID] and spawnmenu.GetTools()[tabID].Label or "Other"
 
 	self.ToolTable = self.ToolTable or {}
-	self.ToolTable[ name ] = {
+		table.insert( self.ToolTable, {
+		name = name,
 		Text = catName,
 		Items = tItems
-	}
+	} )
 
 	for k, v in ipairs( tItems ) do
 
@@ -247,8 +248,8 @@ end
 function PANEL:ReloadTools()
 	self.List:Clear()
 
-	for k, v in pairs( self.ToolTable ) do
-		self:AddCategory( k, v[ "Text" ], v[ "Items" ] )
+	for _, v in ipairs( self.ToolTable ) do
+		self:AddCategory( v.name, v[ "Text" ], v[ "Items" ] )
 	end
 end
 
