@@ -183,14 +183,30 @@ end
 function PANEL:AddCategory( name, catName, tItems )
 
 	local Category = self.List:Add( catName )
+	local tabID = self:GetTabID()
 
-	Category:SetCookieName( "ToolMenu." .. tostring( self:GetTabID() ) .. "." .. tostring( name ) )
+	Category:SetCookieName( "ToolMenu." .. tostring( tabID ) .. "." .. tostring( name ) )
 
 	local tools = {}
-	for k, v in pairs( tItems ) do
-		local name = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
-		if ( name:StartsWith( "#" ) ) then name = name:sub( 2 ) end
-		tools[ language.GetPhrase( name ) ] = v
+	local name_category = spawnmenu.GetTools()[tabID] and spawnmenu.GetTools()[tabID].Label or "Other"
+
+	self.ToolTable = self.ToolTable or {}
+	self.ToolTable[ name ] = {
+		Text = catName,
+		Items = tItems
+	}
+
+	for k, v in ipairs( tItems ) do
+
+		if hook.Run( "SpawnMenuShowTool", name_category, v ) == false then continue end
+
+		local name_tool = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
+		if ( name_tool:StartsWith( "#" ) ) then name_tool = name_tool:sub( 2 ) end
+		tools[ language.GetPhrase( name_tool ) ] = v
+	end
+
+	if ( table.Count( tools ) < 1 ) then
+		Category:SetVisible( false )
 	end
 
 	local currentMode = GetConVar( "gmod_toolmode" ):GetString()
@@ -226,6 +242,14 @@ function PANEL:AddCategory( name, catName, tItems )
 
 	self:InvalidateLayout()
 
+end
+
+function PANEL:ReloadTools()
+	self.List:Clear()
+
+	for k, v in pairs( self.ToolTable ) do
+		self:AddCategory( k, v[ "Text" ], v[ "Items" ] )
+	end
 end
 
 -- Internal, makes the given tool highlighted in its DCategoryList
