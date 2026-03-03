@@ -74,7 +74,7 @@ function SWEP:PrimaryAttack()
 
 	ent:SetPos( targetPos )
 
-	ent:SetAngles( owner:EyeAngles() )
+	ent:SetAngles( fwd:Angle() )
 	ent:SetOwner( owner )
 	ent:Spawn()
 	ent:Activate()
