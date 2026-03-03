@@ -27,7 +27,7 @@ Scheme
 		"GMod_BG_Opaque"	"108 111 114 250"
 		"GMod_BG"			"108 111 114 0" // SRCDS cannot do transparency, so we gotta replace Blank with this.
 		"GMod_WhiteBlank"	"255 255 255 0"
-		
+
 	}
 
 	///////////////////// BASE SETTINGS ////////////////////////
@@ -478,6 +478,19 @@ Scheme
 				"tall"		"26"
 				"weight"	"900"
 				"italic"	"1"
+				"antialias"	"1"
+			}
+		}
+		"CloseCaption_Small"
+		{
+			"1"
+			{
+				"name"		"Tahoma" [!$OSX]
+				"name"		"Verdana" [$OSX]
+				"tall"		"16" [!$OSX]
+				"tall"		"14" [$OSX]
+				"weight"	"900"
+				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
 				"antialias"	"1"
 			}
 		}
