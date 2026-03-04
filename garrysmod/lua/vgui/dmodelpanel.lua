@@ -102,7 +102,7 @@ function PANEL:DrawModel()
 
 		render.ClearDepth( false )
 
-		render.SetScissorRect( leftx, topy, rightx, bottomy, enatruebled )
+		render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 	end
 
 	local ret = self:PreDrawModel( self.Entity )
@@ -206,3 +206,4 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 end
 
 derma.DefineControl( "DModelPanel", "A panel containing a model", PANEL, "DButton" )
+
