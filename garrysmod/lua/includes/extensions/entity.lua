@@ -727,4 +727,3 @@ function vehicle:GetCameraDistance()
 	return self:GetDTFloat( 3 )
 
 end
-
