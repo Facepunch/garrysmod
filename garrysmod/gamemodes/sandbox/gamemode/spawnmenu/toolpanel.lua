@@ -45,6 +45,7 @@ function PANEL:Init()
 
 	self.HorizontalDivider:SetLeft( leftContainer )
 
+
 	self.Content = vgui.Create( "DCategoryList", self.HorizontalDivider )
 	self.HorizontalDivider:SetRight( self.Content )
 
@@ -73,10 +74,10 @@ function PANEL:Think()
 
 		if ( !self.IsToolTab ) then return end
 
-		local disabled = self.ActiveCPName && self.ConVar && !self.ConVar:GetBool() or false
+		local disabled = self.ActiveCPName and self.ConVar and !self.ConVar:GetBool() or false
 		local noToolgun = IsValid( LocalPlayer() ) && !LocalPlayer():HasWeapon( "gmod_tool" )
 
-		self.WarningLabel.Text = noToolgun && language.GetPhrase( "#spawnmenu.tools.no_toolgun" ) or language.GetPhrase( "#spawnmenu.tools.disabled_selected" )
+		self.WarningLabel.Text = noToolgun and language.GetPhrase( "#spawnmenu.tools.no_toolgun" ) or language.GetPhrase( "#spawnmenu.tools.disabled_selected" )
 		if ( ( disabled or noToolgun ) != self.WarningLabel:IsVisible() ) then
 			self.WarningLabel:SetVisible( disabled or noToolgun )
 			self:InvalidateLayout()
@@ -135,18 +136,35 @@ function PANEL:PerformToolFiltering( text )
 end
 
 function PANEL:UpdateToolDisabledStatus()
-
 	if !self.Tools or #self.Tools < 1 then return end
 
 	local ply = LocalPlayer()
+	local total = 0
+	local disabled = 0
+	local oldcategory = nil
 	for _, item in ipairs( self.Tools or {} ) do
 
 		local cvar = item.ConVar
-		local enabled = cvar && cvar:GetBool() && hook.Run( "CanTool", ply, ply:GetEyeTrace(), item.Name, ply:GetTool(), -1 ) != false
+		local enabled = cvar && cvar:GetBool() && hook.Run( "CanTool", ply, ply:GetEyeTrace(), item.Name, ply:GetTool(item.Name), -1 ) != false
 		if ( enabled == item:IsEnabled() && self.ViewDisabled == spawnmenu_view_disabled_tools:GetBool() ) then continue end
 
 		self:SetEnabledItem( item, enabled )
 
+		if oldcategory != item.Category then
+			oldcategory = item.Category
+			total = 0
+			disabled = 0
+		end
+
+		total = total + 1
+		if !enabled then disabled = disabled + 1 end
+
+		local category = item:GetParent()
+		if disabled >= total && !spawnmenu_view_disabled_tools:GetBool() && category:IsVisible() then
+			category:SetVisible( false )
+		elseif !category:IsVisible() && ( disabled < total or spawnmenu_view_disabled_tools:GetBool() ) then
+			category:SetVisible( true )
+		end
 	end
 
 	self.ViewDisabled = spawnmenu_view_disabled_tools:GetBool()
@@ -156,7 +174,6 @@ end
 function PANEL:SetEnabledItem( item, enabled )
 
 	if ( !spawnmenu_view_disabled_tools:GetBool() ) then
-
 		local category = item:GetParent()
 
 		if ( category:IsVisible() && category:GetExpanded() && !enabled ) then
@@ -250,6 +267,7 @@ function PANEL:AddCategory( name, catName, tItems )
 		item.Controls					= v.Controls
 		item.Text						= v.Text
 		item.ConVar 					= GetConVar( "toolmode_allow_" .. v.ItemName )
+		item.Category					= catName
 
 		-- Mark this button as the one to select on first spawnmenu open
 		if ( currentMode == v.ItemName ) then
