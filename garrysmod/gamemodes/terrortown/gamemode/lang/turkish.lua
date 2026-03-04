@@ -138,10 +138,6 @@ L.radio_button_huge    = "H.U.G.E. patlaması"
 L.radio_button_c4      = "C4 bip sesi"
 L.radio_button_burn    = "Yanma sesi"
 L.radio_button_steps   = "Adım sesi"
-L.radio_button_glock   = "Glock atışları"
-L.radio_button_sipist  = "Susturuculu silah"
-L.radio_button_tele    = "Işınlanma"
-L.radio_button_heal    = "Sağlık edinimi"
 
 -- Intro screen shown after joining
 L.intro_help     = "Oyunda yeniyseniz, talimatlar için F1'e basın!"
@@ -260,7 +256,6 @@ L.set_fastswmenu_tip  = "Hızlı silah değiştirme etkinleştirildiğinde, men�
 L.set_wswitch         = "Silah değiştirme menüsünü otomatik kapatmayı devre dışı bırak"
 L.set_wswitch_tip     = "Varsayılan olarak silah değiştirici, son kaydırmadan birkaç saniye sonra otomatik olarak kapanır. Açık kalması için bunu etkinleştirin."
 L.set_cues            = "Bir raunt başladığında veya bittiğinde ses işaretini çal"
-L.set_msg_cue         = "Bir bildirim göründüğünde ses işaretini çal"
 
 
 L.set_title_play    = "Oynanış Ayarları"
@@ -1085,6 +1080,9 @@ L.sb_playervolume = "Oyuncu Sesi"
 --- 2021-09-22
 L.tip41 = "Puan tablosundaki sessize alma simgesine sağ tıklayarak bir oyuncunun mikrofon sesini ayarlayabilirsin."
 
+--- 2023-07-28
+L.set_msg_cue = "Bir bildirim göründüğünde ses işaretini çal"
+
 --- 2025-03-11
 L.set_title_cross = "Nişangâh Ayarları"
 
@@ -1093,3 +1091,9 @@ L.set_cross_color = "Özel renk"
 L.set_hip_cross_opacity = "Opaklık"
 L.set_cross_thickness = "Kalınlık"
 L.set_cross_outlinethickness = "Dış çizgi kalınlığı"
+
+--- 2025-09-04
+L.radio_button_glock   = "Glock atışları"
+L.radio_button_sipist  = "Susturuculu silah"
+L.radio_button_tele    = "Işınlanma"
+L.radio_button_heal    = "Sağlık edinimi"
