@@ -507,8 +507,6 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		favorite:		isFav == "true"
 	};
 
-	if ( data.flag == "eu" ) data.flag = "europeanunion";
-
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
 	data.hasmap = DoWeHaveMap( data.map );
