@@ -39,3 +39,9 @@ garrysmod/gamemodes/*
 !garrysmod/gamemodes/sandbox
 !garrysmod/gamemodes/terrortown
 
+# temp allow to include in PR. remove if merged.
+!/garrysmod/materials
+/garrysmod/materials/*
+!/garrysmod/materials/flags16
+/garrysmod/materials/flags16/*
+!/garrysmod/materials/flags16/eu.png
