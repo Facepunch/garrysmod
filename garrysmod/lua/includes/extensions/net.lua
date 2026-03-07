@@ -233,6 +233,4 @@ function net.ReadType( typeid )
 	local rv = net.ReadVars[ typeid ]
 	if ( rv ) then return rv() end
 
-	error( "net.ReadType: Couldn't read type " .. typeid )
-
 end
