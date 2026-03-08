@@ -1,6 +1,6 @@
 ---- German language strings
 
-local L = LANG.CreateLanguage("Deutsch")
+local L = LANG.CreateLanguage("Deutsch", "de")
 
 --- General text used in various places
 L.traitor    = "Verräter"
