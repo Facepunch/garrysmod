@@ -1,6 +1,6 @@
 ---- Ukrainian language strings
 
-local L = LANG.CreateLanguage("Українська")
+local L = LANG.CreateLanguage("Українська", "uk")
 
 --- General text used in various places
 L.traitor    = "Зрадник"

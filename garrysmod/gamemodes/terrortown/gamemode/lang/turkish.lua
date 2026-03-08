@@ -1,6 +1,6 @@
 ---- Turkish language strings
 
-local L = LANG.CreateLanguage("Türkçe")
+local L = LANG.CreateLanguage("Türkçe", "tr")
 
 -- General text used in various places
 L.traitor    = "Hain"

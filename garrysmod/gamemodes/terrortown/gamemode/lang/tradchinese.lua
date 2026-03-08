@@ -1,6 +1,6 @@
 ---- Traditional Chinese language strings
 
-local L = LANG.CreateLanguage("正體中文 ")
+local L = LANG.CreateLanguage("正體中文 ", "zh-TW")
 
 --- General text used in various places
 L.traitor    = "叛徒"
