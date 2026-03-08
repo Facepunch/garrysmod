@@ -257,7 +257,6 @@ L.set_fastswmenu_tip  = "Quand le changement d'arme rapide est activé, le menu 
 L.set_wswitch         = "Désactiver la fermeture automatique du menu des armes"
 L.set_wswitch_tip     = "Par défaut les menu des armes ferme automatiquement après quelques secondes après le dernier scroll. Activez ceci pour le faire rester."
 L.set_cues            = "Émettre un son quand un round commence ou finit"
-L.set_msg_cue         = "Émettre un son quand vous recevez une notification"
 
 
 L.set_title_play    = "Options de gameplay"
@@ -1089,6 +1088,9 @@ L.sb_playervolume = "Volume du joueur"
 
 --- 2021-09-22
 L.tip41 = "Vous pouvez ajuster le volume du microphone d'une joueur avec un clic droit sur l'icône mute dans le tableau des scores."
+
+--- 2023-07-28
+L.set_msg_cue = "Émettre un son quand vous recevez une notification"
 
 --- 2025-03-11
 L.set_title_cross = "Paramètres du réticule"

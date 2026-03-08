@@ -138,10 +138,6 @@ L.radio_button_huge    = "H.U.G.E burst"
 L.radio_button_c4      = "C4 beeping"
 L.radio_button_burn    = "Burning"
 L.radio_button_steps   = "Footsteps"
-L.radio_button_glock   = "Glock shots"
-L.radio_button_sipist  = "Silenced shots"
-L.radio_button_tele    = "Teleport"
-L.radio_button_heal    = "Healing"
 
 
 -- Intro screen shown after joining
@@ -261,7 +257,6 @@ L.set_fastswmenu_tip  = "When fast weapons switch is enabled, the menu switcher 
 L.set_wswitch         = "Disable weapon switch menu auto-closing"
 L.set_wswitch_tip     = "By default the weapon switcher automatically closes a few seconds after you last scroll. Enable this to make it stay up."
 L.set_cues            = "Play sound cue when a round begins or ends"
-L.set_msg_cue         = "Play sound cue when a notification appears"
 
 
 L.set_title_play    = "Gameplay settings"
@@ -1092,6 +1087,9 @@ L.sb_playervolume = "Player Volume"
 --- 2021-09-22
 L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute icon in the scoreboard."
 
+--- 2023-07-28
+L.set_msg_cue = "Play sound cue when a notification appears"
+
 --- 2025-03-11
 L.set_title_cross = "Crosshair settings"
 
@@ -1100,3 +1098,34 @@ L.set_cross_color = "Custom color"
 L.set_hip_cross_opacity = "Opacity"
 L.set_cross_thickness = "Thickness"
 L.set_cross_outlinethickness = "Outline thickness"
+
+--- 2025-09-04
+L.radio_button_glock  = "Glock shots"
+L.radio_button_sipist = "Silenced shots"
+L.radio_button_tele   = "Teleport"
+L.radio_button_heal   = "Healing"
+
+--- 2026-02-27
+L.dead         = "Dead"
+L.disconnected = "Disconnected"
+
+L.words_suicide = "kills self"
+L.words_fall    = "SPLUT"
+L.words_burn    = "crackle"
+
+L.ev_win_traitor_tip = "Traitors won"
+L.ev_win_inno_tip = "Innocents won"
+L.ev_win_time_tip = "Timelimit"
+
+L.ev_start_tip = "Game"
+L.ev_credit_tip = "Credit found"
+L.ev_body_tip = "Body discovered"
+
+L.ev_c4_disarm_tip = "C4 disarm"
+L.ev_c4_boom_tip = "C4 exploded"
+L.ev_c4_plant_tip = "C4 planted"
+
+L.ev_suicide = "Suicide"
+L.ev_teamkill = "Teamkill"
+L.ev_t_killed_i = "Traitor killed innocent"
+L.ev_i_killed_t = "Innocent killed traitor"
