@@ -135,6 +135,11 @@ function PANEL:PerformToolFiltering( text )
 
 end
 
+local FakeTrace = {
+	Entity = game.GetWorld(),
+	Hit = false,
+}
+
 function PANEL:UpdateToolDisabledStatus()
 	if !self.Tools or #self.Tools < 1 then return end
 
@@ -145,7 +150,8 @@ function PANEL:UpdateToolDisabledStatus()
 	for _, item in ipairs( self.Tools or {} ) do
 
 		local cvar = item.ConVar
-		local enabled = cvar && cvar:GetBool() && hook.Run( "CanTool", ply, ply:GetEyeTrace(), item.Name, ply:GetTool(item.Name), -1 ) != false
+		local enabled = cvar && cvar:GetBool()
+		if ( enabled ) then enabled = hook.Run( "CanTool", ply, FakeTrace, item.Name, ply:GetTool( item.Name ), 4 ) != false end
 		if ( enabled == item:IsEnabled() && self.ViewDisabled == spawnmenu_view_disabled_tools:GetBool() ) then continue end
 
 		self:SetEnabledItem( item, enabled )
