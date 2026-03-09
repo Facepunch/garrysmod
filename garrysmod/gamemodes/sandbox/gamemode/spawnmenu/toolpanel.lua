@@ -150,8 +150,7 @@ function PANEL:UpdateToolDisabledStatus()
 	for _, item in ipairs( self.Tools or {} ) do
 
 		local cvar = item.ConVar
-		local enabled = cvar && cvar:GetBool()
-		if ( enabled ) then enabled = hook.Run( "CanTool", ply, FakeTrace, item.Name, ply:GetTool( item.Name ), 4 ) != false end
+		local enabled = cvar && cvar:GetBool() && hook.Run( "CanTool", ply, FakeTrace, item.Name, ply:GetTool( item.Name ), 4 ) != false
 		if ( enabled == item:IsEnabled() && self.ViewDisabled == spawnmenu_view_disabled_tools:GetBool() ) then continue end
 
 		self:SetEnabledItem( item, enabled )
