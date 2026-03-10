@@ -2,9 +2,33 @@
 
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
+local SafeTranslate = LANG.TryTranslation
+
+local lower = string.lower
 
 -- Buyable weapons are loaded automatically. Buyable items are defined in
 -- equip_items_shd.lua
+
+local function ItemIsWeapon(item) return not tonumber(item.id) end
+local function CanCarryWeapon(item) return LocalPlayer():CanCarryType(item.kind) end
+
+local function SortEquipment(is)
+   table.sort(is, function(a, b)
+      local aItem, bItem = not ItemIsWeapon(a), not ItemIsWeapon(b)
+
+      if aItem or bItem then
+         -- sort items by id
+         if aItem and bItem then
+            return a.id < b.id
+         end
+
+         -- keep items above weapons
+         return aItem
+      end
+
+      return lower(SafeTranslate(a.name)) < lower(SafeTranslate(b.name))
+   end)
+end
 
 local Equipment = nil
 function GetEquipmentForRole(role)
@@ -46,13 +70,16 @@ function GetEquipmentForRole(role)
          end
       end
 
-      -- mark custom items
       for r, is in pairs(tbl) do
+         -- mark custom items
          for _, i in pairs(is) do
             if i and i.id then
                i.custom = not table.HasValue(DefaultEquipment[r], i.id)
             end
          end
+
+         -- sort weapons alphabetically
+         SortEquipment(is)
       end
 
       Equipment = tbl
@@ -61,9 +88,14 @@ function GetEquipmentForRole(role)
    return Equipment and Equipment[role] or {}
 end
 
+hook.Add("TTTLanguageChanged", "TTT_ReSortEquipment", function()
+   if not Equipment then return end
 
-local function ItemIsWeapon(item) return not tonumber(item.id) end
-local function CanCarryWeapon(item) return LocalPlayer():CanCarryType(item.kind) end
+   for r, is in pairs(Equipment) do
+      SortEquipment(is)
+   end
+end)
+
 
 local color_bad = Color(220, 60, 60, 255)
 local color_good = Color(0, 200, 0, 255)
@@ -139,8 +171,6 @@ function PANEL:SelectPanel(pnl)
 end
 vgui.Register("EquipSelect", PANEL, "DPanelSelect")
 
-
-local SafeTranslate = LANG.TryTranslation
 
 local color_darkened = Color(255,255,255, 80)
 -- TODO: make set of global role colour defs, these are same as wepswitch
@@ -452,11 +482,13 @@ function GM:OnContextMenuOpen()
    end
 end
 
+local bitsRequired = util.BitsRequired
+
 local function ReceiveEquipment()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_items = net.ReadInt(util.BitsRequired(EQUIP_MAX, true))
+   ply.equipment_items = net.ReadInt(bitsRequired(EQUIP_MAX, true))
 end
 net.Receive("TTT_Equipment", ReceiveEquipment)
 
@@ -493,8 +525,6 @@ local function ReceiveBought()
    end
 end
 net.Receive("TTT_Bought", ReceiveBought)
-
-local bitsRequired = util.BitsRequired
 
 -- Player received the item he has just bought, so run clientside init
 local function ReceiveBoughtItem()
