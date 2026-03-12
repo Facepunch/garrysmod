@@ -87,6 +87,8 @@ function HELPSCRN:Show()
 
    cb = dgui:CheckBox(GetTranslation("set_msg_cue"), "ttt_cl_msg_soundcue")
 
+   cb = dgui:CheckBox(GetTranslation("set_hide_unbuyable"), "ttt_equipment_hide_unbuyable")
+
    dsettings:AddItem(dgui)
 
    --- Gameplay area

@@ -1129,3 +1129,9 @@ L.ev_suicide = "Suicide"
 L.ev_teamkill = "Teamkill"
 L.ev_t_killed_i = "Traitor killed innocent"
 L.ev_i_killed_t = "Innocent killed traitor"
+
+-- 2026-03-11
+L.equip_sort_default = "Default"
+L.equip_sort_slot    = "Slot"
+
+L.set_hide_unbuyable = "Move unbuyable equipment items to the bottom of the list"
