@@ -369,4 +369,3 @@ WorkshopFiles.prototype.UpdatePageNav = function()
 		self.Scope.Pages.push( i );
 	}
 }
-
