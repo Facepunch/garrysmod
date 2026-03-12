@@ -48,7 +48,7 @@ local hl2_ammo_replace = {
    ["item_healthcharger"] = "item_ammo_revolver_ttt",
    ["item_ammo_crate"] = "weapon_ttt_confgrenade",
    ["item_item_crate"] = "ttt_random_ammo"
-};
+}
 
 -- Replace an ammo entity with the TTT version
 -- Optional cls param is the classname, if the caller already has it handy
@@ -77,7 +77,7 @@ local hl2_weapon_replace = {
    ["weapon_slam"] = "item_ammo_pistol_ttt",
    ["weapon_frag"] = "weapon_zm_revolver",
    ["weapon_crowbar"] = "weapon_zm_molotov"
-};
+}
 
 local function ReplaceWeaponSingle(ent, cls)
    -- Loadout weapons immune
@@ -237,7 +237,7 @@ local dummify = {
    "team_control_point_round",
    -- ZM
    "item_ammo_revolver"
-};
+}
 
 for k, cls in pairs(dummify) do
    scripted_ents.Register({Type="point", IsWeaponDummy=true}, cls)
@@ -428,7 +428,7 @@ local function PlaceExtraWeaponsForCSS()
       "info_player_terrorist",
       "info_player_counterterrorist",
       "hostage_entity"
-   };
+   }
 
    PlaceWeaponsAtEnts(spots_classes)
 end
@@ -452,7 +452,7 @@ local function PlaceExtraWeaponsForTF2()
       "item_teamflag",
       "game_intro_viewpoint",
       "info_observer_point"
-   };
+   }
 
    PlaceWeaponsAtEnts(spots_classes)
 end
@@ -596,7 +596,7 @@ end
 
 local classremap = {
    ttt_playerspawn = "info_player_deathmatch"
-};
+}
 
 local function ImportEntities(map)
    local fname = ents.TTT.CanImportEntities(map)

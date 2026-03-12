@@ -17,6 +17,8 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 		self:PhysicsInit( SOLID_VPHYSICS )
+
+		self.QueuedExplosions = {}
 	end
 
 end
@@ -27,10 +29,36 @@ function ENT:Setup( damage )
 
 end
 
+if ( SERVER ) then
+	function ENT:Think()
+
+		self:HandleQueuedExplosions()
+
+		-- Only think often if we have any events queued (default was 0.2)
+		-- We could also probably use the soonest timer as the delay here..
+		self:NextThink( CurTime() + ( self.AnyQueued and 0.05 or 1 ) )
+		return true
+
+	end
+
+	function ENT:HandleQueuedExplosions()
+
+		for k, v in ipairs( self.QueuedExplosions ) do
+			if ( v.when <= CurTime() ) then
+				self:Explode( 0, v.player )
+				table.remove( self.QueuedExplosions, k )
+			end
+		end
+
+		self.AnyQueued = #self.QueuedExplosions > 0
+
+	end
+end
+
 function ENT:GetOverlayText()
 
 	local txt = string.format( "%s %g\n%s %g",
-		language.GetPhrase( "#tool.dynamite.damage" ), math.Clamp( self:GetDamage(), 0, 1500 ), 
+		language.GetPhrase( "#tool.dynamite.damage" ), math.Clamp( self:GetDamage(), 0, 1500 ),
 		language.GetPhrase( "#tool.dynamite.delay" ), self:GetDelay() )
 
 	if ( game.SinglePlayer() ) then return txt end
@@ -51,15 +79,18 @@ end
 --
 -- Blow that mother fucker up, BAATCHH
 --
-function ENT:Explode( delay, ply )
+function ENT:Explode( delayOverride, ply )
 
 	if ( !IsValid( self ) ) then return end
 
 	if ( !IsValid( ply ) ) then ply = self end
 
-	local _delay = delay or self:GetDelay()
+	local delay = delayOverride or self:GetDelay()
 
-	if ( _delay == 0 ) then
+	-- You do not a timer longer than this.
+	if ( delay > 3600 ) then delay = 3600 end
+
+	if ( delay == 0 ) then
 
 		local radius = 300
 
@@ -74,7 +105,9 @@ function ENT:Explode( delay, ply )
 
 	else
 
-		timer.Simple( _delay, function() if ( !IsValid( self ) ) then return end self:Explode( 0, ply ) end )
+		-- Queue the explosion
+		table.insert( self.QueuedExplosions, { when = CurTime() + delay, player = ply } )
+		self:NextThink( CurTime() )
 
 	end
 

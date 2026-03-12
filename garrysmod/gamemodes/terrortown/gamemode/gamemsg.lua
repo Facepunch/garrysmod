@@ -255,7 +255,6 @@ local function MuteTeam(ply, cmd, args)
 
    -- remove all ifs
    LANG.Msg(ply, MuteModes[t])
-   
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -266,20 +265,22 @@ local LastWordContext = {
    [KILL_SUICIDE] = " *kills self*",
    [KILL_FALL] = " *SPLUT*",
    [KILL_BURN] = " *crackle*"
-};
+}
 
 local function LastWordsMsg(ply, words)
    -- only append "--" if there's no ending interpunction
    local final = string.match(words, "[\\.\\!\\?]$") != nil
 
    -- add optional context relating to death type
-   local context = LastWordContext[ply.death_type] or ""
+   local death_type = ply.death_type
+   local context = LastWordContext[death_type] or ""
    local lastWordsStr = words .. (final and "" or "--") .. context
 
-   if hook.Run("TTTLastWordsMsg", ply, lastWordsStr, words) ~= true then
+   if hook.Run("TTTLastWordsMsg", ply, lastWordsStr, words, death_type) != true then
       net.Start("TTT_LastWordsMsg")
          net.WritePlayer(ply)
-         net.WriteString(lastWordsStr)
+         net.WriteString(words)
+         net.WriteUInt(death_type, 2)
       net.Broadcast()
    end
 end

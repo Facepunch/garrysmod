@@ -349,7 +349,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	}
 }
 
-function FinishedServeres( type )
+function FinishedServers( type )
 {
 	RootScope.Refreshing[type] = "false";
 	UpdateDigest( RootScope, 50 );
@@ -413,22 +413,6 @@ function CalculateRank( server )
 	return recommended;
 }
 
-// Generate a flag from sevrer name if the server doesn't have it set.
-// This is a temporary measure and should not be relied on, you should use sv_location
-var prefixes = { ru: "ru", rus: "ru", fr: "fr", usa: "us", uk: "gb", en: "gb", eng: "gb", ger: "de", pl: "pl", dk: "dk", eu: "eu" };
-function GenerateFlag( server )
-{
-	for ( var key in prefixes )
-	{
-		var s = server.name.toLowerCase().indexOf( "[" + key + "]" );
-		if ( s == -1 ) continue;
-		server.name = server.name.replace( server.name.substring( s, s + key.length + 2 ), "" ).trim();
-		return prefixes[ key ];
-	}
-
-	return "";
-}
-
 function UpdateInfiniteScroll( elem )
 {
 	if ( !RootScope.CurrentGamemode ) return;
@@ -450,7 +434,7 @@ function UpdateServer( address, ping, name, map, players, maxplayers, botplayers
 	if ( server.address != address ) return;
 
 	server.ping = parseInt( ping );
-	server.name = name;
+	server.name = StripWeirdSymbols( name.trim() );
 	server.map = map;
 	server.players = parseInt( players ) - parseInt( botplayers );
 	server.maxplayers = parseInt( maxplayers ) - parseInt( botplayers );
@@ -519,8 +503,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		favorite:		isFav == "true"
 	};
 
-	if ( !data.flag ) data.flag = GenerateFlag( data );
-	if ( data.flag == "eu" ) data.flag = "europeanunion"; // ew
+	if ( data.flag == "eu" ) data.flag = "europeanunion";
 
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 

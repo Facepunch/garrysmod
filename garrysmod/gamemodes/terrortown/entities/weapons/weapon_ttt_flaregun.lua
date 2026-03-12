@@ -13,7 +13,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "flare_desc"
-   };
+   }
 
    SWEP.Icon               = "vgui/ttt/icon_flare"
 end
@@ -199,8 +199,8 @@ function SWEP:PrimaryAttack()
       self:GetOwner():ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
    end
 
-   if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-      self:SetNWFloat( "LastShootTime", CurTime() )
+   if game.SinglePlayer() then
+      self:CallOnClient("SPLastShoot")
    end
 end
 

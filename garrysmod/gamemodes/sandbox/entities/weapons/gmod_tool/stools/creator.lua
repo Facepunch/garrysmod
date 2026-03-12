@@ -6,7 +6,7 @@ TOOL.ClientConVar[ "override" ] = ""
 
 TOOL.Information = { { name = "left" } }
 
-function TOOL:LeftClick( trace, attach )
+function TOOL:LeftClick( trace )
 
 	local type = self:GetClientNumber( "type", 0 )
 	local name = self:GetClientInfo( "name" )

@@ -58,7 +58,7 @@ local checkers = {
    [3] = HasEquipment,
    [4] = HasNade,
    [5] = HasAny
-};
+}
 
 function ENT:GetWeaponChecker(check)
    if isstring(check) then

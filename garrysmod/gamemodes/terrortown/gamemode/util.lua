@@ -94,7 +94,7 @@ end
 util.Capitalize = string.Capitalize
 
 -- Color unpacking
-function clr(color) return color.r, color.g, color.b, color.a; end
+function clr(color) return color.r, color.g, color.b, color.a end
 
 if CLIENT then
    -- Is screenpos on screen?
@@ -304,7 +304,7 @@ if CLIENT then
       wounded = Color(230, 215, 10, 255),
       badwound= Color(255, 140, 0, 255),
       death   = Color(255, 0, 0, 255)
-   };
+   }
 
    function util.HealthToString(health, maxhealth)
       maxhealth = maxhealth or 100
@@ -328,7 +328,7 @@ if CLIENT then
       med  = Color(245, 220, 60, 255),
       low  = Color(255, 180, 0, 255),
       min  = Color(255, 130, 0, 255),
-   };
+   }
 
    function util.KarmaToString(karma)
       local maxkarma = GetGlobalInt("ttt_karma_max", 1000)

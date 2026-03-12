@@ -120,8 +120,8 @@ function PANEL:Think()
 
 	-- Hmm.. This needs to really just be done in one place
 	-- and made available to everyone.
-	local FrameRate = VGUIFrameTime() - self.FrameTime
-	self.FrameTime = VGUIFrameTime()
+	local FrameRate = SysTime() - self.FrameTime
+	self.FrameTime = SysTime()
 
 	if ( self.btnRight:IsDown() ) then
 		self.OffsetX = self.OffsetX + ( 500 * FrameRate )

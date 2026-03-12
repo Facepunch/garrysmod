@@ -388,7 +388,7 @@ local function SendServer( pnlMainMenu, category, id,
 	loc = string.JavascriptSafe( loc )
 	gmcat = string.JavascriptSafe( gmcat )
 
-	pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );]],
+	pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" )]],
 		category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid,
 		tostring( isAnon ), netVersion, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
 
@@ -434,7 +434,7 @@ function GetServers( category, id )
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
 			SendServer( pnlMainMenu, category, id,
-				2000, language.GetPhrase("server_noresponse"):format(address), language.GetPhrase("server_gamemode_unreachable"), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				2000, language.GetPhrase( "server_noresponse" ):format( address ), language.GetPhrase( "server_gamemode_unreachable" ), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]
@@ -442,7 +442,7 @@ function GetServers( category, id )
 		end,
 
 		Finished = function()
-			pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+			pnlMainMenu:Call( "FinishedServers( '" .. category:JavascriptSafe() .. "' )" )
 			Servers[ category ] = {}
 		end,
 
@@ -456,7 +456,7 @@ function GetServers( category, id )
 end
 
 function DoStopServers( category )
-	pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+	pnlMainMenu:Call( "FinishedServers( '" .. category:JavascriptSafe() .. "' )" )
 	ShouldStop[ category ] = true
 	Servers[ category ] = {}
 end
@@ -471,7 +471,7 @@ function PingServer( srvAddress )
 		map = string.JavascriptSafe( map )
 		address = string.JavascriptSafe( address )
 
-		pnlMainMenu:Call( string.format( [[UpdateServer( "%s", %i, "%s", "%s", %i, %i, %i, %s );]],
+		pnlMainMenu:Call( string.format( [[UpdateServer( "%s", %i, "%s", "%s", %i, %i, %i, %s )]],
 			address, ping, name, map, players, maxplayers, botplayers, tostring( pass ) ) )
 
 	end )
@@ -656,13 +656,16 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 	UpdateServerSettings()
 	UpdateSubscribedAddons()
 
+	-- Needs to have addons mounted
+	LoadLastMap()
+
 end )
 
-hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
+hook.Add( "LoadGModSaveFailed", "HandleUGCLoadFailure", function( str, wsid )
 	local button2 = nil
-	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "Open map on Steam Workshop" end
+	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "#ugc.open_map" end
 
-	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
+	Derma_Query( str, "#ugc.load_failed", "#dialog.ok", nil, button2, function() steamworks.ViewFile( wsid ) end )
 	gui.ActivateGameUI()
 end )
 
@@ -678,7 +681,6 @@ timer.Simple( 0, function()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
-	LoadLastMap()
 
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()

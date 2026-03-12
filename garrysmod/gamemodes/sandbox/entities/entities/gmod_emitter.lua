@@ -329,6 +329,7 @@ list.Set( "EffectType", "underwaterexplosion", {
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
+		effectdata:SetFlags( 4 ) -- No sound please!
 		util.Effect( "WaterSurfaceExplosion", effectdata, true, true )
 
 	end

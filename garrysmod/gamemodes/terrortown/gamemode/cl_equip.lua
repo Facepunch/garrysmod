@@ -2,6 +2,14 @@
 
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
+local SafeTranslate = LANG.TryTranslation
+
+local lower = string.lower
+
+local equipment_sorting = CreateClientConVar("ttt_equipment_sorting", "default", true)
+local equipment_ascending = CreateClientConVar("ttt_equipment_ascending", "1", true)
+local equipment_hide_unbuyable = CreateClientConVar("ttt_equipment_hide_unbuyable", "0", true)
+
 
 -- Buyable weapons are loaded automatically. Buyable items are defined in
 -- equip_items_shd.lua
@@ -29,7 +37,7 @@ function GetEquipmentForRole(role)
                type     = "Type not specified",
                model    = "models/weapons/w_bugbait.mdl",
                desc     = "No description specified."
-            };
+            }
 
             -- Force material to nil so that model key is used when we are
             -- explicitly told to do so (ie. material is false rather than nil).
@@ -140,7 +148,135 @@ end
 vgui.Register("EquipSelect", PANEL, "DPanelSelect")
 
 
-local SafeTranslate = LANG.TryTranslation
+local function CanOrder(item, owned_ids)
+   local ply = LocalPlayer()
+   if ply:GetCredits() <= 0 then return false end
+
+   -- already owned
+   if table.HasValue(owned_ids, item.id) then
+      return false
+   end
+
+   if ItemIsWeapon(item) then
+      -- already carrying a weapon for this slot
+      if not CanCarryWeapon(item) then return false end
+   elseif ply:HasEquipmentItem(tonumber(item.id)) then
+      return false
+   end
+
+   if item.limited and ply:HasBought(tostring(item.id)) then
+      -- already bought the item before
+      return false
+   end
+
+   return true
+end
+
+local function GetOwnedEquipment()
+   -- Determine if we already have equipment
+   local owned_ids = {}
+   for _, wep in ipairs(LocalPlayer():GetWeapons()) do
+      if IsValid(wep) and wep:IsEquipment() then
+         table.insert(owned_ids, wep:GetClass())
+      end
+   end
+
+   -- Stick to one value for no equipment
+   if #owned_ids == 0 then
+      owned_ids = nil
+   end
+
+   return owned_ids
+end
+
+
+local sort_funcs = {
+   default = {
+      name = "equip_sort_default",
+      func = function(a, b)
+                local aItem, bItem = not ItemIsWeapon(a), not ItemIsWeapon(b)
+
+                if aItem or bItem then
+                   -- sort items by id
+                   if aItem and bItem then
+                      return a.id < b.id
+                   end
+
+                   -- keep items above weapons
+                   return aItem
+                end
+
+                return lower(SafeTranslate(a.name)) < lower(SafeTranslate(b.name))
+             end
+   },
+   name = {
+      name = "equip_spec_name",
+      func = function(a, b)
+                return lower(SafeTranslate(a.name)) < lower(SafeTranslate(b.name))
+             end
+   },
+   slot = {
+      name = "equip_sort_slot",
+      func = function(a, b)
+                local aSlot = a.slot or 0
+                local bSlot = b.slot or 0
+
+                -- sort items by id
+                if aSlot == 0 and bSlot == 0 then
+                   return a.id < b.id
+                end
+
+                if aSlot == bSlot then
+                   return lower(SafeTranslate(a.name)) < lower(SafeTranslate(b.name))
+                end
+
+                return aSlot < bSlot
+             end
+   }
+}
+
+local function SortEquipmentPanels(pnls)
+   local sort = equipment_sorting:GetString() or "default"
+   local sort_func = sort_funcs[sort].func
+
+   local ascending = equipment_ascending:GetBool()
+   local hide_unbuyable = equipment_hide_unbuyable:GetBool()
+
+   local owned_ids = hide_unbuyable and GetOwnedEquipment()
+
+   table.sort(pnls, function(a, b)
+      local aItem, bItem = a.item, b.item
+
+      if hide_unbuyable then
+         local aBuyable, bBuyable = CanOrder(aItem, owned_ids), CanOrder(bItem, owned_ids)
+
+         if aBuyable != bBuyable then
+            return aBuyable
+         end
+      end
+
+      local ret = sort_func(aItem, bItem)
+
+      -- if table.sort is comparing an item to itself, don't mess with the result otherwise weird stuff happens
+      if not ascending and aItem.id != bItem.id then
+         ret = not ret
+      end
+
+      return ret
+   end)
+end
+
+local ListPanel = nil
+local function ReSortEquipment()
+   if not IsValid(ListPanel) then return end
+
+   SortEquipmentPanels(ListPanel:GetItems())
+   ListPanel:InvalidateLayout()
+end
+hook.Add("TTTLanguageChanged", "TTT_ReSortEquipment", ReSortEquipment)
+cvars.AddChangeCallback("ttt_equipment_sorting", ReSortEquipment)
+cvars.AddChangeCallback("ttt_equipment_ascending", ReSortEquipment)
+
 
 local color_darkened = Color(255,255,255, 80)
 -- TODO: make set of global role colour defs, these are same as wepswitch
@@ -195,31 +331,58 @@ local function TraitorMenuPopup()
    dequip:SetPaintBackground(false)
    dequip:StretchToParent(padding,padding,padding,padding)
 
-   -- Determine if we already have equipment
-   local owned_ids = {}
-   for _, wep in ipairs(ply:GetWeapons()) do
-      if IsValid(wep) and wep:IsEquipment() then
-         table.insert(owned_ids, wep:GetClass())
-      end
+   local sw, sh = 195, 16
+
+   local dsort = vgui.Create("DPanel", dequip)
+   dsort:SetPos(m, 0)
+   dsort:SetSize(sw, sh)
+   dsort:SetPaintBackground(false)
+
+   local dsortlbl = vgui.Create("DLabel", dsort)
+   dsortlbl:SetFont("DermaDefaultBold")
+   dsortlbl:SetText(GetTranslation("sb_sortby"))
+   dsortlbl:SizeToContentsX()
+   dsortlbl:SetTall(sh)
+   dsortlbl:SetColor(COLOR_WHITE)
+
+   local dsorttype = vgui.Create("DComboBox", dsort)
+   dsorttype:MoveRightOf(dsortlbl, m)
+   dsorttype:SetSize(dsort:GetWide() - dsortlbl:GetWide() - sh - m, sh)
+
+   for key, data in pairs(sort_funcs) do
+      dsorttype:AddChoice(GetTranslation(data.name), key, lower(equipment_sorting:GetString()) == key)
    end
 
-   -- Stick to one value for no equipment
-   if #owned_ids == 0 then
-      owned_ids = nil
+   dsorttype.OnSelect = function(s, idx, val, data) equipment_sorting:SetString(data) end
+
+   local dsortasc = vgui.Create("DButton", dsort)
+   dsortasc:SetSize(sh, sh)
+   dsortasc:MoveRightOf(dsorttype)
+   dsortasc:SetText("")
+
+   dsortasc.Paint = function(s, pw, ph)
+      local name = equipment_ascending:GetBool() and "ButtonUp" or "ButtonDown"
+      derma.SkinHook("Paint", name, s, pw, ph)
    end
+
+   dsortasc.DoClick = function(s) equipment_ascending:SetBool(not equipment_ascending:GetBool()) end
+
+   local owned_ids = GetOwnedEquipment()
+
+   local dlistw = 216
 
    --- Construct icon listing
    local dlist = vgui.Create("EquipSelect", dequip)
-   dlist:SetPos(0,0)
-   dlist:SetSize(216, h - 75)
+   dlist:MoveBelow(dsort)
+   dlist:SetSize(dlistw, h - sh - 75)
    dlist:EnableVerticalScrollbar()
    dlist:EnableHorizontal(true)
    dlist:SetPadding(4)
 
+   ListPanel = dlist
 
    local items = GetEquipmentForRole(ply:GetRole())
 
-   local to_select = nil
    for k, item in pairs(items) do
       local ic = nil
 
@@ -280,22 +443,14 @@ local function TraitorMenuPopup()
       ic:SetTooltip(tip)
 
       -- If we cannot order this item, darken it
-      if ((not can_order) or
-          -- already owned
-          table.HasValue(owned_ids, item.id) or
-          (tonumber(item.id) and ply:HasEquipmentItem(tonumber(item.id))) or
-          -- already carrying a weapon for this slot
-          (ItemIsWeapon(item) and (not CanCarryWeapon(item))) or
-          -- already bought the item before
-          (item.limited and ply:HasBought(tostring(item.id)))) then
-
+      if not CanOrder(item, owned_ids) then
          ic:SetIconColor(color_darkened)
       end
 
       dlist:AddPanel(ic)
    end
 
-   local dlistw = 216
+   SortEquipmentPanels(dlist:GetItems())
 
    local bw, bh = 100, 25
 
@@ -341,7 +496,7 @@ local function TraitorMenuPopup()
    local dconfirm = vgui.Create("DButton", dinfobg)
    dconfirm:SetPos(0, dih - bh*2)
    dconfirm:SetSize(bw, bh)
-   dconfirm:SetDisabled(true)
+   dconfirm:SetEnabled(false)
    dconfirm:SetText(GetTranslation("equip_confirm"))
 
 
@@ -389,11 +544,11 @@ local function TraitorMenuPopup()
 
                                    can_order = update_preqs(new.item)
 
-                                   dconfirm:SetDisabled(not can_order)
+                                   dconfirm:SetEnabled(can_order)
                                 end
 
    -- select first
-   dlist:SelectPanel(to_select or dlist:GetItems()[1])
+   dlist:SelectPanel(dlist:GetItems()[1])
 
    -- prep confirm action
    dconfirm.DoClick = function()
@@ -411,14 +566,14 @@ local function TraitorMenuPopup()
 
                             if new:GetPanel() == dequip then
                                can_order = update_preqs(dlist.SelectedPanel.item)
-                               dconfirm:SetDisabled(not can_order)
+                               dconfirm:SetEnabled(can_order)
                             end
                          end
 
    local dcancel = vgui.Create("DButton", dframe)
    dcancel:SetPos(w - 13 - bw, h - bh - 16)
    dcancel:SetSize(bw, bh)
-   dcancel:SetDisabled(false)
+   dcancel:SetEnabled(true)
    dcancel:SetText(GetTranslation("close"))
    dcancel.DoClick = function() dframe:Close() end
 
@@ -452,11 +607,13 @@ function GM:OnContextMenuOpen()
    end
 end
 
+local bitsRequired = util.BitsRequired
+
 local function ReceiveEquipment()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_items = net.ReadInt(util.BitsRequired(EQUIP_MAX, true))
+   ply.equipment_items = net.ReadInt(bitsRequired(EQUIP_MAX, true))
 end
 net.Receive("TTT_Equipment", ReceiveEquipment)
 
@@ -493,8 +650,6 @@ local function ReceiveBought()
    end
 end
 net.Receive("TTT_Bought", ReceiveBought)
-
-local bitsRequired = util.BitsRequired
 
 -- Player received the item he has just bought, so run clientside init
 local function ReceiveBoughtItem()

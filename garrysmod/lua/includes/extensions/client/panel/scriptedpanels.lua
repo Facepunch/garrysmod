@@ -29,7 +29,7 @@ function vgui.Create( classname, parent, name )
 
 		local panel = vgui.Create( metatable.Base, parent, name or classname )
 		if ( !panel ) then
-			Error( "Tried to create panel with invalid base '" .. metatable.Base .. "'\n" );
+			Error( "Tried to create panel with invalid base '" .. metatable.Base .. "'\n" )
 		end
 
 		table.Merge( panel:GetTable(), metatable )

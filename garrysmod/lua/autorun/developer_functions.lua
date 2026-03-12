@@ -145,12 +145,14 @@ concommand.Add( "trace", function( ply )
 		start = ply:EyePos(),
 		endpos = ply:EyePos() + ply:GetAimVector() * 30000,
 		filter = ply,
-		//mask = MASK_OPAQUE_AND_NPCS,
+		--mask = MASK_OPAQUE_AND_NPCS,
 	} )
 
+	local surfData = util.GetSurfaceData( tr.SurfaceProps )
+	tr.Distance = ( tr.HitPos - tr.StartPos ):Length()
+	if ( surfData ) then tr.SurfaceName = surfData.name end
+	if ( IsValid( tr.Entity ) ) then tr.Model = tr.Entity:GetModel() end
 	PrintTable( tr )
-	print( "Dist: ", ( tr.HitPos - tr.StartPos ):Length() )
-	if ( IsValid( tr.Entity ) ) then print( "Model: " .. tr.Entity:GetModel() ) end
 
 	-- Print out the clientside class name
 	ply:SendLua( [[print(Entity(]] .. ply:EntIndex() .. [[):GetEyeTrace().Entity)]] )

@@ -5,7 +5,7 @@ local meta = FindMetaTable( "Player" )
 if ( !meta ) then return end
 
 if ( SERVER ) then
-	g_SBoxObjects = {}
+	g_SBoxObjects = g_SBoxObjects or {}
 end
 
 function meta:CheckLimit( str )
@@ -34,7 +34,9 @@ function meta:CheckLimit( str )
 end
 
 local function CleanInvalidEntities( uid )
-	for countType, entities in pairs( g_SBoxObjects[ uid ] or {} ) do
+	if ( !g_SBoxObjects[ uid ] ) then return end
+
+	for countType, entities in pairs( g_SBoxObjects[ uid ] ) do
 		for k, v in pairs( entities ) do
 			if ( !IsValid( v ) ) then entities[ k ] = nil end
 		end

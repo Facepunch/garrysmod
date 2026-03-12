@@ -72,7 +72,7 @@ EquipmentItems = {
 --         name     = "Body Armor",
 --         desc     = "Reduces bullet damage by 30% when\nyou get hit."
 --      },
-   };
+   },
 
 
    [ROLE_TRAITOR] = {
@@ -99,8 +99,8 @@ EquipmentItems = {
          name     = "item_disg",
          desc     = "item_disg_desc"
       }
-   };
-};
+   }
+}
 
 
 -- Search if an item is in the equipment table of a given role, and return it if

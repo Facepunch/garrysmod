@@ -9,7 +9,7 @@ TRADIO.SoundOrder = {
    "pistol", "shotgun", "mac10", "deagle",
    "m16", "rifle", "huge", "glock",
    "beeps", "sipistol", "teleport", "hstation"
-};
+}
 
 local function PlayRadioSound(snd)
    local r = LocalPlayer().radio

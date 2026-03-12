@@ -196,6 +196,15 @@ event HudTakeDamageHigh
 
 event HudTakeDamageDrown
 {
+	Animate HudDamageIndicator DmgFullscreenColor	"0 0 200 255"	Deaccel 0.0 0.1
+	Animate HudDamageIndicator DmgFullscreenColor	"0 0 200 0"		Deaccel 0.1 1.0
+	RunEvent HudTakeDamageBehind 0.0
+}
+
+event HudTakeDamageCrush
+{
+	Animate HudDamageIndicator DmgFullscreenColor	"200 0 0 200"	Linear 0.0 0.1
+	Animate HudDamageIndicator DmgFullscreenColor	"200 0 0 0"		Deaccel 0.1 1.0
 	RunEvent HudTakeDamageBehind 0.0
 }
 
@@ -207,7 +216,7 @@ event HudTakeDamagePoison
 
 event HudTakeDamageBurn
 {
-	Animate HudDamageIndicator DmgFullscreenColor	"255 0 0 200"	Linear 0.0 0.0
+	Animate HudDamageIndicator DmgFullscreenColor	"255 64 0 200"	Linear 0.0 0.0
 	Animate HudDamageIndicator DmgFullscreenColor	"255 0 0 0"	Deaccel 0.2 0.4
 }
 
@@ -218,13 +227,27 @@ event HudTakeDamageRadiation
 	RunEvent HudTakeDamageBehind 0.0
 }
 
+event HudTakeDamageAcid
+{
+	Animate HudDamageIndicator DmgFullscreenColor	"100 255 100 128"	Deaccel 0.0 0.1
+	Animate HudDamageIndicator DmgFullscreenColor	"100 255 100 0"		Deaccel 0.1 0.4
+	RunEvent HudTakeDamageBehind 0.0
+}
+
+event HudTakeDamagePlasma
+{
+	Animate HudDamageIndicator DmgFullscreenColor	"0 128 255 128"		Deaccel 0.0 0.2
+	Animate HudDamageIndicator DmgFullscreenColor	"0 128 255 0"		Deaccel 0.2 0.4
+}
+
 event HudPlayerDeath
 {
 	StopEvent	HealthLoop  0.0
 	StopEvent	HealthPulse 0.0
 
-	Animate HudDamageIndicator DmgFullscreenColor	"255 0 0 96"		Deaccel 0.1 0.2
-	Animate HudDamageIndicator DmgFullscreenColor	"255 0 0 255"		Deaccel 0.3 4.0
+	// GMOD: This is just obnoxious
+	//Animate HudDamageIndicator DmgFullscreenColor	"255 0 0 96"		Deaccel 0.1 0.2
+	//Animate HudDamageIndicator DmgFullscreenColor	"255 0 0 255"		Deaccel 0.3 4.0
 }
 
 event HealthIncreasedAbove20

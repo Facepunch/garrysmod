@@ -13,12 +13,35 @@ local VarsOnHand = 15
 
 -- Returns true if it has TF2 hands
 local function HasTF2Hands( pEntity )
-	return pEntity:LookupBone( "bip_hand_L" ) != nil
+	for k, v in pairs( list.Get( "FingerPoserSkeletons" ) ) do
+		if ( !v.hand_type || v.hand_type != "tf2" ) then continue end
+
+		local bone = pEntity:LookupBone( v.left_hand )
+		if ( bone ) then return true end
+	end
+
+	return false
 end
 
 -- Returns true if it has Portal 2 hands
 local function HasP2Hands( pEntity )
-	return pEntity:LookupBone( "wrist_A_L" ) != nil || pEntity:LookupBone( "index_1_L" ) != nil
+	for k, v in pairs( list.Get( "FingerPoserSkeletons" ) ) do
+		if ( !v.hand_type || v.hand_type != "portal2" ) then continue end
+
+		local bone = pEntity:LookupBone( v.left_hand )
+		if ( bone ) then
+			-- A little bit of a hack for BallBot/Chell conflict
+			local allGood = true
+			for oldB, newB in pairs( v.bones ) do
+				if ( !pEntity:LookupBone( newB ) ) then allGood = false end
+			end
+			
+			if ( !allGood ) then continue end
+			return true
+		end
+	end
+
+	return false
 end
 
 local TranslateTable_TF2 = {}
@@ -85,6 +108,38 @@ TranslateTable_Zeno[ "ValveBiped.Bip01_R_Finger4" ] = "Bip01_R_Finger4"
 TranslateTable_Zeno[ "ValveBiped.Bip01_R_Finger41" ] = "Bip01_R_Finger41"
 TranslateTable_Zeno[ "ValveBiped.Bip01_R_Finger42" ] = "Bip01_R_Finger42"
 
+local TranslateTable_ZenoToo = {}
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger0" ] = "Bip01 L Finger0"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger01" ] = "Bip01 L Finger01"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger02" ] = "Bip01 L Finger02"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger1" ] = "Bip01 L Finger1"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger11" ] = "Bip01 L Finger11"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger12" ] = "Bip01 L Finger12"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger2" ] = "Bip01 L Finger2"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger21" ] = "Bip01 L Finger21"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger22" ] = "Bip01 L Finger22"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger3" ] = "Bip01 L Finger3"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger31" ] = "Bip01 L Finger31"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger32" ] = "Bip01 L Finger32"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger4" ] = "Bip01 L Finger4"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger41" ] = "Bip01 L Finger41"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_L_Finger42" ] = "Bip01 L Finger42"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger0" ] = "Bip01 R Finger0"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger01" ] = "Bip01 R Finger01"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger02" ] = "Bip01 R Finger02"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger1" ] = "Bip01 R Finger1"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger11" ] = "Bip01 R Finger11"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger12" ] = "Bip01 R Finger12"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger2" ] = "Bip01 R Finger2"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger21" ] = "Bip01 R Finger21"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger22" ] = "Bip01 R Finger22"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger3" ] = "Bip01 R Finger3"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger31" ] = "Bip01 R Finger31"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger32" ] = "Bip01 R Finger32"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger4" ] = "Bip01 R Finger4"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger41" ] = "Bip01 R Finger41"
+TranslateTable_ZenoToo[ "ValveBiped.Bip01_R_Finger42" ] = "Bip01 R Finger42"
+
 local TranslateTable_INS = {}
 TranslateTable_INS[ "ValveBiped.Bip01_L_Finger0" ] = "L Finger0"
 TranslateTable_INS[ "ValveBiped.Bip01_L_Finger01" ] = "L Finger01"
@@ -117,83 +172,93 @@ TranslateTable_INS[ "ValveBiped.Bip01_R_Finger4" ] = "R Finger4"
 TranslateTable_INS[ "ValveBiped.Bip01_R_Finger41" ] = "R Finger41"
 TranslateTable_INS[ "ValveBiped.Bip01_R_Finger42" ] = "R Finger42"
 
-local TranslateTable_Chell = {}
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger0" ] = "thumb_base_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger01" ] = "thumb_mid_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger02" ] = "thumb_end_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger1" ] = "index_base_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger11" ] = "index_mid_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger12" ] = "index_end_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger2" ] = "mid_base_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger21" ] = "mid_mid_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger22" ] = "mid_end_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger3" ] = "ring_base_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger31" ] = "ring_mid_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger32" ] = "ring_end_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger4" ] = "pinky_base_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger41" ] = "pinky_mid_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_L_Finger42" ] = "pinky_end_L"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger0" ] = "thumb_base_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger01" ] = "thumb_mid_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger02" ] = "thumb_end_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger1" ] = "index_base_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger11" ] = "index_mid_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger12" ] = "index_end_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger2" ] = "mid_base_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger21" ] = "mid_mid_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger22" ] = "mid_end_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger3" ] = "ring_base_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger31" ] = "ring_mid_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger32" ] = "ring_end_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger4" ] = "pinky_base_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger41" ] = "pinky_mid_R"
-TranslateTable_Chell[ "ValveBiped.Bip01_R_Finger42" ] = "pinky_end_R"
+local TranslateTable_P1_Chell = {}
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger0" ] = "thumb_base_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger01" ] = "thumb_mid_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger02" ] = "thumb_end_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger1" ] = "index_base_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger11" ] = "index_mid_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger12" ] = "index_end_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger2" ] = "mid_base_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger21" ] = "mid_mid_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger22" ] = "mid_end_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger3" ] = "ring_base_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger31" ] = "ring_mid_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger32" ] = "ring_end_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger4" ] = "pinky_base_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger41" ] = "pinky_mid_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_L_Finger42" ] = "pinky_end_L"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger0" ] = "thumb_base_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger01" ] = "thumb_mid_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger02" ] = "thumb_end_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger1" ] = "index_base_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger11" ] = "index_mid_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger12" ] = "index_end_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger2" ] = "mid_base_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger21" ] = "mid_mid_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger22" ] = "mid_end_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger3" ] = "ring_base_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger31" ] = "ring_mid_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger32" ] = "ring_end_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger4" ] = "pinky_base_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger41" ] = "pinky_mid_R"
+TranslateTable_P1_Chell[ "ValveBiped.Bip01_R_Finger42" ] = "pinky_end_R"
 
-local TranslateTable_EggBot = {}
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger0" ] = "thumb2_0_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger01" ] = "thumb2_1_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger02" ] = "thumb2_2_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger1" ] = "index2_0_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger11" ] = "index2_1_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger12" ] = "index2_2_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger2" ] = "mid2_0_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger21" ] = "mid2_1_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_L_Finger22" ] = "mid2_2_A_L"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger0" ] = "thumb3_0_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger01" ] = "thumb3_1_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger02" ] = "thumb3_2_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger1" ] = "index3_0_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger11" ] = "index3_1_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger12" ] = "index3_2_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger2" ] = "mid3_0_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger21" ] = "mid3_1_A_R"
-TranslateTable_EggBot[ "ValveBiped.Bip01_R_Finger22" ] = "mid3_2_A_R"
+local TranslateTable_P2_EggBot = {}
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger0" ] = "thumb2_0_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger01" ] = "thumb2_1_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger02" ] = "thumb2_2_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger1" ] = "index2_0_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger11" ] = "index2_1_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger12" ] = "index2_2_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger2" ] = "mid2_0_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger21" ] = "mid2_1_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_L_Finger22" ] = "mid2_2_A_L"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger0" ] = "thumb3_0_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger01" ] = "thumb3_1_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger02" ] = "thumb3_2_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger1" ] = "index3_0_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger11" ] = "index3_1_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger12" ] = "index3_2_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger2" ] = "mid3_0_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger21" ] = "mid3_1_A_R"
+TranslateTable_P2_EggBot[ "ValveBiped.Bip01_R_Finger22" ] = "mid3_2_A_R"
 
-local TranslateTable_Poral2 = {}
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger0" ] = "thumb_0_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger01" ] = "thumb_1_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger02" ] = "thumb_2_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger1" ] = "index_0_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger11" ] = "index_1_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger12" ] = "index_2_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger2" ] = "mid_0_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger21" ] = "mid_1_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger22" ] = "mid_2_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger3" ] = "ring_0_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger31" ] = "ring_1_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_L_Finger32" ] = "ring_2_L"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger0" ] = "thumb_0_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger01" ] = "thumb_1_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger02" ] = "thumb_2_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger1" ] = "index_0_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger11" ] = "index_1_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger12" ] = "index_2_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger2" ] = "mid_0_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger21" ] = "mid_1_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger22" ] = "mid_2_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger3" ] = "ring_0_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger31" ] = "ring_1_R"
-TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger32" ] = "ring_2_R"
+local TranslateTable_P2_BallBot = {}
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger0" ] = "thumb_0_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger01" ] = "thumb_1_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger02" ] = "thumb_2_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger1" ] = "index_0_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger11" ] = "index_1_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger12" ] = "index_2_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger2" ] = "mid_0_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger21" ] = "mid_1_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger22" ] = "mid_2_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger3" ] = "ring_0_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger31" ] = "ring_1_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_L_Finger32" ] = "ring_2_L"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger0" ] = "thumb_0_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger01" ] = "thumb_1_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger02" ] = "thumb_2_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger1" ] = "index_0_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger11" ] = "index_1_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger12" ] = "index_2_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger2" ] = "mid_0_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger21" ] = "mid_1_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger22" ] = "mid_2_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger3" ] = "ring_0_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger31" ] = "ring_1_R"
+TranslateTable_P2_BallBot[ "ValveBiped.Bip01_R_Finger32" ] = "ring_2_R"
+TranslateTable_P2_BallBot[ "unique_marker" ] = "piston_elbow1" -- Hack to not trigger this on P2 chell
+
+local TranslateTable_P2_Chell = table.Copy( TranslateTable_P2_BallBot )
+TranslateTable_P2_Chell[ "ValveBiped.Bip01_R_Finger4" ] = "pinky_0_R"
+TranslateTable_P2_Chell[ "ValveBiped.Bip01_R_Finger41" ] = "pinky_1_R"
+TranslateTable_P2_Chell[ "ValveBiped.Bip01_R_Finger42" ] = "pinky_2_R"
+TranslateTable_P2_Chell[ "ValveBiped.Bip01_L_Finger4" ] = "pinky_0_L"
+TranslateTable_P2_Chell[ "ValveBiped.Bip01_L_Finger41" ] = "pinky_1_L"
+TranslateTable_P2_Chell[ "ValveBiped.Bip01_L_Finger42" ] = "pinky_2_L"
+TranslateTable_P2_Chell[ "unique_marker" ] = nil
 
 local TranslateTable_DOG = {}
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger0" ] = "Dog_Model.Thumb1_L"
@@ -229,95 +294,37 @@ TranslateTable_VORT[ "ValveBiped.Bip01_R_Finger4" ] = "ValveBiped.pinky1_R"
 TranslateTable_VORT[ "ValveBiped.Bip01_R_Finger41" ] = "ValveBiped.pinky2_R"
 TranslateTable_VORT[ "ValveBiped.Bip01_R_Finger42" ] = "ValveBiped.pinky3_R"
 
-function TOOL:HandEntity()
-	return self:GetWeapon():GetNWEntity( "HandEntity" )
-end
-
-function TOOL:HandNum()
-	return self:GetWeapon():GetNWInt( "HandNum" )
-end
-
-function TOOL:SetHand( ent, iHand )
-	self:GetWeapon():SetNWEntity( "HandEntity", ent )
-	self:GetWeapon():SetNWInt( "HandNum", iHand )
-end
+list.Set( "FingerPoserSkeletons", "tf2", { left_hand = "bip_hand_L", right_hand = "bip_hand_R", bones = TranslateTable_TF2, hand_type = "tf2" } )
+list.Set( "FingerPoserSkeletons", "zeno_clash", { left_hand = "Bip01_L_Hand", right_hand = "Bip01_R_Hand", bones = TranslateTable_Zeno } )
+list.Set( "FingerPoserSkeletons", "zeno_clash_too", { left_hand = "Left_hand", right_hand = "Right_hand", bones = TranslateTable_ZenoToo } )
+list.Set( "FingerPoserSkeletons", "zeno_clash_too2", { left_hand = "Bip01 L Hand", right_hand = "Bip01 R Hand", bones = TranslateTable_ZenoToo } )
+list.Set( "FingerPoserSkeletons", "hl2_dog", { left_hand = "Dog_Model.Hand_L", right_hand = "Dog_Model.Hand_R", bones = TranslateTable_DOG } )
+list.Set( "FingerPoserSkeletons", "hl2_vortigaunt", { left_hand = "ValveBiped.Hand1_L", right_hand = "ValveBiped.Hand1_R", bones = TranslateTable_VORT } )
+list.Set( "FingerPoserSkeletons", "portal1_chell", { left_hand = "wrist_L", right_hand = "wrist_R", bones = TranslateTable_P1_Chell } )
+list.Set( "FingerPoserSkeletons", "portal2_chell", { left_hand = "wrist_L", right_hand = "wrist_R", bones = TranslateTable_P2_Chell, hand_type = "portal2" } )
+list.Set( "FingerPoserSkeletons", "portal2_ballbot", { left_hand = "wrist_L", right_hand = "wrist_R", bones = TranslateTable_P2_BallBot, hand_type = "portal2" } )
+list.Set( "FingerPoserSkeletons", "portal2_eggbot", { left_hand = "wrist_A_L", right_hand = "wrist_A_R", bones = TranslateTable_P2_EggBot, hand_type = "portal2" } )
+list.Set( "FingerPoserSkeletons", "insurgency", { left_hand = "L Hand", right_hand = "R Hand", bones = TranslateTable_INS } )
 
 -- Translate the fingernum, part and hand into an real bone number
 local function GetFingerBone( self, fingernum, part, hand )
 
-	---- START HL2 BONE LOOKUP ----------------------------------
 	local Name = "ValveBiped.Bip01_L_Finger" .. fingernum
 	if ( hand == 1 ) then Name = "ValveBiped.Bip01_R_Finger" .. fingernum end
 	if ( part != 0 ) then Name = Name .. part end
 
+	-- Look for the nornal Half-Life 2 skeleton
 	local boneid = self:LookupBone( Name )
 	if ( boneid ) then return boneid end
-	---- END HL2 BONE LOOKUP ----------------------------------
 
-	---- START TF BONE LOOKUP ----------------------------------
-	local TranslatedName = TranslateTable_TF2[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
+	-- Try the others by translating bone names
+	for k, v in pairs( list.Get( "FingerPoserSkeletons" ) ) do
+		local TranslatedName = v.bones[ Name ]
+		if ( TranslatedName ) then
+			local bone = self:LookupBone( TranslatedName )
+			if ( bone ) then return bone end
+		end
 	end
-	---- END TF BONE LOOKUP ----------------------------------
-
-	---- START Zeno BONE LOOKUP ----------------------------------
-	TranslatedName = TranslateTable_Zeno[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
-	end
-	---- END Zeno BONE LOOKUP ----------------------------------
-
-	---- START DOG BONE LOOKUP ----------------------------------
-	TranslatedName = TranslateTable_DOG[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
-	end
-	---- END DOG BONE LOOKUP ----------------------------------
-
-	---- START VORT BONE LOOKUP ----------------------------------
-	TranslatedName = TranslateTable_VORT[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
-	end
-	---- END VORT BONE LOOKUP ----------------------------------
-
-	---- START Chell BONE LOOKUP ----------------------------------
-	TranslatedName = TranslateTable_Chell[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
-	end
-	---- END Chell BONE LOOKUP ----------------------------------
-
-	---- START EggBot ( Portal 2 ) BONE LOOKUP ----------------------------------
-	TranslatedName = TranslateTable_EggBot[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
-	end
-	---- END EggBot BONE LOOKUP ----------------------------------
-
-	---- START Portal 2 ( Ball Bot ) BONE LOOKUP ----------------------------------
-	TranslatedName = TranslateTable_Poral2[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
-	end
-	---- END Portal 2 BONE LOOKUP ----------------------------------
-
-	---- START Ins BONE LOOKUP ----------------------------------
-	TranslatedName = TranslateTable_INS[ Name ]
-	if ( TranslatedName ) then
-		local bone = self:LookupBone( TranslatedName )
-		if ( bone ) then return bone end
-	end
-	---- END Insurgency BONE LOOKUP ----------------------------------
-
 end
 
 -- Cache the finger bone numbers for faster access
@@ -343,6 +350,19 @@ local function SetupFingers( self )
 
 end
 
+function TOOL:HandEntity()
+	return self:GetWeapon():GetNWEntity( "HandEntity" )
+end
+
+function TOOL:HandNum()
+	return self:GetWeapon():GetNWInt( "HandNum" )
+end
+
+function TOOL:SetHand( ent, iHand )
+	self:GetWeapon():SetNWEntity( "HandEntity", ent )
+	self:GetWeapon():SetNWInt( "HandNum", iHand )
+end
+
 -- Apply the current tool values to entity's hand
 function TOOL:ApplyValues( pEntity, iHand )
 
@@ -355,8 +375,8 @@ function TOOL:ApplyValues( pEntity, iHand )
 
 	for i = 0, VarsOnHand - 1 do
 
-		local Var = self:GetClientInfo( i )
-		local VecComp = string.Explode( " ", Var )
+		local Var = self:GetClientInfo( "" .. i )
+		local VecComp = string.Split( Var, " " )
 
 		local Ang = nil
 
@@ -396,23 +416,16 @@ end
 function TOOL:GetHandPositions( pEntity )
 
 	local LeftHand = pEntity:LookupBone( "ValveBiped.Bip01_L_Hand" )
-	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "bip_hand_L" ) end
-	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "Bip01_L_Hand" ) end
-	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "Dog_Model.Hand_L" ) end -- DOG
-	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "ValveBiped.Hand1_L" ) end -- Vortigaunt
-	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "wrist_L" ) end -- Chell
-	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "L Hand" ) end -- Insurgency
-	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "wrist_A_L" ) end -- Portal 2 Egg bot
+	for k, v in pairs( list.Get( "FingerPoserSkeletons" ) ) do
+		if ( !LeftHand ) then LeftHand = pEntity:LookupBone( v.left_hand ) end
+		if ( LeftHand ) then break end
+	end
 
 	local RightHand = pEntity:LookupBone( "ValveBiped.Bip01_R_Hand" )
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "bip_hand_R" ) end
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "Bip01_R_Hand" ) end
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "Bip01_R_Hand" ) end
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "Dog_Model.Hand_R" ) end
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "ValveBiped.Hand1_R" ) end
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "wrist_R" ) end
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "R Hand" ) end
-	if ( !RightHand ) then RightHand = pEntity:LookupBone( "wrist_A_R" ) end
+	for k, v in pairs( list.Get( "FingerPoserSkeletons" ) ) do
+		if ( !RightHand ) then RightHand = pEntity:LookupBone( v.right_hand ) end
+		if ( RightHand ) then break end
+	end
 
 	if ( !LeftHand || !RightHand ) then return false end
 

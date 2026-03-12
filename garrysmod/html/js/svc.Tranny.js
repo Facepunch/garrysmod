@@ -13,7 +13,7 @@ angular.module( "tranny", [] )
 
 		var update = function()
 		{
-			var text = strName + " " + strSuffix;
+			var text = strName + ( strSuffix ? " " + strSuffix : "" );
 
 			if ( !IN_ENGINE )
 			{
@@ -24,7 +24,7 @@ angular.module( "tranny", [] )
 			var outStr_old = languageCache[ strName ] || language.Update( strName, function( outStr )
 			{
 				languageCache[ strName ] = outStr;
-				var updatedText = outStr + " " + strSuffix;
+				var updatedText = outStr + ( strSuffix ? " " + strSuffix : "" );
 				updateElement( updatedText );
 			} );
 
@@ -32,7 +32,7 @@ angular.module( "tranny", [] )
 			{
 				// Compatibility with Awesomium
 				languageCache[ strName ] = outStr_old;
-				var updatedText = outStr_old + " " + strSuffix;
+				var updatedText = outStr_old + ( strSuffix ? " " + strSuffix : "" );
 				updateElement( updatedText );
 			}
 		};

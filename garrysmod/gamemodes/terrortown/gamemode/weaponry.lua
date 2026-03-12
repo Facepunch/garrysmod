@@ -42,7 +42,7 @@ local function GetLoadoutWeapons(r)
          [ROLE_INNOCENT] = {},
          [ROLE_TRAITOR]  = {},
          [ROLE_DETECTIVE]= {}
-      };
+      }
 
       for k, w in pairs(weapons.GetList()) do
          if w and istable(w.InLoadoutFor) then

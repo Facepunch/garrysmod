@@ -16,7 +16,7 @@ function demo:FetchLocal( offset, perpage )
 			file	= "demos/" .. v,
 			name	= v:StripExtension(),
 			preview	= "demos/" .. v:StripExtension() .. ".jpg",
-			description	= "Local demo stored on your computer. Local content can be deleted in the main menu."
+			description	= language.GetPhrase( "demos.local_description" )
 		}
 
 		table.insert( saves, entry )
@@ -36,7 +36,7 @@ end
 function demo:DownloadAndPlay( id )
 
 	steamworks.DownloadUGC( id, function( name )
-		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download demo from Steam Workshop!" ) return end
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "ugc.download_failed" ) ) return end
 
 		self:Play( name )
 
@@ -54,7 +54,7 @@ end
 function demo:DownloadAndToVideo( id )
 
 	steamworks.DownloadUGC( id, function( name )
-		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download demo from Steam Workshop!" ) return end
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, language.GetPhrase( "ugc.download_failed" ) ) return end
 
 		self:ToVideo( name )
 
@@ -72,7 +72,7 @@ end
 function demo:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
 	local info = GetDemoFileDetails( filename )
-	if ( !info ) then return "Couldn't get demo information!" end
+	if ( !info ) then return "#ugc_upload.error.demo_info" end
 
 	steamworks.Publish( filename, imagename, name, desc, { "demo", info.mapname }, other.Callback, other.WorkshopID, other.ChangeNotes )
 

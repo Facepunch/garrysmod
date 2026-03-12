@@ -22,7 +22,7 @@ if CLIENT then
       type="Weapon",
       model="models/props_lab/reciever01b.mdl",
       desc="Broadcasts a location to everyone.\n\nUse to warn or group innocents."
-   };
+   }
 
    SWEP.Icon                = "vgui/ttt/icon_beacon"
 end

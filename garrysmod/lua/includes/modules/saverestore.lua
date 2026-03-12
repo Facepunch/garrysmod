@@ -1,5 +1,5 @@
 
-local Msg			= Msg
+local ErrorNoHaltWithStack = ErrorNoHaltWithStack
 local type			= type
 local pairs			= pairs
 local gmod			= gmod
@@ -84,7 +84,7 @@ local function GetTypeStr( name )
 	if ( name == "PhysObj" ) then return TYPE_NONE end
 
 	-- Bitch about it incase I've forgot to hook a savable type up
-	Msg( "Can't save or load unknown type " .. name .. "\n" )
+	ErrorNoHaltWithStack( "Can't save or load unknown type " .. name .. "\n" )
 	return TYPE_NONE
 
 end
@@ -163,7 +163,7 @@ function WriteVar( var, save )
 		elseif ( itype == TYPE_TABLE ) then
 			WriteTable( var, save )
 		else
-			Msg( "Error! Saving unsupported Type: " .. type( var ) .. "\n" )
+			ErrorNoHaltWithStack( "Error! Saving unsupported Type: " .. type( var ) .. "\n" )
 		end
 
 	save:EndBlock()
@@ -197,7 +197,7 @@ function ReadVar( restore )
 		elseif ( itype == TYPE_TABLE ) then
 			retval = ReadTable( restore )
 		else
-			Msg( "Error! Loading unsupported Type: " .. typename .. "\n" )
+			ErrorNoHaltWithStack( "Error! Loading unsupported Type: " .. typename .. "\n" )
 		end
 
 	restore:EndBlock()

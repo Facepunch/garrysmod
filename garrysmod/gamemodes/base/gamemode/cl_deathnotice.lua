@@ -1,5 +1,5 @@
 
-local hud_deathnotice_time = CreateConVar( "hud_deathnotice_time", "6", FCVAR_REPLICATED, "Amount of time to show death notice (kill feed) for" )
+local hud_deathnotice_time = CreateConVar( "hud_deathnotice_time", "6", FCVAR_NONE, "Amount of time to show death notice (kill feed) for" )
 local cl_drawhud = GetConVar( "cl_drawhud" )
 
 -- These are our kill icons
@@ -20,9 +20,18 @@ killicon.AddFont( "prop_combine_ball",	"HL2MPTypeDeath",	"8",	Color_Icon, 0.5 )
 killicon.AddFont( "grenade_ar2",		"HL2MPTypeDeath",	"7",	Color_Icon, 0.35 )
 killicon.AddFont( "weapon_stunstick",	"HL2MPTypeDeath",	"!",	Color_Icon, 0.6 )
 killicon.AddFont( "npc_satchel",		"HL2MPTypeDeath",	"*",	Color_Icon, 0.53 )
-killicon.AddAlias( "npc_tripmine", "npc_satchel" )
 killicon.AddFont( "weapon_crowbar",		"HL2MPTypeDeath",	"6",	Color_Icon, 0.45 )
 killicon.AddFont( "weapon_physcannon",	"HL2MPTypeDeath",	",",	Color_Icon, 0.55 )
+
+killicon.AddAlias( "npc_tripmine", "npc_satchel" )
+
+-- Half-Life 1 weapons, just so we have something to show for them
+killicon.AddAlias( "weapon_crowbar_hl1", "weapon_crowbar" )
+killicon.AddAlias( "crossbow_bolt_hl1", "crossbow_bolt" )
+killicon.AddAlias( "weapon_357_hl1", "weapon_357" )
+killicon.AddAlias( "weapon_shotgun_hl1", "weapon_shotgun" )
+killicon.AddAlias( "weapon_glock_hl1", "weapon_pistol" )
+killicon.AddAlias( "rpg_rocket", "rpg_missile" )
 
 -- Prop like objects get the prop kill icon
 killicon.AddAlias( "prop_ragdoll", "prop_physics" )

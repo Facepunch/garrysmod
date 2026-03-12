@@ -30,7 +30,7 @@ if CLIENT then
    --
    ---- Desc is the description in the menu. Needs manual linebreaks (via \n).
    --     desc = "Text."
-   -- };
+   -- }
 
    -- This sets the icon shown for the weapon in the DNA sampler, search window,
    -- equipment menu (if buyable), etc.
@@ -275,7 +275,7 @@ if CLIENT then
       primaryfire   = Key("+attack",  "LEFT MOUSE"),
       secondaryfire = Key("+attack2", "RIGHT MOUSE"),
       usekey        = Key("+use",     "USE")
-   };
+   }
 
    function SWEP:AddHUDHelp(primary_text, secondary_text, translate, extra_params)
       extra_params = extra_params or {}
@@ -285,7 +285,14 @@ if CLIENT then
          secondary = secondary_text,
          translatable = translate,
          translate_params = table.Merge(extra_params, default_key_params)
-      };
+      }
+   end
+
+   -- CallOnClient only works with lua functions
+   if game.SinglePlayer() then
+      function SWEP:SPLastShoot()
+         self:SetLastShootTime()
+      end
    end
 end
 
@@ -311,6 +318,10 @@ function SWEP:PrimaryAttack(worldsnd)
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
    owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
+
+   if game.SinglePlayer() then
+      self:CallOnClient("SPLastShoot")
+   end
 end
 
 function SWEP:DryFire(setnext)
@@ -516,7 +527,10 @@ function SWEP:SetIronsights(b)
    if (b != self:GetIronsights()) then
       self:SetIronsightsPredicted(b)
       self:SetIronsightsTime(CurTime())
-      if CLIENT then
+
+      if game.SinglePlayer() then
+         self:CallOnClient("CalcViewModel")
+      elseif CLIENT then
          self:CalcViewModel()
       end
    end

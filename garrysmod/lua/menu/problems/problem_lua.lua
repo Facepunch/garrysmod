@@ -76,7 +76,7 @@ function PANEL:Paint( w, h )
 
 	-- The error count
 	if ( count > 0 ) then
-		draw.SimpleText( "x" .. count, "DermaMedium", w - 16 - 16, h / 2, clr, draw.TEXT_ALIGN_RIGHT, draw.TEXT_ALIGN_CENTER )
+		draw.SimpleText( "x" .. count, "DermaMedium", w - 20 - self.CopyBtn:GetWide(), h / 2, clr, draw.TEXT_ALIGN_RIGHT, draw.TEXT_ALIGN_CENTER )
 	end
 
 	-- The error

@@ -23,7 +23,7 @@ WeaponData
 		"empty"				"Weapon_Shotgun.Empty"
 		"reload"			"Weapon_Shotgun.Reload"
 		"special1"			"Weapon_Shotgun.Special1"
-		"single_shot"		"Weapon_Shotgun.Single"
+		"single_shot"		"Weapon_Shotgun.NPC_Single"
 		"double_shot"		"Weapon_Shotgun.Double"
 		// NPC WEAPON SOUNDS
 		"reload_npc"		"Weapon_Shotgun.NPC_Reload"
