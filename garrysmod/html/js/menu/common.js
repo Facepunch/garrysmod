@@ -9,18 +9,21 @@ function UpdateDigest( scope, timeout )
 	if ( !scope ) return;
 
 	var parentHasPendingUpdate = ParentHasDigestScheduled( scope );
-	
+
 	if ( scope.DigestUpdate ) 
 	{
-		if ( parentHasPendingUpdate )  // Cancel scope's pending digest if parent already has one scheduled
+		// Cancel scope's pending digest if parent already has one scheduled
+		if ( parentHasPendingUpdate )
 		{
 			clearTimeout( scope.DigestUpdate );
 			scope.DigestUpdate = 0;
 		}
 		return;
 	}
-	if ( parentHasPendingUpdate ) return; // Don't schedule new digest if scope's parent already has one scheduled
-	
+
+	// Don't schedule new digest if scope's parent already has one scheduled
+	if ( parentHasPendingUpdate ) return;
+
 	scope.DigestUpdate = setTimeout( function()
 	{
 		scope.DigestUpdate = 0;
@@ -29,17 +32,16 @@ function UpdateDigest( scope, timeout )
 	}, timeout );
 }
 
+// When a scope performs digest, it handles child scopes too. 
+// So checking if a parent already has a digest scheduled allows avoiding redundant digests.
 function ParentHasDigestScheduled( scope )
 {
-	// When a scope performs digest, it handles child scopes too. 
-	// So checking if a parent already has a digest scheduled allows avoiding redundant digests.
-	
-	if ( scope == scope.$root ) return false; // already at root, no parents to check
-	
+	// already at root, no parents to check
+	if ( scope == scope.$root ) return false; 
+
 	var parentScope = scope.$parent;
-	
 	if ( parentScope.DigestUpdate ) return true;
-	
+
 	return ParentHasDigestScheduled( parentScope );
 }
 
