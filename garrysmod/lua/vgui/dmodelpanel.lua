@@ -206,4 +206,3 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 end
 
 derma.DefineControl( "DModelPanel", "A panel containing a model", PANEL, "DButton" )
-
