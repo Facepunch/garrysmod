@@ -312,13 +312,12 @@ WorkshopFiles.prototype.ReceiveImage = function( id, url )
 
 WorkshopFiles.prototype.Changed = function()
 {
-	
 	if ( !IS_SPAWN_MENU ) // Game menu works with the common.js UpdateDigest
 	{
 		UpdateDigest( this.Scope, 10 );
 		return;
 	}
-	
+
 	this.Scope.$digest();
 
 	// An update is queued - so chill
