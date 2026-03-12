@@ -312,7 +312,8 @@ WorkshopFiles.prototype.ReceiveImage = function( id, url )
 
 WorkshopFiles.prototype.Changed = function()
 {
-	if ( !IS_SPAWN_MENU ) // Game menu works with the common.js UpdateDigest
+	// Game menu works with the common.js UpdateDigest
+	if ( !IS_SPAWN_MENU )
 	{
 		UpdateDigest( this.Scope, 10 );
 		return;
@@ -368,3 +369,4 @@ WorkshopFiles.prototype.UpdatePageNav = function()
 		self.Scope.Pages.push( i );
 	}
 }
+
