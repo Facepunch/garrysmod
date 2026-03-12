@@ -250,7 +250,7 @@ local function SortEquipmentPanels(pnls)
       if hide_unbuyable then
          local aBuyable, bBuyable = CanOrder(aItem, owned_ids), CanOrder(bItem, owned_ids)
 
-         if (aBuyable or bBuyable) and (not aBuyable or not bBuyable) then
+         if aBuyable != bBuyable then
             return aBuyable
          end
       end
