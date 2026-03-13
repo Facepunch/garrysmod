@@ -61,6 +61,7 @@ function SWEP:DrawHUD()
 	toolObject:DrawHUD()
 
 	if ( !gmod_drawhelp:GetBool() ) then return end
+	if ( toolObject.HideHelp ) then return end
 
 	-- This could probably all suck less than it already does
 
