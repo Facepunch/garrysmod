@@ -167,3 +167,19 @@ end
 function SWEP:ShouldDropOnDie()
 	return false
 end
+
+if ( CLIENT ) then
+
+	local zoom_sensitivity_ratio = GetConVar( "zoom_sensitivity_ratio" )
+
+	function SWEP:AdjustMouseSensitivity( default, localFOV, defaultFOV )
+
+		if ( localFOV == defaultFOV ) then
+			return 1
+		end
+
+		return ( localFOV / defaultFOV ) * zoom_sensitivity_ratio:GetFloat()
+
+	end
+
+end
