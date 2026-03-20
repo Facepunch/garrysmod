@@ -6,6 +6,8 @@ include("sb_info.lua")
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 
+local ttt_highlight_admins = CreateConVar("ttt_highlight_admins", "1", FCVAR_REPLICATED)
+
 local OpenedVoicePanels = {}
 local function HideVolumePanels()
    for _, pnl in pairs(OpenedVoicePanels) do
@@ -98,7 +100,7 @@ function GM:TTTScoreboardColorForPlayer(ply)
 
    if ply:SteamID() == "STEAM_0:0:1963640" then
       return namecolor.dev
-   elseif ply:IsAdmin() and GetGlobalBool("ttt_highlight_admins", true) then
+   elseif ply:IsAdmin() and ttt_highlight_admins:GetBool() then
       return namecolor.admin
    end
    return namecolor.default

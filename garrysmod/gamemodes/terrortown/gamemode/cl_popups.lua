@@ -105,7 +105,7 @@ local function IdlePopup()
    local inner = vgui.Create("DPanel", dframe)
    inner:StretchToParent(5, 25, 5, 45)
 
-   local idle_limit = GetGlobalInt("ttt_idle_limit", 300) or 300
+   local idle_limit = GetConVar("ttt_idle_limit"):GetInt()
 
    local text = vgui.Create("DLabel", inner)
    text:SetWrap(true)

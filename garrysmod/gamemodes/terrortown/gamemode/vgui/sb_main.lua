@@ -25,6 +25,8 @@ surface.CreateFont("treb_small", {font = "Tahoma",
 CreateClientConVar("ttt_scoreboard_sorting", "name", true, false, "name | role | karma | score | deaths | ping")
 CreateClientConVar("ttt_scoreboard_ascending", "1", true, false, "Should scoreboard ordering be in ascending order")
 
+local time_limit_minutes = CreateConVar("ttt_time_limit_minutes", "75", FCVAR_REPLICATED)
+
 local logo = surface.GetTextureID("vgui/ttt/score_logo")
 
 local PANEL = {}
@@ -33,7 +35,7 @@ local max = math.max
 local floor = math.floor
 local function UntilMapChange()
    local rounds_left = max(0, GetGlobalInt("ttt_rounds_left", 6))
-   local time_left = floor(max(0, ((GetGlobalInt("ttt_time_limit_minutes") or 60) * 60) - CurTime()))
+   local time_left = floor(max(0, (time_limit_minutes:GetInt() * 60) - CurTime()))
 
    local h = floor(time_left / 3600)
    time_left = time_left - floor(h * 3600)
