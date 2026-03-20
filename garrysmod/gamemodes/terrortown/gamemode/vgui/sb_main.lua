@@ -169,13 +169,12 @@ function PANEL:Init()
 
    -- the various score column headers
    self.cols = {}
-   self:AddColumn( GetTranslation("sb_ping"), nil, nil,         "ping" )
-   self:AddColumn( GetTranslation("sb_deaths"), nil, nil,       "deaths" )
-   self:AddColumn( GetTranslation("sb_score"), nil, nil,        "score" )
+   self:AddColumn( GetTranslation("sb_ping"), nil, nil,             "ping" )
+   self:AddColumn( GetTranslation("sb_deaths"), nil, nil,           "deaths" )
+   self:AddColumn( GetTranslation("sb_score"), nil, nil,            "score" )
 
-   if KARMA.IsEnabled() then
-      self:AddColumn( GetTranslation("sb_karma"), nil, nil,     "karma" )
-   end
+   local kh = self:AddColumn( GetTranslation("sb_karma"), nil, nil, "karma" )
+   kh.ShouldShow = KARMA.IsEnabled
 
    self.sort_headers = {}
    -- Reuse some translations
@@ -357,6 +356,10 @@ function PANEL:PerformLayout()
       v:SizeToContents()
       cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, cy)
+
+      if v.ShouldShow then
+         v:SetVisible(v:ShouldShow())
+      end
    end
 
    -- sort headers

@@ -351,7 +351,7 @@ function CheckIdle()
 
    if GetRoundState() == ROUND_ACTIVE and client:IsTerror() and client:Alive() then
       local idle_limit = ttt_idle_limit:GetInt()
-      if idle_limit <= 0 then idle_limit = 300 end -- networking sucks sometimes
+      if idle_limit <= 0 then return end
 
 
       if client:GetAngles() != idle.ang then
