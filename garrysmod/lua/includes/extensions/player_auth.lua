@@ -60,8 +60,11 @@ if ( not SERVER ) then return end
 -----------------------------------------------------------]]
 function meta:SetUserGroup( name )
 
+	local sOldUserGroup = self:GetUserGroup()
+
 	self:SetNWString( "UserGroup", name )
 
+	hook.Run( "PlayerUserGroupChanged", self, sOldUserGroup, name )
 end
 
 
