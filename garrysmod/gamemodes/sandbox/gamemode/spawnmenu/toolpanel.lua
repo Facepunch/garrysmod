@@ -67,6 +67,8 @@ end
 
 function PANEL:Think()
 
+	if ( !self.IsToolTab ) then return end
+
 	if ( self.LastUpdate + 0.5 < SysTime() ) then
 		self.LastUpdate = SysTime()
 

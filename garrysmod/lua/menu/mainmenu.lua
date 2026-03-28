@@ -656,6 +656,9 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 	UpdateServerSettings()
 	UpdateSubscribedAddons()
 
+	-- Needs to have addons mounted
+	LoadLastMap()
+
 end )
 
 hook.Add( "LoadGModSaveFailed", "HandleUGCLoadFailure", function( str, wsid )
@@ -678,7 +681,6 @@ timer.Simple( 0, function()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
-	LoadLastMap()
 
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()

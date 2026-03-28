@@ -87,6 +87,8 @@ function HELPSCRN:Show()
 
    cb = dgui:CheckBox(GetTranslation("set_msg_cue"), "ttt_cl_msg_soundcue")
 
+   cb = dgui:CheckBox(GetTranslation("set_hide_unbuyable"), "ttt_equipment_hide_unbuyable")
+
    dsettings:AddItem(dgui)
 
    --- Gameplay area
@@ -113,18 +115,20 @@ function HELPSCRN:Show()
    dlanguage:SetName(GetTranslation("set_title_lang"))
 
    local dlang = vgui.Create("DComboBox", dlanguage)
-   dlang:SetConVar("ttt_language")
 
-   dlang:AddChoice("Server default", "auto")
+   dlang:AddChoice("Server default", "server default")
+   dlang:AddChoice("GMod language setting", "auto")
    for lang, lang_name in pairs(LANG.GetLanguageNames()) do
       dlang:AddChoice(lang_name, lang)
    end
 
+   local ttt_language = LANG.GetLanguageName(GetConVar("ttt_language"):GetString())
+   dlang:SetValue(dlang:GetOptionTextByData(ttt_language))
+
    -- Why is DComboBox not updating the cvar by default?
-   dlang.OnSelect = function(idx, val, data)
+   dlang.OnSelect = function(s, idx, val, data)
                        RunConsoleCommand("ttt_language", data)
                     end
-   dlang.Think = dlang.ConVarStringThink
 
    dlanguage:Help(GetTranslation("set_lang"))
    dlanguage:AddItem(dlang)
