@@ -5,7 +5,7 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_TabID", "TabID" )
 
-local spawnmenu_view_disabled_tools = CreateClientConVar( "spawnmenu_view_disabled_tools", "1", true, false, "Whether to show disabled tools in the spawn menu or not." )
+local spawnmenu_hide_disabled_tools = CreateClientConVar( "spawnmenu_hide_disabled_tools", "0", true, false, "Whether to hide disabled tools in the spawn menu or not." )
 function PANEL:Init()
 
 	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self )
@@ -24,12 +24,11 @@ function PANEL:Init()
 	searchContainer:SetTall( 20 )
 	searchContainer:DockMargin( 0, 0, 0, 5 )
 
-	self.ViewDesactived = vgui.Create( "DCheckBox", searchContainer )
-	self.ViewDesactived:SetTooltip( "#spawnmenu.tools.show_disabled" )
-	self.ViewDesactived:Dock( RIGHT )
-	self.ViewDesactived:DockMargin(5, 2, 0, 2)
-	self.ViewDesactived:SetConVar( spawnmenu_view_disabled_tools:GetName() )
-	self.ViewDisabled = spawnmenu_view_disabled_tools:GetBool()
+	self.HideDesactived = vgui.Create( "DCheckBox", searchContainer )
+	self.HideDesactived:SetTooltip( "#spawnmenu.tools.hide_disabled" )
+	self.HideDesactived:Dock( RIGHT )
+	self.HideDesactived:DockMargin(5, 2, 0, 2)
+	self.HideDesactived:SetConVar( spawnmenu_hide_disabled_tools:GetName() )
 
 	self.SearchBar = vgui.Create( "DTextEntry", searchContainer )
 	self.SearchBar:SetPlaceholderText( "#spawnmenu.quick_filter" )
@@ -76,10 +75,10 @@ function PANEL:Think()
 
 		if ( !self.IsToolTab ) then return end
 
-		local disabled = self.ActiveCPName and self.ConVar and !self.ConVar:GetBool() or false
+		local disabled = self.ActiveCPName && self.ConVar && !self.ConVar:GetBool() or false
 		local noToolgun = IsValid( LocalPlayer() ) && !LocalPlayer():HasWeapon( "gmod_tool" )
 
-		self.WarningLabel.Text = noToolgun and language.GetPhrase( "#spawnmenu.tools.no_toolgun" ) or language.GetPhrase( "#spawnmenu.tools.disabled_selected" )
+		self.WarningLabel.Text = noToolgun && language.GetPhrase( "#spawnmenu.tools.no_toolgun" ) or language.GetPhrase( "#spawnmenu.tools.disabled_selected" )
 		if ( ( disabled or noToolgun ) != self.WarningLabel:IsVisible() ) then
 			self.WarningLabel:SetVisible( disabled or noToolgun )
 			self:InvalidateLayout()
@@ -146,42 +145,38 @@ function PANEL:UpdateToolDisabledStatus()
 	if !self.Tools or #self.Tools < 1 then return end
 
 	local ply = LocalPlayer()
-	local total = 0
 	local disabled = 0
 	local oldcategory = nil
 	for _, item in ipairs( self.Tools or {} ) do
 
 		local cvar = item.ConVar
 		local enabled = cvar && cvar:GetBool() && hook.Run( "CanTool", ply, FakeTrace, item.Name, ply:GetTool( item.Name ), 4 ) != false
-		if ( enabled == item:IsEnabled() && self.ViewDisabled == spawnmenu_view_disabled_tools:GetBool() ) then continue end
+		if ( self.HideDisabled == spawnmenu_hide_disabled_tools:GetBool() ) then continue end
 
-		self:SetEnabledItem( item, enabled )
+		local category = item:GetParent()
+		self:SetEnabledItem( item, enabled, category )
 
 		if oldcategory != item.Category then
 			oldcategory = item.Category
-			total = 0
 			disabled = 0
 		end
 
-		total = total + 1
 		if !enabled then disabled = disabled + 1 end
 
-		local category = item:GetParent()
-		if disabled >= total && !spawnmenu_view_disabled_tools:GetBool() && category:IsVisible() then
+		if disabled >= category.total && spawnmenu_hide_disabled_tools:GetBool() && category:IsVisible() then
 			category:SetVisible( false )
-		elseif !category:IsVisible() && ( disabled < total or spawnmenu_view_disabled_tools:GetBool() ) then
+		elseif !category:IsVisible() && ( disabled < category.total or !spawnmenu_hide_disabled_tools:GetBool() ) then
 			category:SetVisible( true )
 		end
 	end
 
-	self.ViewDisabled = spawnmenu_view_disabled_tools:GetBool()
+	self.HideDisabled = spawnmenu_hide_disabled_tools:GetBool()
 
 end
 
-function PANEL:SetEnabledItem( item, enabled )
+function PANEL:SetEnabledItem( item, enabled, category )
 
-	if ( !spawnmenu_view_disabled_tools:GetBool() ) then
-		local category = item:GetParent()
+	if ( spawnmenu_hide_disabled_tools:GetBool() ) then
 
 		if ( category:IsVisible() && category:GetExpanded() && !enabled ) then
 			category:Toggle()
@@ -236,6 +231,7 @@ function PANEL:AddCategory( name, catName, tItems )
 	local tabID = self:GetTabID()
 
 	Category:SetCookieName( "ToolMenu." .. tostring( tabID ) .. "." .. tostring( name ) )
+	Category.total = #tItems
 
 	local tools = {}
 	self.ToolTable = self.ToolTable or {}
@@ -287,6 +283,7 @@ function PANEL:AddCategory( name, catName, tItems )
 	end
 
 	self:InvalidateLayout()
+	self.HideDisabled = nil
 
 end
 
