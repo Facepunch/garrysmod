@@ -58,7 +58,9 @@ end
 local function TryFixDupePosition( pos, ang, ply, mins, maxs )
 	pos = fixupDupePos( pos, ang, ply, Vector( mins.x, 0, 0 ), Vector( maxs.x, 0, 0 ) )
 	pos = fixupDupePos( pos, ang, ply, Vector( 0, mins.y, 0 ), Vector( 0, maxs.y, 0 ) )
-	pos = fixupDupePos( pos, ang, ply, Vector( 0, 0, mins.z ), Vector( 0, 0, maxs.z ) )
+
+	-- Causes issues with some tall dupes, so disabled for now.
+	-- pos = fixupDupePos( pos, ang, ply, Vector( 0, 0, mins.z ), Vector( 0, 0, maxs.z ) )
 
 	-- Extra checks
 	pos = fixupDupePos( pos, ang, ply, Vector( mins.x, mins.y, 0 ), Vector( maxs.x, maxs.y, 0 ) )
@@ -192,7 +194,10 @@ end
 if ( CLIENT ) then
 
 	local HandleWorkshopDupeInfo = function( id, lblPnl )
-		steamworks.FileInfo( id, function( result ) lblPnl:SetText( language.GetPhrase( "duplicator.dupe_name" ) .. " " .. result.title ) end)
+		steamworks.FileInfo( id, function( result )
+			if ( !IsValid( lblPnl ) ) then return end
+			lblPnl:SetText( language.GetPhrase( "duplicator.dupe_name" ) .. " " .. result.title )
+		end)
 	end
 
 	--
@@ -326,9 +331,9 @@ if ( CLIENT ) then
 
 	end )
 
-	hook.Add( "PostDrawTranslucentRenderables", "DrawDuplicatorPreview", function ()
+	hook.Add( "PostDrawTranslucentRenderables", "DrawDuplicatorPreview", function( depth, skybox )
 		local ply = LocalPlayer()
-		if ( !IsValid( ply ) || !ply.GetTool ) then return end
+		if ( depth || skybox || !IsValid( ply ) || !ply.GetTool ) then return end
 
 		local wep = ply:GetWeapon( "gmod_tool" )
 		if ( !IsValid( wep ) || ply:GetActiveWeapon() != wep || wep:GetMode() != "duplicator" ) then return end
