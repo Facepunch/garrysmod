@@ -233,37 +233,34 @@ if ( SERVER ) then
 
 else
 
-	function UpdateUI()
+	local function BuildPanel( pnl, command )
+		if ( !IsValid( pnl ) ) then return end
 
 		local cleanup_types_s = {}
-		for id, val in pairs( cleanup_types ) do
+
+		for _, val in ipairs( cleanup_types ) do
 			cleanup_types_s[ language.GetPhrase( "Cleanup_" .. val ) ] = val
 		end
 
-		local Panel = controlpanel.Get( "User_Cleanup" )
-		if ( IsValid( Panel ) ) then
-			Panel:Clear()
-			Panel:Help( "#spawnmenu.utilities.cleanup.help" )
-			Panel:Button( "#spawnmenu.utilities.cleanup.all", "gmod_cleanup" )
+		pnl:Clear()
+		pnl:Help( "#spawnmenu.utilities.cleanup.help" )
+		pnl:Button( "#spawnmenu.utilities.cleanup.all", command )
 
-			for key, val in SortedPairs( cleanup_types_s ) do
-				Panel:Button( key, "gmod_cleanup", val )
-			end
+		for key, val in SortedPairs( cleanup_types_s ) do
+			pnl:Button( key, command, val )
 		end
-
-		local AdminPanel = controlpanel.Get( "Admin_Cleanup" )
-		if ( IsValid( AdminPanel ) ) then
-			AdminPanel:Clear()
-			AdminPanel:Help( "#spawnmenu.utilities.cleanup.help" )
-			AdminPanel:Button( "#spawnmenu.utilities.cleanup.all", "gmod_admin_cleanup" )
-
-			for key, val in SortedPairs( cleanup_types_s ) do
-				AdminPanel:Button( key, "gmod_admin_cleanup", val )
-			end
-		end
-
 	end
 
-	hook.Add( "PostReloadToolsMenu", "BuildCleanupUI", UpdateUI )
+	hook.Add( "PopulateToolMenu", "Cleanup_RegisterToolMenu", function()
+
+		spawnmenu.AddToolMenuOption("Utilities", "User", "User_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
+			BuildPanel( pnl, "gmod_cleanup" )
+		end)
+
+		spawnmenu.AddToolMenuOption("Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
+			BuildPanel( pnl, "gmod_admin_cleanup" )
+		end)
+
+	end )
 
 end
