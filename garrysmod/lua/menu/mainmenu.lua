@@ -13,6 +13,7 @@ local PANEL = {}
 function PANEL:Init()
 
 	self:Dock( FILL )
+	self:SetSize( ScrW(), ScrH() ) -- Do not wait for docking to set our size
 	self:SetKeyboardInputEnabled( true )
 	self:SetMouseInputEnabled( true )
 
@@ -45,6 +46,7 @@ function PANEL:Init()
 	self.HTML:SetKeyboardInputEnabled( true )
 	self.HTML:SetMouseInputEnabled( true )
 	self.HTML:RequestFocus()
+	self.HTML:SetSize( ScrW(), ScrH() )
 
 	ws_dupe.HTML = self.HTML
 	ws_save.HTML = self.HTML
