@@ -1,0 +1,3411 @@
+"TableToKeyValues"
+{
+	"parentid"		"37"
+	"icon"		"icon16/page_link.png"
+	"id"		"39"
+	"name"		"Debris and Detail"
+	"version"		"3"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Arches, Windows & Doorways"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_win.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_winbig.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_winfake.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_winfakebig.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_winwalk.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_doora.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_doorb.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_doorc.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_entarch1.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wnda.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndb.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndc.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndc2.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndg.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndx1.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndx1open.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndx2.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndx2open.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndy1.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_wndz1.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/wndb.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/wndc.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/wndd.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/wndg.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/wndl.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/wndx1.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/wndz2.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_inside_window.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_star_window.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_door_slim.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_door_temple_entrance.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_bridge.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_palace.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_2x4_arch.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_2x6_arch.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_2x6_arch_flat.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x4_square.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x4_square_flat.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x6_arch.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x6_square.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x8_arch.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x8_arch_flat.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x8_square.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_4x8_square_flat.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_6x10_arch.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_6x10_arch_flat.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_6x8_shutters.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_6x8_shutters_flat.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_window_6x8_sill.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/tunnelarch.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/doorarchb.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/infarchc.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/doorarcha.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/brickwndwd.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/brickinfdrd.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/plasterinfdrc.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/plasterinfdrd.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/plasterinfwndwe.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/stoneinfwndwa.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/plasterinfwndwg.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/plasterinfwndwg_inside.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/plasterinfwndwh.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/plasterinfwndwi.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/stonewndwb.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/brickwndwa.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/infwndwa.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_doorarch.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_doorarch32.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_doorhalf32.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_wndarch.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_wnddbl.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_wnddbl16.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_wnddbl32.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_wndsng.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_wndsng16.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/props/de_cbble/cb_wndsng32.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_wnd_b1_24.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_wnd_b1_fake.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_wnd_bottom_16.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_wnd_bottom_fake.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_wnd_ct1_28.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_wnd_top_16.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/militiawindow01.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/militiawindow02_breakable_frame.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/militiawindow02_breakable.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_frame.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw02.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw02inside.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railingspikedgate.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_frame.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_01.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_windowframe_01.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_windowframe_02.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_02.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_03.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_frame.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_windowframe_03.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_windowframe_04.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/window01.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p1.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/door01a.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/gate.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/gate_low.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/gate_large.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/elevatordoor.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_archway.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_archway_b.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_archway_c.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_archway_d.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/arch_c.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_arch128x32.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_arch192x32.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_arch64x32.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/props/pi_arch96x32.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_entarch2.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_arch_b1.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_arch_b2.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_arch_b3.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_arch_ct1.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_arch_ct2.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_arch_ct3.mdl"
+		}
+		"129"
+		{
+			"type"		"header"
+			"text"		"Railings & Fences"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/fireescape_top.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/fireescape_bottom.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/fireescape_repeatable.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/ladder_tall.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/railingalley01.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/railingalley02.mdl"
+		}
+		"136"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/railingtraintrack01.mdl"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/rustyrailing01.mdl"
+		}
+		"138"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/rustyrailing02.mdl"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/rustyrailing03.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/railing_stairs.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/railing_stairs2.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/railing_stairs3.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/railing_stairs4.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_blc_med.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_blc_small.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fencewooden01.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fencewooden02.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fencewooden03.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/handrailstairs02.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/handrailstairs01.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/handrailstairs03.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing01.mdl"
+		}
+		"153"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing02.mdl"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing03.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railingspiked.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing04.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing04long.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing_backentrance.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing_bombsite02.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing_bridge.mdl"
+		}
+		"161"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing_ctspawn.mdl"
+		}
+		"162"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing_ctspawn_02.mdl"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railing_longhall.mdl"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railingbalcony.mdl"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/railingbombsite.mdl"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/railing_bombsitea.mdl"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/railing_bombsiteb.mdl"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/railing_catwalk.mdl"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/railing_ramp_a.mdl"
+		}
+		"170"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/railing_ramp_b.mdl"
+		}
+		"171"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/railing_tunnels.mdl"
+		}
+		"172"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/railing_warehouse.mdl"
+		}
+		"173"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_fences_a.mdl"
+		}
+		"174"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_fences_b.mdl"
+		}
+		"175"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_fences_c.mdl"
+		}
+		"176"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_fences_d.mdl"
+		}
+		"177"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_fences_e.mdl"
+		}
+		"178"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_fences_f.mdl"
+		}
+		"179"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_roofbeams_01.mdl"
+		}
+		"180"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_truss02d.mdl"
+		}
+		"181"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_alley-stairs.mdl"
+		}
+		"182"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_alley-upperdeck.mdl"
+		}
+		"183"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_singlespan_128.mdl"
+		}
+		"184"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_tower-lower.mdl"
+		}
+		"185"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_tower-upper.mdl"
+		}
+		"186"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_tspawn-balcony.mdl"
+		}
+		"187"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_yarda-sniperspot.mdl"
+		}
+		"188"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_yardb-catwalk.mdl"
+		}
+		"189"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/handrail_yardb-lower.mdl"
+		}
+		"190"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wood_fence.mdl"
+		}
+		"191"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wood_fence_corner.mdl"
+		}
+		"192"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wood_fence_end.mdl"
+		}
+		"193"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_woodenfences_a.mdl"
+		}
+		"194"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_woodenfences_b.mdl"
+		}
+		"195"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_woodenfences_c.mdl"
+		}
+		"196"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_woodenfences_d.mdl"
+		}
+		"197"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fencewoodlog01_short.mdl"
+		}
+		"198"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fencewoodlog02_short.mdl"
+		}
+		"199"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fencewoodlog03_long.mdl"
+		}
+		"200"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fencewoodlog04_long.mdl"
+		}
+		"201"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fence_ranch.mdl"
+		}
+		"202"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/railing01a.mdl"
+		}
+		"203"
+		{
+			"type"		"header"
+			"text"		"Effects"
+		}
+		"204"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/clouds.mdl"
+		}
+		"205"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/clouds.mdl"
+		}
+		"206"
+		{
+			"type"		"model"
+			"model"		"models/props/de_port/clouds.mdl"
+		}
+		"207"
+		{
+			"type"		"model"
+			"model"		"models/props/de_port/clouds2.mdl"
+		}
+		"208"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bridgelight.mdl"
+		}
+		"209"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/shedlight.mdl"
+		}
+		"210"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/skylight_effects.mdl"
+		}
+		"211"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/warehouselightingeffects.mdl"
+		}
+		"212"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw02beams.mdl"
+		}
+		"213"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/lightwindowsa.mdl"
+		}
+		"214"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/lightwindowsb.mdl"
+		}
+		"215"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/river01.mdl"
+		}
+		"216"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/river02.mdl"
+		}
+		"217"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/river03.mdl"
+		}
+		"218"
+		{
+			"type"		"header"
+			"text"		"Detailing Models"
+		}
+		"219"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/lattice.mdl"
+		}
+		"220"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/infsteps01.mdl"
+		}
+		"221"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/gazebo.mdl"
+		}
+		"222"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/inftowertop.mdl"
+		}
+		"223"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_01.mdl"
+		}
+		"224"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_d2a.mdl"
+		}
+		"225"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_d2b.mdl"
+		}
+		"226"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_d2c.mdl"
+		}
+		"227"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_d2d.mdl"
+		}
+		"228"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_d2e.mdl"
+		}
+		"229"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_medium.mdl"
+		}
+		"230"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_dome_small3.mdl"
+		}
+		"231"
+		{
+			"type"		"model"
+			"model"		"models/props/de_chateau/ch_staircase.mdl"
+		}
+		"232"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roof01b.mdl"
+		}
+		"233"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroof.mdl"
+		}
+		"234"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_04.mdl"
+		}
+		"235"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_06.mdl"
+		}
+		"236"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_07.mdl"
+		}
+		"237"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_08.mdl"
+		}
+		"238"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_10.mdl"
+		}
+		"239"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_brokenledge.mdl"
+		}
+		"240"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wallconcreterubble.mdl"
+		}
+		"241"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/boulderring01.mdl"
+		}
+		"242"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/dustteeth_1.mdl"
+		}
+		"243"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/dustteeth_2.mdl"
+		}
+		"244"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/dustteeth_3.mdl"
+		}
+		"245"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/dustteeth_4.mdl"
+		}
+		"246"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/dustteeth_5.mdl"
+		}
+		"247"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/dustteeth_6.mdl"
+		}
+		"248"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/dustteeth_7.mdl"
+		}
+		"249"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_ibeams_01.mdl"
+		}
+		"250"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_ibeams_02.mdl"
+		}
+		"251"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_tunnelbeams_01.mdl"
+		}
+		"252"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/2x4walls01.mdl"
+		}
+		"253"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/coveredbridge01_bottom.mdl"
+		}
+		"254"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/coveredbridge01_left.mdl"
+		}
+		"255"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/coveredbridge01_right.mdl"
+		}
+		"256"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/coveredbridge01_top.mdl"
+		}
+		"257"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_roofsup192.mdl"
+		}
+		"258"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/it_roofsup240.mdl"
+		}
+		"259"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/shedbeams.mdl"
+		}
+		"260"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/shed_overhang.mdl"
+		}
+		"261"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofbeams01.mdl"
+		}
+		"262"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roof01a.mdl"
+		}
+		"263"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits01.mdl"
+		}
+		"264"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits02.mdl"
+		}
+		"265"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits03.mdl"
+		}
+		"266"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits04.mdl"
+		}
+		"267"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits08.mdl"
+		}
+		"268"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits05.mdl"
+		}
+		"269"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits06.mdl"
+		}
+		"270"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits07.mdl"
+		}
+		"271"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits09.mdl"
+		}
+		"272"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits10.mdl"
+		}
+		"273"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits11.mdl"
+		}
+		"274"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits12.mdl"
+		}
+		"275"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits13.mdl"
+		}
+		"276"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits14.mdl"
+		}
+		"277"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits15.mdl"
+		}
+		"278"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits16.mdl"
+		}
+		"279"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits17.mdl"
+		}
+		"280"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits18.mdl"
+		}
+		"281"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits19.mdl"
+		}
+		"282"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits20.mdl"
+		}
+		"283"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits21.mdl"
+		}
+		"284"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/roofbits22.mdl"
+		}
+		"285"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofedges01.mdl"
+		}
+		"286"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/catwalk_support_a.mdl"
+		}
+		"287"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/catwalk_support_b.mdl"
+		}
+		"288"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/catwalk_support_c.mdl"
+		}
+		"289"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/floorbolts.mdl"
+		}
+		"290"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/powerwires.mdl"
+		}
+		"291"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgea_wu.mdl"
+		}
+		"292"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgea_n.mdl"
+		}
+		"293"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgea_ne.mdl"
+		}
+		"294"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgea_e.mdl"
+		}
+		"295"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgea_s.mdl"
+		}
+		"296"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgea_w.mdl"
+		}
+		"297"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgeb_e.mdl"
+		}
+		"298"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgeb_n.mdl"
+		}
+		"299"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgeb_s.mdl"
+		}
+		"300"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgeb_w.mdl"
+		}
+		"301"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_bridgeb_w2.mdl"
+		}
+		"302"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_courtyard_e.mdl"
+		}
+		"303"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_courtyard_e2.mdl"
+		}
+		"304"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_courtyard_n.mdl"
+		}
+		"305"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_courtyard_s.mdl"
+		}
+		"306"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_courtyard_w.mdl"
+		}
+		"307"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_misca.mdl"
+		}
+		"308"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_hallway_a.mdl"
+		}
+		"309"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_hallway_a2.mdl"
+		}
+		"310"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_hallway_b.mdl"
+		}
+		"311"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_hallway_b2.mdl"
+		}
+		"312"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_miscb.mdl"
+		}
+		"313"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/woodframe_miscc.mdl"
+		}
+		"314"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bedroombeams.mdl"
+		}
+		"315"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/garage_framework1.mdl"
+		}
+		"316"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/garage_framework2.mdl"
+		}
+		"317"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/garage_framework3.mdl"
+		}
+		"318"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/garage_framework4.mdl"
+		}
+		"319"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/garage_framework5.mdl"
+		}
+		"320"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/garage_overhang.mdl"
+		}
+		"321"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_01.mdl"
+		}
+		"322"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/pillarsa.mdl"
+		}
+		"323"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/spiregroup.mdl"
+		}
+		"324"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_warehouseroof.mdl"
+		}
+		"325"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/warehouse1roof.mdl"
+		}
+		"326"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/warehouse_structure1.mdl"
+		}
+		"327"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/middleroombeams.mdl"
+		}
+		"328"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/shedboards01.mdl"
+		}
+		"329"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_bombsite_d.mdl"
+		}
+		"330"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_bombsitea.mdl"
+		}
+		"331"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_bombsiteb.mdl"
+		}
+		"332"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_bombsitec.mdl"
+		}
+		"333"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_ctspawna.mdl"
+		}
+		"334"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_ctspawnb.mdl"
+		}
+		"335"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_ctspawnc.mdl"
+		}
+		"336"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_tspawna.mdl"
+		}
+		"337"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_tspawnb.mdl"
+		}
+		"338"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_tunnela.mdl"
+		}
+		"339"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/ibeams_tunnelb.mdl"
+		}
+		"340"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/warehouse1a.mdl"
+		}
+		"341"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/warehouse1b.mdl"
+		}
+		"342"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/warehouse1c.mdl"
+		}
+		"343"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/warehouse1d.mdl"
+		}
+		"344"
+		{
+			"type"		"header"
+			"text"		"Detailing Models Too"
+		}
+		"345"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/address.mdl"
+		}
+		"346"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/archroofa.mdl"
+		}
+		"347"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/archroofb.mdl"
+		}
+		"348"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/archroofb1.mdl"
+		}
+		"349"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/archroofb2.mdl"
+		}
+		"350"
+		{
+			"type"		"model"
+			"model"		"models/props/de_port/cargo_container01.mdl"
+		}
+		"351"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/water_tower.mdl"
+		}
+		"352"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/silo_01.mdl"
+		}
+		"353"
+		{
+			"type"		"model"
+			"model"		"models/props/de_port/tankoil01.mdl"
+		}
+		"354"
+		{
+			"type"		"model"
+			"model"		"models/props/de_port/tankoil02.mdl"
+		}
+		"355"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/containmentbuilding.mdl"
+		}
+		"356"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/coolingtank.mdl"
+		}
+		"357"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/coolingtower.mdl"
+		}
+		"358"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/turbinegenerator.mdl"
+		}
+		"359"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/bridge.mdl"
+		}
+		"360"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_antenna_b.mdl"
+		}
+		"361"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/chimneycluster01.mdl"
+		}
+		"362"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/duct.mdl"
+		}
+		"363"
+		{
+			"type"		"model"
+			"model"		"models/props_pipes/pipeset02d_256_001a.mdl"
+		}
+		"364"
+		{
+			"type"		"model"
+			"model"		"models/props_pipes/pipeset02d_corner128d_001a.mdl"
+		}
+		"365"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/chimneypipe_cluster02b.mdl"
+		}
+		"366"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/rooftopcluser03a.mdl"
+		}
+		"367"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/rooftopcluser04a.mdl"
+		}
+		"368"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/rooftopcluser05a.mdl"
+		}
+		"369"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fireplacechimney01.mdl"
+		}
+		"370"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wallconcretehole.mdl"
+		}
+		"371"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/brokenwall.mdl"
+		}
+		"372"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bathroomwallhole01_tile.mdl"
+		}
+		"373"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/grate.mdl"
+		}
+		"374"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bathroomwallhole01_wood_broken.mdl"
+		}
+		"375"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bathroomwallhole01_wood_broken_01.mdl"
+		}
+		"376"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bathroomwallhole01_wood_broken_02.mdl"
+		}
+		"377"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bathroomwallhole01_wood_broken_03.mdl"
+		}
+		"378"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bathroomwallhole01_wood_broken_04.mdl"
+		}
+		"379"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_havana/pole_a_skybox.mdl"
+		}
+		"380"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/wirepipe.mdl"
+		}
+		"381"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/wirespout.mdl"
+		}
+		"382"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_05.mdl"
+		}
+		"383"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_09.mdl"
+		}
+		"384"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_11.mdl"
+		}
+		"385"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_antenna_a.mdl"
+		}
+		"386"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_antenna_a_skybox.mdl"
+		}
+		"387"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_hanging_rugsa.mdl"
+		}
+		"388"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_hanging_rugsb.mdl"
+		}
+		"389"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/prodcables128.mdl"
+		}
+		"390"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/prodcables256.mdl"
+		}
+		"391"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/prodcablescornerin.mdl"
+		}
+		"392"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/prodcablescornerout.mdl"
+		}
+		"393"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/du_telephone_pole.mdl"
+		}
+		"394"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/furnace01pipes.mdl"
+		}
+		"395"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/furnace01pipes02.mdl"
+		}
+		"396"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards.mdl"
+		}
+		"397"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards_p1.mdl"
+		}
+		"398"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/skylight01.mdl"
+		}
+		"399"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/sheddoor01.mdl"
+		}
+		"400"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/riverlogs.mdl"
+		}
+		"401"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/rocks01.mdl"
+		}
+		"402"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/churchroof.mdl"
+		}
+		"403"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fireplace01.mdl"
+		}
+		"404"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/vents.mdl"
+		}
+		"405"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/wall_wires1.mdl"
+		}
+		"406"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_assault/wall_wires2.mdl"
+		}
+		"407"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/showers.mdl"
+		}
+		"408"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/ropeladder01.mdl"
+		}
+		"409"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/fencebarbedwire01.mdl"
+		}
+		"410"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/ammo_can_01.mdl"
+		}
+		"411"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_gutter_01.mdl"
+		}
+		"412"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_ibeam_01.mdl"
+		}
+		"413"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_ibeam_02.mdl"
+		}
+		"414"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_ibeam_03.mdl"
+		}
+		"415"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/windowsfront.mdl"
+		}
+		"416"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/windowsside.mdl"
+		}
+		"417"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wall_lamp_ring.mdl"
+		}
+		"418"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/pipeset.mdl"
+		}
+		"419"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/smokestack01.mdl"
+		}
+		"420"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/pipesa_bombsite.mdl"
+		}
+		"421"
+		{
+			"type"		"model"
+			"model"		"models/props/de_nuke/pipesb_bombsite.mdl"
+		}
+		"422"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/tides_chimney.mdl"
+		}
+		"423"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/de_train_drainage_pipe.mdl"
+		}
+		"424"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/biohazardtank_dm_03.mdl"
+		}
+		"425"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/biohazardtank_dm_04.mdl"
+		}
+		"426"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/biohazardtank_dm_05.mdl"
+		}
+		"427"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/biohazardtank_dm_06.mdl"
+		}
+		"428"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/biohazardtank_dm_07.mdl"
+		}
+		"429"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/biohazardtank_dm_08.mdl"
+		}
+		"430"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/oil_pipes.mdl"
+		}
+		"431"
+		{
+			"type"		"model"
+			"model"		"models/props_wasteland/dockpole01a.mdl"
+		}
+		"432"
+		{
+			"type"		"header"
+			"text"		"Gibs"
+		}
+		"433"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/banannagib1.mdl"
+		}
+		"434"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/banannagib2.mdl"
+		}
+		"435"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/orangegib1.mdl"
+		}
+		"436"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/orangegib2.mdl"
+		}
+		"437"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_italy/orangegib3.mdl"
+		}
+		"438"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bottle01_breaka.mdl"
+		}
+		"439"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/bottle01_breakb.mdl"
+		}
+		"440"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p10.mdl"
+		}
+		"441"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p11.mdl"
+		}
+		"442"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p12.mdl"
+		}
+		"443"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p13.mdl"
+		}
+		"444"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p14.mdl"
+		}
+		"445"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p2.mdl"
+		}
+		"446"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p3.mdl"
+		}
+		"447"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p4.mdl"
+		}
+		"448"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p5.mdl"
+		}
+		"449"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p6.mdl"
+		}
+		"450"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p7.mdl"
+		}
+		"451"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p8.mdl"
+		}
+		"452"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/skylight_glass_p9.mdl"
+		}
+		"453"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/militiawindow02_breakable_chunk_01.mdl"
+		}
+		"454"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/militiawindow02_breakable_chunk_02.mdl"
+		}
+		"455"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/militiawindow02_breakable_chunk_03.mdl"
+		}
+		"456"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/militiawindow02_breakable_chunk_04.mdl"
+		}
+		"457"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_chunk_01.mdl"
+		}
+		"458"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_chunk_02.mdl"
+		}
+		"459"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_chunk_03.mdl"
+		}
+		"460"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_chunk_04.mdl"
+		}
+		"461"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_chunk_05.mdl"
+		}
+		"462"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_chunk_06.mdl"
+		}
+		"463"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/wndw01_breakable_chunk_07.mdl"
+		}
+		"464"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p1a.mdl"
+		}
+		"465"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p1b.mdl"
+		}
+		"466"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p1c.mdl"
+		}
+		"467"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p1d.mdl"
+		}
+		"468"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p1e.mdl"
+		}
+		"469"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p2a.mdl"
+		}
+		"470"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p2b.mdl"
+		}
+		"471"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p2c.mdl"
+		}
+		"472"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p2d.mdl"
+		}
+		"473"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_keyboard_p2e.mdl"
+		}
+		"474"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_monitor_p1.mdl"
+		}
+		"475"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_monitor_p1a.mdl"
+		}
+		"476"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_monitor_p2.mdl"
+		}
+		"477"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_monitor_p2a.mdl"
+		}
+		"478"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_gib1.mdl"
+		}
+		"479"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_gib2.mdl"
+		}
+		"480"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_gib3.mdl"
+		}
+		"481"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p1.mdl"
+		}
+		"482"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p1a.mdl"
+		}
+		"483"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p1b.mdl"
+		}
+		"484"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p2.mdl"
+		}
+		"485"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p2a.mdl"
+		}
+		"486"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p2b.mdl"
+		}
+		"487"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p3.mdl"
+		}
+		"488"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p3a.mdl"
+		}
+		"489"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p3b.mdl"
+		}
+		"490"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p4.mdl"
+		}
+		"491"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p4a.mdl"
+		}
+		"492"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p4b.mdl"
+		}
+		"493"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p5.mdl"
+		}
+		"494"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p6a.mdl"
+		}
+		"495"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p6b.mdl"
+		}
+		"496"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p7a.mdl"
+		}
+		"497"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_p7b.mdl"
+		}
+		"498"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_remote_p1.mdl"
+		}
+		"499"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/projector_remote_p2.mdl"
+		}
+		"500"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/radio_p1.mdl"
+		}
+		"501"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/radio_p2.mdl"
+		}
+		"502"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/radio_p3.mdl"
+		}
+		"503"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_caseb_p1a.mdl"
+		}
+		"504"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_caseb_gib1.mdl"
+		}
+		"505"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_caseb_gib2.mdl"
+		}
+		"506"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_caseb_p4b.mdl"
+		}
+		"507"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/computer_caseb_p3b.mdl"
+		}
+		"508"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/tv_plasma_gib1.mdl"
+		}
+		"509"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/tv_plasma_gib2.mdl"
+		}
+		"510"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/tv_plasma_p2.mdl"
+		}
+		"511"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/tv_plasma_p3.mdl"
+		}
+		"512"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/tv_plasma_p4.mdl"
+		}
+		"513"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/coffee_mug_p1.mdl"
+		}
+		"514"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/coffee_mug_p2.mdl"
+		}
+		"515"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/coffee_mug_p3.mdl"
+		}
+		"516"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_gib1.mdl"
+		}
+		"517"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_gib2.mdl"
+		}
+		"518"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p1a.mdl"
+		}
+		"519"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p1b.mdl"
+		}
+		"520"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p1c.mdl"
+		}
+		"521"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p1d.mdl"
+		}
+		"522"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p2a.mdl"
+		}
+		"523"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p2b.mdl"
+		}
+		"524"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p2c.mdl"
+		}
+		"525"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/file_box_p2d.mdl"
+		}
+		"526"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/grainbasket01c_gib1.mdl"
+		}
+		"527"
+		{
+			"type"		"model"
+			"model"		"models/props/de_dust/grainbasket01c_gib2.mdl"
+		}
+		"528"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot01_damage_01.mdl"
+		}
+		"529"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot01_damage_02.mdl"
+		}
+		"530"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot01_damage_03.mdl"
+		}
+		"531"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot01_damage_04.mdl"
+		}
+		"532"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot02_damage_01.mdl"
+		}
+		"533"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot02_damage_02.mdl"
+		}
+		"534"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot02_damage_03.mdl"
+		}
+		"535"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot02_damage_04.mdl"
+		}
+		"536"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot03_damage_02.mdl"
+		}
+		"537"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot03_damage_03.mdl"
+		}
+		"538"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot03_damage_04.mdl"
+		}
+		"539"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot03_damage_05.mdl"
+		}
+		"540"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/claypot03_damage_06.mdl"
+		}
+		"541"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p2.mdl"
+		}
+		"542"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p3.mdl"
+		}
+		"543"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p4.mdl"
+		}
+		"544"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p5.mdl"
+		}
+		"545"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p6.mdl"
+		}
+		"546"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p7.mdl"
+		}
+		"547"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p8.mdl"
+		}
+		"548"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crate_fruit_break_p9.mdl"
+		}
+		"549"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p2.mdl"
+		}
+		"550"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p3.mdl"
+		}
+		"551"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p4.mdl"
+		}
+		"552"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p5.mdl"
+		}
+		"553"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p6.mdl"
+		}
+		"554"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p7.mdl"
+		}
+		"555"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p8.mdl"
+		}
+		"556"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit1_p9.mdl"
+		}
+		"557"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p2.mdl"
+		}
+		"558"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p3.mdl"
+		}
+		"559"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p4.mdl"
+		}
+		"560"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p5.mdl"
+		}
+		"561"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p6.mdl"
+		}
+		"562"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p7.mdl"
+		}
+		"563"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p8.mdl"
+		}
+		"564"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/crates_fruit2_p9.mdl"
+		}
+		"565"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards_p2.mdl"
+		}
+		"566"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards_p3.mdl"
+		}
+		"567"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards_p4.mdl"
+		}
+		"568"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards_p5.mdl"
+		}
+		"569"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards_p6.mdl"
+		}
+		"570"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/roofholeboards_p7.mdl"
+		}
+		"571"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01_break_01.mdl"
+		}
+		"572"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01_break_02.mdl"
+		}
+		"573"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01_break_03.mdl"
+		}
+		"574"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01_break_04.mdl"
+		}
+		"575"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01_break_05.mdl"
+		}
+		"576"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01_break_06.mdl"
+		}
+		"577"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_militia/vent01_break_07.mdl"
+		}
+		"578"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_gib1.mdl"
+		}
+		"579"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_gib2.mdl"
+		}
+		"580"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_gib3.mdl"
+		}
+		"581"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_p2.mdl"
+		}
+		"582"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_p3.mdl"
+		}
+		"583"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_p4.mdl"
+		}
+		"584"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_p5.mdl"
+		}
+		"585"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_p6.mdl"
+		}
+		"586"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/plant01_p7.mdl"
+		}
+		"587"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/trash_can_p1.mdl"
+		}
+		"588"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/trash_can_p2.mdl"
+		}
+		"589"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/trash_can_p3.mdl"
+		}
+		"590"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/trash_can_p4.mdl"
+		}
+		"591"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/trash_can_p5.mdl"
+		}
+		"592"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/trash_can_p6.mdl"
+		}
+		"593"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p1.mdl"
+		}
+		"594"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p10.mdl"
+		}
+		"595"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p9.mdl"
+		}
+		"596"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p11.mdl"
+		}
+		"597"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p2.mdl"
+		}
+		"598"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p3.mdl"
+		}
+		"599"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p4.mdl"
+		}
+		"600"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p5.mdl"
+		}
+		"601"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p6.mdl"
+		}
+		"602"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/flower_barrel_p7.mdl"
+		}
+		"603"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fountain_bowl_p1.mdl"
+		}
+		"604"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fountain_bowl_p2.mdl"
+		}
+		"605"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fountain_bowl_p3.mdl"
+		}
+		"606"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fountain_bowl_p4.mdl"
+		}
+		"607"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/fountain_bowl_p5.mdl"
+		}
+		"608"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_01.mdl"
+		}
+		"609"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_02.mdl"
+		}
+		"610"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_03.mdl"
+		}
+		"611"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_04.mdl"
+		}
+		"612"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_05.mdl"
+		}
+		"613"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_06.mdl"
+		}
+		"614"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_07.mdl"
+		}
+		"615"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_08.mdl"
+		}
+		"616"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_09.mdl"
+		}
+		"617"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_10.mdl"
+		}
+		"618"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_02_damage_11.mdl"
+		}
+		"619"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_04.mdl"
+		}
+		"620"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_05.mdl"
+		}
+		"621"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_06.mdl"
+		}
+		"622"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_07.mdl"
+		}
+		"623"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_08.mdl"
+		}
+		"624"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_09.mdl"
+		}
+		"625"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_10.mdl"
+		}
+		"626"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/windowbreakable_damage_11.mdl"
+		}
+		"627"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p1.mdl"
+		}
+		"628"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p10.mdl"
+		}
+		"629"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p11.mdl"
+		}
+		"630"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p9.mdl"
+		}
+		"631"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p8.mdl"
+		}
+		"632"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p2.mdl"
+		}
+		"633"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p3.mdl"
+		}
+		"634"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p4.mdl"
+		}
+		"635"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p5.mdl"
+		}
+		"636"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p6.mdl"
+		}
+		"637"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/wine_barrel_p7.mdl"
+		}
+		"638"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_01.mdl"
+		}
+		"639"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_02.mdl"
+		}
+		"640"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_03.mdl"
+		}
+		"641"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_04.mdl"
+		}
+		"642"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_05.mdl"
+		}
+		"643"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_06.mdl"
+		}
+		"644"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_07.mdl"
+		}
+		"645"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_08.mdl"
+		}
+		"646"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_09.mdl"
+		}
+		"647"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_10.mdl"
+		}
+		"648"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_11.mdl"
+		}
+		"649"
+		{
+			"type"		"model"
+			"model"		"models/props/de_prodigy/wood_pallet_debris_12.mdl"
+		}
+		"650"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/tablecoffee_damage_a01.mdl"
+		}
+		"651"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/tablecoffee_damage_a02.mdl"
+		}
+		"652"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/tablecoffee_damage_b01.mdl"
+		}
+		"653"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/tablecoffee_damage_b02.mdl"
+		}
+		"654"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/tablecoffee_damage_b03.mdl"
+		}
+		"655"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/tablecoffee_damage_b04.mdl"
+		}
+		"656"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/table_coffee_p1.mdl"
+		}
+		"657"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/table_coffee_p2.mdl"
+		}
+		"658"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/table_coffee_p3.mdl"
+		}
+		"659"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/splinter_damage_01.mdl"
+		}
+		"660"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/splinter_damage_02.mdl"
+		}
+		"661"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/menu_stand_p01.mdl"
+		}
+		"662"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/menu_stand_p02.mdl"
+		}
+		"663"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/menu_stand_p03.mdl"
+		}
+		"664"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/menu_stand_p04.mdl"
+		}
+		"665"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/menu_stand_p06.mdl"
+		}
+		"666"
+		{
+			"type"		"model"
+			"model"		"models/props/de_tides/menu_stand_p07.mdl"
+		}
+		"667"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_02.mdl"
+		}
+		"668"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/bombsiteroofbreak_03.mdl"
+		}
+		"669"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/brokenboard.mdl"
+		}
+		"670"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/brokenboard_damage_01.mdl"
+		}
+		"671"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/brokenboard_damage_02.mdl"
+		}
+		"672"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/chairantique_damage_01.mdl"
+		}
+		"673"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/chairantique_damage_02.mdl"
+		}
+		"674"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/chairantique_damage_03.mdl"
+		}
+		"675"
+		{
+			"type"		"model"
+			"model"		"models/props/de_inferno/chairantique_damage_04.mdl"
+		}
+		"676"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/snowman_head.mdl"
+		}
+		"677"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/snowman_eye1.mdl"
+		}
+		"678"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/snowman_eye2.mdl"
+		}
+		"679"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/snowman_mouth1.mdl"
+		}
+		"680"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/snowman_nose.mdl"
+		}
+	}
+}

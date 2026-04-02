@@ -213,95 +213,100 @@
 		"42"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/companion_doll.mdl"
+			"model"		"models/weapons/w_toolgun.mdl"
 		}
 		"43"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/cube_tool.mdl"
+			"model"		"models/maxofs2d/companion_doll.mdl"
 		}
 		"44"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/gm_painting.mdl"
+			"model"		"models/maxofs2d/cube_tool.mdl"
 		}
 		"45"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/logo_gmod_b.mdl"
+			"model"		"models/maxofs2d/gm_painting.mdl"
 		}
 		"46"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/motion_sensor.mdl"
+			"model"		"models/maxofs2d/logo_gmod_b.mdl"
 		}
 		"47"
+		{
+			"type"		"model"
+			"model"		"models/maxofs2d/motion_sensor.mdl"
+		}
+		"48"
 		{
 			"type"		"model"
 			"model"		"models/maxofs2d/construct_sign.mdl"
 			"wide"		"128"
 		}
-		"48"
+		"49"
 		{
 			"type"		"header"
 			"text"		"Vehicle Props"
 		}
-		"49"
+		"50"
 		{
 			"type"		"model"
 			"model"		"models/nova/airboat_seat.mdl"
 		}
-		"50"
+		"51"
 		{
 			"type"		"model"
 			"model"		"models/nova/jalopy_seat.mdl"
 		}
-		"51"
+		"52"
 		{
 			"type"		"model"
 			"model"		"models/nova/jeep_seat.mdl"
 		}
-		"52"
+		"53"
 		{
 			"type"		"model"
 			"model"		"models/nova/chair_office01.mdl"
 		}
-		"53"
+		"54"
 		{
 			"type"		"model"
 			"model"		"models/nova/chair_office02.mdl"
 		}
-		"54"
+		"55"
 		{
 			"type"		"model"
 			"model"		"models/nova/chair_plastic01.mdl"
 		}
-		"55"
+		"56"
 		{
 			"type"		"model"
 			"model"		"models/nova/chair_wood01.mdl"
 		}
-		"56"
+		"57"
 		{
 			"type"		"header"
 			"text"		"Hats"
 		}
-		"57"
+		"58"
 		{
 			"type"		"model"
 			"model"		"models/nova/w_headcrab.mdl"
 		}
-		"58"
+		"59"
 		{
 			"type"		"model"
 			"model"		"models/nova/w_headgear.mdl"
 		}
-		"59"
+		"60"
 		{
 			"type"		"model"
 			"model"		"models/player/items/humans/graduation_cap.mdl"
 		}
-		"60"
+		"61"
 		{
 			"type"		"model"
 			"model"		"models/player/items/humans/top_hat.mdl"
