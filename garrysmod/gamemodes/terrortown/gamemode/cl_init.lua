@@ -86,7 +86,9 @@ function GM:HUDClear()
 end
 
 KARMA = {}
-function KARMA.IsEnabled() return GetGlobalBool("ttt_karma", false) end
+
+local ttt_karma = CreateConVar("ttt_karma", "1", FCVAR_REPLICATED)
+function KARMA.IsEnabled() return ttt_karma:GetBool() end
 
 function GetRoundState() return GAMEMODE.round_state end
 
@@ -97,7 +99,7 @@ local function RoundStateChange(o, n)
       GAMEMODE:CleanUpMap()
 
       -- show warning to spec mode players
-      if GetConVar("ttt_spectator_mode"):GetBool() and IsValid(LocalPlayer())then
+      if GetConVar("ttt_spectator_mode"):GetBool() and IsValid(LocalPlayer()) then
          LANG.Msg("spec_mode_warning")
       end
 
@@ -330,6 +332,7 @@ end
 
 
 -- Simple client-based idle checking
+local ttt_idle_limit = CreateConVar("ttt_idle_limit", "180", FCVAR_REPLICATED)
 local idle = {ang = nil, pos = nil, mx = 0, my = 0, t = 0}
 function CheckIdle()
    local client = LocalPlayer()
@@ -347,8 +350,8 @@ function CheckIdle()
    end
 
    if GetRoundState() == ROUND_ACTIVE and client:IsTerror() and client:Alive() then
-      local idle_limit = GetGlobalInt("ttt_idle_limit", 300) or 300
-      if idle_limit <= 0 then idle_limit = 300 end -- networking sucks sometimes
+      local idle_limit = ttt_idle_limit:GetInt()
+      if idle_limit <= 0 then return end
 
 
       if client:GetAngles() != idle.ang then

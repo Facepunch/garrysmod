@@ -330,8 +330,9 @@ if CLIENT then
       min  = Color(255, 130, 0, 255),
    }
 
+   local karma_max = CreateConVar("ttt_karma_max", "1000", FCVAR_REPLICATED)
    function util.KarmaToString(karma)
-      local maxkarma = GetGlobalInt("ttt_karma_max", 1000)
+      local maxkarma = karma_max:GetInt()
 
       if karma > maxkarma * 0.89 then
          return "karma_max", karmacolors.max

@@ -92,7 +92,7 @@ end
 concommand.Add("ttt_print_karma", PrintKarma)
 
 
-CreateConVar("ttt_highlight_admins", "1")
+CreateConVar("ttt_highlight_admins", "1", FCVAR_REPLICATED)
 local function ApplyHighlightAdmins(cv, old, new)
    SetGlobalBool("ttt_highlight_admins", tobool(tonumber(new)))
 end
