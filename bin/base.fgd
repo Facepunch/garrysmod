@@ -1293,7 +1293,7 @@
 	input SetTonemapRate(float) : "Set the rate for autoexposure adjustment."
 ]
 
-@PointClass base(Targetname, Parentname) sweptplayerhull() = func_useableladder :
+@PointClass base(Origin, Targetname, Parentname) sweptplayerhull() = func_useableladder :
 	"A Half-Life 2 ladder. Handles player auto mount/unmount, as well as +use to get onto the ladder. \n\n" +
 	"See also 'info_ladder_dismount', used to specify ladder auto-dismount points.\n\n" +
 	"Note: This entity is non-functional in Counter-Strike: Source. Use func_ladder instead."
@@ -2740,14 +2740,14 @@
 	EndU(float) : "U End" : "1.0"
 	StartV(float) : "V Start" : "0.0"
 	EndV(float) : "V End" : "1.0"
-	BasisOrigin(Vector) readonly : "Overlay Basis Origin(Read-Only)"
-	BasisU(Vector) readonly : "Overlay Basis U(Read-Only)"
-	BasisV(Vector) readonly : "Overlay Basis V(Read-Only)"
-	BasisNormal(Vector) readonly : "Overlay Basis Normal(Read-Only)"
-	uv0(vector) readonly : "Overlay Point 1(Read-Only)"
-	uv1(vector) readonly : "Overlay Point 2(Read-Only)"
-	uv2(vector) readonly : "Overlay Point 3(Read-Only)"
-	uv3(vector) readonly : "Overlay Point 4(Read-Only)"
+	BasisOrigin(Vector) readonly : "Overlay Basis Origin (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
+	BasisU(Vector) readonly : "Overlay Basis U (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
+	BasisV(Vector) readonly : "Overlay Basis V (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
+	BasisNormal(Vector) readonly : "Overlay Basis Normal (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
+	uv0(vector) readonly : "Overlay Point 1 (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
+	uv1(vector) readonly : "Overlay Point 2 (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
+	uv2(vector) readonly : "Overlay Point 3 (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
+	uv3(vector) readonly : "Overlay Point 4 (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
 	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the overlay starts to fade (<0 = use fademaxdist)."
 	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
 ]
