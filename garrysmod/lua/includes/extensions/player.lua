@@ -239,6 +239,37 @@ function meta:GodDisable()
 
 end
 
+timer.Create( "PlayerVoice", 0.1, 0, function()
+
+	for _, pl in player.Iterator() do
+		
+		if not IsValid(pl) or not pl:IsPlayer() or pl:IsBot() then continue end
+	
+		if pl:IsSpeaking() and not pl.m_bWasTalking then
+
+			pl.m_bWasTalking = true
+			hook.Run("PlayerStartVoice", pl )
+
+		elseif not pl:IsSpeaking() and pl.m_bWasTalking then
+
+			pl.m_bWasTalking = false
+			hook.Run("PlayerEndVoice", pl )
+
+		end
+
+	end
+
+end)
+
+hook.Add("PlayerDisconnected", "PlayerVoice_Cleanup", function(ply)
+
+	if ply.m_bWasTalking then
+		ply.m_bWasTalking = false
+		hook.Run("PlayerEndVoice", ply )
+	end
+
+end)
+
 end
 
 --[[---------------------------------------------------------
