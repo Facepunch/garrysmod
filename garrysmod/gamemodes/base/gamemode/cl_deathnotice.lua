@@ -29,9 +29,11 @@ killicon.AddAlias( "npc_tripmine", "npc_satchel" )
 killicon.AddAlias( "weapon_crowbar_hl1", "weapon_crowbar" )
 killicon.AddAlias( "crossbow_bolt_hl1", "crossbow_bolt" )
 killicon.AddAlias( "weapon_357_hl1", "weapon_357" )
+killicon.AddAlias( "weapon_mp5_hl1", "weapon_smg1" )
 killicon.AddAlias( "weapon_shotgun_hl1", "weapon_shotgun" )
 killicon.AddAlias( "weapon_glock_hl1", "weapon_pistol" )
 killicon.AddAlias( "rpg_rocket", "rpg_missile" )
+killicon.AddAlias( "grenade_hand", "npc_grenade_frag" )
 
 -- Prop like objects get the prop kill icon
 killicon.AddAlias( "prop_ragdoll", "prop_physics" )
@@ -47,6 +49,9 @@ killicon.AddAlias( "func_rotating", "prop_physics" )
 killicon.AddAlias( "func_rot_button", "prop_physics" )
 killicon.AddAlias( "func_tracktrain", "prop_physics" )
 killicon.AddAlias( "func_train", "prop_physics" )
+killicon.AddAlias( "prop_vehicle_jeep", "prop_physics" )
+killicon.AddAlias( "prop_vehicle_prisoner_pod", "prop_physics" )
+killicon.AddAlias( "prop_vehicle_airboat", "prop_physics" )
 
 local function HandleAchievements( victimType )
 
