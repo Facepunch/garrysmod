@@ -461,82 +461,110 @@ event SuitLoop
 // ammo has been picked up
 event AmmoIncreased
 {
+	StopAnimation	Hudammo FgColor 0.0
+	StopAnimation	Hudammo Blur 0.0
+
 	Animate HudAmmo		FgColor	"BrightFg"		Linear	0.0	0.15
 	Animate HudAmmo		FgColor	"FgColorHud"		Deaccel	0.15	1.5
 	Animate HudAmmo		Blur		"5"			Linear	0.0	0.0 
 	Animate HudAmmo		Blur		"0"			Accel		0.01	1.5 
 }
-
 // ammo has been decreased, but there is still some remaining
 event AmmoDecreased
 {
+	StopAnimation	Hudammo FgColor 0.0
+	StopAnimation	Hudammo Blur 0.0
 	StopEvent AmmoIncreased	0.0
 	
 	Animate HudAmmo		Blur		"7"			Linear	0.0	0.0
 	Animate HudAmmo		Blur		"0"			Deaccel	0.1	1.5
 	
-	Animate HudAmmo		FgColor		"FgColorHud"		Deaccel	0.0	0.1 // GMOD: Snap to good color from AmmoIncreased (reload while holding M1)
+	Animate HudAmmo		FgColor		"FgColorHud"		Deaccel	0.0	0.0 // GMOD: Snap to good color from AmmoIncreased (reload while holding M1)
 	
 	Animate HudAmmo		TextColor	"BrightFg"		Linear	0.0	0.1
 	Animate HudAmmo		TextColor	"FgColorHud"		Deaccel	0.1	0.75
 }
-
 // primary ammo is zero
 event AmmoEmpty
 {
+	StopAnimation	Hudammo FgColor 0.0
+	StopAnimation	Hudammo Blur 0.0
+
+	Animate Hudammo	Blur		"7"			Linear	0.0	0.0
+	Animate Hudammo	Blur		"0"			Deaccel	0.1	1.5
+
 	Animate Hudammo	FgColor		"BrightDamagedFg"	Linear	0.0	0.2
-	Animate Hudammo	FgColor		"DamagedFg"		Accel		0.2	1.2		
+	Animate Hudammo	FgColor		"DamagedFg"		Accel		0.2	1.2
 }
 
 // ammo2 is the total ammo for a weapon that uses clip ammo
 event Ammo2Increased
 {
-	Animate Hudammo	ammo2color		"BrightFg"		Linear	0.0	0.2
-	Animate Hudammo	ammo2color		"FgColorHud"		Accel		0.2	1.2		
+	Animate Hudammo	Ammo2Color		"BrightFg"		Linear	0.0	0.2
+	Animate Hudammo	Ammo2Color		"FgColorHud"		Accel		0.2	1.2
 }
-
 // total ammo has been decreased, but there is still some remaining
 event Ammo2Decreased
 {
-	Animate Hudammo	ammo2color		"BrightFg"		Linear	0.0	0.2
-	Animate Hudammo	ammo2color		"FgColorHud"		Accel		0.2	1.2		
+	Animate Hudammo	Ammo2Color		"BrightFg"		Linear	0.0	0.2
+	Animate Hudammo	Ammo2Color		"FgColorHud"		Accel		0.2	1.2
 }
-
 // total ammo is zero
 event Ammo2Empty
 {
-	Animate Hudammo	ammo2color		"BrightDamagedFg"	Linear	0.0	0.2
-	Animate Hudammo	ammo2color		"DamagedFg"		Accel		0.2	1.2		
+	Animate Hudammo	Ammo2Color		"BrightDamagedFg"	Linear	0.0	0.2
+	Animate Hudammo	Ammo2Color		"DamagedFg"		Accel		0.2	1.2
 }
 
 event AmmoSecondaryIncreased
 {
+	StopAnimation	HudAmmoSecondary FgColor 0.0
+	StopAnimation	HudAmmoSecondary Blur 0.0
+
 	Animate HudAmmoSecondary		FgColor	"BrightFg"		Linear	0.0	0.15
 	Animate HudAmmoSecondary		FgColor	"FgColorHud"		Deaccel	0.15	1.5
 	Animate HudAmmoSecondary		Blur		"5"			Linear	0.0	0.0 
-	Animate HudAmmoSecondary		Blur		"0"			Accel		0.01	1.5 	
+	Animate HudAmmoSecondary		Blur		"0"			Accel		0.01	1.5
 }
-
 event AmmoSecondaryDecreased
 {
 	StopEvent AmmoSecondaryIncreased	0.0
+	StopAnimation	HudAmmoSecondary FgColor 0.0
+	StopAnimation	HudAmmoSecondary Blur 0.0
 	
 	Animate HudAmmoSecondary		Blur		"7"			Linear	0.0	0.0
 	Animate HudAmmoSecondary		Blur		"0"			Deaccel	0.1	1.5
 
-	Animate HudAmmoSecondary		FgColor		"FgColorHud"				Deaccel	0.0	0.1 // GMOD: Snap to good color from AmmoIncreased (reload while holding M1)
+	Animate HudAmmoSecondary		FgColor		"FgColorHud"				Deaccel	0.0	0.0 // GMOD: Snap to good color from AmmoIncreased (reload while holding M1)
 
 	Animate HudAmmoSecondary		TextColor	"BrightFg"		Linear	0.0	0.1
 	Animate HudAmmoSecondary		TextColor	"FgColorHud"		Deaccel	0.1	0.75
 }
-
 event AmmoSecondaryEmpty
 {
+	StopAnimation	HudAmmoSecondary FgColor 0.0
+	StopAnimation	HudAmmoSecondary Blur 0.0
+
 	Animate HudAmmoSecondary		FgColor		"BrightDamagedFg"	Linear	0.0	0.2
 	Animate HudAmmoSecondary		FgColor		"DamagedFg"		Accel		0.2	1.2
 	Animate HudAmmoSecondary		Blur		"7"			Linear	0.0	0.0
 	Animate HudAmmoSecondary		Blur		"0"			Deaccel	0.1	1.5
+}
 
+event Ammo2SecondaryIncreased
+{
+	Animate HudAmmoSecondary	Ammo2Color		"BrightFg"		Linear	0.0	0.2
+	Animate HudAmmoSecondary	Ammo2Color		"FgColorHud"		Accel		0.2	1.2
+}
+event Ammo2SecondaryDecreased
+{
+	Animate HudAmmoSecondary	Ammo2Color		"BrightFg"		Linear	0.0	0.2
+	Animate HudAmmoSecondary	Ammo2Color		"FgColorHud"		Accel		0.2	1.2
+}
+event Ammo2SecondaryEmpty
+{
+	Animate HudAmmoSecondary	Ammo2Color		"BrightDamagedFg"	Linear	0.0	0.2
+	Animate HudAmmoSecondary	Ammo2Color		"DamagedFg"		Accel		0.2	1.2
 }
 
 // current weapon has been changed
@@ -544,8 +572,8 @@ event WeaponChanged
 {
 	Animate HudAmmo		BgColor		"250 220 0 80"	Linear	0.0		0.1
 	Animate HudAmmo		BgColor		"BgColorHud"		Deaccel	0.1		1.0
-	Animate HudAmmo		FgColor		"BrightFg"		Linear	0.0		0.1
-	Animate HudAmmo		FgColor		"FgColorHud"		Linear	0.2		1.5
+	//Animate HudAmmo		FgColor		"BrightFg"		Linear	0.0		0.1
+	//Animate HudAmmo		FgColor		"FgColorHud"		Linear	0.2		1.5
 }
 
 // ran if we just changed to a weapon that needs clip ammo
@@ -589,13 +617,13 @@ event WeaponUsesSecondaryAmmo
 	//StopAnimation 	HudAmmo Position 0.0
 	//StopAnimation 	HudAmmo Size 0.0
 	StopAnimation	HudAmmoSecondary BgColor 0.0
-	StopAnimation	HudAmmoSecondary FgColor 0.0
+	//StopAnimation	HudAmmoSecondary FgColor 0.0
 	StopAnimation	HudAmmoSecondary Alpha 0.0
 
 	Animate HudAmmoSecondary	BgColor		"250 220 0 60"	Linear	0.0		0.1
 	Animate HudAmmoSecondary	BgColor		"BgColorHud"		Deaccel	0.1		1.0
-	Animate HudAmmoSecondary	FgColor		"BrightFg"	Linear	0.0		0.1
-	Animate HudAmmoSecondary	FgColor		"FgColorHud"		Linear	0.2		1.5
+	//Animate HudAmmoSecondary	FgColor		"BrightFg"		Linear	0.0		0.1
+	//Animate HudAmmoSecondary	FgColor		"FgColorHud"		Linear	0.2		1.5
 	Animate HudAmmoSecondary	Alpha		255		Linear	0.0		0.1
 
 	// GMOD: Handled by above events
@@ -624,7 +652,7 @@ event WeaponDoesNotUseSecondaryClips
 event WeaponDoesNotUseSecondaryAmmo
 {
 	StopPanelAnimations	HudAmmoSecondary 	0.0
-	Animate HudAmmoSecondary	FgColor		"0 0 0 0"	Linear	0.0		0.4
+	//Animate HudAmmoSecondary	FgColor		"0 0 0 0"	Linear	0.0		0.4
 	Animate HudAmmoSecondary	BgColor		"0 0 0 0"	Linear	0.0		0.4
 	Animate HudAmmoSecondary	Alpha		0		Linear	0.0		0.1
 }
@@ -676,6 +704,9 @@ event SquadMemberAdded
 	// add in the squad member, brighter then normal color
 	Animate HudSquadStatus LastMemberColor	"255 220 0 255" Linear 0.0 0.3
 	Animate HudSquadStatus LastMemberColor	"255 220 0 160" Linear 0.3 0.3
+
+	// GMOD: Hack to restore the BG color
+	Animate HudSquadStatus	BgColor			"BgColorHud"	Deaccel	0.0 0.0
 }
 
 event SquadMemberLeft
