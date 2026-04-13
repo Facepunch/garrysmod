@@ -236,6 +236,15 @@ function PANEL:SetLegacyType( t )
 	self.Image:SetSize( iconH, iconH )
 	self.Image:Dock( LEFT )
 
+	-- Make the icons not look terrible when scaled
+	self.Image.Paint = function( s, w, h )
+		render.PushFilterMag( TEXFILTER.ANISOTROPIC )
+		render.PushFilterMin( TEXFILTER.ANISOTROPIC )
+		s:PaintAt( 0, 0, w, h )
+		render.PopFilterMin()
+		render.PopFilterMag()
+	end
+
 	self:SizeToContents()
 
 end

@@ -163,9 +163,6 @@ function PANEL:PaintAt( x, y, dw, dh )
 	surface.SetMaterial( self.m_Material )
 	surface.SetDrawColor( self.m_Color.r, self.m_Color.g, self.m_Color.b, self.m_Color.a )
 
-	render.PushFilterMag( TEXFILTER.ANISOTROPIC )
-	render.PushFilterMin( TEXFILTER.ANISOTROPIC )
-
 	if ( self:GetKeepAspect() ) then
 
 		local w = self.ActualWidth
@@ -216,9 +213,6 @@ function PANEL:PaintAt( x, y, dw, dh )
 	else
 		surface.DrawTexturedRect( x, y, dw, dh )
 	end
-
-	render.PopFilterMin()
-	render.PopFilterMag()
 
 	return true
 
