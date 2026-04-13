@@ -83,6 +83,13 @@ local function GetTypeStr( name )
 	if ( name == "ConVar" ) then return TYPE_NONE end
 	if ( name == "PhysObj" ) then return TYPE_NONE end
 
+	-- Maybe we should save these?
+	if ( name == "CSoundPatch" ) then return TYPE_NONE end
+
+	-- These are not individual instances, so don't try to save them in case some mod erroneously stores them
+	if ( name == "CTakeDamageInfo" ) then return TYPE_NONE end
+	if ( name == "CEffectData" ) then return TYPE_NONE end
+
 	-- Bitch about it incase I've forgot to hook a savable type up
 	ErrorNoHaltWithStack( "Can't save or load unknown type " .. name .. "\n" )
 	return TYPE_NONE
