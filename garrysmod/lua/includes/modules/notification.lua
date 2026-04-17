@@ -7,7 +7,7 @@ local iconH = math.ceil( textH * 1.25 )
 surface.CreateFont( "GModNotify", {
 	font	= "Arial",
 	size	= textH,
-	weight	= 0,
+	weight	= 500,
 	extended = true
 } )
 

@@ -331,7 +331,7 @@ Scheme
 				"tall"		"28"
 				"weight"	"900"
 				"antialias" "1"
-				"yres"	"1201 1440"
+				"yres"	"1201 1600"
 				"additive"	"1"
 			}
 			"6"
@@ -340,7 +340,7 @@ Scheme
 				"tall"		"40"
 				"weight"	"900"
 				"antialias" "1"
-				"yres"	"1441 10000"
+				"yres"	"1601 10000"
 				"additive"	"1"
 			}
 		}
