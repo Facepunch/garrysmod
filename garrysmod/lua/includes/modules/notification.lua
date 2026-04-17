@@ -1,5 +1,5 @@
 
-local textH = math.max( 12, math.ceil( ScreenScaleH( 10 ) ) )
+local textH = math.max( 12, math.ceil( ScreenScaleH( 9 ) ) )
 local iconH = math.ceil( textH * 1.25 )
 
 -- TODO: refresh the sizes and font on screen size change? is that really necessary? how often people change resoltuion in game?
