@@ -259,7 +259,7 @@ end
 
 function PANEL:SetLegacyType( t )
 
-	self:SetIcon( NoticeIcon[ t ] )
+	self:SetIcon( NoticeIcons[ t ] )
 
 end
 
