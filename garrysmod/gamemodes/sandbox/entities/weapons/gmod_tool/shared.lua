@@ -216,7 +216,13 @@ function SWEP:DoToolTrace()
 	tr.filter = { owner, owner:GetVehicle() }
 
 	local trace = util.TraceLine( tr )
-	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
+	if ( !trace.Hit || !IsValid( trace.Entity ) ) then
+		local hulltrace = util.TraceHull( tr )
+
+		if ( IsValid( hulltrace.Entity ) ) then
+			trace = hulltrace
+		end
+	end
 	if ( !trace.Hit ) then return end
 
 	return trace

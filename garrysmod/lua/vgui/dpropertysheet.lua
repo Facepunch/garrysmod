@@ -423,7 +423,9 @@ function PANEL:CloseTab( tab, bRemovePanelToo )
 	self.tabScroller:InvalidateLayout( true )
 
 	if ( tab == self:GetActiveTab() ) then
-		self.m_pActiveTab = self.Items[ #self.Items ].Tab
+		local targetTab = self.Items[ #self.Items ].Tab
+		self:OnActiveTabChanged( self.m_pActiveTab, targetTab )
+		self.m_pActiveTab = targetTab
 	end
 
 	local pnl = tab:GetPanel()
@@ -437,6 +439,24 @@ function PANEL:CloseTab( tab, bRemovePanelToo )
 	self:InvalidateLayout( true )
 
 	return pnl
+
+end
+
+function PANEL:Clear()
+
+	-- Let whatever code know that the actie tab is gone
+	self:OnActiveTabChanged( self.m_pActiveTab, nil )
+	self.m_pActiveTab = nil
+
+	-- Remove everything from the scroller
+	self.tabScroller:Clear()
+
+	-- Remove all tabs and their panels
+	for k, tabInfo in ipairs( self.Items ) do
+		tabInfo.Tab:Remove()
+		if ( IsValid( tabInfo.Panel ) ) then tabInfo.Panel:Remove() end
+	end
+	self.Items = {}
 
 end
 

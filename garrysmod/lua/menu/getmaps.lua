@@ -186,6 +186,7 @@ local function UpdateMaps()
 	MapNames[ "tow_" ] = "Team Fortress 2" // Tug of War
 	MapNames[ "2koth_" ] = "Team Fortress 2" // Double King of the Hill
 	MapNames[ "cppl_" ] = "Team Fortress 2" // Control Points => Payload
+	MapNames[ "htf_" ] = "Team Fortress 2" // Hold the Flag
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
@@ -201,6 +202,8 @@ local function UpdateMaps()
 	MapNames[ "vs_" ] = "Fistful of Frags"
 
 	MapNames[ "ff_" ] = "Fortress Forever"
+	MapNames[ "mcv_" ] = "Military Conflict: Vietnam"
+	MapNames[ "bm_" ] = "Black Mesa"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"

@@ -136,7 +136,7 @@ function PreprocSearch(raw)
          end
       elseif t == "c4" then
          if d > 0 then
-            search[t].text= PT("search_c4", {num = d})
+            search[t].text = PT("search_c4", {num = d})
          end
       elseif t == "dmg" then
          search[t].text = DmgToText(d)
@@ -175,7 +175,7 @@ function PreprocSearch(raw)
             local vic = Entity(d[1])
             local dc = d[1] == 0 -- disconnected
             if dc or (IsValid(vic) and vic:IsPlayer()) then
-               search[t].text = PT("search_kills1", {player = (dc and "<Disconnected>" or vic:Nick())})
+               search[t].text = PT("search_kills1", {player = (dc and Format("<%s>", T("disconnected")) or vic:Nick())})
             end
          elseif num > 1 then
             local txt = T("search_kills2") .. "\n"
@@ -185,7 +185,7 @@ function PreprocSearch(raw)
                local vic = Entity(idx)
                local dc = idx == 0
                if dc or (IsValid(vic) and vic:IsPlayer()) then
-                  table.insert(nicks, (dc and "<Disconnected>" or vic:Nick()))
+                  table.insert(nicks, (dc and Format("<%s>", T("disconnected")) or vic:Nick()))
                end
             end
 
@@ -481,11 +481,11 @@ local function ReceiveRagdollSearch()
    -- last words
    --
    local words = net.ReadString()
-   search.words = (words ~= "") and words or nil
+   search.words = (words != "") and words or nil
 
    hook.Call("TTTBodySearchEquipment", nil, search, eq)
 
-   if search.show and hook.Run("TTTShowSearchScreen", search) ~= false then
+   if search.show and hook.Run("TTTShowSearchScreen", search) != false then
       ShowSearchScreen(search)
    end
 

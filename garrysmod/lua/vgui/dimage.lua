@@ -148,7 +148,8 @@ end
 
 function PANEL:Paint( w, h )
 
-	self:PaintAt( 0, 0, w, h )
+	-- HACK: Gotta keep these "or"s for legacy addon code
+	self:PaintAt( 0, 0, w or self:GetWide(), h or self:GetTall() )
 
 end
 
@@ -209,11 +210,10 @@ function PANEL:PaintAt( x, y, dw, dh )
 
 		surface.DrawTexturedRect( OffX + x, OffY + y, w, h )
 
-		return true
-
+	else
+		surface.DrawTexturedRect( x, y, dw, dh )
 	end
 
-	surface.DrawTexturedRect( x, y, dw, dh )
 	return true
 
 end

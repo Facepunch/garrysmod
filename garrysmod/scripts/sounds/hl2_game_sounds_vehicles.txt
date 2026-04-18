@@ -509,6 +509,17 @@
 	"wave"			"weapons/stinger_fire1.wav"
 }
 
+"PropAPC.ReloadRocket" // GMOD
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_130dB"
+
+	"wave"			"vehicles/tank_readyfire1.wav"
+}
+
 // ******************************
 // AIRBOAT
 

@@ -27,7 +27,7 @@ Scheme
 		"GMod_BG_Opaque"	"108 111 114 250"
 		"GMod_BG"			"108 111 114 0" // SRCDS cannot do transparency, so we gotta replace Blank with this.
 		"GMod_WhiteBlank"	"255 255 255 0"
-		
+
 	}
 
 	///////////////////// BASE SETTINGS ////////////////////////
@@ -42,6 +42,10 @@ Scheme
 		"Panel.FgColor"			"255 220 0 255"
 		"Panel.BgColor"			"Blank"
 
+		// GMOD: Since above alphas are set to 255, create new vars for HL2 HUD
+		"FgColorHud"		"255 220 0 220"
+		"BgColorHud"		"0 0 0 90"
+
 		"BrightFg"		"255 220 0 255"
 
 		"DamagedBg"			"180 0 0 200"
@@ -50,10 +54,10 @@ Scheme
 
 		// weapon selection colors
 		"SelectionNumberFg"		"255 220 0 255"
-		"SelectionTextFg"		"255 220 0 255"
-		"SelectionEmptyBoxBg" 	"0 0 0 80"
-		"SelectionBoxBg" 		"0 0 0 80"
-		"SelectionSelectedBoxBg" "0 0 0 80"
+		"SelectionTextFg"		"FgColorHud"
+		"SelectionEmptyBoxBg" 	"0 0 0 70"
+		"SelectionBoxBg" 		"BgColorHud"
+		"SelectionSelectedBoxBg" "0 0 0 150"
 
 		"ZoomReticleColor"	"255 220 0 255"
 
@@ -151,7 +155,7 @@ Scheme
 		// if a font fails to load then the subsequent fonts will replace
 		Default
 		{
-			"21"
+			"1"
 			{
 				"name"		"Verdana"
 				"tall"		"12"
@@ -300,7 +304,7 @@ Scheme
 			"2"
 			{
 				"name"		"Verdana"
-				"tall"		"12"
+				"tall"		"13"
 				"weight"	"700"
 				"antialias" "1"
 				"yres"	"600 767"
@@ -319,15 +323,24 @@ Scheme
 				"tall"		"20"
 				"weight"	"900"
 				"antialias" "1"
-				"yres"	"1024 1199"
+				"yres"	"1024 1200"
 			}
 			"5"
 			{
 				"name"		"Verdana"
-				"tall"		"24"
+				"tall"		"28"
 				"weight"	"900"
 				"antialias" "1"
-				"yres"	"1200 10000"
+				"yres"	"1201 1600"
+				"additive"	"1"
+			}
+			"6"
+			{
+				"name"		"Verdana"
+				"tall"		"40"
+				"weight"	"900"
+				"antialias" "1"
+				"yres"	"1601 10000"
 				"additive"	"1"
 			}
 		}
@@ -335,7 +348,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"HalfLife2"
+				"name"		"HalfLife2" [!$OSX]
+				"name"		"Helvetica Bold" [$OSX]
 				"tall"		"16"
 				"weight"	"1000"
 				"additive"	"1"
@@ -358,7 +372,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"Verdana" [!$OSX]
+				"name"		"Helvetica Bold" [$OSX]
 				"tall"		"14"
 				"weight"	"1000"
 				"antialias" "1"
@@ -369,7 +384,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"Verdana" [!$OSX]
+				"name"		"Helvetica" [$OSX]
 				"tall"		"11"
 				"weight"	"0"
 				"antialias" "1"
@@ -408,15 +424,23 @@ Scheme
 				"tall"		"16"
 				"weight"	"900"
 				"antialias" "1"
-				"yres"	"1024 1199"
+				"yres"	"1024 1200"
 			}
 			"5"
 			{
 				"name"		"Verdana"
-				"tall"		"17"
+				"tall"		"18"
 				"weight"	"1000"
 				"antialias" "1"
-				"yres"	"1200 10000"
+				"yres"	"1201 1440"
+			}
+			"6"
+			{
+				"name"		"Verdana"
+				"tall"		"28"
+				"weight"	"1000"
+				"antialias" "1"
+				"yres"	"1441 10000"
 			}
 		}
 		BudgetLabel
@@ -443,38 +467,59 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma"
+				"name"		"Tahoma" [!$OSX]
+				"name"		"Verdana" [$OSX]
 				"tall"		"26"
 				"weight"	"500"
+				"antialias"	"1"
 			}
 		}
 		"CloseCaption_Italic"
 		{
 			"1"
 			{
-				"name"		"Tahoma"
+				"name"		"Tahoma" [!$OSX]
+				"name"		"Verdana Italic" [$OSX]
 				"tall"		"26"
 				"weight"	"500"
 				"italic"	"1"
+				"antialias"	"1"
 			}
 		}
 		"CloseCaption_Bold"
 		{
 			"1"
 			{
-				"name"		"Tahoma"
+				"name"		"Tahoma" [!$OSX]
+				"name"		"Verdana Bold" [$OSX]
 				"tall"		"26"
 				"weight"	"900"
+				"antialias"	"1"
 			}
 		}
 		"CloseCaption_BoldItalic"
 		{
 			"1"
 			{
-				"name"		"Tahoma"
+				"name"		"Tahoma" [!$OSX]
+				"name"		"Verdana Bold Italic" [$OSX]
 				"tall"		"26"
 				"weight"	"900"
 				"italic"	"1"
+				"antialias"	"1"
+			}
+		}
+		"CloseCaption_Small"
+		{
+			"1"
+			{
+				"name"		"Tahoma" [!$OSX]
+				"name"		"Verdana" [$OSX]
+				"tall"		"16" [!$OSX]
+				"tall"		"14" [$OSX]
+				"weight"	"900"
+				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
+				"antialias"	"1"
 			}
 		}
 		// this is the symbol font
@@ -559,7 +604,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"Verdana" [!$OSX]
+				"name"		"Courier Bold" [$OSX]
 				"tall"		"9"
 				"weight"	"900"
 				"antialias" "1"
@@ -570,7 +616,8 @@ Scheme
 			// note that this scales with the screen resolution
 			"1"
 			{
-				"name"		"Trebuchet MS"
+				"name"		"Trebuchet MS" [!$OSX]
+				"name"		"Helvetica" [$OSX]
 				"tall"		"18"
 				"weight"	"900"
 				"antialias" "1"

@@ -124,13 +124,13 @@ if ( SERVER ) then
 			net.WriteVector( Dupe.Maxs )
 			net.WriteString( dupeName )
 			net.WriteUInt( table.Count( Dupe.Entities ), 24 )
-			net.WriteUInt( table.Count( Dupe.Constraints ), 24 )
 			net.WriteUInt( workshopCount, 16 )
 			if ( Dupe.RequiredAddons ) then
 				for _, wsid in ipairs( Dupe.RequiredAddons ) do
 					net.WriteString( wsid )
 				end
 			end
+			net.WriteUInt( table.Count( Dupe.Constraints ), 24 )
 		net.Send( client )
 
 	end )

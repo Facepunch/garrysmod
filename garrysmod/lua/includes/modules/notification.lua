@@ -1,8 +1,13 @@
 
+local textH = math.max( 12, math.ceil( ScreenScaleH( 9 ) ) )
+local iconH = math.ceil( textH * 1.25 )
+
+-- TODO: refresh the sizes and font on screen size change? is that really necessary? how often people change resoltuion in game?
+
 surface.CreateFont( "GModNotify", {
 	font	= "Arial",
-	size	= 21,
-	weight	= 0,
+	size	= textH,
+	weight	= 500,
 	extended = true
 } )
 
@@ -15,13 +20,18 @@ NOTIFY_CLEANUP	= 4
 module( "notification", package.seeall )
 
 local Notices = {}
-local NoticeIcon = {}
+local NoticeIcons = {}
 
-NoticeIcon[ NOTIFY_GENERIC ]	= "vgui/notices/generic"
-NoticeIcon[ NOTIFY_ERROR ]		= "vgui/notices/error"
-NoticeIcon[ NOTIFY_UNDO ]		= "vgui/notices/undo"
-NoticeIcon[ NOTIFY_HINT ]		= "vgui/notices/hint"
-NoticeIcon[ NOTIFY_CLEANUP ]	= "vgui/notices/cleanup"
+local NOTIF_START_X = 200 -- Pixels
+local NOTIF_CHARGE_X = 0.04 -- Percent of screen size
+local NOTIF_GAP_X = 0.015
+local NOTIF_ANCHOR_Y = 0.8
+
+NoticeIcons[ NOTIFY_GENERIC ]	= "vgui/notices/generic"
+NoticeIcons[ NOTIFY_ERROR ]		= "vgui/notices/error"
+NoticeIcons[ NOTIFY_UNDO ]		= "vgui/notices/undo"
+NoticeIcons[ NOTIFY_HINT ]		= "vgui/notices/hint"
+NoticeIcons[ NOTIFY_CLEANUP ]	= "vgui/notices/cleanup"
 
 local function CreateNotice( msg, length )
 
@@ -33,7 +43,7 @@ local function CreateNotice( msg, length )
 	notice.Length = length
 	notice.VelX = -5
 	notice.VelY = 0
-	notice.fx = ScrW() + 200
+	notice.fx = ScrW() + NOTIF_START_X
 	notice.fy = ScrH()
 	notice:SetAlpha( 255 )
 	notice:SetText( msg )
@@ -49,7 +59,7 @@ function Add( text, length, icon, color )
 	notice:SetIcon( icon or "vgui/notices/generic" )
 
 	if ( color ) then
-		notice.Label:SetTextColor( color )
+	  notice.Label:SetTextColor( color )
 	end
 
 	return table.insert( Notices, notice )
@@ -58,7 +68,7 @@ end
 
 function AddLegacy( text, type, length )
 
-	Add( text, length or 0, NoticeIcon[ type ] )
+	Add( text, length or 0, NoticeIcons[ type ] )
 
 end
 
@@ -99,18 +109,18 @@ local function UpdateNotice( pnl, total_h )
 	local x = pnl.fx
 	local y = pnl.fy
 
-	local w = pnl:GetWide() + 16
-	local h = pnl:GetTall() + 4
+	local w = pnl:GetWide()
+	local h = pnl:GetTall() + math.ceil( textH * 0.2 )
 
-	local ideal_y = ScrH() - 150 - h - total_h
-	local ideal_x = ScrW() - w - 20
+	local ideal_y = ScrH() * NOTIF_ANCHOR_Y - h - total_h
+	local ideal_x = ScrW() - w - ( ScrW() * NOTIF_GAP_X )
 
 	local timeleft = pnl.StartTime - ( SysTime() - pnl.Length )
 	if ( pnl.Length < 0 ) then timeleft = 1 end
 
 	-- Cartoon style about to go thing
 	if ( timeleft < 0.7 ) then
-		ideal_x = ideal_x - 50
+		ideal_x = ideal_x - ( ScrW() * NOTIF_CHARGE_X )
 	end
 
 	-- Gone!
@@ -146,26 +156,22 @@ local function UpdateNotice( pnl, total_h )
 
 end
 
-local function Update()
+hook.Add( "Think", "NotificationThink", function()
 
 	if ( !Notices ) then return end
 
 	local h = 0
 	for key, pnl in pairs( Notices ) do
-
 		h = UpdateNotice( pnl, h )
-
 	end
 
 	for k, Panel in pairs( Notices ) do
-
-		if ( !IsValid( Panel ) || Panel:KillSelf() ) then Notices[ k ] = nil end
-
+		if ( !IsValid( Panel ) || Panel:KillSelf() ) then
+			Notices[ k ] = nil
+		end
 	end
 
-end
-
-hook.Add( "Think", "NotificationThink", Update )
+end )
 
 local PANEL = {}
 
@@ -197,20 +203,31 @@ function PANEL:SizeToContents()
 
 	local width, tall = self.Label:GetSize()
 
-	tall = math.max( tall, 32 ) + 6
-	width = width + 20
+	-- All some padding based on text size
+	tall = tall + math.ceil( textH * 0.25 )
+	width = width + math.ceil( textH * 0.75 )
 
 	if ( IsValid( self.Image ) ) then
-		width = width + 32 + 8
+		local iconGap = math.ceil( iconH * 0.1 )
+		width = width + self.Image:GetWide() + ( iconGap * 2 )
 
-		local x = ( tall - 36 ) / 2
-		self.Image:DockMargin( 0, x, 0, x )
+		local minH = self.Image:GetTall() + ( iconGap * 2 )
+		local oldTall = tall
+		tall = math.max( tall, minH )
+		local diff = math.max( ( oldTall - minH ) / 2, 0 )
+
+		self.Image:DockMargin( iconGap, iconGap + diff, iconGap, iconGap + diff )
 	end
 
 	if ( self.Progress ) then
 		tall = tall + 10
 		self.Label:DockMargin( 0, 0, 0, 10 )
 	end
+
+	-- Add our own padding
+	local l, t, r, b = self:GetDockPadding()
+	width = width + l + r
+	tall = tall + t + b
 
 	self:SetSize( width, tall )
 
@@ -220,13 +237,20 @@ end
 
 function PANEL:SetIcon( icon )
 
-	self.Image = vgui.Create( "DImageButton", self )
+	if ( IsValid( self.Image ) ) then self.Image:Remove() end
+
+	self.Image = vgui.Create( "DImage", self )
 	self.Image:SetMaterial( Material( icon ) )
-	self.Image:SetSize( 32, 32 )
+	self.Image:SetSize( iconH, iconH )
 	self.Image:Dock( LEFT )
-	self.Image:DockMargin( 0, 0, 8, 0 )
-	self.Image.DoClick = function()
-		self.StartTime = 0
+
+	-- Make the icons not look terrible when scaled
+	self.Image.Paint = function( s, w, h )
+		render.PushFilterMag( TEXFILTER.ANISOTROPIC )
+		render.PushFilterMin( TEXFILTER.ANISOTROPIC )
+		s:PaintAt( 0, 0, w, h )
+		render.PopFilterMin()
+		render.PopFilterMag()
 	end
 
 	self:SizeToContents()

@@ -2,10 +2,19 @@
 local PANEL = {}
 local PlayerVoicePanels = {}
 
+surface.CreateFont( "GModVoiceNotify", {
+	font	= "Arial",
+	size	= 21,
+	weight	= 0,
+	extended = true
+} )
+
+local VoicePanelWide = 250
+
 function PANEL:Init()
 
 	self.LabelName = vgui.Create( "DLabel", self )
-	self.LabelName:SetFont( "GModNotify" )
+	self.LabelName:SetFont( "GModVoiceNotify" )
 	self.LabelName:Dock( FILL )
 	self.LabelName:DockMargin( 8, 0, 0, 0 )
 	self.LabelName:SetTextColor( color_white )
@@ -16,7 +25,7 @@ function PANEL:Init()
 
 	self.Color = color_transparent
 
-	self:SetSize( 250, 32 + 8 )
+	self:SetSize( VoicePanelWide, 32 + 8 )
 	self:DockPadding( 4, 4, 4, 4 )
 	self:DockMargin( 2, 2, 2, 2 )
 	self:Dock( BOTTOM )
@@ -135,8 +144,8 @@ local function CreateVoiceVGUI()
 	g_VoicePanelList = vgui.Create( "DPanel" )
 
 	g_VoicePanelList:ParentToHUD()
-	g_VoicePanelList:SetPos( ScrW() - 300, 100 )
-	g_VoicePanelList:SetSize( 250, ScrH() - 200 )
+	g_VoicePanelList:SetPos( ScrW() - VoicePanelWide - 50, ScrH() * 0.13 )
+	g_VoicePanelList:SetSize( VoicePanelWide, ScrH() * 0.74 )
 	g_VoicePanelList:SetPaintBackground( false )
 
 end

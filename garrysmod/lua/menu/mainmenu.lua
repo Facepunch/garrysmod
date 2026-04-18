@@ -13,6 +13,7 @@ local PANEL = {}
 function PANEL:Init()
 
 	self:Dock( FILL )
+	self:SetSize( ScrW(), ScrH() ) -- Do not wait for docking to set our size
 	self:SetKeyboardInputEnabled( true )
 	self:SetMouseInputEnabled( true )
 
@@ -45,6 +46,7 @@ function PANEL:Init()
 	self.HTML:SetKeyboardInputEnabled( true )
 	self.HTML:SetMouseInputEnabled( true )
 	self.HTML:RequestFocus()
+	self.HTML:SetSize( ScrW(), ScrH() )
 
 	ws_dupe.HTML = self.HTML
 	ws_save.HTML = self.HTML
@@ -656,6 +658,9 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 	UpdateServerSettings()
 	UpdateSubscribedAddons()
 
+	-- Needs to have addons mounted
+	LoadLastMap()
+
 end )
 
 hook.Add( "LoadGModSaveFailed", "HandleUGCLoadFailure", function( str, wsid )
@@ -678,7 +683,6 @@ timer.Simple( 0, function()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
-	LoadLastMap()
 
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()
