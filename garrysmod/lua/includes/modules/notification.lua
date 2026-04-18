@@ -59,7 +59,7 @@ function Add( text, length, icon, color )
 	notice:SetIcon( icon or "vgui/notices/generic" )
 
 	if ( color ) then
-	  notice.Label:SetTextColor( color )
+	  	notice.Label:SetTextColor( color )
 	end
 
 	return table.insert( Notices, notice )
