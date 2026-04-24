@@ -1094,6 +1094,7 @@ end
 
 duplicator.RegisterEntityClass( "prop_vehicle_jeep_old", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
 duplicator.RegisterEntityClass( "prop_vehicle_jeep", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
+duplicator.RegisterEntityClass( "prop_vehicle_apc", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
 duplicator.RegisterEntityClass( "prop_vehicle_airboat", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
 duplicator.RegisterEntityClass( "prop_vehicle_prisoner_pod", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
 

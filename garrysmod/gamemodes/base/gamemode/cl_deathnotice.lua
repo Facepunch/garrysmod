@@ -50,6 +50,8 @@ killicon.AddAlias( "func_rot_button", "prop_physics" )
 killicon.AddAlias( "func_tracktrain", "prop_physics" )
 killicon.AddAlias( "func_train", "prop_physics" )
 killicon.AddAlias( "prop_vehicle_jeep", "prop_physics" )
+killicon.AddAlias( "prop_vehicle_jeep_old", "prop_physics" )
+killicon.AddAlias( "prop_vehicle_apc", "prop_physics" )
 killicon.AddAlias( "prop_vehicle_prisoner_pod", "prop_physics" )
 killicon.AddAlias( "prop_vehicle_airboat", "prop_physics" )
 

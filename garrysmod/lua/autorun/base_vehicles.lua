@@ -67,6 +67,23 @@ AddVehicle( {
 	}
 }, "Jalopy" )
 
+AddVehicle( {
+	Name = "#prop_vehicle_apc",
+	Model = "models/combine_apc.mdl",
+	Class = "prop_vehicle_apc",
+	Category = Category,
+
+	Author = "VALVe",
+	Information = "The Combine Armored Personnel Carrier from Half-Life 2",
+
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/apc_gmod.txt"
+	}
+}, "prop_vehicle_apc" )
+
+
+
+
 Category = "#spawnmenu.category.chairs"
 
 local function HandleRollercoasterAnimation( vehicle, player )
