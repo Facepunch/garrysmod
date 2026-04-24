@@ -73,7 +73,12 @@ function PANEL:ConsoleMessage( msg, file, line, severity )
 	if ( isstring( file ) && isnumber( line ) ) then
 
 		if ( #file > 64 ) then
-			file = string.sub( file, 1, 64 ) .. "..."
+			local urlParamPos = string.find( file, "?", 0, true )
+			if ( urlParamPos ) then
+				file = string.sub( file, 1, 32 ) .. "..." .. string.sub( file, urlParamPos - 32, urlParamPos - 1 )
+			else
+				file = string.sub( file, 1, 32 ) .. "..." .. string.sub( file, -32 )
+			end
 		end
 
 		MsgC( Color( 255, 160, 255 ), "[HTML] " )
