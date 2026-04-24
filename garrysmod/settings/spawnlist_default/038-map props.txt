@@ -1129,6 +1129,11 @@
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingb.mdl"
 		}
+		"224.5"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/offpaintingc.mdl"
+		}
 		"225"
 		{
 			"type"		"model"
@@ -1178,6 +1183,11 @@
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingm.mdl"
+		}
+		"234.5"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/offpaintingn.mdl"
 		}
 		"235"
 		{

@@ -63,7 +63,7 @@
 		"12"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/woodbarrel001.mdl"
+			"model"		"models/props/de_inferno/wine_barrel.mdl"
 		}
 		"13"
 		{
