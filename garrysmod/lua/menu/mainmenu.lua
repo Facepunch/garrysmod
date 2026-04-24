@@ -117,7 +117,6 @@ end
 function PANEL:RefreshContent()
 
 	self:RefreshGamemodes()
-	self:RefreshAddons()
 
 end
 
@@ -128,12 +127,6 @@ function PANEL:RefreshGamemodes()
 	self:Call( "UpdateGamemodes( " .. json .. " )" )
 	self:UpdateBackgroundImages()
 	self:Call( "UpdateCurrentGamemode( '" .. engine.ActiveGamemode():JavascriptSafe() .. "' )" )
-
-end
-
-function PANEL:RefreshAddons()
-
-	-- TODO
 
 end
 

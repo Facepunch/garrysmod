@@ -84,9 +84,6 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-
-	-- TODO: Reimplement the old rollermine secondary attack?
-
 end
 
 function SWEP:ShouldDropOnDie()

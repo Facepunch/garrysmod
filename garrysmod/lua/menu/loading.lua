@@ -1,10 +1,4 @@
 
-g_ServerName	= ""
-g_MapName		= ""
-g_ServerURL		= ""
-g_MaxPlayers	= ""
-g_SteamID		= ""
-
 local PANEL = {}
 
 function PANEL:Init()
@@ -69,12 +63,6 @@ end
 
 function PANEL:OnActivate()
 
-	g_ServerName	= ""
-	g_MapName		= ""
-	g_ServerURL		= ""
-	g_MaxPlayers	= ""
-	g_SteamID		= ""
-
 	self:ShowURL( GetDefaultLoadingHTML() )
 
 	self.NumDownloadables = 0
@@ -90,7 +78,6 @@ function PANEL:OnDeactivate()
 	self.NumDownloadables = 0
 
 	-- Notify the user that the game is ready.
-	-- TODO: A convar for this?
 	system.FlashWindow()
 
 end
@@ -110,7 +97,7 @@ function PANEL:Think()
 		local map = GetConVarString( "host_map" )
 		map = string.StripExtension( map )
 
-		GameDetails( GetConVarString( "hostname" ), "127.0.0.1", map, 1, "", GetConVarString( "gamemode" ), true )
+		GameDetails( GetConVarString( "hostname" ), "127.0.0.1", map, 1, 1, "", GetConVarString( "gamemode" ) )
 		self.CheckedSingleplayer = true
 	end
 
@@ -246,25 +233,9 @@ function IsInLoading()
 
 end
 
-function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, noDump )
+function GameDetails( servername, serverurl, mapname, maxplayers, maxplayers_visible, steamid, gamemode )
 
 	if ( engine.IsPlayingDemo() ) then return end
-
-	g_ServerName	= servername
-	g_MapName		= mapname
-	g_ServerURL		= serverurl
-	g_MaxPlayers	= maxplayers
-	g_SteamID		= steamid
-	g_GameMode		= gamemode
-
-	if ( !noDump ) then
-		MsgN( servername )
-		MsgN( serverurl )
-		MsgN( gamemode )
-		MsgN( mapname )
-		MsgN( maxplayers )
-		MsgN( steamid )
-	end
 
 	serverurl = serverurl:Replace( "%s", steamid )
 	serverurl = serverurl:Replace( "%m", mapname )
@@ -274,7 +245,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	end
 
 	-- TODO: This should be pulled from the server
-	local niceGamemode = g_GameMode
+	local niceGamemode = gamemode
 	for k, v in pairs( engine.GetGamemodes() ) do
 		if ( niceGamemode == v.name ) then
 			niceGamemode = v.title
@@ -282,8 +253,8 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 		end
 	end
 
-	pnlLoading.JavascriptRun = string.format( [[if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" )]],
-		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(),
-		GetConVarNumber( "snd_musicvolume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
+	pnlLoading.JavascriptRun = string.format( [[if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );]],
+		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers_visible, steamid:JavascriptSafe(), gamemode:JavascriptSafe(),
+		GetConVarNumber( "snd_musicvolume" ), GetConVarString( "gmod_language" ):JavascriptSafe(), niceGamemode:JavascriptSafe() )
 
 end

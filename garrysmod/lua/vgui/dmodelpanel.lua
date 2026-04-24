@@ -77,33 +77,11 @@ end
 function PANEL:DrawModel()
 
 	-- Get the panel's scissor rect, and apply it to model render
-	if ( surface.GetScissorRect ) then
-		local enabled, leftx, topy, rightx, bottomy = surface.GetScissorRect()
+	local enabled, leftx, topy, rightx, bottomy = surface.GetScissorRect()
 
-		render.ClearDepth( false )
+	render.ClearDepth( false )
 
-		render.SetScissorRect( leftx, topy, rightx, bottomy, enabled )
-	else
-		-- Remove this post update
-		local curparent = self
-		local leftx, topy = self:LocalToScreen( 0, 0 )
-		local rightx, bottomy = self:LocalToScreen( self:GetWide(), self:GetTall() )
-		while ( curparent:GetParent() != nil ) do
-			curparent = curparent:GetParent()
-
-			local x1, y1 = curparent:LocalToScreen( 0, 0 )
-			local x2, y2 = curparent:LocalToScreen( curparent:GetWide(), curparent:GetTall() )
-
-			leftx = math.max( leftx, x1 )
-			topy = math.max( topy, y1 )
-			rightx = math.min( rightx, x2 )
-			bottomy = math.min( bottomy, y2 )
-		end
-
-		render.ClearDepth( false )
-
-		render.SetScissorRect( leftx, topy, rightx, bottomy, true )
-	end
+	render.SetScissorRect( leftx, topy, rightx, bottomy, enabled )
 
 	local ret = self:PreDrawModel( self.Entity )
 	if ( ret != false ) then

@@ -73,15 +73,12 @@ end
 -- Read/Write a player to the stream
 --
 
--- TODO: Replace with MAX_PLAYER_BITS
-local maxplayers_bits = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
-
 function net.WritePlayer( ply )
-	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, maxplayers_bits )
+	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, MAX_PLAYER_BITS )
 end
 
 function net.ReadPlayer()
-	return Entity( net.ReadUInt( maxplayers_bits ) )
+	return Entity( net.ReadUInt( MAX_PLAYER_BITS ) )
 end
 
 
