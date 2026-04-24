@@ -71,6 +71,7 @@ AddVehicle( {
 	Name = "#prop_vehicle_apc",
 	Model = "models/combine_apc.mdl",
 	Class = "prop_vehicle_apc",
+	Health = 0, -- Indestructible
 	Category = Category,
 
 	Author = "VALVe",

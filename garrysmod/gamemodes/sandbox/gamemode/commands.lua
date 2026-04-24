@@ -1073,6 +1073,11 @@ local function MakeVehicle( ply, pos, ang, model, className, VName, data )
 	vehicle:Spawn()
 	vehicle:Activate()
 
+	if ( VTable && VTable.Health ) then
+		vehicle:SetHealth( VTable.Health )
+		vehicle:SetMaxHealth( VTable.Health )
+	end
+
 	-- Some vehicles reset this in Spawn()
 	if ( data && data.ColGroup ) then vehicle:SetCollisionGroup( data.ColGroup ) end
 
