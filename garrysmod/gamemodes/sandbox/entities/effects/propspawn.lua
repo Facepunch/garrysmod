@@ -115,7 +115,9 @@ function EFFECT:RenderParent( flags )
 	render.PopCustomClipPlane()
 	render.EnableClipping( bClipping )
 
-	if ( !isDepthPass ) then
+	local rt = render.GetRenderTarget()
+
+	if ( !isDepthPass and ( !rt or rt:GetName() != "_rt_resolvedfullframedepth" ) ) then
 		self.SpawnEffect:RenderOverlay( self )
 	end
 
