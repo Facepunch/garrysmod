@@ -69,7 +69,7 @@ function ENT:Draw( flags )
 	if ( isDepthPass ) then return end
 
 	if ( halo.RenderedEntity() == self ) then
-		self.AttachedEntity:DrawModel()
+		self.AttachedEntity:DrawModel( flags )
 		return
 	end
 

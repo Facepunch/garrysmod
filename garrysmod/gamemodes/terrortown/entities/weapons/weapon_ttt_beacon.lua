@@ -207,11 +207,11 @@ function SWEP:Deploy()
    return true
 end
 
-function SWEP:DrawWorldModel()
+function SWEP:DrawWorldModel(flags)
    if not IsValid(self:GetOwner()) then
-      self:DrawModel()
+      self:DrawModel(flags)
    end
 end
 
-function SWEP:DrawWorldModelTranslucent()
+function SWEP:DrawWorldModelTranslucent(flags)
 end

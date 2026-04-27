@@ -609,7 +609,7 @@ function GM:PostDrawViewModel( vm, ply, wep, flags )
 			if ( not hook.Call( "PreDrawPlayerHands", self, hands, vm, ply, wep, flags ) ) then
 
 				if ( wep.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
-				hands:DrawModel()
+				hands:DrawModel( flags )
 				render.CullMode( MATERIAL_CULLMODE_CCW )
 
 			end
