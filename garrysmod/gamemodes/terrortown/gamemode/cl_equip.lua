@@ -176,7 +176,7 @@ local function GetOwnedEquipment()
    -- Determine if we already have equipment
    local owned_ids = {}
    for _, wep in ipairs(LocalPlayer():GetWeapons()) do
-      if IsValid(wep) and wep:IsEquipment() then
+      if IsValid(wep) and wep.IsEquipment and wep:IsEquipment() then
          table.insert(owned_ids, wep:GetClass())
       end
    end
