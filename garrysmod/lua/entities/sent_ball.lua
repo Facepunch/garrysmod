@@ -140,7 +140,8 @@ function ENT:PhysicsCollide( data, physobj )
 
 	local TargetVelocity = NewVelocity * LastSpeed * 0.9
 
-	physobj:SetVelocity( TargetVelocity )
+	physobj:SetVelocityInstantaneous( TargetVelocity )
+	physobj:Wake()
 
 end
 
