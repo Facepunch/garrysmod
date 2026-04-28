@@ -485,8 +485,15 @@ function GenericDuplicatorFunction( ply, data )
 	--
 	if ( IsValid( ply ) and !ply:IsAdmin() ) then
 
-		if ( !scripted_ents.GetMember( data.Class, "Spawnable" ) ) then return end
-		if ( scripted_ents.GetMember( data.Class, "AdminOnly" ) ) then return end
+		local weapon = list.GetForEdit( "Weapon" )[ data.Class ]
+
+		if ( weapon ) then
+			if ( !weapon.Spawnable ) then return end
+			if ( weapon.AdminOnly ) then return end
+		else
+			if ( !scripted_ents.GetMember( data.Class, "Spawnable" ) ) then return end
+			if ( scripted_ents.GetMember( data.Class, "AdminOnly" ) ) then return end
+		end
 
 	end
 
