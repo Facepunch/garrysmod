@@ -179,6 +179,9 @@ function GM:Move(ply, mv)
       mv:SetMaxClientSpeed(mv:GetMaxClientSpeed() * mul)
       mv:SetMaxSpeed(mv:GetMaxSpeed() * mul)
    end
+
+   -- Call base movement code
+   if drive.Move(ply, mv) then return true end
 end
 
 

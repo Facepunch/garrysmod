@@ -74,7 +74,7 @@ function SWEP:PrimaryAttack()
 
 	ent:SetPos( targetPos )
 
-	ent:SetAngles( owner:EyeAngles() )
+	ent:SetAngles( fwd:Angle() )
 	ent:SetOwner( owner )
 	ent:Spawn()
 	ent:Activate()
@@ -84,9 +84,6 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-
-	-- TODO: Reimplement the old rollermine secondary attack?
-
 end
 
 function SWEP:ShouldDropOnDie()

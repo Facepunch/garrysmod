@@ -125,7 +125,6 @@
 		"max_speed"		"0.27"
 		"speed_approach_factor" "1.0"
 	}
-
 	"gear"
 	{
 		"max_speed"		"0.5"
@@ -151,12 +150,13 @@
 		"max_speed"		"2.0"
 		"speed_approach_factor" "0.03"
 	}
+
+	// Engine sounds
 	"state"
 	{
 		"name"		"SS_START_WATER"
 		"sound"		"ATV_start_in_water"
 	}
-
 	"state"
 	{
 		"name"		"SS_START_IDLE"
@@ -262,6 +262,7 @@
 		"name"		"SS_SHUTDOWN"
 		"sound"		"JNK_engine_stop"
 	}
+
 	"crashsound"
 	{
 		"min_speed"			"350"

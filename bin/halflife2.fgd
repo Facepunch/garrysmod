@@ -172,7 +172,7 @@
 ]
 
 @SolidClass base(CombineBallSpawners) = func_combine_ball_spawner :
-    "Spawns Combine balls."
+	"Spawns Combine balls."
 [
 	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega Gravity Gun"
@@ -311,7 +311,7 @@
 
 	spawnflags(Flags) =
 	[
-		65536 :  "Start Inactive" : 1
+		65536 : "Start Inactive" : 1
 	]
 
 	input StartFiring(void) : "Tell the driver to attack nearby enemies with the vehicle's weaponry (if any)"
@@ -341,8 +341,8 @@
 	input ForceDrop(string) : "Force the driver to drop the currently held object at the specified entity's location."
 
 	// Outputs
-	output OnPickedUpObject(void)  : "Fired when the ForcePickup specified object has been picked up."
-	output OnDroppedObject(void)  : "Fired when the ForceDrop specified object has been dropped."
+	output OnPickedUpObject(void) : "Fired when the ForcePickup specified object has been picked up."
+	output OnDroppedObject(void) : "Fired when the ForceDrop specified object has been dropped."
 	output OnPausingBeforeDrop(void): "Fired at the start of the pause before dropping the ForceDrop specified object."
 ]
 
@@ -351,7 +351,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "No Rocket Attacks" : 0
+		65536 : "No Rocket Attacks" : 0
 		131072 : "No Gun Attacks" : 0
 	]
 
@@ -372,7 +372,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "Friendly" : 0
+		65536 : "Friendly" : 0
 		131072 : "Use prop_physics collision rules"	: 0
 		262144 : "Spawn as Alyx-hacked" : 0 // GMOD
 	]
@@ -438,7 +438,7 @@
 
 	spawnflags(Flags) =
 	[
-		65536 :  "Hidden" : 0
+		65536 : "Hidden" : 0
 		131072 : "Laser Viewcone" : 0
 		262144 : "No Corpse" : 0
 		524288 : "Start Disabled" : 0
@@ -472,7 +472,7 @@
 [
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt")  = info_snipertarget : "Sniper Target"
+@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt") = info_snipertarget : "Sniper Target"
 [
 	speed(integer) : "Sweep to speed" : 2
 	groupname(string) : "Group Name"
@@ -586,7 +586,7 @@
 	// Inputs
 	input Unburrow(void) : "Unburrow from the ground"
 	input SetShoveTarget(string) : "Sets a shove target to attack"
-	input SetChargeTarget(string) : "Sets a charge target to attack.  Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
+	input SetChargeTarget(string) : "Sets a charge target to attack. Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
 	input ClearChargeTarget(void) : "Clear the charge target"
 	input SetCoverFromAttack(integer) : "Sets whether or not the creature will protect itself from attacks"
 	input Ragdoll(void) : "Causes the antlion guard to die, regardless of health"
@@ -653,8 +653,8 @@
 
 	spawnflags(flags) =
 	[
-		65536  :  "Start hidden" : 0
-		131072 :  "Start hanging from ceiling" : 0
+		65536 : "Start hidden" : 0
+		131072 : "Start hanging from ceiling" : 0
 	]
 
 
@@ -695,10 +695,10 @@
 
 	spawnflags(Flags) =
 	[
-		65536   : "Not Solid" : 0
-		131072  : "Take No Damage" : 0
-		262144  : "Enemy Damage Only" : 0
-		524288  : "Bleed" : 0
+		65536 : "Not Solid" : 0
+		131072 : "Take No Damage" : 0
+		262144 : "Enemy Damage Only" : 0
+		524288 : "Bleed" : 0
 		1048576 : "Perfect Accuracy" : 0
 		2097152 : "Collide against physics objects (Creates VPhysics Shadow)" : 0
 	]
@@ -714,7 +714,7 @@
 		65536 : "Check Visibility" : 1
 		131072 : "APC Visibility checks" : 0
 		262144 : "Short memory" : 0
-		524288  : "Can be an enemy" : 0
+		524288 : "Can be an enemy" : 0
 	]
 	FieldOfView(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 	MinSearchDist(integer) : "Min Search Dist" : 0
@@ -747,7 +747,7 @@
 		65536 : "Check Visibility" : 1
 		131072 : "APC Visibility checks" : 0
 		262144 : "Short memory" : 0
-		524288  : "Can be an enemy" : 0
+		524288 : "Can be an enemy" : 0
 	]
 	FieldOfView(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 	MinSearchDist(integer) : "Min Search Dist" : 0
@@ -802,7 +802,7 @@
 		"weapon_crowbar" : "Crow Bar"
 		"weapon_shotgun" : "Shotgun"
 		"weapon_rpg" : "RPG"
-		"0"  : "Nothing"
+		"0" : "Nothing"
 	]
 
 	ammosupply(choices) : "Ammo to Resupply (if spawnflag set)" : "SMG1" =
@@ -939,9 +939,9 @@
 
 	spawnflags(Flags) =
 	[
-		65536 :  "Start LookOff" : 0
+		65536 : "Start LookOff" : 0
 		131072	: "Don't drop grenades" : 0
-		262144  : "Don't drop ar2 alt fire (elite only) " : 0
+		262144 : "Don't drop ar2 alt fire (elite only) " : 0
 	]
 
 	NumGrenades(choices) : "Number of Grenades" : "5" =
@@ -994,7 +994,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536  :  "Check LOS" : 1
+		65536 : "Check LOS" : 1
 	]
 
 	StartOn(choices) : "Start On" : 0 =
@@ -1019,7 +1019,7 @@
 	]
 	LaunchDelay(integer) : "Launch Delay" : 8	    : "When ON, how long to wait between each launch"
 	LaunchSpeed(string) : "Launch Speed" : 200   : "Initial launch speed of missile (in up direction)"
-	PathCornerName(target_destination) : "Path Corner Name" : "" : "Name of a path corner.  If set launches a pathfollowing missing, rather than a homing missile"
+	PathCornerName(target_destination) : "Path Corner Name" : "" : "Name of a path corner. If set launches a pathfollowing missing, rather than a homing missile"
 	HomingSpeed(string) : "Homing Speed" : 0	    : "Speed to reach when homing"
 	HomingStrength(integer) : "Homing Strength" : 10    : "How strong in homing effect (0-100)"
 	HomingDelay(string) : "Homing Delay" : 0 : "Number of seconds to delay before homing starts"
@@ -1095,15 +1095,15 @@
 	levitategoal_bottom(target_destination) : "Levitation Goal Bottom" : "" : "Objects will levitate at least this high"
 	levitategoal_top(target_destination)    : "Levitation Goal Top" : "" : "Objects will levitate at least this high"
 
-	staging_ent_names(string) : "Staging Position Names"  : "" : "All entities with this name will be considered staging positions for the throw behavior."
+	staging_ent_names(string) : "Staging Position Names" : "" : "All entities with this name will be considered staging positions for the throw behavior."
 	priority_grab_name(string) : "Priority Name For Grabbing" : "" : "If any entities named this are present, the advisor will preferentially pick them up for throwing at the player."
 
 
 
 	output OnPickingThrowable(void) : "Fires just before I pick something to hurl"
-	output OnThrowWarn(void)        : "Fires when I trigger the warning green glow before tossing"
-	output OnThrow(void)            : "Fires just after I throw something"
-	output OnHealthIsNow(integer)   : "When I am damaged, my hitpoints thereafter"
+	output OnThrowWarn(void)		: "Fires when I trigger the warning green glow before tossing"
+	output OnThrow(void)			: "Fires just after I throw something"
+	output OnHealthIsNow(integer)	: "When I am damaged, my hitpoints thereafter"
 
 	input SetThrowRate(float) : "Advisor will throw an object once per this many seconds (plus a little more)"
 	input WrenchImmediate(string) : "Advisor will immediately start levitating all objects with this name"
@@ -1173,8 +1173,8 @@
 [
 	spawnflags(Flags) =
 	[
-		1 :  "No Impact Sound" : 0
-		2 :  "No Launch Sound" : 0
+		1 : "No Impact Sound" : 0
+		2 : "No Launch Sound" : 0
 		4096 : "Start Impacted" : 0
 		8192 : "Land at initial position" : 0
 		16384 : "Wait for input to open" : 0
@@ -1191,15 +1191,15 @@
 		2 : "Poison Headcrabs"
 	]
 	HeadcrabCount(integer) : "Headcrab count" : 6 : "Number of headcrabs to spawn on impact"
-	FlightSpeed(float) : "Flight Speed" : 3000  : "Speed to fly through the air"
-	FlightTime(float) : "Flight Time" : 5	    : "Time to fly through the air in seconds"
+	FlightSpeed(float) : "Flight Speed" : 3000 : "Speed to fly through the air"
+	FlightTime(float) : "Flight Time" : 5 : "Time to fly through the air in seconds"
 	StartingHeight(float) : "Starting Height" : 0 : "Relative height from the landing position at which the canister should be launched. Positive values mean launch it above the impact point, negative values mean launch it below."
 	MinSkyboxRefireTime(float) : "Min Refire Time" : 0 : "Min number of seconds before the cannister is refired. This will only work for cannisters placed in the skybox."
 	MaxSkyboxRefireTime(float) : "Max Refire Time" : 0 : "Max number of seconds before the cannister is refired. This will only work for cannisters placed in the skybox."
 	SkyboxCannisterCount(integer) : "Cannister count" : 1 : "Number of cannisters to fire in the skybox (0 means fire continuously, forever)."
 	Damage(float) : "Impact damage" : 150 : "Max damage the canister applies on impact"
 	DamageRadius(float) : "Impact damage radius": 750 : "Max radius of the impact damage for the canister"
-	SmokeLifetime(float) : "Smoke Duration" : 30 : "Duration that the canister smokes.  -1 means always smoke."
+	SmokeLifetime(float) : "Smoke Duration" : 30 : "Duration that the canister smokes. -1 means always smoke."
 	LaunchPositionName(target_destination) : "Launch Position Name" : "" : "If the canister should launch to it's origin from another point within the world, this should specify an info_target at the launch origin."
 
 	// Inputs
@@ -1253,10 +1253,10 @@
 [
 	spawnflags(Flags) =
 	[
-		65536  :  "Start Track On" : 1
-		131072 :  "Start Light On" : 1
-		262144 :  "No Dynamic Light" : 0
-		524288 :  "Never Move" : 0
+		65536 : "Start Track On" : 1
+		131072 : "Start Light On" : 1
+		262144 : "No Dynamic Light" : 0
+		524288 : "Never Move" : 0
 	]
 
 	health(Integer) : "Health" : 100
@@ -1294,8 +1294,8 @@
 
 	spawnflags(Flags) =
 	[
-		65536 :  "Can Stomp Player" : 0
-		131072 :  "Minimal damage taken from NPCs (1 point per missile)" : 0
+		65536 : "Can Stomp Player" : 0
+		131072 : "Minimal damage taken from NPCs (1 point per missile)" : 0
 	]
 
 	//Inputs
@@ -1344,7 +1344,7 @@
 	spawnflags(Flags) =
 	[
 		65536 : "Cheap death" : 0
-		131072 :  "Ambush Mode"		: 0
+		131072 : "Ambush Mode"		: 0
 	]
 
 	RestDist(float) : "Rest Distance" : 16 : "Distance above the ground that the tongue should lie when the barnacle is at rest"
@@ -1354,7 +1354,7 @@
 
 	input LetGo(void) : "Let go of anything I am holding."
 
-	output OnGrab(string)    : "When I attach my tongue to something"
+	output OnGrab(string) : "When I attach my tongue to something"
 	output OnRelease(string) : "When I let go of something"
 ]
 
@@ -1382,7 +1382,7 @@
 	input DisableRotorSound(void) : "Turns off rotor sounds"
 
 	// Outputs
-	output OnFireCannon(void)  : "Fires when the gunship fires a cannon round"
+	output OnFireCannon(void) : "Fires when the gunship fires a cannon round"
 	output OnFirstDamage( void ) : "Fired when the first damage is done to the gunship."
 	output OnSecondDamage( void ) : "Fired when the second damage is done to the gunship."
 	output OnThirdDamage( void ) : "Fired when the third damage is done to the gunship."
@@ -1394,11 +1394,11 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt")  = info_target_helicopter_crash : "Helicopter Crash Target"
+@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt") = info_target_helicopter_crash : "Helicopter Crash Target"
 [
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt")  = info_target_gunshipcrash : "Gunship Crash Target"
+@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt") = info_target_gunshipcrash : "Gunship Crash Target"
 [
 	input Enable(void) : "Enable the crash target."
 	input Disable(void) : "Disable the crash target."
@@ -1465,7 +1465,7 @@
 
 
 	// Outputs
-	output OnFinishedDropoff(void)  : "Fires when the dropship has finished a dropoff."
+	output OnFinishedDropoff(void) : "Fires when the dropship has finished a dropoff."
 	output OnFinishedPickup(void) : "Fires when the dropship has finished a pickup."
 
 	output OnCrateShotDownBeforeDropoff(float) : "Fires when the container was shot down before it dropped off soldiers. The parameter contains the number of soldiers that weren't successfully dropped off."
@@ -1477,7 +1477,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "Loud rotor wash sound" : 0
+		65536 : "Loud rotor wash sound" : 0
 		131072 : "Electrical drone" : 0
 		262144 : "Helicopter lights" : 0
 		524288 : "Ignore avoid spheres+boxes" : 0
@@ -1544,7 +1544,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "Is a dud" : 0
+		65536 : "Is a dud" : 0
 	]
 
 	// Inputs
@@ -1559,7 +1559,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "Avoid the sphere above and below" : 0
+		65536 : "Avoid the sphere above and below" : 0
 	]
 	radius(float) : "Radius" : 128
 ]
@@ -1568,7 +1568,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "Avoid the box above and below" : 0
+		65536 : "Avoid the box above and below" : 0
 	]
 ]
 
@@ -1614,7 +1614,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "No Dynamic Light" : 0
+		65536 : "No Dynamic Light" : 0
 		131072: "Strider Scout Scanner" : 0
 	]
 
@@ -1645,7 +1645,8 @@
 		1 : "Yes"
 	]
 	// Inputs
-	input DisableSpotlight(void) : "DisableSpotlight"
+	input DisableSpotlight(void) : "Disable scanners spotlight effect"
+	input EnableSpotlight(void) : "Enable scanners spotlight effect"
 	input InspectTargetPhoto(string) : "Tells the scanner to photograph the given entity, named by classname or by target name. !activator or !player works here also."
 	input InspectTargetSpotlight(string) : "Tells the scanner to spotlight the given entity, named by classname or by target name. !activator or !player works here also."
 	input InputSetFlightSpeed(integer) : "Sets the flight speed of the scanner"
@@ -1667,7 +1668,7 @@
 [
 	spawnflags(Flags) =
 	[
-		65536 :  "No Dynamic Light" : 0
+		65536 : "No Dynamic Light" : 0
 		131072: "Strider Scout Scanner" : 0
 	]
 
@@ -1745,10 +1746,10 @@
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 	[
 		"weapon_pistol" : "Pistol"
-		"weapon_smg1"  : "SMG1"
-		"weapon_stunstick"  : "Stun Stick"
-		"weapon_shotgun"  : "Shotgun"
-		"0"  : "Nothing"
+		"weapon_smg1" : "SMG1"
+		"weapon_stunstick" : "Stun Stick"
+		"weapon_shotgun" : "Shotgun"
+		"0" : "Nothing"
 	]
 
 	manhacks(Choices) : "Number of Manhacks" : 0 =
@@ -1798,7 +1799,7 @@
 		"weapon_crowbar" : "Crow Bar"
 		"weapon_shotgun" : "Shotgun"
 		"weapon_rpg" : "RPG"
-		"0"  : "Nothing"
+		"0" : "Nothing"
 	]
 
 	HasGun(choices) : "Has Gun" : 1 =
@@ -1821,7 +1822,7 @@
 	[
 		"weapon_alyxgun" : "Alyx Gun"
 		"weapon_shotgun" : "Shotgun"
-		"0"  : "Nothing"
+		"0" : "Nothing"
 	]
 
 	DontPickupWeapons(choices) : "Prevent picking up weapons?" : "1" : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground." =
@@ -2078,7 +2079,7 @@
 	input Activate(void) : "Turns on"
 	input Deactivate(void) : "Turns off"
 	input SetThrust(string) : "Set Thrust"
-	input SetSideThrust(string)  : "Set Side Thrust"
+	input SetSideThrust(string) : "Set Side Thrust"
 ]
 
 
@@ -2154,7 +2155,7 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "Fire Once"  : 1
+		1 : "Fire Once" : 1
 		2 : "Followers Only" : 0
 		4 : "Interrupt Speech" : 1
 		8 : "Concurrent" : 0
@@ -2172,7 +2173,7 @@
 	[
 		0 : "Small Radius"
 		1 : "Medium Radius"
-		2 : "Large  Radius"
+		2 : "Large Radius"
 		3 : "Play Everywhere"
 	]
 
@@ -2184,7 +2185,7 @@
 	output OnEndSentence(void) : "Fires when the sentence ends"
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt")  = scripted_target : "Scripted Target"
+@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt") = scripted_target : "Scripted Target"
 [
 	StartDisabled(choices) : "Start Disabled" : 1 =
 	[
@@ -2234,7 +2235,7 @@
 		1 : "Yes"
 	]
 
-	Reciprocal(choices) : "Reciprocal" : 0 : "Set this to YES to have the new relationship mirrored by Target"  =
+	Reciprocal(choices) : "Reciprocal" : 0 : "Set this to YES to have the new relationship mirrored by Target" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2286,7 +2287,7 @@
 	goal(string) : "Target Entity"
 	WaitPointName(target_destination) : "Point to wait at if the target's not visible"
 	WaitDistance(float) : "Wait until player gets this close"
-	LeadDistance(float) : "Lead Distance" : "64" : "The player is considered to be lagging if he's beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
+	LeadDistance(float) : "Lead Distance" : "64" : "The player is considered to be lagging if he's beyond this distance. The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
 	RetrieveDistance(float) : "Retrieve Distance" : "96" : "The distance from the player that the NPC should return to when retrieving a lagging player. Must be between ('Lead Distance' + 24) and ('Lead Distance' * 4) to avoid the leader ping-ponging."
 	SuccessDistance(float) : "Success Distance" : "0" : "The distance from the player (to the NPC) that the player must be within for the Lead to succeed, once the NPC has reached the goal. If set to 0, it'll use the lead distance instead (for legacy support)."
 	Run(choices) : "Run instead of Walk" : "0" =
@@ -2344,8 +2345,8 @@
 	]
 
 	// Inputs
-	input Activate( void )  : "Begin the leading behavior"
-	input Deactivate( void )  : "Stop the leading behavior"
+	input Activate( void ) : "Begin the leading behavior"
+	input Deactivate( void ) : "Stop the leading behavior"
 
 	input SetSuccess( void ) : "Notify success of leading"
 	input SetFailure( void ) : "Notify failure of leading"
@@ -2374,7 +2375,7 @@
 	[
 		"weapon_bugbait" : "Bugbait"
 		"weapon_smg1" : "SMG1"
-		"weapon_ar2"  : "AR2"
+		"weapon_ar2" : "AR2"
 	]
 
 	MissingWeaponConceptModifier(string) : "Missing weapon concept modifier"
@@ -2518,11 +2519,11 @@
 //		0 : "No"
 //		1 : "Yes"
 //	]
-//	CustomMinTimeShots(float) : "Custom: Min time wait to shoot"	  : 2 : "Minimum duration of time after a burst of shooting before trying again"
-//	CustomMaxTimeShots(float) : "Custom: Max time wait to shoot"	  : 4 : "Minimum duration of time after a burst of shooting before trying again"
-//	CustomMinShots(integer) : "Custom: Min shots in a burst"	  : 1
-//	CustomMaxShots(integer) : "Custom: Max shots in a burst"	  : 4
-//	CustomOddsCover(integer) : "Custom: Odds cover on damage"	  : 25 : "If damaged, the chances react by taking immediate cover"
+//	CustomMinTimeShots(float) : "Custom: Min time wait to shoot" : 2 : "Minimum duration of time after a burst of shooting before trying again"
+//	CustomMaxTimeShots(float) : "Custom: Max time wait to shoot" : 4 : "Minimum duration of time after a burst of shooting before trying again"
+//	CustomMinShots(integer) : "Custom: Min shots in a burst" : 1
+//	CustomMaxShots(integer) : "Custom: Max shots in a burst" : 4
+//	CustomOddsCover(integer) : "Custom: Odds cover on damage" : 25 : "If damaged, the chances react by taking immediate cover"
 
 	// Inputs
 	input Activate( void ) : "Begin contesting position"
@@ -2556,7 +2557,7 @@
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/assault_rally.vmt") line(255 255 255, targetname, assaultpoint) = assault_rallypoint :
 	"(Assault) rally point"
 [
-	assaultpoint(target_destination)  : "Assault Point" : "" : "Location to move to as assault begins"
+	assaultpoint(target_destination) : "Assault Point" : "" : "Location to move to as assault begins"
 	assaultdelay(float) : "Assault Delay" : 0 : "How long to wait after cue is given before assault begins."
 	rallysequence(string) : "Rally Sequence" : "" : "Override the NPC's wait activity by entering a sequence name."
 	priority(integer) : "Priority" : 1 : "Higher priority rally points get selected first."
@@ -2579,7 +2580,7 @@
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/assault_point.vmt") line(255 255 255, targetname, nextassaultpoint) = assault_assaultpoint :
 	"(Assault) assault point"
 [
-	assaultgroup(string)  : "Assault Hint Group" : "" : "NPC's movements are constrained to this hint group once assault has begun"
+	assaultgroup(string) : "Assault Hint Group" : "" : "NPC's movements are constrained to this hint group once assault has begun"
 	nextassaultpoint(target_destination) : "Next assault point (optional)"
 	assaulttimeout(float) : "Assault time out" : "3.0" : "This point is cleared when no enemies are seen for this long (seconds)"
 	clearoncontact(choices) : "Clear on contact with enemies" : 0 : "If you come in contact with enemies while approaching the assault point, clear our assault point" =
@@ -2746,7 +2747,7 @@
 	]
 
 	output OnNPCLostSeeEntity(void) : "Fired when the NPC loses sight of the see entity (if one is specified)."
-	output OnNPCSeeEnemy(void)  : "Fired when this NPC leaves his actbusy because of sighting an enemy."
+	output OnNPCSeeEnemy(void) : "Fired when this NPC leaves his actbusy because of sighting an enemy."
 ]
 
 @PointClass base(BaseActBusy) = ai_goal_actbusy_queue : "AI Goal Act Busy Queue"
@@ -2806,7 +2807,7 @@
 	input ForceTriggerResponseEvent(string) : "Fire an NPC Response Event, and force the first available NPC to speak the response (breaking them out of any scene they're in). The parameter should match the response rules concept that any nearby friendly NPCs will try to speak."
 	input ForceTriggerResponseEventNoCancel(string) : "Fire an NPC Response Event, and force the first available NPC to speak the response (but don't break them out of any scene they're in). The parameter should match the response rules concept that any nearby friendly NPCs will try to speak."
 ]
-@PointClass base(Targetname) sphere(Radius)  size(-8 -8 -8, 8 8 8) = ai_changehintgroup : "Change Hint Group"
+@PointClass base(Targetname) sphere(Radius) size(-8 -8 -8, 8 8 8) = ai_changehintgroup : "Change Hint Group"
 [
 	SearchType(choices) : "Search Type" : 0 : "How to search for the entities to change." =
 	[
@@ -2860,9 +2861,9 @@
 		2 : "Don't care"
 	]
 
-	RequiredTime(float) : "Required Time"	  : 0 : "Duration of time that all the conditions must be true"
-	MinTimeout(float) : "Minimum time out"  : 0 : "Minimum time before OnConditionsTimeout is fired. 0 = never expire."
-	MaxTimeout(float) : "Maximum time out"  : 0 : "Maximum time before OnConditionsTimeout is fired. 0 = ignore (If you don't specify a Maximum timeout, conditions will time out at exactly Minimum Time Out. If you DO specify a Maximum time out, timeout will occur randomly between Minimum and Maximum time out values.)"
+	RequiredTime(float) : "Required Time" : 0 : "Duration of time that all the conditions must be true"
+	MinTimeout(float) : "Minimum time out" : 0 : "Minimum time before OnConditionsTimeout is fired. 0 = never expire."
+	MaxTimeout(float) : "Maximum time out" : 0 : "Maximum time before OnConditionsTimeout is fired. 0 = ignore (If you don't specify a Maximum timeout, conditions will time out at exactly Minimum Time Out. If you DO specify a Maximum time out, timeout will occur randomly between Minimum and Maximum time out values.)"
 
 	ActorSeePlayer(choices) : "Actor Sees Player" : 2 =
 	[
@@ -2871,7 +2872,7 @@
 		2 : "Don't care"
 	]
 
-	PlayerActorProximity(float) : "Player distance"  : 0 : "The distance the player must/must not be to the actor. Negative values for NOT, 0 for ignore."
+	PlayerActorProximity(float) : "Player distance" : 0 : "The distance the player must/must not be to the actor. Negative values for NOT, 0 for ignore."
 	PlayerActorFOV(float) : "Player FOV for Actor " : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
 	PlayerActorFOVTrueCone(choices ) : "Play FOV to Actor is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " =
 	[
@@ -2888,15 +2889,15 @@
 
 
 	target(target_destination) : "Target (Optional)" : : "Optional entity to include in conditions"
-	ActorSeeTarget(choices)  : "Actor Sees Target" : 2 =
+	ActorSeeTarget(choices) : "Actor Sees Target" : 2 =
 	[
 		0 : "No"
 		1 : "Yes"
 		2 : "Don't care"
 	]
 
-	ActorTargetProximity(float) : "Target distance"  : 0 : "The distance the actor must/must not be to the Target. Negative values for NOT, 0 for ignore."
-	PlayerTargetProximity(float) : "Player distance from Target"  : 0 : "The distance the player must/must not be to the Target. Negative values for NOT, 0 for ignore."
+	ActorTargetProximity(float) : "Target distance" : 0 : "The distance the actor must/must not be to the Target. Negative values for NOT, 0 for ignore."
+	PlayerTargetProximity(float) : "Player distance from Target" : 0 : "The distance the player must/must not be to the Target. Negative values for NOT, 0 for ignore."
 	PlayerTargetFOV(float) : "Player FOV for Target" : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
 	PlayerTargetFOVTrueCone(choices ) : "Play FOV to Target is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " =
 	[
@@ -2950,7 +2951,7 @@
 
 	// Outputs
 	output OnConditionsSatisfied(void) : "Fires when AI conditions satisfied"
-	output OnConditionsTimeout(void)   : "Fires when AI conditions timed out"
+	output OnConditionsTimeout(void) : "Fires when AI conditions timed out"
 	output NoValidActor(void) : "Fires if/when there are no matching actors in the map."
 ]
 
@@ -2998,7 +2999,7 @@
 	m_iszEntity(target_destination) : "Target NPC" : : "The name or classname of an NPC to use."
 	m_flRadius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 
-	graball(choices)  : "All in radius" : 0: "Whether to grab all matching NPCs in the specified radius, instead of just one"  =
+	graball(choices) : "All in radius" : 0: "Whether to grab all matching NPCs in the specified radius, instead of just one" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3077,7 +3078,7 @@
 
 	spawnflags(flags) =
 	[
-		8192  : "Citadel recharger" : 0
+		8192 : "Citadel recharger" : 0
 	]
 
 	// Inputs
@@ -3100,19 +3101,19 @@
 ]
 
 @SolidClass base(func_movelinear) = func_lookdoor : "A door that moves either when looked by a targeted object or when " +
-	"a target object comes near the door.  Behavior can be either based on viewing direction or proximity " +
-	"alone, or on a combination of both.  If inverted the doors behavior will be the opposite."
+	"a target object comes near the door. Behavior can be either based on viewing direction or proximity " +
+	"alone, or on a combination of both. If inverted the doors behavior will be the opposite."
 [
 	spawnflags(flags) =
 	[
-		8192  : "LookDoor Threshold" : 0
+		8192 : "LookDoor Threshold" : 0
 		16384 : "LookDoor Invert" : 0
 		32768 : "LookDoor From Open" : 0
 	]
 
-	ProximityDistance(string) : "Proximity Distance" : "0.0"  : "If non-zero, proximity range over which door will move"
+	ProximityDistance(string) : "Proximity Distance" : "0.0" : "If non-zero, proximity range over which door will move"
 	ProximityOffset(string) : "Proximity Offset" : "0.0" : "Offset from the target object"
-	FieldOfView(string) : "FieldOfView" : "0.0"  : "If non-zero, field of view over which door will move"
+	FieldOfView(string) : "FieldOfView" : "0.0" : "If non-zero, field of view over which door will move"
 
 	// Input
 	input InvertOn(void) : "InvertOn - when set behavior of door is inverted."
@@ -3309,9 +3310,9 @@
 	PulseSpeed(float) : "Pulse Speed" : 1000 : "How fast does pulse travel"
 	PulseColor(color255) : "Pulse Color" : "255 0 0" : "Color of the pulse"
 	PulseWidth(float) : "Pulse Width" : "20" : "Width of the pulse"
-	PulseLife(float) : "Pulse Life" : 2 : "(Seconds)  How long the pulse lasts"
-	PulseLag(float) : "Pulse Lag" : "0.05" : "(Seconds)  How far behind is pulse tail"
-	PulseFireSound(sound)   : "Pulse Fire Sound" : "" : "Sound played when pulse fires"
+	PulseLife(float) : "Pulse Life" : 2 : "(Seconds) How long the pulse lasts"
+	PulseLag(float) : "Pulse Lag" : "0.05" : "(Seconds) How far behind is pulse tail"
+	PulseFireSound(sound) : "Pulse Fire Sound" : "" : "Sound played when pulse fires"
 ]
 
 
@@ -3393,12 +3394,12 @@
 ]
 
 @PointClass base(Item) studio("models/items/healthkit.mdl") = item_dynamic_resupply : "A dynamic item. When the player enters the PVS of this entity, " +
-    "it will determine the item most needed by the player, spawn one of those items, and remove itself. To determine which item the player most needs, it " +
-    "calculates which of the Desired Health/Armor/Ammo ratios the player is farthest from.\n\nIf the player is above all the desired levels, then no item " +
-    "will be spawned, unless this item_dynamic_resupply was created by an item_item_crate. In that case, a random piece of ammo used by a weapon, that " +
-    "the player has, will be spawned. If the 'Fallback to Health Vial' spawnflag is set, a health vial will be spawned instead of the ammo.\n\nBy default, " +
-    "the item_dynamic_resupply uses the values inside the Master resupply, instead of using it's own values. This makes it easy to tweak the desired " +
-    "loadout of many resupplies. The BecomeMaster input allows you to switch Masters dynamically as the level progresses."
+	"it will determine the item most needed by the player, spawn one of those items, and remove itself. To determine which item the player most needs, it " +
+	"calculates which of the Desired Health/Armor/Ammo ratios the player is farthest from.\n\nIf the player is above all the desired levels, then no item " +
+	"will be spawned, unless this item_dynamic_resupply was created by an item_item_crate. In that case, a random piece of ammo used by a weapon, that " +
+	"the player has, will be spawned. If the 'Fallback to Health Vial' spawnflag is set, a health vial will be spawned instead of the ammo.\n\nBy default, " +
+	"the item_dynamic_resupply uses the values inside the Master resupply, instead of using it's own values. This makes it easy to tweak the desired " +
+	"loadout of many resupplies. The BecomeMaster input allows you to switch Masters dynamically as the level progresses."
 [
 	spawnflags(Flags) =
 	[
@@ -3520,7 +3521,7 @@
 
 	spawnflags(flags) =
 	[
-		8192  : "Citadel recharger" : 0
+		8192 : "Citadel recharger" : 0
 		16384 : "Kleiner's recharger" : 0
 	]
 
@@ -4438,7 +4439,7 @@
 		2 : "Start on" : 0
 	]
 
-	scale(float) : "Scale" : 1 : "Scale of the effect.  1 is the default size, 2 is twice that, etc."
+	scale(float) : "Scale" : 1 : "Scale of the effect. 1 is the default size, 2 is twice that, etc."
 
 	// Inputs
 	input StartCharge(float) : "Start charging the core over specified number of seconds."
@@ -4468,7 +4469,7 @@
 // Countdown timer for the teleporter at the end of the game
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor/info_target.vmt")  = info_teleporter_countdown : "Countdown timer for the teleporter. The status of the teleporter will appear on vgui_screen entities whose panel is 'teleport_countdown_screen'."
+@PointClass base(Targetname) iconsprite("editor/info_target.vmt") = info_teleporter_countdown : "Countdown timer for the teleporter. The status of the teleporter will appear on vgui_screen entities whose panel is 'teleport_countdown_screen'."
 [
 	// Inputs
 	input StartCountdown(float) : "Starts the teleporter countdown. Requires an argument which is the number of seconds for the countdown."

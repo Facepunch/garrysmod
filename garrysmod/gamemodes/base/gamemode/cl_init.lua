@@ -415,14 +415,14 @@ end
 		The return is a fraction of the normal sensitivity (0.5 would be half as sensitive)
 		Return -1 to not override.
 -----------------------------------------------------------]]
-function GM:AdjustMouseSensitivity( fDefault )
+function GM:AdjustMouseSensitivity( fDefault, fLocalFOV, fDefaultFOV )
 
 	local ply = LocalPlayer()
 	if ( !IsValid( ply ) ) then return -1 end
 
 	local wep = ply:GetActiveWeapon()
 	if ( wep && wep.AdjustMouseSensitivity ) then
-		return wep:AdjustMouseSensitivity()
+		return wep:AdjustMouseSensitivity( fDefault, fLocalFOV, fDefaultFOV )
 	end
 
 	return -1
@@ -609,7 +609,7 @@ function GM:PostDrawViewModel( vm, ply, wep, flags )
 			if ( not hook.Call( "PreDrawPlayerHands", self, hands, vm, ply, wep, flags ) ) then
 
 				if ( wep.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
-				hands:DrawModel()
+				hands:DrawModel( flags )
 				render.CullMode( MATERIAL_CULLMODE_CCW )
 
 			end

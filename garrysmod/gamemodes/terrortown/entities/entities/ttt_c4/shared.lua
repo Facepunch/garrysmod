@@ -609,8 +609,8 @@ if CLIENT then
 
    local strtime = util.SimpleTime
    local max = math.max
-   function ENT:Draw()
-      self:DrawModel()
+   function ENT:Draw(flags)
+      self:DrawModel(flags)
 
       if self:GetArmed() then
          local angpos_ur = self:GetTimerPos()

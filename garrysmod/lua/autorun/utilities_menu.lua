@@ -76,6 +76,7 @@ local function ServerSettings( pnl )
 	pnl:ControlHelp( "#utilities.maxammo.help" )
 
 	pnl:NumSlider( "#utilities.max_ragdolls", "g_ragdoll_maxcount", 0, 128, 0 )
+	pnl:ControlHelp( "#utilities.max_ragdolls.help" )
 
 	-- Technical convars
 	pnl:NumSlider( "#utilities.iterations", "gmod_physiterations", 1, 10, 0 )

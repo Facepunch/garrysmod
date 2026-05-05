@@ -92,9 +92,9 @@ function WindowResized()
 	save.UpdatePageNav();
 
 	// Refresh HTML
-	save.DigestUpdate = setTimeout( function()
+	save.DigestUpdateResize = setTimeout( function()
 	{
-		self.DigestUpdate = 0;
+		self.DigestUpdateResize = 0;
 		Scope.Go( 0 );
 	}, 500 )
 }

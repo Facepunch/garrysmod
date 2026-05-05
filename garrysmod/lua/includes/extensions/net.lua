@@ -67,15 +67,11 @@ end
 --
 
 function net.WritePlayer( ply )
-
 	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, MAX_PLAYER_BITS )
-
 end
 
 function net.ReadPlayer()
-
 	return Entity( net.ReadUInt( MAX_PLAYER_BITS ) )
-
 end
 
 

@@ -210,11 +210,10 @@ function PANEL:PaintAt( x, y, dw, dh )
 
 		surface.DrawTexturedRect( OffX + x, OffY + y, w, h )
 
-		return true
-
+	else
+		surface.DrawTexturedRect( x, y, dw, dh )
 	end
 
-	surface.DrawTexturedRect( x, y, dw, dh )
 	return true
 
 end

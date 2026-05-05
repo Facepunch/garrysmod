@@ -789,9 +789,9 @@ function SWEP:Deploy()
 end
 
 if CLIENT then
-   function SWEP:DrawWorldModel()
+   function SWEP:DrawWorldModel(flags)
       if not IsValid(self:GetOwner()) then
-         self:DrawModel()
+         self:DrawModel(flags)
       end
    end
 end

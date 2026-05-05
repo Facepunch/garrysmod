@@ -107,7 +107,7 @@ function ENT:OnRemove()
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
 	--
 	-- Don't draw if we're holding the camera
@@ -118,7 +118,7 @@ function ENT:Draw()
 		return
 	end
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end
 

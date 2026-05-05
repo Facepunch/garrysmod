@@ -6,6 +6,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 	local added = false
 
+	table.sort( files, function( a, b ) return a:lower() < b:lower() end )
 	for k, v in ipairs( files ) do
 
 		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
@@ -34,6 +35,8 @@ local function recurseAddFilesSpawnlist( folder, pathid, list )
 	local addedLabel = false
 
 	local files, folders = file.Find( folder .. "/*", pathid )
+
+	if ( files ) then table.sort( files, function( a, b ) return a:lower() < b:lower() end ) end
 	for id, file in pairs( files or {} ) do
 		if ( file:EndsWith( ".mdl" ) ) then
 			if ( !addedLabel ) then

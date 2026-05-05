@@ -183,19 +183,10 @@ function meta:GetEyeTrace()
 		self.LastPlayerTrace = framenum
 	end
 
-	local tracePlayer = self.PlayerTrace
+	local tr = util.TraceLine( util.GetPlayerTrace( self ) )
+	self.PlayerTrace = tr
 
-	if ( !tracePlayer ) then
-		tracePlayer = {}
-		self.PlayerTrace = tracePlayer
-	end
-
-	local trdata = util.GetPlayerTrace( self )
-	trdata.output = tracePlayer
-
-	util.TraceLine( trdata )
-
-	return tracePlayer
+	return tr
 end
 
 --[[---------------------------------------------------------
@@ -213,17 +204,8 @@ function meta:GetEyeTraceNoCursor()
 		self.LastPlayerAimTrace = framenum
 	end
 
-	local tracePlayerAim = self.PlayerAimTrace
+	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward() ) )
+	self.PlayerAimTrace = tr
 
-	if ( !tracePlayerAim ) then
-		tracePlayerAim = {}
-		self.PlayerAimTrace = tracePlayerAim
-	end
-
-	local trdata = util.GetPlayerTrace( self, self:EyeAngles():Forward() )
-	trdata.output = tracePlayerAim
-
-	util.TraceLine( trdata )
-
-	return tracePlayerAim
+	return tr
 end

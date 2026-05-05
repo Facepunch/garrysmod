@@ -141,9 +141,9 @@ end
 	Name: DrawWorldModel
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
-function SWEP:DrawWorldModel()
+function SWEP:DrawWorldModel( flags )
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end
 
@@ -151,9 +151,9 @@ end
 	Name: DrawWorldModelTranslucent
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
-function SWEP:DrawWorldModelTranslucent()
+function SWEP:DrawWorldModelTranslucent( flags )
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end
 
