@@ -243,7 +243,7 @@ timer.Create( "PlayerVoice", 0.1, 0, function()
 
 	for _, pl in player.Iterator() do
 		
-		if not IsValid(pl) or not pl:IsPlayer() or pl:IsBot() then continue end
+		if not IsValid(pl) or pl:IsBot() then continue end
 	
 		if pl:IsSpeaking() and not pl.m_bWasTalking then
 
