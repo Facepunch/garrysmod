@@ -1,6 +1,6 @@
 
 -- TODO: Move to where player and color are defined?
-TYPE_PLAYER = 254
+TYPE_PLAYER = 45
 TYPE_COLOR = 255
 
 net.Receivers = {}
