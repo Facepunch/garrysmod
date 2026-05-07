@@ -128,6 +128,20 @@ function PrintTable( t, indent, done )
 end
 
 --[[---------------------------------------------------------
+	Either print or PrintTable, depending on the arguments
+-----------------------------------------------------------]]
+function Print(...)
+	if select("#", ...) == 1	-- only 1 element
+		and type(...) == "table"	-- which is a table
+		and (getmetatable(...) == nil or not debug.getmetatable(...).__tostring)	-- that has no custom tostring function
+	then
+		PrintTable(...)
+	else
+		print(...)
+	end
+end
+
+--[[---------------------------------------------------------
 	Returns a random vector
 -----------------------------------------------------------]]
 function VectorRand( min, max )
