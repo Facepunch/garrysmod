@@ -1,6 +1,7 @@
 
 var languageCache = {};
 var languageCurrent = "";
+var languageCurrentAttr = "en";
 
 angular.module( "ngLocalize", [] )
 
@@ -39,6 +40,9 @@ angular.module( "ngLocalize", [] )
 
 		var updateElement = function( str )
 		{
+			if ( !IS_SPAWN_MENU && element.attr( "lang" ) != languageCurrentAttr )
+				element.attr( "lang", languageCurrentAttr );
+
 			if ( "placeholder" in element[0] )
 			{
 				if ( element.attr( "placeholder" ) != str )
@@ -63,6 +67,7 @@ angular.module( "ngLocalize", [] )
 			if ( languageCurrent != gScope.Language )
 			{
 				languageCurrent = gScope.Language;
+				languageCurrentAttr = ( languageCurrent == "" || languageCurrent == "en-pt" ) ? "en" : languageCurrent;
 				languageCache = {};
 			}
 			update();
