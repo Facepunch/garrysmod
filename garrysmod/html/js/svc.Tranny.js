@@ -10,31 +10,27 @@ angular.module( "tranny", [] )
 	return function( scope, element, attrs )
 	{
 		var strName = "";
-		var strSuffix = "";
 
 		var update = function()
 		{
-			var text = strName + ( strSuffix ? " " + strSuffix : "" );
 
 			if ( !IN_ENGINE )
 			{
-				updateElement( text );
+				updateElement( strName );
 				return;
 			}
 
 			var outStr_old = languageCache[ strName ] || language.Update( strName, function( outStr )
 			{
 				languageCache[ strName ] = outStr;
-				var updatedText = outStr + ( strSuffix ? " " + strSuffix : "" );
-				updateElement( updatedText );
+				updateElement( outStr );
 			} );
 
 			if ( outStr_old )
 			{
 				// Compatibility with Awesomium
 				languageCache[ strName ] = outStr_old;
-				var updatedText = outStr_old + ( strSuffix ? " " + strSuffix : "" );
-				updateElement( updatedText );
+				updateElement( outStr_old );
 			}
 		};
 
@@ -56,9 +52,7 @@ angular.module( "tranny", [] )
 
 		scope.$watch( attrs.ngTranny, function( value )
 		{
-			var parts = value.split( " " );
-			strName = parts.shift();
-			strSuffix = parts.join( " " );
+			strName = value;
 			update();
 		} );
 
