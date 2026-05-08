@@ -449,6 +449,8 @@ function UpdateServer( address, ping, name, map, players, maxplayers, botplayers
 	UpdateDigest( RootScope, 50 );
 }
 
+var locToLang = { "jp": "ja", "cn": "zh-cn", "tw": "zh-tw", "hk": "zh-hk" };
+
 function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid, isAnon, version, isFav, loc, gmcat )
 {
 	if ( id != RequestNum[ type ] ) return;
@@ -484,6 +486,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	{
 		ping:			parseInt( ping ),
 		name:			StripWeirdSymbols( name.trim() ),
+		nameLang:		undefined, // For server display name text formatting only
 		desc:			desc,
 		map:			map,
 		players:		parseInt( players ) - parseInt( botplayers ),
@@ -504,6 +507,9 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	};
 
 	if ( data.flag == "eu" ) data.flag = "europeanunion";
+
+	// For server display name text formatting only, guess Japanese or Chinese variant based on server flag.
+	if ( data.flag != "" && locToLang[ data.flag ] ) data.nameLang = locToLang[ data.flag ];
 
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
