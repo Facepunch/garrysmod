@@ -367,7 +367,7 @@ end
 list.Set( "ThrusterEffects", "#thrustereffect.none", { thruster_effect = "none" } )
 
 local matHeatWave = Material( "sprites/heatwave" )
-local matFire = Material( "effects/fire_cloud3" )
+local matFire = Material( "effects/fire_cloud1" )
 
 local clrFireBlue = Color( 0, 0, 255, 128 )
 local clrFireWhite = Color( 255, 255, 255, 128 )
