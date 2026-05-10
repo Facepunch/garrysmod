@@ -1,6 +1,7 @@
 
 var languageCache = {};
 var languageCurrent = "";
+var languageCurrentAttr = "en";
 
 angular.module( "tranny", [] )
 
@@ -9,36 +10,35 @@ angular.module( "tranny", [] )
 	return function( scope, element, attrs )
 	{
 		var strName = "";
-		var strSuffix = "";
 
 		var update = function()
 		{
-			var text = strName + ( strSuffix ? " " + strSuffix : "" );
 
 			if ( !IN_ENGINE )
 			{
-				updateElement( text );
+				updateElement( strName );
 				return;
 			}
 
 			var outStr_old = languageCache[ strName ] || language.Update( strName, function( outStr )
 			{
 				languageCache[ strName ] = outStr;
-				var updatedText = outStr + ( strSuffix ? " " + strSuffix : "" );
-				updateElement( updatedText );
+				updateElement( outStr );
 			} );
 
 			if ( outStr_old )
 			{
 				// Compatibility with Awesomium
 				languageCache[ strName ] = outStr_old;
-				var updatedText = outStr_old + ( strSuffix ? " " + strSuffix : "" );
-				updateElement( updatedText );
+				updateElement( outStr_old );
 			}
 		};
 
 		var updateElement = function( str )
 		{
+			if ( !IS_SPAWN_MENU && element.attr( "lang" ) != languageCurrentAttr )
+				element.attr( "lang", languageCurrentAttr );
+			
 			if ( "placeholder" in element[0] )
 			{
 				if ( element.attr( "placeholder" ) != str )
@@ -52,9 +52,7 @@ angular.module( "tranny", [] )
 
 		scope.$watch( attrs.ngTranny, function( value )
 		{
-			var parts = value.split( " " );
-			strName = parts.shift();
-			strSuffix = parts.join( " " );
+			strName = value;
 			update();
 		} );
 
@@ -63,6 +61,7 @@ angular.module( "tranny", [] )
 			if ( languageCurrent != gScope.Language )
 			{
 				languageCurrent = gScope.Language;
+				languageCurrentAttr = ( languageCurrent == "" || languageCurrent == "en-pt" ) ? "en" : languageCurrent;
 				languageCache = {};
 			}
 			update();
