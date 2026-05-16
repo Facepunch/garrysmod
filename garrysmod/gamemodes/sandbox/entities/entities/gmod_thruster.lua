@@ -8,29 +8,16 @@ if ( CLIENT ) then
 	CreateConVar( "cl_drawthrusterseffects", "1", 0, "Should Sandbox Thruster effects be visible?" )
 end
 
-function ENT:SetEffect( name )
-	self:SetNWString( "Effect", name )
+function ENT:SetupDataTables()
+
+	self:NetworkVar( "String", 0, "Effect" )
+	self:NetworkVar( "Vector", 0, "Offset" )
+	self:NetworkVar( "Bool", 0, "On" )
+
 end
 
-function ENT:GetEffect()
-	return self:GetNWString( "Effect", "" )
-end
-
-function ENT:SetOn( on )
-	self:SetNWBool( "On", on )
-end
-
-function ENT:IsOn()
-	return self:GetNWBool( "On", false )
-end
-
-function ENT:SetOffset( v )
-	self:SetNWVector( "Offset", v )
-end
-
-function ENT:GetOffset()
-	return self:GetNWVector( "Offset" )
-end
+-- Backwards compact
+ENT.IsOn = ENT.GetOn
 
 function ENT:Initialize()
 
