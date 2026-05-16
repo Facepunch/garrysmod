@@ -8,28 +8,15 @@ if ( CLIENT ) then
 	CreateConVar( "cl_drawthrusterseffects", "1", 0, "Should Sandbox Thruster effects be visible?" )
 end
 
-function ENT:SetEffect( name )
-	self:SetNWString( "Effect", name )
-end
+function ENT:SetupDataTables()
 
-function ENT:GetEffect()
-	return self:GetNWString( "Effect", "" )
-end
+	self:NetworkVar( "String", 0, "Effect" )
+	self:NetworkVar( "Vector", 0, "Offset" )
+	self:NetworkVar( "Bool", 0, "On" )
 
-function ENT:SetOn( on )
-	self:SetNWBool( "On", on )
-end
+	-- Backwards compact, use :GetOn instead
+	self.IsOn = self.GetOn
 
-function ENT:IsOn()
-	return self:GetNWBool( "On", false )
-end
-
-function ENT:SetOffset( v )
-	self:SetNWVector( "Offset", v )
-end
-
-function ENT:GetOffset()
-	return self:GetNWVector( "Offset" )
 end
 
 function ENT:Initialize()
@@ -77,7 +64,7 @@ end
 if ( CLIENT ) then
 	function ENT:DrawEffects()
 
-		if ( !self:IsOn() ) then return	end
+		if ( !self:GetOn() ) then return end
 		if ( self.ShouldDraw == false ) then return end
 
 		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
@@ -115,7 +102,7 @@ function ENT:Think()
 
 		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) != 0
 
-		if ( !self:IsOn() ) then self.OnStart = nil return end
+		if ( !self:GetOn() ) then self.OnStart = nil return end
 		self.OnStart = self.OnStart or CurTime()
 
 		if ( self.ShouldDraw == false ) then return end
@@ -200,9 +187,6 @@ if ( SERVER ) then
 			self:SetOffset( self.ThrustOffsetR )
 		end
 
-		self:SetNWVector( "1", self.ForceAngle )
-		self:SetNWVector( "2", self.ForceLinear )
-
 		self:SetOverlayText( "Force: " .. math.floor( self.force ) )
 
 	end
@@ -248,7 +232,7 @@ if ( SERVER ) then
 
 	function ENT:PhysicsSimulate( phys, deltatime )
 
-		if ( !self:IsOn() ) then return SIM_NOTHING end
+		if ( !self:GetOn() ) then return SIM_NOTHING end
 
 		return self.ForceAngle, self.ForceLinear, SIM_LOCAL_ACCELERATION
 
@@ -284,7 +268,7 @@ if ( SERVER ) then
 		if ( self.SoundName == sound ) then return end
 
 		-- Gracefully shutdown
-		if ( self:IsOn() ) then
+		if ( self:GetOn() ) then
 			self:StopThrustSound()
 		end
 
@@ -292,7 +276,7 @@ if ( SERVER ) then
 		self.Sound = nil
 
 		-- Now start the new sound
-		if ( self:IsOn() ) then
+		if ( self:GetOn() ) then
 			self:StartThrustSound()
 		end
 
