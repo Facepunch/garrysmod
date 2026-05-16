@@ -16,8 +16,10 @@ function ENT:SetupDataTables()
 
 end
 
--- Backwards compact
-ENT.IsOn = ENT.GetOn
+-- Backwards compact, use :GetOn instead
+function ENT:IsOn()
+	return self:GetOn()
+end
 
 function ENT:Initialize()
 
@@ -64,7 +66,7 @@ end
 if ( CLIENT ) then
 	function ENT:DrawEffects()
 
-		if ( !self:IsOn() ) then return	end
+		if ( !self:GetOn() ) then return	end
 		if ( self.ShouldDraw == false ) then return end
 
 		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
@@ -102,7 +104,7 @@ function ENT:Think()
 
 		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) != 0
 
-		if ( !self:IsOn() ) then self.OnStart = nil return end
+		if ( !self:GetOn() ) then self.OnStart = nil return end
 		self.OnStart = self.OnStart or CurTime()
 
 		if ( self.ShouldDraw == false ) then return end
@@ -232,7 +234,7 @@ if ( SERVER ) then
 
 	function ENT:PhysicsSimulate( phys, deltatime )
 
-		if ( !self:IsOn() ) then return SIM_NOTHING end
+		if ( !self:GetOn() ) then return SIM_NOTHING end
 
 		return self.ForceAngle, self.ForceLinear, SIM_LOCAL_ACCELERATION
 
@@ -268,7 +270,7 @@ if ( SERVER ) then
 		if ( self.SoundName == sound ) then return end
 
 		-- Gracefully shutdown
-		if ( self:IsOn() ) then
+		if ( self:GetOn() ) then
 			self:StopThrustSound()
 		end
 
@@ -276,7 +278,7 @@ if ( SERVER ) then
 		self.Sound = nil
 
 		-- Now start the new sound
-		if ( self:IsOn() ) then
+		if ( self:GetOn() ) then
 			self:StartThrustSound()
 		end
 
