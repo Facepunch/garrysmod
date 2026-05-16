@@ -64,7 +64,7 @@ end
 if ( CLIENT ) then
 	function ENT:DrawEffects()
 
-		if ( !self:GetOn() ) then return	end
+		if ( !self:GetOn() ) then return end
 		if ( self.ShouldDraw == false ) then return end
 
 		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
