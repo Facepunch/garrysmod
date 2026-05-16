@@ -14,11 +14,9 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Vector", 0, "Offset" )
 	self:NetworkVar( "Bool", 0, "On" )
 
-end
+	-- Backwards compact, use :GetOn instead
+	self.IsOn = self.GetOn
 
--- Backwards compact, use :GetOn instead
-function ENT:IsOn()
-	return self:GetOn()
 end
 
 function ENT:Initialize()
