@@ -514,3 +514,24 @@ function WEPS.ForcePrecache()
       end
    end
 end
+
+-- Adjust weapons with the non-TTT base to add required TTT SWEP functions
+function GM:PreRegisterSWEP(swep, class)
+   if swep.Base ~= "weapon_base" then return end
+
+   if not isfunction(swep.IsEquipment) then
+      function swep:IsEquipment()
+         return WEPS.IsEquipment(self)
+      end
+   end
+
+   if not isnumber(swep.HeadshotMultiplier) then
+      swep.HeadshotMultiplier = 2.7
+   end
+
+   if not isfunction(swep.GetHeadshotMultiplier) then
+      function SWEP:GetHeadshotMultiplier(victim, dmginfo)
+         return self.HeadshotMultiplier
+      end
+   end
+end
