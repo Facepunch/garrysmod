@@ -66,10 +66,10 @@ function ENT:Initialize()
 end
 
 function ENT:Draw( flags )
+	
+	if ( halo.RenderedEntity() != self ) then return end
 
-	if ( halo.RenderedEntity() == self ) then
-		self.AttachedEntity:DrawModel( flags )
-	end
+	self.AttachedEntity:DrawModel( flags )
 
 end
 
