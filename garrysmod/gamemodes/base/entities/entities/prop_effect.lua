@@ -9,6 +9,8 @@ ENT.Type = "anim"
 
 ENT.Spawnable = false
 
+ENT.RenderGroup = RENDERGROUP_BOTH
+
 function ENT:Initialize()
 
 	local Radius = 6
@@ -65,13 +67,14 @@ end
 
 function ENT:Draw( flags )
 
-	local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
-	if ( isDepthPass ) then return end
-
 	if ( halo.RenderedEntity() == self ) then
 		self.AttachedEntity:DrawModel( flags )
 		return
 	end
+
+end
+
+function ENT:DrawTranslucent( flags )
 
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 
