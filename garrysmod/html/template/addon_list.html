@@ -30,7 +30,7 @@
 			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
 				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.' + cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
-				<ul ng-show="Category == cat">
+				<ul ng-show="Category == cat && Category != 'downloaded_ugc'">
 					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
 						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
@@ -89,6 +89,7 @@
 
 						<control ng-hide="IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
 						<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'addon.unsubscribe'">..</control>
+						<control ng-show="Category == 'downloaded_ugc'" ng-click="MarkUnused( file )" ng-Tranny="'addon.mark_unused'">..</control>
 					</right>
 				</controls>
 
