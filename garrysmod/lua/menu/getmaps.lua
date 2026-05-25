@@ -108,6 +108,15 @@ local function UpdateMaps()
 	}
 	for _, map in ipairs( GStringMaps ) do MapNames[ map ] = "G String" end
 
+	local InsurgencyMaps = {
+		"buhriz", "buhriz_coop", "buhriz_night", "contact", "contact_coop", "contact_night", "district", "district_coop", "district_night",
+		"drycanal", "drycanal_coop", "drycanal_night", "embassy", "embassy_coop", "embassy_night", "heights", "heights_coop", "heights_night",
+		"kandagal", "kandagal_night", "market", "market_coop", "market_night", "ministry", "ministry_coop", "ministry_night", "panj", "panj_night",
+		"peak", "peak_night", "revolt", "revolt_coop", "revolt_night", "siege", "siege_coop", "sinjar", "sinjar_coop", "sinjar_night", "station",
+		"station_night", "tell", "tell_coop", "tell_night", "training", "uprising", "uprising_night", "verticality", "verticality_coop", "verticality_night"
+	} 
+	for _, map in ipairs( InsurgencyMaps ) do MapNames[ map ] = "Insurgency" end
+
 	MapNames[ "dm_" ] = "Half-Life 2: Deathmatch"
 	MapNames[ "halls3" ] = "Half-Life 2: Deathmatch"
 
