@@ -390,7 +390,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		render.SetMaterial( matFire )
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size * Scale, scroll, clrFireBlue) )
+			render.AddBeam( vOffset, size * Scale, scroll, clrFireBlue )
 			render.AddBeam( vOffset + vNormal * 60 * Scale, 32 * Scale, scroll + 1, clrFireWhite )
 			render.AddBeam( vOffset + vNormal * 148 * Scale, 32 * Scale, scroll + 3, clrFireWhiteEmpty )
 		render.EndBeam()
