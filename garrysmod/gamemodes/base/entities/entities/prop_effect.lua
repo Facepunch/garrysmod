@@ -9,7 +9,7 @@ ENT.Type = "anim"
 
 ENT.Spawnable = false
 
-ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.WantsTranslucency = true
 
 function ENT:Initialize()
 
@@ -66,8 +66,6 @@ function ENT:Initialize()
 end
 
 function ENT:Draw( flags )
-	
-	if ( halo.RenderedEntity() != self ) then return end
 
 	self.AttachedEntity:DrawModel( flags )
 
@@ -75,7 +73,7 @@ end
 
 function ENT:DrawTranslucent( flags )
 
-	if ( halo.RenderedEntity() == self ) then return end
+	self.AttachedEntity:DrawModel( flags )
 
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 
