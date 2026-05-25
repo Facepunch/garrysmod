@@ -88,7 +88,7 @@ end
 --
 function TOOL:LeftClick( trace )
 
-	if ( CLIENT ) then return true end
+	if ( CLIENT ) then return self.CurrentDupeName != nil end
 
 	--
 	-- Get the copied dupe. We store it on the player so it will still exist if they die and respawn.
