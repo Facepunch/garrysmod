@@ -518,6 +518,7 @@ end
 -- Adjust weapons with the non-TTT base to add required TTT SWEP functions
 function GM:PreRegisterSWEP(swep, class)
    if swep.Base ~= "weapon_base" then return end
+   if class == "weapon_tttbase" or class == "weapon_base" then return end
 
    if not isfunction(swep.IsEquipment) then
       function swep:IsEquipment()
