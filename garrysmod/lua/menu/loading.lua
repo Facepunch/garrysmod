@@ -38,10 +38,10 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:Paint()
+function PANEL:Paint( w, h )
 
 	surface.SetDrawColor( 30, 30, 30, 255 )
-	surface.DrawRect( 0, 0, self:GetWide(), self:GetTall() )
+	surface.DrawRect( 0, 0, w, h )
 
 	if ( self.JavascriptRun && IsValid( self.HTML ) && !self.HTML:IsLoading() ) then
 
@@ -67,7 +67,6 @@ function PANEL:OnActivate()
 
 	self.NumDownloadables = 0
 	self.CheckedSingleplayer = false
-
 
 end
 
