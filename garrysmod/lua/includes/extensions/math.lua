@@ -101,7 +101,7 @@ function math.calcBSplineN( i, k, t, tInc )
 	local knot = ( i - 3 ) * tInc
 
 	if ( k <= 1 ) then
-		if ( knot <= t && t < knot + tInc ) then
+		if ( knot <= t and t < knot + tInc ) then
 			return 1
 		end
 
@@ -182,9 +182,8 @@ function math.Approach( cur, target, inc )
 	return target
 end
 
--- Get sign of a number
-function math.sign( num )
-	return ( num > 0 && 1 ) or ( num < 0 && -1 ) or 0
+function math.Sign( num )
+	return ( num > 0 and 1 ) or ( num < 0 and -1 ) or 0
 end
 
 function math.NormalizeAngle( a )
