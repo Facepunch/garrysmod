@@ -67,13 +67,13 @@ end
 
 function ENT:Draw( flags )
 
-	if ( halo.RenderedEntity() == self ) then
-		self.AttachedEntity:DrawModel( flags )
-	end
+	self.AttachedEntity:DrawModel( flags )
 
 end
 
 function ENT:DrawTranslucent( flags )
+
+	if ( halo.RenderedEntity() == self ) then return end
 
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 
