@@ -40,12 +40,19 @@
 	input SetLightingOriginHack(target_destination) : "Sets the relative lighting origin entity. This will make this entity sample lighting from the given entity's position"
 ]
 
-// Also all CBaseAnimating entities
+// Also all CBaseAnimating entities, but we limit where it appears to avoid potential "it no worky" issues
 @BaseClass = GMODModelScale
 [
-	modelscale(float) : "Model Scale" : "1.0" : "Scales the model by precentage given. 1 = 100%, 0.5 = 50%, 2 = 200%, etc."
+	modelscale(float) : "Model Scale" : "1.0" : "Scales the model by precentage given.\n1 = 100%, 0.5 = 50%, 2 = 200%, etc."
 
-	input SetModelScale(float) : "Scales the model by precentage given. 1 = 100%, 0.5 = 50%, 2 = 200%, etc."
+	input SetModelScale(string) : "Takes two values separated by a space. The first is the target model scale. (1 = 100%, 0.5 = 50%, 2 = 200%, etc.) The second value is the number of seconds the change in scale will be spread over."
+]
+
+@BaseClass = CBaseAnimating
+[
+	input SetModel(string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
+	input SetCycle(float) : "Skip to a specific point in the current animation"
+	input SetPlaybackRate(float) : "Change the animation speed multiplier"
 ]
 
 // GMOD Note: This fixes brush model bounds being in world space, which is useful for good parenting.
@@ -82,7 +89,7 @@
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 ]
 
-@BaseClass base(GMODSandbox, ToggleDraw, Shadow, Skin) = Studiomodel
+@BaseClass base(GMODSandbox, CBaseAnimating, ToggleDraw, Shadow, Skin) = Studiomodel
 [
 	model(*studio) : "World model" : "" : "The model this entity should use."
 
