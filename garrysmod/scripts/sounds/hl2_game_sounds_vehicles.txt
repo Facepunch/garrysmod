@@ -880,3 +880,23 @@
 	"pitch"		"100"
 	"wave"		"vehicles/apc/apc_slowdown_fast_loop5.wav"
 }
+
+"APC_turbo_on"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	"wave"		"vehicles/apc/apc_turbo_on_loop1.wav"
+}
+
+"apc_reverse"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.45"
+	"soundlevel"	"SNDLVL_95db"
+	"pitch"		"50,60"
+	"wave"		"vehicles/apc/apc_firstgear_loop1.wav"
+}
+
+
