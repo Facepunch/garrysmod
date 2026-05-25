@@ -69,7 +69,6 @@ function ENT:Draw( flags )
 
 	if ( halo.RenderedEntity() == self ) then
 		self.AttachedEntity:DrawModel( flags )
-		return
 	end
 
 end
