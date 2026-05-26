@@ -7,10 +7,10 @@ KARMA.RememberedPlayers = {}
 
 -- Convars, more convenient access than GetConVar bla bla
 KARMA.cv = {}
-KARMA.cv.enabled     = CreateConVar("ttt_karma", "1", FCVAR_ARCHIVE)
+KARMA.cv.enabled     = CreateConVar("ttt_karma", "1", FCVAR_ARCHIVE + FCVAR_REPLICATED)
 KARMA.cv.strict      = CreateConVar("ttt_karma_strict", "1")
 KARMA.cv.starting    = CreateConVar("ttt_karma_starting", "1000")
-KARMA.cv.max         = CreateConVar("ttt_karma_max", "1000")
+KARMA.cv.max         = CreateConVar("ttt_karma_max", "1000", FCVAR_REPLICATED)
 KARMA.cv.ratio       = CreateConVar("ttt_karma_ratio", "0.001")
 KARMA.cv.killpenalty = CreateConVar("ttt_karma_kill_penalty", "15")
 KARMA.cv.roundheal   = CreateConVar("ttt_karma_round_increment", "5")
@@ -38,12 +38,11 @@ cvars.AddChangeCallback("ttt_karma_max", function(cvar, old, new)
 end)
 
 function KARMA.InitState()
-   SetGlobalBool("ttt_karma", config.enabled:GetBool())
    SetGlobalInt("ttt_karma_max", config.max:GetFloat())
 end
 
 function KARMA.IsEnabled()
-   return GetGlobalBool("ttt_karma", false)
+   return config.enabled:GetBool()
 end
 
 -- Compute penalty for hurting someone a certain amount
@@ -303,7 +302,7 @@ function KARMA.Remember(ply)
 end
 
 function KARMA.Recall(ply)
-   if config.persist:GetBool()then
+   if config.persist:GetBool() then
       ply.delay_karma_recall = not ply:IsFullyAuthenticated()
 
       if ply:IsFullyAuthenticated() then
