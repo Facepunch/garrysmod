@@ -269,10 +269,10 @@ function math.IsNearlyEqual( a, b, tolerance )
 end
 
 --[[---------------------------------------------------------
-	Name: cot( num )
+	Name: Cot( num )
 	Desc: Calculate cotangent of num
 -----------------------------------------------------------]]
-function math.cot( num )
+function math.Cot( num )
 	return 1 / math.tan( num )
 end
 
