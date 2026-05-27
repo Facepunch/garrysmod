@@ -361,10 +361,8 @@ L.decoy_broken    = "Tuzağınız yok edildi!"
 L.decoy_help_pri  = "{primaryfire} tuzağı yerleştirir."
 
 L.decoy_desc = [[
-Dedektiflere sahte bir radar işareti gösterir,
-ve DNA tarayıcıları
-DNA'nızı taradıkları takdirde yemin yerini göstermesini sağlar
-.]]
+Dedektiflere sahte bir radar işareti gösterir. DNA tarayıcıları
+DNA'nızı taradıkları takdirde yemin yerini göstermesini sağlar.]]
 
 -- Defuser
 L.defuser_name    = "İmha Kiti"
@@ -382,8 +380,7 @@ L.flare_desc = [[
 Cesetleri yakmak için kullanılabilir, böylece
 asla bulunmazlar. Sınırlı cephane.
 
-Bir cesedi yakmak belirgin bir ses çıkarır
-.]]
+Bir cesedi yakmak belirgin bir ses çıkarır.]]
 
 -- Health station
 L.hstation_name   = "Sağlık İstasyonu"
@@ -505,7 +502,7 @@ L.magnet_help     = "Cesedi yüzeye tutturmak için {primaryfire}"
 L.grenade_smoke   = "Duman Bombası"
 L.grenade_fire    = "Yakıcı Bomba"
 
-L.unarmed_name    = "Gizlendi"
+L.unarmed_name    = "Silahı İndir"
 L.crowbar_name    = "Levye"
 L.pistol_name     = "Tabanca"
 L.rifle_name      = "Tüfek"
