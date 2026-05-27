@@ -1117,8 +1117,8 @@ L.ev_c4_plant_tip = "C4 kuruldu"
 
 L.ev_suicide = "İntihar"
 L.ev_teamkill = "Takım Öldürmesi"
-L.ev_t_killed_i = "Hain, masum rolündeki oyuncuyu öldürdü"
-L.ev_i_killed_t = "Masum, hain rolündeki oyuncuyu öldürdü"
+L.ev_t_killed_i = "Hain rolündeki oyuncu, masum rolündeki oyuncuyu öldürdü"
+L.ev_i_killed_t = "Masum rolündeki oyuncu, hain rolündeki oyuncuyu öldürdü"
 
 -- 2026-03-11
 L.equip_sort_default = "Varsayılan"
