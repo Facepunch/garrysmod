@@ -331,12 +331,12 @@ L.c4_remove_pickup   = "C4'ü al"
 L.c4_remove_destroy1 = "C4'ü yok et"
 L.c4_remove_destroy2 = "İmhayı onayla"
 
-L.c4_disarm       = "C4'ü devre dışı bırak"
+L.c4_disarm       = "C4'ü etkisiz hale getir"
 L.c4_disarm_cut   = "{num} telini kesmek için tıklayın"
 
 L.c4_disarm_t     = "Bombayı etkisiz hale getirmek için bir kablo kesin. Hain olduğun için her kablo güvende. Masumlar için iş o kadar kolay değil!"
 L.c4_disarm_owned = "Bombayı etkisiz hale getirmek için bir kablo kesin. Bu senin bomban, bu yüzden her kablo onu etkisiz hale getirecek."
-L.c4_disarm_other = "Bombayı etkisiz hale getirmek için bir kablo kesin. Yanlış yaparsan patlar!"
+L.c4_disarm_other = "Bombayı etkisiz hale getirmek için doğru kabloyu kesin. Yanlış yaparsan patlar!"
 
 L.c4_status_armed    = "KURULDU"
 L.c4_status_disarmed = "DEVRE DIŞI"
@@ -1121,4 +1121,10 @@ L.ev_c4_plant_tip = "C4 kuruldu"
 L.ev_suicide = "İntihar"
 L.ev_teamkill = "Takım Öldürmesi"
 L.ev_t_killed_i = "Hain, masum rolündeki oyuncuyu öldürdü"
-L.ev_i_killed_t = "Masum , hain rolündeki oyuncuyu öldürdü"
+L.ev_i_killed_t = "Masum, hain rolündeki oyuncuyu öldürdü"
+
+-- 2026-03-11
+L.equip_sort_default = "Varsayılan"
+L.equip_sort_slot    = "Yuva"
+
+L.set_hide_unbuyable = "Satın alınamayan ekipman ögelerini listenin altına taşı."
