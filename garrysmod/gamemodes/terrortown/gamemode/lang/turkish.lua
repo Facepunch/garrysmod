@@ -1097,3 +1097,28 @@ L.radio_button_glock   = "Glock atışları"
 L.radio_button_sipist  = "Susturuculu silah"
 L.radio_button_tele    = "Işınlanma"
 L.radio_button_heal    = "Sağlık edinimi"
+
+--- 2026-02-27
+L.dead         = "Ölü"
+L.disconnected = "Sunucudan Ayrıldı"
+
+L.words_suicide = "kendini öldürdü"
+L.words_fall    = "KÜT"
+L.words_burn    = "çıtırtı"
+
+L.ev_win_traitor_tip = "Hainler kazandı"
+L.ev_win_inno_tip = "Masumlar kazandı"
+L.ev_win_time_tip = "Zaman Sınırı"
+
+L.ev_start_tip = "Oyun"
+L.ev_credit_tip = "Kredi bulundu"
+L.ev_body_tip = "Ceset bulundu"
+
+L.ev_c4_disarm_tip = "C4 etkisiz hale getirildi"
+L.ev_c4_boom_tip = "C4 patladı"
+L.ev_c4_plant_tip = "C4 kuruldu"
+
+L.ev_suicide = "İntihar"
+L.ev_teamkill = "Takım Öldürmesi"
+L.ev_t_killed_i = "Hain, masum rolündeki oyuncuyu öldürdü"
+L.ev_i_killed_t = "Masum , hain rolündeki oyuncuyu öldürdü"
