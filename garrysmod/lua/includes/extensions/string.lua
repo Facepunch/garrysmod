@@ -76,9 +76,9 @@ function string.PatternSafe( str )
 end
 
 --[[---------------------------------------------------------
-	Name: explode(seperator ,string)
+	Name: explode(separator ,string)
 	Desc: Takes a string and turns it into a table
-	Usage: string.explode( " ", "Seperate this string")
+	Usage: string.explode( " ", "Separate this string")
 -----------------------------------------------------------]]
 local totable = string.ToTable
 local string_sub = string.sub
@@ -108,7 +108,7 @@ function string.Split( str, delimiter )
 end
 
 --[[---------------------------------------------------------
-	Name: Implode( seperator, Table)
+	Name: Implode( separator, Table)
 	Desc: Takes a table and turns it into a string
 	Usage: string.Implode( " ", { "This", "Is", "A", "Table" } )
 -----------------------------------------------------------]]
@@ -123,9 +123,15 @@ end
 -----------------------------------------------------------]]
 function string.GetExtensionFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = string.sub( path, i, i )
-		if ( c == "/" or c == "\\" ) then return nil end
-		if ( c == "." ) then return string.sub( path, i + 1 ) end
+		local c = path:byte(i)
+
+		if c == 47 or c == 92 then -- / or \
+			return nil
+		end
+
+		if c == 46 then -- .
+			return path:sub(i + 1)
+		end
 	end
 
 	return nil
@@ -136,9 +142,13 @@ end
 -----------------------------------------------------------]]
 function string.StripExtension( path )
 	for i = #path, 1, -1 do
-		local c = string.sub( path, i, i )
-		if ( c == "/" or c == "\\" ) then return path end
-		if ( c == "." ) then return string.sub( path, 1, i - 1 ) end
+		local c = path:byte(i)
+
+		if c == 47 or c == 92 then -- / or \
+			return path
+		elseif c == 46 then -- .
+			return path:sub(1, i - 1)
+		end
 	end
 
 	return path
@@ -146,13 +156,16 @@ end
 
 --[[---------------------------------------------------------
 	Name: GetPathFromFilename( path )
-	Desc: Returns path from filepath
+	Desc: Returns path from file path
 	Usage: string.GetPathFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetPathFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = string.sub( path, i, i )
-		if ( c == "/" or c == "\\" ) then return string.sub( path, 1, i ) end
+		local c = path:byte(i)
+
+		if c == 47 or c == 92 then -- / or \
+			return path:sub(1, i)
+		end
 	end
 
 	return ""
@@ -165,8 +178,11 @@ end
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = string.sub( path, i, i )
-		if ( c == "/" or c == "\\" ) then return string.sub( path, i + 1 ) end
+		local c = path:byte(i)
+
+		if c == 47 or c == 92 then -- / or \
+			return path:sub(i + 1)
+		end
 	end
 
 	return path
@@ -176,7 +192,7 @@ end
 	Name: FormattedTime( TimeInSeconds, Format )
 	Desc: Given a time in seconds, returns formatted time
 			If 'Format' is not specified the function returns a table
-			conatining values for hours, mins, secs, ms
+			containing values for hours, mins, secs, ms
 
 	Examples: string.FormattedTime( 123.456, "%02i:%02i:%02i")	==> "02:03:45"
 			  string.FormattedTime( 123.456, "%02i:%02i")		==> "02:03"
