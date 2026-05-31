@@ -26,6 +26,7 @@ function ENT:Initialize()
 		self.AttachedEntity:SetSkin( self:GetSkin() )
 		self.AttachedEntity:Spawn()
 		self.AttachedEntity:SetParent( self )
+		self.AttachedEntity:SetTransmitWithParent( true )
 		self.AttachedEntity:DrawShadow( false )
 
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
