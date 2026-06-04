@@ -2276,7 +2276,7 @@
 	input SparkOnce(void) : "Spark once."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) = env_sprite :
+@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(140 140 20) = env_sprite :
 	"An entity that controls the drawing of a sprite in the world."
 [
 	framerate(float) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -2618,17 +2618,18 @@
 //	input Command(string) : "Command to execute."
 //]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor :
-	"An entity that relays bonus maps changes."
-[
-	filename(string) : "File Name" : ""
-	mapname(string) : "Map Name" : ""
-
-	// Inputs
-	input Unlock(void) : "Unlocks the filename/map combination."
-	input Complete(void) : "Completes the filename/map combination."
-	input Save(void) : "Saves bonus map data."
-]
+// GMOD: Useless in GMod, was removed
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor :
+//	"An entity that relays bonus maps changes."
+//[
+//	filename(string) : "File Name" : ""
+//	mapname(string) : "Map Name" : ""
+//
+//	// Inputs
+//	input Unlock(void) : "Unlocks the filename/map combination."
+//	input Complete(void) : "Completes the filename/map combination."
+//	input Save(void) : "Saves bonus map data."
+//]
 
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = game_ui :
 	"An entity used to override player input when the player is looking at it."
@@ -2740,13 +2741,13 @@
 @PointClass base(Targetname) size(-1 -1 0, 1 1 1) color(80 150 225) studio("models/editor/overlay_helper.mdl") sphere(fademindist) sphere(fademaxdist) overlay() = info_overlay :
 	"An entity that places an overlay on the world."
 [
-	material(material) : "Material"
-	sides(sidelist) : "Brush faces"
+	material(material) : "Material" : : "The material to overlay. It must be a decal shader material."
+	sides(sidelist) : "Brush faces" : : "Surfaces that this overlay should apply to."
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
-	StartU(float) : "U Start" : "0.0"
-	EndU(float) : "U End" : "1.0"
-	StartV(float) : "V Start" : "0.0"
-	EndV(float) : "V End" : "1.0"
+	StartU(float) : "U Start" : "0.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - left edge, 1 - right edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
+	EndU(float) : "U End" : "1.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - left edge, 1 - right edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
+	StartV(float) : "V Start" : "0.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - top edge, 1 - bottom edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
+	EndV(float) : "V End" : "1.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - top edge, 1 - bottom edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
 	BasisOrigin(Vector) readonly : "Overlay Basis Origin (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
 	BasisU(Vector) readonly : "Overlay Basis U (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
 	BasisV(Vector) readonly : "Overlay Basis V (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
