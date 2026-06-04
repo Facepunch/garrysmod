@@ -67,19 +67,19 @@ end
 
 function ENT:Draw( flags )
 
-	self.AttachedEntity:DrawModel( flags )
+	-- Draw the actual model when we are grabbed by physics gun, etc.
+	if ( halo.RenderedEntity() == self ) then
+		self.AttachedEntity:DrawModel( flags )
+	end
 
 end
 
 function ENT:DrawTranslucent( flags )
 
-	self.AttachedEntity:DrawModel( flags )
-
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 
 	-- Don't draw the grip if there's no chance of us picking it up
-	local ply = LocalPlayer()
-	local wep = ply:GetActiveWeapon()
+	local wep = LocalPlayer():GetActiveWeapon()
 	if ( !IsValid( wep ) ) then return end
 
 	local weapon_name = wep:GetClass()
