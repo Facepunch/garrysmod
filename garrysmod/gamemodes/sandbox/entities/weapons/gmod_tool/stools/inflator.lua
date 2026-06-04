@@ -112,6 +112,9 @@ function TOOL:LeftClick( trace, scale )
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( trace.HitPos )
+	effectdata:SetAttachment( bone )
+	effectdata:SetEntity( trace.Entity )
+	effectdata:SetScale( scale or 1 )
 	util.Effect( "inflator_magic", effectdata )
 
 	return false
