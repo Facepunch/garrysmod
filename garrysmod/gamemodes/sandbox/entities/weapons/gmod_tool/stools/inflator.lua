@@ -104,6 +104,7 @@ function TOOL:LeftClick( trace, scale )
 
 	if ( !IsValid( trace.Entity ) ) then return false end
 	if ( !trace.Entity:IsNPC() and trace.Entity:GetClass() != "prop_ragdoll" /*&& !trace.Entity:IsPlayer()*/ ) then return false end
+	if ( trace.HullTrace ) then return false end -- We hit the bounding box, not a specific bone (because of the hull trace)
 
 	local bone = trace.Entity:TranslatePhysBoneToBone( trace.PhysicsBone )
 	ScaleBone( trace.Entity, bone, scale or 1 )
