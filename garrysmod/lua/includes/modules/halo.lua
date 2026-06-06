@@ -9,6 +9,7 @@ local rt_Blur		= render.GetScreenEffectTexture( 1 )
 
 local List = {}
 local RenderEnt = NULL
+local flags = bit.band( STUDIO_RENDER, STUDIO_SKIP_DECALS )
 
 function Add( entities, color, blurx, blury, passes, add, ignorez )
 
@@ -73,7 +74,7 @@ function Render( entry )
 
 						RenderEnt = v
 
-						v:DrawModel()
+						v:DrawModel( flags )
 					end
 
 					RenderEnt = NULL
