@@ -123,14 +123,14 @@ end
 -----------------------------------------------------------]]
 function string.GetExtensionFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = path:byte(i)
+		local c = string.byte( path, i )
 
-		if c == 47 or c == 92 then -- / or \
+		if ( c == 47 or c == 92 ) then -- Slash
 			return nil
 		end
 
-		if c == 46 then -- .
-			return path:sub(i + 1)
+		if ( c == 46 ) then -- Point
+			return string.sub( path, i + 1 )
 		end
 	end
 
@@ -142,12 +142,12 @@ end
 -----------------------------------------------------------]]
 function string.StripExtension( path )
 	for i = #path, 1, -1 do
-		local c = path:byte(i)
+		local c = string.byte( path, i )
 
-		if c == 47 or c == 92 then -- / or \
+		if ( c == 47 or c == 92 ) then -- Slash
 			return path
-		elseif c == 46 then -- .
-			return path:sub(1, i - 1)
+		elseif ( c == 46 ) then -- Point
+			return string.sub( path, 1, i - 1 )
 		end
 	end
 
@@ -161,10 +161,10 @@ end
 -----------------------------------------------------------]]
 function string.GetPathFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = path:byte(i)
+		local c = string.byte( path, i )
 
-		if c == 47 or c == 92 then -- / or \
-			return path:sub(1, i)
+		if ( c == 47 or c == 92 ) then -- Slash
+			return string.sub( path, 1, i )
 		end
 	end
 
@@ -178,10 +178,10 @@ end
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = path:byte(i)
+		local c = string.byte( path, i )
 
-		if c == 47 or c == 92 then -- / or \
-			return path:sub(i + 1)
+		if ( c == 47 or c == 92 ) then -- Slash
+			return string.sub( path, i + 1 )
 		end
 	end
 
