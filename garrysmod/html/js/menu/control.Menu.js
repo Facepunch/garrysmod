@@ -290,13 +290,13 @@ function UpdateLanguages( lang )
 
 	for ( k in lang )
 	{
-		gScope.Languages.push( lang[k].substr( 0, lang[k].length - 4 ) )
+		gScope.Languages.push( lang[k].substr( 0, lang[k].length - 4 ).toLowerCase() )
 	}
 }
 
 function UpdateLanguage( lang )
 {
-	gScope.Language = lang;
+	gScope.Language = lang.toLowerCase();
 	gScope.$broadcast( "languagechanged" );
 	UpdateDigest( gScope, 50 );
 }
