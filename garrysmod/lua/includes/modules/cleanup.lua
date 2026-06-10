@@ -253,13 +253,13 @@ else
 
 	hook.Add( "PopulateToolMenu", "Cleanup_RegisterToolMenu", function()
 
-		spawnmenu.AddToolMenuOption("Utilities", "User", "User_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
+		spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
 			BuildPanel( pnl, "gmod_cleanup" )
-		end)
+		end )
 
-		spawnmenu.AddToolMenuOption("Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
+		spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
 			BuildPanel( pnl, "gmod_admin_cleanup" )
-		end)
+		end )
 
 	end )
 
