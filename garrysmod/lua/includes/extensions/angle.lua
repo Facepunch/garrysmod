@@ -17,3 +17,9 @@ function meta:SnapTo( component, degrees )
 	return self
 
 end
+
+function meta:Left()
+	local vec = self:Right()
+	vec:Mul( -1 )
+	return vec
+end
