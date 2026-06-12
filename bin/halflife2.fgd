@@ -3170,34 +3170,43 @@
 		4096: "Allow friendlies to hit player" : 0
 		32768: "Non-solid." : 0
 		131072: "Perfect accuracy every 3rd shot at player" : 0
+
+		// Episodic?
+		8192: "Ignore range when making viewcone checks" : 0
+		256 : "Aiming Assistance (Player Only)" : 0
 	]
 
 	control_volume(target_destination) : "Control Volume" : "" : "Name of a trigger the specifies the volume in which a player must be to control this tank."
 
 	// Mainly for use with 1009 team settings (game_team_master)
-	master(string) : "(Team) Master"
+	master(string) : "(Team) Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate. Avoid using this."
 
-	yawrate(string) : "Yaw rate" : "30"
-	yawrange(string) : "Yaw range" : "180"
-	yawtolerance(string) : "Yaw tolerance" : "15"
-	pitchrate(string) : "Pitch rate" : "0"
-	pitchrange(string) : "Pitch range" : "0"
-	pitchtolerance(string) : "Pitch tolerance" : "5"
-	barrel(string) : "Barrel Length" : "0"
-	barrely(string) : "Barrel Horizontal" : "0"
-	barrelz(string) : "Barrel Vertical" : "0"
-	spritesmoke(sprite) : "Smoke Sprite" : ""
-	spriteflash(sprite) : "Flash Sprite" : ""
-	spritescale(string) : "Sprite scale" : "1"
+	yawrate(string) : "Yaw rate" : "60" : "Horizontal aiming speed."
+	yawrange(string) : "Yaw range" : "180" : "Horizontal aiming range in both directions. (left/right)"
+	yawtolerance(string) : "Yaw tolerance" : "15" : "Horizontal aiming tolerance. How far the gun can exceed the aiming range before returning to to the maximum range."
+	pitchrate(string) : "Pitch rate" : "60" : "Vertical aiming speed."
+	pitchrange(string) : "Pitch range" : "0" : "Vertical aiming range in both directions. (up/down)"
+	pitchtolerance(string) : "Pitch tolerance" : "5" : "Vertical aiming tolerance. How far the gun can exceed the aiming range before returning to to the maximum range."
+
+	barrel(string) : "Barrel Length" : "0" : "Length of the gun barrel. Affects where sprites are placed if they are used."
+	barrely(string) : "Barrel Horizontal" : "0" : "Width of the gun barrel."
+	barrelz(string) : "Barrel Vertical" : "0" : "Height of the gun barrel."
+
+	spritesmoke(sprite) : "Smoke Sprite" : "" : "Muzzle smoke sprite. Will play its full animation if animated sprite is given."
+	spriteflash(sprite) : "Flash Sprite" : "" : "Muzzleflash texture."
+	spritescale(string) : "Sprite scale" : "1" : "Scale smoke and flash sprites."
+
 	rotatestartsound(sound) : "Rotate Start Sound" : ""
 	rotatesound(sound) : "Rotate Loop Sound" : ""
 	rotatestopsound(sound) : "Rotate Stop Sound" : ""
-	firerate(string) : "Rate of Fire" : "1"
+
+	firerate(string) : "Rate of Fire" : "1" : "How many shots per second?"
 	bullet_damage(string) : "Damage Per Bullet" : "0" : "If set to 0, it'll use the base weapon bullet's damage."
 	bullet_damage_vs_player(string) : "Damage Per Bullet Vs Player" : "0" : "If set to 0, it'll use the Damage Per Bullet value."
-	persistence(string) : "Firing persistence" : "1" : "(Seconds) How long to keep firing at last known position after lose sight of target"
-	persistence2(string) : "Firing persistence2" : "0" : "(Seconds) After lost enemy and persistence time has passed, how long to occasionally fire at enemy's last known position"
-	firespread(choices) : "Bullet accuracy" : 0 =
+
+	persistence(string) : "Firing persistence" : "1" : "(Seconds) How long to keep firing at last known position after lose sight of target. Not applicable for player controlled tanks."
+	persistence2(string) : "Firing persistence 2" : "0" : "(Seconds) After lost enemy and persistence time has passed, how long to occasionally fire at enemy's last known position. Not applicable for player controlled tanks."
+	firespread(choices) : "Bullet accuracy" : 0 : "How accurate each shot is?" =
 	[
 		0: "Perfect Shot"
 		1: "Small cone"
@@ -3205,8 +3214,8 @@
 		3: "Large cone"
 		4: "Extra-large cone"
 	]
-	minRange(string) : "Minmum target range" : "0"
-	maxRange(string) : "Maximum target range" : "0"
+	minRange(string) : "Minmum target range" : "0" : "Minimum range at which the automated turret can see enemies. Not applicable for player controlled tanks."
+	maxRange(string) : "Maximum target range" : "0" : "Maximum range at which the automated turret can see enemies. Not applicable for player controlled tanks."
 	_minlight(string) : "Minimum light level"
 
 	gun_base_attach(string) : "Gun Base Attachment" : "" : "If Parent is specified, this is the attachment point on the parent to aim from."
@@ -3218,7 +3227,7 @@
 
 	ammo_count(integer) : "Ammunition Count" : -1 : "Only applies to player use. -1 = unlimited ammo."
 
-	LeadTarget(choices) : "Lead Target" : "No" =
+	LeadTarget(choices) : "Lead Target" : "No" : "Should this turrent lead the target to try to hit it while it is moving? Not applicable for player controlled tanks." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -3226,12 +3235,12 @@
 
 	npc_man_point(target_destination) : "NPC Man Point" : "" : "Point where NPC must stand to man this func_tank."
 	playergraceperiod(float) : "Post-NPC Attack Grace Period" : "0" : "If specified, NPC's manning this func tank won't fire at the player, after firing at a non-player, for this amount of time."
-	ignoregraceupto(float) : "Ignore Grace Upto" : "768" : "The player grace period is ignored if the player's under this distance from the func_tank."
+	ignoregraceupto(float) : "Ignore Grace Up To" : "768" : "The player grace period is ignored if the player's under this distance from the func_tank."
 	playerlocktimebeforefire(float) : "Player Lock Time" : "0" : "The tank must have the player as a target for this amount of time before it's allowed to fire."
 
 	effecthandling(choices) : "Effect Handling" : 0 =
 	[
-		0 : "Use Individual Settings."
+		0 : "Use Individual Settings"
 		1 : "AR2"
 		2 : "Combine Cannon"
 	]
@@ -3264,31 +3273,17 @@
 	output OnReadyToFire(void) : "Fires once when the tank is done waiting to fire between rounds"
 ]
 
-
-// dvs: FIXME: put this back once we have an episodic FGD
-//@SolidClass base(BaseTank) = func_tank : "Brush Gun Turret"
-//[
-//	bullet(choices) : "Bullets" : 0 =
-//	[
-//		0: "None"
-//		1: "Pistol"
-//		2: "SMG1"
-//		3: "AR2"
-//		4: "Laser"
-//	]
-//
-//	spawnflags(flags) =
-//	[
-//		8192: "Ignore range when making viewcone checks" : 0
-//		256 : "Aiming Assistance (Player Only)" : 0
-//	]
-//]
-
-
-// dvs: FIXME: move into an episodic FGD
 @SolidClass base(BaseTank) = func_tank : "Brush Gun Turret"
 [
-	ammotype(choices) : "Ammo type" : "" =
+	bullet(choices) : "Bullets" : 0 : "What kind of bullet are we firing. If used None and Ammo Type is not set, will fire nothing, OnFire output is still executed." =
+	[
+		0: "None (Use Ammo Type)"
+		1: "Pistol"
+		2: "SMG1"
+		3: "AR2"
+		//4: "Laser" // GMOD: Not a thing
+	]
+	ammotype(choices) : "Ammo type" : "" : "Can be any in-game ammo name." =
 	[
 		"" : "None"
 		"Pistol" : "Pistol"
@@ -3297,11 +3292,12 @@
 		"CombineHeavyCannon" : "Combine Heavy Cannon"
 	]
 
-	spawnflags(flags) =
-	[
-		8192: "Ignore range when making viewcone checks" : 0
-		256 : "Aiming Assistance (Player Only)" : 0
-	]
+	// Applicable to all func_tank entities
+	//spawnflags(flags) =
+	//[
+	//	8192: "Ignore range when making viewcone checks" : 0
+	//	256 : "Aiming Assistance (Player Only)" : 0
+	//]
 ]
 
 

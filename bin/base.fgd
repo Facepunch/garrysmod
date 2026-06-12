@@ -164,7 +164,7 @@
 
 @BaseClass = RenderFxChoices
 [
-	renderfx(choices) :"Render FX" : 0 =
+	renderfx(choices) :"Render FX" : 0 : "Custom rendering effects." =
 	[
 		0: "Normal"
 		1: "Slow Pulse"
