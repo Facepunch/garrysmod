@@ -1,7 +1,7 @@
 
 var IS_SPAWN_MENU = true;
 
-App = angular.module( 'CSavesApp', [ 'ngRoute', 'tranny' ] );
+App = angular.module( 'CSavesApp', [ 'ngRoute', 'ngLocalize' ] );
 
 App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
