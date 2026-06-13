@@ -120,6 +120,10 @@ function PANEL:SetModel( mdl, iSkin, BodyGroups )
 
 end
 
+function PANEL:GetModel()
+	return self:GetModelName()
+end
+
 function PANEL:RebuildSpawnIcon()
 
 	self.Icon:RebuildSpawnIcon()
