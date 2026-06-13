@@ -400,7 +400,9 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 	if ( !NPCData ) then return NULL end
 
 	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) or game.SinglePlayer()
-	if ( NPCData.AdminOnly && !isAdmin ) then return NULL end
+	if ( NPCData.AdminOnly && !isAdmin ) then
+		if ( !IsValid( ply ) || !gamemode.Call( "PlayerSpawnNPCAdmin", ply, Class, Equipment ) ) then return NULL end
+	end
 
 	local bDropToFloor = false
 	local wasSpawnedOnCeiling = false
@@ -780,7 +782,9 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 		-- Is the entity spawnable?
 		local EntTable = list.GetEntry( "SpawnableEntities", EntityName )
 		if ( !EntTable ) then return false end
-		if ( EntTable.AdminOnly && !isAdmin ) then return false end
+		if ( EntTable.AdminOnly && !isAdmin ) then
+			if ( !IsValid( ply ) || !gamemode.Call( "PlayerSpawnSENTAdmin", ply, EntityName ) ) then return false end
+		end
 		return true
 
 	end
@@ -790,8 +794,9 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 	if ( !isfunction( SpawnFunction ) ) then return false end
 
 	-- You're not allowed to spawn this unless you're an admin!
-	if ( !scripted_ents.GetMember( EntityName, "Spawnable" ) && !isAdmin ) then return false end
-	if ( scripted_ents.GetMember( EntityName, "AdminOnly" ) && !isAdmin ) then return false end
+	if ( ( !scripted_ents.GetMember( EntityName, "Spawnable" ) || scripted_ents.GetMember( EntityName, "AdminOnly" ) ) && !isAdmin ) then
+		if ( !IsValid( ply ) || !gamemode.Call( "PlayerSpawnSENTAdmin", ply, EntityName ) ) then return false end
+	end
 
 	return true
 
@@ -933,8 +938,8 @@ function CCGiveSWEP( ply, command, arguments )
 
 	-- You're not allowed to spawn this!
 	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
-	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
-		return
+	if ( ( !swep.Spawnable || swep.AdminOnly ) && !isAdmin ) then
+		if ( !gamemode.Call( "PlayerGiveSWEPAdmin", ply, arguments[1], swep ) ) then return end
 	end
 
 	if ( !gamemode.Call( "PlayerGiveSWEP", ply, arguments[1], swep ) ) then return end
@@ -969,14 +974,10 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	-- You're not allowed to spawn this!
 	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
-	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
-		return
-	end
-
-	-- Do not allow spawning weapons with no model
+	-- Do not allow spawning weapons with no model (for non-admins)
 	local swepTable = weapons.Get( swep.ClassName )
-	if ( swepTable && swepTable.WorldModel == "" && !isAdmin ) then
-		return
+	if ( ( !swep.Spawnable || swep.AdminOnly || ( swepTable && swepTable.WorldModel == "" ) ) && !isAdmin ) then
+		if ( !gamemode.Call( "PlayerSpawnSWEPAdmin", ply, wepname, swep ) ) then return end
 	end
 
 	if ( !gamemode.Call( "PlayerSpawnSWEP", ply, wepname, swep ) ) then return end
