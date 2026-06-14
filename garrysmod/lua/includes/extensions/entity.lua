@@ -82,6 +82,16 @@ if ( SERVER ) then
 		return self.m_PlayerCreator or NULL
 	end
 
+	local DEFAULT_USE_DISTANCE = 72
+
+	function meta:SetUseDistance( dist )
+		self.m_fUseDistance = dist
+	end
+
+	function meta:GetUseDistance()
+		return self.m_fUseDistance or DEFAULT_USE_DISTANCE
+	end
+
 end
 
 --[[---------------------------------------------------------

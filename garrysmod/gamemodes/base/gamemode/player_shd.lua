@@ -107,12 +107,18 @@ function GM:FindUseEntity( ply, ent )
 
 	-- Simple fix to allow entities inside playerclip brushes to be used. Necessary for c1a0c map in Half-Life: Source 
 	if ( !IsValid( ent ) ) then
-		local traceEnt = util.TraceLine( {
+		local tr = util.TraceLine( {
 			start = ply:GetShootPos(),
-			endpos = ply:GetShootPos() + ply:GetAimVector() * 72,
+			endpos = ply:GetShootPos() + ply:GetAimVector() * 4096,
 			filter = ply
-		} ).Entity
-		if ( IsValid( traceEnt ) ) then return traceEnt end
+		} )
+
+		local traceEnt = tr.Entity
+
+		if ( IsValid( traceEnt ) && tr.StartPos:Distance(tr.HitPos) <= traceEnt:GetUseDistance() ) then
+			return traceEnt
+		end
+
 	end
 
 	return ent
