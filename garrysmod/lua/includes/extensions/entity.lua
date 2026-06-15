@@ -30,6 +30,18 @@ function meta:GetLeft()
 	return vec
 end
 
+function meta:GetBackward()
+	local vec = self:GetForward()
+	vec:Mul( -1 )
+	return vec
+end
+
+function meta:GetDown()
+	local vec = self:GetUp()
+	vec:Mul( -1 )
+	return vec
+end
+
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
 --

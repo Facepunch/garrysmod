@@ -23,3 +23,15 @@ function meta:Left()
 	vec:Mul( -1 )
 	return vec
 end
+
+function meta:Backward()
+	local vec = self:Forward()
+	vec:Mul( -1 )
+	return vec
+end
+
+function meta:Down()
+	local vec = self:Up()
+	vec:Mul( -1 )
+	return vec
+end
