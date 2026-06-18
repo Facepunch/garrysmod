@@ -334,6 +334,7 @@ end
 -- Simple client-based idle checking
 local ttt_idle_limit = CreateConVar("ttt_idle_limit", "180", FCVAR_REPLICATED)
 local idle = {ang = nil, pos = nil, mx = 0, my = 0, t = 0}
+local distanceMax = 100
 function CheckIdle()
    local client = LocalPlayer()
    if not IsValid(client) then return end
@@ -363,7 +364,7 @@ function CheckIdle()
          idle.mx = gui.MouseX()
          idle.my = gui.MouseY()
          idle.t = CurTime()
-      elseif client:GetPos():Distance(idle.pos) > 10 then
+      elseif client:GetPos():DistToSqr(idle.pos) > distanceMax then
          -- Even if players don't move their mouse, they might still walk
          idle.pos = client:GetPos()
          idle.t = CurTime()
