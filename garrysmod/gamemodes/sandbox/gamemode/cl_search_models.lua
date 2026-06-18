@@ -113,38 +113,27 @@ local function AddSearchProvider( listname, ctype, stype )
 	search.AddProvider( function( str )
 
 		local results = {}
-		local entities = {}
-
-		for k, v in pairs( list.Get( listname ) ) do
+		for name_c, v in pairs( list.Get( listname ) ) do
 			if ( !istable( v ) ) then continue end -- Some mod doing something wrong
 			if ( listname == "Weapon" and !v.Spawnable ) then continue end
 
-			v.ClassName = k
-			v.PrintName = v.PrintName or v.Name
-			v.ScriptedEntityType = ctype
-			table.insert( entities, v )
-		end
-
-		for k, v in ipairs( entities ) do
-
-			local name = v.PrintName
-			local name_c = v.ClassName
+			local name = language.GetPhrase(v.PrintName or v.Name)
 			if ( !isstring( name ) and !isstring( name_c ) ) then continue end
 
 			if ( ( isstring( name ) and name:lower():find( str, nil, true ) ) or ( isstring( name_c ) and name_c:lower():find( str, nil, true ) ) ) then
 
 				local contentIconData = {
-					nicename = v.PrintName or v.ClassName,
-					spawnname = v.ClassName,
-					material = "entities/" .. v.ClassName .. ".png",
+					nicename = name or name_c,
+					spawnname = name_c,
+					material = "entities/" .. name_c .. ".png",
 					admin = v.AdminOnly
 				}
 
 				if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
 
 				local entry = {
-					text = v.PrintName or v.ClassName,
-					icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, contentIconData ),
+					text = name or name_c,
+					icon = spawnmenu.CreateContentIcon( ctype or "entity", nil, contentIconData ),
 					words = { v }
 				}
 
