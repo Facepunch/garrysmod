@@ -204,40 +204,47 @@ function FireProblemFromEngine( id, severity, params )
 	end
 end
 
+local mat_hdr_level = GetConVar( "mat_hdr_level" )
+local mat_bumpmap = GetConVar( "mat_bumpmap" )
+local mat_specular = GetConVar( "mat_specular" )
+local gmod_mcore_test = GetConVar( "gmod_mcore_test" )
+local voice_fadeouttime = GetConVar( "voice_fadeouttime" )
+local mat_viewportscale = GetConVar( "mat_viewportscale" )
+local cl_forwardspeed, cl_sidespeed, cl_backspeed = GetConVar( "cl_forwardspeed" ), GetConVar( "cl_sidespeed" ), GetConVar( "cl_backspeed" )
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
-	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
-		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end, severity = 1 } )
+	if ( math.floor( mat_hdr_level:GetInt() ) != 2 ) then
+		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() mat_hdr_level:SetInt(2) end, severity = 1 } )
 	else
 		ClearProblem( "mat_hdr_level" )
 	end
 
-	if ( math.floor( math.abs( GetConVarNumber( "mat_bumpmap" ) ) ) == 0 ) then
-		FireProblem( { id = "mat_bumpmap", text = "#problem.mat_bumpmap", type = "config", fix = function() RunConsoleCommand( "mat_bumpmap", "1" ) end } )
+	if ( math.floor( math.abs( mat_bumpmap:GetInt() ) ) == 0 ) then
+		FireProblem( { id = "mat_bumpmap", text = "#problem.mat_bumpmap", type = "config", fix = function() mat_bumpmap:SetInt(1) end } )
 	else
 		ClearProblem( "mat_bumpmap" )
 	end
 
-	if ( math.floor( math.abs( GetConVarNumber( "mat_specular" ) ) ) == 0 ) then
-		FireProblem( { id = "mat_specular", text = "#problem.mat_specular", type = "config", fix = function() RunConsoleCommand( "mat_specular", "1" ) end } )
+	if ( math.floor( math.abs( mat_specular:GetInt() ) ) == 0 ) then
+		FireProblem( { id = "mat_specular", text = "#problem.mat_specular", type = "config", fix = function() mat_specular:SetInt(1) end } )
 	else
 		ClearProblem( "mat_specular" )
 	end
 
-	if ( math.floor( math.abs( GetConVarNumber( "gmod_mcore_test" ) ) ) != 0 ) then
+	if ( math.floor( math.abs( gmod_mcore_test:GetInt() ) ) != 0 ) then
 		FireProblem( { id = "gmod_mcore_test", text = "#problem.gmod_mcore_test", type = "config" } )
 	else
 		ClearProblem( "gmod_mcore_test" )
 	end
 
-	if ( math.abs( GetConVarNumber( "voice_fadeouttime" ) - 0.1 ) > 0.001 ) then
-		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) ClearProblem( "voice_fadeouttime" ) end } )
+	if ( math.abs( voice_fadeouttime:GetFloat() - 0.1 ) > 0.001 ) then
+		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() voice_fadeouttime:SetFloat(0.1) ClearProblem( "voice_fadeouttime" ) end } )
 	else
 		ClearProblem( "voice_fadeouttime" )
 	end
 
-	if ( GetConVarNumber( "mat_viewportscale" ) < 0.1 ) then
-		FireProblem( { id = "mat_viewportscale", text = "#problem.mat_viewportscale", type = "config", fix = function() RunConsoleCommand( "mat_viewportscale", "1" ) ClearProblem( "mat_viewportscale" ) end } )
+	if ( mat_viewportscale:GetFloat() < 0.1 ) then
+		FireProblem( { id = "mat_viewportscale", text = "#problem.mat_viewportscale", type = "config", fix = function() mat_viewportscale:SetFloat(1) ClearProblem( "mat_viewportscale" ) end } )
 	else
 		ClearProblem( "mat_viewportscale" )
 	end
@@ -249,11 +256,11 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	-- These are not saved, but still affect gameplay
-	if ( GetConVarNumber( "cl_forwardspeed" ) != 10000 or GetConVarNumber( "cl_sidespeed" ) != 10000 or GetConVarNumber( "cl_backspeed" ) != 10000 ) then
+	if ( cl_forwardspeed:GetInt() != 10000 or cl_sidespeed:GetInt() != 10000 or cl_backspeed:GetInt() != 10000 ) then
 		FireProblem( { id = "cl_speeds", text = "#problem.cl_speeds", type = "config", fix = function()
-			RunConsoleCommand( "cl_forwardspeed", "10000" )
-			RunConsoleCommand( "cl_sidespeed", "10000" )
-			RunConsoleCommand( "cl_backspeed", "10000" )
+			cl_forwardspeed:SetInt(10000)
+			cl_sidespeed:SetInt(10000)
+			cl_backspeed:SetInt(10000)
 		end } )
 	else
 		ClearProblem( "cl_speeds" )

@@ -11,9 +11,10 @@ end
    Name: gamemode:CanPlayerUnfreeze( )
    Desc: Can the player unfreeze this entity & physobject
 -----------------------------------------------------------]]
+local sbox_persist = GetConVar( "sbox_persist" )
 function GM:CanPlayerUnfreeze( ply, entity, physobject )
 
-	if ( entity:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
+	if ( entity:GetPersistent() && sbox_persist:GetString():Trim() != "" ) then return false end
 
 	return true
 end

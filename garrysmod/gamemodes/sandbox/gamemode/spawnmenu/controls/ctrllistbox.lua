@@ -39,7 +39,7 @@ function PANEL:ConVarsChanged()
 	for k, v in pairs( self.ConVars ) do
 
 		if ( self[ k ] == nil ) then return true end
-		if ( self[ k ] != GetConVarString( k ) ) then return true end
+		if ( self[ k ] != cvars.String( k ) ) then return true end
 
 	end
 
@@ -47,13 +47,13 @@ function PANEL:ConVarsChanged()
 
 end
 
-function PANEL:CheckForMatch( cvars )
+function PANEL:CheckForMatch( conVars )
 
-	if ( table.IsEmpty( cvars ) ) then return false end
+	if ( table.IsEmpty( conVars ) ) then return false end
 
-	for k, v in pairs( cvars ) do
+	for k, v in pairs( conVars ) do
 
-		if ( tostring(v) != GetConVarString( k ) ) then
+		if ( tostring(v) != cvars.String( k ) ) then
 			return false
 		end
 
@@ -68,7 +68,7 @@ function PANEL:CheckConVarChanges()
 	if (!self:ConVarsChanged()) then return end
 
 	for k, v in pairs( self.ConVars ) do
-		self[ k ] = GetConVarString( k )
+		self[ k ] = cvars.String( k )
 	end
 
 	for k, v in pairs( self.Data ) do

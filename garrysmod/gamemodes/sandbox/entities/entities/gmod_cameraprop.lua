@@ -212,9 +212,10 @@ function ENT:CanTool( ply, trace, mode, tool, click )
 
 end
 
+local cl_drawcameras = GetConVar( "cl_drawcameras" )
 function ENT:Draw( flags )
 
-	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
+	if ( !cl_drawcameras:GetBool() ) then return end
 
 	-- Don't draw the camera if we're taking pics
 	local wep = LocalPlayer():GetActiveWeapon()

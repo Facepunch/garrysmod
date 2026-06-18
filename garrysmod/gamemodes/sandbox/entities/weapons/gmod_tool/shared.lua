@@ -175,6 +175,7 @@ function SWEP:Think()
 end
 
 -- The shoot effect
+local gmod_drawtooleffects = GetConVar( "gmod_drawtooleffects" )
 function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePredicted )
 
 	local owner = self:GetOwner()
@@ -187,7 +188,7 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 	owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
 
 	if ( !bFirstTimePredicted ) then return end
-	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+	if ( !gmod_drawtooleffects:GetBool() ) then return end
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( hitpos )

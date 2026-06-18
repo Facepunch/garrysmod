@@ -442,9 +442,10 @@ end
 local FacePoser = surface.GetTextureID( "gui/faceposer_indicator" )
 
 -- Draw a box indicating the face we have selected
+local gmod_drawtooleffects = GetConVar( "gmod_drawtooleffects" )
 function TOOL:DrawHUD()
 
-	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+	if ( !gmod_drawtooleffects:GetBool() ) then return end
 
 	local selected = self:FacePoserEntity()
 

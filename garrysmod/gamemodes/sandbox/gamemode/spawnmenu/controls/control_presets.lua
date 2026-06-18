@@ -72,7 +72,7 @@ end
 function PANEL:QuickSaveInternal( text )
 	local tabValues = {}
 	for k, v in pairs( self:GetConVars() ) do
-		tabValues[ v ] = GetConVarString( v )
+		tabValues[ v ] = cvars.String( v )
 	end
 
 	presets.Add( self.m_strPreset, text, tabValues )

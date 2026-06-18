@@ -98,6 +98,7 @@ function PANEL:SetSearchType( stype, hookname )
 	end )
 end
 
+local sbox_search_maxresults = GetConVar( "sbox_search_maxresults" )
 function PANEL:RefreshResults( str )
 
 	if ( !str ) then -- User tried to search for something
@@ -113,7 +114,7 @@ function PANEL:RefreshResults( str )
 
 	if ( !str or str == "" ) then return end
 
-	local results = search.GetResults( str, self.m_strSearchType, GetConVarNumber( "sbox_search_maxresults" ) )
+	local results = search.GetResults( str, self.m_strSearchType, sbox_search_maxresults:GetInt() )
 	for id, result in ipairs( results ) do
 		if ( !IsValid( result.icon ) ) then ErrorNoHalt( "Failed to create icon for " .. ( result.words && isstring( result.words[ 1 ] ) && result.words[ 1 ] || result.text ).. "\n" ) continue end
 		result.icon:SetParent( vgui.GetWorldPanel() ) -- Don't parent the icons to search panel prematurely

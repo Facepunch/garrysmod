@@ -23,7 +23,7 @@ function PANEL:Think()
 	if ( !self.m_strConVar ) then return end
 	if ( self._NextThink > RealTime() ) then return end
 
-	local strValue = GetConVarString( self.m_strConVar )
+	local strValue = cvars.String( self.m_strConVar )
 
 	self:SetChecked( strValue == self.m_strValueOn )
 

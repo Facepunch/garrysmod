@@ -74,9 +74,10 @@ function ENT:Draw( flags )
 
 end
 
+local cl_draweffectrings = GetConVar( "cl_draweffectrings" )
 function ENT:DrawTranslucent( flags )
 
-	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
+	if ( cl_draweffectrings:GetInt() == 0 ) then return end
 
 	-- Don't draw the grip if there's no chance of us picking it up
 	local wep = LocalPlayer():GetActiveWeapon()

@@ -102,6 +102,7 @@ if ( CLIENT ) then
 	end
 end
 
+local cl_drawthrusterseffects = GetConVar( "cl_drawthrusterseffects" )
 function ENT:Think()
 
 	BaseClass.Think( self )
@@ -113,7 +114,7 @@ function ENT:Think()
 
 	if ( CLIENT ) then
 
-		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) != 0
+		self.ShouldDraw = cl_drawthrusterseffects:GetBool()
 
 		if ( !self:IsOn() ) then self.OnStart = nil return end
 		self.OnStart = self.OnStart or CurTime()

@@ -60,7 +60,7 @@ function ToolObj:GetServerInfo( property )
 		return self.ServerConVars[ property ]:GetString()
 	end
 
-	return GetConVarString( self:GetMode() .. "_" .. property )
+	return cvars.String( self:GetMode() .. "_" .. property )
 
 end
 
@@ -201,6 +201,7 @@ end )
 --
 -- Search
 --
+local sbox_search_maxresults = GetConVar( "sbox_search_maxresults" )
 search.AddProvider( function( str )
 
 	local list = {}
@@ -223,7 +224,7 @@ search.AddProvider( function( str )
 
 		table.insert( list, entry )
 
-		if ( #list >= GetConVarNumber( "sbox_search_maxresults" ) / 32 ) then break end
+		if ( #list >= sbox_search_maxresults:GetInt() / 32 ) then break end
 
 	end
 

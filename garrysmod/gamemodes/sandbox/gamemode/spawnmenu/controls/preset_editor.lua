@@ -228,7 +228,7 @@ function PANEL:InternalAdd( ToName )
 
 	local tabValues = {}
 	for k, v in pairs( self:GetConVars() ) do
-		tabValues[ v ] = GetConVarString( v:lower() )
+		tabValues[ v ] = cvars.String( v:lower() )
 	end
 
 	presets.Add( self:GetType(), ToName, tabValues )

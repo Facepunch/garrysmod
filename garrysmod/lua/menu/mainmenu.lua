@@ -221,13 +221,14 @@ end
 --
 -- Called from JS when starting a new game
 --
+local hostname, sv_lan, p2p_enabled, p2p_friendsonly = GetConVar("hostname"), GetConVar("sv_lan"), GetConVar("p2p_enabled"), GetConVar("p2p_friendsonly")
 function UpdateServerSettings()
 
 	local array = {
-		hostname = GetConVarString( "hostname" ),
-		sv_lan = GetConVarString( "sv_lan" ),
-		p2p_enabled = GetConVarString( "p2p_enabled" ),
-		p2p_friendsonly = GetConVarString( "p2p_friendsonly" )
+		hostname = hostname:GetString(),
+		sv_lan = sv_lan:GetString(),
+		p2p_enabled = p2p_enabled:GetString(),
+		p2p_friendsonly = p2p_friendsonly:GetString()
 	}
 
 	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
@@ -667,12 +668,13 @@ end )
 --
 -- Initialize
 --
+local gmod_language = GetConVar( "gmod_language" )
 timer.Simple( 0, function()
 
 	pnlMainMenu = vgui.Create( "MainMenuPanel" )
 	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR:JavascriptSafe() .. "', '" .. NETVERSIONSTR:JavascriptSafe() .. "', '" .. BRANCH:JavascriptSafe() .. "' )" )
 
-	local lang = GetConVarString( "gmod_language" )
+	local lang = gmod_language:GetString()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )

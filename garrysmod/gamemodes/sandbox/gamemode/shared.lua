@@ -112,10 +112,11 @@ end
    Name: gamemode:PhysgunPickup( )
    Desc: Return true if player can pickup entity
 -----------------------------------------------------------]]
+local sbox_persist = GetConVar( "sbox_persist" )
 function GM:PhysgunPickup( ply, ent )
 
 	-- Don't pick up persistent props
-	if ( ent:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
+	if ( ent:GetPersistent() && sbox_persist:GetString():Trim() != "" ) then return false end
 
 	if ( ent:IsValid() && ent.PhysgunPickup ) then
 		return ent:PhysgunPickup( ply )
@@ -182,6 +183,7 @@ end
    Desc: Player pressed the noclip key, return true if
 		  the player is allowed to noclip, false to block
 -----------------------------------------------------------]]
+local sbox_noclip = GetConVar( "sbox_noclip" )
 function GM:PlayerNoClip( pl, on )
 
 	-- Don't allow if player is in vehicle
@@ -190,7 +192,7 @@ function GM:PlayerNoClip( pl, on )
 	-- Always allow to turn off noclip, and in single player
 	if ( !on || game.SinglePlayer() ) then return true end
 
-	return GetConVarNumber( "sbox_noclip" ) > 0
+	return sbox_noclip:GetInt() > 0
 
 end
 
@@ -198,6 +200,9 @@ end
    Name: gamemode:CanProperty( pl, property, ent )
    Desc: Can the player do this property, to this entity?
 -----------------------------------------------------------]]
+local sbox_bonemanip_npc = GetConVar( "sbox_bonemanip_npc" )
+local sbox_bonemanip_player = GetConVar( "sbox_bonemanip_player" )
+local sbox_bonemanip_misc = GetConVar( "sbox_bonemanip_misc" )
 function GM:CanProperty( pl, property, ent )
 
 	--
@@ -228,10 +233,10 @@ function GM:CanProperty( pl, property, ent )
 
 		if ( game.SinglePlayer() ) then return true end
 
-		if ( ent:IsNPC() ) then return GetConVarNumber( "sbox_bonemanip_npc" ) != 0 end
-		if ( ent:IsPlayer() ) then return GetConVarNumber( "sbox_bonemanip_player" ) != 0 end
+		if ( ent:IsNPC() ) then return sbox_bonemanip_npc:GetBool() end
+		if ( ent:IsPlayer() ) then return sbox_bonemanip_player:GetBool() end
 
-		return GetConVarNumber( "sbox_bonemanip_misc" ) != 0
+		return sbox_bonemanip_misc:GetBool()
 
 	end
 

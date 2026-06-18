@@ -2,6 +2,9 @@
 if ( SERVER ) then AddCSLuaFile() return end
 
 local default_animations = { "idle_all_01", "menu_walk" }
+local cl_playerskin = GetConVar( "cl_playerskin" )
+local cl_playerbodygroups = GetConVar( "cl_playerbodygroups" )
+local cl_weaponcolor = GetConVar( "cl_weaponcolor" )
 
 list.Set( "DesktopWindows", "PlayerEditor", {
 
@@ -102,7 +105,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
 		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
-		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
+		wepcol:SetVector( Vector( cl_weaponcolor:GetString() ) )
 
 		sheet:AddSheet( "#smwidget.colors", controls, "icon16/color_wheel.png" )
 
@@ -138,7 +141,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				mdl.Entity:SetBodygroup( pnl.typenum, math.Round( val ) )
 
-				local str = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+				local str = string.Explode( " ", cl_playerbodygroups:GetString() )
 				if ( #str < pnl.typenum + 1 ) then for i = 1, pnl.typenum + 1 do str[ i ] = str[ i ] or 0 end end
 				str[ pnl.typenum + 1 ] = math.Round( val )
 				RunConsoleCommand( "cl_playerbodygroups", table.concat( str, " " ) )
@@ -146,7 +149,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			elseif ( pnl.type == "skin" ) then
 
 				mdl.Entity:SetSkin( math.Round( val ) )
-				RunConsoleCommand( "cl_playerskin", math.Round( val ) )
+				--RunConsoleCommand( "cl_playerskin", math.Round( val ) )
+				cl_playerskin:SetInt( math.Round( val ) )
 
 			end
 		end
@@ -165,18 +169,18 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				skins:SetTall( 50 )
 				skins:SetDecimals( 0 )
 				skins:SetMax( nskins )
-				skins:SetValue( GetConVarNumber( "cl_playerskin" ) )
+				skins:SetValue( cl_playerskin:GetFloat() )
 				skins.type = "skin"
 				skins.OnValueChanged = UpdateBodyGroups
 
 				bdcontrolspanel:AddItem( skins )
 
-				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
+				mdl.Entity:SetSkin( cl_playerskin:GetFloat() )
 
 				bgtab.Tab:SetVisible( true )
 			end
 
-			local groups = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+			local groups = string.Explode( " ", cl_playerbodygroups:GetString() )
 			for k = 0, mdl.Entity:GetNumBodyGroups() - 1 do
 				if ( mdl.Entity:GetBodygroupCount( k ) <= 1 ) then continue end
 
@@ -210,11 +214,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			local modelname = player_manager.TranslatePlayerModel( model )
 			util.PrecacheModel( modelname )
 			mdl:SetModel( modelname )
-			mdl.Entity.GetPlayerColor = function() return Vector( GetConVarString( "cl_playercolor" ) ) end
+			mdl.Entity.GetPlayerColor = function() return Vector( cl_playercolor:GetString() ) end
 			mdl.Entity:SetPos( Vector( -100, 0, -61 ) )
 
-			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) )
-			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
+			plycol:SetVector( Vector( cl_playercolor:GetString() ) )
+			wepcol:SetVector( Vector( cl_weaponcolor:GetString() ) )
 
 			PlayPreviewAnimation( mdl, model )
 			RebuildBodygroupTab()
@@ -223,8 +227,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local function UpdateFromControls()
 
-			RunConsoleCommand( "cl_playercolor", tostring( plycol:GetVector() ) )
-			RunConsoleCommand( "cl_weaponcolor", tostring( wepcol:GetVector() ) )
+			cl_playercolor:SetString( tostring( plycol:GetVector() ) )
+			cl_weaponcolor:SetString( tostring( wepcol:GetVector() ) )
 
 		end
 
@@ -236,8 +240,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		function PanelSelect:OnActivePanelChanged( old, new )
 
 			if ( old != new ) then -- Only reset if we changed the model
-				RunConsoleCommand( "cl_playerbodygroups", "0" )
-				RunConsoleCommand( "cl_playerskin", "0" )
+				cl_playerbodygroups:SetString( "0" )
+				cl_playerskin:SetInt( 0 )
 			end
 
 			timer.Simple( 0.1, function() UpdateFromConvars() end )

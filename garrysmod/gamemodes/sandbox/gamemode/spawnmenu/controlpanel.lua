@@ -392,7 +392,7 @@ function PANEL:AddControl( control, data )
 					-- This is kind of broken because it only checks one convar
 					-- instead of all of them. But this is legacy. It will do for now.
 					for k, v in pairs( line.data ) do
-						if ( GetConVarString( k ) == tostring( v ) ) then
+						if ( cvars.String( k ) == tostring( v ) ) then
 							line:SetSelected( true )
 						end
 					end

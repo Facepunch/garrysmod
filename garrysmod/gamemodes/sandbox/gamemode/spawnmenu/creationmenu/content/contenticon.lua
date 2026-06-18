@@ -115,6 +115,7 @@ local function DrawTextShadow( text, x, y )
 	draw.SimpleText( text, "DermaDefault", x, y, color_white )
 end
 
+local gmod_npcweapon = GetConVar( "gmod_npcweapon" )
 function PANEL:Paint( w, h )
 
 	if ( self.Depressed && !self.Dragging ) then
@@ -164,7 +165,7 @@ function PANEL:Paint( w, h )
 	if ( self:GetIsNPCWeapon() ) then
 		surface.SetMaterial( matOverlay_NPCWeapon )
 
-		if ( self:GetSpawnName() == GetConVarString( "gmod_npcweapon" ) ) then
+		if ( self:GetSpawnName() == gmod_npcweapon:GetString() ) then
 			surface.SetMaterial( matOverlay_NPCWeaponSelected )
 		end
 
@@ -523,7 +524,7 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 
 		if ( self:GetIsNPCWeapon() ) then
 			local opt = menu:AddOption( "#spawnmenu.menu.use_as_npc_gun", function() RunConsoleCommand( "gmod_npcweapon", self:GetSpawnName() ) end )
-			if ( self:GetSpawnName() == GetConVarString( "gmod_npcweapon" ) ) then
+			if ( self:GetSpawnName() == gmod_npcweapon:GetString() ) then
 				opt:SetIcon( "icon16/monkey_tick.png" )
 			else
 				opt:SetIcon( "icon16/monkey.png" )

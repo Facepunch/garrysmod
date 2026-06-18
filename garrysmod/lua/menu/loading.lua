@@ -87,16 +87,17 @@ function PANEL:OnScreenSizeChanged( oldW, oldH, newW, newH )
 
 end
 
+local host_map, hostname, cv_gamemode = GetConVar("host_map"), GetConVar("hostname"), GetConVar("gamemode")
 function PANEL:Think()
 
 	self:CheckForStatusChanges()
 	self:CheckDownloadTables()
 
 	if ( !self.CheckedSingleplayer && IsHostingGame() ) then
-		local map = GetConVarString( "host_map" )
+		local map = host_map:GetString()
 		map = string.StripExtension( map )
 
-		GameDetails( GetConVarString( "hostname" ), "127.0.0.1", map, 1, 1, "", GetConVarString( "gamemode" ) )
+		GameDetails( hostname:GetString(), "127.0.0.1", map, 1, 1, "", cv_gamemode:GetString() )
 		self.CheckedSingleplayer = true
 	end
 
@@ -232,6 +233,8 @@ function IsInLoading()
 
 end
 
+local snd_musicvolume = GetConVar( "snd_musicvolume" )
+local gmod_language = GetConVar( "gmod_language" )
 function GameDetails( servername, serverurl, mapname, maxplayers, maxplayers_visible, steamid, gamemode )
 
 	if ( engine.IsPlayingDemo() ) then return end
@@ -254,6 +257,6 @@ function GameDetails( servername, serverurl, mapname, maxplayers, maxplayers_vis
 
 	pnlLoading.JavascriptRun = string.format( [[if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );]],
 		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers_visible, steamid:JavascriptSafe(), gamemode:JavascriptSafe(),
-		GetConVarNumber( "snd_musicvolume" ), GetConVarString( "gmod_language" ):JavascriptSafe(), niceGamemode:JavascriptSafe() )
+		snd_musicvolume:GetFloat(), gmod_language:GetString():JavascriptSafe(), niceGamemode:JavascriptSafe() )
 
 end

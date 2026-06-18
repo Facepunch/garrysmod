@@ -608,9 +608,10 @@ end
 local FacePoser = surface.GetTextureID( "gui/faceposer_indicator" )
 
 -- Draw a circle around the selected hand
+local gmod_drawtooleffects = CreateClientConVar( "gmod_drawtooleffects", "1", true, false )
 function TOOL:DrawHUD()
 
-	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+	if ( !gmod_drawtooleffects:GetBool() ) then return end
 
 	local selected = self:HandEntity()
 	local hand = self:HandNum()

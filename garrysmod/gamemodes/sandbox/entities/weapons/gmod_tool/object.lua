@@ -158,8 +158,9 @@ end
 
 
 -- Returns the number of objects in the list
+local gmod_toolmode = GetConVar( "gmod_toolmode" )
 function ToolObj:GetHelpText()
 
-	return "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. self:GetStage()
+	return "#tool." .. gmod_toolmode:GetString() .. "." .. self:GetStage()
 
 end

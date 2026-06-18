@@ -46,10 +46,11 @@ end
 	Name: gamemode:OnPhysgunFreeze( weapon, phys, ent, player )
 	Desc: The physgun wants to freeze a prop
 -----------------------------------------------------------]]
+local sbox_persist = GetConVar( "sbox_persist" )
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
 	-- Don't freeze persistent props (should already be frozen)
-	if ( ent:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
+	if ( ent:GetPersistent() && sbox_persist:GetString():Trim() != "" ) then return false end
 
 	BaseClass.OnPhysgunFreeze( self, weapon, phys, ent, ply )
 
