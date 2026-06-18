@@ -117,10 +117,11 @@ local function AddSearchProvider( listname, ctype, stype )
 			if ( !istable( v ) ) then continue end -- Some mod doing something wrong
 			if ( listname == "Weapon" and !v.Spawnable ) then continue end
 
-			local name = language.GetPhrase(v.PrintName or v.Name)
+			local name = v.PrintName or v.Name
+			local name_language = language.GetPhrase( name )
 			if ( !isstring( name ) and !isstring( name_c ) ) then continue end
 
-			if ( ( isstring( name ) and name:lower():find( str, nil, true ) ) or ( isstring( name_c ) and name_c:lower():find( str, nil, true ) ) ) then
+			if ( ( isstring( name_language ) and name_language:lower():find( str, nil, true ) ) or ( isstring( name_c ) and name_c:lower():find( str, nil, true ) ) ) then
 
 				local contentIconData = {
 					nicename = name or name_c,
