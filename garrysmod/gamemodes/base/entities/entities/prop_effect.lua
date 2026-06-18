@@ -1,8 +1,9 @@
 
 AddCSLuaFile()
 
+local cl_draweffectrings
 if ( CLIENT ) then
-	CreateConVar( "cl_draweffectrings", "1", 0, "Should the green effect rings be visible?" )
+	cl_draweffectrings = CreateConVar( "cl_draweffectrings", "1", 0, "Should the green effect rings be visible?" )
 end
 
 ENT.Type = "anim"
@@ -74,10 +75,9 @@ function ENT:Draw( flags )
 
 end
 
-local cl_draweffectrings = GetConVar( "cl_draweffectrings" )
 function ENT:DrawTranslucent( flags )
 
-	if ( cl_draweffectrings:GetInt() == 0 ) then return end
+	if ( !cl_draweffectrings:GetBool() ) then return end
 
 	-- Don't draw the grip if there's no chance of us picking it up
 	local wep = LocalPlayer():GetActiveWeapon()
