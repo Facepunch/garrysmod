@@ -115,7 +115,7 @@ local function DrawTextShadow( text, x, y )
 	draw.SimpleText( text, "DermaDefault", x, y, color_white )
 end
 
-local gmod_npcweapon = GetConVar( "gmod_npcweapon" )
+local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE, FCVAR_USERINFO }, "Overrides the weapon all spawnmenu NPCs will spawn with. Set to \"\" to not override." )
 function PANEL:Paint( w, h )
 
 	if ( self.Depressed && !self.Dragging ) then
@@ -352,8 +352,6 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	return icon
 
 end )
-
-local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE, FCVAR_USERINFO }, "Overrides the weapon all spawnmenu NPCs will spawn with. Set to \"\" to not override." )
 
 spawnmenu.AddContentType( "npc", function( container, obj )
 
