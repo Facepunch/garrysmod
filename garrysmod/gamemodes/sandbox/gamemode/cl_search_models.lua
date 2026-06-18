@@ -118,8 +118,8 @@ local function AddSearchProvider( listname, ctype, stype )
 			if ( listname == "Weapon" and !v.Spawnable ) then continue end
 
 			local name = v.PrintName or v.Name
-			local name_language = language.GetPhrase( name )
 			if ( !isstring( name ) and !isstring( name_c ) ) then continue end
+			local name_language = language.GetPhrase( name )
 
 			if ( ( isstring( name_language ) and name_language:lower():find( str, nil, true ) ) or ( isstring( name_c ) and name_c:lower():find( str, nil, true ) ) ) then
 
