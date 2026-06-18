@@ -98,8 +98,12 @@ function PANEL:SetSearchType( stype, hookname )
 	end )
 end
 
-local sbox_search_maxresults = GetConVar( "sbox_search_maxresults" )
+-- The convar is not yet loaded
+local sbox_search_maxresults
 function PANEL:RefreshResults( str )
+	if !sbox_search_maxresults then
+		sbox_search_maxresults = GetConVar( "sbox_search_maxresults" )
+	end
 
 	if ( !str ) then -- User tried to search for something
 		self.CurrentSearch = self.Search:GetText()

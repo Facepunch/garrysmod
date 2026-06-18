@@ -5,6 +5,7 @@ local default_animations = { "idle_all_01", "menu_walk" }
 local cl_playerskin = GetConVar( "cl_playerskin" )
 local cl_playerbodygroups = GetConVar( "cl_playerbodygroups" )
 local cl_weaponcolor = GetConVar( "cl_weaponcolor" )
+local cl_playercolor = GetConVar( "cl_playercolor" )
 
 list.Set( "DesktopWindows", "PlayerEditor", {
 
