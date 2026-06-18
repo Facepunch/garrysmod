@@ -144,12 +144,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				local str = string.Explode( " ", cl_playerbodygroups:GetString() )
 				if ( #str < pnl.typenum + 1 ) then for i = 1, pnl.typenum + 1 do str[ i ] = str[ i ] or 0 end end
 				str[ pnl.typenum + 1 ] = math.Round( val )
-				RunConsoleCommand( "cl_playerbodygroups", table.concat( str, " " ) )
+				cl_playerbodygroups:SetString( table.concat( str, " " ) )
 
 			elseif ( pnl.type == "skin" ) then
 
 				mdl.Entity:SetSkin( math.Round( val ) )
-				--RunConsoleCommand( "cl_playerskin", math.Round( val ) )
 				cl_playerskin:SetInt( math.Round( val ) )
 
 			end
