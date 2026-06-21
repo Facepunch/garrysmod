@@ -768,8 +768,8 @@ function GM:ScalePlayerDamage(ply, hitgroup, dmginfo)
 
       local wep = util.WeaponFromDamage(dmginfo)
 
-      if IsValid(wep) and wep.GetHeadshotMultiplier then
-         local s = wep:GetHeadshotMultiplier(ply, dmginfo) or 2
+      if IsValid(wep) then
+         local s = wep.GetHeadshotMultiplier and wep:GetHeadshotMultiplier(ply, dmginfo) or 2
          dmginfo:ScaleDamage(s)
       end
    elseif (hitgroup == HITGROUP_LEFTARM or
