@@ -26,6 +26,7 @@ end
 
 function ENT:SetupGlobals( activator, caller )
 
+	SELF = self
 	ACTIVATOR = activator
 	CALLER = caller
 
@@ -37,6 +38,7 @@ end
 
 function ENT:KillGlobals()
 
+	SELF = nil
 	ACTIVATOR = nil
 	CALLER = nil
 	TRIGGER_PLAYER = nil
