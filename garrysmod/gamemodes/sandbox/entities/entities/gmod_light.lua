@@ -98,20 +98,20 @@ function ENT:GetOverlayText()
 end
 
 local matLight = Material( "sprites/light_ignorez" )
+local tubeCol = Color( 255, 255, 255, 255 )
 function ENT:DrawEffects()
 
 	if ( !self:GetOn() ) then return end
 
 	local LightPos = self:GetPos()
 
-	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )
-	if ( !Visibile || Visibile < 0.1 ) then return end
+	local Visible = util.PixelVisible( LightPos, 4, self.PixVis )
+	if ( !Visible || Visible < 0.1 ) then return end
 
 	local c = self:GetColor()
-	local Alpha = 255 * Visibile
 	local up = self:GetAngles():Up()
 
-	local tubeCol = Color( 255, 255, 255, Alpha )
+	tubeCol.a = 255 * Visible
 
 	render.SetMaterial( matLight )
 	render.DrawSprite( LightPos - up * 2, 8, 8, tubeCol )
