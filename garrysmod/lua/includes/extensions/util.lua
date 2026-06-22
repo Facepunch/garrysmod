@@ -100,7 +100,7 @@ end
 -----------------------------------------------------------]]
 function util.DateStamp()
 
-	local t = os.date( '*t' )
+	local t = os.date( "*t" )
 	return t.year .. "-" .. t.month .. "-" .. t.day .. " " .. Format( "%02i-%02i-%02i", t.hour, t.min, t.sec )
 
 end
