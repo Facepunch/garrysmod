@@ -49,6 +49,7 @@ function Material( name, words )
 end
 
 local C_type = type
+local getmetatable = getmetatable
 function type( v )
 
 	local v_type = C_type( v )
@@ -63,11 +64,11 @@ function type( v )
 	return metaName
 
 end
+_G.C_type = C_type
 
 --[[---------------------------------------------------------
 	TypeID
 -----------------------------------------------------------]]
-local getmetatable = getmetatable
 
 -- Builtin types don't have MetaIDs in their metatables
 local STORED_TYPE_IDS = {
@@ -79,23 +80,17 @@ local STORED_TYPE_IDS = {
 	["function"] = TYPE_FUNCTION,
 	["thread"] = TYPE_THREAD,
 }
+local TYPE_USERDATA = TYPE_USERDATA
 
-local OldTypeID = TypeID
 function TypeID( v )
-	local vType = C_type( v )
-	local id = STORED_TYPE_IDS[ vType ]
+
+	local id = STORED_TYPE_IDS[ C_type( v ) ]
 	if ( id ) then return id end
 
-	if ( vType == "userdata" ) then
-		-- Garry's Mod types have their IDs in their metatables
-		local vMeta = getmetatable( v )
-		if ( vMeta ) then
-			id = vMeta.MetaID
-			if ( id ) then return id end
-		end
-	end
+	-- Garry's Mod types have their IDs in their metatables
+	local vMeta = getmetatable( v )
+	return vMeta and vMeta.MetaID or TYPE_USERDATA
 
-	return OldTypeID( v )
 end
 
 --[[---------------------------------------------------------
