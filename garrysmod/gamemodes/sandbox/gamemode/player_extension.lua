@@ -4,7 +4,9 @@ local meta = FindMetaTable( "Player" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
-g_SBoxObjects = {}
+if ( SERVER ) then
+	g_SBoxObjects = g_SBoxObjects or {}
+end
 
 function meta:CheckLimit( str )
 
@@ -31,28 +33,53 @@ function meta:CheckLimit( str )
 
 end
 
+local function CleanInvalidEntities( uid )
+	if ( !g_SBoxObjects[ uid ] ) then return end
+
+	for countType, entities in pairs( g_SBoxObjects[ uid ] ) do
+		for k, v in pairs( entities ) do
+			if ( !IsValid( v ) ) then entities[ k ] = nil end
+		end
+
+		-- Clear the table for this "count type" if its empty
+		if ( !next( entities ) ) then g_SBoxObjects[ uid ][ countType ] = nil end
+	end
+
+	if ( !next( g_SBoxObjects[ uid ] ) ) then g_SBoxObjects[ uid ] = nil end
+end
+
+local function QueueUpdateCleanup( uid, countType )
+	timer.Create( "SBoxCountUpdate_" .. countType .. "_" .. uid, 0, 1, function()
+		CleanInvalidEntities( uid )
+	end )
+end
+
+local function QueueUpdateCounts( ply, countType )
+	-- Instead of running ply:GetCount for each deletion or creation immediately,
+	-- we use a timer to batch them together in the next frame.
+	-- This helps immenseley when a lot of entities are being removed or created at once.
+	local key = ply:UniqueID()
+	timer.Create( "SBoxCountUpdate_" .. countType .. "_" .. key, 0, 1, function()
+		if ( IsValid( ply ) ) then ply:GetCount( countType ) else CleanInvalidEntities( key ) end
+	end )
+end
+
 function meta:GetCount( str, minus )
 
 	if ( CLIENT ) then
 		return self:GetNWInt( "Count." .. str, 0 )
 	end
 
-	minus = minus or 0
-
 	if ( !self:IsValid() ) then return end
 
 	local key = self:UniqueID()
 	local tab = g_SBoxObjects[ key ]
-
 	if ( !tab || !tab[ str ] ) then
-
 		self:SetNWInt( "Count." .. str, 0 )
 		return 0
-
 	end
 
 	local c = 0
-
 	for k, v in pairs( tab[ str ] ) do
 
 		if ( IsValid( v ) && !v:IsMarkedForDeletion() ) then
@@ -63,6 +90,13 @@ function meta:GetCount( str, minus )
 
 	end
 
+	-- Clear the table for this "count type" if its empty
+	if ( c == 0 ) then tab[ str ] = nil end
+
+	-- Clear the top level table for the player if there's nothing in it left
+	if ( !next( tab ) ) then g_SBoxObjects[ key ] = nil end
+
+	minus = minus or 0
 	self:SetNWInt( "Count." .. str, math.max( c - minus, 0 ) )
 
 	return c
@@ -82,9 +116,15 @@ function meta:AddCount( str, ent )
 		table.insert( tab, ent )
 
 		-- Update count (for client)
-		self:GetCount( str )
+		QueueUpdateCounts( self, str )
 
-		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, str ) ply:GetCount( str ) end, self, str )
+		-- Update count on deletion
+		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, countType, uid )
+			if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
+			if ( !IsValid( ply ) ) then QueueUpdateCleanup( uid, countType ) return end
+
+			QueueUpdateCounts( ply, countType )
+		end, self, str, key )
 
 	end
 
@@ -112,7 +152,7 @@ if ( SERVER ) then
 
 	function meta:LimitHit( str )
 
-		self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
+		self:SendLua( string.format( "hook.Run('LimitHit',%q)", str ) )
 
 	end
 
@@ -121,7 +161,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( string.format( 'hook.Run("AddHint",%q,%d)', str, delay ) )
+		self:SendLua( string.format( "hook.Run('AddHint',%q,%d)", str, delay ) )
 		self.Hints[ str ] = true
 
 	end
@@ -131,7 +171,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( string.format( 'hook.Run("SuppressHint",%q)', str ) )
+		self:SendLua( string.format( "hook.Run('SuppressHint',%q)", str ) )
 		self.Hints[ str ] = true
 
 	end

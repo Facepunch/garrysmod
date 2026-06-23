@@ -82,7 +82,7 @@ hook.Add( "PlayerSpawnedSENT", "CopyOverEditSkySettings", function( ply, ent )
 
 	if ( ent:GetClass() != "edit_sky" ) then return end
 
-	local skyPaint = ents.FindByClass( "env_skypaint" )[ 1 ];
+	local skyPaint = ents.FindByClass( "env_skypaint" )[ 1 ]
 	if ( !IsValid( skyPaint ) ) then return end
 
 	ent:SetTopColor( skyPaint:GetTopColor() )

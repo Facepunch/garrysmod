@@ -102,8 +102,8 @@ function ActivateTool( strName, noCommand )
 
 	-- I really don't like this triple loop
 	for tab, v in ipairs( g_ToolMenu ) do
-		for _, items in pairs( v.Items ) do
-			for _, item in pairs( items ) do
+		for _, category in pairs( v.Items ) do
+			for _, item in pairs( category ) do
 
 				if ( istable( item ) && item.ItemName && item.ItemName == strName ) then
 

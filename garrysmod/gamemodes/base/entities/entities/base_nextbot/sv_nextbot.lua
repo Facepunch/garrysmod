@@ -208,7 +208,7 @@ function ENT:FindSpots( tbl )
 	tbl.radius		= tbl.radius		or 1000
 	tbl.stepdown	= tbl.stepdown		or 20
 	tbl.stepup		= tbl.stepup		or 20
-	tbl.type		= tbl.type			or 'hiding'
+	tbl.type		= tbl.type			or "hiding"
 
 	-- Use a path to find the length
 	local path = Path( "Follow" )
@@ -224,7 +224,7 @@ function ENT:FindSpots( tbl )
 		-- get the spots
 		local spots
 
-		if ( tbl.type == 'hiding' ) then spots = area:GetHidingSpots() end
+		if ( tbl.type == "hiding" ) then spots = area:GetHidingSpots() end
 
 		for k, vec in ipairs( spots ) do
 

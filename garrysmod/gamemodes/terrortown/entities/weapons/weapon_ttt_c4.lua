@@ -17,7 +17,7 @@ if CLIENT then
       type  = "item_weapon",
       name  = "C4",
       desc  = "c4_desc"
-   };
+   }
 
    SWEP.Icon                = "vgui/ttt/icon_c4"
    SWEP.IconLetter          = "I"

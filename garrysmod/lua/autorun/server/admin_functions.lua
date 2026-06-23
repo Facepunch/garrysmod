@@ -14,7 +14,7 @@ local function KickId( player, command, arguments )
 
 end
 
-concommand.Add( "kickid2", KickId, nil, "", { FCVAR_DONTRECORD } )
+concommand.Add( "kickid2", KickId, nil, "Alias of kickid, do not use.", { FCVAR_DONTRECORD } )
 
 
 --[[---------------------------------------------------------
@@ -32,4 +32,4 @@ local function BanID( player, command, arguments )
 
 end
 
-concommand.Add( "banid2", BanID, nil, "", { FCVAR_DONTRECORD } )
+concommand.Add( "banid2", BanID, nil, "Alias of banid, do not use.", { FCVAR_DONTRECORD } )

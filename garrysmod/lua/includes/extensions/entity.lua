@@ -5,15 +5,15 @@ local meta = FindMetaTable( "Entity" )
 if ( !meta ) then return end
 
 function meta:SetSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", flags )
+	self:SetKeyValue( "spawnflags", flags )
 end
 
 function meta:AddSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
+	self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
 end
 
 function meta:RemoveSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
+	self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
 end
 
 function meta:GetShouldPlayPickupSound()
@@ -148,14 +148,14 @@ end
 -----------------------------------------------------------]]
 local function DoDieFunction( ent )
 
-	if ( !ent or !ent.OnDieFunctions ) then return end
+	if ( !ent.OnDieFunctions ) then return end
 
-	for k, v in pairs( ent.OnDieFunctions ) do
+	for name, data in pairs( ent.OnDieFunctions ) do
 
 		-- Functions aren't saved - so this could be nil if we loaded a game.
-		if ( v && v.Function ) then
+		if ( data && data.Function ) then
 
-			v.Function( ent, unpack( v.Args ) )
+			ProtectedCall( data.Function, ent, unpack( data.Args ) )
 
 		end
 

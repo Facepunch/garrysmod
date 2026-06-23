@@ -19,7 +19,7 @@ if CLIENT then
       name = "C4",
       hint = "c4_hint",
       fmt  = function(ent, txt) return GetPTranslation(txt, hint_params) end
-   };
+   }
 end
 
 C4_WIRE_COUNT   = 6
@@ -258,7 +258,7 @@ function ENT:Explode(tr)
       phexp:SetKeyValue("radius", r_outer)
       phexp:SetKeyValue("spawnflags", "19")
       phexp:Spawn()
-      phexp:Fire("Explode", "", 0)
+      phexp:Fire("Explode")
 
 
       -- few fire bits to ignite things
@@ -587,7 +587,7 @@ end
 
 if CLIENT then
    surface.CreateFont("C4ModelTimer", {
-                         font = "Default",
+                         font = "Tahoma",
                          size = 13,
                          weight = 0,
                          antialias = false
@@ -609,8 +609,8 @@ if CLIENT then
 
    local strtime = util.SimpleTime
    local max = math.max
-   function ENT:Draw()
-      self:DrawModel()
+   function ENT:Draw(flags)
+      self:DrawModel(flags)
 
       if self:GetArmed() then
          local angpos_ur = self:GetTimerPos()

@@ -16,7 +16,7 @@ function PANEL_Browser:Init()
 	self.HTML:Dock( FILL )
 	--self.HTML:SetOpenLinksExternally( true )
 
-	self:SetTitle( "Steam overlay replacement" )
+	self:SetTitle( "#openurl.overlay_replacement_title" )
 	self:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
 	self:SetSizable( true )
 	self:Center()

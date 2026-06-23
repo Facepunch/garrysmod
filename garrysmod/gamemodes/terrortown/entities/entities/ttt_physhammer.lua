@@ -138,7 +138,7 @@ if SERVER then
                phexp:SetKeyValue("radius", 128)
                phexp:SetKeyValue("spawnflags", 1 + 2)
                phexp:Spawn()
-               phexp:Fire("Explode", "", 0)
+               phexp:Fire("Explode")
             end
 
             local norm = self:GetAngles():Up() * -1

@@ -267,10 +267,10 @@ function PANEL:UpdateConVars( color )
 
 	self.NextConVarCheck = SysTime() + 0.2
 
-	self:UpdateConVar( self.m_ConVarR, 'r', color )
-	self:UpdateConVar( self.m_ConVarG, 'g', color )
-	self:UpdateConVar( self.m_ConVarB, 'b', color )
-	self:UpdateConVar( self.m_ConVarA, 'a', color )
+	self:UpdateConVar( self.m_ConVarR, "r", color )
+	self:UpdateConVar( self.m_ConVarG, "g", color )
+	self:UpdateConVar( self.m_ConVarB, "b", color )
+	self:UpdateConVar( self.m_ConVarA, "a", color )
 
 end
 

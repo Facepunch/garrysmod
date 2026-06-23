@@ -72,7 +72,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 	end
 
 	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ) .. " );" )
+	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ) .. " )" )
 
 	return HTML
 
@@ -84,7 +84,7 @@ hook.Add( "DupeSaveAvailable", "UpdateDupeSpawnmenuAvailable", function()
 
 	if ( !IsValid( HTML ) ) then return end
 
-	HTML:Call( "SetDupeSaveState( true );" )
+	HTML:Call( "SetDupeSaveState( true )" )
 
 end )
 
@@ -94,7 +94,7 @@ hook.Add( "DupeSaveUnavailable", "UpdateDupeSpawnmenuUnavailable", function()
 
 	if ( !IsValid( HTML ) ) then return end
 
-	HTML:Call( "SetDupeSaveState( false );" )
+	HTML:Call( "SetDupeSaveState( false )" )
 
 end )
 
@@ -102,7 +102,7 @@ hook.Add( "DupeSaved", "DuplicationSavedSpawnMenu", function()
 
 	if ( !IsValid( HTML ) ) then return end
 
-	HTML:Call( "ShowLocalDupes();" )
+	HTML:Call( "ShowLocalDupes()" )
 
 end )
 
@@ -110,6 +110,6 @@ concommand.Add( "dupe_show", function()
 
 	g_SpawnMenu:OpenCreationMenuTab( "#spawnmenu.category.dupes" )
 
-	timer.Simple( 1.0, function() if ( !IsValid( HTML ) ) then return end HTML:Call( "ShowLocalDupes();" ) end )
+	timer.Simple( 1.0, function() if ( !IsValid( HTML ) ) then return end HTML:Call( "ShowLocalDupes()" ) end )
 
 end, nil, "", { FCVAR_DONTRECORD } )

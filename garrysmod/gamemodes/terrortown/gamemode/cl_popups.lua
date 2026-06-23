@@ -43,6 +43,7 @@ local function GetTextForRole(role)
 end
 
 local startshowtime = CreateConVar("ttt_startpopup_duration", "17", FCVAR_ARCHIVE)
+local roundStartFrame = nil
 -- shows info about goal and fellow traitors (if any)
 local function RoundStartPopup()
    -- based on Derma_Message
@@ -81,7 +82,11 @@ local function RoundStartPopup()
 
    dframe:AlignBottom( 10 )
 
-   timer.Simple(startshowtime:GetInt(), function() dframe:Remove() end)
+   -- Do not stack the messages when ttt_roundrestart is used
+   if (IsValid(roundStartFrame)) then roundStartFrame:Remove() end
+   roundStartFrame = dframe
+
+   timer.Simple(startshowtime:GetInt(), function() if (IsValid(dframe)) then dframe:Remove() end end)
 end
 concommand.Add("ttt_cl_startpopup", RoundStartPopup)
 
@@ -100,7 +105,7 @@ local function IdlePopup()
    local inner = vgui.Create("DPanel", dframe)
    inner:StretchToParent(5, 25, 5, 45)
 
-   local idle_limit = GetGlobalInt("ttt_idle_limit", 300) or 300
+   local idle_limit = GetConVar("ttt_idle_limit"):GetInt()
 
    local text = vgui.Create("DLabel", inner)
    text:SetWrap(true)

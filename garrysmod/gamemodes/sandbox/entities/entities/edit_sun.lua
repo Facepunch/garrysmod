@@ -44,13 +44,13 @@ function ENT:SetupDataTables()
 
 	if ( SERVER ) then
 
-		-- defaults
+		-- Defaults
 		self:SetSunSize( 20 )
 		self:SetOverlaySize( 20 )
 		self:SetOverlayColor( Vector( 1, 1, 1 ) )
 		self:SetSunColor( Vector( 1, 1, 1 ) )
 
-		-- call this function when something changes these variables
+		-- Call this function when something changes these variables
 		self:NetworkVarNotify( "SunSize", self.OnVariableChanged )
 		self:NetworkVarNotify( "OverlaySize", self.OnVariableChanged )
 		self:NetworkVarNotify( "SunColor", self.OnVariableChanged )
@@ -84,7 +84,7 @@ end
 --
 -- Update all the variables on the sun, from our variables in this entity
 --
-function ENT:OnVariableChanged()
+function ENT:OnVariableChanged( name, old, new )
 
 	if ( !IsValid( self.EnvSun ) ) then return end
 
@@ -114,12 +114,19 @@ hook.Add( "PlayerSpawnedSENT", "CopyOverEditSunSettings", function( ply, ent )
 
 	if ( ent:GetClass() != "edit_sun" ) then return end
 
-	local envSun = ents.FindByClass( "env_sun" )[ 1 ];
+	local envSun = ents.FindByClass( "env_sun" )[ 1 ]
 	if ( !IsValid( envSun ) ) then return end
 
-	ent:SetSunSize( envSun:GetInternalVariable( "size" ) )
-	ent:SetOverlaySize( envSun:GetInternalVariable( "overlaysize" ) )
-	ent:SetOverlayColor( Vector( envSun:GetInternalVariable( "overlaycolor" ) ) / 255 )
-	ent:SetSunColor( Vector( envSun:GetInternalVariable( "rendercolor" ) ) / 255 )
+	-- Gotta store them beforehand, because OnVariableChanged will set ALL sun values,
+	-- so they will be set to defaults after the first one is set.
+	local sunSize = envSun:GetInternalVariable( "size" )
+	local overlaySize = envSun:GetInternalVariable( "overlaysize" )
+	local sunColor = Vector( envSun:GetInternalVariable( "rendercolor" ) ) / 255
+	local overlayColor = Vector( envSun:GetInternalVariable( "overlaycolor" ) ) / 255
+
+	ent:SetSunSize( sunSize )
+	ent:SetSunColor( sunColor )
+	ent:SetOverlaySize( overlaySize )
+	ent:SetOverlayColor( overlayColor )
 
 end )

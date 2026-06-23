@@ -17,7 +17,7 @@ AddVehicle( {
 
 	-- Optional information
 	Author = "VALVe",
-	Information = "The regular old jeep",
+	Information = "The regular old jeep from Half-Life 2 coasts",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jeep_test.txt"
@@ -31,7 +31,7 @@ AddVehicle( {
 	Category = Category,
 
 	Author = "VALVe",
-	Information = "Airboat from Half-Life 2",
+	Information = "Airboat from Half-Life 2 canals",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/airboat.txt"
@@ -45,7 +45,7 @@ AddVehicle( {
 	Category = Category,
 
 	Author = "VALVe",
-	Information = "The prisoner pod",
+	Information = "The prisoner pod from Half-Life 2 citadel",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
@@ -53,21 +53,37 @@ AddVehicle( {
 	}
 }, "Pod" )
 
-if ( IsMounted( "ep2" ) ) then
-	AddVehicle( {
-		Name = "#spawnmenu.vehicle.jalopy",
-		Model = "models/vehicle.mdl",
-		Class = "prop_vehicle_jeep",
-		Category = Category,
+AddVehicle( {
+	Name = "#spawnmenu.vehicle.jalopy",
+	Model = "models/vehicle.mdl",
+	Class = "prop_vehicle_jeep",
+	Category = Category,
 
-		Author = "VALVe",
-		Information = "The muscle car from Episode 2",
+	Author = "VALVe",
+	Information = "The muscle car from Half-Life 2: Episode 2",
 
-		KeyValues = {
-			vehiclescript = "scripts/vehicles/jalopy.txt"
-		}
-	}, "Jalopy" )
-end
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/jalopy.txt"
+	}
+}, "Jalopy" )
+
+AddVehicle( {
+	Name = "#prop_vehicle_apc",
+	Model = "models/combine_apc.mdl",
+	Class = "prop_vehicle_apc",
+	Health = 0, -- Indestructible
+	Category = Category,
+
+	Author = "VALVe",
+	Information = "The Combine Armored Personnel Carrier from Half-Life 2",
+
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/apc_gmod.txt"
+	}
+}, "prop_vehicle_apc" )
+
+
+
 
 Category = "#spawnmenu.category.chairs"
 
@@ -183,25 +199,23 @@ AddVehicle( {
 	}
 }, "Seat_Airboat" )
 
-if ( IsMounted( "ep2" ) ) then
-	AddVehicle( {
-		Name = "#spawnmenu.seat.jalopy",
-		Model = "models/nova/jalopy_seat.mdl",
-		Class = "prop_vehicle_prisoner_pod",
-		Category = Category,
+AddVehicle( {
+	Name = "#spawnmenu.seat.jalopy",
+	Model = "models/nova/jalopy_seat.mdl",
+	Class = "prop_vehicle_prisoner_pod",
+	Category = Category,
 
-		Author = "VALVe",
-		Information = "A seat from VALVe's Jalopy",
+	Author = "VALVe",
+	Information = "A seat from VALVe's Jalopy",
 
-		KeyValues = {
-			vehiclescript = "scripts/vehicles/prisoner_pod.txt",
-			limitview = "0"
-		},
-		Members = {
-			HandleAnimation = HandleRollercoasterAnimation,
-		}
-	}, "Seat_Jalopy" )
-end
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
+	},
+	Members = {
+		HandleAnimation = HandleRollercoasterAnimation,
+	}
+}, "Seat_Jalopy" )
 
 -- PhoeniX-Storms Vehicles
 

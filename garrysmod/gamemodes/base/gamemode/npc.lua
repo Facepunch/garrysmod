@@ -19,7 +19,7 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 
 		if ( isstring( attacker ) ) then
 			net.WriteUInt( 1, 2 )
-			net.WriteString( attacker )
+			net.WriteString( attacker:sub( 0, 512 ) )
 		elseif ( IsValid( attacker ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( attacker )
@@ -28,11 +28,16 @@ function GM:SendDeathNotice( attacker, inflictor, victim, flags )
 			net.WriteUInt( 0, 2 )
 		end
 
-		net.WriteString( inflictor )
+		if ( isstring( inflictor ) ) then
+			net.WriteString( inflictor:sub( 0, 512 ) )
+		else
+			-- Should never really reach here..
+			net.WriteString( "" )
+		end
 
 		if ( isstring( victim ) ) then
 			net.WriteUInt( 1, 2 )
-			net.WriteString( victim )
+			net.WriteString( victim:sub( 0, 512 ) )
 		elseif ( IsValid( victim ) ) then
 			net.WriteUInt( 2, 2 )
 			net.WriteEntity( victim )
@@ -61,15 +66,19 @@ function GM:GetDeathNoticeEntityName( ent )
 	if ( ent:GetClass() == "npc_sniper" and ( ent:GetName() == "alyx_sniper" || ent:GetName() == "sniper_alyx" ) ) then return "#npc_alyx" end
 
 	-- Custom vehicle and NPC names from spawnmenu
-	if ( ent:IsVehicle() and ent.VehicleTable and ent.VehicleTable.Name ) then
-		return ent.VehicleTable.Name
-	end
-	if ( ent:IsNPC() and ent.NPCTable and ent.NPCTable.Name ) then
-		return ent.NPCTable.Name
+	if ( ent:IsVehicle() ) then
+		local vehTable = list.GetEntry( "Vehicles", ent.VehicleName )
+		if ( vehTable and vehTable.Name ) then return vehTable.Name end
+	elseif ( ent:IsNPC() ) then
+		local npcTable = list.GetEntry( "NPC", ent.NPCName )
+		if ( npcTable and npcTable.Name ) then return npcTable.Name end
+	elseif ( ent.EntityName ) then
+		local sentTable = list.GetEntry( "SpawnableEntities", ent.EntityName )
+		if ( sentTable and sentTable.PrintName ) then return sentTable.PrintName end
 	end
 
 	if ( ent:GetClass() == "npc_antlion" and ent:GetModel() == "models/antlion_worker.mdl" ) then
-		return list.Get( "NPC" )[ "npc_antlion_worker" ].Name
+		return list.GetEntry( "NPC", "npc_antlion_worker" ).Name
 	end
 
 	-- Fallback to old behavior
@@ -120,7 +129,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 		if ( attacker:IsPlayer() ) then
 
 			local flags = 0
-			if ( ent:IsNPC() and ent:Disposition( attacker ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
+			if ( ent:IsNPC() and ent:Disposition( attacker ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_VICTIM end
 
 			self:SendDeathNotice( attacker, InflictorClass, self:GetDeathNoticeEntityName( ent ), flags )
 

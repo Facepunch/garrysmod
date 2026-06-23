@@ -55,12 +55,12 @@ end
 
 function PANEL:Think()
 
+	if ( !self.IsToolTab ) then return end
+
 	if ( self.LastUpdate + 0.5 < SysTime() ) then
 		self.LastUpdate = SysTime()
 
 		self:UpdateToolDisabledStatus()
-
-		if ( !self.IsToolTab ) then return end
 
 		local disabled = false
 		local noToolgun = IsValid( LocalPlayer() ) && !LocalPlayer():HasWeapon( "gmod_tool" )
@@ -138,6 +138,12 @@ function PANEL:UpdateToolDisabledStatus()
 			if ( !cvar ) then continue end
 
 			local enabled = cvar:GetBool()
+			if ( enabled ) then
+				if ( !hook.Run( "CanTool", LocalPlayer(), { Entity = game.GetWorld() }, item.Name, LocalPlayer():GetTool( item.Name ), 4 ) ) then
+					enabled = false
+				end
+			end
+			
 			if ( enabled == item:IsEnabled() ) then continue end
 
 			item:SetEnabled( enabled )

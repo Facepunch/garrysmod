@@ -128,7 +128,7 @@ local Builder =
 
 	IsApplicable = function( self, ent )
 
-		local mdl = ent:GetModel();
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/pyro.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/pyro.mdl" ) ) then return true end

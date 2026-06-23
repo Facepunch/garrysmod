@@ -560,7 +560,6 @@
 			"model"		"models/props_combine/combine_citadelcloud002a.mdl"
 		}
 	}
-	"needsapp"		"episodic"
 	"name"		"Episode 1"
 	"version"		"3"
 }

@@ -84,9 +84,13 @@ COLOR_OLIVE  = Color(100, 100, 0, 255)
 include("util.lua")
 include("lang_shd.lua") -- uses some of util
 include("equip_items_shd.lua")
+include("radio_shd.lua")
 
-function DetectiveMode() return GetGlobalBool("ttt_detective", false) end
-function HasteMode() return GetGlobalBool("ttt_haste", false) end
+local ttt_detective = CreateConVar("ttt_sherlock_mode", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED)
+function DetectiveMode() return ttt_detective:GetBool() end
+
+local ttt_haste = CreateConVar("ttt_haste", "1", FCVAR_NOTIFY + FCVAR_REPLICATED)
+function HasteMode() return ttt_haste:GetBool() end
 
 -- Create teams
 TEAM_TERROR = 1
@@ -107,7 +111,7 @@ local ttt_playermodels = {
    Model("models/player/arctic.mdl"),
    Model("models/player/guerilla.mdl"),
    Model("models/player/leet.mdl")
-};
+}
 
 function GetRandomPlayerModel()
    return table.Random(ttt_playermodels)
@@ -137,7 +141,7 @@ local ttt_playercolors = {
       COLOR_DGREEN,
       COLOR_OLIVE
    }
-};
+}
 
 local playercolor_mode = CreateConVar("ttt_playercolor_mode", "1")
 function GM:TTTPlayerColor(model)
@@ -178,6 +182,9 @@ function GM:Move(ply, mv)
       mv:SetMaxClientSpeed(mv:GetMaxClientSpeed() * mul)
       mv:SetMaxSpeed(mv:GetMaxSpeed() * mul)
    end
+
+   -- Call base movement code
+   if drive.Move(ply, mv) then return true end
 end
 
 
@@ -233,4 +240,4 @@ DefaultEquipment = {
       "weapon_zm_sledge",
       "weapon_ttt_glock"
    }
-};
+}

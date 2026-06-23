@@ -42,12 +42,11 @@ function TOOL:LeftClick( trace, attach )
 	local force = math.Clamp( self:GetClientNumber( "force", 500 ), -1E34, 1E34 )
 	local length = self:GetClientNumber( "ropelength", 64 )
 
-	local modeltable = list.Get( "BalloonModels" )[ model ]
-
 	--
 	-- Model is a table index on BalloonModels
 	-- If the model isn't defined then it can't be spawned.
 	--
+	local modeltable = list.GetEntry( "BalloonModels", model )
 	if ( !modeltable ) then return false end
 
 	--
@@ -191,8 +190,8 @@ function TOOL:UpdateGhostBalloon( ent, ply )
 
 	local pos = trace.HitPos + Offset
 
-	local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
-	if ( modeltable.skin ) then ent:SetSkin( modeltable.skin ) end
+	local modeltable = list.GetEntry( "BalloonModels", self:GetClientInfo( "model" ) )
+	if ( modeltable && modeltable.skin ) then ent:SetSkin( modeltable.skin ) end
 
 	ent:SetPos( pos )
 	ent:SetAngles( angle_zero )
@@ -205,7 +204,7 @@ function TOOL:Think()
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity.model != self:GetClientInfo( "model" ) ) then
 
-		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
+		local modeltable = list.GetEntry( "BalloonModels", self:GetClientInfo( "model" ) )
 		if ( !modeltable ) then self:ReleaseGhostEntity() return end
 
 		self:MakeGhostEntity( modeltable.model, vector_origin, angle_zero )

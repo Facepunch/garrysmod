@@ -93,28 +93,28 @@ CreateConVar("ttt_limit_spectator_chat", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 CreateConVar("ttt_limit_spectator_voice", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
 function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
-	if (not IsValid(listener)) then return false end
-	if (not IsValid(speaker)) then
-		if isentity(speaker) then
-			return true
-		else
-			return false
-		end
-	end
+   if (not IsValid(listener)) then return false end
+   if (not IsValid(speaker)) then
+      if isentity(speaker) then
+         return true
+      else
+         return false
+      end
+   end
 
-	local sTeam = speaker:Team() == TEAM_SPEC
-	local lTeam = listener:Team() == TEAM_SPEC
+   local sTeam = speaker:Team() == TEAM_SPEC
+   local lTeam = listener:Team() == TEAM_SPEC
 
-	if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
-	(not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
-	(not DetectiveMode()) or   -- Mumbling
-	(not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
-	(not sTeam and team_only and speaker:GetRole() == listener:GetRole()) or
-	(sTeam and lTeam) then   -- If the speaker and listener are spectators
-	   return true
-	end
+   if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
+   (not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
+   (not DetectiveMode()) or   -- Mumbling
+   (not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
+   (not sTeam and team_only and speaker:GetRole() == listener:GetRole()) or
+   (sTeam and lTeam) then   -- If the speaker and listener are spectators
+      return true
+   end
 
-	return false
+   return false
 end
 
 local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mammaries", "political situation", "mrmm", "hrm",
@@ -147,8 +147,8 @@ function GM:PlayerSay(ply, text, team_only)
          table.insert(filtered, 1, "[MUMBLED]")
          return table.concat(filtered, " ")
       elseif team_only and not team and ply:IsSpecial() then
-	     RoleChatMsg(ply, ply:GetRole(), text)
-		 return ""
+         RoleChatMsg(ply, ply:GetRole(), text)
+         return ""
       end
    end
 
@@ -164,7 +164,7 @@ function MuteForRestart(state)
 end
 
 
-local loc_voice = CreateConVar("ttt_locational_voice", "0")
+local loc_voice = CreateConVar("ttt_locational_voice", "0", FCVAR_REPLICATED)
 
 -- Of course voice has to be limited as well
 function GM:PlayerCanHearPlayersVoice(listener, speaker)
@@ -255,7 +255,6 @@ local function MuteTeam(ply, cmd, args)
 
    -- remove all ifs
    LANG.Msg(ply, MuteModes[t])
-   
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -266,20 +265,22 @@ local LastWordContext = {
    [KILL_SUICIDE] = " *kills self*",
    [KILL_FALL] = " *SPLUT*",
    [KILL_BURN] = " *crackle*"
-};
+}
 
 local function LastWordsMsg(ply, words)
    -- only append "--" if there's no ending interpunction
    local final = string.match(words, "[\\.\\!\\?]$") != nil
 
    -- add optional context relating to death type
-   local context = LastWordContext[ply.death_type] or ""
+   local death_type = ply.death_type
+   local context = LastWordContext[death_type] or ""
    local lastWordsStr = words .. (final and "" or "--") .. context
 
-   if hook.Run("TTTLastWordsMsg", ply, lastWordsStr, words) ~= true then
+   if hook.Run("TTTLastWordsMsg", ply, lastWordsStr, words, death_type) != true then
       net.Start("TTT_LastWordsMsg")
          net.WritePlayer(ply)
-         net.WriteString(lastWordsStr)
+         net.WriteString(words)
+         net.WriteUInt(death_type, 2)
       net.Broadcast()
    end
 end

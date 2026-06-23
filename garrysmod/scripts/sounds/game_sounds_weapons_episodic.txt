@@ -43,7 +43,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,102"
 	"rndwave"
 	{
@@ -58,7 +58,7 @@
 {
 	"channel"		"CHAN_STATIC"
 	"volume"		"0.9"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,102"
 
 	"rndwave"
@@ -94,7 +94,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.7"
-	"soundlevel"	"SNDLVL_GUNFIRE"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,105"
 
 	"wave"			"^weapons/smg1/smg1_fireburst1.wav"

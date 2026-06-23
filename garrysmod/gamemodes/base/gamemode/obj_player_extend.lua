@@ -84,8 +84,6 @@ function meta:PhysgunUnfreeze()
 
 		end
 
-
-
 		return UnfrozenObjects
 
 	end
@@ -122,7 +120,7 @@ function meta:UnfreezePhysicsObjects()
 			if ( IsValid( v.phys ) && !v.phys:IsMoveable() ) then
 
 				-- We need to freeze/unfreeze all physobj's in jeeps to stop it spazzing
-				if ( v.ent:GetClass() == "prop_vehicle_jeep" ) then
+				if ( v.ent:GetClass() == "prop_vehicle_jeep" || v.ent:GetClass() == "prop_vehicle_apc" ) then
 
 					-- How many physics objects we have
 					local objects = v.ent:GetPhysicsObjectCount()

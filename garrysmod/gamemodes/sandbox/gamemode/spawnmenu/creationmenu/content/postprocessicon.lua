@@ -29,7 +29,7 @@ function PANEL:Setup( name, icon, label )
 	self:SetMaterial( icon )
 	self:SetName( label or name )
 
-	self.PP = list.Get( "PostProcess" )[ name ]
+	self.PP = list.GetEntry( "PostProcess", name )
 	if ( !self.PP ) then return end
 
 	self.DoClick = function()

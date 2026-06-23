@@ -23,29 +23,29 @@ function MenuController( $scope, $rootScope )
 
 	gScope = $scope;
 
-	gScope.Gamemode = '';
+	gScope.Gamemode = "";
 
 	$scope.ToggleGamemodes = function()
 	{
-		$( '.popup:not(.gamemode_list)' ).hide();
-		$( '.gamemode_list' ).toggle();
+		$( ".popup:not(.gamemode_list)" ).hide();
+		$( ".gamemode_list" ).toggle();
 	}
 
 	$scope.ToggleLanguage = function()
 	{
-		$( '.popup:not(.language_list)' ).hide();
-		$( '.language_list' ).toggle();
+		$( ".popup:not(.language_list)" ).hide();
+		$( ".language_list" ).toggle();
 	}
 
 	$scope.ToggleGames = function()
 	{
-		$( '.popup:not(.games_list)' ).hide();
-		$( '.games_list' ).toggle();
+		$( ".popup:not(.games_list)" ).hide();
+		$( ".games_list" ).toggle();
 	}
 
 	$scope.TogglePopup = function( name )
 	{
-		$( '.popup:not('+name+')' ).hide();
+		$( ".popup:not("+name+")" ).hide();
 		$( name ).toggle();
 	}
 
@@ -55,7 +55,7 @@ function MenuController( $scope, $rootScope )
 		$scope.GamemodeTitle = gm.title;
 		lua.Run( "RunConsoleCommand( \"gamemode\", %s )", gm.name );
 
-		$( '.gamemode_list' ).hide();
+		$( ".gamemode_list" ).hide();
 	}
 
 	$scope.SelectLanguage = function( lang )
@@ -63,7 +63,7 @@ function MenuController( $scope, $rootScope )
 		$rootScope.Language = lang;
 		lua.Run( "RunConsoleCommand( \"gmod_language\", %s )", lang );
 
-		$( '.language_list' ).hide();
+		$( ".language_list" ).hide();
 	}
 
 	$scope.MenuOption = function( btn, v )
@@ -81,6 +81,7 @@ function MenuController( $scope, $rootScope )
 	// Map List
 	//
 	$rootScope.MapList = [];
+	$rootScope.MapListFav = {};
 	$rootScope.AddonMapList = [];
 	lua.Run( "UpdateMapList()" );
 
@@ -88,7 +89,7 @@ function MenuController( $scope, $rootScope )
 	// Languages
 	//
 	$rootScope.Languages = []
-	$rootScope.Language = 'en';
+	$rootScope.Language = "en";
 	lua.Run( "UpdateLanguages()" );
 
 	//
@@ -123,7 +124,7 @@ function MenuController( $scope, $rootScope )
 	{
 		if ( !id ) return;
 
-		lua.Run( "steamworks.ViewFile( %s )", String( id ) );
+		gmod.OpenWorkshopFile( String( id ) );
 	}
 
 	$scope.OpenFolder = function( foldername )
@@ -248,19 +249,21 @@ function UpdateAddonMaps( inmaps )
 
 function UpdateMaps( inmaps )
 {
-	var mapList = []
+	var mapList = [];
+	var favList = {};
 
 	for ( k in inmaps )
 	{
 		var order = k;
-		if ( k == 'Sandbox' ) order = '2';
-		if ( k == 'Favourites' ) order = '1';
+		if ( k == "Sandbox" ) order = "2";
+		if ( k == "Favourites" ) order = "1";
 
 		var maps = []
 		for ( v in inmaps[k] )
 		{
 			maps.push( inmaps[k][v] );
 			MapIndex[ inmaps[k][v].toLowerCase() ] = true;
+			if ( k == "Favourites" ) favList[ inmaps[k][v].toLowerCase() ] = true;
 		}
 
 		mapList.push(
@@ -272,6 +275,7 @@ function UpdateMaps( inmaps )
 	}
 
 	gScope.MapList = mapList;
+	gScope.MapListFav = favList;
 	UpdateDigest( gScope, 50 );
 }
 

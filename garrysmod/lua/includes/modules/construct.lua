@@ -58,7 +58,7 @@ if SERVER then
 		if ( !IsValid( magnet ) ) then return false end
 		if ( magnet:GetTable().toggle != 0 ) then return true end
 
-		magnet:Fire( "TurnOff", "" , 0 )
+		magnet:Fire( "TurnOff" )
 
 		return true
 
@@ -74,16 +74,16 @@ if SERVER then
 			magnet:GetTable().toggle_state = !magnet:GetTable().toggle_state
 
 			if ( magnet:GetTable().toggle_state ) then
-				magnet:Fire( "TurnOn", "" , 0 )
+				magnet:Fire( "TurnOn" )
 			else
-				magnet:Fire( "TurnOff", "" , 0 )
+				magnet:Fire( "TurnOff" )
 			end
 
 			return true
 
 		end
 
-		magnet:Fire( "TurnOn", "" , 0 )
+		magnet:Fire( "TurnOn" )
 
 		return true
 

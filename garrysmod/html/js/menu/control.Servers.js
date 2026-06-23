@@ -7,6 +7,16 @@ var ServerTypes = {};
 var FirstTime = true;
 var UpdateInterval = undefined;
 
+function StripWeirdSymbols( name )
+{
+	// Weird symbols
+	var ret = name.replace( /[\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
+
+	// Emojis
+	ret = ret.replace( /\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDD10-\uDFFF]/g, "" );
+	return ret;
+}
+
 function ControllerServers( $scope, $element, $rootScope, $location )
 {
 	RootScope = $rootScope;
@@ -18,6 +28,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	$scope.SVFilterHasPly = false;
 	$scope.SVFilterNotFull = false;
 	$scope.SVFilterHidePass = false;
+	$scope.SVFilterHideOutdated = false;
 	$scope.SVFilterMaxPing = 2000;
 	$scope.SVFilterPlyMin = 0;
 	$scope.SVFilterPlyMax = 128;
@@ -110,22 +121,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			lua.Run( "GetPlayerList( %s )", server.address );
 			lua.Run( "PingServer( %s )", server.address );
 		}, 10000 );
-
-		//
-		// ng-dblclick doesn't work properly in engine, so we fake it!
-		//
-		if ( server.DoubleClick )
-		{
-			$scope.JoinServer( server );
-			return;
-		}
-
-		server.DoubleClick = true;
-
-		setTimeout( function()
-		{
-			server.DoubleClick = false;
-		}, 500 );
 	}
 
 	$scope.SelectGamemode = function( gm )
@@ -133,7 +128,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		RootScope.CurrentGamemode = gm;
 
 		if ( gm ) gm.server_offset = 0;
-		UpdateDigest( RootScope, 50 );
 	}
 
 	$scope.ServerClass = function( sv )
@@ -173,14 +167,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !gm ) return "Unknown Gamemode";
 
 		if ( gm.info && gm.info.title )
-			return gm.info.title.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
+			return StripWeirdSymbols( gm.info.title );
 
-		return gm.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );;
-	}
-
-	$scope.ServerName = function( server )
-	{
-		return server.name.replace( /[\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
+		return StripWeirdSymbols( gm.name );
 	}
 
 	$scope.JoinServer = function( srv )
@@ -311,6 +300,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( server.ping > $scope.SVFilterMaxPing ) return false;
 		if ( server.players < $scope.SVFilterPlyMin ) return false;
 		if ( server.players > $scope.SVFilterPlyMax ) return false;
+		if ( server.version_c < 0 && $scope.SVFilterHideOutdated ) return false;
 		if ( server.flag && $scope.CurrentGamemode.FilterFlags[ server.flag ] == false ) return false;
 		if ( $scope.CurrentGamemode.HasPreferFlags && $scope.CurrentGamemode.FilterFlags[ server.flag ] != true ) return false;
 
@@ -359,7 +349,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	}
 }
 
-function FinishedServeres( type )
+function FinishedServers( type )
 {
 	RootScope.Refreshing[type] = "false";
 	UpdateDigest( RootScope, 50 );
@@ -410,7 +400,7 @@ function CalculateRank( server )
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	//if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
-	if ( server.pass ) recommended += 300; // Password protected, can't join it
+	if ( server.pass || server.version_c < 0 ) recommended += 300; // Password protected or outdated, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
 
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
@@ -421,22 +411,6 @@ function CalculateRank( server )
 	if ( server.players >= 64 ) recommended -= 10;
 
 	return recommended;
-}
-
-// Generate a flag from sevrer name if the server doesn't have it set.
-// This is a temporary measure and should not be relied on, you should use sv_location
-var prefixes = { ru: "ru", rus: "ru", fr: "fr", usa: "us", uk: "gb", en: "gb", eng: "gb", ger: "de", pl: "pl", dk: "dk", eu: "eu" };
-function GenerateFlag( server )
-{
-	for ( var key in prefixes )
-	{
-		var s = server.name.toLowerCase().indexOf( "[" + key + "]" );
-		if ( s == -1 ) continue;
-		server.name = server.name.replace( server.name.substring( s, s + key.length + 2 ), "" ).trim();
-		return prefixes[ key ];
-	}
-
-	return "";
 }
 
 function UpdateInfiniteScroll( elem )
@@ -460,7 +434,7 @@ function UpdateServer( address, ping, name, map, players, maxplayers, botplayers
 	if ( server.address != address ) return;
 
 	server.ping = parseInt( ping );
-	server.name = name;
+	server.name = StripWeirdSymbols( name.trim() );
 	server.map = map;
 	server.players = parseInt( players ) - parseInt( botplayers );
 	server.maxplayers = parseInt( maxplayers ) - parseInt( botplayers );
@@ -509,7 +483,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	var data =
 	{
 		ping:			parseInt( ping ),
-		name:			name.trim(),
+		name:			StripWeirdSymbols( name.trim() ),
 		desc:			desc,
 		map:			map,
 		players:		parseInt( players ) - parseInt( botplayers ),
@@ -529,8 +503,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		favorite:		isFav == "true"
 	};
 
-	if ( !data.flag ) data.flag = GenerateFlag( data );
-	if ( data.flag == "eu" ) data.flag = "europeanunion"; // ew
+	if ( data.flag == "eu" ) data.flag = "europeanunion";
 
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
@@ -567,7 +540,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	RootScope.ServerCount[ type ] += 1;
 
-	UpdateDigest( RootScope, 50 );
+	UpdateDigest( RootScope, 100 );
 }
 
 function MissingGamemodeIcon( element )

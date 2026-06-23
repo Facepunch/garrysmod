@@ -5,14 +5,14 @@
 
 		<ul>
 
-			<li><h2 ng-tranny="'saves'"></h2></li>
+			<li><h2 ng-Localize="'saves'"></h2></li>
 
 			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Localize="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
 				<ul ng-show="Category == cat && cat != 'local'" style="margin-top: 4px; margin-bottom: 15px;">
 					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'saves.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'saves.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
@@ -20,11 +20,11 @@
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Localize="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
 				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
 					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'saves.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'saves.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
@@ -32,18 +32,18 @@
 			<li>&nbsp;</li>
 
 			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Tranny="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				<a ng-click="Switch( cat, 0 )" ng-Localize="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
 				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
 					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'saves.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'saves.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li><a ng-click="OpenFolder( 'saves' )" ng-Tranny="'saves.openfolder'"></a></li>
+			<li><a ng-click="OpenFolder( 'saves' )" ng-Localize="'saves.openfolder'"></a></li>
 
 		</ul>
 
@@ -51,13 +51,13 @@
 
 	<div class="ugc_content">
 
-		<h1 class="menuheader"><span ng-Tranny="'saves.'+Category">...</span><small ng-Tranny="'saves.'+Category + '.subtitle'">...</small></h1>
+		<h1 class="menuheader"><span ng-Localize="'saves.'+Category">...</span><small ng-Localize="'saves.'+Category + '.subtitle'">...</small></h1>
 
 		<workshopcontainer>
 
-			<workshopmessage ng-show="Loading" ng-Tranny="'saves.loading'">...</workshopmessage>
-			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Tranny="'saves.none'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed_ugc'" ng-Tranny="'ugc.disabled'">...</workshopmessage>
+			<workshopmessage ng-show="Loading" ng-Localize="'saves.loading'">...</workshopmessage>
+			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Localize="'saves.none'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed_ugc'" ng-Localize="'ugc.disabled'">...</workshopmessage>
 
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
@@ -66,9 +66,9 @@
 				</preview>
 
 				<name>
-					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title || "Loading..."}}</label>
+					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}<span ng-if="!file.info.title" ng-Localize="'ugc.loading'"></label>
 				</name>
-				<author ng-hide="file.local">{{file.info.ownername}}</author>
+				<author ng-hide="file.local">{{file.info.ownername}}<span ng-if="!file.info.ownername" ng-Localize="'ugc.loading'"></span></author>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
 				<description>{{file.info.description}}</description>
@@ -78,14 +78,14 @@
 					<left>
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
-						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'saves.publish'">..</control>
-						<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'saves.delete'">..</control>
+						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Localize="'saves.publish'">..</control>
+						<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Localize="'saves.delete'">..</control>
 					</left>
 
 					<right>
-						<control ng-show="!file.local && !IsSubscribed( file ) && !Disabled" ng-click="Subscribe( file )" ng-Tranny="'ugc.subscribe'">..</control>
-						<control ng-show="!file.local && IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'ugc.unsubscribe'">..</control>
-						<control ng-click="LoadSave( file )" ng-Tranny="'saves.load'">..</control>
+						<control ng-show="!file.local && !IsSubscribed( file ) && !Disabled" ng-click="Subscribe( file )" ng-Localize="'ugc.subscribe'">..</control>
+						<control ng-show="!file.local && IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Localize="'ugc.unsubscribe'">..</control>
+						<control ng-click="LoadSave( file )" ng-Localize="'saves.load'">..</control>
 					</right>
 
 				</controls>

@@ -1,0 +1,31 @@
+
+"NPC_AntlionGuard.ShellCrack"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.000"
+	"pitch"			"90,110"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_guard/antlion_guard_shellcrack1.wav"
+		"wave"	"npc/antlion_guard/antlion_guard_shellcrack2.wav"
+	}
+}
+
+"NPC_AntlionGuard.Pain_Roar"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.000"
+	"pitch"			"90,110"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_guard/antlion_guard_pain1.wav"
+		"wave"	"npc/antlion_guard/antlion_guard_pain2.wav"
+	}
+}
+

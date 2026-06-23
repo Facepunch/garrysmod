@@ -64,35 +64,35 @@ end
 if ( CLIENT ) then
 
 	local buffer = ""
-	net.Receive( "ReceiveDupe", function( len, client )
+	net.Receive( "ReceiveDupe", function()
 
-			local part = net.ReadUInt( 8 )
-			local total = net.ReadUInt( 8 )
+		local part = net.ReadUInt( 8 )
+		local total = net.ReadUInt( 8 )
 
-			local length = net.ReadUInt( 32 )
-			local data = net.ReadData( length )
+		local length = net.ReadUInt( 32 )
+		local data = net.ReadData( length )
 
-			buffer = buffer .. data
+		buffer = buffer .. data
 
-			-- MsgN( "R [ " .. part .. " / " .. total .. " ] Size: " .. data:len() )
+		-- MsgN( "R [ " .. part .. " / " .. total .. " ] Size: " .. data:len() )
 
-			if ( part != total ) then return end
+		if ( part != total ) then return end
 
-			MsgN( "Received dupe. Size: " .. buffer:len() )
+		MsgN( "Received dupe. Size: " .. buffer:len() )
 
-			local uncompressed = util.Decompress( buffer )
-			buffer = ""
+		local uncompressed = util.Decompress( buffer )
+		buffer = ""
 
-			if ( !uncompressed ) then
-				MsgN( "Received dupe - but couldn't decompress!?" )
-				return
-			end
+		if ( !uncompressed ) then
+			MsgN( "Received dupe - but couldn't decompress!?" )
+			return
+		end
 
-			--
-			-- Set this global so we can pick it up when we're rendering a frame
-			-- See icon.lua for this process
-			--
-			g_ClientSaveDupe = util.JSONToTable( uncompressed )
+		--
+		-- Set this global so we can pick it up when we're rendering a frame
+		-- See icon.lua for this process
+		--
+		g_ClientSaveDupe = util.JSONToTable( uncompressed )
 
 	end )
 

@@ -14,7 +14,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "newton_desc"
-   };
+   }
 
    SWEP.Icon               = "vgui/ttt/icon_launch"
 end
@@ -98,14 +98,16 @@ function SWEP:FirePulse(force_fwd, force_up)
    local num = 6
 
    local bullet = {}
-   bullet.Num    = num
-   bullet.Src    = self:GetOwner():GetShootPos()
-   bullet.Dir    = self:GetOwner():GetAimVector()
-   bullet.Spread = Vector( cone, cone, 0 )
-   bullet.Tracer = 1
-   bullet.Force  = force_fwd / 10
-   bullet.Damage = 1
+   bullet.Num        = num
+   bullet.Src        = self:GetOwner():GetShootPos()
+   bullet.Dir        = self:GetOwner():GetAimVector()
+   bullet.Spread     = Vector( cone, cone, 0 )
+   bullet.Tracer     = 1
+   bullet.Force      = force_fwd / 10
+   bullet.Damage     = 1
    bullet.TracerName = "AirboatGunHeavyTracer"
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
 
    local owner = self:GetOwner()
    local fwd = force_fwd / num

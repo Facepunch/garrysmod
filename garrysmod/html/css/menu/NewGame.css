@@ -13,23 +13,16 @@ UL.category LI.mapicon IMG.favtoggle
 
 	background-image: url( '../../img/favourite.png?1' );
 }
-UL.category LI.mapicon:hover IMG.favtoggle
+UL.category LI.mapicon:hover IMG.favtoggle,
+UL.category LI.mapicon.favmap IMG.favtoggle
 {
 	visibility: visible;
 }
-UL.category LI.mapicon IMG.favtoggle_always
-{
-	position: absolute;
-	top: 8px;
-	right: 8px;
-
-	background-image: url( '../../img/favourite.png?1' );
-}
-UL.category LI.mapicon IMG.faviconadd:hover
+UL.category LI.mapicon IMG.favtoggle:hover
 {
 	background-image: url( '../../img/favourite_add.png?1' );
 }
-UL.category LI.mapicon IMG.faviconremove:hover
+UL.category LI.mapicon.favmap IMG.favtoggle:hover
 {
 	background-image: url( '../../img/favourite_remove.png?1' );
 }
@@ -132,13 +125,18 @@ gamesettings select
 	cursor: pointer;
 
 	font-weight: bold;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5C5), to(#2C2));
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5C5), to(#22bd22));
 	border: 1px solid #CCC;
 	border-color: #2a2 #2a2 #181;
 	color: white;
 	cursor: pointer;
 	vertical-align: middle;
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown .label:hover
+{
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6d6), to(#3c3));
 }
 
 .dropdown .contents
@@ -180,9 +178,29 @@ gamesettings select
 	margin-right: 10px;
 }
 
+gamesettings .scrollable
+{
+	overflow-y: scroll;
+	
+	margin: 10px;
+	margin-right: 0px; /* make room for scrollbar */
+	padding-right: 2px;
+}
+
 gamesettings .control
 {
 	margin-top: 8px;
+}
+
+gamesettings .control:first-child
+{
+	margin-top: 6px;
+}
+
+gamesettings .control-sub
+{
+	margin-top: 4px;
+	margin-left: 18px;
 }
 
 gamesettings .control LABEL
@@ -191,11 +209,18 @@ gamesettings .control LABEL
 	color: #666;
 }
 
-gamesettings .control:not(.control-numeric) LABEL
+gamesettings .control:not(.control-numeric):not(.control-text) LABEL
 {
 	position: relative;
 	top: -2px;
 }
+
+gamesettings .control-text LABEL
+{
+	margin-bottom: 2px;
+	display: block;
+}
+
 gamesettings .control-numeric LABEL
 {
 	line-height: 20px;
@@ -217,7 +242,6 @@ gamesettings .control-numeric
 gamesettings .control-numeric input[type=text]
 {
 	width: 44px;
-	margin-right: 8px;
 	padding: 2px;
 	float: right;
 	height: 20px;
@@ -261,9 +285,14 @@ gamesettings .control-numeric input[type=text]
 	position: relative;
 }
 
+.controls LI.category:hover
+{
+	background-color: #ccc;
+}
+
 .controls LI.active
 {
-	background-color: #9cf;
+	background-color: #9cf !important;
 	color: #333;
 }
 

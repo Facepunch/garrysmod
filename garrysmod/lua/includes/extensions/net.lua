@@ -72,14 +72,13 @@ end
 --
 -- Read/Write a player to the stream
 --
-local maxplayers_bits = math.ceil( math.log( 1 + game.MaxPlayers() ) / math.log( 2 ) )
 
 function net.WritePlayer( ply )
-	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, maxplayers_bits )
+	net.WriteUInt( IsValid( ply ) and ply:IsPlayer() and ply:EntIndex() or 0, MAX_PLAYER_BITS )
 end
 
 function net.ReadPlayer()
-	return Entity( net.ReadUInt( maxplayers_bits ) )
+	return Entity( net.ReadUInt( MAX_PLAYER_BITS ) )
 end
 
 
@@ -116,6 +115,29 @@ function net.ReadColor( readAlpha )
 
 end
 
+local function HasCyclicReferences( tab )
+	local function check( t, visited )
+		if ( visited[ t ] ) then return true end
+		visited[ t ] = true
+
+		for k, v in pairs( t ) do
+			if ( istable( k ) ) then
+				if ( check( k, visited ) ) then return true end
+			end
+			if ( istable( v ) ) then
+				if ( check( v, visited ) ) then return true end
+			end
+		end
+
+		visited[ t ] = nil
+
+		return false
+	end
+
+	local visited = {}
+	return check( tab, visited )
+end
+
 --
 -- Write a whole table to the stream
 -- This is less optimal than writing each
@@ -123,6 +145,12 @@ end
 -- because it adds type information before each var
 --
 function net.WriteTable( tab, seq )
+
+	-- Check for cyclic references in the table. Trying to write such a table will cause a stack overflow,
+	-- So we display a more friendly error message instead.
+	if ( HasCyclicReferences( tab ) ) then
+		error( "net.WriteTable: Cyclic table detected. Cannot write tables with cyclic references.", 2 )
+	end
 
 	if ( seq ) then
 
@@ -197,7 +225,7 @@ net.WriteVars =
 function net.WriteType( v )
 	local typeid = nil
 
-	if IsColor( v ) then
+	if ( IsColor( v ) ) then
 		typeid = TYPE_COLOR
 	else
 		typeid = TypeID( v )

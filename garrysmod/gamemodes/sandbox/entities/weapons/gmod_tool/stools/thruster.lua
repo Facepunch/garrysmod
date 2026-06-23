@@ -210,7 +210,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo( "model" )
 	if ( !IsValidThrusterModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl:lower() ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
@@ -277,11 +277,8 @@ list.Set( "ThrusterModels", "models/props_c17/TrapPropeller_Engine.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/FurnitureSink001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament001.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trashcan_indoor001b.mdl", {} )
-
-if ( IsMounted( "cstrike" ) ) then
-	list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
-	list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
-end
+list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
+list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
 
 --PHX
 list.Set( "ThrusterModels", "models/props_phx2/garbage_metalcan001a.mdl", {} )

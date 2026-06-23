@@ -15,7 +15,7 @@ local ClassHint = {
 
       fmt = function(ent, txt) return GetPTranslation(txt, key_params) end
    }
-};
+}
 
 -- Access for servers to display hints using their own HUD/UI.
 function GM:GetClassHints()
@@ -128,7 +128,7 @@ end
 
 ---- Crosshair affairs
 
-surface.CreateFont("TargetIDSmall2", {font = "TargetID",
+surface.CreateFont("TargetIDSmall2", {font = "Tahoma",
                                       size = 16,
                                       weight = 1000})
 

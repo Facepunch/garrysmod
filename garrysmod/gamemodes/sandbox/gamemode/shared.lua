@@ -52,7 +52,7 @@ function GM:CanTool( ply, trace, mode, tool, button )
 
 	-- The jeep spazzes out when applying something
 	-- todo: Find out what it's reacting badly to and change it in _physprops
-	if ( mode == "physprop" && trace.Entity:IsValid() && trace.Entity:GetClass() == "prop_vehicle_jeep" ) then
+	if ( mode == "physprop" && trace.Entity:IsValid() && ( trace.Entity:GetClass() == "prop_vehicle_jeep" || trace.Entity:GetClass() == "prop_vehicle_apc" ) ) then
 		return false
 	end
 
@@ -166,7 +166,7 @@ end
 function GM:EntityKeyValue( ent, key, value )
 
 	-- Physgun not allowed on this prop..
-	if ( key == "gmod_allowphysgun" && value == '0' ) then
+	if ( key == "gmod_allowphysgun" && value == "0" ) then
 		ent.PhysgunDisabled = true
 	end
 
@@ -257,7 +257,7 @@ end
 -----------------------------------------------------------]]
 function GM:CanDrive( pl, ent )
 
-	local classname = ent:GetClass();
+	local classname = ent:GetClass()
 
 	--
 	-- Only let physics based NPCs be driven for now
@@ -314,8 +314,8 @@ function GM:PlayerDriveAnimate( ply )
 	ply:SetPoseParameter( "move_yaw",		0 )
 	ply:SetPoseParameter( "move_scale",		0 )
 
-	AimAng.p = 0;
-	AimAng.r = 0;
+	AimAng.p = 0
+	AimAng.r = 0
 
 	ply:SetRenderAngles( AimAng )
 	ply:SetEyeTarget( driving:GetPos() )
