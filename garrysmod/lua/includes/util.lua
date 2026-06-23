@@ -53,15 +53,11 @@ local getmetatable = getmetatable
 function type( v )
 
 	local v_type = C_type( v )
-	if ( v_type != "userdata" ) then return v_type end
+	if ( v_type ~= "userdata" ) then return v_type end
 
 	local metatable = getmetatable( v )
-	if ( !metatable ) then return "UserData" end
-
-	local metaName = metatable.MetaName
-	if ( C_type( metaName ) != "string" ) then return "UserData" end
-
-	return metaName
+	local metaName = metatable and metatable.MetaName
+	return C_type( metaName ) == "string" and metaName or "UserData"
 
 end
 _G.C_type = C_type
