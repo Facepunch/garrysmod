@@ -408,7 +408,7 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		LoadSpawnpointNamesFromGModPlayerSpawn()
 
 		self.SpawnPoints = {}
-		for _, ent in ipairs( ents.GetAll() ) do
+		for _, ent in ents.Iterator() do
 			if ( SpawnPointEntityClasses[ ent:GetClass() ] ) then
 				self.SpawnPoints[#self.SpawnPoints + 1] = ent
 
