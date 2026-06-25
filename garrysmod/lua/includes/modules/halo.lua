@@ -16,6 +16,8 @@ local modelFlags = bit.bor( STUDIO_RENDER, STUDIO_SKIP_DECALS or 0 )
 function Add( entities, color, blurx, blury, passes, add, ignorez )
 
 	if ( table.IsEmpty( entities ) ) then return end
+	local call = hook.Run("ShouldDrawHalo", entities)
+	if ( call == false ) then return end
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
 
