@@ -119,9 +119,10 @@ local function AddSearchProvider( listname, ctype, stype )
 
 			local name = v.PrintName or v.Name
 			if ( !isstring( name ) and !isstring( name_c ) ) then continue end
-			local name_language = (isstring(name) and name:sub(1,1) == "#") and language.GetPhrase(name) or name
 
-			if ( ( isstring( name_language ) and name_language:lower():find( str, nil, true ) ) or ( isstring( name_c ) and name_c:lower():find( str, nil, true ) ) ) then
+			local name_lang = ( isstring( name ) and language.GetPhrase( name ) or name )
+			if ( ( isstring( name_lang ) and name_lang:lower():find( str, nil, true ) ) or
+				 ( isstring( name_c ) and name_c:lower():find( str, nil, true ) ) ) then
 
 				local contentIconData = {
 					nicename = name or name_c,
