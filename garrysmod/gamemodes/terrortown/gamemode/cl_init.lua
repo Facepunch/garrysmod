@@ -363,7 +363,7 @@ function CheckIdle()
          idle.mx = gui.MouseX()
          idle.my = gui.MouseY()
          idle.t = CurTime()
-      elseif client:GetPos():Distance(idle.pos) > 10 then
+      elseif client:GetPos():DistToSqr(idle.pos) > 100 then
          -- Even if players don't move their mouse, they might still walk
          idle.pos = client:GetPos()
          idle.t = CurTime()

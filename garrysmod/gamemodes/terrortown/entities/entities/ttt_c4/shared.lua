@@ -476,7 +476,7 @@ if SERVER then
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
 
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             -- These cases should never arise in normal play, so no messages
             return
          elseif time < C4_MINIMUM_TIME or time > C4_MAXIMUM_TIME then
@@ -512,7 +512,7 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and not bomb.DisarmCausedExplosion and bomb:GetArmed() then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             return
          elseif bomb.SafeWires[wire] or ply:IsTraitor() or ply == bomb:GetOwner() then
             LANG.Msg(ply, "c4_disarmed")
@@ -540,7 +540,7 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             return
          elseif not ply:CanCarryType(WEAPON_EQUIP1) then
             LANG.Msg(ply, "c4_no_room")
@@ -571,7 +571,7 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             return
          else
             -- spark to show onlookers we destroyed this bomb

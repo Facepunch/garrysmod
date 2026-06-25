@@ -115,6 +115,7 @@ local GetPTranslation = LANG.GetParamTranslation
 local FormatTime = util.SimpleTime
 
 local near_cursor_dist = 180
+local near_cursor_distsqrt = near_cursor_dist ^ 2
 
 function RADAR:Draw(client)
    if not client then return end
@@ -172,8 +173,8 @@ function RADAR:Draw(client)
       if not scrpos.visible then
          continue
       end
-      md = mpos:Distance(Vector(scrpos.x, scrpos.y, 0))
-      if md < near_cursor_dist then
+      md = mpos:DistToSqr(Vector(scrpos.x, scrpos.y, 0))
+      if md < near_cursor_distsqrt then
          alpha = math.Clamp(alpha * (md / near_cursor_dist), 40, 230)
       end
 
