@@ -80,7 +80,7 @@ local function SetCache( key, value )
 
 	-- It is unlikely that this could ever happen but with a invalid __tostring method tostring may silently fail
 	if ( strValue == nil ) then
-		error( "bad argument #2 to 'value' (string expected, got " .. type( value ) .. ")", 2 )
+		error( "bad argument #2 to 'cookie.Set' (string expected, got " .. type( value ) .. ")", 2 )
 	end
 
 	if CachedEntries[ key ] then
