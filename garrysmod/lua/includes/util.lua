@@ -48,21 +48,76 @@ function Material( name, words )
 
 end
 
+--[[---------------------------------------------------------
+	type override so we can return the correct type for our custom types
+-----------------------------------------------------------]]
 local C_type = type
+local getmetatable = getmetatable
 function type( v )
 
 	local v_type = C_type( v )
-	if ( v_type != "userdata" ) then return v_type end
+	if ( v_type ~= "userdata" ) then return v_type end
 
 	local metatable = getmetatable( v )
-	if ( !metatable ) then return "UserData" end
-
-	local metaName = metatable.MetaName
-	if ( C_type( metaName ) != "string" ) then return "UserData" end
-
-	return metaName
+	local metaName = metatable and metatable.MetaName
+	return C_type( metaName ) == "string" and metaName or "UserData"
 
 end
+
+--[[---------------------------------------------------------
+	TypeID
+-----------------------------------------------------------]]
+
+-- Builtin types don't have MetaIDs in their metatables
+local STORED_TYPE_IDS = {
+	["nil"] = TYPE_NIL,
+	["boolean"] = TYPE_BOOL,
+	["number"] = TYPE_NUMBER,
+	["string"] = TYPE_STRING,
+	["table"] = TYPE_TABLE,
+	["function"] = TYPE_FUNCTION,
+	["thread"] = TYPE_THREAD,
+}
+
+function TypeID( v )
+
+	local id = STORED_TYPE_IDS[ C_type( v ) ]
+	if ( id ) then return id end
+
+	-- Garry's Mod types have their IDs in their metatables
+	local vMeta = getmetatable( v )
+	return vMeta and vMeta.MetaID or TYPE_USERDATA
+
+end
+
+--[[---------------------------------------------------------
+	is* functions
+-----------------------------------------------------------]]
+function isstring( v ) return C_type( v ) == "string" end
+function isnumber( v ) return C_type( v ) == "number" end
+function istable( v ) return C_type( v ) == "table" end
+function isfunction( v ) return C_type( v ) == "function" end
+function isbool( v ) return v == true or v == false end
+function isangle( v ) return type( v ) == "Angle" end
+function isvector( v ) return type( v ) == "Vector" end
+function ismatrix( v ) return type( v ) == "VMatrix" end
+function ispanel( v ) return type( v ) == "Panel" end
+function isentity( v )
+	if ( C_type( v ) == "userdata" ) then
+		local vMeta = getmetatable( v )
+		if ( vMeta ) then
+			if ( vMeta.MetaName == "Entity" ) then
+				return true
+			end
+			vMeta = vMeta.MetaBaseClass
+			if ( vMeta ) then
+				return vMeta.MetaName == "Entity"
+			end
+		end
+	end
+	return false
+end
+IsEntity = isentity
 
 --[[---------------------------------------------------------
 	IsTableOfEntitiesValid
