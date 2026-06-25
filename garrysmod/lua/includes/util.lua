@@ -48,6 +48,9 @@ function Material( name, words )
 
 end
 
+--[[---------------------------------------------------------
+	type override so we can return the correct type for our custom types
+-----------------------------------------------------------]]
 local C_type = type
 local getmetatable = getmetatable
 function type( v )
@@ -60,7 +63,6 @@ function type( v )
 	return C_type( metaName ) == "string" and metaName or "UserData"
 
 end
-_G.C_type = C_type
 
 --[[---------------------------------------------------------
 	TypeID
@@ -76,7 +78,6 @@ local STORED_TYPE_IDS = {
 	["function"] = TYPE_FUNCTION,
 	["thread"] = TYPE_THREAD,
 }
-local TYPE_USERDATA = TYPE_USERDATA
 
 function TypeID( v )
 
@@ -99,6 +100,8 @@ function isfunction( v ) return C_type( v ) == "function" end
 function isbool( v ) return v == true or v == false end
 function isangle( v ) return type( v ) == "Angle" end
 function isvector( v ) return type( v ) == "Vector" end
+function ismatrix( v ) return type( v ) == "VMatrix" end
+function ispanel( v ) return type( v ) == "Panel" end
 function isentity( v )
 	if ( C_type( v ) == "userdata" ) then
 		local vMeta = getmetatable( v )
@@ -114,9 +117,7 @@ function isentity( v )
 	end
 	return false
 end
-IsEntity = isentity -- Backwards compatibility?
-function ismatrix( v ) return type( v ) == "VMatrix" end
-function ispanel( v ) return type( v ) == "Panel" end
+IsEntity = isentity
 
 --[[---------------------------------------------------------
 	IsTableOfEntitiesValid
@@ -586,4 +587,3 @@ function GetConVarString( name )
 	local c = GetConVar( name )
 	return ( c and c:GetString() ) or ""
 end
-
