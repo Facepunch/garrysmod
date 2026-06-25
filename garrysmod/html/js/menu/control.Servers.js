@@ -718,5 +718,3 @@ function ReceiveFoundServers( data )
 
 	UpdateDigest( RootScope, 60 );
 }
-
-
