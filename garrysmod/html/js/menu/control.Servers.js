@@ -77,6 +77,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		ServerTypes[ RootScope.ServerType ].gamemodes = {};
 		ServerTypes[ RootScope.ServerType ].list.length = 0;
+		GamemodeDetails = {};
 
 		if ( !IN_ENGINE ) TestUpdateServers( RootScope.ServerType, RequestNum[ RootScope.ServerType ] );
 
