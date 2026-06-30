@@ -13,68 +13,66 @@ TOOL.Information = {
 }
 
 local ScaleYZ = {
-	"ValveBiped.Bip01_L_UpperArm",
-	"ValveBiped.Bip01_L_Forearm",
-	"ValveBiped.Bip01_L_Thigh",
-	"ValveBiped.Bip01_L_Calf",
-	"ValveBiped.Bip01_R_UpperArm",
-	"ValveBiped.Bip01_R_Forearm",
-	"ValveBiped.Bip01_R_Thigh",
-	"ValveBiped.Bip01_R_Calf",
-	"ValveBiped.Bip01_Spine2",
-	"ValveBiped.Bip01_Spine1",
-	"ValveBiped.Bip01_Spine",
-	"ValveBiped.Bip01_Spinebut",
+	["ValveBiped.Bip01_L_UpperArm"] = true,
+	["ValveBiped.Bip01_L_Forearm"] = true,
+	["ValveBiped.Bip01_L_Thigh"] = true,
+	["ValveBiped.Bip01_L_Calf"] = true,
+	["ValveBiped.Bip01_R_UpperArm"] = true,
+	["ValveBiped.Bip01_R_Forearm"] = true,
+	["ValveBiped.Bip01_R_Thigh"] = true,
+	["ValveBiped.Bip01_R_Calf"] = true,
+	["ValveBiped.Bip01_Spine2"] = true,
+	["ValveBiped.Bip01_Spine1"] = true,
+	["ValveBiped.Bip01_Spine"] = true,
+	["ValveBiped.Bip01_Spinebut"] = true,
 
 	-- Vortigaunt
-	"ValveBiped.spine4",
-	"ValveBiped.spine3",
-	"ValveBiped.spine2",
-	"ValveBiped.spine1",
-	"ValveBiped.hlp_ulna_R",
-	"ValveBiped.hlp_ulna_L",
-	"ValveBiped.arm1_L",
-	"ValveBiped.arm1_R",
-	"ValveBiped.arm2_L",
-	"ValveBiped.arm2_R",
-	"ValveBiped.leg_bone1_L",
-	"ValveBiped.leg_bone1_R",
-	"ValveBiped.leg_bone2_L",
-	"ValveBiped.leg_bone2_R",
-	"ValveBiped.leg_bone3_L",
-	"ValveBiped.leg_bone3_R",
+	["ValveBiped.spine4"] = true,
+	["ValveBiped.spine3"] = true,
+	["ValveBiped.spine2"] = true,
+	["ValveBiped.spine1"] = true,
+	["ValveBiped.hlp_ulna_R"] = true,
+	["ValveBiped.hlp_ulna_L"] = true,
+	["ValveBiped.arm1_L"] = true,
+	["ValveBiped.arm1_R"] = true,
+	["ValveBiped.arm2_L"] = true,
+	["ValveBiped.arm2_R"] = true,
+	["ValveBiped.leg_bone1_L"] = true,
+	["ValveBiped.leg_bone1_R"] = true,
+	["ValveBiped.leg_bone2_L"] = true,
+	["ValveBiped.leg_bone2_R"] = true,
+	["ValveBiped.leg_bone3_L"] = true,
+	["ValveBiped.leg_bone3_R"] = true,
 
 	-- Team Fortress 2
-	"bip_knee_L",
-	"bip_knee_R",
-	"bip_hip_R",
-	"bip_hip_L",
+	["bip_knee_L"] = true,
+	["bip_knee_R"] = true,
+	["bip_hip_R"] = true,
+	["bip_hip_L"] = true,
 }
 
 local ScaleXZ = {
-	"ValveBiped.Bip01_pelvis",
+	["ValveBiped.Bip01_pelvis"] = true,
 
 	-- Team Fortress 2
-	"bip_upperArm_L",
-	"bip_upperArm_R",
-	"bip_lowerArm_L",
-	"bip_lowerArm_R",
-	"bip_forearm_L",
-	"bip_forearm_R",
+	["bip_upperArm_L"] = true,
+	["bip_upperArm_R"] = true,
+	["bip_lowerArm_L"] = true,
+	["bip_lowerArm_R"] = true,
+	["bip_forearm_L"] = true,
+	["bip_forearm_R"] = true,
 }
 
 local function GetNiceBoneScale( name, scale )
-
-	if ( table.HasValue( ScaleYZ, name ) or string.find( name:lower(), "leg" ) or string.find( name:lower(), "arm" ) ) then
+	if ( ScaleYZ[ name ] or string.find( name:lower(), "leg" ) or string.find( name:lower(), "arm" ) ) then
 		return Vector( 0, scale, scale )
 	end
 
-	if ( table.HasValue( ScaleXZ, name ) ) then
+	if ( ScaleXZ[ name ] ) then
 		return Vector( scale, 0, scale )
 	end
 
 	return Vector( scale, scale, scale )
-
 end
 
 --Scale the specified bone by Scale
