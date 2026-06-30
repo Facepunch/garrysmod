@@ -132,14 +132,15 @@ function TOOL.BuildCPanel( CPanel )
 	local filter = CPanel:TextEntry( "#spawnmenu.quick_filter_tool" )
 	filter:SetUpdateOnType( true )
 
-	-- Remove duplicate materials. table.HasValue is used to preserve material order
+	-- Remove duplicate materials. A lookup table is used to preserve material order efficiently.
 	local materials = {}
+	local seen = {}
 	for id, str in ipairs( list.Get( "OverrideMaterials" ) ) do
-		if ( !table.HasValue( materials, str ) ) then
-			table.insert( materials, str )
-		end
+	    if ( !seen[ str ] ) then
+	        seen[ str ] = true
+	        table.insert( materials, str )
+	    end
 	end
-
 	local matlist = CPanel:MatSelect( "material_override", materials, true, 0.25, 0.25 )
 
 	filter.OnValueChange = function( s, txt )
