@@ -62,12 +62,11 @@ function PANEL:Init()
 	end
 
 end
+
 function PANEL:ScreenshotScan( folder )
+
 	local bReturn = false
 	local Screenshots = file.Find( folder .. "*.*", "GAME" )
-
-	-- Shuffle the table in-place to randomize backgrounds without generating table garbage
-	table.Shuffle( Screenshots )
 
 	for _, v in ipairs( Screenshots ) do
 		AddBackgroundImage( folder .. v )
@@ -75,6 +74,7 @@ function PANEL:ScreenshotScan( folder )
 	end
 
 	return bReturn
+
 end
 
 function PANEL:Paint()
