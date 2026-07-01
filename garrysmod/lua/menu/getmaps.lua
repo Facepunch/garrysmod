@@ -1,4 +1,3 @@
-
 local MapPatterns = {}
 local MapNames = {}
 
@@ -186,16 +185,16 @@ local function UpdateMaps()
 	MapNames[ "rd_" ] = "Team Fortress 2"
 	MapNames[ "pd_" ] = "Team Fortress 2"
 	MapNames[ "sd_" ] = "Team Fortress 2"
-	MapNames[ "tc_" ] = "Team Fortress 2" // Territory Control
-	MapNames[ "tr_" ] = "Team Fortress 2" // Training
+	MapNames[ "tc_" ] = "Team Fortress 2" -- Territory Control
+	MapNames[ "tr_" ] = "Team Fortress 2" -- Training
 	MapNames[ "trade_" ] = "Team Fortress 2"
-	MapNames[ "pass_" ] = "Team Fortress 2" // PASS time
-	MapNames[ "vsh_" ] = "Team Fortress 2" // Versus Saxton Hale
-	MapNames[ "zi_" ] = "Team Fortress 2" // Zombie Invasion
-	MapNames[ "tow_" ] = "Team Fortress 2" // Tug of War
-	MapNames[ "2koth_" ] = "Team Fortress 2" // Double King of the Hill
-	MapNames[ "cppl_" ] = "Team Fortress 2" // Control Points => Payload
-	MapNames[ "htf_" ] = "Team Fortress 2" // Hold the Flag
+	MapNames[ "pass_" ] = "Team Fortress 2" -- PASS time
+	MapNames[ "vsh_" ] = "Team Fortress 2" -- Versus Saxton Hale
+	MapNames[ "zi_" ] = "Team Fortress 2" -- Zombie Invasion
+	MapNames[ "tow_" ] = "Team Fortress 2" -- Tug of War
+	MapNames[ "2koth_" ] = "Team Fortress 2" -- Double King of the Hill
+	MapNames[ "cppl_" ] = "Team Fortress 2" -- Control Points => Payload
+	MapNames[ "htf_" ] = "Team Fortress 2" -- Hold the Flag
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
@@ -342,6 +341,12 @@ local function RefreshMaps( skip )
 	local maps = file.Find( "maps/*.bsp", "GAME" )
 	LoadFavourites()
 
+	-- Build a fast lookup table for O(1) favorite checks
+	local fav_lookup = {}
+	for _, mapname in ipairs( favmaps ) do
+		fav_lookup[ mapname ] = true
+	end
+
 	for k, v in ipairs( maps ) do
 		local name = string.lower( string.gsub( v, "%.bsp$", "" ) )
 		local prefix = string.match( name, "^(.-_)" )
@@ -376,12 +381,9 @@ local function RefreshMaps( skip )
 		-- Throw all uncategorised maps into Other
 		Category = Category or "Other"
 
-		local fav
-
-		if ( table.HasValue( favmaps, name ) ) then
-			fav = true
-		end
-
+		-- Fast O(1) lookup for favorite check
+		local fav = fav_lookup[ name ]
+		
 		local csgo = false
 
 		if ( Category == "Counter-Strike" and file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then

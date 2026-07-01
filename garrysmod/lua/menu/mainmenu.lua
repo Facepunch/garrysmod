@@ -66,13 +66,11 @@ end
 function PANEL:ScreenshotScan( folder )
 
 	local bReturn = false
-
 	local Screenshots = file.Find( folder .. "*.*", "GAME" )
-	for k, v in RandomPairs( Screenshots ) do
 
+	for _, v in ipairs( Screenshots ) do
 		AddBackgroundImage( folder .. v )
 		bReturn = true
-
 	end
 
 	return bReturn
