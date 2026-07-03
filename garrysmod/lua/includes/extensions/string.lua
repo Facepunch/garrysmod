@@ -2,6 +2,12 @@
 local string = string
 local math = math
 
+-- Allow these, but no more
+local string_sub = string.sub
+local string_gsub = string.gsub
+local string_len = string.len
+local string_byte = string.byte
+
 --[[---------------------------------------------------------
 	Name: string.ToTable( string )
 -----------------------------------------------------------]]
@@ -12,7 +18,7 @@ function string.ToTable( input )
 	local str = tostring( input )
 
 	for i = 1, #str do
-		tbl[i] = string.sub( str, i, i )
+		tbl[i] = string_sub( str, i, i )
 	end
 
 	return tbl
@@ -41,11 +47,11 @@ local javascript_escape_replacements = {
 
 function string.JavascriptSafe( str )
 
-	str = string.gsub( str, ".", javascript_escape_replacements )
+	str = string_gsub( str, ".", javascript_escape_replacements )
 
 	-- U+2028 and U+2029 are treated as line separators in JavaScript, handle separately as they aren't single-byte
-	str = string.gsub( str, "\226\128\168", "\\\226\128\168" )
-	str = string.gsub( str, "\226\128\169", "\\\226\128\169" )
+	str = string_gsub( str, "\226\128\168", "\\\226\128\168" )
+	str = string_gsub( str, "\226\128\169", "\\\226\128\169" )
 
 	return str
 
@@ -72,20 +78,18 @@ local pattern_escape_replacements = {
 }
 
 function string.PatternSafe( str )
-	return ( string.gsub( str, ".", pattern_escape_replacements ) )
+	return ( string_gsub( str, ".", pattern_escape_replacements ) )
 end
 
 --[[---------------------------------------------------------
-	Name: explode(separator ,string)
+	Name: Explode( separator, string )
 	Desc: Takes a string and turns it into a table
-	Usage: string.explode( " ", "Separate this string")
+	Usage: string.Explode( " ", "Separate this string")
 -----------------------------------------------------------]]
-local totable = string.ToTable
-local string_sub = string.sub
+local string_ToTable = string.ToTable
 local string_find = string.find
-local string_len = string.len
 function string.Explode( separator, str, withpattern )
-	if ( separator == "" ) then return totable( str ) end
+	if ( separator == "" ) then return string_ToTable( str ) end
 	if ( withpattern == nil ) then withpattern = false end
 
 	local ret = {}
@@ -108,7 +112,7 @@ function string.Split( str, delimiter )
 end
 
 --[[---------------------------------------------------------
-	Name: Implode( separator, Table)
+	Name: Implode( separator, Table )
 	Desc: Takes a table and turns it into a string
 	Usage: string.Implode( " ", { "This", "Is", "A", "Table" } )
 -----------------------------------------------------------]]
@@ -123,14 +127,14 @@ end
 -----------------------------------------------------------]]
 function string.GetExtensionFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = string.byte( path, i )
+		local c = string_byte( path, i )
 
 		if ( c == 47 or c == 92 ) then -- Slash
 			return nil
 		end
 
 		if ( c == 46 ) then -- Point
-			return string.sub( path, i + 1 )
+			return string_sub( path, i + 1 )
 		end
 	end
 
@@ -142,12 +146,12 @@ end
 -----------------------------------------------------------]]
 function string.StripExtension( path )
 	for i = #path, 1, -1 do
-		local c = string.byte( path, i )
+		local c = string_byte( path, i )
 
 		if ( c == 47 or c == 92 ) then -- Slash
 			return path
 		elseif ( c == 46 ) then -- Point
-			return string.sub( path, 1, i - 1 )
+			return string_sub( path, 1, i - 1 )
 		end
 	end
 
@@ -161,10 +165,10 @@ end
 -----------------------------------------------------------]]
 function string.GetPathFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = string.byte( path, i )
+		local c = string_byte( path, i )
 
 		if ( c == 47 or c == 92 ) then -- Slash
-			return string.sub( path, 1, i )
+			return string_sub( path, 1, i )
 		end
 	end
 
@@ -178,10 +182,10 @@ end
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
 	for i = #path, 1, -1 do
-		local c = string.byte( path, i )
+		local c = string_byte( path, i )
 
 		if ( c == 47 or c == 92 ) then -- Slash
-			return string.sub( path, i + 1 )
+			return string_sub( path, i + 1 )
 		end
 	end
 
@@ -257,8 +261,8 @@ function string.NiceTime( seconds )
 
 end
 
-function string.Left( str, num ) return string.sub( str, 1, num ) end
-function string.Right( str, num ) return string.sub( str, -num ) end
+function string.Left( str, num ) return string_sub( str, 1, num ) end
+function string.Right( str, num ) return string_sub( str, -num ) end
 
 function string.Replace( str, tofind, toreplace )
 	local tbl = string.Explode( tofind, str )
@@ -314,13 +318,13 @@ end
 
 function string.SetChar( s, k, v )
 
-	return string.sub( s, 0, k - 1 ) .. v .. string.sub( s, k + 1 )
+	return string_sub( s, 0, k - 1 ) .. v .. string_sub( s, k + 1 )
 
 end
 
 function string.GetChar( s, k )
 
-	return string.sub( s, k, k )
+	return string_sub( s, k, k )
 
 end
 
@@ -332,21 +336,21 @@ function meta:__index( key )
 	if ( val ~= nil ) then
 		return val
 	elseif ( tonumber( key ) ) then
-		return string.sub( self, key, key )
+		return string_sub( self, key, key )
 	end
 
 end
 
 function string.StartsWith( str, start )
 
-	return string.sub( str, 1, string.len( start ) ) == start
+	return string_sub( str, 1, string_len( start ) ) == start
 
 end
 string.StartWith = string.StartsWith
 
 function string.EndsWith( str, endStr )
 
-	return endStr == "" or string.sub( str, -string.len( endStr ) ) == endStr
+	return endStr == "" or string_sub( str, -string_len( endStr ) ) == endStr
 
 end
 
@@ -380,7 +384,7 @@ function string.Comma( number, str )
 	end
 
 	local index = -1
-	while index ~= 0 do number, index = string.gsub( number, "^(-?%d+)(%d%d%d)", replace ) end
+	while index ~= 0 do number, index = string_gsub( number, "^(-?%d+)(%d%d%d)", replace ) end
 
 	return number
 
@@ -388,7 +392,7 @@ end
 
 function string.Interpolate( str, lookuptable )
 
-	return ( string.gsub( str, "{([_%a][_%w]*)}", lookuptable ) )
+	return ( string_gsub( str, "{([_%a][_%w]*)}", lookuptable ) )
 
 end
 
@@ -448,14 +452,14 @@ function string.NiceName( name )
 		if ( #word == 1 ) then
 			newParts[i] = string.upper( word )
 		else
-			newParts[i] = string.upper( string.sub( word, 1, 1 ) ) .. string.sub( word, 2 )
+			newParts[i] = string.upper( string_sub( word, 1, 1 ) ) .. string_sub( word, 2 )
 		end
 	end
 
 	return table.concat( newParts, " " )]]
 
 	local ret = table.concat( newParts, " " )
-	ret = string.upper( string.sub( ret, 1, 1 ) ) .. string.sub( ret, 2 )
+	ret = string.upper( string_sub( ret, 1, 1 ) ) .. string_sub( ret, 2 )
 	return ret
 
 end
