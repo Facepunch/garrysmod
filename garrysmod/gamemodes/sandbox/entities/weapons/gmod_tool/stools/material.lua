@@ -132,7 +132,7 @@ function TOOL.BuildCPanel( CPanel )
 	local filter = CPanel:TextEntry( "#spawnmenu.quick_filter_tool" )
 	filter:SetUpdateOnType( true )
 
-	-- Remove duplicate materials. A lookup table is used to preserve material order efficiently.
+	-- Remove duplicate materials, preserving order
 	local materials = {}
 	local seen = {}
 	for id, str in ipairs( list.Get( "OverrideMaterials" ) ) do
