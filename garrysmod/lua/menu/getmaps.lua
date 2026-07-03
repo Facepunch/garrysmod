@@ -1,3 +1,4 @@
+
 local MapPatterns = {}
 local MapNames = {}
 
@@ -113,7 +114,7 @@ local function UpdateMaps()
 		"kandagal", "kandagal_night", "market", "market_coop", "market_night", "ministry", "ministry_coop", "ministry_night", "panj", "panj_night",
 		"peak", "peak_night", "revolt", "revolt_coop", "revolt_night", "siege", "siege_coop", "sinjar", "sinjar_coop", "sinjar_night", "station",
 		"station_night", "tell", "tell_coop", "tell_night", "training", "uprising", "uprising_night", "verticality", "verticality_coop", "verticality_night"
-	} 
+	}
 	for _, map in ipairs( InsurgencyMaps ) do MapNames[ map ] = "Insurgency" end
 
 	MapNames[ "dm_" ] = "Half-Life 2: Deathmatch"
@@ -277,7 +278,7 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps or ( cookiestr and string.Explode( ";", cookiestr ) or {} )
+	favmaps = favmaps or ( cookiestr and string.Split( cookiestr, ";" ) or {} )
 
 end
 
@@ -341,7 +342,6 @@ local function RefreshMaps( skip )
 	local maps = file.Find( "maps/*.bsp", "GAME" )
 	LoadFavourites()
 
-	-- Build a fast lookup table for O(1) favorite checks
 	local fav_lookup = {}
 	for _, mapname in ipairs( favmaps ) do
 		fav_lookup[ mapname ] = true
@@ -381,9 +381,6 @@ local function RefreshMaps( skip )
 		-- Throw all uncategorised maps into Other
 		Category = Category or "Other"
 
-		-- Fast O(1) lookup for favorite check
-		local fav = fav_lookup[ name ]
-		
 		local csgo = false
 
 		if ( Category == "Counter-Strike" and file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
@@ -400,7 +397,7 @@ local function RefreshMaps( skip )
 
 		table.insert( MapList[ Category ], name )
 
-		if ( fav ) then
+		if ( fav_lookup[ name ] ) then
 			if ( !MapList[ "Favourites" ] ) then
 				MapList[ "Favourites" ] = {}
 			end
