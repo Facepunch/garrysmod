@@ -141,6 +141,7 @@ function TOOL.BuildCPanel( CPanel )
 	        table.insert( materials, str )
 	    end
 	end
+
 	local matlist = CPanel:MatSelect( "material_override", materials, true, 0.25, 0.25 )
 
 	filter.OnValueChange = function( s, txt )
