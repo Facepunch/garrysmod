@@ -11,12 +11,6 @@ local function Undo( pnl )
 
 end
 
-local function User_Cleanup( pnl )
-
-	-- This is added by the cleanup module dynamically
-
-end
-
 local function LoadInConvarDefaults( cvars )
 	for k, v in pairs( cvars ) do
 		local convar = GetConVar( k )
