@@ -237,7 +237,6 @@ else
 		if ( !IsValid( pnl ) ) then return end
 
 		local cleanup_types_s = {}
-
 		for _, val in ipairs( cleanup_types ) do
 			cleanup_types_s[ language.GetPhrase( "Cleanup_" .. val ) ] = val
 		end
@@ -249,6 +248,14 @@ else
 		for key, val in SortedPairs( cleanup_types_s ) do
 			pnl:Button( key, command, val )
 		end
+	end
+
+	function UpdateUI()
+		local Panel = controlpanel.Get( "User_Cleanup" )
+		if ( IsValid( Panel ) ) then BuildPanel( Panel, "gmod_cleanup" ) end
+
+		local Panel = controlpanel.Get( "Admin_Cleanup" )
+		if ( IsValid( Panel ) ) then BuildPanel( Panel, "gmod_admin_cleanup" ) end
 	end
 
 	hook.Add( "PopulateToolMenu", "Cleanup_RegisterToolMenu", function()
