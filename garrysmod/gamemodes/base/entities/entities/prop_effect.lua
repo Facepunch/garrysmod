@@ -99,31 +99,47 @@ end
 
 -- Copied from base_gmodentity.lua
 ENT.MaxWorldTipDistance = 256
+
+local lastLookedFrame = nil
+local lastLooked = nil
+
 function ENT:BeingLookedAtByLocalPlayer()
-	local ply = LocalPlayer()
-	if ( !IsValid( ply ) ) then return false end
 
-	local view = ply:GetViewEntity()
-	local dist = self.MaxWorldTipDistance
-	dist = dist * dist
+	local currentFrame = FrameNumber()
 
-	-- If we're spectating a player, perform an eye trace
-	if ( view:IsPlayer() ) then
-		return view:EyePos():DistToSqr( self:GetPos() ) <= dist && view:GetEyeTrace().Entity == self
+	if ( currentFrame ~= lastLookedFrame ) then
+		lastLookedFrame = currentFrame
+
+		local trace = nil
+		local viewer = GetViewEntity()
+
+		-- If we're spectating a player, perform an eye trace
+		if ( viewer:IsPlayer() ) then
+			trace = viewer:GetEyeTrace()
+		else
+			-- If we're not spectating a player, perform a manual trace from the entity's position
+			local startPos = viewer:GetPos()
+			local endPos = viewer:GetForward()
+			endPos:Mul(32768)
+			endPos:Add(startPos)
+
+			trace = util.TraceLine( {
+				start = startpos,
+				endpos = endpos,
+				filter = viewer
+			} )
+		end
+
+		lastLooked = trace.Entity
+		local distance = lastLooked.MaxWorldTipDistance
+
+		if ( !distance || trace.Fraction * 32768 > distance ) then
+			lastLooked = nil
+		end
 	end
 
-	-- If we're not spectating a player, perform a manual trace from the entity's position
-	local pos = view:GetPos()
+	return self == lastLooked
 
-	if ( pos:DistToSqr( self:GetPos() ) <= dist ) then
-		return util.TraceLine( {
-			start = pos,
-			endpos = pos + ( view:GetAngles():Forward() * dist ),
-			filter = view
-		} ).Entity == self
-	end
-
-	return false
 end
 
 function ENT:PhysicsUpdate( physobj )
