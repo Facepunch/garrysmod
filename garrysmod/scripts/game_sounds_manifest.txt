@@ -142,6 +142,7 @@ game_sounds_manifest
 	// Counter-Strike: Source
 	"precache_file"		"scripts/sounds/cs_game_sounds_radio.txt"
 	"precache_file"		"scripts/sounds/cs_game_sounds_weapons.txt"
+	"precache_file"		"scripts/sounds/cs_game_sounds_world.txt"
 
 	// Day of Defeat
 	"precache_file"		"scripts/sounds/dod_game_sounds_weapons.txt"
