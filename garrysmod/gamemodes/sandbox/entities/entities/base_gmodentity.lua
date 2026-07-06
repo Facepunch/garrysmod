@@ -50,6 +50,7 @@ if ( CLIENT ) then
 	end
 
 	function ENT:Think()
+
 		if ( self:BeingLookedAtByLocalPlayer() ) then
 			local text = self:GetOverlayText()
 
@@ -58,6 +59,7 @@ if ( CLIENT ) then
 				halo.Add( { self }, color_white, 1, 1, 1, true, true )
 			end
 		end
+
 	end
 end
 
