@@ -18,7 +18,7 @@ local function LastWordsRecv()
    local death_type = net.ReadUInt(2)
 
    -- only append "--" if there's no ending interpunction
-   local final = string.match(words, "[\\.\\!\\?]$") != nil
+   local final = string.match(words, "[.!?]$") != nil
    local lastWordsStr = words .. (final and " " or "-- ")
 
    -- add optional context relating to death type

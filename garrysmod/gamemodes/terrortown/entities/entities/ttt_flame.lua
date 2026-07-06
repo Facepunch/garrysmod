@@ -209,7 +209,7 @@ function ENT:BackupDraw()
    side.r = side.r + 0.1
 
    cam.Start3D2D(vstart, side, 1)
-   draw.DrawText("FIRE! IT BURNS!", "Default", 0, 0, COLOR_RED, ALIGN_CENTER)
+   draw.DrawText("FIRE! IT BURNS!", "Default", 0, 0, COLOR_RED, TEXT_ALIGN_CENTER)
    cam.End3D2D()
 
    render.SetMaterial(fakefire)

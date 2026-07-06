@@ -269,7 +269,7 @@ local LastWordContext = {
 
 local function LastWordsMsg(ply, words)
    -- only append "--" if there's no ending interpunction
-   local final = string.match(words, "[\\.\\!\\?]$") != nil
+   local final = string.match(words, "[.!?]$") != nil
 
    -- add optional context relating to death type
    local death_type = ply.death_type
