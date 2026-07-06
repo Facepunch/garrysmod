@@ -297,7 +297,7 @@ end
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
 	if ( char ) then char = string.PatternSafe( char ) else char = "%s" end
-	return string.match( s, "^" .. char .. "*(.+)$" ) or s
+	return string.match( s, "^" .. char .. "*(.-)$" ) or s
 end
 
 function string.NiceSize( size )

@@ -796,8 +796,8 @@ if ( !table.move ) then
 		local buffer = { unpack( sourceTbl, from, to ) }
 
 		dest = math.floor( dest - 1 )
-		for i, v in ipairs( buffer ) do
-			destTbl[ dest + i ] = v
+		for i = 1, to - from + 1 do
+			destTbl[ dest + i ] = buffer[ i ]
 		end
 
 		return destTbl
