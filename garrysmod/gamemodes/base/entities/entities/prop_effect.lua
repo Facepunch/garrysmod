@@ -58,6 +58,12 @@ function ENT:Initialize()
 		local tab = ents.FindByClassAndParent( "prop_dynamic", self )
 		if ( tab && IsValid( tab[ 1 ] ) ) then self.AttachedEntity = tab[ 1 ] end
 
+		-- Selectively inherit BeingLookedAtByLocalPlayer from base_gmodentity so we don't have to copy paste it
+		local base_gmodentity = scripted_ents.Get( "base_gmodentity" )
+		if ( base_gmodentity ) then
+			self.BeingLookedAtByLocalPlayer = base_gmodentity.BeingLookedAtByLocalPlayer
+			self.MaxWorldTipDistance = base_gmodentity.MaxWorldTipDistance
+		end
 	end
 
 	-- Set collision bounds exactly
@@ -94,51 +100,6 @@ function ENT:DrawTranslucent( flags )
 	end
 
 	render.DrawSprite( self:GetPos(), 16, 16, color_white )
-
-end
-
--- Copied from base_gmodentity.lua
-ENT.MaxWorldTipDistance = 256
-
-local lastLookedFrame = nil
-local lastLooked = nil
-
-function ENT:BeingLookedAtByLocalPlayer()
-
-	local currentFrame = FrameNumber()
-
-	if ( currentFrame ~= lastLookedFrame ) then
-		lastLookedFrame = currentFrame
-
-		local trace = nil
-		local viewer = GetViewEntity()
-
-		-- If we're spectating a player, perform an eye trace
-		if ( viewer:IsPlayer() ) then
-			trace = viewer:GetEyeTrace()
-		else
-			-- If we're not spectating a player, perform a manual trace from the entity's position
-			local startPos = viewer:GetPos()
-			local endPos = viewer:GetForward()
-			endPos:Mul(32768)
-			endPos:Add(startPos)
-
-			trace = util.TraceLine( {
-				start = startpos,
-				endpos = endpos,
-				filter = viewer
-			} )
-		end
-
-		lastLooked = trace.Entity
-		local distance = lastLooked.MaxWorldTipDistance
-
-		if ( !distance || trace.Fraction * 32768 > distance ) then
-			lastLooked = nil
-		end
-	end
-
-	return self == lastLooked
 
 end
 
