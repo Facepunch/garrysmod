@@ -14,7 +14,7 @@ if ( CLIENT ) then
 
 		local currentFrame = FrameNumber()
 
-		if ( currentFrame ~= lastLookedFrame ) then
+		if ( currentFrame != lastLookedFrame ) then
 			lastLookedFrame = currentFrame
 
 			local trace = nil
