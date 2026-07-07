@@ -31,8 +31,8 @@ if ( CLIENT ) then
 				endPos:Add(startPos)
 
 				trace = util.TraceLine( {
-					start = startpos,
-					endpos = endpos,
+					start = startPos,
+					endpos = endPos,
 					filter = viewer
 				} )
 			end
