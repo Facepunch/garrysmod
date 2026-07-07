@@ -5,30 +5,28 @@ DEFINE_BASECLASS( "base_anim" )
 ENT.Spawnable = false
 
 if ( CLIENT ) then
+
 	ENT.MaxWorldTipDistance = 256
 
 	local lastLookedFrame = nil
 	local lastLooked = nil
-
 	function ENT:BeingLookedAtByLocalPlayer()
 
 		local currentFrame = FrameNumber()
-
 		if ( currentFrame != lastLookedFrame ) then
 			lastLookedFrame = currentFrame
 
 			local trace = nil
 			local viewer = GetViewEntity()
-
-			-- If we're spectating a player, perform an eye trace
 			if ( viewer:IsPlayer() ) then
+				-- If we're spectating a player, perform an eye trace
 				trace = viewer:GetEyeTrace()
 			else
 				-- If we're not spectating a player, perform a manual trace from the entity's position
 				local startPos = viewer:GetPos()
 				local endPos = viewer:GetForward()
-				endPos:Mul(32768)
-				endPos:Add(startPos)
+				endPos:Mul( 32768 )
+				endPos:Add( startPos )
 
 				trace = util.TraceLine( {
 					start = startPos,
@@ -38,8 +36,8 @@ if ( CLIENT ) then
 			end
 
 			lastLooked = trace.Entity
-			local distance = lastLooked.MaxWorldTipDistance
 
+			local distance = lastLooked.MaxWorldTipDistance
 			if ( !distance || trace.Fraction * 32768 > distance ) then
 				lastLooked = nil
 			end
@@ -51,39 +49,33 @@ if ( CLIENT ) then
 
 	function ENT:Think()
 
-		if ( self:BeingLookedAtByLocalPlayer() ) then
-			local text = self:GetOverlayText()
+		if ( !self:BeingLookedAtByLocalPlayer() ) then return end
 
-			if ( text != "" && !self:GetNoDraw() ) then
-				AddWorldTip( nil, text, nil, nil, self )
-				halo.Add( { self }, color_white, 1, 1, 1, true, true )
-			end
+		local text = self:GetOverlayText()
+		if ( text != "" && !self:GetNoDraw() ) then
+			AddWorldTip( nil, text, nil, nil, self )
+			halo.Add( { self }, color_white, 1, 1, 1, true, true )
 		end
 
 	end
+
 end
 
 function ENT:SetOverlayText( text )
+
 	self:SetNWString( "GModOverlayText", text )
+
 end
 
 function ENT:GetOverlayText()
 
 	local txt = self:GetNWString( "GModOverlayText" )
+	if ( txt == "" ) then return "" end
 
-	if ( txt == "" ) then
-		return ""
-	end
-
-	if ( game.SinglePlayer() ) then
-		return txt
-	end
+	if ( game.SinglePlayer() ) then return txt end
 
 	local PlayerName = self:GetPlayerName()
-
-	if ( !PlayerName or PlayerName == "" ) then
-		return txt
-	end
+	if ( !PlayerName or PlayerName == "" ) then return txt end
 
 	return txt .. "\n(" .. PlayerName .. ")"
 
