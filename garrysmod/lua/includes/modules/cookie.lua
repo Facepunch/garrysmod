@@ -7,18 +7,15 @@ end
 
 module( "cookie", package.seeall )
 
-local CachedEntries = {
-	--[[
-		key:
-			1 = number expireTime - if the SysTime exired then the cookie is fetched from SQL
-			2 = string cookieValue
-	]]
-}
-local BufferedQueue = {
-	--[[
-		key = value (false for delete else for insert it's a string value)
-	]]
-}
+--[[
+	key:
+		1 = number expireTime - if the SysTime expired then the cookie is fetched from SQL
+		2 = string cookieValue
+]]
+local CachedEntries = {}
+
+-- key = value (false for delete, else string value for insert)
+local BufferedQueue = {}
 
 local function GetCache( key )
 
@@ -27,10 +24,9 @@ local function GetCache( key )
 	local entry = CachedEntries[ key ]
 
 	if ( entry == nil || SysTime() > entry[ 1 ] ) then
-		local name = SQLStr( key )
-		local val = sql.QueryValue( "SELECT value FROM cookies WHERE key = " .. name )
+		local val = sql.QueryValue( "SELECT value FROM cookies WHERE key = " .. SQLStr( key ) )
 
-		if !val then
+		if ( !val ) then
 			return false
 		end
 
@@ -78,7 +74,7 @@ local function SetCache( key, value )
 
 	local strValue = tostring( value )
 
-	-- It is unlikely that this could ever happen but with a invalid __tostring method tostring may silently fail
+	-- It is unlikely that this could ever happen, but with an invalid __tostring method tostring() may silently fail
 	if ( strValue == nil ) then
 		error( "bad argument #2 to 'cookie.Set' (string expected, got " .. type( value ) .. ")", 2 )
 	end
@@ -143,4 +139,3 @@ concommand.Add( "lua_cookieclear", function( ply, command, arguments )
 	FlushCache()
 
 end )
-
