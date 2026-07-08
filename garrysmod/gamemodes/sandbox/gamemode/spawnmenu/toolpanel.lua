@@ -36,7 +36,7 @@ function PANEL:Init()
 	self.HideDeactivated:Dock( RIGHT )
 	self.HideDeactivated:DockMargin( 0, 3, 3, 3 )
 	self.HideDeactivated:SetConVar( cvar_hide_disabled:GetName() )
-	
+
 	self.HideDeactivated.OnChange = function( s )
 		self.LastUpdate = 0 -- Force an update on the next think
 	end
@@ -142,6 +142,7 @@ function PANEL:UpdateToolDisabledStatus()
 	local shouldHide = cvar_hide_disabled:GetBool()
 	local searchText = self.SearchBar:GetText():Trim():lower()
 	local fakeTrace = { Entity = game.GetWorld(), Hit = false }
+	local anyChanged = false
 
 	for cid, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
 		local numInCat = 0
@@ -157,14 +158,21 @@ function PANEL:UpdateToolDisabledStatus()
 				enabled = false
 			end
 
-			item:SetEnabled( enabled )
-			item:SetTooltip( !enabled and "#spawnmenu.tools.disabled" or nil )
+			if ( enabled != item:IsEnabled() ) then
+				item:SetEnabled( enabled )
+				item:SetTooltip( !enabled and "#spawnmenu.tools.disabled" or nil )
+				anyChanged = true
+			end
 
 			local visible = !shouldHide or enabled
 
 			-- If searching, don't stomp the search resulsts
 			if ( searchText == "" ) then
-				item:SetVisible( visible )
+				if ( item:IsVisible() != visible ) then
+					item:SetVisible( visible )
+					anyChanged = true
+				end
+
 				if ( visible ) then numInCat = numInCat + 1 end
 			end
 
@@ -176,12 +184,14 @@ function PANEL:UpdateToolDisabledStatus()
 			category:SetVisible( numInCat > 0 )
 		end
 
-		category:InvalidateLayout()
+		if ( anyChanged ) then category:InvalidateLayout() end
 
 	end
 
-	self.List.pnlCanvas:InvalidateLayout()
-	self.List:InvalidateLayout()
+	if ( anyChanged ) then
+		self.List.pnlCanvas:InvalidateLayout()
+		self.List:InvalidateLayout()
+	end
 
 	-- If searching, re-run the search to hide disabled tools, so we don't stomp on search results
 	if ( searchText != "" ) then
