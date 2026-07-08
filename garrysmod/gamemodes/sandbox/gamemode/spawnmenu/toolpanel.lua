@@ -173,7 +173,6 @@ function PANEL:UpdateToolDisabledStatus()
 
 		-- If searching, don't stomp the search resulsts
 		if ( searchText == "" ) then
-			print(category.Header:GetText(),numInCat)
 			category:SetVisible( numInCat > 0 )
 		end
 
