@@ -19,6 +19,7 @@ properties.Add( "motioncontrol_ragdoll", {
 
 		if ( CLIENT && !motionsensor ) then return false end
 		if ( CLIENT && !motionsensor.IsAvailable() ) then return false end
+		if ( !IsValid( ent ) ) then return false end
 		if ( !ent:IsRagdoll() ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "motioncontrol_ragdoll", ent ) ) then return false end
 

@@ -10,7 +10,7 @@ function EFFECT:Init( data )
 	local attid = data:GetAttachment()
 
 	if ( IsValid( ent ) && attid > 0 ) then
-		if ( ent.Owner == LocalPlayer() && LocalPlayer():GetViewModel() == LocalPlayer() ) then ent = ent.Owner:GetViewModel() end
+		if ( ent.Owner == LocalPlayer() ) then ent = ent.Owner:GetViewModel() end
 
 		local att = ent:GetAttachment( attid )
 		if ( att ) then
