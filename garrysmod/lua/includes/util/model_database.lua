@@ -44,7 +44,7 @@ function OnModelLoaded( ModelName, NumPoseParams, NumSeq, NumAttachments, NumBon
 	-- We delete the old entry because this model may have been updated.
 	-- The chances are very slim, but there's no real harm in it.
 	--
-	sql.Query( "DELETE FROM modelinfo WHERE model = "..safeModelName )
+	sql.Query( "DELETE FROM modelinfo WHERE name = "..safeModelName )
 	sql.Query( Format( [[INSERT INTO modelinfo ( name, 
 												poseparams, 
 												numsequences, 
