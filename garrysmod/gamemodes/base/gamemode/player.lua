@@ -182,7 +182,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	local flags = 0
 	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
+	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, flags )
 
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 

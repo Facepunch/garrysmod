@@ -119,7 +119,7 @@ else
 			return
 		end
 
-		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp() )
+		engine.WriteSave( uncompressed, game.GetMap() .. " " .. util.DateStamp() )
 		buffer = ""
 
 		if ( showsave ) then

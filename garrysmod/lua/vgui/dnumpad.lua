@@ -21,9 +21,10 @@ function PANEL:Init()
 	self.Buttons = {}
 
 	for i = 0, 15 do
+		local number = i
 		self.Buttons[ i ] = vgui.Create( "DButton", self )
 		self.Buttons[ i ]:SetText( i )
-		self.Buttons[ i ].DoClick = function( btn ) self:ButtonPressed( btn, i ) end
+		self.Buttons[ i ].DoClick = function( btn ) self:ButtonPressed( btn, number ) end
 	end
 
 	self.Buttons[KP_ENTER]:SetText( "" )

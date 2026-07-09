@@ -15,15 +15,16 @@ function GM:ShowTeam()
 	local y = 30
 	for ID, TeamInfo in pairs ( AllTeams ) do
 	
-		if ( ID != TEAM_CONNECTING && ID != TEAM_UNASSIGNED ) then
+	if ( ID != TEAM_CONNECTING && ID != TEAM_UNASSIGNED ) then
 	
-			local Team = vgui.Create( "DButton", self.TeamSelectFrame )
-			function Team.DoClick() self:HideTeam() RunConsoleCommand( "changeteam", ID ) end
+		local teamID = ID
+		local Team = vgui.Create( "DButton", self.TeamSelectFrame )
+		function Team.DoClick() self:HideTeam() RunConsoleCommand( "changeteam", teamID ) end
 			Team:SetPos( 10, y )
 			Team:SetSize( 130, 20 )
 			Team:SetText( TeamInfo.Name )
 			
-			if ( IsValid( LocalPlayer() ) && LocalPlayer():Team() == ID ) then
+		if ( IsValid( LocalPlayer() ) && LocalPlayer():Team() == teamID ) then
 				Team:SetEnabled( false )
 			end
 			

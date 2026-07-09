@@ -356,7 +356,8 @@ end
 --
 function ENT:PlaySequenceAndWait( name, speed )
 
-	local len = self:SetSequence( name )
+	self:SetSequence( name )
+	local len = self:SequenceDuration()
 	speed = speed or 1
 
 	self:ResetSequenceInfo()
