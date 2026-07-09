@@ -229,14 +229,14 @@ function SCORE:StreamToClients()
 
       repeat
          net.Start("TTT_ReportStream_Part")
-            net.WriteData(string.sub(events, curpos + 1, curpos + MaxStreamLength + 1), MaxStreamLength)
+            net.WriteData(string.sub(events, curpos + 1, curpos + MaxStreamLength), MaxStreamLength)
          net.Broadcast()
 
-         curpos = curpos + MaxStreamLength + 1
+         curpos = curpos + MaxStreamLength
       until(len - curpos <= MaxStreamLength)
 
       net.Start("TTT_ReportStream")
-         net.WriteUInt(len, 16)
+         net.WriteUInt(len - curpos, 16)
          net.WriteData(string.sub(events, curpos + 1, len), len - curpos)
       net.Broadcast()
    end

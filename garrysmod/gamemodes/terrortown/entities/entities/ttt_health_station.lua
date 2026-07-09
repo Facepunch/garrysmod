@@ -73,6 +73,7 @@ function ENT:Initialize()
    self:SetPlacer(nil)
 
    self.NextHeal = 0
+   self.NextCharge = 0
 
    self.fingerprints = {}
 end
@@ -138,12 +139,11 @@ end
 
 if SERVER then
    -- recharge
-   local nextcharge = 0
    function ENT:Think()
-      if nextcharge < CurTime() then
+      if self.NextCharge < CurTime() then
          self:AddToStorage(self.RechargeRate)
 
-         nextcharge = CurTime() + self.RechargeFreq
+         self.NextCharge = CurTime() + self.RechargeFreq
       end
    end
 
