@@ -180,7 +180,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	local flags = 0
-	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
+	if ( attacker:IsNPC() and attacker:Disposition( ply ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
 	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, flags )
 
