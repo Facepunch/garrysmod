@@ -32,6 +32,7 @@ ENT.RechargeRate = 1
 ENT.RechargeFreq = 2 -- in seconds
 
 ENT.NextHeal = 0
+ENT.NextCharge = 0
 ENT.HealRate = 1
 ENT.HealFreq = 0.2
 
