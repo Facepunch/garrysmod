@@ -20,7 +20,7 @@ end
 hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, node )
 
 	pnlContent:PopulateFromList( "PostProcess", tree, {
-		SortName = "name",
+		SortName = "SpawnName",
 		CategoryIcon = "icon16/picture.png",
 		TranslateNames = TranslateNames,
 		CreateIconFunc = CreatePostProcessIcon

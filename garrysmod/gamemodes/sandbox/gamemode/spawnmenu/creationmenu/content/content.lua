@@ -138,7 +138,7 @@ local function AddCategory( tree, catName, options )
 		for k, v in pairs( items ) do
 			local subCat = language.GetPhrase( v.SubCategory or "" )
 			subCats[ subCat ] = subCats[ subCat ] or {}
-			table.insert( subCats[ subCat ], v )
+			table.insert( subCats[ subCat ], { item = v, sortName = language.GetPhrase( v[ options.SortName ] ) } )
 		end
 
 		for subCatName, itemList in SortedPairs( subCats ) do
@@ -153,8 +153,8 @@ local function AddCategory( tree, catName, options )
 				table.insert( subCatItems, header )
 			end
 
-			for _, item in SortedPairsByMemberValue( itemList, options.SortName ) do
-				local icon = tree.CreateIconFunc( item, self.PropPanel )
+			for _, item in SortedPairsByMemberValue( itemList, "sortName" ) do
+				local icon = tree.CreateIconFunc( item.item, self.PropPanel )
 				-- Post processing functions do not return an icon (and make multiple), sigh
 				if ( icon ) then table.insert( subCatItems, icon ) end
 			end
