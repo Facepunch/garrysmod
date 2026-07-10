@@ -6,36 +6,26 @@ local TranslateNames = {
 	["Texturize"] = "#texturize_pp"
 }
 
-local function AddPPToCategory( pp, className, propPanel )
+local function CreatePostProcessIcon( pp, propPanel )
 	if ( pp.func ) then
 		pp.func( propPanel )
 		return
 	end
 
 	return spawnmenu.CreateContentIcon( "postprocess", propPanel, {
-		name	= pp.label or className,
+		name	= pp.SpawnName,
 		icon	= pp.icon
 	} )
 end
 
 hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, node )
 
-	local options = {}
-
-	options.memberSortName = "label"
-	options.defaultCategoryIcon = "icon16/picture.png"
-	options.categoryMemberName = "category"
-	options.headerMemberName = "categoryHeader"
-	options.translationMap = TranslateNames
-	options.iconBuildFunc = AddPPToCategory
-
-	pnlContent:PopulateFromList( "PostProcess", tree, options )
-
-	-- Select the first node
-	local FirstNode = tree:Root():GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
-		FirstNode:InternalDoClick()
-	end
+	pnlContent:PopulateFromList( "PostProcess", tree, {
+		SortName = "name",
+		CategoryIcon = "icon16/picture.png",
+		TranslateNames = TranslateNames,
+		CreateIconFunc = CreatePostProcessIcon
+	} )
 
 end )
 

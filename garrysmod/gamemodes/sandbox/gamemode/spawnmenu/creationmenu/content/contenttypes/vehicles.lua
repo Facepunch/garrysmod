@@ -4,31 +4,23 @@ local TranslateNames = {
 	["Other"] = "#spawnmenu.category.other"
 }
 
-local function AddVehicleToCategory( veh, className, propPanel )
-	return spawnmenu.CreateContentIcon( "vehicle", propPanel, {
-		nicename	= veh.Name or className,
-		spawnname	= className,
-		material	= veh.IconOverride or "entities/" .. className .. ".png",
-		admin		= veh.AdminOnly
+local function CreateVehicleIcon( ent, propPanel )
+	return spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "vehicle", propPanel, {
+		nicename	= ent.PrintName or ent.SpawnName,
+		spawnname	= ent.SpawnName,
+		material	= ent.IconOverride or "entities/" .. ent.SpawnName .. ".png",
+		admin		= ent.AdminOnly
 	} )
 end
 
-hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, browseNode )
+hook.Add( "PopulateVehicles", "AddVehicleContent", function( pnlContent, tree, browseNode )
 
-	local options = {}
-
-	options.memberSortName = "Name"
-	options.defaultCategoryIcon = "icon16/bricks.png"
-	options.translationMap = TranslateNames
-	options.iconBuildFunc = AddVehicleToCategory
-
-	pnlContent:PopulateFromList( "Vehicles", tree, options )
-
-	-- Select the first node
-	local FirstNode = tree:Root():GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
-		FirstNode:InternalDoClick()
-	end
+	pnlContent:PopulateFromList( "Vehicles", tree, {
+		SortName = "PrintName",
+		CategoryIcon = "icon16/car.png",
+		TranslateNames = TranslateNames,
+		CreateIconFunc = CreateVehicleIcon
+	} )
 
 end )
 

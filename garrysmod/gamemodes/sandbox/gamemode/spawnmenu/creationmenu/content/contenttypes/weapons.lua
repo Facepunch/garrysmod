@@ -1,92 +1,42 @@
 
-local function AddWeaponToCategory( wep, className, propPanel )
-	return spawnmenu.CreateContentIcon( wep.ScriptedEntityType or "weapon", propPanel, {
-		nicename	= wep.PrintName or className,
-		spawnname	= className,
-		material	= wep.IconOverride or ( "entities/" .. className .. ".png" ),
-		admin		= wep.AdminOnly
+local function CreateWeaponIcon( ent, propPanel )
+	return spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", propPanel, {
+		nicename	= ent.PrintName or ent.ClassName,
+		spawnname	= ent.ClassName,
+		material	= ent.IconOverride or ( "entities/" .. ent.ClassName .. ".png" ),
+		admin		= ent.AdminOnly
 	} )
 end
 
-local PopulateOptions = {}
-PopulateOptions.memberSortName = "PrintName"
-PopulateOptions.defaultCategoryIcon = "icon16/gun.png"
-PopulateOptions.checkSpawnable = true
-PopulateOptions.iconBuildFunc = AddWeaponToCategory
-
 hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, browseNode )
 
-	-- Helpers for auto refresh
-	tree.CategoryNodes = pnlContent:PopulateFromList( "Weapon", tree, PopulateOptions )
-	tree.pnlContent = pnlContent
-
-	-- Select the first node
-	local FirstNode = tree:Root():GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then FirstNode:InternalDoClick() end
+	pnlContent:PopulateFromList( "Weapon", tree, {
+		SortName = "PrintName",
+		CategoryIcon = "icon16/gun.png",
+		CreateIconFunc = CreateWeaponIcon
+	} )
 
 end )
 
-local function AutorefreshWeaponToSpawnmenu( weaponData, className )
+local function AutorefreshWeaponToSpawnmenu( weapon, name )
 
 	local swepTab = g_SpawnMenu.CreateMenu:GetCreationTab( "#spawnmenu.category.weapons" )
 	if ( !swepTab || !swepTab.ContentPanel || !IsValid( swepTab.Panel ) ) then return end
 
 	local tree = swepTab.ContentPanel.ContentNavBar.Tree
-	local categoryNodes = tree.CategoryNodes
+	if ( !tree.Categories ) then return end
 
-	if ( !categoryNodes ) then return end
-
-	local populatedNode
-	local wepCategoryChanged
-	local wepCategory = language.GetPhrase( weaponData.Category or "#spawnmenu.category.other" )
-
-	for categoryName, node in pairs( categoryNodes ) do
-
-		if ( populatedNode ) then break end
-
-		local propPanel = node.PropPanel
-		if ( !IsValid( propPanel ) ) then continue end
-
-		for _, icon in pairs( propPanel.IconList:GetChildren() ) do
-
-			if ( icon:GetName() != "ContentIcon" ) then continue end
-
-			local spawnName = icon:GetSpawnName()
-
-			if ( spawnName == className ) then
-
-				populatedNode = node
-				wepCategoryChanged = wepCategory != categoryName
-
-				node:RefreshContent()
-
-				break
-
-			end
-
-		end
-
-		-- Leave the empty categories, this only applies to devs anyway
-	end
-
-	if ( !wepCategoryChanged ) then return end
-
-	local newCategoryNode = categoryNodes[ wepCategory ]
-
-	if ( !IsValid( newCategoryNode ) ) then 
-		tree.CategoryNodes = tree.pnlContent:PopulateFromList( "Weapon", tree, PopulateOptions )
-	else
-		newCategoryNode:RefreshContent()
-	end
+	tree:RefreshContent( weapon, name )
 
 end
 
-local function OnPreRegisterSWEP( weapon, className )
+local function OnPreRegisterSWEP( weapon, name )
 	if ( !weapon.Spawnable || !g_SpawnMenu ) then return end
 
 	-- Gotta wait for the next frame because this hook is called just before the weapon is registered
-	timer.Simple( 0, function() AutorefreshWeaponToSpawnmenu( weapon, className ) end )
+	timer.Simple( 0, function() AutorefreshWeaponToSpawnmenu( weapon, name ) end )
 end
+
 
 spawnmenu.AddCreationTab( "#spawnmenu.category.weapons", function()
 

@@ -5,11 +5,11 @@ local TranslateNames = {
 	["Other"] = "#spawnmenu.category.other"
 }
 
-local function AddEntityToCategory( ent, className, propPanel )
+local function CreateEntityIcon( ent, propPanel )
 	return spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", propPanel, {
-		nicename	= ent.PrintName or className,
-		spawnname	= className,
-		material	= ent.IconOverride or ( "entities/" .. className .. ".png" ),
+		nicename	= ent.PrintName or ent.SpawnName,
+		spawnname	= ent.SpawnName,
+		material	= ent.IconOverride or ( "entities/" .. ent.SpawnName .. ".png" ),
 		admin		= ent.AdminOnly
 	} )
 end
@@ -20,20 +20,12 @@ list.Set( "ContentCategoryIcons", "Portal", "games/16/portal.png" )
 
 hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, browseNode )
 
-	local options = {}
-
-	options.memberSortName = "PrintName"
-	options.defaultCategoryIcon = "icon16/bricks.png"
-	options.translationMap = TranslateNames
-	options.iconBuildFunc = AddEntityToCategory
-
-	pnlContent:PopulateFromList( "SpawnableEntities", tree, options )
-
-	-- Select the first node
-	local FirstNode = tree:Root():GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
-		FirstNode:InternalDoClick()
-	end
+	pnlContent:PopulateFromList( "SpawnableEntities", tree, {
+		SortName = "PrintName",
+		CategoryIcon = "icon16/bricks.png",
+		TranslateNames = TranslateNames,
+		CreateIconFunc = CreateEntityIcon
+	} )
 
 end )
 

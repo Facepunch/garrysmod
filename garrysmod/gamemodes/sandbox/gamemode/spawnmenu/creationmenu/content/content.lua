@@ -82,184 +82,187 @@ function PANEL:OnSizeChanged()
 	self.HorizontalDivider:LoadCookies()
 end
 
-local function createCategorizedList( listName, options )
+local function BuildCategorizedList( listName, nameOverrides )
 
-	local memberSortName = options.memberSortName -- The name of the field with the presenting name
-	local translationMap = options.translationMap -- Category localization support for old addons
-	local checkSpawnable = options.checkSpawnable -- Filters out ones that do not have the Spawnable field, or have it set to false
+	local categorised = {}
 
-	local dataList = list.Get( listName ) -- Create a copy of the list
-	local categorisedList = {}
-	
-	for className, data in pairs( dataList ) do
+	for k, v in pairs( list.Get( listName ) ) do
 
-		if ( !checkSpawnable or data.Spawnable ) then
+		if ( listName == "Weapon" && !v.Spawnable ) then continue end
 
-			local sortName = data[ memberSortName ]
-			data.SortName = sortName and language.GetPhrase( sortName ) or className
+		-- Post Processing effects use lower case values... sigh
+		if ( !v.Category ) then v.Category = v.category end
 
-			local category = data[ options.categoryMemberName ]
+		local categoryName = v.Category
 
-			if ( !category ) then
-				category = "#spawnmenu.category.other"
-			elseif translationMap and translationMap[ category ] then
-				category = translationMap[ category ]
+		-- Manual category localization for old addons that want to appear in base game categories
+		if ( nameOverrides ) then categoryName = nameOverrides[ categoryName ] or categoryName end
+
+		local Category = language.GetPhrase( categoryName or "#spawnmenu.category.other" )
+		if ( !isstring( Category ) ) then Category = tostring( Category ) end
+		categorised[ Category ] = categorised[ Category ] or {}
+
+		v.SpawnName = k
+		if ( !v.PrintName ) then v.PrintName = v.Name end
+
+		table.insert( categorised[ Category ], v )
+
+	end
+
+	return categorised
+
+end
+
+local function AddCategory( tree, catName, options )
+
+	local node = tree:AddNode( catName, list.GetEntry( "ContentCategoryIcons", catName ) or options.CategoryIcon )
+	tree.Categories[ catName ] = node
+
+	-- When we click on the node - populate it using this function
+	node.DoPopulate = function( self )
+
+		-- If we've already populated it - forget it.
+		if ( self.PropPanel ) then return end
+
+		-- Create the container panel
+		self.PropPanel = vgui.Create( "ContentContainer", tree.ContentPanel )
+		self.PropPanel:SetVisible( false )
+		self.PropPanel:SetTriggerSpawnlistChange( false )
+		self.PropPanel.SubCategories = {}
+
+		-- Get a fresh copy in case the list has changed since the category was created,
+		-- but before it's populated with actual icons
+		local items = BuildCategorizedList( tree.ContentListName, options.TranslateNames )[ catName ]
+
+		local subCats = {}
+		for k, v in pairs( items ) do
+			local subCat = language.GetPhrase( v.SubCategory or "" )
+			subCats[ subCat ] = subCats[ subCat ] or {}
+			table.insert( subCats[ subCat ], v )
+		end
+
+		for subCatName, itemList in SortedPairs( subCats ) do
+
+			local subCatItems = {}
+
+			if ( subCatName != "" ) then
+				local header = vgui.Create( "ContentHeader" )
+				header:SetText( subCatName )
+				self.PropPanel:Add( header )
+
+				table.insert( subCatItems, header )
 			end
 
-			category = language.GetPhrase( category )
-
-			local categoryTab = categorisedList[ category ]
-
-			if ( !categoryTab ) then
-				categoryTab = {}
-				categorisedList[ category ] = categoryTab
+			for _, item in SortedPairsByMemberValue( itemList, options.SortName ) do
+				table.insert( subCatItems, tree.CreateIconFunc( item, self.PropPanel ) )
 			end
 
-			categoryTab[ className ] = data
+			self.PropPanel.SubCategories[ subCatName ] = subCatItems
 
 		end
 
 	end
 
-	return categorisedList
+	-- If we click on the node, populate it and switch to it.
+	node.DoClick = function( self )
+
+		self:DoPopulate()
+		tree.ContentPanel:SwitchPanel( self.PropPanel )
+
+	end
+
+	return node
 
 end
 
--- 
+--
 -- Populate creation tab from list
 --
 function PANEL:PopulateFromList( listName, tree, options )
 
-	options = options or {}
-	options.categoryMemberName = options.categoryMemberName or "Category"
-	options.headerMemberName = options.headerMemberName or "CategoryHeader"
+	-- Store some useful things we may need later
+	tree.Categories = {}
+	tree.ContentPanel = self
+	tree.ContentListName = listName
+	tree.CreateIconFunc = options.CreateIconFunc
 
-	local categorisedList = createCategorizedList( listName, options )
-	local categoryIconsList = list.GetForEdit( "ContentCategoryIcons" )
+	-- Set up sorting by categories
+	local categorised = BuildCategorizedList( listName, options.TranslateNames )
 
-	local defaultCategoryIcon = options.defaultCategoryIcon
-	local iconBuildFunc = options.iconBuildFunc
-
-	local categoryNodes = {}
-	
-	for _, childNode in ipairs( tree:Root():GetChildNodes() ) do
-		categoryNodes[ childNode:GetText() ] = childNode
+	-- Add a tree node for each category
+	for catName, items in SortedPairs( categorised ) do
+		AddCategory( tree, catName, options )
 	end
 
-	-- Add a node for each category to the tree
-	for categoryName in SortedPairs( categorisedList ) do
+	-- Handle auto refresh moving an icon to a different category or adding a new one
+	tree.RefreshContent = function( self, item, spawnname )
 
-		-- Don't add duplicate nodes
-		if ( categoryNodes[ categoryName ] ) then continue end
+		local newCategory = language.GetPhrase( item.Category or "#spawnmenu.category.other" )
 
-		local node = tree:AddNode( categoryName, categoryIconsList[ categoryName ] or defaultCategoryIcon )
-		categoryNodes[ categoryName ] = node
+		-- Remove from previous category..
+		for cat, catPnl in pairs( self.Categories ) do
+			if ( !IsValid( catPnl.PropPanel ) ) then continue end
 
-		node.Populate = function( node )
+			for subCatName, icons in pairs( catPnl.PropPanel.SubCategories ) do
+				for id, icon in pairs( icons ) do
+					if ( icon:GetName() != "ContentIcon" ) then continue end
 
-			-- Create the container panel
-			local propPanel = vgui.Create( "ContentContainer", self )
-			node.PropPanel = propPanel
-			
-			propPanel:SetVisible( false )
-			propPanel:SetTriggerSpawnlistChange( false )
-
-			local categorisedData = categorisedList[ categoryName ]
-			if ( !categorisedData ) then return end -- May no longer have anything due to autorefresh
-
-			local createdHeaders = {}
-			local noHeaderIcons = {}
-			local hasHeaders = false
-
-			for name, data in SortedPairsByMemberValue( categorisedData, "SortName" ) do
-
-				local headerName = data[ options.headerMemberName ]
-				local hasHeader = isstring( headerName )
-
-				headerName = hasHeader and language.GetPhrase( headerName )
-
-				if ( hasHeader and !createdHeaders[ headerName ] ) then
-
-					local header = vgui.Create( "ContentHeader" )
-
-					header:SetText( headerName )
-					propPanel:Add( header )
-
-					createdHeaders[ headerName ] = header
-					hasHeaders = true
-
+					if ( icon:GetSpawnName() == spawnname ) then
+						icon:Remove()
+						table.remove( icons, id )
+						break
+					end
 				end
 
-				local icon = iconBuildFunc( data, name, propPanel, tree, node )
-
-				if ( icon and !hasHeader ) then
-					noHeaderIcons[ icon ] = icon.m_NiceName
+				-- Remove the header too if it is empty
+				if ( subCatName != "" && #icons == 1 && icons[ 1 ]:GetName() == "ContentHeader" ) then
+					icons[ 1 ]:Remove()
+					table.remove( icons, 1 )
+					catPnl.PropPanel.SubCategories[ subCatName ] = nil
 				end
-
 			end
 
-			-- Move ones without a header to the top
-			if ( hasHeaders and !table.IsEmpty( noHeaderIcons ) ) then
-
-				local children = propPanel.IconList:GetChildren()
-				local pos = 0
-
-				for icon in SortedPairsByValue( noHeaderIcons ) do
-
-					table.RemoveByValue( children, icon )
-
-					pos = pos + 1
-					table.insert( children, pos, icon )
-
-				end
-
-				for zPos, childIcon in ipairs( children ) do
-					childIcon:SetZPos( zPos )
-				end
-
-			end
-
-			return propPanel
-
-		end
-		
-		node.RefreshContent = function( node )
-
-			local propPanel = node.PropPanel
-			if ( !IsValid( propPanel ) ) then return end
-
-			local selected = self.SelectedPanel == propPanel
-
-			-- Get an up-to-date list
-			categorisedList = createCategorizedList( listName, options )
-
-			propPanel:Remove()
-
-			if ( selected ) then
-				self:SwitchPanel( node:Populate() )
-			end
-
+			-- Leave the empty categories, this only applies to devs anyway
 		end
 
-		-- If we click on the node populate it and switch to it.
-		node.DoClick = function( node )
+		-- Add to new category
+		if ( IsValid( self.Categories[ newCategory ] ) ) then
+			-- Only do this if it is already populated.
+			-- If not, the weapon will appear automatically when user clicks on the category
+			local propPnl = self.Categories[ newCategory ].PropPanel
+			if ( IsValid( propPnl ) ) then
+				-- TODO: Find correct alphabetical spot to insert?
+				local subCat = language.GetPhrase( item.SubCategory or "" )
 
-			node:DoPopulate()
-			self:SwitchPanel( node.PropPanel )
+				if ( !propPnl.SubCategories[ subCat ] ) then
+					propPnl.SubCategories[ subCat ] = {}
+					if ( subCat != "" ) then
+						local header = vgui.Create( "ContentHeader" )
+						header:SetText( subCat )
+						propPnl:Add( header )
+						table.insert( propPnl.SubCategories[ subCat ], header )
+					end
+				end
 
-		end
+				-- Just append it to the end
+				local icon = self.CreateIconFunc( item, propPnl )
+				table.insert( propPnl.SubCategories[ subCat ], icon )
 
-		node.DoPopulate = function( node )
+				-- Moe it to the correct sub category
+				icon:MoveToAfter( propPnl.SubCategories[ subCat ][ #propPnl.SubCategories[ subCat ] ] )
 
-			if ( !IsValid( node.PropPanel ) ) then
-				node:Populate()
 			end
-
+		else
+			AddCategory( self, newCategory, options )
 		end
 
 	end
 
-	return categoryNodes
+	-- Select the first node
+	local FirstNode = tree:Root():GetChildNode( 0 )
+	if ( IsValid( FirstNode ) ) then
+		FirstNode:InternalDoClick()
+	end
 
 end
 

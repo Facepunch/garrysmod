@@ -134,7 +134,7 @@ function Register( t, name )
 		Information		= t.Information,
 		ScriptedEntityType = t.ScriptedEntityType,
 		IconOverride	= t.IconOverride,
-		CategoryHeader = t.CategoryHeader
+		SubCategory		= t.SubCategory
 	} )
 
 end

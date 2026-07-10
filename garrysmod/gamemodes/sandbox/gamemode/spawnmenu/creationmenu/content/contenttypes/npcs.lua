@@ -7,32 +7,24 @@ local TranslateNames = {
 	["Other"] = "#spawnmenu.category.other"
 }
 
-local function AddNPCToCategory( npc, className, propPanel )
-	return spawnmenu.CreateContentIcon( npc.ScriptedEntityType or "npc", propPanel, {
-		nicename	= npc.Name or className,
-		spawnname	= className,
-		material	= npc.IconOverride or "entities/" .. className .. ".png",
-		weapon		= npc.Weapons,
-		admin		= npc.AdminOnly
+local function CreateNPCIcon( ent, propPanel )
+	return spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", propPanel, {
+		nicename	= ent.Name or ent.SpawnName,
+		spawnname	= ent.SpawnName,
+		material	= ent.IconOverride or "entities/" .. ent.SpawnName .. ".png",
+		weapon		= ent.Weapons,
+		admin		= ent.AdminOnly
 	} )
 end
 
 hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNode )
 
-	local options = {}
-
-	options.memberSortName = "Name"
-	options.defaultCategoryIcon = "icon16/monkey.png"
-	options.translationMap = TranslateNames
-	options.iconBuildFunc = AddNPCToCategory
-
-	pnlContent:PopulateFromList( "NPC", tree, options )
-
-	-- Select the first node
-	local FirstNode = tree:Root():GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
-		FirstNode:InternalDoClick()
-	end
+	pnlContent:PopulateFromList( "NPC", tree, {
+		SortName = "Name",
+		CategoryIcon = "icon16/monkey.png",
+		TranslateNames = TranslateNames,
+		CreateIconFunc = CreateNPCIcon
+	} )
 
 end )
 
