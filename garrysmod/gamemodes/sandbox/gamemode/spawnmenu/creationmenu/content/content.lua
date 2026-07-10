@@ -154,7 +154,9 @@ local function AddCategory( tree, catName, options )
 			end
 
 			for _, item in SortedPairsByMemberValue( itemList, options.SortName ) do
-				table.insert( subCatItems, tree.CreateIconFunc( item, self.PropPanel ) )
+				local icon = tree.CreateIconFunc( item, self.PropPanel )
+				-- Post processing functions do not return an icon (and make multiple), sigh
+				if ( icon ) then table.insert( subCatItems, icon ) end
 			end
 
 			self.PropPanel.SubCategories[ subCatName ] = subCatItems
@@ -246,7 +248,7 @@ function PANEL:PopulateFromList( listName, tree, options )
 
 				-- Just append it to the end
 				local icon = self.CreateIconFunc( item, propPnl )
-				table.insert( propPnl.SubCategories[ subCat ], icon )
+				if ( icon ) then table.insert( propPnl.SubCategories[ subCat ], icon ) end
 
 				-- Moe it to the correct sub category
 				icon:MoveToAfter( propPnl.SubCategories[ subCat ][ #propPnl.SubCategories[ subCat ] ] )

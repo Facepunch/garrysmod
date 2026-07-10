@@ -8,8 +8,7 @@ local TranslateNames = {
 
 local function CreatePostProcessIcon( pp, propPanel )
 	if ( pp.func ) then
-		pp.func( propPanel )
-		return
+		return pp.func( propPanel )
 	end
 
 	return spawnmenu.CreateContentIcon( "postprocess", propPanel, {
