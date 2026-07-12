@@ -20,6 +20,11 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self.AttachedEntity = ents.Create( "prop_dynamic" )
+		if !IsValid( self.AttachedEntity ) then
+			self:Remove()
+			return
+		end
+
 		self.AttachedEntity:SetModel( self:GetModel() )
 		self.AttachedEntity:SetAngles( self:GetAngles() )
 		self.AttachedEntity:SetPos( self:GetPos() )
@@ -74,7 +79,7 @@ end
 function ENT:Draw( flags )
 
 	-- Draw the actual model when we are grabbed by physics gun, etc.
-	if ( halo.RenderedEntity() == self ) then
+	if ( halo.RenderedEntity() == self ) && IsValid( self.AttachedEntity ) then
 		self.AttachedEntity:DrawModel( flags )
 	end
 
@@ -118,6 +123,7 @@ function ENT:PhysicsUpdate( physobj )
 end
 
 function ENT:OnEntityCopyTableFinish( tab )
+	if !IsValid( self.AttachedEntity ) then return end
 
 	-- We need to store the model of the attached entity
 	-- Not the one we have here.
