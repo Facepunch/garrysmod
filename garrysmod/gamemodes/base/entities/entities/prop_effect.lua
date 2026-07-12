@@ -79,7 +79,7 @@ end
 function ENT:Draw( flags )
 
 	-- Draw the actual model when we are grabbed by physics gun, etc.
-	if ( halo.RenderedEntity() == self ) && IsValid( self.AttachedEntity ) then
+	if ( halo.RenderedEntity() == self && IsValid( self.AttachedEntity ) ) then
 		self.AttachedEntity:DrawModel( flags )
 	end
 
