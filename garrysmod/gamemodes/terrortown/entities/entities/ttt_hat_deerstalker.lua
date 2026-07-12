@@ -127,6 +127,7 @@ if SERVER then
 
    local function TestHat(ply, cmd, args)
       local hat = ents.Create("ttt_hat_deerstalker")
+      if not IsValid(hat) then return end
 
       hat:SetPos(ply:GetPos() + Vector(0,0,70))
       hat:SetAngles(ply:GetAngles())

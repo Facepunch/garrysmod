@@ -866,6 +866,7 @@ function Spawn_SENT( ply, EntityName, tr )
 		end
 
 		entity = ents.Create( EntTable.ClassName )
+		if ( !IsValid( entity ) ) then return NULL end
 		entity:SetPos( SpawnPos )
 
 		if ( EntTable.KeyValues ) then
@@ -989,7 +990,7 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	local entity = ents.Create( swep.ClassName )
 
-	if ( !IsValid( entity ) ) then return end
+	if ( !IsValid( entity ) ) then return NULL end
 
 	DoPropSpawnedEffect( entity )
 

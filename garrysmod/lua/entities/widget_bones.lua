@@ -153,6 +153,8 @@ function ENT:Setup( ent )
 		if ( !ent:BoneHasFlag( k, BONE_USED_BY_VERTEX_LOD0 ) ) then continue end
 
 		local btn = ents.Create( "widget_bone" )
+		if ( !IsValid( btn ) ) then continue end
+
 		btn:FollowBone( ent, k )
 		btn:SetLocalPos( vector_origin )
 		btn:SetLocalAngles( angle_zero )

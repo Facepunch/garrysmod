@@ -36,6 +36,8 @@ properties.Add( "bone_manipulate", {
 		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent.widget = ents.Create( "widget_bones" )
+		if !IsValid(ent.widget) then ent.widget = nil return end
+
 		ent.widget:Setup( ent )
 		ent.widget:Spawn()
 		ent.widget.LastBonePress = 0
@@ -60,6 +62,7 @@ properties.Add( "bone_manipulate", {
 			local EntityCycle = { "widget_bonemanip_move", "widget_bonemanip_rotate", "widget_bonemanip_scale" }
 
 			w.axis = ents.Create( EntityCycle[ w.BonePressCount + 1 ] )
+			if ( !IsValid( w.axis ) ) then w.axis = nil return end
 			w.axis:Setup( ent, boneid, w.BonePressCount == 1 )
 			w.axis:Spawn()
 			w.axis:SetPriority( 0.5 )

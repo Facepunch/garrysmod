@@ -441,6 +441,8 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
 		-- Create the constraint
 		local Constraint = ents.Create( "phys_constraint" )
+		if ( !IsValid(Constraint) ) then return NULL end
+
 		ConstraintCreated( Constraint )
 		if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
 		if ( nocollide ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
@@ -503,6 +505,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addLength, forcel
 
 			-- Create the constraint
 			Constraint = ents.Create( "phys_lengthconstraint" )
+			if ( !IsValid(Constraint) ) then return NULL, NULL end
 			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
@@ -581,6 +584,8 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 		onStartConstraint( Ent1, Ent2 )
 
 			Constraint = ents.Create( "phys_spring" )
+			if ( !IsValid(Constraint) ) then return NULL, NULL end
+
 			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "springaxis", tostring( WPos2 ) )
@@ -653,6 +658,8 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	onStartConstraint( Ent )
 
 		local Constraint = ents.Create( "phys_keepupright" )
+		if ( !IsValid( Constraint ) ) then return NULL end
+
 		ConstraintCreated( Constraint )
 		Constraint:SetAngles( Ang )
 		Constraint:SetKeyValue( "angularlimit", angularlimit )
@@ -742,6 +749,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_slideconstraint" )
+		if ( !IsValid(Constraint) ) then return NULL end
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "slideaxis", tostring( WPos2 ) )
@@ -810,6 +818,8 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_hinge" )
+		if ( !IsValid(Constraint) ) then return NULL end
+
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "hingeaxis", tostring( WPos2 ) )
@@ -873,6 +883,8 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 		if ( nocollide && nocollide > 0 ) then flags = flags + 1 end
 
 		local Constraint = ents.Create( "phys_ragdollconstraint" )
+		if ( !IsValid(Constraint) ) then return NULL end
+
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "xmin", xmin )
@@ -1078,6 +1090,8 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_torque" )
+		if ( !IsValid(Constraint) ) then return NULL end
+
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "axis", tostring( WPos2 ) )
@@ -1167,6 +1181,8 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 	onStartConstraint( Ent1, Ent4 )
 
 		local Constraint = ents.Create( "phys_pulleyconstraint" )
+		if ( !IsValid(Constraint) ) then return NULL end
+
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos2 )
 		Constraint:SetKeyValue( "position2", tostring( WPos3 ) )
@@ -1244,6 +1260,8 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_ballsocket" )
+		if ( !IsValid(Constraint) ) then return NULL end
+
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos )
 		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
@@ -1319,6 +1337,8 @@ function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd
 
 	-- Attach our Controller to the Elastic constraint
 	local controller = ents.Create( "gmod_winch_controller" )
+	if ( !IsValid( controller ) ) then return NULL end
+
 	controller:SetConstraint( Constraint )
 	controller:SetRope( rope )
 	controller:Spawn()
@@ -1401,6 +1421,8 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, lengthMin, lengt
 		end
 
 		local controller = ents.Create( "gmod_winch_controller" )
+		if ( !IsValid( controller ) ) then return NULL end
+
 		if ( lengthMax > lengthMin ) then
 			controller:SetKeyValue( "minlength", lengthMin )
 			controller:SetKeyValue( "maxlength", lengthMax )
@@ -1486,6 +1508,8 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 	end
 
 	local controller = ents.Create( "gmod_winch_controller" )
+	if ( !IsValid( controller ) ) then return NULL end
+
 	if ( Length2 > Length1 ) then
 		controller:SetKeyValue( "minlength", Length1 )
 		controller:SetKeyValue( "maxlength", Length2 )

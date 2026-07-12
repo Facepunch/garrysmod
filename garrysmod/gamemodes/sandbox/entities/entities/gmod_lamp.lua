@@ -115,6 +115,7 @@ if ( SERVER ) then
 		local lightInfo = self:GetLightInfo()
 
 		self.flashlight = ents.Create( "env_projectedtexture" )
+		if ( !IsValid( self.flashlight ) ) then self.flashlight = nil return end
 		self.flashlight:SetParent( self )
 
 		-- The local positions are the offsets from parent..
