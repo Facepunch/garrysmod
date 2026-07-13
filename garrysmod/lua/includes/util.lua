@@ -315,8 +315,11 @@ function IsValid( object )
 
 	if ( !object ) then return false end
 
-	local isvalid = object.IsValid
-	if ( !isvalid ) then return false end
+	local ok, isvalid = pcall( function()
+		return object.IsValid
+	end )
+
+	if ( !ok || !isvalid ) then return false end
 
 	return isvalid( object )
 
