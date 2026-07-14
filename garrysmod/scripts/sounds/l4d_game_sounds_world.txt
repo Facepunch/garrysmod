@@ -725,6 +725,47 @@
 }
 
 //---------------------------------------------------------------
+// dlc garage
+//---------------------------------------------------------------
+
+
+"dlc.Generator_nostart_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"soundlevel"  		"SNDLVL_140dB"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient\generator\Generator_nostart_loop.wav"
+}
+
+"dlc.Generator_start_run_loop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"soundlevel"  		"SNDLVL_140dB"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient\generator\Generator_start_run_loop.wav"
+}
+
+"dlc.Generator_stop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"soundlevel"  		"SNDLVL_140dB"
+	"pitch"			"PITCH_NORM"
+	"wave"			"ambient\generator\Generator_stop.wav"
+}
+
+"dlc.garage_outro"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"soundlevel"  		"SNDLVL_140dB"
+	"pitch"			"PITCH_NORM"
+	"wave"			"animation/garage_outro.wav"
+}
+
+//---------------------------------------------------------------
 // Campaign 5 - map 4: Quarter
 //---------------------------------------------------------------
 
