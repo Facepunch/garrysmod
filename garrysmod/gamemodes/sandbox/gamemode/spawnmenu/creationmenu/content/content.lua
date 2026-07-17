@@ -138,7 +138,7 @@ local function AddCategory( tree, catName, options )
 		for k, v in pairs( items ) do
 			local subCat = language.GetPhrase( v.SubCategory or "" )
 			subCats[ subCat ] = subCats[ subCat ] or {}
-			table.insert( subCats[ subCat ], { item = v, sortName = language.GetPhrase( v[ options.SortName ] ) } )
+			table.insert( subCats[ subCat ], { item = v, sortName = ( v[ options.SortName ] and language.GetPhrase( v[ options.SortName ] ) or v.SpawnName ) } )
 		end
 
 		for subCatName, itemList in SortedPairs( subCats ) do
