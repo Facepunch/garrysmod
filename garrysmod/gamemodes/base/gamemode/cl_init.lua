@@ -200,7 +200,7 @@ function GM:OnChatTab( str )
 
 		local nickname = v:Nick()
 
-		if ( string.len( LastWord ) < string.len( nickname ) && string.find( string.lower( nickname ), string.lower( LastWord ), 0, true ) == 1 ) then
+		if ( string.len( LastWord ) < string.len( nickname ) and string.find( string.lower( nickname ), string.lower( LastWord ), 0, true ) == 1 ) then
 
 			str = string.sub( str, 1, ( string.len( LastWord ) * -1 ) - 1 )
 			str = str .. nickname
@@ -304,7 +304,7 @@ end
 -----------------------------------------------------------]]
 function GM:CalcVehicleView( Vehicle, ply, view )
 
-	if ( Vehicle.GetThirdPersonMode == nil || ply:GetViewEntity() != ply ) then
+	if ( Vehicle.GetThirdPersonMode == nil or ply:GetViewEntity() != ply ) then
 		-- This shouldn't ever happen.
 		return
 	end
@@ -330,7 +330,7 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 		endpos = TargetOrigin,
 		filter = function( e )
 			local c = e:GetClass() -- Avoid contact with entities that can potentially be attached to the vehicle. Ideally, we should check if "e" is constrained to "Vehicle".
-			return !c:StartsWith( "prop_physics" ) &&!c:StartsWith( "prop_dynamic" ) && !c:StartsWith( "phys_bone_follower" ) && !c:StartsWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartsWith( "gmod_" )
+			return !c:StartsWith( "prop_physics" ) and !c:StartsWith( "prop_dynamic" ) and !c:StartsWith( "phys_bone_follower" ) and !c:StartsWith( "prop_ragdoll" ) and !e:IsVehicle() and !c:StartsWith( "gmod_" )
 		end,
 		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
 		maxs = Vector( WallOffset, WallOffset, WallOffset ),
@@ -342,7 +342,7 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 	--
 	-- If the trace hit something, put the camera there.
 	--
-	if ( tr.Hit && !tr.StartSolid) then
+	if ( tr.Hit and !tr.StartSolid) then
 		view.origin = view.origin + tr.HitNormal * WallOffset
 	end
 
@@ -421,7 +421,7 @@ function GM:AdjustMouseSensitivity( fDefault, fLocalFOV, fDefaultFOV )
 	if ( !IsValid( ply ) ) then return -1 end
 
 	local wep = ply:GetActiveWeapon()
-	if ( wep && wep.AdjustMouseSensitivity ) then
+	if ( wep and wep.AdjustMouseSensitivity ) then
 		return wep:AdjustMouseSensitivity( fDefault, fLocalFOV, fDefaultFOV )
 	end
 
@@ -561,7 +561,7 @@ function GM:CalcViewModelView( wep, vm, oldEyePos, oldEyeAng, eyePos, eyeAng )
 	-- Controls the position of all viewmodels
 	local func = wep.GetViewModelPosition
 	if ( func ) then
-		local pos, ang = func( wep, eyePos*1, eyeAng*1 )
+		local pos, ang = func( wep, eyePos, eyeAng )
 		vm_origin = pos or vm_origin
 		vm_angles = ang or vm_angles
 	end
@@ -569,7 +569,7 @@ function GM:CalcViewModelView( wep, vm, oldEyePos, oldEyeAng, eyePos, eyeAng )
 	-- Controls the position of individual viewmodels
 	func = wep.CalcViewModelView
 	if ( func ) then
-		local pos, ang = func( wep, vm, oldEyePos*1, oldEyeAng*1, eyePos*1, eyeAng*1 )
+		local pos, ang = func( wep, vm, oldEyePos, oldEyeAng, eyePos, eyeAng )
 		vm_origin = pos or vm_origin
 		vm_angles = ang or vm_angles
 	end
@@ -601,12 +601,12 @@ function GM:PostDrawViewModel( vm, ply, wep, flags )
 
 	if ( !IsValid( wep ) ) then return false end
 
-	if ( wep.UseHands || !wep:IsScripted() ) then
+	if ( wep.UseHands or !wep:IsScripted() ) then
 
 		local hands = ply:GetHands()
-		if ( IsValid( hands ) && IsValid( hands:GetParent() ) ) then
+		if ( IsValid( hands ) and IsValid( hands:GetParent() ) ) then
 
-			if ( not hook.Call( "PreDrawPlayerHands", self, hands, vm, ply, wep, flags ) ) then
+			if ( !hook.Call( "PreDrawPlayerHands", self, hands, vm, ply, wep, flags ) ) then
 
 				if ( wep.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
 				hands:DrawModel( flags )
