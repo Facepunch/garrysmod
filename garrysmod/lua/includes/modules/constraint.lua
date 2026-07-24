@@ -441,7 +441,10 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
 		-- Create the constraint
 		local Constraint = ents.Create( "phys_constraint" )
-		if ( !IsValid(Constraint) ) then return NULL end
+		if ( !IsValid(Constraint) ) then
+			onFinishConstraint()
+			return false
+		end
 
 		ConstraintCreated( Constraint )
 		if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
@@ -505,7 +508,11 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addLength, forcel
 
 			-- Create the constraint
 			Constraint = ents.Create( "phys_lengthconstraint" )
-			if ( !IsValid(Constraint) ) then return NULL, NULL end
+			if ( !IsValid(Constraint) ) then
+				onFinishConstraint()
+				return false
+			end
+
 			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
@@ -584,7 +591,10 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 		onStartConstraint( Ent1, Ent2 )
 
 			Constraint = ents.Create( "phys_spring" )
-			if ( !IsValid(Constraint) ) then return NULL, NULL end
+			if ( !IsValid(Constraint) ) then
+				onFinishConstraint()
+				return false
+			end
 
 			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
@@ -658,7 +668,10 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	onStartConstraint( Ent )
 
 		local Constraint = ents.Create( "phys_keepupright" )
-		if ( !IsValid( Constraint ) ) then return NULL end
+		if ( !IsValid( Constraint ) ) then
+			onFinishConstraint()
+			return false
+		end
 
 		ConstraintCreated( Constraint )
 		Constraint:SetAngles( Ang )
@@ -749,7 +762,11 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_slideconstraint" )
-		if ( !IsValid(Constraint) ) then return NULL end
+		if ( !IsValid(Constraint) ) then
+			onFinishConstraint()
+			return false
+		end
+
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "slideaxis", tostring( WPos2 ) )
@@ -818,7 +835,10 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_hinge" )
-		if ( !IsValid(Constraint) ) then return NULL end
+		if ( !IsValid(Constraint) ) then
+			onFinishConstraint()
+			return false
+		end
 
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
@@ -883,7 +903,10 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 		if ( nocollide && nocollide > 0 ) then flags = flags + 1 end
 
 		local Constraint = ents.Create( "phys_ragdollconstraint" )
-		if ( !IsValid(Constraint) ) then return NULL end
+		if ( !IsValid(Constraint) ) then
+			onFinishConstraint()
+			return false
+		end
 
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
@@ -1081,6 +1104,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 
 	-- The true at the end stops it adding the axis table to the entity's count stuff.
 	local axis = Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, 0, friction, nocollide, LocalAxis, true )
+	if ( !IsValid( axis ) ) then return false end
 
 	-- Delete the axis when either object dies
 	Ent1:DeleteOnRemove( axis )
@@ -1090,7 +1114,11 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_torque" )
-		if ( !IsValid(Constraint) ) then return NULL end
+		if ( !IsValid(Constraint) ) then
+			axis:Remove()
+			onFinishConstraint()
+			return false
+		end
 
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
@@ -1181,7 +1209,10 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 	onStartConstraint( Ent1, Ent4 )
 
 		local Constraint = ents.Create( "phys_pulleyconstraint" )
-		if ( !IsValid(Constraint) ) then return NULL end
+		if ( !IsValid(Constraint) ) then
+			onFinishConstraint()
+			return false
+		end
 
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos2 )
@@ -1260,7 +1291,10 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_ballsocket" )
-		if ( !IsValid(Constraint) ) then return NULL end
+		if ( !IsValid(Constraint) ) then
+			onFinishConstraint()
+			return false
+		end
 
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos )
