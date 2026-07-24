@@ -147,13 +147,19 @@ function ENT:Setup( ent )
 	self:SetParent( ent )
 	self:SetLocalPos( vector_origin )
 
+	local bones = {}
 	for k = 0, ent:GetBoneCount() - 1 do
 
 		if ( ent:GetBoneParent( k ) <= 0 ) then continue end
 		if ( !ent:BoneHasFlag( k, BONE_USED_BY_VERTEX_LOD0 ) ) then continue end
 
 		local btn = ents.Create( "widget_bone" )
-		if ( !IsValid( btn ) ) then continue end
+		if ( !IsValid( btn ) ) then
+			for _, v in pairs( bones ) do if ( IsValid( v ) ) then v:Remove() end end
+
+			error( "Failed to create widget_bone entity for bone " .. k .. " on " .. ent:GetClass() .. " (" .. ent:EntIndex() .. ")" )
+			return
+		end
 
 		btn:FollowBone( ent, k )
 		btn:SetLocalPos( vector_origin )
@@ -166,9 +172,11 @@ function ENT:Setup( ent )
 		end
 
 		self:DeleteOnRemove( btn )
+		bones[ k ] = btn
 
 	end
 
+	bones = nil
 end
 
 function ENT:OnBoneClick( boneid, ply )
