@@ -115,7 +115,17 @@ if ( SERVER ) then
 		local lightInfo = self:GetLightInfo()
 
 		self.flashlight = ents.Create( "env_projectedtexture" )
-		if ( !IsValid( self.flashlight ) ) then self.flashlight = nil return end
+		if ( !IsValid( self.flashlight ) ) then
+
+			local ply = self:GetPlayer()
+			if ( IsValid( ply ) ) then
+				ply:PrintMessage( HUD_PRINTTALK, "Failed to create flashlight entity." )
+			end
+
+			ErrorNoHalt( "Failed to create flashlight entity for " .. self:GetClass() .. " (" .. self:EntIndex() .. ")!\n" )
+			self.flashlight = nil
+			return
+		end
 		self.flashlight:SetParent( self )
 
 		-- The local positions are the offsets from parent..
