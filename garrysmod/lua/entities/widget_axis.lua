@@ -82,7 +82,11 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowX:SetAxisIndex( 1 )
 
 	self.ArrowY = ents.Create( EntName )
-	if ( !IsValid( self.ArrowY ) ) then return end
+	if ( !IsValid( self.ArrowY ) ) then
+		self.ArrowX:Remove()
+		error( "Failed to create widget_axis_arrow entity for Y axis on " .. ent:GetClass() .. " (" .. ent:EntIndex() .. ")" )
+		return
+	end
 
 	self.ArrowY:SetParent( self )
 	self.ArrowY:SetColor( Color( 0, 230, 50, 255 ) )
@@ -92,7 +96,13 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowY:SetAxisIndex( 2 )
 
 	self.ArrowZ = ents.Create( EntName )
-	if ( !IsValid( self.ArrowZ ) ) then return end
+	if ( !IsValid( self.ArrowZ ) ) then
+		self.ArrowX:Remove()
+		self.ArrowY:Remove()
+
+		error( "Failed to create widget_axis_arrow entity for Z axis on " .. ent:GetClass() .. " (" .. ent:EntIndex() .. ")" )
+		return
+	end
 
 	self.ArrowZ:SetParent( self )
 	self.ArrowZ:SetColor( Color( 50, 100, 255, 255 ) )
