@@ -9,13 +9,13 @@ local GetLang = LANG.GetUnsafeLanguageTable
 local interp = string.Interp
 
 -- Fonts
-surface.CreateFont("TraitorState", {font = "Tahoma",
+surface.CreateFont("TraitorState", {font = GAMEMODE_DEFAULT_UI_FONT,
                                     size = 28,
                                     weight = 1000})
-surface.CreateFont("TimeLeft",     {font = "Tahoma",
+surface.CreateFont("TimeLeft",     {font = GAMEMODE_DEFAULT_UI_FONT,
                                     size = 24,
                                     weight = 800})
-surface.CreateFont("HealthAmmo",   {font = "Tahoma",
+surface.CreateFont("HealthAmmo",   {font = GAMEMODE_DEFAULT_UI_FONT,
                                     size = 24,
                                     weight = 750})
 -- Color presets

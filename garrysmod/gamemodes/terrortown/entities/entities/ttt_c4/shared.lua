@@ -586,7 +586,7 @@ end
 
 if CLIENT then
    surface.CreateFont("C4ModelTimer", {
-                         font = "Tahoma",
+                         font = GAMEMODE_DEFAULT_UI_FONT,
                          size = 13,
                          weight = 0,
                          antialias = false

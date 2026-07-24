@@ -1,14 +1,14 @@
 include("shared.lua")
 
 -- Define GM12 fonts for compatibility
-surface.CreateFont("DefaultBold", {font = "Tahoma",
+surface.CreateFont("DefaultBold", {font = GAMEMODE_DEFAULT_UI_FONT,
                                    size = 13,
                                    weight = 1000})
-surface.CreateFont("TabLarge",    {font = "Tahoma",
+surface.CreateFont("TabLarge",    {font = GAMEMODE_DEFAULT_UI_FONT,
                                    size = 13,
                                    weight = 700,
                                    shadow = true, antialias = false})
-surface.CreateFont("Trebuchet22", {font = "Tahoma",
+surface.CreateFont("Trebuchet22", {font = GAMEMODE_DEFAULT_UI_FONT,
                                    size = 22,
                                    weight = 900})
 

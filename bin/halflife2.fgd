@@ -374,7 +374,7 @@
 	[
 		65536 : "Friendly" : 0
 		131072 : "Use prop_physics collision rules"	: 0
-		262144 : "Spawn as Alyx-hacked" : 0 // GMOD
+		262144 : "Spawn as Alyx-hacked (GMod Exclusive)" : 0 // GMOD
 	]
 
 	startburied(choices) : "Start Buried" : "No" =
@@ -1724,6 +1724,7 @@
 		131072 : "Don't use any damage effects" : 0
 		262144 : "Use Air Nodes" : 0
 		1048576 : "No Danger Sounds" : 0
+		2097152 : "Spawn as Alyx-hacked (GMod Exclusive)" : 0 // GMOD
 	]
 
 	input DisableSwarm(void) : "Disable the manhack swarm behavior."

@@ -159,6 +159,14 @@ AddNPC( {
 	NoDrop = true
 }, "npc_rollermine_hacked" )
 
+AddNPC( {
+	Class = "npc_manhack",
+	Category = Category,
+	KeyValues = { SquadName = "resistance" },
+	SpawnFlags = 2097152, -- SF_MANHACK_HACKED
+	NoDrop = true
+}, "npc_manhack_hacked" )
+
 Category = "#spawnmenu.category.zombies_aliens"
 
 AddNPC( {
@@ -237,8 +245,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_antlionguard",
 	Category = Category,
-	KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
-	Material = "Models/antlion_guard/antlionGuard2"
+	KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" }
 }, "npc_antlionguardian" )
 
 AddNPC( {
