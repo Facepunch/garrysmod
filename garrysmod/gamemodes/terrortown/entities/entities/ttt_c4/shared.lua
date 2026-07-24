@@ -251,16 +251,6 @@ function ENT:Explode(tr)
 
       self:BroadcastSound(c4boom, 100)
 
-      -- extra push
-      local phexp = ents.Create("env_physexplosion")
-      phexp:SetPos(pos)
-      phexp:SetKeyValue("magnitude", self:GetDmg())
-      phexp:SetKeyValue("radius", r_outer)
-      phexp:SetKeyValue("spawnflags", "19")
-      phexp:Spawn()
-      phexp:Fire("Explode")
-
-
       -- few fire bits to ignite things
       timer.Simple(0.2, function() StartFires(pos, tr, 4, 5, true, dmgowner) end)
 
@@ -268,7 +258,20 @@ function ENT:Explode(tr)
 
       SCORE:HandleC4Explosion(dmgowner, self:GetArmTime(), CurTime())
 
+      local dmg = self:GetDmg()
       self:Remove()
+
+      -- extra push
+      local phexp = ents.Create("env_physexplosion")
+      if not IsValid(phexp) then return end
+      phexp:SetPos(pos)
+      phexp:SetKeyValue("magnitude", dmg)
+      phexp:SetKeyValue("radius", r_outer)
+      phexp:SetKeyValue("spawnflags", "19")
+      phexp:Spawn()
+      phexp:Fire("Explode")
+
+
    else
       local spos = self:GetPos()
       local trs = util.TraceLine({start=spos + Vector(0,0,64), endpos=spos + Vector(0,0,-128), filter=self})
