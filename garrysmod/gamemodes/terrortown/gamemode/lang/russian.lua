@@ -1104,3 +1104,5 @@ L.radio_button_glock   = "Выстрелы Glock"
 L.radio_button_sipist  = "Выстрелы глушителя"
 L.radio_button_tele    = "Телепортация"
 L.radio_button_heal    = "Лечение"
+
+L.flame_burn = "ОГОНЬ! ОН ЖЖЁТ!"
