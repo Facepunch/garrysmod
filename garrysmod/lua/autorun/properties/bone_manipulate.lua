@@ -50,6 +50,7 @@ properties.Add( "bone_manipulate", {
 			if ( IsValid( w.axis ) ) then w.axis:Remove() end
 
 			-- We clicked on the same bone
+			local oldBonePressCount, oldLastBonePress = w.BonePressCount, w.LastBonePress
 			if ( w.LastBonePress == boneid ) then
 				w.BonePressCount = w.BonePressCount + 1
 				if ( w.BonePressCount >= 3 ) then w.BonePressCount = 0 end
@@ -62,7 +63,12 @@ properties.Add( "bone_manipulate", {
 			local EntityCycle = { "widget_bonemanip_move", "widget_bonemanip_rotate", "widget_bonemanip_scale" }
 
 			w.axis = ents.Create( EntityCycle[ w.BonePressCount + 1 ] )
-			if ( !IsValid( w.axis ) ) then w.axis = nil return end
+			if ( !IsValid( w.axis ) ) then
+				w.axis = nil
+				w.BonePressCount = oldBonePressCount
+				w.LastBonePress = oldLastBonePress
+				return
+			end
 			w.axis:Setup( ent, boneid, w.BonePressCount == 1 )
 			w.axis:Spawn()
 			w.axis:SetPriority( 0.5 )
