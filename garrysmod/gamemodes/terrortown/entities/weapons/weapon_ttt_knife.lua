@@ -151,41 +151,41 @@ function SWEP:StabKill(tr, spos, sdest)
    ang:RotateAroundAxis(ang:Right(), -90)
    pos = pos - (ang:Forward() * 7)
 
+   local prints = self.fingerprints
    local ignore = self:GetOwner()
 
    target.effect_fn = function(rag)
-      -- we might find a better location
-      local rtr = util.TraceLine({start=pos, endpos=pos + norm * 40, filter=ignore, mask=MASK_SHOT_HULL})
+                         -- we might find a better location
+                         local rtr = util.TraceLine({start=pos, endpos=pos + norm * 40, filter=ignore, mask=MASK_SHOT_HULL})
 
-      if IsValid(rtr.Entity) and rtr.Entity == rag then
-         bone = rtr.PhysicsBone
-         pos = rtr.HitPos
-         ang = Angle(-28,0,0) + rtr.Normal:Angle()
-         ang:RotateAroundAxis(ang:Right(), -90)
-         pos = pos - (ang:Forward() * 10)
+                         if IsValid(rtr.Entity) and rtr.Entity == rag then
+                            bone = rtr.PhysicsBone
+                            pos = rtr.HitPos
+                            ang = Angle(-28,0,0) + rtr.Normal:Angle()
+                            ang:RotateAroundAxis(ang:Right(), -90)
+                            pos = pos - (ang:Forward() * 10)
 
-      end
+                         end
 
-      local knife = ents.Create("prop_physics")
-      if not IsValid(knife) then return end
-      knife:SetModel("models/weapons/w_knife_t.mdl")
-      knife:SetPos(pos)
-      knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-      knife:SetAngles(ang)
-      knife.CanPickup = false
+                         local knife = ents.Create("prop_physics")
+                         knife:SetModel("models/weapons/w_knife_t.mdl")
+                         knife:SetPos(pos)
+                         knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+                         knife:SetAngles(ang)
+                         knife.CanPickup = false
 
-      knife:Spawn()
+                         knife:Spawn()
 
-      local phys = knife:GetPhysicsObject()
-      if IsValid(phys) then
-         phys:EnableCollisions(false)
-      end
+                         local phys = knife:GetPhysicsObject()
+                         if IsValid(phys) then
+                            phys:EnableCollisions(false)
+                         end
 
-      constraint.Weld(rag, knife, bone, 0, 0, true)
+                         constraint.Weld(rag, knife, bone, 0, 0, true)
 
-      -- need to close over knife in order to keep a valid ref to it
-      rag:CallOnRemove("ttt_knife_cleanup", function() SafeRemoveEntity(knife) end)
-   end
+                         -- need to close over knife in order to keep a valid ref to it
+                         rag:CallOnRemove("ttt_knife_cleanup", function() SafeRemoveEntity(knife) end)
+                      end
 
 
    -- seems the spos and sdest are purely for effects/forces?
