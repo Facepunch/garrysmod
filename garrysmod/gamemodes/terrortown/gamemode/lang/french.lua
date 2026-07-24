@@ -1101,4 +1101,5 @@ L.set_hip_cross_opacity = "Opacité"
 L.set_cross_thickness = "Épaisseur"
 L.set_cross_outlinethickness = "Épaisseur du contour"
 
+-- 2026-07-24
 L.flame_burn = "AU FEU ! ÇA BRÛLE !"

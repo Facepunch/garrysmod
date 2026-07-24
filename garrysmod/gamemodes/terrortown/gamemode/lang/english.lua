@@ -1136,4 +1136,5 @@ L.equip_sort_slot    = "Slot"
 
 L.set_hide_unbuyable = "Move unbuyable equipment items to the bottom of the list"
 
+-- 2026-07-24
 L.flame_burn = "FIRE! IT BURNS!"
