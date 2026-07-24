@@ -154,6 +154,9 @@ function SWEP:StabKill(tr, spos, sdest)
    local ignore = self:GetOwner()
 
    target.effect_fn = function(rag)
+      local knife = ents.Create("prop_physics")
+      if not IsValid(knife) then return end
+
       -- we might find a better location
       local rtr = util.TraceLine({start=pos, endpos=pos + norm * 40, filter=ignore, mask=MASK_SHOT_HULL})
 
@@ -163,11 +166,8 @@ function SWEP:StabKill(tr, spos, sdest)
          ang = Angle(-28,0,0) + rtr.Normal:Angle()
          ang:RotateAroundAxis(ang:Right(), -90)
          pos = pos - (ang:Forward() * 10)
-
       end
 
-      local knife = ents.Create("prop_physics")
-      if not IsValid(knife) then return end
       knife:SetModel("models/weapons/w_knife_t.mdl")
       knife:SetPos(pos)
       knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
