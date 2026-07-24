@@ -1135,3 +1135,5 @@ L.equip_sort_default = "Default"
 L.equip_sort_slot    = "Slot"
 
 L.set_hide_unbuyable = "Move unbuyable equipment items to the bottom of the list"
+
+L.flame_burn = "FIRE! IT BURNS!"

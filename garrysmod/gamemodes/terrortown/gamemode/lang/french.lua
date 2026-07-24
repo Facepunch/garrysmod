@@ -1100,3 +1100,5 @@ L.set_cross_color = "Couleur du réticule"
 L.set_hip_cross_opacity = "Opacité"
 L.set_cross_thickness = "Épaisseur"
 L.set_cross_outlinethickness = "Épaisseur du contour"
+
+L.flame_burn = "Au feu ! Ça brûle !"
