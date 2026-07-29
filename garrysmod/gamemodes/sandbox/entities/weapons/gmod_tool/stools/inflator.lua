@@ -64,6 +64,7 @@ local ScaleXZ = {
 }
 
 local function GetNiceBoneScale( name, scale )
+
 	if ( ScaleYZ[ name ] or string.find( name:lower(), "leg" ) or string.find( name:lower(), "arm" ) ) then
 		return Vector( 0, scale, scale )
 	end
@@ -73,6 +74,7 @@ local function GetNiceBoneScale( name, scale )
 	end
 
 	return Vector( scale, scale, scale )
+
 end
 
 --Scale the specified bone by Scale
