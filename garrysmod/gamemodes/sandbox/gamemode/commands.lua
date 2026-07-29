@@ -641,6 +641,8 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 end
 concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end )
 
+local strictDuplicator = GetConVar( "duplicator_strict" )
+
 -- This should be in base_npcs.lua really
 local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, data )
 
@@ -676,7 +678,9 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 		if ( data.CurHealth ) then ent:SetHealth( data.CurHealth ) end
 		if ( data.MaxHealth ) then ent:SetMaxHealth( data.MaxHealth ) end
 
-		table.Merge( ent:GetTable(), data )
+		if ( not strictDuplicator:GetBool() ) then
+			table.Merge( ent:GetTable(), data )
+		end
 
 	end
 
