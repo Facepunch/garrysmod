@@ -1,11 +1,12 @@
 
-TOOL.AddToMenu = false
-
 --
 -- This tool is the most important aspect of Garry's Mod
 --
 
+TOOL.AddToMenu = false
 TOOL.LeftClickAutomatic = true
+
+if ( true ) then return end -- Don't actually run anything below, remove this to make everything below functional
 
 function TOOL:LeftClick( trace )
 
