@@ -206,6 +206,12 @@ end
 
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
+	if ( math.floor( GetConVarNumber( "r_rootlod" ) ) == 2 ) then
+		FireProblem( { id = "r_rootlod", text = "#problem.r_rootlod", type = "config", fix = function() RunConsoleCommand( "r_rootlod", "1" ) end, severity = 1 } )
+	else
+		ClearProblem( "r_rootlod" )
+	end
+
 	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
 		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end, severity = 1 } )
 	else
