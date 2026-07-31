@@ -137,6 +137,9 @@ local function onStartConstraint( ent1, ent2 )
 	-- Any constraints called after this call will use this system
 	SetPhysConstraintSystem( CurrentSystem )
 
+	-- TODO: Do not make constraints if FindOrCreateConstraintSystem fails when out of entity slots?
+	-- return IsValid( CurrentSystem )
+
 end
 
 --[[----------------------------------------------------------------------
@@ -441,7 +444,7 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
 		-- Create the constraint
 		local Constraint = ents.Create( "phys_constraint" )
-		if ( !IsValid(Constraint) ) then
+		if ( !IsValid( Constraint ) ) then
 			onFinishConstraint()
 			return false
 		end
@@ -508,7 +511,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addLength, forcel
 
 			-- Create the constraint
 			Constraint = ents.Create( "phys_lengthconstraint" )
-			if ( !IsValid(Constraint) ) then
+			if ( !IsValid( Constraint ) ) then
 				onFinishConstraint()
 				return false
 			end
@@ -538,7 +541,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addLength, forcel
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
 	if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
 
-	-- What the fuck
+	-- What the hell
 	if ( !Constraint ) then Constraint, rope = rope, nil end
 
 	if ( IsValid( Constraint ) ) then
@@ -559,7 +562,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addLength, forcel
 			color = color
 		}
 		Constraint:SetTable( ctable )
-	
+
 		AddConstraintTable( Ent1, Constraint, Ent2 )
 	end
 
@@ -591,7 +594,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 		onStartConstraint( Ent1, Ent2 )
 
 			Constraint = ents.Create( "phys_spring" )
-			if ( !IsValid(Constraint) ) then
+			if ( !IsValid( Constraint ) ) then
 				onFinishConstraint()
 				return false
 			end
@@ -658,7 +661,7 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	-- This was once here. Is there any specific reason this was the case?
 	--if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
 	if ( Ent:IsPlayer() || Ent:IsWorld() ) then return false end
-	if ( !angularlimit or angularlimit < 0 ) then return end
+	if ( !angularlimit or angularlimit < 0 ) then return false end
 
 	local Phys = Ent:GetPhysicsObjectNum( Bone )
 
@@ -725,8 +728,6 @@ end
 ------------------------------------------------------------------------]]
 function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color )
 
-	-- TODO: If we get rid of sliders we can get rid of gmod_anchor too!
-
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
@@ -740,13 +741,14 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 	if ( Phys1 == Phys2 ) then return end
 
 	-- Start World Hack.
-	-- Attaching a slider to the world makes it really sucks so we make
+	-- Attaching a slider to the world makes it really bad so we make
 	-- a prop and attach to that.
 
 	if ( Ent1:IsWorld() ) then
 
 		Ent1, Phys1, Bone1, LPos1 = CreateStaticAnchorPoint( WPos1 )
 		StaticAnchor = Ent1
+		if ( !IsValid( StaticAnchor ) ) then return false end
 
 	end
 
@@ -754,6 +756,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 
 		Ent2, Phys2, Bone2, LPos2 = CreateStaticAnchorPoint( WPos2 )
 		StaticAnchor = Ent2
+		if ( !IsValid( StaticAnchor ) ) then return false end
 
 	end
 
@@ -762,7 +765,8 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_slideconstraint" )
-		if ( !IsValid(Constraint) ) then
+		if ( !IsValid( Constraint ) ) then
+			if ( IsValid( StaticAnchor ) ) then StaticAnchor:Remove() end
 			onFinishConstraint()
 			return false
 		end
@@ -835,7 +839,7 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_hinge" )
-		if ( !IsValid(Constraint) ) then
+		if ( !IsValid( Constraint ) ) then
 			onFinishConstraint()
 			return false
 		end
@@ -903,7 +907,7 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 		if ( nocollide && nocollide > 0 ) then flags = flags + 1 end
 
 		local Constraint = ents.Create( "phys_ragdollconstraint" )
-		if ( !IsValid(Constraint) ) then
+		if ( !IsValid( Constraint ) ) then
 			onFinishConstraint()
 			return false
 		end
@@ -1114,7 +1118,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_torque" )
-		if ( !IsValid(Constraint) ) then
+		if ( !IsValid( Constraint ) ) then
 			axis:Remove()
 			onFinishConstraint()
 			return false
@@ -1209,7 +1213,7 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 	onStartConstraint( Ent1, Ent4 )
 
 		local Constraint = ents.Create( "phys_pulleyconstraint" )
-		if ( !IsValid(Constraint) ) then
+		if ( !IsValid( Constraint ) ) then
 			onFinishConstraint()
 			return false
 		end
@@ -1291,7 +1295,7 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_ballsocket" )
-		if ( !IsValid(Constraint) ) then
+		if ( !IsValid( Constraint ) ) then
 			onFinishConstraint()
 			return false
 		end
@@ -1371,7 +1375,10 @@ function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd
 
 	-- Attach our Controller to the Elastic constraint
 	local controller = ents.Create( "gmod_winch_controller" )
-	if ( !IsValid( controller ) ) then return NULL end
+	if ( !IsValid( controller ) ) then
+		Constraint:Remove()
+		return false
+	end
 
 	controller:SetConstraint( Constraint )
 	controller:SetRope( rope )
@@ -1421,6 +1428,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, lengthMin, lengt
 	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, tobool( fixed ) )
 
 	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false, color )
+	if ( !Constraint ) then return nil, rope end
 
 	local ctable = {
 		Type = "Hydraulic",
@@ -1444,9 +1452,9 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, lengthMin, lengt
 	}
 	Constraint:SetTable( ctable )
 
-	if ( Constraint && Constraint != rope ) then
+	if ( Constraint != rope ) then
 
-		local slider
+		local slider = nil
 
 		if ( fixed == 1 ) then
 			slider = Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, 0 )
@@ -1455,7 +1463,11 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, lengthMin, lengt
 		end
 
 		local controller = ents.Create( "gmod_winch_controller" )
-		if ( !IsValid( controller ) ) then return NULL end
+		if ( !IsValid( controller ) ) then
+			-- if "slider" or "rope" exists, it will be deleted by DeleteOnRemove
+			Constraint:Remove()
+			return false
+		end
 
 		if ( lengthMax > lengthMin ) then
 			controller:SetKeyValue( "minlength", lengthMin )
@@ -1542,7 +1554,10 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 	end
 
 	local controller = ents.Create( "gmod_winch_controller" )
-	if ( !IsValid( controller ) ) then return NULL end
+	if ( !IsValid( controller ) ) then
+		Constraint:Remove()
+		return false
+	end
 
 	if ( Length2 > Length1 ) then
 		controller:SetKeyValue( "minlength", Length1 )
