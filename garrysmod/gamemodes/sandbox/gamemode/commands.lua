@@ -140,20 +140,21 @@ function GMODSpawnRagdoll( ply, model, iSkin, strBody )
 
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
 
-	local e = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody )
+	local ragdoll = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody )
+	if ( !IsValid( ragdoll ) ) then return end -- Must've hit edict limit
 
 	if ( IsValid( ply ) ) then
-		gamemode.Call( "PlayerSpawnedRagdoll", ply, model, e )
+		gamemode.Call( "PlayerSpawnedRagdoll", ply, model, ragdoll )
 	end
 
-	DoPropSpawnedEffect( e )
+	DoPropSpawnedEffect( ragdoll )
 
 	undo.Create( "prop_ragdoll" )
 		undo.SetPlayer( ply )
-		undo.AddEntity( e )
+		undo.AddEntity( ragdoll )
 	undo.Finish( "#prop_ragdoll (" .. tostring( model ) .. ")" )
 
-	ply:AddCleanup( "ragdolls", e )
+	ply:AddCleanup( "ragdolls", ragdoll )
 
 end
 
@@ -866,7 +867,8 @@ function Spawn_SENT( ply, EntityName, tr )
 		end
 
 		entity = ents.Create( EntTable.ClassName )
-		if ( !IsValid( entity ) ) then return NULL end
+		if ( !IsValid( entity ) ) then return end
+
 		entity:SetPos( SpawnPos )
 
 		if ( EntTable.KeyValues ) then
@@ -982,15 +984,11 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	if ( !gamemode.Call( "PlayerSpawnSWEP", ply, wepname, swep ) ) then return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
-
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 	if ( !tr.Hit ) then return end
 
 	local entity = ents.Create( swep.ClassName )
-
-	if ( !IsValid( entity ) ) then return NULL end
+	if ( !IsValid( entity ) ) then return end
 
 	DoPropSpawnedEffect( entity )
 
