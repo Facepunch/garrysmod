@@ -139,12 +139,13 @@ function TOOL.BuildCPanel( CPanel )
 
 	-- Remove duplicates.
 	local Options = {}
+	local seen = {}
 	for id, str in ipairs( list.Get( "PaintMaterials" ) ) do
-		if ( !table.HasValue( Options, str ) ) then
-			table.insert( Options, str )
-		end
+	    if ( !seen[ str ] ) then
+	        seen[ str ] = true
+	        table.insert( Options, str )
+	    end
 	end
-
 	table.sort( Options )
 
 	local listbox = vgui.Create( "DListView" )

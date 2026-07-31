@@ -564,12 +564,15 @@ function SpawnWillingPlayers(dead_only)
       local num_spawns = #GetSpawnEnts()
 
       local to_spawn = {}
-      for _, ply in RandomPairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          if IsValid(ply) and ply:ShouldSpawn() then
             table.insert(to_spawn, ply)
             GAMEMODE:PlayerSpawnAsSpectator(ply)
          end
       end
+
+      -- Shuffle the table of queued players to randomize the spawn order
+      table.Shuffle(to_spawn)
 
       local sfn = function()
                      local c = 0
