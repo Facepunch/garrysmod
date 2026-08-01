@@ -145,7 +145,7 @@ function PANEL:UpdateToolDisabledStatus()
 
 	local shouldHide = cvar_hide_disabled:GetBool()
 	local searchText = self.SearchBar:GetText():Trim():lower()
-	local fakeTrace = { Entity = game.GetWorld(), Hit = false }
+	local fakeTrace = { Entity = game.GetWorld(), Hit = false, Spawnmenu = true }
 	local anyChanged = false
 
 	for cid, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
