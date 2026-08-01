@@ -59,11 +59,8 @@ function ENT:Initialize()
 		if ( tab && IsValid( tab[ 1 ] ) ) then self.AttachedEntity = tab[ 1 ] end
 
 		-- Selectively inherit BeingLookedAtByLocalPlayer from base_gmodentity so we don't have to copy paste it
-		local base_gmodentity = scripted_ents.Get( "base_gmodentity" )
-		if ( base_gmodentity ) then
-			self.BeingLookedAtByLocalPlayer = base_gmodentity.BeingLookedAtByLocalPlayer
-			self.MaxWorldTipDistance = base_gmodentity.MaxWorldTipDistance
-		end
+		self.BeingLookedAtByLocalPlayer = scripted_ents.GetMember( "base_gmodentity", "BeingLookedAtByLocalPlayer" )
+		self.MaxWorldTipDistance = scripted_ents.GetMember( "base_gmodentity", "MaxWorldTipDistance" )
 	end
 
 	-- Set collision bounds exactly
