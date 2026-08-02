@@ -203,7 +203,7 @@ function PANEL:PopulateFromList( listName, tree, options )
 
 		-- Remove from previous category..
 		for cat, catPnl in pairs( self.Categories ) do
-			if ( !IsValid( catPnl.PropPanel ) ) then continue end
+			if ( !IsValid( catPnl.PropPanel ) or !catPnl.PropPanel.SubCategories ) then continue end
 
 			for subCatName, icons in pairs( catPnl.PropPanel.SubCategories ) do
 				for id, icon in pairs( icons ) do
