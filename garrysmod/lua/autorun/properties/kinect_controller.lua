@@ -51,6 +51,7 @@ properties.Add( "motioncontrol_ragdoll", {
 		local timeout = playerTimeouts[ player ]
 		if ( timeout && timeout.time > CurTime() ) then
 			if ( !timeout.sentMessage ) then
+				ServerLog( "Player " .. tostring( player ) .. " tried to use 'motioncontrol_ragdoll' property too rapidly!\n" )
 				player:PrintMessage( HUD_PRINTTALK, "Please wait at least 0.2 seconds before trying to control another ragdoll." )
 				timeout.sentMessage = true
 			end
@@ -64,8 +65,7 @@ properties.Add( "motioncontrol_ragdoll", {
 
 		local ragdoll_motion = ents.Create( "ragdoll_motion" )
 		if ( !IsValid( ragdoll_motion ) ) then
-			ServerLog( "Player " .. tostring( player ) .. " failed to create ragdoll_motion entity for " .. ent:GetClass() .. " (" .. ent:EntIndex() .. ")!\n" )
-			player:PrintMessage( HUD_PRINTTALK, "Failed to create ragdoll_motion entity for " .. ent:GetClass() )
+			player:PrintMessage( HUD_PRINTTALK, "Failed to create Motion Sensor Controller for " .. ent:GetClass() )
 			return
 		end
 		ragdoll_motion:SetPos( player:EyePos() + player:EyeAngles():Forward() * 10 )
