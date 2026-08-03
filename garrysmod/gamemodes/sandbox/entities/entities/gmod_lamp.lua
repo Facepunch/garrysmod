@@ -116,16 +116,30 @@ if ( SERVER ) then
 
 		self.flashlight = ents.Create( "env_projectedtexture" )
 		if ( !IsValid( self.flashlight ) ) then
-
 			local ply = self:GetPlayer()
 			if ( IsValid( ply ) ) then
 				ply:PrintMessage( HUD_PRINTTALK, "Failed to create flashlight entity." )
 			end
 
-			ErrorNoHalt( "Failed to create flashlight entity for " .. self:GetClass() .. " (" .. self:EntIndex() .. ")!\n" )
 			self.flashlight = nil
+
+			-- Turn off, since that's what we look like now
+			-- And play a cute effect
+			timer.Simple( 0, function()
+				self:SetOn( false )
+
+				local effectdata = EffectData()
+				effectdata:SetOrigin( self:GetPos() )
+				effectdata:SetNormal( self:GetForward() )
+				effectdata:SetMagnitude( 1 )
+				effectdata:SetScale( 1 )
+				effectdata:SetRadius( 16 )
+				util.Effect( "Sparks", effectdata, false, true )
+			end )
+
 			return
 		end
+
 		self.flashlight:SetParent( self )
 
 		-- The local positions are the offsets from parent..
