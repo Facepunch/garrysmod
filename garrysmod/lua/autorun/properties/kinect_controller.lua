@@ -51,7 +51,6 @@ properties.Add( "motioncontrol_ragdoll", {
 		local timeout = playerTimeouts[ player ]
 		if ( timeout && timeout.time > CurTime() ) then
 			if ( !timeout.sentMessage ) then
-				ServerLog( "Player " .. tostring( player ) .. " tried to use 'motioncontrol_ragdoll' property too rapidly!\n" )
 				player:PrintMessage( HUD_PRINTTALK, "Please wait at least 0.2 seconds before trying to control another ragdoll." )
 				timeout.sentMessage = true
 			end
