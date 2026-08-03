@@ -72,7 +72,9 @@ function ENT:Setup( ent, boneid, rotate )
 	if ( rotate ) then EntName = "widget_axis_disc" end
 
 	self.ArrowX = ents.Create( EntName )
-	if ( !IsValid( self.ArrowX ) ) then return end
+	if ( !IsValid( self.ArrowX ) ) then
+		return false
+	end
 
 	self.ArrowX:SetParent( self )
 	self.ArrowX:SetColor( Color( 255, 0, 0, 255 ) )
@@ -84,8 +86,7 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowY = ents.Create( EntName )
 	if ( !IsValid( self.ArrowY ) ) then
 		self.ArrowX:Remove()
-		error( "Failed to create widget_axis_arrow entity for Y axis on " .. ent:GetClass() .. " (" .. ent:EntIndex() .. ")" )
-		return
+		return false
 	end
 
 	self.ArrowY:SetParent( self )
@@ -99,9 +100,7 @@ function ENT:Setup( ent, boneid, rotate )
 	if ( !IsValid( self.ArrowZ ) ) then
 		self.ArrowX:Remove()
 		self.ArrowY:Remove()
-
-		error( "Failed to create widget_axis_arrow entity for Z axis on " .. ent:GetClass() .. " (" .. ent:EntIndex() .. ")" )
-		return
+		return false
 	end
 
 	self.ArrowZ:SetParent( self )
@@ -116,6 +115,8 @@ function ENT:Setup( ent, boneid, rotate )
 		if ( IsValid( self.ArrowY ) ) then self.ArrowY:SetIsScaleArrow( true ) end
 		if ( IsValid( self.ArrowZ ) ) then self.ArrowZ:SetIsScaleArrow( true ) end
 	end
+
+	return true
 
 end
 
