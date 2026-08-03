@@ -177,6 +177,7 @@ function ENT:Setup( ent )
 	end
 
 	bones = nil
+
 end
 
 function ENT:OnBoneClick( boneid, ply )
