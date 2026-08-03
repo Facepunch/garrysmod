@@ -156,9 +156,7 @@ function ENT:Setup( ent )
 		local btn = ents.Create( "widget_bone" )
 		if ( !IsValid( btn ) ) then
 			for _, v in pairs( bones ) do if ( IsValid( v ) ) then v:Remove() end end
-
-			error( "Failed to create widget_bone entity for bone " .. k .. " on " .. ent:GetClass() .. " (" .. ent:EntIndex() .. ")" )
-			return
+			return false
 		end
 
 		btn:FollowBone( ent, k )
@@ -177,6 +175,8 @@ function ENT:Setup( ent )
 	end
 
 	bones = nil
+
+	return true
 
 end
 
