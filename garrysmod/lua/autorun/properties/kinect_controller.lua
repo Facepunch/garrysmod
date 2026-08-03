@@ -64,6 +64,10 @@ properties.Add( "motioncontrol_ragdoll", {
 		end
 
 		local ragdoll_motion = ents.Create( "ragdoll_motion" )
+		if ( !IsValid( ragdoll_motion ) ) then
+			player:PrintMessage( HUD_PRINTTALK, "Failed to create Motion Sensor Controller for " .. ent:GetClass() )
+			return
+		end
 		ragdoll_motion:SetPos( player:EyePos() + player:EyeAngles():Forward() * 10 )
 		ragdoll_motion:SetAngles( Angle( 0, player:EyeAngles().yaw, 0 ) )
 		ragdoll_motion:SetRagdoll( ent )

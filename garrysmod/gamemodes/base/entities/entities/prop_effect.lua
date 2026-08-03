@@ -20,18 +20,23 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self.AttachedEntity = ents.Create( "prop_dynamic" )
-		self.AttachedEntity:SetModel( self:GetModel() )
-		self.AttachedEntity:SetAngles( self:GetAngles() )
-		self.AttachedEntity:SetPos( self:GetPos() )
-		self.AttachedEntity:SetSkin( self:GetSkin() )
-		self.AttachedEntity:Spawn()
-		self.AttachedEntity:SetParent( self )
-		self.AttachedEntity:DrawShadow( false )
 
+		-- This can happen at entity limit
+		if ( IsValid( self.AttachedEntity ) ) then
+			self.AttachedEntity:SetModel( self:GetModel() )
+			self.AttachedEntity:SetAngles( self:GetAngles() )
+			self.AttachedEntity:SetPos( self:GetPos() )
+			self.AttachedEntity:SetSkin( self:GetSkin() )
+			self.AttachedEntity:Spawn()
+			self.AttachedEntity:SetParent( self )
+			self.AttachedEntity:DrawShadow( false )
+
+			self:DeleteOnRemove( self.AttachedEntity )
+			self.AttachedEntity:DeleteOnRemove( self )
+		end
+
+		self.OriginalModel = self:GetModel() -- Used for duplicator in case attached entity is gone for whatever reason
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
-
-		self:DeleteOnRemove( self.AttachedEntity )
-		self.AttachedEntity:DeleteOnRemove( self )
 
 		-- Don't use the model's physics - create a box instead
 		self:PhysicsInitBox( mins, maxs )
@@ -74,7 +79,7 @@ end
 function ENT:Draw( flags )
 
 	-- Draw the actual model when we are grabbed by physics gun, etc.
-	if ( halo.RenderedEntity() == self ) then
+	if ( halo.RenderedEntity() == self && IsValid( self.AttachedEntity ) ) then
 		self.AttachedEntity:DrawModel( flags )
 	end
 
@@ -118,6 +123,12 @@ function ENT:PhysicsUpdate( physobj )
 end
 
 function ENT:OnEntityCopyTableFinish( tab )
+
+	-- This entity is in an invalid state, still try to store something useful for the duplicator
+	if ( !IsValid( self.AttachedEntity ) ) then
+		tab.Model = self.OriginalModel
+		return
+	end
 
 	-- We need to store the model of the attached entity
 	-- Not the one we have here.
