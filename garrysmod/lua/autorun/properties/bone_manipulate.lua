@@ -42,7 +42,12 @@ properties.Add( "bone_manipulate", {
 			return
 		end
 
-		ent.widget:Setup( ent )
+		if ( !ent.widget:Setup( ent ) ) then
+			if ( IsValid( ply ) ) then ply:PrintMessage( HUD_PRINTTALK, "Failed to initialize bone manipulation widget." ) end
+			ent.widget:Remove()
+			ent.widget = nil
+			return
+		end
 		ent.widget:Spawn()
 		ent.widget.LastBonePress = 0
 		ent.widget.BonePressCount = 0
@@ -74,7 +79,14 @@ properties.Add( "bone_manipulate", {
 				w.LastBonePress = oldLastBonePress
 				return
 			end
-			w.axis:Setup( ent, boneid, w.BonePressCount == 1 )
+			if ( !w.axis:Setup( ent, boneid, w.BonePressCount == 1 ) ) then
+				if ( IsValid( ply ) ) then ply:PrintMessage( HUD_PRINTTALK, "Failed to initialize bone manipulation pivot." ) end
+				w.axis:Remove()
+				w.axis = nil
+				w.BonePressCount = oldBonePressCount
+				w.LastBonePress = oldLastBonePress
+				return
+			end
 			w.axis:Spawn()
 			w.axis:SetPriority( 0.5 )
 			w:DeleteOnRemove( w.axis )
