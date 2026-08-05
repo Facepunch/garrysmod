@@ -271,15 +271,22 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 		if ( $scope.CurrentGamemode.FilterFlags[ flag ] == false )
 		{
-			$scope.CurrentGamemode.FilterFlags[ flag ] = undefined;
+			delete $scope.CurrentGamemode.FilterFlags[ flag ];
 		}
 		else
 		{
 			$scope.CurrentGamemode.FilterFlags[ flag ] = !$scope.CurrentGamemode.FilterFlags[ flag ];
 		}
 
-		// Kinda ugly hack :(
-		$scope.CurrentGamemode.HasPreferFlags = Object.keys( $scope.CurrentGamemode.FilterFlags ).filter( function( key ) { return $scope.CurrentGamemode.FilterFlags[ key ] === true; } ).length > 0;
+		if ( IS_AWESOMIUM )
+		{
+			// Kinda ugly hack :(
+			$scope.CurrentGamemode.HasPreferFlags = Object.keys( $scope.CurrentGamemode.FilterFlags ).filter( function( key ) { return $scope.CurrentGamemode.FilterFlags[ key ] === true; } ).length > 0;
+			return;
+		}
+		
+		$scope.CurrentGamemode.HasPreferFlags = Object.values( $scope.CurrentGamemode.FilterFlags ).includes( true );
+
 	}
 	$scope.FilterFlagClass = function( flag )
 	{
@@ -505,6 +512,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	};
 
 	if ( data.flag == "eu" ) data.flag = "europeanunion";
+	if ( !data.flag ) data.flag = "unknown";
 
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
@@ -559,6 +567,7 @@ function MissingGamemodeIcon( element )
 function MissingFlag( element )
 {
 	element.src = "img/unk_flag.png";
+	element.classList.add( "noflag" );
 	return true;
 }
 
@@ -692,7 +701,7 @@ function UpdateGamemodeInfo( server, type )
 	{
 		if ( !gi.flags ) gi.flags = {};
 		gi.flags[ server.flag ] = true;
-		gi.hasflags = true;
+		if ( !gi.hasflags && Object.keys( gi.flags ).length > 1 ) gi.hasflags = true;
 	}
 }
 
