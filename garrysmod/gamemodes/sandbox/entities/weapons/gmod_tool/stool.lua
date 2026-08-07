@@ -215,13 +215,13 @@ search.AddProvider( function( str )
 		local niceName = v.Name or ( "#" .. k )
 		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
-		for k2, v2 in ipairs( searchTerms ) do
+		for srchId, srchTxt in ipairs( searchTerms ) do
 
-			if ( !k:lower():find( v2, nil, true ) and !niceName:lower():find( v2, nil, true ) ) then
-				
+			if ( !k:lower():find( srchTxt, nil, true ) and !niceName:lower():find( srchTxt, nil, true ) ) then
+
 				break
 
-			elseif ( k2 == #searchTerms ) then
+			elseif ( srchId == #searchTerms ) then
 
 				local entry = {
 					text = niceName,
