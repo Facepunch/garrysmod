@@ -3033,7 +3033,6 @@
 			"model"		"models/props_outland/basementdoor01a_shard3.mdl"
 		}
 	}
-	"needsapp"		"ep2"
 	"name"		"Episode 2"
 	"version"		"3"
 }

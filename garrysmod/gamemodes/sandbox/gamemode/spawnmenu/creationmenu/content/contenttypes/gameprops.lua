@@ -4,6 +4,7 @@ local function recurseAddFiles( folder, pathid, list )
 	local addedLabel = false
 
 	local files, folders = file.Find( folder .. "/*", pathid )
+	if ( files ) then table.sort( files, function( a, b ) return a:lower() < b:lower() end ) end
 	for id, file in pairs( files or {} ) do
 		if ( file:EndsWith( ".mdl" ) ) then
 			if ( !addedLabel ) then
@@ -101,6 +102,7 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 
 		local mdls = file.Find( SearchString, node:GetPathID() )
 		if ( mdls ) then
+			table.sort( mdls, function( a, b ) return a:lower() < b:lower() end )
 			for k, v in ipairs( mdls ) do
 				local cp = spawnmenu.GetContentType( "model" )
 				if ( cp ) then

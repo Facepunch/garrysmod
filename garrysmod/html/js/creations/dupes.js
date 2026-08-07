@@ -1,19 +1,23 @@
 
-App = angular.module( 'CDupesApp', [ 'tranny' ] );
+var IS_SPAWN_MENU = true;
 
-App.config( function ( $routeProvider, $locationProvider )
+App = angular.module( 'CDupesApp', [ 'ngRoute', 'ngLocalize' ] );
+
+App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
 	$routeProvider.when( '/', { templateUrl: 'template/creations/dupes.html' } );
+	$routeProvider.when( '/list/:Category/', { templateUrl: 'template/creations/dupes.html' } );
 	$routeProvider.when( '/list/:Category/:Tag/', { templateUrl: 'template/creations/dupes.html' } );
+	
+	$controllerProvider.register( 'CDupes', CDupes );
+	$controllerProvider.register( 'ControllerDupes', ControllerDupes );
 } );
 
 var CreationScope		= null;
-var CreationLocation	= null;
 
 function CDupes( $scope, $timeout, $location )
 {
 	CreationScope		= $scope;
-	CreationLocation	= $location;
 
 	CreationScope.MyCategories =
 	[
@@ -81,10 +85,7 @@ function SetDupeSaveState( b )
 //
 function ShowLocalDupes()
 {
-	// No extra slash at the end so its always different from the real path and thus a redirection will always happen
-	CreationLocation.path( "/list/local/" );
-
-	CreationScope.$apply();
+	Scope.Switch( 'local', 0 );
 }
 
 
@@ -95,9 +96,9 @@ function WindowResized()
 	dupe.UpdatePageNav();
 
 	// Refresh HTML
-	dupe.DigestUpdate = setTimeout( function()
+	dupe.DigestUpdateResize = setTimeout( function()
 	{
-		self.DigestUpdate = 0;
+		self.DigestUpdateResize = 0;
 		Scope.Go( 0 );
 	}, 500 )
 }

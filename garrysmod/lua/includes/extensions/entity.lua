@@ -5,15 +5,15 @@ local meta = FindMetaTable( "Entity" )
 if ( !meta ) then return end
 
 function meta:SetSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", flags )
+	self:SetKeyValue( "spawnflags", flags )
 end
 
 function meta:AddSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
+	self:SetKeyValue( "spawnflags", bit.bor( self:GetSpawnFlags(), flags ) )
 end
 
 function meta:RemoveSpawnFlags( flags )
-    self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
+	self:SetKeyValue( "spawnflags", bit.band( self:GetSpawnFlags(), bit.bnot( flags ) ) )
 end
 
 function meta:GetShouldPlayPickupSound()
@@ -148,14 +148,14 @@ end
 -----------------------------------------------------------]]
 local function DoDieFunction( ent )
 
-	if ( !ent or !ent.OnDieFunctions ) then return end
+	if ( !ent.OnDieFunctions ) then return end
 
-	for k, v in pairs( ent.OnDieFunctions ) do
+	for name, data in pairs( ent.OnDieFunctions ) do
 
 		-- Functions aren't saved - so this could be nil if we loaded a game.
-		if ( v && v.Function ) then
+		if ( data && data.Function ) then
 
-			v.Function( ent, unpack( v.Args ) )
+			ProtectedCall( data.Function, ent, unpack( data.Args ) )
 
 		end
 
@@ -174,34 +174,21 @@ function meta:PhysWake()
 
 end
 
-local GetColorOriginal4 = meta.GetColor4Part  -- Do not use me! I will be removed
-local GetColorOriginal = meta.GetColor
+-- This makes these a bit faster
 function meta:GetColor()
 
-	-- Backwards comp slower method
-	if ( !GetColorOriginal4 ) then
-		return GetColorOriginal( self )
-	end
-
-	return Color( GetColorOriginal4( self ) )
+	return Color( self:GetColor4Part() )
 
 end
 
-local SetColorOriginal4 = meta.SetColor4Part  -- Do not use me! I will be removed
-local SetColorOriginal = meta.SetColor
 function meta:SetColor( col )
 
-	-- Backwards comp slower method
-	if ( !SetColorOriginal4 ) then
-		return SetColorOriginal( self, col )
-	end
-
-	-- Even more backwards compat
+	-- Backwards compatibility
 	if ( !col ) then
-		return SetColorOriginal4( self, 255, 255, 255, 255 )
+		return self:SetColor4Part( 255, 255, 255, 255 )
 	end
 
-	SetColorOriginal4( self, col.r, col.g, col.b, col.a )
+	self:SetColor4Part( col.r, col.g, col.b, col.a )
 
 end
 
@@ -456,6 +443,31 @@ function meta:InstallDataTable()
 
 		local v = util.StringToType( value, k.Type )
 		if ( v == nil ) then return end
+
+		k.Set( ent, v )
+		return true
+
+	end
+
+	self.SetNetworkVarsFromMapInput = function( ent, name, data )
+
+		name = name:lower()
+		if ( !string.StartsWith( name, "set" ) ) then return end
+
+		name = string.sub( name, 4 )
+		if ( name == "" ) then return end
+
+		-- Only allow setting variables that were marked as editable!
+		local k = keytable[ name ]
+		if ( !k || !k.Edit ) then return end
+
+		local v = util.StringToType( data, k.Type )
+		if ( v == nil ) then return end
+
+		-- Special case for colors. FGD (maps) use color255 format, while colors in this system use unit vectors.
+		if ( k.Edit.type == "VectorColor" ) then
+			v = v / 255
+		end
 
 		k.Set( ent, v )
 		return true

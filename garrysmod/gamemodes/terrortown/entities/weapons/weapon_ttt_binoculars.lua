@@ -15,7 +15,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type  = "item_weapon",
       desc  = "binoc_desc"
-   };
+   }
 
    SWEP.Icon                = "vgui/ttt/icon_binoc"
 end
@@ -48,7 +48,7 @@ SWEP.ZoomLevels = {
    30,
    20,
    10
-};
+}
 
 SWEP.ProcessingDelay       = 5
 
@@ -230,9 +230,9 @@ if CLIENT then
    end
 
 
-   function SWEP:DrawWorldModel()
+   function SWEP:DrawWorldModel(flags)
       if not IsValid(self:GetOwner()) then
-         self:DrawModel()
+         self:DrawModel(flags)
       end
    end
 

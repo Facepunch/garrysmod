@@ -203,16 +203,29 @@ local function RenderSpawnIcon_Special( model, pos, middle, size, x, y, z )
 
 end
 
+local function RenderSpawnIcon_ViewModel( model, pos, middle, size )
+
+	-- Select the most neutral animation
+	model:ResetSequence( model:SelectWeightedSequence( ACT_VM_IDLE ) )
+
+	local view = {}
+	view.fov		= 60 -- Just a value that seems to work well for various models
+	view.origin		= Vector( -3, 0, -2 ) -- Position it so more of the model is in the frame
+	view.znear		= 0.1
+	view.zfar		= 100
+	view.angles		= Angle( 0, 0, 0 )
+
+	return view
+
+end
+
 SpawniconGenFunctions = {}
 
 function PositionSpawnIcon( model, pos, noAngles )
 
 	local mn, mx = model:GetRenderBounds()
 	local middle = ( mn + mx ) * 0.5
-	local size = 0
-	size = math.max( size, math.abs( mn.x ) + math.abs( mx.x ) )
-	size = math.max( size, math.abs( mn.y ) + math.abs( mx.y ) )
-	size = math.max( size, math.abs( mn.z ) + math.abs( mx.z ) )
+	local size = math.max( 0, mx.x - mn.x, mx.y - mn.y, mx.z - mn.z )
 
 	model:SetPos( pos )
 	if ( !noAngles ) then model:SetAngles( angle_zero ) end
@@ -242,6 +255,11 @@ function PositionSpawnIcon( model, pos, noAngles )
 	-- CS:GO Hostages
 	if ( model:LookupAttachment( "forward" ) > 0 ) then
 		return RenderSpawnIcon_Ragdoll_Forward( model, pos, middle, size )
+	end
+
+	-- View models
+	if ( model:SelectWeightedSequence( ACT_VM_IDLE ) >= 0 /*and model:SelectWeightedSequence( ACT_VM_DRAW ) >= 0*/ and !string.find( ModelName, "/w_" ) ) then
+		return RenderSpawnIcon_ViewModel( model, pos, middle, size )
 	end
 
 	return RenderSpawnIcon_Prop( model, pos, middle, size )

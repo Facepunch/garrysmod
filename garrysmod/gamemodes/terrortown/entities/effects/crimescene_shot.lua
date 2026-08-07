@@ -40,5 +40,5 @@ local shot_mat = Material("cable/blue_elec")
 function EFFECT:Render()
    render.SetMaterial(shot_mat)
 
-   render.DrawBeam(self.ShotStart, self.ShotEnd, self.Width, 0, 0, self.Color)
+   render.DrawBeam(self.ShotStart, self.ShotEnd, self.Width, 0, 0)
 end

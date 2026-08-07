@@ -1,6 +1,6 @@
 ---- English language strings
 
-local L = LANG.CreateLanguage("Svenska")
+local L = LANG.CreateLanguage("Svenska", "sv-SE")
 
 --- General text used in various places
 L.traitor    = "Förrädare"
@@ -1043,10 +1043,10 @@ L.aw_fnd2_title = "Gotta Catch Em All"
 L.aw_fnd2_text  = "found {num} corpses for his collection."
 
 L.aw_fnd3_title = "Death Scent"
-L.aw_fnd3_text  = "keeps stumbling on random corpses, {num} times this round." 
+L.aw_fnd3_text  = "keeps stumbling on random corpses, {num} times this round."
 
 L.aw_crd1_title = "Recycler"
-L.aw_crd1_text  = "scrounged up {num} leftover credits from corpses." 
+L.aw_crd1_text  = "scrounged up {num} leftover credits from corpses."
 
 L.aw_tod1_title = "Pyrrhusseger"
 L.aw_tod1_text  = "dog bara några sekunder innan hans lag vann rundan."
@@ -1062,10 +1062,10 @@ L.aw_tod2_text  = "dog precis efter att rundan påbörjats."
 --- v23
 L.set_avoid_det     = "Undvik att bli vald som Detective"
 L.set_avoid_det_tip = "Aktivera det här för att be servern att inte välja dig som Detective om möjligt. Betyder inte att du är Traitor oftare."
- 
+
 --- v24
 L.drop_no_ammo = "Otillräcklig ammunition i vapnets klipp att släppa som en ammo låda."
- 
+
 --- v31
 L.set_cross_brightness = "Hårkors ljushet"
 L.set_cross_size = "Hårkors storlek"

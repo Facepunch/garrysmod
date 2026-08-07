@@ -6,9 +6,10 @@ function PANEL:Init()
 	self:Dock( TOP )
 	self:DockMargin( 0, 0, 0, 1 )
 
-	self.CopyBtn = self:Add( "DImageButton" )
+	self.CopyBtn = self:Add( "DButton" )
 	self.CopyBtn:SetImage( "icon16/page_copy.png" )
-	self.CopyBtn:SetSize( 16, 16 )
+	self.CopyBtn:SetText( "#spawnmenu.menu.copy" )
+	self.CopyBtn:SizeToContentsX( 4 )
 	self.CopyBtn.DoClick = function( btm )
 		if ( !self.Problem ) then return end
 
@@ -45,14 +46,15 @@ function PANEL:PerformLayout( w, h )
 		targetH = targetH + self.Markup:GetHeight() + textPaddingY
 	end
 
+	local posY = targetH
 	local fixW, fixH = self.FixBtn:GetSize()
-	self.FixBtn:SetPos( textPaddingX + severityOffset, targetH )
+	self.FixBtn:SetPos( textPaddingX + severityOffset, posY )
 	targetH = targetH + fixH + textPaddingY
 
 	self:SetTall( targetH )
 
 	local bW, bH = self.CopyBtn:GetSize()
-	self.CopyBtn:SetPos( w - bW - copyIconPad, targetH / 2 - bH / 2 )
+	self.CopyBtn:SetPos( w - bW - copyIconPad, posY )
 
 end
 
@@ -97,7 +99,8 @@ function PANEL:Setup( problem )
 
 	self.FixBtn:SetEnabled( problem.fix != nil )
 	self.FixBtn:SetText( problem.fix and "#problems.quick_fix" or "#problems.no_quick_fix" )
-	self.FixBtn:SizeToContentsX( 10 )
+	self.FixBtn:SetImage( problem.fix and "icon16/wrench.png" or "icon16/wrench_orange.png" )
+	self.FixBtn:SizeToContentsX( 4 )
 
 end
 

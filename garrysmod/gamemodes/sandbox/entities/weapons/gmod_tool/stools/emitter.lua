@@ -68,7 +68,7 @@ function TOOL:LeftClick( trace, worldweld )
 	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, scale, { Pos = pos, Angle = ang } )
 	if ( !IsValid( emitter ) ) then return false end
 
-	undo.Create( "Emitter" )
+	undo.Create( "gmod_emitter" )
 		undo.AddEntity( emitter )
 
 		-- Don't weld to world

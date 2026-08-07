@@ -53,7 +53,7 @@ function Call( name, mat, ent )
 	if ( !proxy ) then return end
 	if ( !proxy.bind ) then return end
 
-	proxy:bind( mat, ent )
+	proxy:bind( proxy.Material, ent )
 
 end
 
@@ -67,12 +67,13 @@ function Init( name, uname, mat, values )
 
 	ActiveList[ uname ] = table.Copy( proxy )
 	local active_proxy = ActiveList[ uname ]
-	if ( !active_proxy.init ) then return end
-
-	active_proxy:init( mat, values )
 
 	-- Store these incase we reload
 	active_proxy.Values = values
 	active_proxy.Material = mat
+
+	if ( !active_proxy.init ) then return end
+
+	active_proxy:init( mat, values )
 
 end

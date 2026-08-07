@@ -53,6 +53,7 @@ lua\includes\gui\icon_progress.lua
 lua\includes\extensions\util\worldpicker.lua
 lua\includes\extensions\debug.lua
 lua\includes\extensions\entity.lua
+lua\includes\extensions\entity_iter.lua
 lua\includes\extensions\net.lua
 lua\includes\extensions\math.lua
 lua\includes\extensions\math\ease.lua

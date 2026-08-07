@@ -49,7 +49,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		"followed",
 		"favorite",
 		"friends",
-		"mine"
+		"mine",
+		"downloaded_ugc"
 	];
 
 	$scope.AddonTypes =
@@ -114,6 +115,15 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.Unsubscribe = function( file )
 	{
 		subscriptions.Unsubscribe( file.id );
+	}
+	$scope.MarkUnused = function( file )
+	{
+		subscriptions.MarkUnused( file.id );
+		$scope.RefreshCurrentView(); // Update UI
+	}
+	$scope.SubscribeByID = function( fileId )
+	{
+		subscriptions.Subscribe( fileId );
 	}
 	$scope.UninstallAllSubscribed = function()
 	{
@@ -337,6 +347,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		lua.Run( "ListAddonPresets()" );
 		$scope.LoadPresetMenuOpen = true;
 		$scope.LoadPresetResub = false;
+		$scope.SelectedPreset = undefined;
+		$scope.PresetSearchText = "";
 	}
 	$scope.SelectPreset = function( preset, newAction )
 	{

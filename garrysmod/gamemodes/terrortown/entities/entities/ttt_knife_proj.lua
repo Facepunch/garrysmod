@@ -132,7 +132,7 @@ if SERVER then
      local vel = self:GetVelocity()
      if vel == vector_origin then return end
 
-     local tr = util.TraceLine({start=self:GetPos(), endpos=self:GetPos() + vel:GetNormal() * 20, filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
+     local tr = util.TraceLine({start=self:GetPos(), endpos=self:GetPos() + vel:GetNormalized() * 20, filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
 
      if tr.Hit and tr.HitNonWorld and IsValid(tr.Entity) then
         local other = tr.Entity

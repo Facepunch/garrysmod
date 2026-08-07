@@ -75,7 +75,7 @@ function TOOL:LeftClick( trace )
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidHoverballModel( model ) ) then return false end
 	if ( !self:GetWeapon():CheckLimit( "hoverballs" ) ) then return false end
 
-	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, nil, nil, nil, key_o )
+	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, key_o )
 	if ( !IsValid( ball ) ) then return false end
 
 	local ang = trace.HitNormal:Angle()
@@ -87,7 +87,7 @@ function TOOL:LeftClick( trace )
 	local Offset = CurPos - NearestPoint
 	ball:SetPos( trace.HitPos + Offset )
 
-	undo.Create( "HoverBall" )
+	undo.Create( "gmod_hoverball" )
 		undo.AddEntity( ball )
 
 		-- Don't weld to world
@@ -207,7 +207,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo( "model" )
 	if ( !IsValidHoverballModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl:lower() ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
@@ -223,7 +223,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:ToolPresets( "hoverball", ConVarsDefault )
 
 	CPanel:KeyBinder( "#tool.hoverball.up", "hoverball_keyup", "#tool.hoverball.down", "hoverball_keydn" )
-	CPanel:KeyBinder( "#tool.toggle", "hoverball_keyon" )
+	CPanel:KeyBinder( "#tool.hoverball.key", "hoverball_keyon" )
 
 	CPanel:NumSlider( "#tool.hoverball.speed", "hoverball_speed", 0, 20 )
 	CPanel:ControlHelp( "#tool.hoverball.speed.help" )

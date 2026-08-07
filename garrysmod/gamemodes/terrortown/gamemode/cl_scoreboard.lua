@@ -1,14 +1,8 @@
 -- a much requested darker scoreboard
 
-local table = table
-local surface = surface
-local draw = draw
-local math = math
-local team = team
-
 local namecolor = {
    admin = Color(220, 180, 0, 255)
-};
+}
 
 include("vgui/sb_main.lua")
 

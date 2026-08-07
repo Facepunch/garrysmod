@@ -1,0 +1,119 @@
+"NPC_AntlionGuard.BreatheLoop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.7"
+	"pitch"			"100"
+	
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"npc/antlion_guard/breathe_loop.wav"
+}
+
+"NPC_AntlionGuard.NearStepLight"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.30, 0.500"
+	"pitch"			"90,100"
+
+	"soundlevel"	"SNDLVL_85db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_guard/near_foot_light1.wav"
+		"wave"	"npc/antlion_guard/near_foot_light2.wav"
+	}
+}
+
+"NPC_AntlionGuard.NearStepHeavy"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.600, 0.750"
+	"pitch"			"90,100"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_guard/near_foot_heavy1.wav"
+		"wave"	"npc/antlion_guard/near_foot_heavy2.wav"
+	}
+}
+
+"NPC_AntlionGuard.FarStepLight"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.30, 0.500"
+	"pitch"			"90,100"
+
+	"soundlevel"	"SNDLVL_85db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_guard/far_foot_light1.wav"
+		"wave"	"npc/antlion_guard/far_foot_light2.wav"
+	}
+}
+
+"NPC_AntlionGuard.FarStepHeavy"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.600, 0.750"
+	"pitch"			"90,100"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_guard/far_foot_heavy1.wav"
+		"wave"	"npc/antlion_guard/far_foot_heavy2.wav"
+	}
+}
+
+"NPC_AntlionGuard.FrustratedRoar"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.000"
+	"pitch"			"90,110"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion_guard/frustrated_growl1.wav"
+		"wave"	"npc/antlion_guard/frustrated_growl2.wav"
+		"wave"	"npc/antlion_guard/frustrated_growl3.wav"
+	}
+}
+
+"NPC_AntlionGuard.FrustratedRoar1"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.000"
+	"pitch"			"90,110"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"wave"	"npc/antlion_guard/frustrated_growl1.wav"
+}
+
+"NPC_AntlionGuard.FrustratedRoar2"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.000"
+	"pitch"			"90,110"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"wave"	"npc/antlion_guard/frustrated_growl2.wav"
+}
+
+"NPC_AntlionGuard.FrustratedRoar3"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.000"
+	"pitch"			"90,110"
+
+	"soundlevel"		"SNDLVL_100dB"
+
+	"wave"	"npc/antlion_guard/frustrated_growl3.wav"
+}

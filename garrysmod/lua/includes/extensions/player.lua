@@ -184,7 +184,7 @@ function meta:CanUseFlashlight() return self.m_bFlashlight == true end
 
 -- A function to set up player hands, so coders don't have to copy all the code everytime.
 -- Call this in PlayerSpawn hook
-function meta:SetupHands( ply )
+function meta:SetupHands( spec_ply )
 
 	local oldhands = self:GetHands()
 	if ( IsValid( oldhands ) ) then
@@ -193,7 +193,7 @@ function meta:SetupHands( ply )
 
 	local hands = ents.Create( "gmod_hands" )
 	if ( IsValid( hands ) ) then
-		hands:DoSetup( self, ply )
+		hands:DoSetup( self, spec_ply )
 		hands:Spawn()
 	end
 
@@ -263,10 +263,9 @@ end
 
 -- These are totally in the wrong place.
 function player.GetByAccountID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:AccountID() == ID ) then
-			return players[i]
+	for _, pl in player.Iterator() do
+		if ( pl:AccountID() == ID ) then
+			return pl
 		end
 	end
 
@@ -274,10 +273,9 @@ function player.GetByAccountID( ID )
 end
 
 function player.GetByUniqueID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:UniqueID() == ID ) then
-			return players[i]
+	for _, pl in player.Iterator() do
+		if ( pl:UniqueID() == ID ) then
+			return pl
 		end
 	end
 
@@ -286,10 +284,10 @@ end
 
 function player.GetBySteamID( ID )
 	ID = string.upper( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID() == ID ) then
-			return players[i]
+
+	for _, pl in player.Iterator() do
+		if ( pl:SteamID() == ID ) then
+			return pl
 		end
 	end
 
@@ -297,33 +295,11 @@ function player.GetBySteamID( ID )
 end
 
 function player.GetBySteamID64( ID )
-	ID = tostring( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID64() == ID ) then
-			return players[i]
+	for _, pl in player.Iterator() do
+		if ( pl:SteamID64() == ID ) then
+			return pl
 		end
 	end
 
 	return false
 end
-
-local inext = ipairs( {} )
-local PlayerCache = nil
-
-function player.Iterator()
-
-	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
-
-	return inext, PlayerCache, 0
-
-end
-
-local function InvalidatePlayerCache( ent )
-
-	if ( ent:IsPlayer() ) then PlayerCache = nil end
-
-end
-
-hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
-hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )

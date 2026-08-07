@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType              = "pistol"
+SWEP.HoldType              = "revolver"
 
 if CLIENT then
    SWEP.PrintName          = "flare_name"
@@ -13,7 +13,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "flare_desc"
-   };
+   }
 
    SWEP.Icon               = "vgui/ttt/icon_flare"
 end
@@ -165,15 +165,17 @@ end
 function SWEP:ShootFlare()
    local cone = self.Primary.Cone
    local bullet = {}
-   bullet.Num       = 1
-   bullet.Src       = self:GetOwner():GetShootPos()
-   bullet.Dir       = self:GetOwner():GetAimVector()
-   bullet.Spread    = Vector( cone, cone, 0 )
-   bullet.Tracer    = 1
-   bullet.Force     = 2
-   bullet.Damage    = self.Primary.Damage
+   bullet.Num        = 1
+   bullet.Src        = self:GetOwner():GetShootPos()
+   bullet.Dir        = self:GetOwner():GetAimVector()
+   bullet.Spread     = Vector( cone, cone, 0 )
+   bullet.Tracer     = 1
+   bullet.Force      = 2
+   bullet.Damage     = self.Primary.Damage
    bullet.TracerName = self.Tracer
-   bullet.Callback = IgniteTarget
+   bullet.Callback   = IgniteTarget
+   bullet.Attacker   = self:GetOwner()
+   bullet.Inflictor  = self
 
    self:GetOwner():FireBullets( bullet )
 end
@@ -197,8 +199,8 @@ function SWEP:PrimaryAttack()
       self:GetOwner():ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
    end
 
-   if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-      self:SetNWFloat( "LastShootTime", CurTime() )
+   if game.SinglePlayer() then
+      self:CallOnClient("SPLastShoot")
    end
 end
 

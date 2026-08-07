@@ -62,7 +62,8 @@ function TOOL:LeftClick( trace )
 			undo.Create( "Weld" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.weld.name" )
+			undo.Finish( "#tool.weld.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )
@@ -104,6 +105,7 @@ function TOOL:RightClick( trace )
 
 		if ( !IsValid( trace.Entity ) ) then return false end
 		if ( trace.Entity:GetClass() == "prop_vehicle_jeep" ) then return false end
+		if ( trace.Entity:GetClass() == "prop_vehicle_apc" ) then return false end
 
 	end
 
@@ -203,7 +205,8 @@ function TOOL:RightClick( trace )
 			undo.Create( "Weld" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.weld.name" )
+			undo.Finish( "#tool.weld.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )

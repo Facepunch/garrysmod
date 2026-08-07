@@ -2,7 +2,7 @@
 -- Server and client both need this for scoring event logs
 
 -- 2^16 bytes - 4 (header) - 2 (UInt length in TTT_ReportStream) - 1 (terminanting byte)
-(SERVER and SCORE or CLSCORE).MaxStreamLength = 65529
+(SERVER and SCORE or CLSCORE).MaxStreamLength = 65000
 
 function ScoreInit()
    return {
@@ -12,7 +12,7 @@ function ScoreInit()
       traitors=0,
       was_traitor=false,
       bonus=0 -- non-kill points to add
-   };
+   }
 end
 
 function ScoreEvent(e, scores)

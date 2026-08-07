@@ -1,27 +1,27 @@
 <html>
 	<head>
 		<title>Loading..</title>
-		<link rel="stylesheet" type="text/css" href="loading.css?3" />
+		<link rel="stylesheet" type="text/css" href="loading.css" />
 	</head>
 	<body>
 
 		<div id="background">
 			<div id="container">
 
-				<img src='img/gmod_logo_brave.png' class="bounce"/>
-
-				<center>
-					<br />
+				<img id="logo" src='img/gmod_logo_brave.png'/>
+				
+				<div>
 					<div class="walk">:v</div>
-				</center>
+				</div>
 
 			</div>
 
 			<div class="server_info">
-				<img id="mapimg" src="asset://mapimage/invalid_map"></img><div class="text">
-					<span id="serverName">A really long server name will be here that will be too long to fit on the loading screen</span><br>
-					<span id="serverMap">gm_hilldirt</span><br>
-					<span id="serverGamemode">Snadbox</span>
+				<img id="mapimg" src="asset://mapimage/invalid_map" />
+				<div class="text">
+					<div id="serverName">A really long server name will be here that will be too long to fit on the loading screen</div>
+					<div id="serverMap">gm_hilldirt</div>
+					<div id="serverGamemode">Snadbox</div>
 				</div>
 			</div>
 
@@ -49,11 +49,13 @@
 
 			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
 			{
+				var mapImg = "asset://mapimage/" + mapname;
+				
 				document.querySelector("#serverName").innerText = servername;
 				document.querySelector("#serverMap").innerText = mapname;
 				document.querySelector("#serverGamemode").innerText = gamemodeNice;
-				document.querySelector("#mapimg").setAttribute( "src", "asset://mapimage/" + mapname );
-				document.body.style.backgroundImage = "url('asset://mapimage/" + mapname + "')";
+				document.querySelector("#mapimg").setAttribute( "src", mapImg );
+				document.body.style.backgroundImage = "url('" + mapImg + "')";
 
 				document.querySelector(".server_info").classList.add( "visible" );
 

@@ -116,6 +116,11 @@ ENT.SpawnPointClasses = {
 	"info_player_attacker", -- NEOTOKYO
 	"info_player_defender",
 
+	"info_player_usa", -- MC:V
+	"info_player_vc",
+	"info_zombie_spawn",
+	"info_deathmatch_spawn",
+
 	"info_coop_spawn", -- Portal 2 Coop
 	"ins_spawnpoint", -- Insurgency
 	"dys_spawn_point", -- Dystopia

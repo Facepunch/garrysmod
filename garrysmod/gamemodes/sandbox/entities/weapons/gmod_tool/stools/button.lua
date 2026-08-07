@@ -55,7 +55,7 @@ function TOOL:RightClick( trace, worldweld )
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )
 
-	undo.Create( "Button" )
+	undo.Create( "gmod_button" )
 		undo.AddEntity( button )
 
 		if ( worldweld && trace.Entity != NULL ) then
@@ -159,7 +159,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo( "model" )
 	if ( !IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl:lower() ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 

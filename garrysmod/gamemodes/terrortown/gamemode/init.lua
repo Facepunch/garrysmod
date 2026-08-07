@@ -23,6 +23,7 @@ AddCSLuaFile("lang_shd.lua")
 AddCSLuaFile("corpse_shd.lua")
 AddCSLuaFile("player_ext_shd.lua")
 AddCSLuaFile("weaponry_shd.lua")
+AddCSLuaFile("radio_shd.lua")
 AddCSLuaFile("cl_radio.lua")
 AddCSLuaFile("cl_radar.lua")
 AddCSLuaFile("cl_tbuttons.lua")
@@ -60,57 +61,59 @@ include("player.lua")
 CreateConVar("ttt_roundtime_minutes", "10", FCVAR_NOTIFY)
 CreateConVar("ttt_preptime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_posttime_seconds", "30", FCVAR_NOTIFY)
-CreateConVar("ttt_firstpreptime", "60")
+CreateConVar("ttt_firstpreptime", "60", FCVAR_NOTIFY)
 
 -- Haste mode
-local ttt_haste = CreateConVar("ttt_haste", "1", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_starting_minutes", "5", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_minutes_per_death", "0.5", FCVAR_NOTIFY)
 
 -- Player Spawning
-CreateConVar("ttt_spawn_wave_interval", "0")
+CreateConVar("ttt_spawn_wave_interval", "0", FCVAR_NOTIFY)
 
-CreateConVar("ttt_traitor_pct", "0.25")
-CreateConVar("ttt_traitor_max", "32")
+CreateConVar("ttt_traitor_pct", "0.25", FCVAR_NOTIFY)
+CreateConVar("ttt_traitor_max", "32", FCVAR_NOTIFY)
 
 CreateConVar("ttt_detective_pct", "0.13", FCVAR_NOTIFY)
-CreateConVar("ttt_detective_max", "32")
-CreateConVar("ttt_detective_min_players", "8")
-local detective_karma_min = CreateConVar("ttt_detective_karma_min", "600")
+CreateConVar("ttt_detective_max", "32", FCVAR_NOTIFY)
+CreateConVar("ttt_detective_min_players", "8", FCVAR_NOTIFY)
+local detective_karma_min = CreateConVar("ttt_detective_karma_min", "600", FCVAR_NOTIFY)
 
 
 -- Traitor credits
-CreateConVar("ttt_credits_starting", "2")
-CreateConVar("ttt_credits_award_pct", "0.35")
-CreateConVar("ttt_credits_award_size", "1")
-CreateConVar("ttt_credits_award_repeat", "1")
-CreateConVar("ttt_credits_detectivekill", "1")
+CreateConVar("ttt_credits_starting", "2", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_award_pct", "0.35", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_award_size", "1", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_award_repeat", "1", FCVAR_NOTIFY)
+CreateConVar("ttt_credits_detectivekill", "1", FCVAR_NOTIFY)
 
-CreateConVar("ttt_credits_alonebonus", "1")
+CreateConVar("ttt_credits_alonebonus", "1", FCVAR_NOTIFY)
 
 -- Detective credits
-CreateConVar("ttt_det_credits_starting", "1")
-CreateConVar("ttt_det_credits_traitorkill", "0")
-CreateConVar("ttt_det_credits_traitordead", "1")
+CreateConVar("ttt_det_credits_starting", "1", FCVAR_NOTIFY)
+CreateConVar("ttt_det_credits_traitorkill", "0", FCVAR_NOTIFY)
+CreateConVar("ttt_det_credits_traitordead", "1", FCVAR_NOTIFY)
 
 -- Other
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
 CreateConVar("ttt_weapon_spawn_count", "0")
 
 CreateConVar("ttt_round_limit", "6", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED)
-CreateConVar("ttt_time_limit_minutes", "75", FCVAR_NOTIFY + FCVAR_REPLICATED)
+local time_limit_minutes = CreateConVar("ttt_time_limit_minutes", "75", FCVAR_NOTIFY + FCVAR_REPLICATED)
 
-CreateConVar("ttt_idle_limit", "180", FCVAR_NOTIFY)
+local idle_limit = CreateConVar("ttt_idle_limit", "180", FCVAR_NOTIFY + FCVAR_REPLICATED)
 
-CreateConVar("ttt_voice_drain", "0", FCVAR_NOTIFY)
-CreateConVar("ttt_voice_drain_normal", "0.2", FCVAR_NOTIFY)
-CreateConVar("ttt_voice_drain_admin", "0.05", FCVAR_NOTIFY)
-CreateConVar("ttt_voice_drain_recharge", "0.05", FCVAR_NOTIFY)
+local loc_voice = GetConVar("ttt_locational_voice")
+
+local voice_drain = CreateConVar("ttt_voice_drain", "0", FCVAR_NOTIFY + FCVAR_REPLICATED)
+local voice_drain_normal = CreateConVar("ttt_voice_drain_normal", "0.2", FCVAR_NOTIFY + FCVAR_REPLICATED)
+local voice_drain_admin = CreateConVar("ttt_voice_drain_admin", "0", FCVAR_NOTIFY + FCVAR_REPLICATED)
+local voice_drain_recharge = CreateConVar("ttt_voice_drain_recharge", "0.05", FCVAR_NOTIFY + FCVAR_REPLICATED)
+
+local highlight_admins = GetConVar("ttt_highlight_admins")
 
 CreateConVar("ttt_namechange_kick", "1", FCVAR_NOTIFY)
-CreateConVar("ttt_namechange_bantime", "10")
+CreateConVar("ttt_namechange_bantime", "10", FCVAR_NOTIFY)
 
-local ttt_detective = CreateConVar("ttt_sherlock_mode", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 local ttt_minply = CreateConVar("ttt_minimum_players", "2", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
 -- debuggery
@@ -170,8 +173,8 @@ function GM:Initialize()
       [OPEN_DOOR] = true,
       [OPEN_ROT] = true,
       [OPEN_BUT] = true,
-      [OPEN_NOTOGGLE]= true
-   };
+      [OPEN_NOTOGGLE] = true
+   }
 
    -- More map config ent defaults
    GAMEMODE.force_plymodel = ""
@@ -205,14 +208,6 @@ function GM:Initialize()
       ErrorNoHalt("TTT WARNING: sv_alltalk is enabled. Dead players will be able to talk to living players. TTT will now attempt to set sv_alltalk 0.\n")
       RunConsoleCommand("sv_alltalk", "0")
    end
-
-   local cstrike = false
-   for _, g in ipairs(engine.GetGames()) do
-      if g.folder == 'cstrike' then cstrike = true end
-   end
-   if not cstrike then
-      ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
-   end
 end
 
 -- Used to do this in Initialize, but server cfg has not always run yet by that
@@ -232,20 +227,19 @@ function GM:InitPostEntity()
    WEPS.ForcePrecache()
 end
 
--- Convar replication is broken in gmod, so we do this.
+-- Convar replication used to be broken in gmod, so we did this.
 -- I don't like it any more than you do, dear reader.
+-- These globals are now deprecated, you should use the actual convars instead.
 function GM:SyncGlobals()
-   SetGlobalBool("ttt_detective", ttt_detective:GetBool())
-   SetGlobalBool("ttt_haste", ttt_haste:GetBool())
-   SetGlobalInt("ttt_time_limit_minutes", GetConVar("ttt_time_limit_minutes"):GetInt())
-   SetGlobalBool("ttt_highlight_admins", GetConVar("ttt_highlight_admins"):GetBool())
-   SetGlobalBool("ttt_locational_voice", GetConVar("ttt_locational_voice"):GetBool())
-   SetGlobalInt("ttt_idle_limit", GetConVar("ttt_idle_limit"):GetInt())
+   SetGlobalInt("ttt_time_limit_minutes", time_limit_minutes:GetInt())
+   SetGlobalBool("ttt_highlight_admins", highlight_admins:GetBool())
+   SetGlobalBool("ttt_locational_voice", loc_voice:GetBool())
+   SetGlobalInt("ttt_idle_limit", idle_limit:GetInt())
 
-   SetGlobalBool("ttt_voice_drain", GetConVar("ttt_voice_drain"):GetBool())
-   SetGlobalFloat("ttt_voice_drain_normal", GetConVar("ttt_voice_drain_normal"):GetFloat())
-   SetGlobalFloat("ttt_voice_drain_admin", GetConVar("ttt_voice_drain_admin"):GetFloat())
-   SetGlobalFloat("ttt_voice_drain_recharge", GetConVar("ttt_voice_drain_recharge"):GetFloat())
+   SetGlobalBool("ttt_voice_drain", voice_drain:GetBool())
+   SetGlobalFloat("ttt_voice_drain_normal", voice_drain_normal:GetFloat())
+   SetGlobalFloat("ttt_voice_drain_admin", voice_drain_admin:GetFloat())
+   SetGlobalFloat("ttt_voice_drain_recharge", voice_drain_recharge:GetFloat())
 end
 
 function SendRoundState(state, ply)
@@ -281,12 +275,10 @@ end
 
 -- Used to be in Think/Tick, now in a timer
 function WaitingForPlayersChecker()
-   if GetRoundState() == ROUND_WAIT then
-      if EnoughPlayers() then
-         timer.Create("wait2prep", 1, 1, PrepareRound)
+   if GetRoundState() == ROUND_WAIT and EnoughPlayers() then
+      timer.Create("wait2prep", 1, 1, PrepareRound)
 
-         timer.Stop("waitingforply")
-      end
+      timer.Stop("waitingforply")
    end
 end
 
@@ -373,25 +365,26 @@ function StopWinChecks()
    timer.Stop("winchecker")
 end
 
-local function CleanUp()
-   local et = ents.TTT
-   -- if we are going to import entities, it's no use replacing HL2DM ones as
-   -- soon as they spawn, because they'll be removed anyway
-   et.SetReplaceChecking(not et.CanImportEntities(game.GetMap()))
+local function StopRoundTimers()
+   -- remove all timers
+   timer.Stop("wait2prep")
+   timer.Stop("prep2begin")
+   timer.Stop("end2prep")
+   timer.Stop("winchecker")
+end
 
-   et.FixParentedPreCleanup()
+-- Make sure we have the players to do a round, people can leave during our
+-- preparations so we'll call this numerous times
+local function CheckForAbort()
+   if not EnoughPlayers() then
+      LANG.Msg("round_minplayers")
+      StopRoundTimers()
 
-   game.CleanUpMap(false, nil, function() et.FixParentedPostCleanup() end)
-
-   -- Strip players now, so that their weapons are not seen by ReplaceEntities
-   for k,v in player.Iterator() do
-      if IsValid(v) then
-         v:StripWeapons()
-      end
+      WaitForPlayers()
+      return true
    end
 
-   -- a different kind of cleanup
-   hook.Remove("PlayerSay", "ULXMeCheck")
+   return false
 end
 
 local function SpawnEntities()
@@ -416,28 +409,37 @@ local function SpawnEntities()
    SpawnWillingPlayers()
 end
 
+local function CleanUp()
+   local et = ents.TTT
+   -- if we are going to import entities, it's no use replacing HL2DM ones as
+   -- soon as they spawn, because they'll be removed anyway
+   et.SetReplaceChecking(not et.CanImportEntities(game.GetMap()))
 
-local function StopRoundTimers()
-   -- remove all timers
-   timer.Stop("wait2prep")
-   timer.Stop("prep2begin")
-   timer.Stop("end2prep")
-   timer.Stop("winchecker")
-end
+   et.FixParentedPreCleanup()
 
--- Make sure we have the players to do a round, people can leave during our
--- preparations so we'll call this numerous times
-local function CheckForAbort()
-   if not EnoughPlayers() then
-      LANG.Msg("round_minplayers")
-      StopRoundTimers()
+   game.CleanUpMap(false, nil, function()
+      et.FixParentedPostCleanup()
+      SpawnEntities()
 
-      WaitForPlayers()
-      return true
+      if CheckForAbort() then return end
+
+      -- Tell hooks and map we started prep
+      hook.Call("TTTPrepareRound")
+
+      et.TriggerRoundStateOutputs(ROUND_PREP)
+   end)
+
+   -- Strip players now, so that their weapons are not seen by ReplaceEntities
+   for k,v in player.Iterator() do
+      if IsValid(v) then
+         v:StripWeapons()
+      end
    end
 
-   return false
+   -- a different kind of cleanup
+   hook.Remove("PlayerSay", "ULXMeCheck")
 end
+
 
 function GM:TTTDelayRoundStartForVote()
    -- Can be used for custom voting systems
@@ -498,9 +500,6 @@ function PrepareRound()
    LANG.Msg("round_begintime", {num = ptime})
    SetRoundState(ROUND_PREP)
 
-   -- Delay spawning until next frame to avoid ent overload
-   timer.Simple(0.01, SpawnEntities)
-
    -- Undo the roundrestart mute, though they will once again be muted for the
    -- selectmute timer.
    timer.Create("restartmute", 1, 1, function() MuteForRestart(false) end)
@@ -509,11 +508,6 @@ function PrepareRound()
 
    -- In case client's cleanup fails, make client set all players to innocent role
    timer.Simple(1, SendRoleReset)
-
-   -- Tell hooks and map we started prep
-   hook.Call("TTTPrepareRound")
-
-   ents.TTT.TriggerRoundStateOutputs(ROUND_PREP)
 end
 
 function SetRoundEnd(endtime)
@@ -570,12 +564,15 @@ function SpawnWillingPlayers(dead_only)
       local num_spawns = #GetSpawnEnts()
 
       local to_spawn = {}
-      for _, ply in RandomPairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          if IsValid(ply) and ply:ShouldSpawn() then
             table.insert(to_spawn, ply)
             GAMEMODE:PlayerSpawnAsSpectator(ply)
          end
       end
+
+      -- Shuffle the table of queued players to randomize the spawn order
+      table.Shuffle(to_spawn)
 
       local sfn = function()
                      local c = 0
@@ -687,7 +684,7 @@ function BeginRound()
 
    hook.Call("TTTBeginRound")
 
-   ents.TTT.TriggerRoundStateOutputs(ROUND_BEGIN)
+   ents.TTT.TriggerRoundStateOutputs(ROUND_ACTIVE)
 end
 
 function PrintResultMessage(type)
@@ -711,7 +708,7 @@ function CheckForMapSwitch()
    local rounds_left = math.max(0, GetGlobalInt("ttt_rounds_left", 6) - 1)
    SetGlobalInt("ttt_rounds_left", rounds_left)
 
-   local time_left = math.max(0, (GetConVar("ttt_time_limit_minutes"):GetInt() * 60) - CurTime())
+   local time_left = math.max(0, (time_limit_minutes:GetInt() * 60) - CurTime())
    local switchmap = false
    local nextmap = string.upper(game.GetMapNext())
 
@@ -843,7 +840,7 @@ function SelectRoles()
       [ROLE_INNOCENT] = {},
       [ROLE_TRAITOR] = {},
       [ROLE_DETECTIVE] = {}
-   };
+   }
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 

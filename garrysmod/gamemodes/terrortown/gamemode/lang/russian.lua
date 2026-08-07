@@ -1,6 +1,6 @@
 ---- Russian language strings
 
-local L = LANG.CreateLanguage("Русский")
+local L = LANG.CreateLanguage("Русский", "ru")
 
 --- General text used in various places
 L.traitor    = "Предатель"
@@ -128,13 +128,13 @@ L.radio_notplaced = "Чтобы воспроизводить звуки, Рад�
 -- Radio soundboard buttons
 L.radio_button_scream  = "Крик"
 L.radio_button_expl    = "Взрыв"
-L.radio_button_pistol  = "Пистолет"
-L.radio_button_m16     = "M16"
-L.radio_button_deagle  = "Deagle"
-L.radio_button_mac10   = "МАС10"
-L.radio_button_shotgun = "Дробовик"
-L.radio_button_rifle   = "Винтовка"
-L.radio_button_huge    = "H.U.G.E"
+L.radio_button_pistol  = "Выстрелы пистолета"
+L.radio_button_m16     = "Выстрелы M16"
+L.radio_button_deagle  = "Выстрелы Deagle"
+L.radio_button_mac10   = "Выстрелы МАС10"
+L.radio_button_shotgun = "Выстрелы дробовика"
+L.radio_button_rifle   = "Выстрелы винтовки"
+L.radio_button_huge    = "Выстрелы H.U.G.E"
 L.radio_button_c4      = "Пиканье С4"
 L.radio_button_burn    = "Горение"
 L.radio_button_steps   = "Шаги"
@@ -244,7 +244,7 @@ L.set_tips      = "Показывать советы внизу экрана в�
 L.set_startpopup = "Длительность всплывающего окна в начале раунда"
 L.set_startpopup_tip = "Когда начинается раунд, небольшое всплывающее окно появляется внизу экрана на несколько секунд. Здесь можно изменить длительность его отображения."
 
-L.set_cross_opacity   = "Непрозрачность прицела при прицеливании"
+L.set_cross_opacity   = "Непрозрачность (при прицеливании)"
 L.set_cross_disable   = "Выключить прицел."
 L.set_minimal_id      = "Минималистичная информация о цели под прицелом (без текста о карме, подсказок и т.д.)."
 L.set_healthlabel     = "Показывать состояние здоровья на полоске здоровья."
@@ -257,7 +257,6 @@ L.set_fastswmenu_tip  = "Когда включена быстрая смена �
 L.set_wswitch         = "Выключить автозакрытие меню переключения оружия."
 L.set_wswitch_tip     = "По умолчанию меню переключения автоматически закрывается через несколько секунд после последней прокрутки. Если вы включите эту функцию, оно не будет закрываться."
 L.set_cues            = "Проигрывать звуки начала и конца раунда."
-L.set_msg_cue         = "Проигрывать звук при появлении уведомлений."
 
 
 L.set_title_play    = "Настройки игры"
@@ -390,7 +389,7 @@ L.flare_desc      = [[
 
 -- Health station
 L.hstation_name   = "Лечебная станция"
-L.hstation_hint   = "Нажмите {usekey}, чтобы восстановить здоровье. Заряд: {num}."
+L.hstation_hint   = "Зажмите {usekey}, чтобы восстановить здоровье. Заряд: {num}."
 L.hstation_broken = "Ваша Лечебная станция уничтожена!"
 L.hstation_help   = "{primaryfire}: поместить Лечебную станцию."
 
@@ -1051,8 +1050,8 @@ L.set_avoid_det_tip = "Включите, чтобы сервер не выбир
 L.drop_no_ammo = "Недостаточно патронов в обойме для их выброса в виде коробки с патронами."
 
 --- v31
-L.set_cross_brightness = "Яркость прицела"
-L.set_cross_size = "Размер прицела"
+L.set_cross_brightness = "Яркость"
+L.set_cross_size = "Размер"
 
 --- 2015-05-25
 L.hat_retrieve = "Вы подобрали шляпу детектива."
@@ -1087,3 +1086,52 @@ L.sb_playervolume = "Громкость игрока"
 
 --- 2021-09-22
 L.tip41 = "Вы можете настроить громкость микрофона игрока, нажав правой кнопкой мыши по его иконке заглушения в таблице счёта."
+
+--- 2023-07-28
+L.set_msg_cue = "Проигрывать звук при появлении уведомлений."
+
+--- 2025-03-11
+L.set_title_cross = "Настройки прицела"
+
+L.set_cross_color_enable = "Включить собственный цвет."
+L.set_cross_color = "Собственный цвет"
+L.set_hip_cross_opacity = "Непрозрачность"
+L.set_cross_thickness = "Толщина"
+L.set_cross_outlinethickness = "Толщина обводки"
+
+--- 2025-09-04
+L.radio_button_glock   = "Выстрелы Glock"
+L.radio_button_sipist  = "Выстрелы глушителя"
+L.radio_button_tele    = "Телепортация"
+L.radio_button_heal    = "Лечение"
+
+--- 2026-02-27
+L.dead         = "Мёртв"
+L.disconnected = "Отключившийся"
+
+L.words_suicide = "убивает себя"
+L.words_fall    = "ХРУСТ"
+L.words_burn    = "тление"
+
+L.ev_win_traitor_tip = "Предатели победили"
+L.ev_win_inno_tip = "Невиновные победили"
+L.ev_win_time_tip = "Время истекло"
+
+L.ev_start_tip = "Игра"
+L.ev_credit_tip = "Найден кредит"
+L.ev_body_tip = "Найдено тело"
+
+L.ev_c4_disarm_tip = "C4 обезврежена"
+L.ev_c4_boom_tip = "C4 взорвалась"
+L.ev_c4_plant_tip = "C4 заложена"
+
+L.ev_suicide = "Самоубийство"
+L.ev_teamkill = "Убийство товарища"
+L.ev_t_killed_i = "Предатель убивает невиновного"
+L.ev_i_killed_t = "Невиновный убивает предателя"
+
+-- 2026-03-11
+L.equip_sort_default = "По умолчанию"
+L.equip_sort_slot    = "Слот"
+
+L.set_hide_unbuyable = "Перемещать непокупаемое снаряжение в конец списка."

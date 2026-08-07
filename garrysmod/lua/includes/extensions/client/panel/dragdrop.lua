@@ -53,12 +53,16 @@ function dragndrop.Drop()
 
 		for k, v in pairs( dragndrop.m_ReceiverSlot.Menu ) do
 
-			menu:AddOption( v, function()
+			local opt = menu:AddOption( v, function()
 
 				dragndrop.CallReceiverFunction( true, k, x, y )
 				dragndrop.StopDragging()
 
 			end )
+
+			-- HACK: This is lame, but there's no other way that I can see to get icons for these
+			if ( k == "move" ) then opt:SetIcon( "icon16/arrow_turn_right.png" ) end
+			if ( k == "copy" ) then opt:SetIcon( "icon16/arrow_branch.png" ) end
 
 		end
 

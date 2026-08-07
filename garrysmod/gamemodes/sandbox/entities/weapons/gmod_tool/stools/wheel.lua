@@ -81,7 +81,7 @@ function TOOL:LeftClick( trace )
 
 	local constr, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
 
-	undo.Create( "Wheel" )
+	undo.Create( "gmod_wheel" )
 		if ( IsValid( constr ) ) then
 			undo.AddEntity( constr )
 			ply:AddCleanup( "wheels", constr )
@@ -121,6 +121,8 @@ function TOOL:RightClick( trace )
 	local toggle = self:GetClientNumber( "toggle" ) != 0
 	local fwd = self:GetClientNumber( "fwd" )
 	local bck = self:GetClientNumber( "bck" )
+	-- TODO: Friction
+	-- TODO: Force Limit
 
 	wheelEnt.BaseTorque = torque
 	wheelEnt:SetTorque( torque )
@@ -234,7 +236,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo( "model" )
 	if ( !IsValidWheelModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( !IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() != mdl ) then
+	if ( !IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() != mdl:lower() ) then
 		self.wheelAngle = Angle( math.NormalizeAngle( self:GetClientNumber( "rx" ) ), math.NormalizeAngle( self:GetClientNumber( "ry" ) ), math.NormalizeAngle( self:GetClientNumber( "rz" ) ) )
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end

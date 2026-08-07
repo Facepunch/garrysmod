@@ -59,7 +59,7 @@ function TOOL:LeftClick( trace )
 		local time = self:GetClientNumber( "forcetime" )
 		local forekey = self:GetClientNumber( "fwd" )
 		local backkey = self:GetClientNumber( "bwd" )
-		local toggle = self:GetClientNumber( "toggle" )
+		local toggle = self:GetClientNumber( "toggle" ) != 0
 		local limit = self:GetClientNumber( "forcelimit" )
 
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -93,7 +93,8 @@ function TOOL:LeftClick( trace )
 				undo.AddEntity( constr )
 				if ( IsValid( axis ) ) then undo.AddEntity( axis ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.motor.name" )
+			undo.Finish( "#tool.motor.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )

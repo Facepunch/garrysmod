@@ -46,21 +46,24 @@ end
 function GM:OnUndo( name, strCustomString )
 
 	local text = strCustomString
+	local overwritten = false
 
 	if ( !text ) then
 		local strId = "#Undone_" .. name
 		text = language.GetPhrase( strId )
 		if ( strId == text ) then
-			-- No translation available, generate our own
+			-- No custom translation available, make a generic one
 			text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( name ) )
+			overwritten = true
 		end
 	end
 
-	-- This is a hack for SWEPs, Tools, etc, that already have hardcoded English only translations
-	-- TODO: Do this for non English languages only
-	local strMatch = string.match( text, "^Undone (.*)$" )
-	if ( strMatch ) then
-		text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( strMatch ) )
+	if ( !overwritten ) then
+		-- HACK: Try to translate existing English-only translations
+		local strMatch = string.match( text, "^Undone (.*)$" )
+		if ( strMatch ) then
+			text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( strMatch ) )
+		end
 	end
 
 	self:AddNotify( text, NOTIFY_UNDO, 2 )

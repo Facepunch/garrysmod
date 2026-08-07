@@ -2,10 +2,19 @@
 local PANEL = {}
 local PlayerVoicePanels = {}
 
+surface.CreateFont( "GModVoiceNotify", {
+	font	= "Arial",
+	size	= 21,
+	weight	= 0,
+	extended = true
+} )
+
+local VoicePanelWide = 250
+
 function PANEL:Init()
 
 	self.LabelName = vgui.Create( "DLabel", self )
-	self.LabelName:SetFont( "GModNotify" )
+	self.LabelName:SetFont( "GModVoiceNotify" )
 	self.LabelName:Dock( FILL )
 	self.LabelName:DockMargin( 8, 0, 0, 0 )
 	self.LabelName:SetTextColor( color_white )
@@ -16,7 +25,7 @@ function PANEL:Init()
 
 	self.Color = color_transparent
 
-	self:SetSize( 250, 32 + 8 )
+	self:SetSize( VoicePanelWide, 32 + 8 )
 	self:DockPadding( 4, 4, 4, 4 )
 	self:DockMargin( 2, 2, 2, 2 )
 	self:Dock( BOTTOM )
@@ -28,9 +37,9 @@ function PANEL:Setup( ply )
 	self.ply = ply
 	self.LabelName:SetText( ply:Nick() )
 	self.Avatar:SetPlayer( ply )
-	
-	self.Color = team.GetColor( ply:Team() )
-	
+
+	self.Color = hook.Run( "GetTeamColor", ply )
+
 	self:InvalidateLayout()
 
 end
@@ -43,7 +52,7 @@ function PANEL:Paint( w, h )
 end
 
 function PANEL:Think()
-	
+
 	if ( IsValid( self.ply ) ) then
 		self.LabelName:SetText( self.ply:Nick() )
 	end
@@ -55,17 +64,17 @@ function PANEL:Think()
 end
 
 function PANEL:FadeOut( anim, delta, data )
-	
+
 	if ( anim.Finished ) then
-	
+
 		if ( IsValid( PlayerVoicePanels[ self.ply ] ) ) then
 			PlayerVoicePanels[ self.ply ]:Remove()
 			PlayerVoicePanels[ self.ply ] = nil
 			return
 		end
-		
+
 	return end
-	
+
 	self:SetAlpha( 255 - ( 255 * delta ) )
 
 end
@@ -77,7 +86,7 @@ derma.DefineControl( "VoiceNotify", "", PANEL, "DPanel" )
 function GM:PlayerStartVoice( ply )
 
 	if ( !IsValid( g_VoicePanelList ) ) then return end
-	
+
 	-- There'd be an exta one if voice_loopback is on, so remove it.
 	GAMEMODE:PlayerEndVoice( ply )
 
@@ -99,7 +108,7 @@ function GM:PlayerStartVoice( ply )
 
 	local pnl = g_VoicePanelList:Add( "VoiceNotify" )
 	pnl:Setup( ply )
-	
+
 	PlayerVoicePanels[ ply ] = pnl
 
 end
@@ -107,11 +116,11 @@ end
 local function VoiceClean()
 
 	for k, v in pairs( PlayerVoicePanels ) do
-	
+
 		if ( !IsValid( k ) ) then
 			GAMEMODE:PlayerEndVoice( k )
 		end
-	
+
 	end
 
 end
@@ -135,8 +144,8 @@ local function CreateVoiceVGUI()
 	g_VoicePanelList = vgui.Create( "DPanel" )
 
 	g_VoicePanelList:ParentToHUD()
-	g_VoicePanelList:SetPos( ScrW() - 300, 100 )
-	g_VoicePanelList:SetSize( 250, ScrH() - 200 )
+	g_VoicePanelList:SetPos( ScrW() - VoicePanelWide - 50, ScrH() * 0.13 )
+	g_VoicePanelList:SetSize( VoicePanelWide, ScrH() * 0.74 )
 	g_VoicePanelList:SetPaintBackground( false )
 
 end

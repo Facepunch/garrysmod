@@ -5,7 +5,7 @@ local cleanup_types = {}
 
 local function IsType( type )
 
-	for key, val in pairs( cleanup_types ) do
+	for key, val in ipairs( cleanup_types ) do
 
 		if ( val == type ) then return true end
 
@@ -19,7 +19,7 @@ function Register( type )
 
 	if ( type == "all" ) then return end
 
-	for key, val in pairs( cleanup_types ) do
+	for key, val in ipairs( cleanup_types ) do
 
 		if val == type then return end
 
@@ -38,24 +38,52 @@ if ( SERVER ) then
 
 	local cleanup_list = {}
 
+	local function CleanupInvalidEntities()
+		for uniqId, cleanupTypes in pairs( cleanup_list ) do
+			for cleanupType, entities in pairs( cleanupTypes ) do
+				for key, ent in pairs( entities ) do
+					if ( !IsValid( ent ) ) then
+						entities[ key ] = nil
+					end
+				end
+
+				-- Clear the table for this "cleanup type" if its empty
+				if ( !next( entities ) ) then cleanupTypes[ cleanupType ] = nil end
+			end
+
+			-- Clear the top level table for the player if there's nothing in it left
+			if ( !next( cleanupTypes ) ) then cleanup_list[ uniqId ] = nil end
+		end
+	end
+
+	local numCleanups = 0
+	hook.Add( "EntityRemoved", "Cleanup_RemoveInvalidEntities", function()
+
+		-- Use a timer to guard against many entities being removed at once
+		timer.Create( "Cleanup_QueuedRemoveInvalidEntities", 0, 1, function()
+			numCleanups = numCleanups + 1
+
+			-- Cleanup invalid entities only every once in a while
+			-- The value is arbitrary, we just don't want to go through the entire table on every entity removal
+			-- As the memory savings would not be worth the execution time
+			if ( numCleanups >= 16 ) then
+				numCleanups = 0
+				CleanupInvalidEntities()
+			end
+		end )
+
+	end )
+
 	function GetList()
 		return cleanup_list
 	end
 
-	local function Save( save )
-
+	saverestore.AddSaveHook( "CleanupTable", function( save )
 		saverestore.WriteTable( cleanup_list, save )
-
-	end
-
-	local function Restore( restore )
-
+	end )
+	saverestore.AddRestoreHook( "CleanupTable", function( restore )
 		cleanup_list = saverestore.ReadTable( restore )
-
-	end
-
-	saverestore.AddSaveHook( "CleanupTable", Save )
-	saverestore.AddRestoreHook( "CleanupTable", Restore )
+	end )
 
 	function Add( pl, type, ent )
 
@@ -205,37 +233,41 @@ if ( SERVER ) then
 
 else
 
-	function UpdateUI()
+	local function BuildPanel( pnl, command )
+		if ( !IsValid( pnl ) ) then return end
 
 		local cleanup_types_s = {}
-		for id, val in pairs( cleanup_types ) do
+		for _, val in ipairs( cleanup_types ) do
 			cleanup_types_s[ language.GetPhrase( "Cleanup_" .. val ) ] = val
 		end
 
-		local Panel = controlpanel.Get( "User_Cleanup" )
-		if ( IsValid( Panel ) ) then
-			Panel:Clear()
-			Panel:Help( "#spawnmenu.utilities.cleanup.help" )
-			Panel:Button( "#CleanupAll", "gmod_cleanup" )
+		pnl:Clear()
+		pnl:Help( "#spawnmenu.utilities.cleanup.help" )
+		pnl:Button( "#spawnmenu.utilities.cleanup.all", command )
 
-			for key, val in SortedPairs( cleanup_types_s ) do
-				Panel:Button( key, "gmod_cleanup", val )
-			end
+		for key, val in SortedPairs( cleanup_types_s ) do
+			pnl:Button( key, command, val )
 		end
-
-		local AdminPanel = controlpanel.Get( "Admin_Cleanup" )
-		if ( IsValid( AdminPanel ) ) then
-			AdminPanel:Clear()
-			AdminPanel:Help( "#spawnmenu.utilities.cleanup.help" )
-			AdminPanel:Button( "#CleanupAll", "gmod_admin_cleanup" )
-
-			for key, val in SortedPairs( cleanup_types_s ) do
-				AdminPanel:Button( key, "gmod_admin_cleanup", val )
-			end
-		end
-
 	end
 
-	hook.Add( "PostReloadToolsMenu", "BuildCleanupUI", UpdateUI )
+	function UpdateUI()
+		local Panel = controlpanel.Get( "User_Cleanup" )
+		if ( IsValid( Panel ) ) then BuildPanel( Panel, "gmod_cleanup" ) end
+
+		local Panel = controlpanel.Get( "Admin_Cleanup" )
+		if ( IsValid( Panel ) ) then BuildPanel( Panel, "gmod_admin_cleanup" ) end
+	end
+
+	hook.Add( "PopulateToolMenu", "Cleanup_RegisterToolMenu", function()
+
+		spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
+			BuildPanel( pnl, "gmod_cleanup" )
+		end )
+
+		spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", function( pnl )
+			BuildPanel( pnl, "gmod_admin_cleanup" )
+		end )
+
+	end )
 
 end

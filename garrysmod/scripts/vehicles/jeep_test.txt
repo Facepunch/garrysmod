@@ -119,13 +119,11 @@
 "vehicle_sounds"
 {
 	// List gears in order from lowest speed to highest speed
-
 	"gear"
 	{
 		"max_speed"		"0.27"
 		"speed_approach_factor" "1.0"
 	}
-
 	"gear"
 	{
 		"max_speed"		"0.5"
@@ -151,6 +149,7 @@
 		"max_speed"		"2.0"
 		"speed_approach_factor" "0.03"
 	}
+
 	"state"
 	{
 		"name"		"SS_START_WATER"
@@ -262,6 +261,7 @@
 		"name"		"SS_SHUTDOWN"
 		"sound"		"ATV_engine_stop"
 	}
+
 	"crashsound"
 	{
 		"min_speed"			"350"

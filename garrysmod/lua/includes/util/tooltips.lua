@@ -1,6 +1,6 @@
 
 local Tooltip = nil
-local TooltippedPanel = nil
+--local TooltippedPanel = nil
 
 --[[---------------------------------------------------------
 	Name: ChangeTooltip
@@ -10,7 +10,8 @@ function RemoveTooltip()
 
 	if ( !IsValid( Tooltip ) ) then return true end
 
-	Tooltip:Close()
+	-- Helper for SetTooltipPanelOverride
+	if ( Tooltip.Close ) then Tooltip:Close() else Tooltip:Remove() end
 	Tooltip = nil
 
 	return true
@@ -59,7 +60,7 @@ function ChangeTooltip( panel )
 	end
 
 	Tooltip:OpenForPanel( PositionPanel )
-	TooltippedPanel = panel
+	--TooltippedPanel = panel
 
 end
 

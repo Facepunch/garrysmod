@@ -30,11 +30,17 @@ if ( CLIENT ) then
 		local Panel = controlpanel.Get( "Undo" )
 		if ( !IsValid( Panel ) ) then return end
 
-		Panel:Clear()
-		Panel:Help( "#spawnmenu.utilities.undo.help" )
+		local ComboBox = Panel.UndoListPanel
+		if ( !IsValid( ComboBox ) ) then
+			Panel:Clear()
+			Panel:Help( "#spawnmenu.utilities.undo.help" )
 
-		local ComboBox = Panel:ListBox()
-		ComboBox:SetTall( 500 )
+			ComboBox = Panel:ListBox()
+			ComboBox:SetTall( 500 )
+			Panel.UndoListPanel = ComboBox
+		else
+			ComboBox:Clear()
+		end
 
 		local Limit = 100
 		local Count = 0
@@ -56,10 +62,18 @@ if ( CLIENT ) then
 	-----------------------------------------------------------]]
 	net.Receive( "Undo_AddUndo", function()
 
-		local k	= net.ReadInt( 16 )
-		local v	= net.ReadString()
+		local key = net.ReadInt( 16 )
+		local name = net.ReadString()
 
-		table.insert( ClientUndos, 1, { Key = k, Name = v } )
+		-- HACK: To support localization of "#prop_physics (models/path.mdl)"
+		if ( name[ 1 ] == "#" and string.find( name, " (", nil, true ) ) then
+			local undoName, undoSecondary = string.match( name, "^(#.*) %((.*)%)$" )
+			if ( undoName and undoSecondary ) then
+				name = string.format( "%s (%s)", language.GetPhrase( undoName ), language.GetPhrase( undoSecondary ) )
+			end
+		end
+
+		table.insert( ClientUndos, 1, { Key = key, Name = name } )
 
 		MakeUIDirty()
 
@@ -86,7 +100,7 @@ if ( CLIENT ) then
 		has been undone or made redundant. We act by updating
 		out data (We wait until the UI is viewed until updating)
 	-----------------------------------------------------------]]
-	local function Undone()
+	net.Receive( "Undo_Undone", function()
 
 		local key = net.ReadInt( 16 )
 
@@ -105,8 +119,7 @@ if ( CLIENT ) then
 
 		MakeUIDirty()
 
-	end
-	net.Receive( "Undo_Undone", Undone )
+	end )
 
 	--[[---------------------------------------------------------
 		MakeUIDirty
@@ -159,7 +172,13 @@ if ( CLIENT ) then
 
 	end
 
-	hook.Add( "PostReloadToolsMenu", "BuildUndoUI", SetupUI )
+	hook.Add( "PopulateToolMenu", "Undo_RegisterToolMenu", function()
+
+		spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo", "#spawnmenu.utilities.undo", "", "", function( pnl )
+			SetupUI()
+		end )
+
+	end )
 
 end
 
@@ -189,23 +208,15 @@ function GetTable()
 end
 
 --[[---------------------------------------------------------
-	GetTable
 	Save/Restore the undo tables
 -----------------------------------------------------------]]
-local function Save( save )
-
+saverestore.AddSaveHook( "UndoTable", function( save )
 	saverestore.WriteTable( PlayerUndo, save )
+end )
 
-end
-
-local function Restore( restore )
-
+saverestore.AddRestoreHook( "UndoTable", function( restore )
 	PlayerUndo = saverestore.ReadTable( restore )
-
-end
-
-saverestore.AddSaveHook( "UndoTable", Save )
-saverestore.AddRestoreHook( "UndoTable", Restore )
+end )
 
 --[[---------------------------------------------------------
 	Start a new undo
@@ -295,7 +306,6 @@ function SetPlayer( ply )
 end
 
 --[[---------------------------------------------------------
-	SendUndoneMessage
 	Sends a message to notify the client that one of their
 	undos has been removed. They can then update their GUI.
 -----------------------------------------------------------]]
@@ -339,7 +349,7 @@ function Finish( NiceText )
 	local index = Current_Undo.Owner:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
-	Current_Undo.NiceText = NiceText or Current_Undo.Name
+	Current_Undo.NiceText = NiceText or ( "#" .. Current_Undo.Name )
 
 	local id = table.insert( PlayerUndo[ index ], Current_Undo )
 
@@ -357,10 +367,70 @@ function Finish( NiceText )
 	end
 
 	Current_Undo = nil
-	
+
 	return true
 
 end
+
+--[[---------------------------------------------------------
+	Cleanup the list of invalid undos, primarily for disconnected players
+-----------------------------------------------------------]]
+local function CleanupInvalidUndos()
+	for uniqId, playerUndos in pairs( PlayerUndo ) do
+		local invalidUndos = 0
+		local allUndos = 0
+
+		for undoIndex, undoData in pairs( playerUndos ) do
+			allUndos = allUndos + 1
+
+			-- If the undo has functions, we cannot discard it
+			if ( undoData.Functions and next( undoData.Functions ) ) then
+				continue
+			end
+
+			local allInvalid = true
+			for entIdx, ent in pairs( undoData.Entities or {} ) do
+				if ( IsValid( ent ) ) then
+					allInvalid = false
+				else
+					undoData.Entities[ entIdx ] = nil
+				end
+			end
+
+			-- If there are still valid entities, can't remove it
+			if ( not allInvalid ) then continue end
+
+			-- Null out the invalid undo entry
+			-- Undone: causes issues somehow
+			--playerUndos[ undoIndex ] = nil
+			invalidUndos = invalidUndos + 1
+
+			-- CallOnRemove already handles this for players on the server
+			--SendUndoneMessage( nil, undoIndex, undoData.Owner )
+		end
+
+		-- If the player has no undos left or they are all invalid, remove their entry
+		if ( not next( playerUndos ) || invalidUndos == allUndos ) then PlayerUndo[ uniqId ] = nil end
+	end
+end
+
+local numCleanups = 0
+hook.Add( "EntityRemoved", "Undo_RemoveInvalidUndos", function( ent )
+
+	-- Use a timer to guard against many entities being removed at once
+	timer.Create( "Undo_QueuedRemoveInvalidUndos", 0, 1, function()
+		numCleanups = numCleanups + 1
+
+		-- Cleanup invalid undo entries only every once in a while
+		-- The value is arbitrary, we just don't want to go through the entire table on every entity removal
+		-- As the memory savings would not be worth the execution time
+		if ( numCleanups >= 16 ) then
+			numCleanups = 0
+			CleanupInvalidUndos()
+		end
+	end )
+
+end )
 
 --[[---------------------------------------------------------
 	Undos an undo
@@ -424,9 +494,6 @@ local function Can_Undo( ply, undo )
 
 end
 
---[[---------------------------------------------------------
-	Console command
------------------------------------------------------------]]
 local function CC_UndoLast( pl, command, args )
 
 	local index = pl:UniqueID()
@@ -468,9 +535,6 @@ local function CC_UndoLast( pl, command, args )
 
 end
 
---[[---------------------------------------------------------
-	Console command
------------------------------------------------------------]]
 local function CC_UndoNum( ply, command, args )
 
 	if ( !args[ 1 ] ) then return end

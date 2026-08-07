@@ -6,9 +6,11 @@
 "+menu_context"		"#GarrysMod_Keyboard_OpenContextMenu"
 
 "gmod_undo"			"#GarrysMod_Keyboard_Undo"
+"gmod_cleanup"		"#GarrysMod_Keyboard_Cleanup"
 "noclip"			"#GarrysMod_Keyboard_NoclipMode"
 "gm_demo"			"#GarrysMod_Keyboard_RecordDemo"
 "gm_video"			"#GarrysMod_Keyboard_RecordVideo"
+"gmod_camera"		"#GarrysMod_Keyboard_SwitchToCamera"
 
 
 "blank"				"=========================="

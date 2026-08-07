@@ -1,69 +1,30 @@
 
+local TranslateNames = {
+	["Animals"] = "#spawnmenu.category.animals",
+	["Combine"] = "#spawnmenu.category.combine",
+	["Humans + Resistance"] = "#spawnmenu.category.humans_resistance",
+	["Zombies + Enemy Aliens"] = "#spawnmenu.category.zombies_aliens",
+	["Other"] = "#spawnmenu.category.other"
+}
+
+local function CreateNPCIcon( ent, propPanel )
+	return spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", propPanel, {
+		nicename	= ent.Name or ent.SpawnName,
+		spawnname	= ent.SpawnName,
+		material	= ent.IconOverride or "entities/" .. ent.SpawnName .. ".png",
+		weapon		= ent.Weapons,
+		admin		= ent.AdminOnly
+	} )
+end
+
 hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNode )
 
-	-- Get a list of available NPCs
-	local NPCList = list.Get( "NPC" )
-
-	-- Categorize them
-	local Categories = {}
-	for k, v in pairs( NPCList ) do
-
-		local Category = v.Category or "#spawnmenu.category.other"
-		if ( !isstring( Category ) ) then Category = tostring( Category ) end
-
-		local Tab = Categories[ Category ] or {}
-		Tab[ k ] = v
-		Categories[ Category ] = Tab
-
-	end
-
-	-- Create an icon for each one and put them on the panel
-	local CustomIcons = list.Get( "ContentCategoryIcons" )
-	for CategoryName, v in SortedPairs( Categories ) do
-
-		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/monkey.png" )
-
-		-- When we click on the node - populate it using this function
-		node.DoPopulate = function( self )
-
-			-- If we've already populated it - forget it.
-			if ( self.PropPanel ) then return end
-
-			-- Create the container panel
-			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
-			self.PropPanel:SetVisible( false )
-			self.PropPanel:SetTriggerSpawnlistChange( false )
-
-			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
-
-				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
-					nicename	= ent.Name or name,
-					spawnname	= name,
-					material	= ent.IconOverride or "entities/" .. name .. ".png",
-					weapon		= ent.Weapons,
-					admin		= ent.AdminOnly
-				} )
-
-			end
-
-		end
-
-		-- If we click on the node populate it and switch to it.
-		node.DoClick = function( self )
-
-			self:DoPopulate()
-			pnlContent:SwitchPanel( self.PropPanel )
-
-		end
-
-	end
-
-	-- Select the first node
-	local FirstNode = tree:Root():GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
-		FirstNode:InternalDoClick()
-	end
+	pnlContent:PopulateFromList( "NPC", tree, {
+		SortName = "Name",
+		CategoryIcon = "icon16/monkey.png",
+		TranslateNames = TranslateNames,
+		CreateIconFunc = CreateNPCIcon
+	} )
 
 end )
 
@@ -104,21 +65,22 @@ function PANEL:Init()
 	DComboBox:SetConVar( "gmod_npcweapon" )
 	DComboBox:SetSortItems( false )
 
-	DComboBox:AddChoice( "#menubar.npcs.defaultweapon", "" )
-	DComboBox:AddChoice( "#menubar.npcs.noweapon", "none" )
+	DComboBox:AddChoice( "#menubar.npcs.defaultweapon", "", false, "icon16/gun.png" )
+	DComboBox:AddChoice( "#menubar.npcs.noweapon", "none", false, "icon16/cross.png" )
 
+	local CustomIcons = list.Get( "ContentCategoryIcons" )
 	-- Sort the items by name, and group by category
 	local groupedWeps = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-		local cat = (v.category or ""):lower()
+		local cat = ( v.category or "" ):lower()
 		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
-		groupedWeps[ cat ][ v.class ] = language.GetPhrase( v.title )
+		groupedWeps[ cat ][ v.class ] = { title = language.GetPhrase( v.title ), icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
 	end
 
 	for group, items in SortedPairs( groupedWeps ) do
 		DComboBox:AddSpacer()
-		for class, title in SortedPairsByValue( items ) do
-			DComboBox:AddChoice( title, class )
+		for class, info in SortedPairsByMemberValue( items, "title" ) do
+			DComboBox:AddChoice( info.title, class, false, info.icon )
 		end
 	end
 
@@ -143,6 +105,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 
 	local sidebar = ctrl.ContentNavBar
 	sidebar.Options = vgui.Create( "SpawnmenuNPCSidebarToolbox", sidebar )
+	sidebar.Options:Dock( BOTTOM )
 
 	return ctrl
 

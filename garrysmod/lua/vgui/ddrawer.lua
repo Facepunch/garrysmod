@@ -14,8 +14,9 @@ function PANEL:Init()
 	self:SetSize( 0, 0 )
 
 	self.ToggleButton = vgui.Create( "DButton", self:GetParent() )
-	self.ToggleButton:SetSize( 16, 16 )
-	self.ToggleButton:SetText( "::" )
+	self.ToggleButton:SetSize( 18, 18 )
+	self.ToggleButton:SetText( "" )
+	self.ToggleButton:SetIcon( "icon16/bullet_arrow_up_high.png" )
 	self.ToggleButton.DoClick = function()
 
 		self:Toggle()
@@ -62,6 +63,7 @@ function PANEL:Open()
 	self.m_bOpened = true
 	self:SizeTo( self:GetWide(), self.m_iOpenSize, self.m_fOpenTime )
 	self.ToggleButton:MoveToFront()
+	self.ToggleButton:SetIcon( "icon16/bullet_arrow_down.png" )
 
 end
 
@@ -72,6 +74,7 @@ function PANEL:Close()
 	self.m_bOpened = false
 	self:SizeTo( self:GetWide(), 0, self.m_fOpenTime )
 	self.ToggleButton:MoveToFront()
+	self.ToggleButton:SetIcon( "icon16/bullet_arrow_up_high.png" )
 
 end
 

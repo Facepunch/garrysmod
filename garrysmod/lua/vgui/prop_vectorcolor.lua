@@ -73,6 +73,8 @@ function PANEL:Setup( vars )
 		color:SetupCloseButton( function() CloseDermaMenus() end )
 		color.OnValueChanged = function( colorCombo, newcol )
 
+			if ( !IsValid( self ) ) then return end
+
 			if ( isvector( self.VectorValue ) ) then
 				-- convert color to vector
 				local vec = Vector( newcol.r / 255, newcol.g / 255, newcol.b / 255 )
@@ -86,6 +88,9 @@ function PANEL:Setup( vars )
 		local col = self.VectorValue
 		if ( isvector( self.VectorValue ) ) then col = self.VectorValue:ToColor() end
 		color:SetColor( col )
+
+		-- Delete the popup if the edit window goes away
+		btn.OnRemove = function() if ( IsValid( color ) ) then color:Remove() end end
 
 		local menu = DermaMenu()
 		menu:AddPanel( color )

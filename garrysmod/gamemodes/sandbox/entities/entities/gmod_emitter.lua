@@ -65,9 +65,7 @@ function ENT:Think()
 	--
 	-- Find our effect table
 	--
-	local Effect = self:GetEffect()
-
-	local EffectTable = list.Get( "EffectType" )[ Effect ]
+	local EffectTable = list.GetEntry( "EffectType", self:GetEffect() )
 	if ( !EffectTable ) then return end
 
 	local Angle = self:GetAngles()
@@ -331,6 +329,7 @@ list.Set( "EffectType", "underwaterexplosion", {
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
+		effectdata:SetFlags( 4 ) -- No sound please!
 		util.Effect( "WaterSurfaceExplosion", effectdata, true, true )
 
 	end

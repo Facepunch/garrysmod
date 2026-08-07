@@ -18,7 +18,7 @@ end
 
 function ENT:KeyValue( key, value )
 
-	if ( key == "Code" ) then
+	if ( key:lower() == "code" ) then
 		self:SetDefaultCode( value )
 	end
 

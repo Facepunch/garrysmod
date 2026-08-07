@@ -92,7 +92,7 @@ end
 concommand.Add("ttt_print_karma", PrintKarma)
 
 
-CreateConVar("ttt_highlight_admins", "1")
+CreateConVar("ttt_highlight_admins", "1", FCVAR_REPLICATED)
 local function ApplyHighlightAdmins(cv, old, new)
    SetGlobalBool("ttt_highlight_admins", tobool(tonumber(new)))
 end
@@ -200,7 +200,7 @@ local ban_functions = {
    sam = sam and sam.player and sam.player.ban,
 
    gmod   = StandardBan
-};
+}
 
 local function BanningFunction()
    local bantype = string.lower(ttt_bantype:GetString())

@@ -5,8 +5,8 @@
 
 		<workshopcontainer>
 
-			<workshopmessage ng-show="Loading" ng-Tranny="'saves.loading'">...</workshopmessage>
-			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading" ng-Tranny="'saves.noneonmap'">...</workshopmessage>
+			<workshopmessage ng-show="Loading" ng-Localize="'saves.loading'">...</workshopmessage>
+			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading" ng-Localize="'saves.noneonmap'">...</workshopmessage>
 
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
 
@@ -15,10 +15,10 @@
 				</preview>
 
 				<name>
-					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title || "Loading..."}}</label>
+					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}<span ng-if="!file.info.title" ng-Localize="'ugc.loading'"></label>
 				</name>
 
-				<author ng-hide="file.local">{{file.info.ownername}}</author>
+				<author ng-hide="file.local">{{file.info.ownername}}<span ng-if="!file.info.ownername" ng-Localize="'ugc.loading'"></span></author>
 
 				<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
@@ -32,13 +32,13 @@
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
 					-->
-						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'saves.publish'">..</control>
-						<control ng-show="!file.local" ng-click="OpenWorkshopFile( file.id )" ng-Tranny="'saves.commentandrate'">..</control>
+						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Localize="'saves.publish'">..</control>
+						<control ng-show="!file.local" ng-click="OpenWorkshopFile( file.id )" ng-Localize="'saves.commentandrate'">..</control>
 
 					</left>
 
 					<right>
-						<control ng-click="LoadSave( file )" ng-Tranny="'saves.load'">..</control>
+						<control ng-click="LoadSave( file )" ng-Localize="'saves.load'">..</control>
 					</right>
 
 				</controls>

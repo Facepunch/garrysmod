@@ -4,7 +4,6 @@
 local vgui = vgui
 
 local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 
 
 --- Base stuff
@@ -136,7 +135,7 @@ local tags = {
    {txt="sb_tag_avoid",  color=Color(255, 150, 0, 255)},
    {txt="sb_tag_kill",   color=COLOR_RED},
    {txt="sb_tag_miss",   color=Color(130, 190, 130, 255)}
-};
+}
 
 local PANEL = {}
 
@@ -255,7 +254,7 @@ end
 local select_color = Color(255, 200, 0, 255)
 function PANEL:PaintOver()
    if self.Player and self.Player.sb_tag == self.Tag then
-      surface.SetDrawColor(255,200,0,255)
+      surface.SetDrawColor(select_color)
       surface.DrawOutlinedRect(0, 0, self:GetWide(), self:GetTall())
    end
 end

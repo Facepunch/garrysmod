@@ -96,7 +96,7 @@ function SWEP:PrimaryAttack()
 	end
 
 	if ( owner:IsPlayer() ) then
-		undo.Create( "Manhack" )
+		undo.Create( "npc_manhack" )
 			undo.AddEntity( weld )
 			undo.AddEntity( ent )
 			undo.SetPlayer( owner )
@@ -150,7 +150,7 @@ function SWEP:SecondaryAttack()
 	end
 
 	if ( owner:IsPlayer() ) then
-		undo.Create( "Rollermine" )
+		undo.Create( "npc_rollermine" )
 			undo.AddEntity( weld )
 			undo.AddEntity( ent )
 			undo.SetPlayer( owner )

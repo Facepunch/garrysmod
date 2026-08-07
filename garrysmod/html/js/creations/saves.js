@@ -1,19 +1,23 @@
 
-App = angular.module( 'CSavesApp', [ 'tranny' ] );
+var IS_SPAWN_MENU = true;
 
-App.config( function ( $routeProvider, $locationProvider )
+App = angular.module( 'CSavesApp', [ 'ngRoute', 'ngLocalize' ] );
+
+App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
 	$routeProvider.when( '/', { templateUrl: 'template/creations/saves.html' } );
+	$routeProvider.when( '/list/:Category/', { templateUrl: 'template/creations/saves.html' } );
 	$routeProvider.when( '/list/:Category/:Tag/', { templateUrl: 'template/creations/saves.html' } );
+	
+	$controllerProvider.register( 'CSaves', CSaves );
+	$controllerProvider.register( 'ControllerSaves', ControllerSaves );
 } );
 
 var CreationScope		= null;
-var CreationLocation	= null;
 
 function CSaves( $scope, $timeout, $location )
 {
 	CreationScope		= $scope;
-	CreationLocation	= $location;
 
 	CreationScope.MyCategories =
 	[
@@ -88,9 +92,9 @@ function WindowResized()
 	save.UpdatePageNav();
 
 	// Refresh HTML
-	save.DigestUpdate = setTimeout( function()
+	save.DigestUpdateResize = setTimeout( function()
 	{
-		self.DigestUpdate = 0;
+		self.DigestUpdateResize = 0;
 		Scope.Go( 0 );
 	}, 500 )
 }

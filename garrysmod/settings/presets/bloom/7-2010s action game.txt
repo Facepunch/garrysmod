@@ -1,0 +1,12 @@
+"2010s Action Game"
+{
+	"pp_bloom_sizex"		"17.00"
+	"pp_bloom_darken"		"0.50"
+	"pp_bloom_sizey"		"0.00"
+	"pp_bloom_multiply"		"2.5"
+	"pp_bloom_color_r"		"240"
+	"pp_bloom_color_g"		"240"
+	"pp_bloom_color"		"0.00"
+	"pp_bloom_passes"		"30"
+	"pp_bloom_color_b"		"240"
+}

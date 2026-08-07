@@ -145,6 +145,8 @@ function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
 
 	if ( convarA != nil ) then
 		color:SetConVarA( convarA )
+	else
+		color:SetConVarA( nil ) -- Disable the alpha bar
 	end
 
 	self:AddPanel( color )

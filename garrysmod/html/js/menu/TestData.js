@@ -20,6 +20,11 @@ function DoTestData()
 if ( !IN_ENGINE )
 {
 	setTimeout( function () { DoTestData() }, 100 );
+
+	// Just so it works in browsers for testing
+	lua = {};
+	lua.Run = function( a ) { console.log( "Lua Run: ", a ); }
+	lua.PlaySound = function( a ) { console.log( "PlaySound: ", a ); }
 }
 
 function TestUpdateServers( type, id )

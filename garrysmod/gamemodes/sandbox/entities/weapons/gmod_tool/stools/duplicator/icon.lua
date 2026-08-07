@@ -22,7 +22,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	local CamDist = Radius / math.sin( math.rad( FOV ) / 2 ) -- Works out how far the camera has to be away based on radius + fov!
 	local Center = LerpVector( 0.5, Dupe.Mins, Dupe.Maxs )
 	local CamPos = Center + Vector( -1, 0, 0.5 ):GetNormalized() * CamDist
-	local EyeAng = ( Center - CamPos ):GetNormal():Angle()
+	local EyeAng = ( Center - CamPos ):GetNormalized():Angle()
 
 	--
 	-- The base view

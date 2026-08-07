@@ -30,11 +30,11 @@ function JS_Workshop( html )
 	// Dupes
 	html:AddFunction( "gmod", "DownloadDupe", function( param ) ws_dupe:DownloadAndArm( param ) end )
 	html:AddFunction( "gmod", "ArmDupe", function( param ) ws_dupe:Arm( param ) end )
-	html:AddFunction( "gmod", "SaveDupe", function( param ) RunConsoleCommand( "dupe_save", "spawnmenu" ) end )
+	html:AddFunction( "gmod", "SaveDupe", function() RunConsoleCommand( "dupe_save", "spawnmenu" ) end )
 
 	// Saves
 	html:AddFunction( "gmod", "DownloadSave", function( param ) ws_save:DownloadAndLoad( param ) end )
 	html:AddFunction( "gmod", "LoadSave", function( param ) ws_save:Load( param ) end )
-	html:AddFunction( "gmod", "SaveSave", function( param ) RunConsoleCommand( "gm_save", "spawnmenu" ) end )
+	html:AddFunction( "gmod", "SaveSave", function() RunConsoleCommand( "gm_save", "spawnmenu" ) end )
 
 end

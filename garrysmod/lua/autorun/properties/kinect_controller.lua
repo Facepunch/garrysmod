@@ -19,6 +19,7 @@ properties.Add( "motioncontrol_ragdoll", {
 
 		if ( CLIENT && !motionsensor ) then return false end
 		if ( CLIENT && !motionsensor.IsAvailable() ) then return false end
+		if ( !IsValid( ent ) ) then return false end
 		if ( !ent:IsRagdoll() ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "motioncontrol_ragdoll", ent ) ) then return false end
 
@@ -63,13 +64,17 @@ properties.Add( "motioncontrol_ragdoll", {
 		end
 
 		local ragdoll_motion = ents.Create( "ragdoll_motion" )
+		if ( !IsValid( ragdoll_motion ) ) then
+			player:PrintMessage( HUD_PRINTTALK, "Failed to create Motion Sensor Controller for " .. ent:GetClass() )
+			return
+		end
 		ragdoll_motion:SetPos( player:EyePos() + player:EyeAngles():Forward() * 10 )
 		ragdoll_motion:SetAngles( Angle( 0, player:EyeAngles().yaw, 0 ) )
 		ragdoll_motion:SetRagdoll( ent )
 		ragdoll_motion:SetController( player )
 		ragdoll_motion:Spawn()
 
-		undo.Create( "MotionController" )
+		undo.Create( "ragdoll_motion" )
 			undo.AddEntity( ragdoll_motion )
 			undo.SetPlayer( player )
 		undo.Finish()

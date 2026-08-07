@@ -109,7 +109,7 @@ motionsensor.ProcessAngle = function( translator, sensor, pos, ang, special_vect
 
 	if ( a == nil or b == nil or up == nil ) then return end
 
-	ang[ boneid ]	= ( a - b ):GetNormal():AngleEx( up:GetNormal() );
+	ang[ boneid ]	= ( a - b ):GetNormal():AngleEx( up:GetNormal() )
 
 	if ( v.adjust ) then
 		ang[ boneid ] = ang[ boneid ] + v.adjust

@@ -72,7 +72,7 @@ EquipmentItems = {
 --         name     = "Body Armor",
 --         desc     = "Reduces bullet damage by 30% when\nyou get hit."
 --      },
-   };
+   },
 
 
    [ROLE_TRAITOR] = {
@@ -99,8 +99,8 @@ EquipmentItems = {
          name     = "item_disg",
          desc     = "item_disg_desc"
       }
-   };
-};
+   }
+}
 
 
 -- Search if an item is in the equipment table of a given role, and return it if
@@ -116,8 +116,17 @@ function GetEquipmentItem(role, id)
    end
 end
 
- -- Utility function to register a new Equipment ID
+-- GMod's bitwise library is limited to a 32-bit signed int
+local EQUIP_LIMIT = 2 ^ 31
+
+-- Utility function to register a new Equipment ID
 function GenerateNewEquipmentID()
-   EQUIP_MAX = EQUIP_MAX * 2
+   local new_max = EQUIP_MAX * 2
+
+   if new_max > EQUIP_LIMIT then
+      error("Passive equipment item limit reached. Things may break in strange ways!")
+   end
+
+   EQUIP_MAX = new_max
    return EQUIP_MAX
 end

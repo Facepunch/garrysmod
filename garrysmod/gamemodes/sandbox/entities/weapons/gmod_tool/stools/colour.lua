@@ -26,8 +26,12 @@ local function SetColour( ply, ent, data )
 	end
 
 	if ( data.Color ) then ent:SetColor( Color( data.Color.r, data.Color.g, data.Color.b, data.Color.a ) ) end
-	if ( data.RenderMode ) then ent:SetRenderMode( data.RenderMode ) end
-	if ( data.RenderFX ) then ent:SetKeyValue( "renderfx", data.RenderFX ) end
+	if ( data.RenderMode ) then ent:SetRenderMode( math.Clamp( data.RenderMode, 0, 9 ) ) end
+	if ( data.RenderFX ) then
+		-- Disallow invalid render effects
+		if ( ( data.RenderFX < 0 or data.RenderFX > 16 ) and data.RenderFX != 24 ) then data.RenderFX = 0 end
+		ent:SetKeyValue( "renderfx", data.RenderFX )
+	end
 
 	if ( SERVER ) then
 		duplicator.StoreEntityModifier( ent, "colour", data )

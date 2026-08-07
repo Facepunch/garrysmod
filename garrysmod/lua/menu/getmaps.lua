@@ -108,6 +108,15 @@ local function UpdateMaps()
 	}
 	for _, map in ipairs( GStringMaps ) do MapNames[ map ] = "G String" end
 
+	local InsurgencyMaps = {
+		"buhriz", "buhriz_coop", "buhriz_night", "contact", "contact_coop", "contact_night", "district", "district_coop", "district_night",
+		"drycanal", "drycanal_coop", "drycanal_night", "embassy", "embassy_coop", "embassy_night", "heights", "heights_coop", "heights_night",
+		"kandagal", "kandagal_night", "market", "market_coop", "market_night", "ministry", "ministry_coop", "ministry_night", "panj", "panj_night",
+		"peak", "peak_night", "revolt", "revolt_coop", "revolt_night", "siege", "siege_coop", "sinjar", "sinjar_coop", "sinjar_night", "station",
+		"station_night", "tell", "tell_coop", "tell_night", "training", "uprising", "uprising_night", "verticality", "verticality_coop", "verticality_night"
+	}
+	for _, map in ipairs( InsurgencyMaps ) do MapNames[ map ] = "Insurgency" end
+
 	MapNames[ "dm_" ] = "Half-Life 2: Deathmatch"
 	MapNames[ "halls3" ] = "Half-Life 2: Deathmatch"
 
@@ -129,6 +138,8 @@ local function UpdateMaps()
 	MapNames[ "undertow" ] = "Half-Life Deathmatch"
 
 	MapNames[ "ins_" ] = "Insurgency"
+
+	MapNames[ "t_" ] = "Klaus Veen's Treason"
 
 	MapNames[ "l4d_" ] = "Left 4 Dead"
 
@@ -175,13 +186,16 @@ local function UpdateMaps()
 	MapNames[ "rd_" ] = "Team Fortress 2"
 	MapNames[ "pd_" ] = "Team Fortress 2"
 	MapNames[ "sd_" ] = "Team Fortress 2"
-	MapNames[ "tc_" ] = "Team Fortress 2" // Territory Control
-	MapNames[ "tr_" ] = "Team Fortress 2" // Training
+	MapNames[ "tc_" ] = "Team Fortress 2" -- Territory Control
+	MapNames[ "tr_" ] = "Team Fortress 2" -- Training
 	MapNames[ "trade_" ] = "Team Fortress 2"
-	MapNames[ "pass_" ] = "Team Fortress 2" // PASS time
-	MapNames[ "vsh_" ] = "Team Fortress 2" // Versus Saxton Hale
-	MapNames[ "zi_" ] = "Team Fortress 2" // Zombie Invasion
-	MapNames[ "tow_" ] = "Team Fortress 2" // Tug of War
+	MapNames[ "pass_" ] = "Team Fortress 2" -- PASS time
+	MapNames[ "vsh_" ] = "Team Fortress 2" -- Versus Saxton Hale
+	MapNames[ "zi_" ] = "Team Fortress 2" -- Zombie Invasion
+	MapNames[ "tow_" ] = "Team Fortress 2" -- Tug of War
+	MapNames[ "2koth_" ] = "Team Fortress 2" -- Double King of the Hill
+	MapNames[ "cppl_" ] = "Team Fortress 2" -- Control Points => Payload
+	MapNames[ "htf_" ] = "Team Fortress 2" -- Hold the Flag
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
@@ -197,6 +211,14 @@ local function UpdateMaps()
 	MapNames[ "vs_" ] = "Fistful of Frags"
 
 	MapNames[ "ff_" ] = "Fortress Forever"
+	MapNames[ "mcv_" ] = "Military Conflict: Vietnam"
+
+	local BlackMesaDMMaps = {
+		"dm_boom", "dm_bounce", "dm_chopper", "dm_crossfire", "dm_gasworks", "dm_lambdabunker", "dm_power", "dm_rail", "dm_stack",
+		"dm_stalkyard", "dm_subtransit", "dm_undertow"
+	}
+	for _, map in ipairs( BlackMesaDMMaps ) do MapNames[ map ] = "Black Mesa" end
+	MapNames[ "bm_" ] = "Black Mesa"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
@@ -224,6 +246,7 @@ local function UpdateMaps()
 	MapNames[ "zm_" ] = "Zombie Survival"
 	MapNames[ "zombiesurvival_" ] = "Zombie Survival"
 	MapNames[ "zs_" ] = "Zombie Survival"
+	MapNames[ "ze_" ] = "Zombie Escape"
 	MapNames[ "coop_" ] = "Cooperative"
 
 	local GamemodeList = engine.GetGamemodes()
@@ -261,7 +284,7 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps or ( cookiestr and string.Explode( ";", cookiestr ) or {} )
+	favmaps = favmaps or ( cookiestr and string.Split( cookiestr, ";" ) or {} )
 
 end
 
@@ -325,6 +348,11 @@ local function RefreshMaps( skip )
 	local maps = file.Find( "maps/*.bsp", "GAME" )
 	LoadFavourites()
 
+	local fav_lookup = {}
+	for _, mapname in ipairs( favmaps ) do
+		fav_lookup[ mapname ] = true
+	end
+
 	for k, v in ipairs( maps ) do
 		local name = string.lower( string.gsub( v, "%.bsp$", "" ) )
 		local prefix = string.match( name, "^(.-_)" )
@@ -357,13 +385,7 @@ local function RefreshMaps( skip )
 		end
 
 		-- Throw all uncategorised maps into Other
-		Category = Category or language.GetPhrase( "spawnmenu.category.other" )
-
-		local fav
-
-		if ( table.HasValue( favmaps, name ) ) then
-			fav = true
-		end
+		Category = Category or "Other"
 
 		local csgo = false
 
@@ -381,7 +403,7 @@ local function RefreshMaps( skip )
 
 		table.insert( MapList[ Category ], name )
 
-		if ( fav ) then
+		if ( fav_lookup[ name ] ) then
 			if ( !MapList[ "Favourites" ] ) then
 				MapList[ "Favourites" ] = {}
 			end

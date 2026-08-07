@@ -22,19 +22,6 @@ function DrawBokehDOF( intensity, distance, focus )
 
 end
 
-local function OnChange( name, oldvalue, newvalue )
-
-	if ( !GAMEMODE:PostProcessPermitted( "bokeh" ) ) then return end
-
-	if ( newvalue != "0" ) then
-		DOFModeHack( true )
-	else
-		DOFModeHack( false )
-	end
-
-end
-cvars.AddChangeCallback( "pp_bokeh", OnChange )
-
 hook.Add( "RenderScreenspaceEffects", "RenderBokeh", function()
 
 	if ( !pp_bokeh:GetBool() ) then return end

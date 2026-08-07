@@ -59,8 +59,7 @@ function PANEL:Init()
 	local overlay = vgui.Create( "DPanel", self )
 	overlay:SetZPos( 9999 )
 	overlay.Paint = function( s, w, h )
-		surface.SetDrawColor( 0, 0, 0, 200 )
-		surface.DrawRect( 0, 0, w, h )
+		draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, 200 ) )
 	end
 	self.Overlay = overlay
 

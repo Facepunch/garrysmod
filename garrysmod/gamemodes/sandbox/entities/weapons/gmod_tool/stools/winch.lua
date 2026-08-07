@@ -69,7 +69,8 @@ function TOOL:LeftClick( trace )
 				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 				if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.winch.name" )
+			undo.Finish( "#tool.winch.name" )
 
 			ply:AddCount( "ropeconstraints", constr )
 			ply:AddCleanup( "ropeconstraints", constr )
@@ -174,7 +175,8 @@ function TOOL:RightClick( trace )
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 			undo.SetPlayer( ply )
-		undo.Finish()
+			undo.SetCustomUndoText( "Undone #tool.winch.name" )
+		undo.Finish( "#tool.winch.name" )
 
 		ply:AddCount( "ropeconstraints", constr )
 		ply:AddCleanup( "ropeconstraints", constr )

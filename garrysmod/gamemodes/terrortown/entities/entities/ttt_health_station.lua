@@ -17,7 +17,7 @@ if CLIENT then
                                        { usekey = Key("+use", "USE"),
                                          num    = ent:GetStoredHealth() or 0 } )
              end
-   };
+   }
 
 end
 
@@ -32,6 +32,7 @@ ENT.RechargeRate = 1
 ENT.RechargeFreq = 2 -- in seconds
 
 ENT.NextHeal = 0
+ENT.NextCharge = 0
 ENT.HealRate = 1
 ENT.HealFreq = 0.2
 
@@ -73,6 +74,7 @@ function ENT:Initialize()
    self:SetPlacer(nil)
 
    self.NextHeal = 0
+   self.NextCharge = 0
 
    self.fingerprints = {}
 end
@@ -138,38 +140,37 @@ end
 
 if SERVER then
    -- recharge
-   local nextcharge = 0
    function ENT:Think()
-      if nextcharge < CurTime() then
+      if self.NextCharge < CurTime() then
          self:AddToStorage(self.RechargeRate)
 
-         nextcharge = CurTime() + self.RechargeFreq
+         self.NextCharge = CurTime() + self.RechargeFreq
       end
    end
 
    local ttt_damage_own_healthstation = CreateConVar("ttt_damage_own_healthstation", "0") -- 0 as detective cannot damage their own health station
-	
+
    -- traditional equipment destruction effects
    function ENT:OnTakeDamage(dmginfo)
-      if dmginfo:GetAttacker() == self:GetPlacer() and not ttt_damage_own_healthstation:GetBool() then return end
-   
+      local att = dmginfo:GetAttacker()
+      local placer = self:GetPlacer()
+      if att == placer and not ttt_damage_own_healthstation:GetBool() then return end
+
       self:TakePhysicsDamage(dmginfo)
 
       self:SetHealth(self:Health() - dmginfo:GetDamage())
 
-      local att = dmginfo:GetAttacker()
-      local placer = self:GetPlacer()
       if IsPlayer(att) then
          DamageLog(Format("DMG: \t %s [%s] damaged health station [%s] for %d dmg", att:Nick(), att:GetRoleString(),  (IsPlayer(placer) and placer:Nick() or "<disconnected>"), dmginfo:GetDamage()))
       end
 
-      if self:Health() < 0 then
+      if self:Health() <= 0 then
          self:Remove()
 
          util.EquipmentDestroyed(self:GetPos())
 
-         if IsValid(self:GetPlacer()) then
-            LANG.Msg(self:GetPlacer(), "hstation_broken")
+         if IsValid(placer) then
+            LANG.Msg(placer, "hstation_broken")
          end
       end
    end

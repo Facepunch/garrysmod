@@ -108,6 +108,8 @@ function FireProblem( prob )
 	Problems[ probID ] = prob
 	if ( IsValid( ProblemsPanel ) ) then ProblemsPanel:ReceivedProblem( probID, prob ) end
 
+	hook.Call( "OnProblemReceived", nil, prob, probID )
+
 end
 
 local function FireError( str, realm, stack, addontitle, addonid )

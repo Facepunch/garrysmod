@@ -91,7 +91,7 @@ function TOOL:LeftClick( trace )
 
 	lamp:SetPos( trace.HitPos + LampOffset )
 
-	undo.Create( "Lamp" )
+	undo.Create( "gmod_lamp" )
 		undo.AddEntity( lamp )
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
@@ -225,7 +225,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo( "model" )
 	if ( !IsValidLampModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
-	if ( !IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() != mdl ) then
+	if ( !IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() != mdl:lower() ) then
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 

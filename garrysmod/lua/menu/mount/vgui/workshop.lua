@@ -2,6 +2,7 @@
 PANEL.Base = "DPanel"
 
 local wsFont
+
 if ( system.IsLinux() ) then
 	wsFont = "DejaVu Sans"
 elseif ( system.IsWindows() ) then
@@ -45,24 +46,24 @@ function PANEL:Init()
 	self.TotalsLabel:SetVisible( false )
 	self.TotalsLabel:SetTextColor( Color( 255, 255, 255, 50 ) )
 
-	self:SetDrawProgress( false )
-
 	self.Progress = 0
 	self.TotalProgress = 0
 
+	self:SetDrawProgress( false )
+
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( wide )
 
 	self:SetSize( 500, 80 )
 	self:Center()
 	self:AlignBottom( 16 )
 
 	self.ProgressLabel:SetSize( 100, 20 )
-	self.ProgressLabel:SetPos( self:GetWide() - 100, 40 )
+	self.ProgressLabel:SetPos( wide - 100, 40 )
 
 	self.TotalsLabel:SetSize( 100, 20 )
-	self.TotalsLabel:SetPos( self:GetWide() - 100, 60 )
+	self.TotalsLabel:SetPos( wide - 100, 60 )
 
 end
 
@@ -74,7 +75,7 @@ end
 
 function PANEL:PrepareDownloading()
 
-	if ( self.Rocket ) then self.Rocket:Remove() end
+	if ( IsValid( self.Rocket ) ) then self.Rocket:Remove() end
 
 	self.Rocket = self:Add( pnlRocket )
 	self.Rocket:Dock( LEFT )
@@ -88,12 +89,13 @@ function PANEL:StartDownloading( id, iImageID, title, iSize )
 	self.Label:SetText( language.GetPhrase( "ugc.downloadingX" ):format( title ) )
 
 	self.Rocket:Charging( id, iImageID )
-	self:SetDrawProgress( true )
+
 	self.ProgressLabel:Show()
 	self.ProgressLabel:SetText( "" )
 
 	self.TotalsLabel:Show()
 
+	self:SetDrawProgress( true )
 	self:UpdateProgress( 0, iSize )
 
 end
@@ -116,32 +118,37 @@ function PANEL:SetMessage( msg )
 
 end
 
-function PANEL:Paint()
+local boxColor = Color( 50, 50, 50, 255 )
+local progressBarColor = Color( 255, 255, 255, 200 )
+local progressBarOutlineColor = Color( 0, 0, 0, 150 )
+
+function PANEL:Paint( wide, tall )
 
 	DisableClipping( true )
-		draw.RoundedBox( 4, -1, -1, self:GetWide() + 2, self:GetTall() + 2, color_black )
+		draw.RoundedBox( 4, -1, -1, wide + 2, tall + 2, color_black )
 	DisableClipping( false )
 
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 50, 50, 50, 255 ) )
+	draw.RoundedBox( 4, 0, 0, wide, tall, boxColor )
 
 	surface.SetDrawColor( 0, 0, 0, 100 )
 	surface.SetMaterial( matProgressCog )
-	surface.DrawTexturedRectRotated( 0, 32, 64 * 4, 64 * 4, SysTime() * -20 )
+	surface.DrawTexturedRectRotated( 0, 32, 256, 256, SysTime() * -20 )
 
 	if ( self:GetDrawProgress() ) then
 
 		-- Overall progress
-		local off = 0
-		local w = (self:GetWide() - 64 - 64 - 100)
+		local w = wide - 228
 		local x = 80
 
-		draw.RoundedBox( 4, x + 32 + off, 44 + 18, w, 10, Color( 0, 0, 0, 150 ) )
-		draw.RoundedBox( 4, x + 33 + off, 45 + 18, w * math.Clamp( self.TotalProgress, 0.05, 1 ) - 2, 8, Color( 255, 255, 255, 200 ) )
+		draw.RoundedBox( 4, x + 32, 62, w, 10, progressBarOutlineColor )
+		draw.RoundedBox( 4, x + 33, 63, w * math.Clamp( self.TotalProgress, 0.05, 1 ) - 2, 8, progressBarColor )
 
 		-- Current file Progress
-		if ( self.Progress >= 0 ) then
-			draw.RoundedBox( 4, x + 32, 40, w, 15, Color( 0, 0, 0, 150 ) )
-			draw.RoundedBox( 4, x + 33, 41, w * math.Clamp( self.Progress, 0.05, 1 ) - 2, 15-2, Color( 255, 255, 255, 200 ) )
+		local currentProgress = self.Progress
+
+		if ( currentProgress >= 0 ) then
+			draw.RoundedBox( 4, x + 32, 40, w, 15, progressBarOutlineColor )
+			draw.RoundedBox( 4, x + 33, 41, w * math.Clamp( currentProgress, 0.05, 1 ) - 2, 13, progressBarColor )
 		end
 
 	end

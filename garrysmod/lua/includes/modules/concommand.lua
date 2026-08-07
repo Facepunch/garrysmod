@@ -2,6 +2,9 @@
 local AddConsoleCommand = AddConsoleCommand
 local string = string
 local Msg = Msg
+local isfunction = isfunction
+local type = type
+local ErrorNoHaltWithStack = ErrorNoHaltWithStack
 
 --[[---------------------------------------------------------
    Name: concommand
@@ -26,6 +29,9 @@ end
    Desc: Register a new console command
 -----------------------------------------------------------]]
 function Add( name, func, completefunc, help, flags )
+	if ( !isfunction( func ) ) then ErrorNoHaltWithStack( "bad argument #2 to 'Add' (function expected, got " .. type( func ) .. ")", 2 ) end
+	if ( completefunc != nil && !isfunction( completefunc ) ) then ErrorNoHaltWithStack( "bad argument #3 to 'Add' (function expected, got " .. type( completefunc ) .. ")", 2 ) end
+
 	local LowerName = string.lower( name )
 	CommandList[ LowerName ] = func
 	CompleteList[ LowerName ] = completefunc

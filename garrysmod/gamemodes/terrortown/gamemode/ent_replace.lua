@@ -48,7 +48,7 @@ local hl2_ammo_replace = {
    ["item_healthcharger"] = "item_ammo_revolver_ttt",
    ["item_ammo_crate"] = "weapon_ttt_confgrenade",
    ["item_item_crate"] = "ttt_random_ammo"
-};
+}
 
 -- Replace an ammo entity with the TTT version
 -- Optional cls param is the classname, if the caller already has it handy
@@ -77,7 +77,7 @@ local hl2_weapon_replace = {
    ["weapon_slam"] = "item_ammo_pistol_ttt",
    ["weapon_frag"] = "weapon_zm_revolver",
    ["weapon_crowbar"] = "weapon_zm_molotov"
-};
+}
 
 local function ReplaceWeaponSingle(ent, cls)
    -- Loadout weapons immune
@@ -237,7 +237,7 @@ local dummify = {
    "team_control_point_round",
    -- ZM
    "item_ammo_revolver"
-};
+}
 
 for k, cls in pairs(dummify) do
    scripted_ents.Register({Type="point", IsWeaponDummy=true}, cls)
@@ -258,6 +258,77 @@ function ents.TTT.GetSpawnableSWEPs()
    end
 
    return SpawnableSWEPs
+end
+
+SPAWNFILTER_SMG = 1
+SPAWNFILTER_AR = 2
+SPAWNFILTER_SNIPER = 4
+SPAWNFILTER_SHOTGUN = 8
+SPAWNFILTER_LMG = 16
+SPAWNFILTER_PISTOL = 32
+SPAWNFILTER_AUTOPISTOL = 64
+SPAWNFILTER_MAGNUM = 128
+SPAWNFILTER_NADE = 256
+
+local ammotype_spawnfilter = {
+   ["smg1"] = SPAWNFILTER_SMG,
+   ["357"] = SPAWNFILTER_SNIPER,
+   ["alyxgun"] = SPAWNFILTER_MAGNUM,
+   ["buckshot"] = SPAWNFILTER_SHOTGUN,
+   ["airboatgun"] = SPAWNFILTER_LMG
+}
+
+function GM:TTTWeaponFilter(wep)
+   local kind = wep.Kind
+   if not kind then return end
+
+   if kind == WEAPON_NADE then
+      return SPAWNFILTER_NADE
+   end
+
+   local ammo = wep.Primary.Ammo
+   if not ammo then return end
+   ammo = ammo:lower()
+
+   if ammo == "pistol" then
+      if kind == WEAPON_HEAVY then
+         return SPAWNFILTER_AR
+      elseif kind == WEAPON_PISTOL then
+         if not wep.Primary.Delay or wep.Primary.Delay > 0.15 or not wep.Primary.Automatic then
+            return SPAWNFILTER_PISTOL
+         else
+            return SPAWNFILTER_AUTOPISTOL
+         end
+      end
+   end
+
+   return ammotype_spawnfilter[ammo]
+end
+
+local SWEPSpawnFlags = nil
+local FilteredSWEPs = {}
+function ents.TTT.GetFilteredSpawnableSWEPs(filter)
+   if not SWEPSpawnFlags then
+      local tbl = {}
+      for _, wep in ipairs(ents.TTT.GetSpawnableSWEPs()) do
+         tbl[wep] = hook.Run("TTTWeaponFilter", wep)
+      end
+
+      SWEPSpawnFlags = tbl
+   end
+
+   if not FilteredSWEPs[filter] then
+      local tbl = {}
+      for wep, spawnflag in pairs(SWEPSpawnFlags) do
+         if util.BitSet(filter, spawnflag) then
+            table.insert(tbl, wep)
+         end
+      end
+
+      FilteredSWEPs[filter] = tbl
+   end
+
+   return FilteredSWEPs[filter]
 end
 
 local SpawnableAmmoClasses = nil
@@ -357,7 +428,7 @@ local function PlaceExtraWeaponsForCSS()
       "info_player_terrorist",
       "info_player_counterterrorist",
       "hostage_entity"
-   };
+   }
 
    PlaceWeaponsAtEnts(spots_classes)
 end
@@ -381,7 +452,7 @@ local function PlaceExtraWeaponsForTF2()
       "item_teamflag",
       "game_intro_viewpoint",
       "info_observer_point"
-   };
+   }
 
    PlaceWeaponsAtEnts(spots_classes)
 end
@@ -525,7 +596,7 @@ end
 
 local classremap = {
    ttt_playerspawn = "info_player_deathmatch"
-};
+}
 
 local function ImportEntities(map)
    local fname = ents.TTT.CanImportEntities(map)

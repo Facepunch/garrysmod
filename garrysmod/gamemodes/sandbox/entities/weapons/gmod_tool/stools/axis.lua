@@ -30,6 +30,7 @@ function TOOL:LeftClick( trace )
 
 	-- Don't do jeeps (crash protection until we get it fixed)
 	if ( iNum == 0 && trace.Entity:GetClass() == "prop_vehicle_jeep" ) then return false end
+	if ( iNum == 0 && trace.Entity:GetClass() == "prop_vehicle_apc" ) then return false end
 
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
@@ -92,7 +93,8 @@ function TOOL:LeftClick( trace )
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.axis.name" )
+			undo.Finish( "#tool.axis.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )
@@ -172,7 +174,8 @@ function TOOL:RightClick( trace )
 			undo.Create( "Axis" )
 				undo.AddEntity( constr )
 				undo.SetPlayer( ply )
-			undo.Finish()
+				undo.SetCustomUndoText( "Undone #tool.axis.name" )
+			undo.Finish( "#tool.axis.name" )
 
 			ply:AddCount( "constraints", constr )
 			ply:AddCleanup( "constraints", constr )

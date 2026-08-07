@@ -30,9 +30,9 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "String", 0, "StarTexture", { KeyName = "startexture", Edit = { type = "Texture", group = "Stars", category = "Stars", order = 11 } } )
 
 	self:NetworkVar( "Int", 0, "StarLayers", { KeyName = "starlayers", Edit = { type = "Int", min = 1, max = 3, category = "Stars", order = 12 } } )
-	self:NetworkVarElement( "Angle", 0, 'p', "StarScale", { KeyName = "starscale", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 13 } } )
-	self:NetworkVarElement( "Angle", 0, 'y', "StarFade", { KeyName = "starfade", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 14 } } )
-	self:NetworkVarElement( "Angle", 0, 'r', "StarSpeed", { KeyName = "starspeed", Edit = { type = "Float", min = 0, max = 2, category = "Stars", order = 15 } } )
+	self:NetworkVarElement( "Angle", 0, "p", "StarScale", { KeyName = "starscale", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 13 } } )
+	self:NetworkVarElement( "Angle", 0, "y", "StarFade", { KeyName = "starfade", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 14 } } )
+	self:NetworkVarElement( "Angle", 0, "r", "StarSpeed", { KeyName = "starspeed", Edit = { type = "Float", min = 0, max = 2, category = "Stars", order = 15 } } )
 
 	self:NetworkVar( "Float", 1, "HDRScale", { KeyName = "hdrscale", Edit = { type = "Float", category = "Main", min = 0, max = 1, order = 4 } } )
 
@@ -69,15 +69,28 @@ end
 function ENT:Initialize()
 end
 
-function ENT:KeyValue( key, value )
+if ( SERVER ) then
 
-	if ( self:SetNetworkKeyValue( key, value ) ) then
-		return
+	function ENT:KeyValue( key, value )
+
+		if ( self:SetNetworkKeyValue( key, value ) ) then
+			return
+		end
+
+		-- TODO: sunposmethod
+		-- 		0 : "Custom - Use the Sun Normal to position the sun"
+		--		1 : "Automatic - Find a env_sun entity and use that"
+
 	end
 
-	-- TODO: sunposmethod
-	-- 		0 : "Custom - Use the Sun Normal to position the sun"
-	--		1 : "Automatic - Find a env_sun entity and use that"
+
+	function ENT:AcceptInput( name, activator, caller, data )
+
+		if ( self:SetNetworkVarsFromMapInput( name, data ) ) then
+			return true -- Accept the input so the there are no warnings in console with developer 2
+		end
+
+	end
 
 end
 

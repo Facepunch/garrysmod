@@ -1,18 +1,86 @@
 
 local Category = ""
+local SubCategory = ""
+
+-- This is basically dupliacator.GenericDuplicatorFunction, but calls the relevant hooks
+-- Move this all to commands.lua?
+local function ADD_ITEM_DUPEFUNC( ply, data )
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnSENT", ply, data.Class ) ) then return NULL end
+
+	local ent = ents.Create( data.Class )
+	if ( !IsValid( ent ) ) then return NULL end -- Must've hit edict limit
+
+	-- Remove certain fields we do not want dupes to manipulate
+	data.Model = nil
+
+	-- Restore the keyvalues
+	local entTable = list.GetEntry( "SpawnableEntities", data.EntityName )
+	if ( entTable && entTable.ClassName == data.Class && entTable.KeyValues ) then
+		for k, v in pairs( entTable.KeyValues ) do
+			ent:SetKeyValue( k, v )
+		end
+	end
+
+	duplicator.DoGeneric( ent, data )
+
+	ent:Spawn()
+
+	--duplicator.DoGenericPhysics( ent, ply, data )
+
+	ent:Activate()
+
+	ent.EntityName = data.EntityName
+
+	-- For hacked combine mines, they reset their skin
+	if ( data.Skin ) then ent:SetSkin( data.Skin ) end
+
+	if ( IsValid( ply ) ) then
+		ent:SetCreator( ply )
+		gamemode.Call( "PlayerSpawnedSENT", ply, ent )
+	end
+
+	return ent
+end
+
+local function ADD_WEAPON_DUPEFUNC( ply, data )
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnSWEP", ply, data.Class, list.GetEntry( "Weapon", data.Class ) ) ) then return NULL end
+
+	local ent = ents.Create( data.Class )
+	if ( !IsValid( ent ) ) then return NULL end -- Must've hit edict limit
+
+	-- Remove certain fields we do not want dupes to manipulate
+	data.Model = nil
+
+	duplicator.DoGeneric( ent, data )
+
+	ent:Spawn()
+
+	--duplicator.DoGenericPhysics( ent, ply, data )
+
+	ent:Activate()
+
+	ent.EntityName = data.EntityName
+
+	if ( IsValid( ply ) ) then
+		ent:SetCreator( ply )
+		gamemode.Call( "PlayerSpawnedSWEP", ply, ent )
+	end
+
+	return ent
+end
 
 local function ADD_ITEM( class, offset, extras, classOverride )
 
 	local base = { PrintName = "#" .. ( classOverride or class ), ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" }
 	list.Set( "SpawnableEntities", classOverride or class, table.Merge( base, extras or {} ) )
-	duplicator.Allow( class )
+	duplicator.RegisterEntityClass( class, ADD_ITEM_DUPEFUNC, "Data" )
 
 end
 
 local function ADD_WEAPON( class )
 
 	list.Set( "Weapon", class, { ClassName = class, PrintName = "#" .. ( class ), Category = Category, Author = "VALVe", Spawnable = true } )
-	duplicator.Allow( class )
+	duplicator.RegisterEntityClass( class, ADD_WEAPON_DUPEFUNC, "Data" )
 
 end
 
@@ -23,49 +91,45 @@ local function ADD_NPC_WEAPON( class )
 end
 
 Category = "Half-Life 2"
+SubCategory = "#spawnmenu.category.ammo_items"
 
 -- Ammo
-ADD_ITEM( "item_ammo_ar2", -8 )
-ADD_ITEM( "item_ammo_ar2_large", -8 )
+ADD_ITEM( "item_ammo_ar2", -8, { SubCategory = SubCategory } )
+ADD_ITEM( "item_ammo_ar2_large", -8, { SubCategory = SubCategory } )
 
-ADD_ITEM( "item_ammo_pistol", -4 )
-ADD_ITEM( "item_ammo_pistol_large", -4 )
+ADD_ITEM( "item_ammo_pistol", -4, { SubCategory = SubCategory } )
+ADD_ITEM( "item_ammo_pistol_large", -4, { SubCategory = SubCategory } )
 
-ADD_ITEM( "item_ammo_357", -4 )
-ADD_ITEM( "item_ammo_357_large", -4 )
+ADD_ITEM( "item_ammo_357", -4, { SubCategory = SubCategory } )
+ADD_ITEM( "item_ammo_357_large", -4, { SubCategory = SubCategory } )
 
-ADD_ITEM( "item_ammo_smg1", -2 )
-ADD_ITEM( "item_ammo_smg1_large", -2 )
+ADD_ITEM( "item_ammo_smg1", -2, { SubCategory = SubCategory } )
+ADD_ITEM( "item_ammo_smg1_large", -2, { SubCategory = SubCategory } )
 
-ADD_ITEM( "item_ammo_smg1_grenade", -10 )
-ADD_ITEM( "item_ammo_crossbow", -10 )
-ADD_ITEM( "item_box_buckshot", -10 )
-ADD_ITEM( "item_ammo_ar2_altfire", -2 )
-ADD_ITEM( "item_rpg_round", -10 )
+ADD_ITEM( "item_ammo_smg1_grenade", -10, { SubCategory = SubCategory } )
+ADD_ITEM( "item_ammo_crossbow", -10, { SubCategory = SubCategory } )
+ADD_ITEM( "item_box_buckshot", -10, { SubCategory = SubCategory } )
+ADD_ITEM( "item_ammo_ar2_altfire", -2, { SubCategory = SubCategory } )
+ADD_ITEM( "item_rpg_round", -10, { SubCategory = SubCategory } )
 
 -- Dynamic materials; gives player what he needs most (health, shotgun ammo, suit energy, etc)
 -- ADD_ITEM( "item_dynamic_resupply" )
 
 -- Items
-ADD_ITEM( "item_battery", -4 )
-ADD_ITEM( "item_healthkit", -8 )
-ADD_ITEM( "item_healthvial", -4 )
+ADD_ITEM( "item_battery", -4, { SubCategory = SubCategory } )
+ADD_ITEM( "item_healthkit", -8, { SubCategory = SubCategory } )
+ADD_ITEM( "item_healthvial", -4, { SubCategory = SubCategory } )
 ADD_ITEM( "item_suitcharger" )
 ADD_ITEM( "item_healthcharger" )
 ADD_ITEM( "item_suit", 0 )
 
 ADD_ITEM( "prop_thumper" )
 ADD_ITEM( "combine_mine", -8 )
+ADD_ITEM( "combine_mine", -8, { KeyValues = { Modification = 1 } }, "combine_mine_resistance" )
 ADD_ITEM( "npc_grenade_frag", -8 )
 ADD_ITEM( "grenade_helicopter", 4 )
 
-if ( IsMounted( "ep2" ) ) then
-	game.AddParticles( "particles/striderbuster.pcf" )
-	ADD_ITEM( "weapon_striderbuster" )
-
-	-- Needs duplicator support
-	--ADD_ITEM( "combine_mine", -8, { KeyValues = { Modification = 1 } }, "combine_mine_resistance" )
-end
+ADD_ITEM( "weapon_striderbuster" )
 
 -- Weapons
 ADD_WEAPON( "weapon_physcannon" )
@@ -129,6 +193,7 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	--ADD_ITEM( "xen_plantlight", -16 )
 
 	ADD_NPC_WEAPON( "weapon_357_hl1" )
+	ADD_NPC_WEAPON( "weapon_mp5_hl1" )
 	ADD_NPC_WEAPON( "weapon_glock_hl1" )
 	ADD_NPC_WEAPON( "weapon_shotgun_hl1" )
 end

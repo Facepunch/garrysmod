@@ -17,7 +17,7 @@ SWEP.Spawnable		= true
 util.PrecacheModel( SWEP.ViewModel )
 util.PrecacheModel( SWEP.WorldModel )
 
-SWEP.ShootSound = Sound( "Airboat.FireGunRevDown" )
+SWEP.ShootSound = Sound( "Toolgun.Single" )
 
 SWEP.Tool = {}
 
@@ -205,20 +205,35 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 
 end
 
-local toolmask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+local toolMask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+function SWEP:DoToolTrace()
+	local owner = self:GetOwner()
+
+	local tr = util.GetPlayerTrace( owner )
+	tr.mask = toolMask
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
+	tr.filter = { owner, owner:GetVehicle() }
+
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit || !IsValid( trace.Entity ) ) then
+		local hulltrace = util.TraceHull( tr )
+
+		if ( IsValid( hulltrace.Entity ) ) then
+			trace = hulltrace
+			trace.HullTrace = true
+		end
+	end
+	if ( !trace.Hit ) then return end
+
+	return trace
+end
 
 -- Trace a line then send the result to a mode function
 function SWEP:PrimaryAttack()
 
-	local owner = self:GetOwner()
-
-	local tr = util.GetPlayerTrace( owner )
-	tr.mask = toolmask
-	tr.mins = vector_origin
-	tr.maxs = tr.mins
-	local trace = util.TraceLine( tr )
-	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
-	if ( !trace.Hit ) then return end
+	local trace = self:DoToolTrace()
+	if ( !trace ) then return end
 
 	local tool = self:GetToolObject()
 	if ( !tool ) then return end
@@ -230,7 +245,7 @@ function SWEP:PrimaryAttack()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 1 ) ) then return end
+	if ( !gamemode.Call( "CanTool", self:GetOwner(), trace, mode, tool, 1 ) ) then return end
 
 	if ( !tool:LeftClick( trace ) ) then return end
 
@@ -240,15 +255,8 @@ end
 
 function SWEP:SecondaryAttack()
 
-	local owner = self:GetOwner()
-
-	local tr = util.GetPlayerTrace( owner )
-	tr.mask = toolmask
-	tr.mins = vector_origin
-	tr.maxs = tr.mins
-	local trace = util.TraceLine( tr )
-	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
-	if ( !trace.Hit ) then return end
+	local trace = self:DoToolTrace()
+	if ( !trace ) then return end
 
 	local tool = self:GetToolObject()
 	if ( !tool ) then return end
@@ -260,7 +268,7 @@ function SWEP:SecondaryAttack()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", owner, trace, mode, tool, 2 ) ) then return end
+	if ( !gamemode.Call( "CanTool", self:GetOwner(), trace, mode, tool, 2 ) ) then return end
 
 	if ( !tool:RightClick( trace ) ) then return end
 
@@ -275,13 +283,8 @@ function SWEP:Reload()
 	-- This makes the reload a semi-automatic thing rather than a continuous thing
 	if ( !owner:KeyPressed( IN_RELOAD ) ) then return end
 
-	local tr = util.GetPlayerTrace( owner )
-	tr.mask = toolmask
-	tr.mins = vector_origin
-	tr.maxs = tr.mins
-	local trace = util.TraceLine( tr )
-	if ( !trace.Hit ) then trace = util.TraceHull( tr ) end
-	if ( !trace.Hit ) then return end
+	local trace = self:DoToolTrace()
+	if ( !trace ) then return end
 
 	local tool = self:GetToolObject()
 	if ( !tool ) then return end

@@ -102,9 +102,10 @@ function render.BlurRenderTarget( rt, sizex, sizey, passes )
 
 end
 
+local camera2DTable = { type = "2D" }
 function cam.Start2D()
 
-	return cam.Start( { type = "2D" } )
+	return cam.Start( camera2DTable )
 
 end
 

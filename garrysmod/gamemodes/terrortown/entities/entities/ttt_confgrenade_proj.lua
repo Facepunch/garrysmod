@@ -16,7 +16,7 @@ local function PushPullRadius(pos, pusher)
    for k, target in ipairs(ents.FindInSphere(pos, radius)) do
       if IsValid(target) then
          local tpos = target:LocalToWorld(target:OBBCenter())
-         local dir = (tpos - pos):GetNormal()
+         local dir = (tpos - pos):GetNormalized()
          local phys = target:GetPhysicsObject()
 
          if target:IsPlayer() and (not target:IsFrozen()) and ((not target.was_pushed) or target.was_pushed.t != CurTime()) then

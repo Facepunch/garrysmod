@@ -727,7 +727,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_140db"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"95,105"
 
 	"rndwave"
@@ -752,7 +752,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_140db"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"93,108"
 
 	"wave"			"weapons/xbow_fire1.wav"
@@ -797,7 +797,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"95,100"
 
 	"wave"			"weapons/cbar_miss1.wav"
@@ -807,7 +807,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,102"
 
 	"rndwave"
@@ -822,7 +822,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"98,102"
 
 	"rndwave"
@@ -848,7 +848,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"VOL_NORM"
-	"soundlevel"		"SNDLVL_140db"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"80,111"
 
 	"wave"			"weapons/gauss2.wav"
@@ -858,7 +858,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_140db"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"80,143"
 
 	"wave"			"weapons/electro4.wav"
@@ -922,7 +922,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"95,105"
 
 	"wave"			"weapons/pl_gun3.wav"
@@ -935,7 +935,7 @@
 	"channel"		"CHAN_WEAPON"
 	"pitch"			"98"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"			"weapons/egon_windup2.wav"
 }
@@ -945,7 +945,7 @@
 	"channel"		"CHAN_STATIC"
 	"pitch"			"98"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"			"weapons/egon_run3.wav"
 }
@@ -955,7 +955,7 @@
 	"channel"		"CHAN_WEAPON"
 	"pitch"			"98"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_140db"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"			"weapons/egon_off1.wav"
 }
@@ -998,7 +998,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"94,110"
 
 	"rndwave"
@@ -1012,7 +1012,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"94,110"
 
 	"rndwave"
@@ -1069,7 +1069,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"93,124"
 
 	"wave"			"weapons/sbarrel1.wav"
@@ -1079,7 +1079,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"			"85,115"
 
 	"wave"			"weapons/dbarrel1.wav"
@@ -1090,7 +1090,7 @@
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"0.9"
-	"soundlevel"		"SNDLVL_GUNFIRE"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"			"weapons/rocketfire1.wav"
 }
@@ -1400,7 +1400,7 @@
 	"channel"		"CHAN_WEAPON"
 	"volume"		"VOL_NORM"
 
-	"soundlevel"		"SNDLVL_140dB"
+	"soundlevel"		"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 
 	"wave"		"weapons/stinger_fire1.wav"
 }
@@ -1417,7 +1417,7 @@
 "Barney.FirePistol"
 {
 	"channel"	"CHAN_WEAPON"
-	"soundlevel"  	"SNDLVL_140db"
+	"soundlevel"  	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"volume"	"1.0"
 	"pitch"		"PITCH_NORM"
 
@@ -1716,7 +1716,7 @@
 {
 	"channel"	"CHAN_VOICE"
 	"volume"	"1.0"
-	"soundlevel"	"SNDLVL_140db"
+	"soundlevel"	"SNDLVL_105dB" // GMOD: Changed from SNDLVL_GUNFIRE
 	"pitch"		"PITCH_NORM"
 	"rndwave"
 	{

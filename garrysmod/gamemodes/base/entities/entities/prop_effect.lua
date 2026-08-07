@@ -9,6 +9,8 @@ ENT.Type = "anim"
 
 ENT.Spawnable = false
 
+ENT.WantsTranslucency = true
+
 function ENT:Initialize()
 
 	local Radius = 6
@@ -18,18 +20,23 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self.AttachedEntity = ents.Create( "prop_dynamic" )
-		self.AttachedEntity:SetModel( self:GetModel() )
-		self.AttachedEntity:SetAngles( self:GetAngles() )
-		self.AttachedEntity:SetPos( self:GetPos() )
-		self.AttachedEntity:SetSkin( self:GetSkin() )
-		self.AttachedEntity:Spawn()
-		self.AttachedEntity:SetParent( self )
-		self.AttachedEntity:DrawShadow( false )
 
+		-- This can happen at entity limit
+		if ( IsValid( self.AttachedEntity ) ) then
+			self.AttachedEntity:SetModel( self:GetModel() )
+			self.AttachedEntity:SetAngles( self:GetAngles() )
+			self.AttachedEntity:SetPos( self:GetPos() )
+			self.AttachedEntity:SetSkin( self:GetSkin() )
+			self.AttachedEntity:Spawn()
+			self.AttachedEntity:SetParent( self )
+			self.AttachedEntity:DrawShadow( false )
+
+			self:DeleteOnRemove( self.AttachedEntity )
+			self.AttachedEntity:DeleteOnRemove( self )
+		end
+
+		self.OriginalModel = self:GetModel() -- Used for duplicator in case attached entity is gone for whatever reason
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
-
-		self:DeleteOnRemove( self.AttachedEntity )
-		self.AttachedEntity:DeleteOnRemove( self )
 
 		-- Don't use the model's physics - create a box instead
 		self:PhysicsInitBox( mins, maxs )
@@ -56,6 +63,9 @@ function ENT:Initialize()
 		local tab = ents.FindByClassAndParent( "prop_dynamic", self )
 		if ( tab && IsValid( tab[ 1 ] ) ) then self.AttachedEntity = tab[ 1 ] end
 
+		-- Selectively inherit BeingLookedAtByLocalPlayer from base_gmodentity so we don't have to copy paste it
+		self.BeingLookedAtByLocalPlayer = scripted_ents.GetMember( "base_gmodentity", "BeingLookedAtByLocalPlayer" )
+		self.MaxWorldTipDistance = scripted_ents.GetMember( "base_gmodentity", "MaxWorldTipDistance" )
 	end
 
 	-- Set collision bounds exactly
@@ -63,22 +73,24 @@ function ENT:Initialize()
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
-	if ( halo.RenderedEntity() == self ) then
-		self.AttachedEntity:DrawModel()
-		return
+	-- Draw the actual model when we are grabbed by physics gun, etc.
+	if ( halo.RenderedEntity() == self && IsValid( self.AttachedEntity ) ) then
+		self.AttachedEntity:DrawModel( flags )
 	end
+
+end
+
+function ENT:DrawTranslucent( flags )
 
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 
 	-- Don't draw the grip if there's no chance of us picking it up
-	local ply = LocalPlayer()
-	local wep = ply:GetActiveWeapon()
+	local wep = LocalPlayer():GetActiveWeapon()
 	if ( !IsValid( wep ) ) then return end
 
 	local weapon_name = wep:GetClass()
-
 	if ( weapon_name != "weapon_physgun" && weapon_name != "gmod_tool" ) then
 		return
 	end
@@ -91,35 +103,6 @@ function ENT:Draw()
 
 	render.DrawSprite( self:GetPos(), 16, 16, color_white )
 
-end
-
--- Copied from base_gmodentity.lua
-ENT.MaxWorldTipDistance = 256
-function ENT:BeingLookedAtByLocalPlayer()
-	local ply = LocalPlayer()
-	if ( !IsValid( ply ) ) then return false end
-
-	local view = ply:GetViewEntity()
-	local dist = self.MaxWorldTipDistance
-	dist = dist * dist
-
-	-- If we're spectating a player, perform an eye trace
-	if ( view:IsPlayer() ) then
-		return view:EyePos():DistToSqr( self:GetPos() ) <= dist && view:GetEyeTrace().Entity == self
-	end
-
-	-- If we're not spectating a player, perform a manual trace from the entity's position
-	local pos = view:GetPos()
-
-	if ( pos:DistToSqr( self:GetPos() ) <= dist ) then
-		return util.TraceLine( {
-			start = pos,
-			endpos = pos + ( view:GetAngles():Forward() * dist ),
-			filter = view
-		} ).Entity == self
-	end
-
-	return false
 end
 
 function ENT:PhysicsUpdate( physobj )
@@ -137,6 +120,12 @@ function ENT:PhysicsUpdate( physobj )
 end
 
 function ENT:OnEntityCopyTableFinish( tab )
+
+	-- This entity is in an invalid state, still try to store something useful for the duplicator
+	if ( !IsValid( self.AttachedEntity ) ) then
+		tab.Model = self.OriginalModel
+		return
+	end
 
 	-- We need to store the model of the attached entity
 	-- Not the one we have here.

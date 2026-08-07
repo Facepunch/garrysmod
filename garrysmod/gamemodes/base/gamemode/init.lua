@@ -1,8 +1,8 @@
 
-include( 'shared.lua' )
-include( 'player.lua' )
-include( 'npc.lua' )
-include( 'variable_edit.lua' )
+include( "shared.lua" )
+include( "player.lua" )
+include( "npc.lua" )
+include( "variable_edit.lua" )
 
 --[[---------------------------------------------------------
 	Name: gamemode:Initialize()

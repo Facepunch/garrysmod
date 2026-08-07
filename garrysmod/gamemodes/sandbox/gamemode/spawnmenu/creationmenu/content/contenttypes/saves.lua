@@ -25,7 +25,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 				file	= "saves/" .. v,
 				name	= v:StripExtension(),
 				preview	= "saves/" .. v:StripExtension() .. ".jpg",
-				description	= "Local map saves stored on your computer. Local content can be deleted in the main menu."
+				description	= language.GetPhrase( "saves.local_description" )
 			}
 
 			table.insert( saves, entry )
@@ -52,11 +52,40 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	end
 
-	function ws_save:Load( filename ) RunConsoleCommand( "gm_load", filename ) end
+	function ws_save:Load( filename )
+
+		-- Early out for workshop saves
+		if ( string.StartsWith( filename, "content/4000" ) ) then
+			RunConsoleCommand( "gm_load", filename )
+			return
+		end
+
+		local saveFile = file.Open( filename, "rb", "GAME" )
+		if ( !saveFile ) then -- Somehow the file doesn't exist?
+			RunConsoleCommand( "gm_load", filename )
+			return
+		end
+
+		saveFile:Seek( 4 )
+		local mapFile = saveFile:ReadLine():TrimRight( "\n" )
+
+		if ( mapFile == game.GetMap() ) then
+			RunConsoleCommand( "gm_load", filename )
+		else
+			local msg = string.format( language.GetPhrase( "saves.mapchange_message" ), mapFile )
+
+			Derma_Query( msg,
+				language.GetPhrase( "saves.confirm_load_title" ),
+				language.GetPhrase( "saves.dialog_load" ), function() RunConsoleCommand( "gm_load", filename ) end,
+				language.GetPhrase( "dialog.cancel" ) )
+		end
+
+	end
+
 	function ws_save:Publish( filename, imagename ) RunConsoleCommand( "save_publish", filename, imagename ) end
 
 	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
-	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
+	HTML:Call( "SetMap( '" .. game.GetMap() .. "' )" )
 
 	return HTML
 

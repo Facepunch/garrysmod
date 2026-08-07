@@ -130,7 +130,7 @@ function PANEL:OnModified()
 
 end
 
-function PANEL:ContentsToTable( contentpanel )
+function PANEL:ContentsToTable()
 
 	local tab = {}
 

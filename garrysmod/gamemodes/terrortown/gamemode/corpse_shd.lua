@@ -5,11 +5,11 @@ CORPSE = CORPSE or {}
 -- Manual datatable indexing
 CORPSE.dti = {
    BOOL_FOUND = 0,
-   
+
    ENT_PLAYER = 0,
 
    INT_CREDITS = 0
-};
+}
 
 local dti = CORPSE.dti
 --- networked data abstraction

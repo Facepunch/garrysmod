@@ -28,8 +28,18 @@ function PANEL:Init()
 	self.Tabs = sheet
 
 	-- Lua errors
-	local luaErrorList = ProblemsFrame:Add( "DScrollPanel" )
-	sheet:AddSheet( "#problems.lua_errors", luaErrorList, "icon16/error.png" )
+	local luaErrorContainer = vgui.Create( "Panel", ProblemsFrame )
+
+	local luaErrorList = luaErrorContainer:Add( "DScrollPanel" )
+	luaErrorList:Dock( FILL )
+
+	local luaStrictMode = luaErrorContainer:Add( "DCheckBoxLabel" )
+	luaStrictMode:Dock( BOTTOM )
+	luaStrictMode:SetText( "#lua_strict" )
+	luaStrictMode:SetConVar( "lua_strict" )
+	luaStrictMode:SetDark( true )
+
+	sheet:AddSheet( "#problems.lua_errors", luaErrorContainer, "icon16/error.png" )
 	self.LuaErrorList = luaErrorList
 
 	-- Generic problems
@@ -45,6 +55,22 @@ function PANEL:Init()
 	ProblemsFrame.btnClose:MoveToFront()
 	ProblemsFrame.btnMaxim:MoveToFront()
 	ProblemsFrame.btnMinim:MoveToFront()
+
+end
+
+function PANEL:OnMousePressed( mcode )
+
+	if ( mcode == MOUSE_LEFT ) then
+		self:Remove()
+	end
+
+end
+
+function PANEL:Think()
+
+	if ( input.IsKeyDown( KEY_ESCAPE ) and !IsInGame() ) then
+		self:Remove()
+	end
 
 end
 
@@ -66,9 +92,11 @@ function PANEL:AddEmptyWarning( txt, parent )
 
 end
 
+local color_background = Color( 0, 0, 0, 240 )
+
 function PANEL:Paint( w, h )
 
-	draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 240 ) )
+	draw.RoundedBox( 0, 0, 0, w, h, color_background )
 
 end
 

@@ -567,7 +567,7 @@ function SortedPairs( pTable, Desc )
 		end )
 	end
 
-	local i, key = 1
+	local i, key = 1, nil
 	return function()
 		key, i = keys[ i ], i + 1
 		return key, pTable[ key ]
@@ -796,8 +796,8 @@ if ( !table.move ) then
 		local buffer = { unpack( sourceTbl, from, to ) }
 
 		dest = math.floor( dest - 1 )
-		for i, v in ipairs( buffer ) do
-			destTbl[ dest + i ] = v
+		for i = 1, to - from + 1 do
+			destTbl[ dest + i ] = buffer[ i ]
 		end
 
 		return destTbl
