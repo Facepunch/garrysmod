@@ -50,10 +50,12 @@ function ENT:Initialize()
 end
 
 function StartFires(pos, tr, num, lifetime, explode, dmgowner)
-   for i=1, num do
+   for i = 1, num do
+      local flame = ents.Create("ttt_flame")
+      if not IsValid(flame) then return end
+
       local ang = Angle(-math.Rand(0, 180), math.Rand(0, 360), math.Rand(0, 360))
 
-      local flame = ents.Create("ttt_flame")
       flame:SetPos(pos)
       if IsValid(dmgowner) and dmgowner:IsPlayer() then
          flame:SetDamageParent(dmgowner)

@@ -18,6 +18,8 @@ local function ReplaceSingle(ent, newname)
    ent:SetSolid(SOLID_NONE)
 
    local rent = ents.Create(newname)
+   if not IsValid(rent) then return end
+
    rent:SetPos(ent:GetPos())
    rent:SetAngles(ent:GetAngles())
    rent:Spawn()
@@ -353,6 +355,8 @@ local function PlaceWeapon(swep, pos, ang)
 
    -- Create the weapon, somewhat in the air in case the spot hugs the ground.
    local ent = ents.Create(cls)
+   if not IsValid(ent) then return NULL end
+
    pos.z = pos.z + 3
    ent:SetPos(pos)
    ent:SetAngles(VectorRand():Angle())
