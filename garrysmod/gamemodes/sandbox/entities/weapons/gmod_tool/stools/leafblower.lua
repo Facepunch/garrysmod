@@ -5,14 +5,20 @@ TOOL.AddToMenu = false
 -- This tool is the most important aspect of Garry's Mod
 --
 
+TOOL.Name = "#tool.leafblower.name"
+TOOL.Information = { { name = "left" } }
 TOOL.LeftClickAutomatic = true
 
 function TOOL:LeftClick( trace )
 
 	if ( CLIENT ) then return end
 
-	util.PrecacheSound( "ambient/wind/wind_hit2.wav" )
-	self:GetOwner():EmitSound( "ambient/wind/wind_hit2.wav" )
+	if ( ( self.NextWindSound or 0 ) <= CurTime() ) then
+
+		self:GetOwner():EmitSound( "ambient/wind/wind_hit2.wav", SNDLVL_75dB, math.random( 75, 125 ) )
+		self.NextWindSound = CurTime() + 0.5
+
+	end
 
 	if ( IsValid( trace.Entity ) and IsValid( trace.Entity:GetPhysicsObject() ) ) then
 
