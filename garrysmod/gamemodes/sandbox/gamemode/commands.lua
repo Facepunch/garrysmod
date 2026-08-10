@@ -1142,7 +1142,7 @@ function Spawn_Vehicle( ply, vname, tr )
 
 	if ( vehicle.Members ) then
 		table.Merge( Ent, vehicle.Members )
-		duplicator.StoreEntityModifier( Ent, "VehicleMemDupe", vehicle.Members )
+		duplicator.StoreEntityModifier( Ent, "VehicleMemDupe", {} )
 	end
 
 	undo.Create( "Vehicle" )
@@ -1160,7 +1160,13 @@ concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply
 
 local function VehicleMemDupe( ply, ent, Data )
 
-	table.Merge( ent, Data )
+	local vname = ent:IsVehicle() and ent:GetVehicleClass()
+	if ( !vname ) then return end
+
+	local vehicle = list.GetEntry( "Vehicles", vname )
+	if ( !vehicle or !vehicle.Members ) then return end
+	
+	table.Merge( ent, vehicle.Members )
 
 end
 duplicator.RegisterEntityModifier( "VehicleMemDupe", VehicleMemDupe )
