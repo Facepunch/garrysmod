@@ -420,11 +420,13 @@ local function OrderEquipment(ply, cmd, args)
                       net.Start("TTT_BoughtItem")
                       net.WriteBool(is_item)
                       if is_item then
+                         -- https://github.com/Facepunch/garrysmod-issues/issues/6556
+                         local exp = math.floor(math.log(id) / math.log(2))
+                         local max_exp = math.floor(math.log(EQUIP_MAX) / math.log(2))
+
                          -- since we only network one item here, convert the bitflag equipment id
                          -- into a power of two exponent before networking it
-
-                         local exponent = math.log(id) / math.log(2)
-                         net.WriteUInt(exponent, bitsRequired(math.log(EQUIP_MAX) / math.log(2)))
+                         net.WriteUInt(exp, bitsRequired(max_exp))
                       else
                          net.WriteString(id)
                       end
