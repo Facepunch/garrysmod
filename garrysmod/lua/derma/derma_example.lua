@@ -3,7 +3,7 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:SetTitle( "Derma Initiative Control Test" )
+	self:SetTitle( language.GetPhrase( "derma_controls.title" ) )
 	self.ContentPanel = vgui.Create( "DPropertySheet", self )
 	self.ContentPanel:Dock( FILL )
 
@@ -24,6 +24,29 @@ function PANEL:Init()
 	end
 
 	self:SetSize( 600, 450 )
+
+	self.SearchControl = vgui.Create( "DTextEntry", self )
+	self.SearchControl:Dock( TOP )
+	self.SearchControl:SetUpdateOnType( true )
+	self.SearchControl:SetPlaceholderText( language.GetPhrase( "derma_controls.search" ) )
+	self.SearchControl.OnValueChange = function( _, str )
+		if str == "" then
+			for k, v in ipairs( self.ContentPanel:GetItems() ) do
+				v.Tab:SetVisible( true )
+			end
+		else
+			for k, v in ipairs( self.ContentPanel:GetItems() ) do
+				if string.find( string.lower( v.Name ), string.lower( str ) ) then
+					v.Tab:SetVisible( true )
+				else
+					v.Tab:SetVisible( false )
+				end
+			end
+		end
+
+		-- Force panel refresh (for size)
+		self.ContentPanel.tabScroller:ScrollToChild( self.ContentPanel:GetActiveTab() )
+	end
 
 end
 
@@ -48,7 +71,8 @@ concommand.Add( "derma_controls" .. DermaControlsSuffix, function( player, comma
 
 	if ( IsValid( DermaExample ) ) then
 		DermaExample:Remove()
-	return end
+		return 
+	end
 
 	DermaExample = vgui.CreateFromTable( vguiExampleWindow )
 	DermaExample:SwitchTo( args )
