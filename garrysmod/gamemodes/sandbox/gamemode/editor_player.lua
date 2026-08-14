@@ -136,17 +136,17 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local function UpdateBodyGroups( pnl, val )
 			if ( pnl.type == "bgroup" ) then
 
-				mdl.Entity:SetBodygroup( pnl.typenum, math.Round( val ) )
+				mdl.Entity:SetBodygroup( pnl.typenum, math.floor( val ) )
 
 				local str = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
 				if ( #str < pnl.typenum + 1 ) then for i = 1, pnl.typenum + 1 do str[ i ] = str[ i ] or 0 end end
-				str[ pnl.typenum + 1 ] = math.Round( val )
+				str[ pnl.typenum + 1 ] = math.floor( val )
 				RunConsoleCommand( "cl_playerbodygroups", table.concat( str, " " ) )
 
 			elseif ( pnl.type == "skin" ) then
 
-				mdl.Entity:SetSkin( math.Round( val ) )
-				RunConsoleCommand( "cl_playerskin", math.Round( val ) )
+				mdl.Entity:SetSkin( math.floor( val ) )
+				RunConsoleCommand( "cl_playerskin", math.floor( val ) )
 
 			end
 		end
