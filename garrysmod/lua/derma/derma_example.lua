@@ -30,17 +30,12 @@ function PANEL:Init()
 	self.SearchControl:SetUpdateOnType( true )
 	self.SearchControl:SetPlaceholderText( language.GetPhrase( "derma_controls.search" ) )
 	self.SearchControl.OnValueChange = function( _, str )
-		if str == "" then
-			for k, v in ipairs( self.ContentPanel:GetItems() ) do
+		local strLower = string.lower( str )
+		for k, v in ipairs( self.ContentPanel:GetItems() ) do
+			if ( strLower == "" or string.find( string.lower( v.Name ), strLower ) ) then
 				v.Tab:SetVisible( true )
-			end
-		else
-			for k, v in ipairs( self.ContentPanel:GetItems() ) do
-				if string.find( string.lower( v.Name ), string.lower( str ) ) then
-					v.Tab:SetVisible( true )
-				else
-					v.Tab:SetVisible( false )
-				end
+			else
+				v.Tab:SetVisible( false )
 			end
 		end
 
