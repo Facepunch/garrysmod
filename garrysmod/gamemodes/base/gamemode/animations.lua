@@ -13,22 +13,22 @@ local CurTime = CurTime
 
 function GM:HandlePlayerJumping( ply, velocity, plyTable )
 
-	if ( !plyTable ) then plyTable = GetTable(ply) end
+	if ( !plyTable ) then plyTable = GetTable( ply ) end
 
-	if ( GetMoveType(ply) == MOVETYPE_NOCLIP ) then
+	if ( GetMoveType( ply ) == MOVETYPE_NOCLIP ) then
 		plyTable.m_bJumping = false
 		return
 	end
 
 	-- airwalk more like hl2mp, we airwalk until we have 0 velocity, then it's the jump animation
 	-- underwater we're alright we airwalking
-	if ( !plyTable.m_bJumping && !OnGround(ply) && WaterLevel(ply) <= 0 ) then
+	if ( !plyTable.m_bJumping && !OnGround( ply ) && WaterLevel( ply ) <= 0 ) then
 
 		if ( !plyTable.m_fGroundTime ) then
 
 			plyTable.m_fGroundTime = CurTime()
 
-		elseif ( ( CurTime() - plyTable.m_fGroundTime ) > 0 && Length2DSqr(velocity) < 0.25 ) then
+		elseif ( ( CurTime() - plyTable.m_fGroundTime ) > 0 && Length2DSqr( velocity ) < 0.25 ) then
 
 			plyTable.m_bJumping = true
 			plyTable.m_bFirstJumpFrame = false
@@ -46,7 +46,7 @@ function GM:HandlePlayerJumping( ply, velocity, plyTable )
 
 		end
 
-		if ( ( WaterLevel(ply) >= 2 ) || ( ( CurTime() - plyTable.m_flJumpStartTime ) > 0.2 && OnGround(ply) ) ) then
+		if ( ( WaterLevel( ply ) >= 2 ) || ( ( CurTime() - plyTable.m_flJumpStartTime ) > 0.2 && OnGround( ply ) ) ) then
 
 			plyTable.m_bJumping = false
 			plyTable.m_fGroundTime = nil
@@ -66,11 +66,11 @@ end
 
 function GM:HandlePlayerDucking( ply, velocity, plyTable )
 
-	if ( !plyTable ) then plyTable = GetTable(ply) end
+	if ( !plyTable ) then plyTable = GetTable( ply ) end
 
 	if ( !IsFlagSet( ply, FL_ANIMDUCKING ) ) then return false end
 
-	if ( Length2DSqr(velocity) > 0.25 ) then
+	if ( Length2DSqr( velocity ) > 0.25 ) then
 		plyTable.CalcIdeal = ACT_MP_CROUCHWALK
 	else
 		plyTable.CalcIdeal = ACT_MP_CROUCH_IDLE
@@ -82,9 +82,9 @@ end
 
 function GM:HandlePlayerNoClipping( ply, velocity, plyTable )
 
-	if ( !plyTable ) then plyTable = GetTable(ply) end
+	if ( !plyTable ) then plyTable = GetTable( ply ) end
 
-	if ( GetMoveType(ply) != MOVETYPE_NOCLIP || InVehicle(ply) ) then
+	if ( GetMoveType( ply ) != MOVETYPE_NOCLIP || InVehicle( ply ) ) then
 
 		if ( plyTable.m_bWasNoclipping ) then
 
@@ -111,7 +111,7 @@ end
 
 function GM:HandlePlayerVaulting( ply, velocity, plyTable )
 
-	if ( !plyTable ) then plyTable = GetTable(ply) end
+	if ( !plyTable ) then plyTable = GetTable( ply ) end
 
 	if ( LengthSqr( velocity ) < 1000000 ) then return end
 	if ( IsOnGround( ply ) ) then return end
@@ -124,9 +124,9 @@ end
 
 function GM:HandlePlayerSwimming( ply, velocity, plyTable )
 
-	if ( !plyTable ) then plyTable = GetTable(ply) end
+	if ( !plyTable ) then plyTable = GetTable( ply ) end
 
-	if ( WaterLevel(ply) < 2 || IsOnGround( ply ) ) then
+	if ( WaterLevel( ply ) < 2 || IsOnGround( ply ) ) then
 		plyTable.m_bInSwim = false
 		return false
 	end
@@ -140,7 +140,7 @@ end
 
 function GM:HandlePlayerLanding( ply, velocity, WasOnGround )
 
-	if ( GetMoveType(ply) == MOVETYPE_NOCLIP ) then return end
+	if ( GetMoveType( ply ) == MOVETYPE_NOCLIP ) then return end
 
 	if ( IsOnGround( ply ) && !WasOnGround ) then
 		ply:AnimRestartGesture( GESTURE_SLOT_JUMP, ACT_LAND, true )
@@ -163,7 +163,7 @@ end
 
 function GM:HandlePlayerDriving( ply, plyTable )
 
-	if ( !plyTable ) then plyTable = GetTable(ply) end
+	if ( !plyTable ) then plyTable = GetTable( ply ) end
 
 	-- The player must have a parent to be in a vehicle. If there's no parent, we are in the exit anim, so don't do sitting in 3rd person anymore
 	if ( !InVehicle( ply ) || !IsValid( ply:GetParent() ) ) then return false end
@@ -233,7 +233,7 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 	local rate = math.min( movement, 2 )
 
 	-- if we're under water we want to constantly be swimming..
-	if ( WaterLevel(ply) >= 2 ) then
+	if ( WaterLevel( ply ) >= 2 ) then
 		rate = math.max( rate, 0.5 )
 	elseif ( !IsOnGround( ply ) && lenSqr >= 1000000 ) then
 		rate = 0.1
@@ -284,7 +284,7 @@ end
 --
 function GM:GrabEarAnimation( ply, plyTable )
 
-	if ( !plyTable ) then plyTable = GetTable(ply) end
+	if ( !plyTable ) then plyTable = GetTable( ply ) end
 
 	plyTable.ChatGestureWeight = plyTable.ChatGestureWeight || 0
 
@@ -342,7 +342,7 @@ end
 
 function GM:CalcMainActivity( ply, velocity )
 
-	local plyTable = GetTable(ply)
+	local plyTable = GetTable( ply )
 	plyTable.CalcIdeal = ACT_MP_STAND_IDLE
 	plyTable.CalcSeqOverride = -1
 
@@ -355,13 +355,13 @@ function GM:CalcMainActivity( ply, velocity )
 		self:HandlePlayerSwimming( ply, velocity, plyTable ) ||
 		self:HandlePlayerDucking( ply, velocity, plyTable ) ) then
 
-		local len2d = Length2DSqr(velocity)
+		local len2d = Length2DSqr( velocity )
 		if ( len2d > 22500 ) then plyTable.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.25 ) then plyTable.CalcIdeal = ACT_MP_WALK end
 
 	end
 
 	plyTable.m_bWasOnGround = IsOnGround( ply )
-	plyTable.m_bWasNoclipping = ( GetMoveType(ply) == MOVETYPE_NOCLIP && !InVehicle( ply ) )
+	plyTable.m_bWasNoclipping = ( GetMoveType( ply ) == MOVETYPE_NOCLIP && !InVehicle( ply ) )
 
 	return plyTable.CalcIdeal, plyTable.CalcSeqOverride
 
