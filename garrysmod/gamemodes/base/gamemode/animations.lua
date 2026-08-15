@@ -326,7 +326,8 @@ function GM:MouthMoveAnimation( ply )
 	-- If the model has no flex, there is no point in executing the rest.
 	if ( #ply.m_MouthFlex == 0 ) then return end
 
-	local weight = ply:IsSpeaking() && math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) || 0
+	-- Experimental: Multiplying by 4 seems preferable to multiplying by 2, so that the mouth opens properly and a real difference is visible while remaining realistic.
+	local weight = ply:IsSpeaking() && math.Clamp( ply:VoiceVolume() * 4, 0, 2 ) || 0
 
 	if ( !ply.m_FlexWeight || ply.m_FlexWeight != weight ) then
 		ply.m_FlexWeight = weight
