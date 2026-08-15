@@ -149,8 +149,8 @@ function GM:HandlePlayerLanding( ply, velocity, WasOnGround )
 end
 
 local function cacheLookupSequence( ply, plyTable, seq )
-	if ( !plyTable.m_SeqCache || ( plyTable.m_ModelSeq && plyTable.m_ModelSeq != GetModel( ply ) ) ) then 
-		plyTable.m_SeqCache = {} 
+	if ( !plyTable.m_SeqCache || ( plyTable.m_ModelSeq && plyTable.m_ModelSeq != GetModel( ply ) ) ) then
+		plyTable.m_SeqCache = {}
 		plyTable.m_ModelSeq = GetModel( ply )
 	end
 
@@ -255,7 +255,7 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 		-- Pass the vehicles steer param down to the player
 		-- No steering in seats (when overridden to use jeep animations)
 		-- So that it doesn't stick to random value it had before
-		local steer = class == "prop_vehicle_prisoner_pod" && 0 
+		local steer = class == "prop_vehicle_prisoner_pod" && 0
 					|| Vehicle:GetPoseParameter( "vehicle_steer" )
 
 		if ( class == "prop_vehicle_prisoner_pod" ) then
@@ -311,7 +311,7 @@ end
 --
 function GM:MouthMoveAnimation( ply )
 
-	if ( !ply.m_MouthFlex or ply.m_MouthModelCache != GetModel( ply ) ) then
+	if ( !ply.m_MouthFlex || ply.m_MouthModelCache != GetModel( ply ) ) then
 		ply.m_MouthFlex = {
 			ply:GetFlexIDByName( "jaw_drop" ),
 			ply:GetFlexIDByName( "left_part" ),
@@ -328,8 +328,8 @@ function GM:MouthMoveAnimation( ply )
 
 	local weight = ply:IsSpeaking() && math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) || 0
 
-	if ( !ply.m_FlexWeight or ply.m_FlexWeight != weight ) then
-		ply.m_FlexWeight = weight 
+	if ( !ply.m_FlexWeight || ply.m_FlexWeight != weight ) then
+		ply.m_FlexWeight = weight
 		for k, v in ipairs( ply.m_MouthFlex ) do
 
 			ply:SetFlexWeight( v, weight )
