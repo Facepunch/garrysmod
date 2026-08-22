@@ -1,89 +1,53 @@
-<html>
-<head>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Saves</title>
 
-	<title>Creations</title>
+		<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="css/creations/Creations.css"
+		/>
+	</head>
 
-	<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
-	<link rel="stylesheet" type="text/css" href="css/creations/Creations.css" />
+	<body>
+		<div id="app"></div>
 
-	<script type="text/javascript" src="js/lua.js"></script>
+		<script type="text/javascript" src="js/lib/vue.global.prod.js"></script>
 
-	<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
-	<script type="text/javascript" src="js/thirdparty/angular.js"></script>
-	<script type="text/javascript" src="js/thirdparty/angular-route.js"></script>
+		<script type="text/javascript" src="js/core/env.js"></script>
+		<script type="text/javascript" src="js/core/lua.js"></script>
+		<script type="text/javascript" src="js/core/i18n.js"></script>
+		<script type="text/javascript" src="js/core/utils.js"></script>
 
-	<script type="text/javascript" src="js/menu/WorkshopFiles.js"></script>
-	<script type="text/javascript" src="js/ngLocalize.js"></script>
+		<script
+			type="text/javascript"
+			src="js/state/subscriptions-store.js"
+		></script>
+		<script
+			type="text/javascript"
+			src="js/state/workshop-store.js"
+		></script>
+		<script type="text/javascript" src="js/state/menu-store.js"></script>
+		<script type="text/javascript" src="js/state/news-store.js"></script>
+		<script type="text/javascript" src="js/state/newgame-store.js"></script>
+		<script type="text/javascript" src="js/state/servers-store.js"></script>
+		<script type="text/javascript" src="js/state/addons-store.js"></script>
+		<script type="text/javascript" src="js/state/stores.js"></script>
 
-	<script type="text/javascript" src="js/creations/saves.js"></script>
-	<script type="text/javascript" src="js/menu/common.js"></script>
-	<script type="text/javascript" src="js/menu/control.Saves.js"></script>
+		<script type="text/javascript" src="js/core/api.js"></script>
 
-	<script type="text/javascript" src="js/menu/TestWorkshop.js"></script>
+		<script type="text/javascript" src="js/ui/components.js"></script>
+		<script
+			type="text/javascript"
+			src="js/pages/page-creations.js"
+		></script>
 
-</head>
-
-<body ng-app="CSavesApp" ng-controller="CSaves" onresize="WindowResized()">
-
-	<div class="options">
-
-		<!-- SAVES -->
-
-		<ul>
-
-			<li class="headline" ng-Localize="'saves'"></li>
-			<li class="subtitle"></li>
-
-			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-href='#/list/{{cat}}/' ng-Localize="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
-
-				<ul ng-show="cat == Category && cat != 'local'" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
-						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Localize="'saves.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
-					</li>
-				</ul>
-			</li>
-
-			<li>&nbsp;</li>
-
-			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-href='#/list/{{cat}}/' ng-Localize="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
-
-				<ul ng-show="cat == Category" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
-						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Localize="'saves.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
-					</li>
-				</ul>
-			</li>
-
-			<li>&nbsp;</li>
-
-			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-href='#/list/{{cat}}/' ng-Localize="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
-
-				<ul ng-show="cat == Category" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
-						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Localize="'saves.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
-					</li>
-				</ul>
-			</li>
-
-			<li>&nbsp;</li>
-
-			<li><button ng-click="SaveSave();" ng-Localize="'save.savegame'" class="savegamebutton {{SaveDisabled}}">..</button></li>
-
-		</ul>
-
-		<!--
-		<input type="button" value="Reload Page" onClick="document.location.reload(true)">
-		-->
-
-	</div>
-
-	<div ng-view>
-
-	</div>
-
-</body>
+		<script type="text/javascript">
+			window.addEventListener("DOMContentLoaded", function () {
+				startCreationsApp("saves");
+			});
+		</script>
+	</body>
 </html>
-
