@@ -238,6 +238,7 @@
 }
 
 .popup.language-list li {
+	margin-right: 3px;
 	display: inline-block;
 	width: 26px;
 	height: 24px;

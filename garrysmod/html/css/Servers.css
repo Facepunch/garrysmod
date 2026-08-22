@@ -191,6 +191,7 @@
 .server-list name .flag {
 	position: relative;
 	top: -2px;
+	margin-right: 4px;
 }
 
 .server-list name .passworded {
@@ -345,10 +346,22 @@
 	padding: 4px;
 }
 
+.serverinfo footer input[type="checkbox"] {
+	margin-right: 4px;
+}
+
+.serverinfo footer label {
+	margin-left: 2px;
+}
+
+.serverinfo footer button {
+	margin-top: 5px;
+}
+
 .serverinfo .close-btn {
 	position: absolute;
-	right: 1px;
-	top: 1px;
+	right: 5px;
+	top: 5px;
 	width: 21px;
 	height: 21px;
 	background: #1a8cff url("../img/cross.png") no-repeat center;
@@ -519,6 +532,44 @@ span.install-gamemode:hover {
 div.page .options ul li.filters {
 	font-size: 16px;
 	margin-right: 42px;
+}
+
+div.page .options ul li.filters input[type="checkbox"],
+div.page .options ul li.filters input[type="radio"] {
+	margin-right: 4px;
+}
+
+div.page .options ul li.filters label {
+	margin-left: 2px;
+}
+
+div.page .options ul li.filters .filter-title {
+	display: block;
+	margin-top: 14px;
+	margin-bottom: 8px;
+}
+
+div.page .options ul li.filters .filter-title:first-child {
+	margin-top: 0;
+}
+
+div.page .options ul li.filters .filter-row {
+	margin-bottom: 10px;
+}
+
+div.page .options ul li.filters .filter-sep {
+	margin: 0 6px;
+}
+
+div.page .options ul li.filters .filter-hides {
+	margin-top: 20px;
+	padding-top: 12px;
+	padding-left: 16px;
+	border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+div.page .options ul li.filters .filter-hides .filter-row {
+	margin-bottom: 7px;
 }
 
 div.page .options ul li.filters-separator {

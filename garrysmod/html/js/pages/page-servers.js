@@ -140,16 +140,24 @@ const ServersPage = {
 			</li>
 
 			<li class="filters" v-if="ServersStore.currentGamemode != null">
-				<label for="SVFilterPlyMin">{{ t('svfltr_ply_limit') }}</label><br/>
-				<input id="SVFilterPlyMin" v-model.number="ServersStore.filters.plyMin" type="number" class="input-small" placeholder="0" min="0" max="128" step="8"/>
-				&nbsp;-&nbsp;
-				<input v-model.number="ServersStore.filters.plyMax" type="number" class="input-small" placeholder="128" min="0" max="128" step="8"/><br/>
-				<label for="SVFilterMaxPing">{{ t('svfltr_ping_limit') }}</label><br/>
-				<input id="SVFilterMaxPing" v-model.number="ServersStore.filters.maxPing" type="number" class="input-small" placeholder="2000" min="0" max="2500" step="20"/><br/>
-				<input type="checkbox" id="sv_notfull" v-model="ServersStore.filters.notFull"/><label for="sv_notfull">{{ t('svfltr_not_full') }}</label><br/>
-				<input type="checkbox" id="sv_notempty" v-model="ServersStore.filters.hasPlayers"/><label for="sv_notempty">{{ t('svfltr_has_players') }}</label><br/>
-				<input type="checkbox" id="sv_nopass" v-model="ServersStore.filters.hidePassword"/><label for="sv_nopass"><span>{{ t('svfltr_no_password') }}</span> <img class="passworded" src='img/server-passworded.png'/></label><br/>
-				<input type="checkbox" id="sv_outdated" v-model="ServersStore.filters.hideOutdated"/><label for="sv_outdated">{{ t('svfltr_outdated') }}</label>
+				<label class="filter-title" for="SVFilterPlyMin">{{ t('svfltr_ply_limit') }}</label>
+				<div class="filter-row">
+					<input id="SVFilterPlyMin" v-model.number="ServersStore.filters.plyMin" type="number" class="input-small" placeholder="0" min="0" max="128" step="8"/>
+					<span class="filter-sep">-</span>
+					<input v-model.number="ServersStore.filters.plyMax" type="number" class="input-small" placeholder="128" min="0" max="128" step="8"/>
+				</div>
+
+				<label class="filter-title" for="SVFilterMaxPing">{{ t('svfltr_ping_limit') }}</label>
+				<div class="filter-row">
+					<input id="SVFilterMaxPing" v-model.number="ServersStore.filters.maxPing" type="number" class="input-small" placeholder="2000" min="0" max="2500" step="20"/>
+				</div>
+
+				<div class="filter-hides">
+					<div class="filter-row"><input type="checkbox" id="sv_notfull" v-model="ServersStore.filters.notFull"/><label for="sv_notfull">{{ t('svfltr_not_full') }}</label></div>
+					<div class="filter-row"><input type="checkbox" id="sv_notempty" v-model="ServersStore.filters.hasPlayers"/><label for="sv_notempty">{{ t('svfltr_has_players') }}</label></div>
+					<div class="filter-row"><input type="checkbox" id="sv_nopass" v-model="ServersStore.filters.hidePassword"/><label for="sv_nopass"><span>{{ t('svfltr_no_password') }}</span> <img class="passworded" src='img/server-passworded.png'/></label></div>
+					<div class="filter-row"><input type="checkbox" id="sv_outdated" v-model="ServersStore.filters.hideOutdated"/><label for="sv_outdated">{{ t('svfltr_outdated') }}</label></div>
+				</div>
 
 				<div class="flags-filter" v-if="ServersStore.currentGamemode.hasflags">
 					<img v-for="(flag, index) in Object.keys(ServersStore.currentGamemode.flags)" :key="flag"

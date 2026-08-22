@@ -404,6 +404,10 @@ pagination .pages {
 	overflow: hidden;
 }
 
+pagination .pages span {
+	margin-right: 3px;
+}
+
 pagination span.page-num {
 	font-size: 14px;
 }

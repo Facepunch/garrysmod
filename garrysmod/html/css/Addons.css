@@ -216,12 +216,17 @@ controls control {
 	position: relative;
 	display: inline-block;
 	height: 15px;
+	margin-right: 4px;
 	padding: 2px 4px;
 	background-color: #f5ff80;
 	border-radius: 2px;
 	font-size: 11px;
 	cursor: pointer;
 	-webkit-box-shadow: 1px 1px 2px black;
+}
+
+controls control:last-child {
+	margin-right: 0;
 }
 
 controls control img {
@@ -352,6 +357,7 @@ workshopicon.invalid.disabled size {
 	display: inline-block;
 	vertical-align: top;
 	margin: 0 auto;
+	margin-right: 6px;
 	padding: 0 1%;
 }
 
