@@ -1,7 +1,7 @@
 .maplist {
 	position: absolute;
 	left: 16px;
-	right: 256px;
+	right: 330px;
 	top: 16px;
 	bottom: 16px;
 	padding: 10px;
@@ -158,7 +158,7 @@ gamesettings {
 	right: 16px;
 	top: 16px;
 	bottom: 16px;
-	width: 226px;
+	width: 300px;
 	background-color: white;
 	border-radius: 5px;
 }
