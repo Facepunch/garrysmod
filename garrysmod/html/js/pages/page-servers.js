@@ -171,11 +171,7 @@ const ServersPage = {
 			<div class="gamemodes-scroll scrollable">
 				<div v-for="gm in gamemodeList" :key="gm.name" class='gamemode' :class="gm.element_class" @click="ServerActions.selectGamemode( gm )">
 					<img :src="'../gamemodes/' + gm.name + '/icon24.png'" @error="gmIconError"/>
-					<div class='stats'>{{ gm.num_players }}
-						<span>{{ gm.num_players === 1 ? t('servers_player_on') : t('servers_players_on') }}</span>
-						{{ gm.num_servers }}
-						<span>{{ gm.num_servers === 1 ? t('servers_server') : t('servers_servers') }}</span>
-					</div>
+					<div class='stats'>{{ gm.num_players }} <span>{{ gm.num_players === 1 ? t('servers_player_on') : t('servers_players_on') }}</span> {{ gm.num_servers }} <span>{{ gm.num_servers === 1 ? t('servers_server') : t('servers_servers') }}</span></div>
 					<div class='name'>
 						{{ ServerActions.gamemodeName( gm ) }}<tag v-if="gm.info && gm.info.tag">{{ t('gmfltr_hide_' + gm.info.tag) }}</tag>
 					</div>

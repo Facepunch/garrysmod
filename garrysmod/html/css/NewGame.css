@@ -99,6 +99,10 @@
 	font-size: 14px;
 }
 
+.category li:first-child .count-note {
+	margin-left: 8px;
+}
+
 .category li.icon {
 	display: inline-block;
 }

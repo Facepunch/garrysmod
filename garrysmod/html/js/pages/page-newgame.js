@@ -96,10 +96,8 @@ const NewGamePage = {
 		<div class="scrollable" style="margin: 0px; top: 0px; left: 200px">
 			<ul class="category" v-for="cat in categories" :key="'list-' + cat.category" v-show="cat.category === NewGameStore.currentCategory">
 				<li>
-					<span v-if="cat.category !== 'Favourites' && cat.category !== 'Other'">{{ cat.category }}</span>
-					<span v-if="cat.category === 'Favourites'">{{ t('newgame_favorite_maps') }}</span>
-					<span v-if="cat.category === 'Other'">{{ t('spawnmenu.category.other') }}</span>
-					<small>{{ NewGameActions.countFiltered( cat.maps ) }} </small><small>{{ NewGameActions.countFiltered( cat.maps ) === 1 ? t('newgame_map') : t('newgame_maps') }}</small>
+					<span v-if="cat.category !== 'Favourites' && cat.category !== 'Other'">{{ cat.category }}</span><span v-if="cat.category === 'Favourites'">{{ t('newgame_favorite_maps') }}</span><span v-if="cat.category === 'Other'">{{ t('spawnmenu.category.other') }}</span>
+					<small class="count-note">{{ NewGameActions.countFiltered( cat.maps ) }} {{ NewGameActions.countFiltered( cat.maps ) === 1 ? t('newgame_map') : t('newgame_maps') }}</small>
 				</li>
 
 				<li v-for="map in mapsInCategory( cat )" :key="cat.category + '-' + map"
