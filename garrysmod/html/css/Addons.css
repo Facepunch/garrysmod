@@ -298,7 +298,7 @@ workshopicon.invalid.disabled size {
 	padding: 6px;
 	background: #2387ed;
 	border-radius: 4px;
-	cursor: default;
+	cursor: pointer;
 }
 
 .settings-toggle:hover {
@@ -342,7 +342,7 @@ workshopicon.invalid.disabled size {
 	color: #000;
 	font-weight: bold;
 	text-align: center;
-	cursor: default;
+	cursor: pointer;
 }
 
 .settings-panel a:hover {
