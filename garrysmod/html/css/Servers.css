@@ -428,6 +428,9 @@ span.install-gamemode:hover {
 	right: 0;
 	top: 64px;
 	bottom: 0;
+	margin: 0 auto;
+	width: 85%;
+	max-width: 1000px;
 	border: 5px solid white;
 }
 
@@ -664,14 +667,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
 	.server-list .header name {
 		padding: 0;
-	}
-
-	.gamemodes-panel {
-		background-color: white;
-		border-radius: 4px;
-		margin: 0 auto;
-		width: 80%;
-		max-width: 1000px;
 	}
 }
 
