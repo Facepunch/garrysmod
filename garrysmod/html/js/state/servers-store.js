@@ -306,7 +306,7 @@ const ServerActions = {
 		if (!current) return;
 
 		let offset = Math.max(
-			Math.floor(elem.scrollTop / 22) - ServersStore.serversPerPage / 4,
+			Math.floor(elem.scrollTop / 26) - ServersStore.serversPerPage / 4,
 			0,
 		);
 		offset -= offset % 2;

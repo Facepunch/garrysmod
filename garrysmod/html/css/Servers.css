@@ -104,11 +104,11 @@
 
 .server-list .server {
 	display: -webkit-box;
-	height: 16px;
-	padding: 3px 4px;
+	height: 18px;
+	padding: 4px;
 	background-color: #e7f0ff;
 	color: #444;
-	line-height: 16px;
+	line-height: 18px;
 	-webkit-box-pack: justify;
 	-webkit-box-align: stretch;
 	cursor: pointer;
@@ -159,7 +159,7 @@
 .server-list name {
 	margin-right: 3px;
 	font-size: 13px;
-	line-height: 17px;
+	line-height: 18px;
 	white-space: nowrap;
 	text-align: left;
 	width: auto;
@@ -191,7 +191,7 @@
 .server-list name .flag {
 	position: relative;
 	top: -2px;
-	margin-right: 4px;
+	margin-right: 7px;
 }
 
 .server-list name .passworded {
@@ -204,7 +204,9 @@
 }
 
 .server-list players {
-	width: 48px;
+	margin: 0;
+	width: 60px;
+	text-align: center;
 }
 
 .server-list ping {
@@ -627,7 +629,7 @@ name .favbutton {
 	display: inline-block;
 	width: 16px;
 	height: 16px;
-	margin-right: 4px;
+	margin-right: 7px;
 	background: url("../img/notfavourite.png");
 }
 
@@ -761,11 +763,13 @@ input[type="number"]::-webkit-inner-spin-button {
 		width: 56px;
 	}
 
-	.server-list players {
-		width: 46px;
+	.server-list players,
+	.server-list .header players {
+		width: 56px;
 	}
 
-	.server-list ping {
+	.server-list ping,
+	.server-list .header ping {
 		width: 18px;
 	}
 

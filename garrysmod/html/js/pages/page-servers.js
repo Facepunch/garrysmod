@@ -57,7 +57,7 @@ const ServersPage = {
 						ServersStore.serversPerPage -
 						current.server_offset,
 					0,
-				) * 22
+				) * 26
 			);
 		},
 	},
@@ -243,7 +243,7 @@ const ServersPage = {
 				</div>
 
 				<div class='body scrollable' @scroll="onScroll">
-					<div :style="{ height: (ServersStore.currentGamemode.server_offset * 22) + 'px' }"></div>
+					<div :style="{ height: (ServersStore.currentGamemode.server_offset * 26) + 'px' }"></div>
 
 					<div v-for="server in sortedServers" :key="server.address"
 						class="server" :class="serverClass( server )"
