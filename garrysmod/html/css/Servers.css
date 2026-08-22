@@ -369,7 +369,7 @@
 	opacity: 0.4;
 }
 
-.install-gamemode {
+div.install-gamemode {
 	z-index: 100;
 	position: absolute;
 	top: 10px;
@@ -388,7 +388,7 @@
 	cursor: pointer;
 }
 
-.install-gamemode:hover {
+div.install-gamemode:hover {
 	background-color: #4f9ded;
 }
 
