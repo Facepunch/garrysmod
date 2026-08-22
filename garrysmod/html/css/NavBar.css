@@ -220,13 +220,13 @@
 .popup.gamemode-list li {
 	display: block;
 	margin: 0 0 2px 0;
-	background-color: #eee;
+	background-color: #fff;
 	border-radius: 0;
 	cursor: pointer;
 }
 
 .popup.gamemode-list li:hover {
-	background-color: #fff;
+	background-color: #e7f0ff;
 }
 
 .popup.gamemode-list li:first-child {
