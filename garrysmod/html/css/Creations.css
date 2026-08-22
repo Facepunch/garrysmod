@@ -91,13 +91,17 @@ div.page {
 	pointer-events: none;
 }
 
-.workshopcontainer {
+workshopcontainer {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
 	background-color: transparent;
 	border-radius: 0;
 	padding: 0;
 }
 
-.workshopmessage {
+workshopmessage {
 	color: #fff;
 	text-shadow: 2px 2px black;
 }
