@@ -23,6 +23,11 @@ INPUT[type="number"] {
 	outline-color: #08f;
 }
 
+INPUT[type="checkbox"],
+INPUT[type="radio"] {
+	cursor: pointer;
+}
+
 INPUT.searchbox,
 INPUT.gamemode-search {
 	height: 24px;
