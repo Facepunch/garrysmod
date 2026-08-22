@@ -134,71 +134,81 @@
 	z-index: 1000;
 }
 
-.popup hr {
-	margin-right: 2px;
-}
-
-.popup.games-list li {
-	cursor: default;
-}
-
-.popup.games-list {
+.popup.games-popup {
 	right: 150px;
-	width: 260px;
-	max-height: 300px;
+	width: 240px;
 	padding: 0;
-	overflow: auto;
+	background-color: #eee;
 	border: 3px solid #333;
 }
 
-.popup.games-list li {
-	position: relative;
-	display: block;
-	height: 20px;
+.games-legend {
+	display: -webkit-box;
+	-webkit-box-pack: center;
+	padding: 8px 8px 2px;
+	color: #555;
+	font-size: 11px;
+}
+
+.games-legend span {
+	display: -webkit-box;
+	margin: 0 6px;
+	white-space: nowrap;
+}
+
+.games-legend img {
+	margin-right: 4px;
+	vertical-align: middle;
+}
+
+.games-items {
+	list-style: none;
+	max-height: 320px;
 	margin: 0;
-	margin-right: 2px;
+	padding: 2px 4px 4px;
+	overflow: auto;
+}
+
+.popup .games-items li {
+	display: block;
+	height: 24px;
+	line-height: 24px;
 	margin-bottom: 2px;
-	padding: 0;
-	border-radius: 2px;
-	line-height: inherit;
+	padding: 0 4px;
+	background-color: transparent;
+	border-radius: 3px;
+	color: #333;
+	text-align: left;
 	white-space: nowrap;
 	overflow: hidden;
 	cursor: pointer;
 }
 
-.popup.games-list li:last-child {
-	margin-bottom: 0;
+.popup .games-items li:hover {
+	background-color: #fff;
 }
 
-.popup.games-list li span {
-	position: absolute;
-	left: 25px;
-	right: 22px;
-	top: 3px;
-}
-
-.popup.games-list li img {
-	position: absolute;
-	left: 2px;
-	top: 2px;
-}
-
-.popup.games-list > .notowned,
-.popup.games-list > .notinstalled,
-.popup.games-list > hr {
-	-webkit-box-ordinal-group: 1;
-	order: 1;
-}
-
-.popup.games-list li.game-item {
-	-webkit-box-ordinal-group: 2;
-	order: 2;
-}
-
-.popup.games-list li.game-item.notowned,
-.popup.games-list li.game-item.notinstalled {
-	opacity: 0.7;
+.popup .games-items li.notowned,
+.popup .games-items li.notinstalled {
+	opacity: 0.55;
 	cursor: default;
+}
+
+.popup .games-items input[type="checkbox"] {
+	margin: 0 4px 0 0;
+	vertical-align: middle;
+}
+
+.popup .games-items img {
+	vertical-align: middle;
+}
+
+.popup .games-items .state-icon {
+	margin-right: 3px;
+}
+
+.popup .games-items .game-title {
+	padding-left: 4px;
 }
 
 .popup.gamemode-list {

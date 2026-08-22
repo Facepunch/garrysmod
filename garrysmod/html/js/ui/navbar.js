@@ -54,19 +54,22 @@ const NavBar = {
 	</li>
 </ul>
 
-<ul class="games-list popup" v-show="MenuStore.popup === 'games'">
-	<li class="notowned"><img src='img/notowned.png' width="16" height="16" loading="lazy"> <span>{{ t('game_not_owned') }}</span></li>
-	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16" loading="lazy"> <span>{{ t('game_not_installed') }}</span></li>
-	<hr/>
-	<li v-for="game in sortedGames" :key="game.folder || game.title"
-		class="game-item" :class="{ notowned: !game.owned, notinstalled: !game.installed }">
-		<input type="checkbox" v-model="game.mounted" v-if="game.installed" @change="MenuActions.gameMountChanged( game )"/>
-		<img src='img/notowned.png' v-if="!game.owned" width="16" height="16" loading="lazy">
-		<img src='img/notinstalled.png' v-if="game.owned && !game.installed" width="16" height="16" loading="lazy">
-		<img :src="'../materials/games/16/' + game.folder + '.png'" style="margin-left: 20px;" loading="lazy">
-		<span style="margin-left: 16px;">{{ game.title }}</span>
-	</li>
-</ul>
+<div class="popup games-popup" v-show="MenuStore.popup === 'games'">
+	<div class="games-legend">
+		<span><img src='img/notowned.png' width="16" height="16"> {{ t('game_not_owned') }}</span>
+		<span><img src='img/notinstalled.png' width="16" height="16"> {{ t('game_not_installed') }}</span>
+	</div>
+	<ul class="games-items">
+		<li v-for="game in sortedGames" :key="game.folder || game.title"
+			class="game-item" :class="{ notowned: !game.owned, notinstalled: !game.installed }">
+			<input type="checkbox" v-model="game.mounted" v-if="game.installed" @change="MenuActions.gameMountChanged( game )"/>
+			<img v-if="!game.owned" class="state-icon" src='img/notowned.png' width="16" height="16">
+			<img v-if="game.owned && !game.installed" class="state-icon" src='img/notinstalled.png' width="16" height="16">
+			<img class="game-icon" :src="'../materials/games/16/' + game.folder + '.png'" width="16" height="16">
+			<span class="game-title">{{ game.title }}</span>
+		</li>
+	</ul>
+</div>
 
 <ul class="kinect-settings popup" v-show="MenuStore.popup === 'kinect'">
 	<li>
