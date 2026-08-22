@@ -86,9 +86,15 @@ div.page .options ul {
 	padding: 2px 0;
 }
 
-div.page .options ul li {
-	margin-bottom: 1px;
+div.page .options > ul > li {
+	margin-bottom: 8px;
 	padding: 0 16px;
+}
+
+div.page .options > ul > li.spacer {
+	margin-bottom: 4px;
+	font-size: 10px;
+	line-height: 12px;
 }
 
 div.page .options,

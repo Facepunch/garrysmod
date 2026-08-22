@@ -8,19 +8,19 @@ const MainPage = {
 	<div class="options">
 		<ul>
 			<li><img :src="'../gamemodes/' + MenuStore.gamemode + '/logo.png'" /></li>
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 			<li v-if="MenuStore.inGame"><a @click="MenuActions.backToGame()">{{ t('resume_game') }}</a></li>
 			<li v-if="MenuStore.inGame">&nbsp;</li>
 			<li><a href="#/newgame/">{{ t('new_game') }}</a></li>
 			<li><a href="#/servers/">{{ t('find_mp_game') }}</a></li>
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 			<li><a href="#/addons/">{{ t('addons') }}</a></li>
 			<li><a href="#/dupes/">{{ t('dupes') }}</a></li>
 			<li><a href="#/saves/">{{ t('saves') }}</a></li>
 			<li><a href="#/demos/">{{ t('demos') }}</a></li>
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 			<li><a @click="MenuActions.menuOption( 'OpenOptionsDialog' )">{{ t('options') }}</a></li>
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 			<li v-if="MenuStore.inGame"><a @click="MenuActions.menuOption( 'Disconnect' )">{{ t('disconnect') }}</a></li>
 			<li><a @click="MenuActions.menuOption( 'Quit' )">{{ t('quit') }}</a></li>
 		</ul>

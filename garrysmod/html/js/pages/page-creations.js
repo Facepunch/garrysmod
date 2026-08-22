@@ -115,7 +115,7 @@ function startCreationsApp(kind) {
 			</ul>
 		</li>
 
-		<li>&nbsp;</li>
+		<li class="spacer">&nbsp;</li>
 
 		<li v-for="cat in categories" :key="cat">
 			<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
@@ -126,7 +126,7 @@ function startCreationsApp(kind) {
 			</ul>
 		</li>
 
-		<li>&nbsp;</li>
+		<li class="spacer">&nbsp;</li>
 
 		<li v-for="cat in categoriesSecondary" :key="'s' + cat">
 			<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
@@ -137,7 +137,7 @@ function startCreationsApp(kind) {
 			</ul>
 		</li>
 
-		<li>&nbsp;</li>
+		<li class="spacer">&nbsp;</li>
 
 		<li><button @click="saveAction()" :disabled="saveDisabled"
 			:class="[isSavesFlag ? 'savegamebutton' : 'savedupebutton', saveDisabled ? 'disabled' : '']">..

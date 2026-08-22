@@ -112,17 +112,17 @@ const ServersPage = {
 			<li><h2>{{ t('server_list') }}</h2></li>
 			<li class="small" style="margin-top: -1.5em;">{{ ServersStore.serverCount[ServersStore.type] || 0 }} {{ t('servers_servercount') }}</li>
 			<li class="small">{{ typeData ? typeData.list.length : 0 }} {{ t('servers_gmcount') }}</li>
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 			<li><a :class="{ active: ServersStore.type === 'internet' }" @click="ServerActions.switchType( 'internet' )">{{ t('servers_internet') }}</a></li>
 			<li><a :class="{ active: ServersStore.type === 'favorite' }" @click="ServerActions.switchType( 'favorite' )">{{ t('servers_favorites') }}</a></li>
 			<li><a :class="{ active: ServersStore.type === 'history' }" @click="ServerActions.switchType( 'history' )">{{ t('servers_history') }}</a></li>
 			<li><a :class="{ active: ServersStore.type === 'lan' }" @click="ServerActions.switchType( 'lan' )">{{ t('servers_local') }}</a></li>
-			<li v-if="(ServersStore.currentGamemode == null && !ServersStore.refreshing[ServersStore.type]) || ServersStore.refreshing[ServersStore.type]">&nbsp;</li>
+			<li v-if="(ServersStore.currentGamemode == null && !ServersStore.refreshing[ServersStore.type]) || ServersStore.refreshing[ServersStore.type]" class="spacer">&nbsp;</li>
 			<li v-if="ServersStore.currentGamemode == null && !ServersStore.refreshing[ServersStore.type]"><a @click="ServerActions.refresh()">{{ t('servers_refresh') }}</a></li>
 			<li v-if="ServersStore.refreshing[ServersStore.type]"><a @click="ServerActions.stopRefresh()">{{ t('servers_stoprefresh') }}</a></li>
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 			<li><a @click="MenuActions.menuOption( 'OpenServerBrowser' )">{{ t('legacy_browser') }}</a></li>
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 			<li class="filters-separator"></li>
 
 			<li class="filters" v-if="ServersStore.currentGamemode == null">

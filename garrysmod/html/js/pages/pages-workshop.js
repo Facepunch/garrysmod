@@ -27,36 +27,36 @@ function createWorkshopPage(config) {
 
 			<li v-for="cat in myCategories" :key="'m' + cat">
 				<a @click="store.switch( cat, 0 )" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
-				<ul v-if="store.category === cat && cat !== 'local' && subCategories.length > 0" style="margin-top: 4px; margin-bottom: 15px;">
+				<ul v-if="store.category === cat && cat !== 'local' && subCategories.length > 0" class="submenu" style="margin-top: 4px; margin-bottom: 15px;">
 					<li v-for="tag in subCategories" :key="cat + tag">
 						<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
 					</li>
 				</ul>
 			</li>
 
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 
 			<li v-for="cat in categories" :key="cat">
 				<a @click="store.switch( cat, 0 )" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
-				<ul v-if="store.category === cat && subCategories.length > 0" style="margin-top: 4px; margin-bottom: 15px;">
+				<ul v-if="store.category === cat && subCategories.length > 0" class="submenu" style="margin-top: 4px; margin-bottom: 15px;">
 					<li v-for="tag in subCategories" :key="cat + tag">
 						<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
 					</li>
 				</ul>
 			</li>
 
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 
 			<li v-for="cat in categoriesSecondary" :key="'s' + cat">
 				<a @click="store.switch( cat, 0 )" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
-				<ul v-if="store.category === cat && subCategories.length > 0" style="margin-top: 4px; margin-bottom: 15px;">
+				<ul v-if="store.category === cat && subCategories.length > 0" class="submenu" style="margin-top: 4px; margin-bottom: 15px;">
 					<li v-for="tag in subCategories" :key="cat + tag">
 						<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
 					</li>
 				</ul>
 			</li>
 
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 
 			<li><a @click="MenuActions.openFolder( mode )">{{ t(titleKey + '.openfolder') }}</a></li>
 		</ul>

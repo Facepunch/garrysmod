@@ -110,29 +110,29 @@ const AddonsPage = {
 				</ul>
 			</li>
 
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 
 			<li v-for="cat in categories" :key="cat">
 				<a @click="store.switchWithTag( cat, 0, 'Addon' )" :class="{ active: store.category === cat }">{{ t('addons.' + cat) }}</a>
-				<ul v-if="store.category === cat">
+				<ul v-if="store.category === cat" class="submenu">
 					<li v-for="tag in addonTypes" :key="cat + tag">
 						<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t('addons.' + tag) }}</a>
 					</li>
 				</ul>
 			</li>
 
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 
 			<li v-for="cat in categoriesSecondary" :key="'s-' + cat">
 				<a @click="store.switchWithTag( cat, 0, 'Addon' )" :class="{ active: store.category === cat }">{{ t('addons.' + cat) }}</a>
-				<ul v-if="store.category === cat && cat !== 'downloaded_ugc'">
+				<ul v-if="store.category === cat && cat !== 'downloaded_ugc'" class="submenu">
 					<li v-for="tag in addonTypes" :key="cat + tag">
 						<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t('addons.' + tag) }}</a>
 					</li>
 				</ul>
 			</li>
 
-			<li>&nbsp;</li>
+			<li class="spacer">&nbsp;</li>
 
 			<li><a @click="MenuActions.openWorkshop()">{{ t('addons.openworkshop') }}</a></li>
 		</ul>
