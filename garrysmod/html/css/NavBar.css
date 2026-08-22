@@ -16,10 +16,9 @@
 	padding-left: 5px;
 }
 
-#NavBar .group.center {
+#NavBar .group.right {
 	-webkit-box-flex: 1;
 	-webkit-box-pack: end;
-	margin: 0 10%;
 }
 
 #NavBar .button,
@@ -273,9 +272,5 @@
 @media (max-width: 940px) {
 	#NavBar .hidelabel span {
 		display: none;
-	}
-
-	#NavBar .group.center {
-		margin: 0 15px;
 	}
 }

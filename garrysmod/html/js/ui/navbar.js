@@ -24,9 +24,6 @@ const NavBar = {
 
 	<div class="group left">
 		<a href="#/" class="button ui-sound-return" v-show="Router.path !== '/'" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span>{{ t('back_to_main_menu') }}</span></a>
-	</div>
-
-	<div class="group center">
 		<div class="button bigicon" v-if="MenuStore.inGame" @click="MenuActions.backToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span>{{ t('back_to_game') }}</span></a></div>
 		<div class="button bigicon hidelabel" v-if="MenuStore.inGame && MenuStore.showFavButton && !MenuStore.isCurrentServerFav" @click="MenuActions.toggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span>{{ t('favorite_this_server') }}</span></a></div>
 		<div class="button bigicon hidelabel" v-if="MenuStore.inGame && MenuStore.showFavButton && MenuStore.isCurrentServerFav" @click="MenuActions.toggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span>{{ t('unfavorite_this_server') }}</span></a></div>
