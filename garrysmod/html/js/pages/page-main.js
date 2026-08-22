@@ -27,13 +27,13 @@ const MainPage = {
 	</div>
 
 	<div class="news" v-show="NewsStore.list.length > 0">
-		<div class="news_item" v-if="NewsStore.currentItem" :style="{ backgroundImage: 'url(' + NewsStore.currentItem.HeaderImage + ')' }" v-show="!NewsStore.hideNews">
+		<div class="news-item" v-if="NewsStore.currentItem" :style="{ backgroundImage: 'url(' + NewsStore.currentItem.HeaderImage + ')' }" v-show="!NewsStore.hideNews">
 			<div>
 				<span @click="NewsActions.openInSteam( NewsStore.currentItem.Url )">{{ NewsStore.currentItem.Title }}</span>
 				<font>{{ NewsStore.currentItem.SummaryHtml }}</font>
 			</div>
 		</div>
-		<div class='news_buttons'>
+		<div class='news-buttons'>
 			<div @click="NewsActions.toggleNewsList()" v-show="!NewsStore.hideNews && !NewsStore.anyNewItems"><img src="../materials/icon16/cross.png"></div>
 			<div v-for="item in [...NewsStore.list].sort((a, b) => Date.parse(a.Date) - Date.parse(b.Date))" :key="item.Url"
 				:class="{ selected: item.Url === NewsStore.currentItem.Url }"

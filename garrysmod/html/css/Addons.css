@@ -1,0 +1,409 @@
+workshopcontainer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 64px;
+	bottom: 0;
+	padding: 8px;
+	background-color: white;
+	border-radius: 3px;
+}
+
+workshopmessage {
+	display: block;
+	margin: 64px;
+	color: #999;
+	font-size: 48px;
+	font-weight: bolder;
+	text-align: center;
+}
+
+@media screen and (max-height: 800px) {
+	workshopmessage {
+		margin: 16px;
+	}
+}
+
+workshopicon {
+	position: relative;
+	display: inline-block;
+	width: 200px;
+	height: 200px;
+	margin: 10px;
+	background-color: #666;
+	background-position: center;
+	border: 3px solid white;
+	border-radius: 3px;
+	overflow: hidden;
+	-webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+workshopicon preview {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+workshopicon disabled {
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	background: #000;
+}
+
+workshopicon.disabled disabled {
+	opacity: 0.5;
+}
+
+workshopicon name {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 10;
+	height: 22px;
+	background-color: rgba(255, 255, 255, 0.99);
+	color: #666;
+	font-family: "Arial";
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	text-align: left;
+}
+
+workshopicon name label {
+	position: absolute;
+	left: 0;
+	right: 2px;
+	top: 0;
+	padding: 2px 0 4px 2px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+workshopicon name.subscription label {
+	right: 24px;
+}
+
+workshopicon.floating name label {
+	right: 2px;
+}
+
+workshopicon author,
+workshopicon votes,
+workshopicon size {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	z-index: 10;
+	padding: 3px 6px;
+	background-color: #fff;
+	color: #333;
+	font-family: "Arial";
+	font-size: 11px;
+	font-weight: bold;
+	text-align: right;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+workshopicon author,
+workshopicon size {
+	-webkit-transition: right 100ms ease-out 200ms;
+}
+
+workshopicon:hover author,
+workshopicon:hover size {
+	right: -200px;
+	-webkit-transition: right 100ms ease-in 0ms;
+}
+
+workshopicon size {
+	top: 22px;
+	bottom: auto;
+	border-radius: 0 0 0 4px;
+}
+
+workshopicon votes {
+	left: 0;
+	bottom: 0;
+	right: inherit;
+	color: #4a4;
+	border-radius: 0 4px 0 0;
+	-webkit-transition: left 100ms ease-out 200ms;
+}
+
+workshopicon votes.negative {
+	color: #a44;
+}
+
+workshopicon:hover votes {
+	left: -200px;
+	-webkit-transition: left 100ms ease-in 0ms;
+}
+
+workshopicon description {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 32px 8px;
+	background-color: rgba(70, 180, 250, 0.95);
+	color: #fff;
+	font-size: 11px;
+	text-align: left;
+	word-break: break-word;
+	cursor: default;
+	opacity: 0;
+	-webkit-transition: opacity 100ms ease-in 0ms;
+}
+
+workshopicon:hover description {
+	opacity: 1;
+	-webkit-transition: opacity 50ms ease-in 0ms;
+}
+
+workshopicon .checkbox {
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 32;
+	width: 19px;
+	height: 19px;
+	margin: 0;
+}
+
+controls {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 6px 5px;
+	padding: 3px;
+	overflow: visible;
+}
+
+controls left {
+	float: left;
+}
+
+controls right {
+	float: right;
+}
+
+workshopicon controls {
+	z-index: 10;
+	bottom: -32px;
+	-webkit-transition: bottom 100ms ease-in 0ms;
+}
+
+workshopicon:hover controls {
+	opacity: 1;
+	bottom: 0;
+	-webkit-transition: bottom 100ms ease-in 200ms;
+}
+
+controls control {
+	position: relative;
+	display: inline-block;
+	height: 15px;
+	padding: 2px 4px;
+	background-color: #f5ff80;
+	border-radius: 2px;
+	font-size: 11px;
+	cursor: pointer;
+	-webkit-box-shadow: 1px 1px 2px black;
+}
+
+controls control img {
+	padding-top: 3px;
+}
+
+controls control:hover {
+	background-color: white;
+}
+
+controls control.disabled {
+	background-color: #bfbfbf;
+	cursor: default;
+}
+
+workshopicon.installed {
+	border-color: #d2fc7b;
+}
+
+workshopicon.installed name,
+workshopicon.installed author,
+workshopicon.installed votes,
+workshopicon.installed size {
+	background: #d2fc7b;
+}
+
+workshopicon.disabled {
+	border-color: #cedcb1;
+}
+
+workshopicon.disabled name,
+workshopicon.disabled author,
+workshopicon.disabled votes,
+workshopicon.disabled size {
+	background: #cedcb1;
+}
+
+workshopicon.invalid {
+	border-color: #d22;
+}
+
+workshopicon.invalid name,
+workshopicon.invalid author,
+workshopicon.invalid votes,
+workshopicon.invalid size {
+	background: #d22;
+	color: #fff;
+}
+
+workshopicon.invalid.disabled {
+	border-color: #922;
+}
+
+workshopicon.invalid.disabled name,
+workshopicon.invalid.disabled author,
+workshopicon.invalid.disabled votes,
+workshopicon.invalid.disabled size {
+	background: #922;
+	color: #fff;
+}
+
+.settings-toggle {
+	box-sizing: border-box;
+	position: absolute;
+	right: 4px;
+	bottom: 4px;
+	width: 44px;
+	height: 44px;
+	padding: 6px;
+	background: #2387ed;
+	border-radius: 4px;
+	cursor: default;
+}
+
+.settings-toggle:hover {
+	background: #4f9ded;
+}
+
+.settings-panel {
+	position: absolute;
+	left: 0;
+	bottom: 52px;
+	width: 100%;
+	padding: 10px;
+	background: #eee;
+	visibility: hidden;
+	overflow: hidden;
+	box-sizing: border-box;
+	z-index: 128;
+}
+
+.settings-panel.active {
+	visibility: visible;
+}
+
+.settings-panel span {
+	display: block;
+	font-weight: bold;
+}
+
+.settings-panel label {
+	position: relative;
+	top: -2px;
+}
+
+.settings-panel a {
+	display: block;
+	min-width: 140px;
+	margin-top: 2px;
+	padding: 4px 15px;
+	background: #ddd;
+	border-radius: 4px;
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+	cursor: default;
+}
+
+.settings-panel a:hover {
+	background: #ccc;
+}
+
+.settings-panel a:active {
+	background: #bbb;
+}
+
+.settings-column {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 auto;
+	padding: 0 1%;
+}
+
+.modal-preset {
+	min-width: 350px;
+}
+
+.preset-content {
+	display: -webkit-box;
+	min-width: 500px;
+	min-height: 290px;
+	max-height: 400px;
+	margin-bottom: 5px;
+}
+
+.preset-side {
+	display: -webkit-box;
+	width: 150px;
+	-webkit-box-orient: vertical;
+}
+
+.preset-side input[type="text"] {
+	display: block;
+	box-sizing: border-box;
+	margin-bottom: 8px;
+	margin-right: 8px;
+	padding: 2px 4px;
+}
+
+.preset-list {
+	-webkit-box-flex: 1;
+	background: #eee;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.preset-list font {
+	display: block;
+	padding: 5px;
+	cursor: default;
+}
+
+.preset-list font:hover {
+	background: #ddd;
+}
+
+.preset-list font.active {
+	background: #ccc;
+}
+
+.preset-data {
+	-webkit-box-flex: 1;
+	padding-left: 5px;
+	cursor: default;
+}

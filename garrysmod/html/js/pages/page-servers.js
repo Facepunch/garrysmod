@@ -105,7 +105,7 @@ const ServersPage = {
 		},
 	},
 	template: `
-<div class="page server_browser">
+<div class="page server-browser">
 
 	<div class="options">
 		<ul>
@@ -123,9 +123,9 @@ const ServersPage = {
 			<li>&nbsp;</li>
 			<li><a @click="MenuActions.menuOption( 'OpenServerBrowser' )">{{ t('legacy_browser') }}</a></li>
 			<li>&nbsp;</li>
-			<li class="sb_filter_sep"></li>
+			<li class="filters-separator"></li>
 
-			<li class="sb_filters" v-if="ServersStore.currentGamemode == null">
+			<li class="filters" v-if="ServersStore.currentGamemode == null">
 				<span>{{ t('addons.sort_by') }}</span><br/>
 				<input id="gms_players" type="radio" value="-order" v-model="ServersStore.gmSort"/><label for="gms_players">{{ t('gmsort_players') }}</label><br/>
 				<input id="gms_servers" type="radio" value="-num_servers" v-model="ServersStore.gmSort"/><label for="gms_servers">{{ t('gmsort_servers') }}</label><br/>
@@ -134,24 +134,24 @@ const ServersPage = {
 				<div v-for="cat in ServersStore.gmCats" :key="cat">
 					<input type="checkbox" :id="'gmfltr_hide_' + cat" :checked="!!ServersStore.gmFilterTags[cat]" @change="toggleGmTag( cat, $event.target.checked )"/>
 					<label :for="'gmfltr_hide_' + cat">{{ t('gmfltr_hide_' + cat) }}</label>
-					<img class="gmfilter_rev" src="img/remove.png" @click="reverseGmTag( cat )"/><br/>
+					<img class="filter-reverse" src="img/remove.png" @click="reverseGmTag( cat )"/><br/>
 				</div>
-				<input type="text" v-model="ServersStore.gmSearch" class="gm_search" :placeholder="t('gmsearch_placeholder')" /><br/>
+				<input type="text" v-model="ServersStore.gmSearch" class="gamemode-search" :placeholder="t('gmsearch_placeholder')" /><br/>
 			</li>
 
-			<li class="sb_filters" v-if="ServersStore.currentGamemode != null">
+			<li class="filters" v-if="ServersStore.currentGamemode != null">
 				<label for="SVFilterPlyMin">{{ t('svfltr_ply_limit') }}</label><br/>
-				<input id="SVFilterPlyMin" v-model.number="ServersStore.filters.plyMin" type="number" class="smalltextbox" placeholder="0" min="0" max="128" step="8"/>
+				<input id="SVFilterPlyMin" v-model.number="ServersStore.filters.plyMin" type="number" class="input-small" placeholder="0" min="0" max="128" step="8"/>
 				&nbsp;-&nbsp;
-				<input v-model.number="ServersStore.filters.plyMax" type="number" class="smalltextbox" placeholder="128" min="0" max="128" step="8"/><br/>
+				<input v-model.number="ServersStore.filters.plyMax" type="number" class="input-small" placeholder="128" min="0" max="128" step="8"/><br/>
 				<label for="SVFilterMaxPing">{{ t('svfltr_ping_limit') }}</label><br/>
-				<input id="SVFilterMaxPing" v-model.number="ServersStore.filters.maxPing" type="number" class="smalltextbox" placeholder="2000" min="0" max="2500" step="20"/><br/>
+				<input id="SVFilterMaxPing" v-model.number="ServersStore.filters.maxPing" type="number" class="input-small" placeholder="2000" min="0" max="2500" step="20"/><br/>
 				<input type="checkbox" id="sv_notfull" v-model="ServersStore.filters.notFull"/><label for="sv_notfull">{{ t('svfltr_not_full') }}</label><br/>
 				<input type="checkbox" id="sv_notempty" v-model="ServersStore.filters.hasPlayers"/><label for="sv_notempty">{{ t('svfltr_has_players') }}</label><br/>
 				<input type="checkbox" id="sv_nopass" v-model="ServersStore.filters.hidePassword"/><label for="sv_nopass"><span>{{ t('svfltr_no_password') }}</span> <img class="passworded" src='img/server-passworded.png'/></label><br/>
 				<input type="checkbox" id="sv_outdated" v-model="ServersStore.filters.hideOutdated"/><label for="sv_outdated">{{ t('svfltr_outdated') }}</label>
 
-				<div class="flags_filter" v-if="ServersStore.currentGamemode.hasflags">
+				<div class="flags-filter" v-if="ServersStore.currentGamemode.hasflags">
 					<img v-for="(flag, index) in Object.keys(ServersStore.currentGamemode.flags)" :key="flag"
 						class="flag" :class="ServerActions.filterFlagClass( flag )"
 						:src="'asset://garrysmod/materials/flags16/' + flag + '.png'"
@@ -162,13 +162,13 @@ const ServersPage = {
 	</div>
 
 	<div class="innerpage" v-if="ServersStore.currentGamemode == null">
-		<h1 class="menuheader">
+		<h1 class="menu-header">
 			<span>{{ t('servers_gamemodes') }}</span>
 			<small>{{ t('servers_gamemodes.subtitle') }}</small>
 		</h1>
 
-		<div class='server_gamemodes whiterounded'>
-			<div class="server_gamemodes_inner scrollable">
+		<div class='gamemodes-panel'>
+			<div class="gamemodes-scroll scrollable">
 				<div v-for="gm in gamemodeList" :key="gm.name" class='gamemode' :class="gm.element_class" @click="ServerActions.selectGamemode( gm )">
 					<img :src="'../gamemodes/' + gm.name + '/icon24.png'" @error="gmIconError"/>
 					<div class='stats'>{{ gm.num_players }}
@@ -179,20 +179,20 @@ const ServersPage = {
 					<div class='name'>
 						{{ ServerActions.gamemodeName( gm ) }}<tag v-if="gm.info && gm.info.tag">{{ t('gmfltr_hide_' + gm.info.tag) }}</tag>
 					</div>
-					<span class='installgamemode' v-if="ServerActions.shouldShowInstall( gm )" @click.stop="ServerActions.installGamemode( gm )">&nbsp;</span>
+					<span class='install-gamemode' v-if="ServerActions.shouldShowInstall( gm )" @click.stop="ServerActions.install-gamemode( gm )">&nbsp;</span>
 				</div>
 			</div>
 
-			<div class='add_fav_server' v-if="ServersStore.type === 'favorite'">
+			<div class='add-favorite' v-if="ServersStore.type === 'favorite'">
 				<div class="header">
 					<span>{{ t('servers_find_title') }}</span>
-					<div class="fav_inputs">
+					<div class="fav-inputs">
 						<input type="text" v-model="ServersStore.findServerString" placeholder="127.0.0.1:27015"/>
 						<button @click="ServerActions.findServersAtAddress(); ServerActions.refresh();">{{ t('servers_find') }}</button>
 					</div>
 				</div>
 
-				<div class="found_servers serverlist" v-if="ServersStore.foundServers.length > 0">
+				<div class="found-servers server-list" v-if="ServersStore.foundServers.length > 0">
 					<div v-for="server in ServersStore.foundServers" :key="server.address" class="server">
 						<name>
 							<a class='favbutton' :class="{ favorited: server.favorite }" @click="ServerActions.toggleFavorite( server ); ServerActions.refresh();"></a>
@@ -210,20 +210,20 @@ const ServersPage = {
 
 	<div class="innerpage" v-if="ServersStore.currentGamemode != null">
 
-		<h1 class="menuheader">
+		<h1 class="menu-header">
 			<span>{{ ServerActions.gamemodeName( ServersStore.currentGamemode ) }}</span>
 			<small>{{ t('join_a_server') }}</small>
 		</h1>
 
-		<div class='installgamemode' v-if="ServerActions.shouldShowInstall( ServersStore.currentGamemode )" @click="ServerActions.installGamemode( ServersStore.currentGamemode )">{{ t('servers_install_gamemode') }}</div>
+		<div class='install-gamemode' v-if="ServerActions.shouldShowInstall( ServersStore.currentGamemode )" @click="ServerActions.install-gamemode( ServersStore.currentGamemode )">{{ t('servers_install_gamemode') }}</div>
 
 		<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
 			<input type="text" v-model="ServersStore.currentGamemode.search" class="searchbox" :placeholder="t('svsearch_placeholder')" />
-			<a class='bglink' @click="ServerActions.selectGamemode(null)"><img src='img/bg_arrow_left.png' /> {{ t('return_to_gamemodes') }}</a>
+			<a class='btn-blue' @click="ServerActions.selectGamemode(null)"><img src='img/bg_arrow_left.png' /> {{ t('return_to_gamemodes') }}</a>
 		</div>
 
-		<div class="serverlist_layout">
-			<div class='serverlist'>
+		<div class="server-layout">
+			<div class='server-list'>
 				<div class='header'>
 					<name @click="ServerActions.changeOrder( ServersStore.currentGamemode, 'name' )">{{ t('server_name_header') }}</name>
 					<map @click="ServerActions.changeOrder( ServersStore.currentGamemode, 'map' )">{{ t('server_mapname') }}</map>
@@ -258,7 +258,7 @@ const ServersPage = {
 			</div>
 
 			<div class='serverinfo' v-if="ServersStore.currentGamemode.selected">
-				<span class="closebtn" @click="ServerActions.selectServer( null, $event )"></span>
+				<span class="close-btn" @click="ServerActions.selectServer( null, $event )"></span>
 				<div>
 					<header>
 						<div class="cell" style="padding-bottom: 5px; padding-right: 8px;">

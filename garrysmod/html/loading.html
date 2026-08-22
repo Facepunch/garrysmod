@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Loading..</title>
-		<link rel="stylesheet" type="text/css" href="loading.css" />
+		<link rel="stylesheet" type="text/css" href="css/Loading.css" />
 	</head>
 	<body>
 		<div id="background">
@@ -13,7 +13,7 @@
 				</div>
 			</div>
 
-			<div class="server_info">
+			<div class="server-info">
 				<img id="mapimg" src="asset://mapimage/invalid_map" alt="" />
 				<div class="text">
 					<div id="serverName"></div>
@@ -70,7 +70,7 @@
 				document.querySelector("#mapimg").setAttribute("src", mapImg);
 				document.body.style.backgroundImage = "url('" + mapImg + "')";
 
-				document.querySelector(".server_info").classList.add("visible");
+				document.querySelector(".server-info").classList.add("visible");
 			}
 
 			function DownloadingFile(file) {

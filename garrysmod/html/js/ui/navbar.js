@@ -23,7 +23,7 @@ const NavBar = {
 <div id="NavBar">
 
 	<div class="group left">
-		<a href="#/" class="button ui_sound_return" v-show="Router.path !== '/'" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span>{{ t('back_to_main_menu') }}</span></a>
+		<a href="#/" class="button ui-sound-return" v-show="Router.path !== '/'" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span>{{ t('back_to_main_menu') }}</span></a>
 	</div>
 
 	<div class="group center">
@@ -45,19 +45,19 @@ const NavBar = {
 
 </div>
 
-<ul class="gamemode_list popup" v-show="MenuStore.popup === 'gamemode'">
+<ul class="gamemode-list popup" v-show="MenuStore.popup === 'gamemode'">
 	<li v-for="gm in sortedGamemodes" :key="gm.name" @click="MenuActions.selectGamemode( gm )">
 		<img :src="'../gamemodes/' + gm.name + '/icon24.png'" loading="lazy"><span>{{ gm.title }}</span>
 	</li>
 </ul>
 
-<ul class="language_list popup" v-show="MenuStore.popup === 'language'">
+<ul class="language-list popup" v-show="MenuStore.popup === 'language'">
 	<li v-for="lang in MenuStore.languages" :key="lang" @click="MenuActions.selectLanguage( lang )">
 		<img :src="'../resource/localization/' + lang + '.png'" loading="lazy">
 	</li>
 </ul>
 
-<ul class="games_list popup" v-show="MenuStore.popup === 'games'">
+<ul class="games-list popup" v-show="MenuStore.popup === 'games'">
 	<li class="notowned"><img src='img/notowned.png' width="16" height="16" loading="lazy"> <span>{{ t('game_not_owned') }}</span></li>
 	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16" loading="lazy"> <span>{{ t('game_not_installed') }}</span></li>
 	<hr/>
@@ -71,7 +71,7 @@ const NavBar = {
 	</li>
 </ul>
 
-<ul class="kinect_settings popup" v-show="MenuStore.popup === 'kinect'">
+<ul class="kinect-settings popup" v-show="MenuStore.popup === 'kinect'">
 	<li>
 		<div>
 			<p>

@@ -9,9 +9,9 @@ const WbPagination = {
 	<a class="back" @click="store.go( store.perPage * -1 )">&nbsp;</a>
 	<a class="next" @click="store.go( store.perPage * 1 )">&nbsp;</a>
 	<div class="pages">
-		<span v-for="p in store.pages" :key="p"><a :class="{ active: p === store.page }" class="page" @click="store.goToPage( p )"><img src="img/pagination_page.png?1" /></a></span><br/>
+		<span v-for="p in store.pages" :key="p"><a :class="{ active: p === store.page }" class="page-link" @click="store.goToPage( p )"><img src="img/pagination_page.png?1" /></a></span><br/>
 	</div>
-	<span class="pagenum">{{ store.page }}</span>
+	<span class="page-num">{{ store.page }}</span>
 </pagination>`,
 };
 

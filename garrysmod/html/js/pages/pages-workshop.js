@@ -62,9 +62,9 @@ function createWorkshopPage(config) {
 		</ul>
 	</div>
 
-	<div class="ugc_content">
+	<div class="page-content">
 
-		<h1 class="menuheader"><span>{{ t(titleKey + '.' + store.category) }}</span><small>{{ t(titleKey + '.' + store.category + '.subtitle') }}</small></h1>
+		<h1 class="menu-header"><span>{{ t(titleKey + '.' + store.category) }}</span><small>{{ t(titleKey + '.' + store.category + '.subtitle') }}</small></h1>
 
 		<workshopcontainer>
 			<workshopmessage v-if="store.loading">{{ t(titleKey + '.loading') }}</workshopmessage>

@@ -106,7 +106,7 @@ const AddonsPage = {
 					<li v-for="tag in addonTypes" :key="tag">
 						<a @click="store.switchWithTag( 'subscribed', 0, tag )" :class="{ active: store.tagged === tag }">{{ t('addons.' + tag) }}</a>
 					</li>
-					<li><input type="text" class="search_bar" v-model="AddonsStore.subscriptionSearchText" @input="store.handleOnSearch()" :placeholder="t('addons.search')"/></li>
+					<li><input type="text" class="search-bar" v-model="AddonsStore.subscriptionSearchText" @input="store.handleOnSearch()" :placeholder="t('addons.search')"/></li>
 				</ul>
 			</li>
 
@@ -138,8 +138,8 @@ const AddonsPage = {
 		</ul>
 	</div>
 
-	<div class="ugc_content">
-		<h1 class="menuheader">
+	<div class="page-content">
+		<h1 class="menu-header">
 			<span>{{ t(headerKey) }}</span>
 			<small>{{ t(headerSubKey) }}</small>
 		</h1>
@@ -193,24 +193,24 @@ const AddonsPage = {
 			<WbPagination :store="store"></WbPagination>
 		</center>
 
-		<a v-if="store.category === 'subscribed'" class="ugc_settings_button" @click="AddonsStore.settingsOpen = !AddonsStore.settingsOpen">
+		<a v-if="store.category === 'subscribed'" class="settings-toggle" @click="AddonsStore.settingsOpen = !AddonsStore.settingsOpen">
 			<img src="img/settings.png">
 		</a>
 
-		<div v-if="store.category === 'subscribed'" class="ugc_settings" :class="AddonsStore.settingsOpen ? 'active' : 'hidden'">
-			<div class="ugc_settings_cat">
+		<div v-if="store.category === 'subscribed'" class="settings-panel" :class="AddonsStore.settingsOpen ? 'active' : 'hidden'">
+			<div class="settings-column">
 				<span>{{ t('addons.filter_by') }}</span>
 				<input type="checkbox" v-model="AddonsStore.filterEnabledOnly" @change="store.handleFilterChange( 1 )" id="FilterEnabledOnly"/><label for="FilterEnabledOnly">{{ t('addons.enabled_only') }}</label><br/>
 				<input type="checkbox" v-model="AddonsStore.filterDisabledOnly" @change="store.handleFilterChange( 0 )" id="FilterDisabledOnly"/><label for="FilterDisabledOnly">{{ t('addons.disabled_only') }}</label>
 			</div>
-			<div class="ugc_settings_cat">
+			<div class="settings-column">
 				<span>{{ t('addons.sort_by') }}</span>
 				<input type="radio" name="sort" value="title" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_title"/><label for="UGCSortMethod_title">{{ t('addons.name') }}</label><br/>
 				<input type="radio" name="sort" value="size" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_size"/><label for="UGCSortMethod_size">{{ t('addons.size') }}</label><br/>
 				<input type="radio" name="sort" value="updated" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_updated"/><label for="UGCSortMethod_updated">{{ t('addons.update_date') }}</label><br/>
 				<input type="radio" name="sort" value="subscribed" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_subscribed"/><label for="UGCSortMethod_subscribed">{{ t('addons.sub_date') }}</label>
 			</div>
-			<div class="ugc_settings_cat">
+			<div class="settings-column">
 				<div v-if="!AddonActions.isAnySelected()">
 					<a @click="AddonActions.selectAll()">{{ t('addons.selectall') }}</a>
 					<a @click="AddonActions.selectAllPage()">{{ t('addons.selectpage') }}</a>
@@ -226,12 +226,12 @@ const AddonsPage = {
 					<a @click="AddonActions.displayPopupMessage( 'addons.uninstall_selected.warning', () => AddonActions.uninstallAllSelected() )">{{ t('addons.uninstall_selected') }}</a>
 				</div>
 			</div>
-			<div class="ugc_settings_cat">
-				<a @click="AddonActions.openCreatePresetMenu()">{{ t('addons.create_preset') }}</a>
+			<div class="settings-column">
+				<a @click="AddonActions.openCreatePresetMenu()">{{ t('addons.modal-preset') }}</a>
 				<a @click="AddonActions.openLoadPresetMenu()">{{ t('addons.load_preset') }}</a>
 				<a @click="AddonActions.openImportPresetMenu()">{{ t('addons.import_preset') }}</a>
 			</div>
-			<div class="ugc_settings_cat">
+			<div class="settings-column">
 				<span><font>{{ t('addons.total_subscriptions') }}</font> {{ AddonActions.getSubscribedCount() }}</span>
 				<span><font>{{ t('addons.total_selected') }}</font> {{ AddonActions.getSelectedCount() }}</span>
 			</div>
@@ -239,10 +239,10 @@ const AddonsPage = {
 	</div>
 
 	<div class="modaldialog" v-if="AddonsStore.createPresetOpen">
-		<div class="centermessage left create_preset">
-			<b>{{ t('addons.create_preset') }}</b>
+		<div class="centermessage left modal-preset">
+			<b>{{ t('addons.modal-preset') }}</b>
 			<br/><br/>
-			<input type="text" class="preset_name" v-model="AddonsStore.presetName" :placeholder="t('addons.preset_name_placeholder')"/><br/>
+			<input type="text" class="preset-name" v-model="AddonsStore.presetName" :placeholder="t('addons.preset_name_placeholder')"/><br/>
 			<br/>
 			<input type="checkbox" v-model="AddonsStore.saveEnabled" id="CreatePresetSaveEnabled"/><label for="CreatePresetSaveEnabled">{{ t('addons.preset_save_enabled') }}</label><br/>
 			<input type="checkbox" v-model="AddonsStore.saveDisabled" id="CreatePresetSaveDisabled"/><label for="CreatePresetSaveDisabled">{{ t('addons.preset_save_disabled') }}</label><br/>
@@ -252,19 +252,19 @@ const AddonsPage = {
 			<input type="radio" name="createpreset_newitems" value="disable" v-model="AddonsStore.presetNewAction" id="cp_disable"/><label for="cp_disable">{{ t('addons.action_disable') }}</label><br/>
 			<input type="radio" name="createpreset_newitems" value="enable" v-model="AddonsStore.presetNewAction" id="cp_enable"/><label for="cp_enable">{{ t('addons.action_enable') }}</label><br/>
 			<br/>
-			<a @click="AddonActions.createNewPreset()" :class="{ disabled: AddonsStore.presetName === '' }" class="create big">{{ t('addons.create_preset') }}</a>
+			<a @click="AddonActions.createNewPreset()" :class="{ disabled: AddonsStore.presetName === '' }" class="create big">{{ t('addons.modal-preset') }}</a>
 			<hr>
 			<a @click="AddonActions.closePopupMessage()">{{ t('addons.cancel') }}</a>
 		</div>
 	</div>
 
 	<div class="modaldialog" v-if="AddonsStore.importPresetOpen">
-		<div class="centermessage left create_preset">
+		<div class="centermessage left modal-preset">
 			<b>{{ t('addons.import_preset') }}</b>
 			<br/><br/>
-			<input type="text" class="preset_name" v-model="AddonsStore.importSource" :placeholder="t('addons.preset_source')"/><br/>
+			<input type="text" class="preset-name" v-model="AddonsStore.importSource" :placeholder="t('addons.preset_source')"/><br/>
 			<br/><br/>
-			<input type="text" class="preset_name" v-model="AddonsStore.presetName" :placeholder="t('addons.preset_name_placeholder')"/><br/>
+			<input type="text" class="preset-name" v-model="AddonsStore.presetName" :placeholder="t('addons.preset_name_placeholder')"/><br/>
 			<br/>
 			<b>{{ t('addons.preset_new_action') }}</b><br/>
 			<input type="radio" name="importpreset_newitems" value="" v-model="AddonsStore.presetNewAction" id="ip_nothing"/><label for="ip_nothing">{{ t('addons.action_nothing') }}</label><br/>
@@ -278,7 +278,7 @@ const AddonsPage = {
 	</div>
 
 	<div class="modaldialog" v-if="AddonsStore.importPresetLoading">
-		<div class="centermessage left create_preset">
+		<div class="centermessage left modal-preset">
 			<h1>{{ t('dupes.loading') }}</h1>
 		</div>
 	</div>
@@ -288,15 +288,15 @@ const AddonsPage = {
 			<b>{{ t('addons.load_preset') }}</b>
 			<br/><br/>
 
-			<div class="preset_content">
-				<div class="preset_side">
+			<div class="preset-content">
+				<div class="preset-side">
 					<input type="text" v-model="AddonsStore.presetSearchText" :placeholder="t('addons.filter_preset')"/>
-					<div class="preset_list">
+					<div class="preset-list">
 						<font v-for="preset in presetNames" :key="preset.name" @click="AddonActions.selectPreset( preset.name, preset.newAction );" :class="{ active: preset.name === AddonsStore.selectedPreset }">{{ preset.name }}</font>
 					</div>
 				</div>
-				<div class="preset_data" v-if="selectedPresetData">
-					<b>{{ t('addons.preset_name') }}</b> {{ selectedPresetData.name }}<br/>
+				<div class="preset-data" v-if="selectedPresetData">
+					<b>{{ t('addons.preset-name') }}</b> {{ selectedPresetData.name }}<br/>
 					<b>{{ t('addons.preset_enabled') }}</b> {{ selectedPresetData.enabled.length }}<br/>
 					<b>{{ t('addons.preset_disabled') }}</b> {{ selectedPresetData.disabled.length }}<br/>
 					<input type="checkbox" v-model="AddonsStore.loadPresetResub" id="LoadPresetResub"/><label for="LoadPresetResub">{{ t('addons.preset_resub_missing') }}</label><br/>

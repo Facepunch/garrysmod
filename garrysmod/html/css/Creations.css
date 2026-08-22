@@ -1,0 +1,145 @@
+div.page {
+	left: 200px;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.options {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 200px;
+}
+
+.options ul {
+	margin: 8px;
+	margin-right: 0;
+	padding: 4px;
+	background-color: #2387ed;
+	border: 3px solid #fff;
+	border-radius: 6px;
+	list-style: none;
+	color: #fff;
+	font-weight: bold;
+}
+
+.options ul li {
+	margin: 0;
+	padding: 1px;
+	border-radius: 2px;
+	color: #fff;
+	-webkit-transition: all 0.2s;
+}
+
+.options ul li.headline {
+	padding: 0;
+	text-align: center;
+	color: #fff;
+	font-size: 32px;
+	font-weight: bolder;
+	letter-spacing: -2px;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+	border-radius: 4px 4px 0 0;
+}
+
+.options ul li.subtitle {
+	padding: 0;
+	padding-bottom: 4px;
+	margin-bottom: 10px;
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 10px;
+	text-align: center;
+	letter-spacing: 1px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.options ul li a {
+	display: block;
+	color: rgba(255, 255, 255, 0.9);
+	cursor: pointer;
+}
+
+.options ul li a.active {
+	color: #fff;
+	text-shadow: 0 0 8px rgba(255, 255, 255, 1);
+}
+
+.options ul li button {
+	width: 100%;
+	margin: 0;
+	padding: 4px 8px;
+	background-color: rgba(255, 255, 255, 0.4);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 2px;
+	color: #fff;
+	font-weight: bolder;
+	font-size: 18px;
+	text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+}
+
+.options ul li button:hover {
+	background-color: rgba(255, 255, 255, 0.5);
+	border-color: rgba(255, 255, 255, 0.6);
+	text-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.options .disabled {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+.workshopcontainer {
+	background-color: transparent;
+	border-radius: 0;
+	padding: 0;
+}
+
+.workshopmessage {
+	color: #fff;
+	text-shadow: 2px 2px black;
+}
+
+@media (max-width: 700px) {
+	workshopicon {
+		margin: 0;
+		margin-right: 5px;
+		margin-bottom: 5px;
+	}
+}
+
+@media (max-width: 670px) {
+	div.page {
+		left: 150px !important;
+	}
+
+	.options {
+		width: 150px !important;
+	}
+
+	workshopicon {
+		width: 170px !important;
+		height: 170px !important;
+		margin: 0;
+		margin-right: 1px;
+		margin-bottom: 1px;
+	}
+}
+
+@media (max-width: 530px) {
+	div.page {
+		left: 130px !important;
+	}
+
+	.options {
+		width: 130px !important;
+	}
+
+	workshopicon {
+		width: 90px !important;
+		height: 90px !important;
+		margin: 0;
+	}
+}

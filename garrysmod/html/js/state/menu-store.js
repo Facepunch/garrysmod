@@ -85,7 +85,7 @@ const MenuActions = {
 
 	toggleServerFavorites(add) {
 		luaRun(
-			"serverlist.AddCurrentServerToFavorites( " +
+			"server-list.AddCurrentServerToFavorites( " +
 				(add ? "true" : "false") +
 				" )",
 		);
@@ -166,7 +166,7 @@ if (
 
 function setupSoundHooks() {
 	document.addEventListener("mouseover", function (e) {
-		const target = e.target.closest(".options a, .noisy, .ui_sound_return");
+		const target = e.target.closest(".options a, .noisy, .ui-sound-return");
 		if (target && (!e.relatedTarget || !target.contains(e.relatedTarget)))
 			luaPlaySound("garrysmod/ui_hover.wav");
 	});
@@ -174,7 +174,7 @@ function setupSoundHooks() {
 	document.addEventListener("click", function (e) {
 		if (e.target.closest(".options a, .noisy"))
 			luaPlaySound("garrysmod/ui_click.wav");
-		else if (e.target.closest(".ui_sound_return"))
+		else if (e.target.closest(".ui-sound-return"))
 			luaPlaySound("garrysmod/ui_return.wav");
 	});
 }

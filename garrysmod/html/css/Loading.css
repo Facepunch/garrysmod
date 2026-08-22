@@ -1,0 +1,104 @@
+BODY {
+	overflow: hidden;
+	margin: 0;
+	background-size: cover;
+}
+
+#background {
+	height: 100%;
+	background-image: url("../img/bg.png");
+	background-size: 100% 100%;
+}
+
+body.dark {
+	color: #fff;
+}
+
+body.dark #background {
+	background-image: url("../img/bg_dark.png");
+}
+
+#container {
+	position: absolute;
+	left: 50%;
+	top: 45%;
+	width: 300px;
+	margin-top: -120px;
+	margin-left: -150px;
+	text-align: center;
+}
+
+#logo {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1.25em;
+}
+
+@-webkit-keyframes walk {
+	0% {
+		-webkit-transform: rotateZ(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotateZ(360deg);
+	}
+}
+
+.walk {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fe7;
+	border: 2px solid #999;
+	border-radius: 3px;
+	color: #999;
+	font-size: 16px;
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	text-align: center;
+	-webkit-animation: walk 10s linear infinite;
+}
+
+.server-info {
+	display: inline-block;
+	box-sizing: border-box;
+	max-width: 100%;
+	padding: 20px;
+	padding-right: 180px;
+	background-image: -webkit-linear-gradient(
+		left,
+		rgba(0, 0, 0, 0.4) 0%,
+		rgba(0, 0, 0, 0.03) 75%,
+		rgba(0, 0, 0, 0) 100%
+	);
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	visibility: hidden;
+}
+
+.server-info.visible {
+	visibility: visible;
+}
+
+.server-info .text {
+	display: inline-block;
+	max-width: 100%;
+	vertical-align: top;
+	font-size: xx-large;
+	line-height: 42px;
+}
+
+.server-info .text > div {
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.server-info #mapimg {
+	float: left;
+	width: 128px;
+	height: 128px;
+	margin-right: 16px;
+	background: #666;
+}
