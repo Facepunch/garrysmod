@@ -256,6 +256,9 @@
 }
 
 .popup.language-list li img {
+	position: absolute;
+	left: 4px;
+	top: 6px;
 	border: 1px solid #888;
 }
 
