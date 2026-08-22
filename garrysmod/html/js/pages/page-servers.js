@@ -126,17 +126,23 @@ const ServersPage = {
 			<li class="filters-separator"></li>
 
 			<li class="filters" v-if="ServersStore.currentGamemode == null">
-				<span>{{ t('addons.sort_by') }}</span><br/>
-				<input id="gms_players" type="radio" value="-order" v-model="ServersStore.gmSort"/><label for="gms_players">{{ t('gmsort_players') }}</label><br/>
-				<input id="gms_servers" type="radio" value="-num_servers" v-model="ServersStore.gmSort"/><label for="gms_servers">{{ t('gmsort_servers') }}</label><br/>
-				<input id="gms_name" type="radio" value="info.title" v-model="ServersStore.gmSort"/><label for="gms_name">{{ t('gmsort_name') }}</label><br/>
-				<span>{{ t('addons.filter_by') }}</span><br/>
-				<div v-for="cat in ServersStore.gmCats" :key="cat">
-					<input type="checkbox" :id="'gmfltr_hide_' + cat" :checked="!!ServersStore.gmFilterTags[cat]" @change="toggleGmTag( cat, $event.target.checked )"/>
-					<label :for="'gmfltr_hide_' + cat">{{ t('gmfltr_hide_' + cat) }}</label>
-					<img class="filter-reverse" src="img/remove.png" @click="reverseGmTag( cat )"/><br/>
+				<label class="filter-title">{{ t('addons.sort_by') }}</label>
+				<div class="filter-row"><input id="gms_players" type="radio" value="-order" v-model="ServersStore.gmSort"/><label for="gms_players">{{ t('gmsort_players') }}</label></div>
+				<div class="filter-row"><input id="gms_servers" type="radio" value="-num_servers" v-model="ServersStore.gmSort"/><label for="gms_servers">{{ t('gmsort_servers') }}</label></div>
+				<div class="filter-row"><input id="gms_name" type="radio" value="info.title" v-model="ServersStore.gmSort"/><label for="gms_name">{{ t('gmsort_name') }}</label></div>
+
+				<div class="filter-hides">
+					<label class="filter-title">{{ t('addons.filter_by') }}</label>
+					<div class="filter-row" v-for="cat in ServersStore.gmCats" :key="cat">
+						<input type="checkbox" :id="'gmfltr_hide_' + cat" :checked="!!ServersStore.gmFilterTags[cat]" @change="toggleGmTag( cat, $event.target.checked )"/>
+						<label :for="'gmfltr_hide_' + cat">{{ t('gmfltr_hide_' + cat) }}</label>
+						<img class="filter-reverse" src="img/remove.png" @click="reverseGmTag( cat )"/>
+					</div>
 				</div>
-				<input type="text" v-model="ServersStore.gmSearch" class="gamemode-search" :placeholder="t('gmsearch_placeholder')" /><br/>
+
+				<div class="filter-row">
+					<input type="text" v-model="ServersStore.gmSearch" class="gamemode-search" :placeholder="t('gmsearch_placeholder')" />
+				</div>
 			</li>
 
 			<li class="filters" v-if="ServersStore.currentGamemode != null">

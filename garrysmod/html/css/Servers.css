@@ -572,6 +572,11 @@ div.page .options ul li.filters .filter-hides .filter-row {
 	margin-bottom: 7px;
 }
 
+div.page .options ul li.filters .gamemode-search {
+	width: 100%;
+	box-sizing: border-box;
+}
+
 div.page .options ul li.filters-separator {
 	margin-right: 42px;
 	margin-bottom: 24px;
