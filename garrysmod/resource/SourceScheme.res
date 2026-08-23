@@ -487,7 +487,7 @@ Scheme
 			{
 				"name"		"Lucida Console" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
-				"tall"		"10" [$WINDOWS]
+				"tall"		"12" [$WINDOWS]
 				"tall"		"14" [!$WINDOWS]
 				"weight"	"500"
 			}
