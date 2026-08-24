@@ -170,8 +170,8 @@ var ServerActions = {
 
 	gamemodeName: function (gm) {
 		if (!gm) return "Unknown Gamemode";
-		if (gm.info && gm.info.title) return StripWeirdSymbols(gm.info.title);
-		return StripWeirdSymbols(gm.name);
+		if (gm.info && gm.info.title) return gm.info.title;
+		return gm.name;
 	},
 
 	joinServer: function (srv) {
@@ -380,7 +380,7 @@ function AddServer(
 
 	var data = {
 		ping: parseInt(ping),
-		name: StripWeirdSymbols(name.trim()),
+		name: name.trim(),
 		desc: desc,
 		map: map,
 		players: parseInt(players) - parseInt(botplayers),

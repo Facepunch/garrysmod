@@ -154,7 +154,7 @@ function UpdateServer(
 	if (server.address != address) return;
 
 	server.ping = parseInt(ping);
-	server.name = StripWeirdSymbols(String(name).trim());
+	server.name = String(name).trim();
 	server.map = map;
 	server.players = parseInt(players) - parseInt(botplayers);
 	server.maxplayers = parseInt(maxplayers) - parseInt(botplayers);
