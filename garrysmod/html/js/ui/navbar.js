@@ -20,7 +20,7 @@ var NavBar = {
 				MenuStore.gamemodes.filter(function (gm) {
 					return gm.menusystem;
 				}),
-				"name",
+				"name"
 			);
 		},
 	},

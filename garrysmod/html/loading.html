@@ -41,11 +41,11 @@
 				var darkMode =
 					today.getHours() >= 19 || today.getHours() <= 7;
 
-				const versionMatch = navigator.userAgent.match(/Chrome\/(\d+)/);
-				const supportsSystemDarkMode =
+				var versionMatch = navigator.userAgent.match(/Chrome\/(\d+)/);
+				var supportsSystemDarkMode =
 					versionMatch && parseInt(versionMatch[1]) >= 76;
 				var systemDarkMode = window.matchMedia(
-					"(prefers-color-scheme: dark)",
+					"(prefers-color-scheme: dark)"
 				).matches;
 
 				if (
@@ -65,7 +65,7 @@
 				gamemode,
 				volume,
 				lang,
-				gamemodeNice,
+				gamemodeNice
 			) {
 				var mapImg = "asset://mapimage/" + mapname;
 
@@ -78,7 +78,7 @@
 
 				addClass(
 					document.querySelector(".server-info"),
-					"visible",
+					"visible"
 				);
 			}
 

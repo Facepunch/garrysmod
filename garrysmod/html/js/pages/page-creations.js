@@ -55,14 +55,14 @@ function startCreationsApp(kind) {
 		methods: {
 			applyRoute: function () {
 				var match = /^#\/list\/([^/]*)\/(?:([^/]*)\/)?/.exec(
-					window.location.hash || "",
+					window.location.hash || ""
 				);
 				if (match && match[1] && match[1] !== "list") {
 					store.switchWithTag(
 						match[1],
 						0,
 						match[2] || "",
-						store.mapName,
+						store.mapName
 					);
 				} else {
 					store.switch("local", 0);

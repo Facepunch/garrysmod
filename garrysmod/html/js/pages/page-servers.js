@@ -18,7 +18,7 @@ var ServersPage = {
 				type.list.filter(function (gm) {
 					return ServerActions.gamemodeFilter(gm);
 				}),
-				[ServersStore.gmSort, "-num_players", "name"],
+				[ServersStore.gmSort, "-num_players", "name"]
 			);
 		},
 		typeData: function () {
@@ -33,10 +33,10 @@ var ServersPage = {
 					return ServerActions.serverFilter(sv);
 				}),
 				current.orderBy,
-				current.orderReverse,
+				current.orderReverse
 			).slice(
 				current.server_offset,
-				current.server_offset + ServersStore.serversPerPage,
+				current.server_offset + ServersStore.serversPerPage
 			);
 		},
 		postPlaceholderHeight: function () {
@@ -47,7 +47,7 @@ var ServersPage = {
 					current.servers.length -
 						ServersStore.serversPerPage -
 						current.server_offset,
-					0,
+					0
 				) * 26
 			);
 		},

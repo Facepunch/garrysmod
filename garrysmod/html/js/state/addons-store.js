@@ -73,7 +73,7 @@ var AddonActions = {
 			addonStore.category,
 			addonStore.offset,
 			addonStore.tagged,
-			addonStore.mapName,
+			addonStore.mapName
 		);
 	},
 
@@ -145,7 +145,7 @@ var AddonActions = {
 			"addons.uninstall_selected.warning",
 			function () {
 				AddonActions.uninstallAllSelected();
-			},
+			}
 		);
 	},
 
@@ -186,7 +186,7 @@ var AddonActions = {
 		setKey(
 			AddonsStore.selectedItems,
 			file.id,
-			!AddonsStore.selectedItems[file.id],
+			!AddonsStore.selectedItems[file.id]
 		);
 		event.stopPropagation();
 	},
@@ -289,7 +289,7 @@ var AddonActions = {
 			function () {
 				luaRun("DeleteAddonPreset( %s )", name);
 				AddonsStore.selectedPreset = undefined;
-			},
+			}
 		);
 	},
 
@@ -336,7 +336,7 @@ var AddonActions = {
 	copySelectedPreset: function () {
 		var presetList = compatState.presetList;
 		var copy = JSON.parse(
-			JSON.stringify(presetList[AddonsStore.selectedPreset]),
+			JSON.stringify(presetList[AddonsStore.selectedPreset])
 		);
 		delete copy.$$hashKey;
 		luaRun("SetClipboardText( %s )", JSON.stringify(copy));
@@ -353,7 +353,7 @@ var AddonActions = {
 			AddonsStore.importPresetLoading = true;
 			var match =
 				/https?:\/\/steamcommunity\.com\/sharedfiles\/filedetails\/\?(?:.*)id=([0-9]+)(?:.*)/.exec(
-					source,
+					source
 				);
 			if (!match) match = /([0-9]+)/.exec(source);
 
@@ -371,7 +371,7 @@ var AddonActions = {
 			luaRun(
 				"ImportAddonPreset( %s, %s )",
 				match[1],
-				JSON.stringify(preset),
+				JSON.stringify(preset)
 			);
 		} else {
 			try {

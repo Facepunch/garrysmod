@@ -142,7 +142,7 @@ function UpdateServer(
 	players,
 	maxplayers,
 	botplayers,
-	pass,
+	pass
 ) {
 	var current = ServersStore.currentGamemode;
 	if (!current || !current.selected) {

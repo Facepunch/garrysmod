@@ -17,7 +17,7 @@ function OnSubscriptionsChanged() {
 			store.category,
 			store.offset,
 			store.tagged,
-			store.mapName,
+			store.mapName
 		);
 	}
 }

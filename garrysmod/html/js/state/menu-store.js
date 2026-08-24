@@ -44,7 +44,7 @@ function GetGamemodeInfo(name) {
 				tag: "",
 				tag_set: false,
 				workshopid: "",
-			}),
+			})
 		);
 	}
 	return MenuStore.gamemodeDetails[key];
@@ -85,7 +85,7 @@ var MenuActions = {
 			"engine.SetMounted( %s, " +
 				(mount.mounted ? "true" : "false") +
 				" )",
-			String(mount.depot),
+			String(mount.depot)
 		);
 	},
 
@@ -97,7 +97,7 @@ var MenuActions = {
 		luaRun(
 			"server-list.AddCurrentServerToFavorites( " +
 				(add ? "true" : "false") +
-				" )",
+				" )"
 		);
 	},
 
@@ -121,7 +121,7 @@ var MenuActions = {
 	showNews: function () {
 		if (MenuStore.branch !== "unknown")
 			return luaRun(
-				"gui.OpenURL( 'https://commits.facepunch.com/r/garrysmod.main' )",
+				"gui.OpenURL( 'https://commits.facepunch.com/r/garrysmod.main' )"
 			);
 
 		luaRun("gui.OpenURL( 'http://gmod.facepunch.com/changes/' )");
@@ -152,13 +152,13 @@ var MenuActions = {
 		if (scales[kinect.colorSize]) {
 			luaRun(
 				'RunConsoleCommand( "sensor_color_scale", %s )',
-				scales[kinect.colorSize],
+				scales[kinect.colorSize]
 			);
 		}
 
 		luaRun(
 			'RunConsoleCommand( "sensor_color_show", %s )',
-			kinect.showColor ? "1" : "0",
+			kinect.showColor ? "1" : "0"
 		);
 	},
 };
@@ -194,7 +194,7 @@ function setupSoundHooks() {
 	document.addEventListener("mouseover", function (e) {
 		var target = closestElement(
 			e.target,
-			".options a, .noisy, .ui-sound-return",
+			".options a, .noisy, .ui-sound-return"
 		);
 		if (target && (!e.relatedTarget || !target.contains(e.relatedTarget)))
 			luaPlaySound("garrysmod/ui_hover.wav");

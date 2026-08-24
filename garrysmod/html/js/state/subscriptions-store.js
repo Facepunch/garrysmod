@@ -46,7 +46,7 @@ var Subscriptions = {
 			"steamworks.SetShouldMountAddon( %s, " +
 				(b ? "true" : "false") +
 				" )",
-			String(wsid),
+			String(wsid)
 		);
 	},
 

@@ -51,7 +51,7 @@ var AddonsPage = {
 					preset.name
 						.toLowerCase()
 						.indexOf(
-							self.AddonsStore.presetSearchText.toLowerCase(),
+							self.AddonsStore.presetSearchText.toLowerCase()
 						) !== -1
 				);
 			});

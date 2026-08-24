@@ -10,7 +10,7 @@ function getNiceSize(size) {
 function StripWeirdSymbols(name) {
 	var ret = String(name).replace(
 		/[\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g,
-		"",
+		""
 	);
 	ret = ret.replace(/([\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF])/g, "");
 	return ret;
@@ -90,7 +90,7 @@ function sortByKeys(list, keys, reverse) {
 
 			if (typeof av === "string" || typeof bv === "string") {
 				result = String(av == null ? "" : av).localeCompare(
-					String(bv == null ? "" : bv),
+					String(bv == null ? "" : bv)
 				);
 			} else {
 				var an = av == null ? 0 : av;

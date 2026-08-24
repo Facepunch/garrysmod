@@ -96,7 +96,7 @@ var ServerActions = {
 		luaRun(
 			"GetServers( %s, %s )",
 			type,
-			String(ServersStore.requestNum[type]),
+			String(ServersStore.requestNum[type])
 		);
 
 		setKey(ServersStore.refreshing, type, true);
@@ -192,12 +192,12 @@ var ServerActions = {
 		if (server.favorite)
 			luaRun(
 				"serverlist.AddServerToFavorites( %s )",
-				String(server.address),
+				String(server.address)
 			);
 		else
 			luaRun(
 				"serverlist.RemoveServerFromFavorites( %s )",
-				String(server.address),
+				String(server.address)
 			);
 	},
 
@@ -228,7 +228,7 @@ var ServerActions = {
 		current.hasPreferFlags = objValues(current.filterFlags).some(
 			function (v) {
 				return v === true;
-			},
+			}
 		);
 	},
 
@@ -300,7 +300,7 @@ var ServerActions = {
 
 		luaRun(
 			"FindServersAtAddress( %s )",
-			ServersStore.findServerString.trim(),
+			ServersStore.findServerString.trim()
 		);
 	},
 
@@ -310,7 +310,7 @@ var ServerActions = {
 
 		var offset = Math.max(
 			Math.floor(elem.scrollTop / 26) - ServersStore.serversPerPage / 4,
-			0,
+			0
 		);
 		offset -= offset % 2;
 		current.server_offset = offset;
@@ -366,7 +366,7 @@ function AddServer(
 	version,
 	isFav,
 	loc,
-	gmcat,
+	gmcat
 ) {
 	if (Number(id) !== ServersStore.requestNum[type]) return;
 
@@ -444,7 +444,7 @@ function AddServer(
 	setKey(
 		ServersStore.serverCount,
 		type,
-		(ServersStore.serverCount[type] || 0) + 1,
+		(ServersStore.serverCount[type] || 0) + 1
 	);
 }
 

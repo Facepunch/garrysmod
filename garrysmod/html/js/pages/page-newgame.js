@@ -14,7 +14,7 @@ var NewGamePage = {
 			return sortByKeys(NewGameStore.mapList, "order").filter(
 				function (cat) {
 					return self.NewGameActions.countFiltered(cat.maps) > 0;
-				},
+				}
 			);
 		},
 		maxPlayersLabel: function () {
@@ -78,7 +78,7 @@ var NewGamePage = {
 		mapsInCategory: function (category) {
 			var filtered = NewGameActions.filterMaps(
 				category.maps,
-				NewGameStore.search,
+				NewGameStore.search
 			);
 			return filtered.slice().sort(function (a, b) {
 				return a.localeCompare(b);

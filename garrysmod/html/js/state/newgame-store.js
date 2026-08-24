@@ -115,7 +115,7 @@ var NewGameActions = {
 		luaRun('RunConsoleCommand( "disconnect" )');
 		luaRun(
 			'RunConsoleCommand( "maxplayers", %s )',
-			String(state.maxPlayers),
+			String(state.maxPlayers)
 		);
 
 		if (state.maxPlayers > 0) {
@@ -129,39 +129,39 @@ var NewGameActions = {
 				luaRun(
 					"RunConsoleCommand( %s, %s )",
 					saved.Numeric[k].name,
-					String(saved.Numeric[k].Value),
+					String(saved.Numeric[k].Value)
 				);
 
 			for (var j in saved.Text)
 				luaRun(
 					"RunConsoleCommand( %s, %s )",
 					saved.Text[j].name,
-					saved.Text[j].Value,
+					saved.Text[j].Value
 				);
 
 			for (var m in saved.CheckBox)
 				luaRun(
 					"RunConsoleCommand( %s, %s )",
 					saved.CheckBox[m].name,
-					saved.CheckBox[m].Value ? "1" : "0",
+					saved.CheckBox[m].Value ? "1" : "0"
 				);
 
 			luaRun('RunConsoleCommand( "hostname", %s )', saved.hostname);
 			luaRun(
 				'RunConsoleCommand( "p2p_enabled", %s )',
-				saved.p2p_enabled ? "1" : "0",
+				saved.p2p_enabled ? "1" : "0"
 			);
 			luaRun(
 				'RunConsoleCommand( "p2p_friendsonly", %s )',
-				saved.p2p_friendsonly ? "1" : "0",
+				saved.p2p_friendsonly ? "1" : "0"
 			);
 			luaRun(
 				'RunConsoleCommand( "sv_lan", %s )',
-				saved.sv_lan ? "1" : "0",
+				saved.sv_lan ? "1" : "0"
 			);
 			luaRun(
 				'RunConsoleCommand( "maxplayers", %s )',
-				String(state.maxPlayers),
+				String(state.maxPlayers)
 			);
 			luaRun('RunConsoleCommand( "map", %s )', String(state.map).trim());
 		}, 200);
