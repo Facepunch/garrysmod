@@ -174,11 +174,15 @@ if ( SERVER ) then
 
 	end
 
+	local cleanupRunning = false
+
 	function CC_AdminCleanup( pl, command, args )
 
 		if ( IsValid( pl ) && !pl:IsAdmin() ) then return end
 
 		if ( !args[ 1 ] ) then
+
+			if ( cleanupRunning ) then return end
 
 			for key, ply in pairs( cleanup_list ) do
 
@@ -196,7 +200,11 @@ if ( SERVER ) then
 
 			end
 
+			cleanupRunning = true
+
 			game.CleanUpMap( false, nil, function()
+				cleanupRunning = false
+
 				-- Send tooltip command to client
 				if ( IsValid( pl ) ) then pl:SendLua( "hook.Run('OnCleanup','all')" ) end
 			end )
