@@ -101,14 +101,6 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.handleFilterChange = function (which) {
-		if (which === 1 && !AddonsStore.filterDisabledOnly)
-			AddonsStore.filterEnabledOnly = false;
-		if (which === 0 && !AddonsStore.filterEnabledOnly)
-			AddonsStore.filterDisabledOnly = false;
-		store.switchWithTag(store.category, 0, store.tagged, store.mapName);
-	};
-
-	store.handleFilterChange = function (which) {
 		if (which === 1) store.filterEnabledOnly = false;
 		if (which === 0) store.filterDisabledOnly = false;
 		store.switchWithTag(store.category, 0, store.tagged, store.mapName);
