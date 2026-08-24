@@ -378,7 +378,7 @@ pagination {
 	left: 0;
 	right: 0;
 	z-index: 64;
-	max-width: 500px;
+	max-width: 620px;
 	margin: 0 auto;
 	padding: 4px;
 	background-color: #fff;
@@ -413,6 +413,7 @@ pagination .next {
 pagination .pages {
 	margin-top: 6px;
 	overflow: hidden;
+	white-space: nowrap;
 }
 
 pagination .pages span {
