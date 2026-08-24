@@ -221,6 +221,8 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.ReceiveFileInfo = function (id, data) {
+		if (!data) return;
+
 		for (var i = 0; i < store.files.length; i++) {
 			var file = store.files[i];
 			if (String(file.id) !== String(id)) continue;

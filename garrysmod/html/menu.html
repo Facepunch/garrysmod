@@ -569,9 +569,7 @@
 							</preview>
 
 							<name :class="{ subscription: store.category === 'subscribed' }">
-								<label @click="MenuActions.openWorkshopFile( file.id )">{{ file.extra.title || file.info.title }}
-									<span v-if="!file.extra.title && !file.info.title">{{ t('ugc.loading') }}</span>
-								</label>
+								<label @click="MenuActions.openWorkshopFile( file.id )">{{ (file.extra && file.extra.title) || (file.info && file.info.title) || t('ugc.loading') }}</label>
 							</name>
 							<author v-if="!file.local">{{ file.info.ownername }}<span v-if="!file.info.ownername">{{ t('ugc.loading') }}</span></author>
 							<size v-if="fileHasSize( file )">{{ getNiceSize( file.info.size ) }}</size>
@@ -833,7 +831,7 @@
 				</preview>
 
 				<name>
-					<label @click="openWorkshopFile()">{{ file.info.title }}<span v-if="!file.info.title">{{ t('ugc.loading') }}</span></label>
+					<label @click="openWorkshopFile()">{{ (file.info && file.info.title) || t('ugc.loading') }}</label>
 				</name>
 				<author v-if="!file.local">{{ file.info.ownername }}<span v-if="!file.info.ownername">{{ t('ugc.loading') }}</span></author>
 				<votes v-if="!file.local && upvotes() > 0" style="color: #4a4">+{{ num0(upvotes()) }}</votes>
