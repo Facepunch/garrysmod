@@ -637,7 +637,7 @@
 							</div>
 						</div>
 						<div class="settings-column">
-							<a @click="AddonActions.openCreatePresetMenu()">{{ t('addons.modal-preset') }}</a>
+							<a @click="AddonActions.openCreatePresetMenu()">{{ t('addons.create_preset') }}</a>
 							<a @click="AddonActions.openLoadPresetMenu()">{{ t('addons.load_preset') }}</a>
 							<a @click="AddonActions.openImportPresetMenu()">{{ t('addons.import_preset') }}</a>
 						</div>
@@ -650,7 +650,7 @@
 
 				<div class="modaldialog" v-if="AddonsStore.createPresetOpen">
 					<div class="centermessage left modal-preset">
-						<b>{{ t('addons.modal-preset') }}</b>
+						<b>{{ t('addons.create_preset') }}</b>
 						<br/><br/>
 						<input type="text" class="preset-name" v-model="AddonsStore.presetName" :placeholder="t('addons.preset_name_placeholder')"/><br/>
 						<br/>
@@ -662,7 +662,7 @@
 						<input type="radio" name="createpreset_newitems" value="disable" v-model="AddonsStore.presetNewAction" id="cp_disable"/><label for="cp_disable">{{ t('addons.action_disable') }}</label><br/>
 						<input type="radio" name="createpreset_newitems" value="enable" v-model="AddonsStore.presetNewAction" id="cp_enable"/><label for="cp_enable">{{ t('addons.action_enable') }}</label><br/>
 						<br/>
-						<a @click="AddonActions.createNewPreset()" :class="{ disabled: AddonsStore.presetName === '' }" class="create big">{{ t('addons.modal-preset') }}</a>
+						<a @click="AddonActions.createNewPreset()" :class="{ disabled: AddonsStore.presetName === '' }" class="create big">{{ t('addons.create_preset') }}</a>
 						<hr>
 						<a @click="AddonActions.closePopupMessage()">{{ t('addons.cancel') }}</a>
 					</div>
@@ -706,7 +706,7 @@
 								</div>
 							</div>
 							<div class="preset-data" v-if="selectedPresetData">
-								<b>{{ t('addons.preset-name') }}</b> {{ selectedPresetData.name }}<br/>
+								<b>{{ t('addons.preset_name') }}</b> {{ selectedPresetData.name }}<br/>
 								<b>{{ t('addons.preset_enabled') }}</b> {{ selectedPresetData.enabled.length }}<br/>
 								<b>{{ t('addons.preset_disabled') }}</b> {{ selectedPresetData.disabled.length }}<br/>
 								<input type="checkbox" v-model="AddonsStore.loadPresetResub" id="LoadPresetResub"/><label for="LoadPresetResub">{{ t('addons.preset_resub_missing') }}</label><br/>
