@@ -34,7 +34,7 @@ function createWorkshopStore(nameSpace) {
 			store.category,
 			store.offset + delta,
 			store.tagged,
-			store.mapName,
+			store.mapName
 		);
 	};
 
@@ -48,7 +48,7 @@ function createWorkshopStore(nameSpace) {
 			store.category,
 			offset,
 			store.tagged,
-			store.mapName,
+			store.mapName
 		);
 	};
 
@@ -71,8 +71,15 @@ function createWorkshopStore(nameSpace) {
 		store.loading = true;
 
 		var filter = "";
-		if (store.filterEnabledOnly) filter = "enabledonly";
-		if (store.filterDisabledOnly) filter = "disabledonly";
+		var searchText = "";
+		var sortMethod = "subscribed";
+
+		if (typeof AddonsStore !== "undefined") {
+			if (AddonsStore.filterEnabledOnly) filter = "enabledonly";
+			if (AddonsStore.filterDisabledOnly) filter = "disabledonly";
+			searchText = AddonsStore.subscriptionSearchText || "";
+			sortMethod = AddonsStore.ugcSortMethod || "subscribed";
+		}
 
 		store.updatePageNav();
 
@@ -87,10 +94,18 @@ function createWorkshopStore(nameSpace) {
 			store.offset,
 			store.perPage,
 			tag,
-			store.subscriptionSearchText || "",
+			searchText,
 			filter,
-			store.ugcSortMethod || "subscribed",
+			sortMethod
 		);
+	};
+
+	store.handleFilterChange = function (which) {
+		if (which === 1 && !AddonsStore.filterDisabledOnly)
+			AddonsStore.filterEnabledOnly = false;
+		if (which === 0 && !AddonsStore.filterEnabledOnly)
+			AddonsStore.filterDisabledOnly = false;
+		store.switchWithTag(store.category, 0, store.tagged, store.mapName);
 	};
 
 	store.handleFilterChange = function (which) {
@@ -131,7 +146,7 @@ function createWorkshopStore(nameSpace) {
 		luaPlaySound(
 			b
 				? "npc/roller/mine/rmine_chirp_answer1.wav"
-				: "buttons/button10.wav",
+				: "buttons/button10.wav"
 		);
 	};
 
@@ -144,7 +159,7 @@ function createWorkshopStore(nameSpace) {
 		luaPlaySound(
 			b
 				? "npc/roller/mine/rmine_chirp_answer1.wav"
-				: "buttons/button10.wav",
+				: "buttons/button10.wav"
 		);
 	};
 
@@ -199,7 +214,7 @@ function createWorkshopStore(nameSpace) {
 			setKey(
 				store.files[store.files.length - 1],
 				"extra",
-				data.extraresults ? data.extraresults[k] : {},
+				data.extraresults ? data.extraresults[k] : {}
 			);
 		}
 
