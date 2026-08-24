@@ -1,4 +1,4 @@
-const ServersStore = Vue.reactive({
+var ServersStore = Vue.observable({
 	type: null,
 	types: {},
 	requestNum: {},
@@ -32,24 +32,24 @@ const ServersStore = Vue.reactive({
 	playerListInterval: 0,
 });
 
-const ServerActions = {
-	getTypeData(type) {
+var ServerActions = {
+	getTypeData: function (type) {
 		if (!ServersStore.types[type]) {
-			ServersStore.types[type] = Vue.reactive({
+			setKey(ServersStore.types, type, Vue.observable({
 				gamemodes: {},
 				list: [],
-			});
+			}));
 		}
 		return ServersStore.types[type];
 	},
 
-	getGamemode(name, type) {
+	getGamemode: function (name, type) {
 		if (!ServersStore.types[type]) return;
 
-		const data = this.getTypeData(type);
+		var data = this.getTypeData(type);
 		if (data.gamemodes[name]) return data.gamemodes[name];
 
-		const gm = Vue.reactive({
+		var gm = Vue.observable({
 			name: name,
 			servers: [],
 			num_servers: 0,
@@ -66,29 +66,31 @@ const ServerActions = {
 			search: "",
 			element_class: "",
 			order: 0,
+			flags: {},
+			hasflags: false,
 		});
 
-		data.gamemodes[name] = gm;
+		setKey(data.gamemodes, name, gm);
 		data.list.push(gm);
 
 		return gm;
 	},
 
-	stopRefresh() {
+	stopRefresh: function () {
 		if (!ServersStore.type) return;
 		luaRun("DoStopServers( %s )", ServersStore.type);
 	},
 
-	refresh() {
-		const type = ServersStore.type;
+	refresh: function () {
+		var type = ServersStore.type;
 		if (!type) return;
 
 		ServersStore.requestNum[type] =
 			(ServersStore.requestNum[type] || 0) + 1;
 
-		const data = this.getTypeData(type);
+		var data = this.getTypeData(type);
 		data.gamemodes = {};
-		data.list.length = 0;
+		data.list = [];
 		ResetGamemodeInfo();
 
 		luaRun(
@@ -97,16 +99,16 @@ const ServerActions = {
 			String(ServersStore.requestNum[type]),
 		);
 
-		ServersStore.refreshing[type] = true;
-		ServersStore.serverCount[type] = 0;
+		setKey(ServersStore.refreshing, type, true);
+		setKey(ServersStore.serverCount, type, 0);
 	},
 
-	switchType(type) {
+	switchType: function (type) {
 		if (ServersStore.type === type) return;
 
 		this.stopRefresh();
 
-		const firstTime = !ServersStore.types[type];
+		var firstTime = !ServersStore.types[type];
 
 		this.getTypeData(type);
 
@@ -118,13 +120,14 @@ const ServerActions = {
 		}
 	},
 
-	selectGamemode(gm) {
+	selectGamemode: function (gm) {
 		ServersStore.currentGamemode = gm;
 		if (gm) gm.server_offset = 0;
 	},
 
-	selectServer(server, event) {
-		const current = ServersStore.currentGamemode;
+	selectServer: function (server, event) {
+		var current = ServersStore.currentGamemode;
+		var self = this;
 
 		if (server == null) {
 			if (current) current.selected = null;
@@ -144,17 +147,17 @@ const ServerActions = {
 		this.requestPlayerList(server.address);
 
 		clearInterval(ServersStore.playerListInterval);
-		ServersStore.playerListInterval = setInterval(() => {
-			this.requestPlayerList(server.address);
+		ServersStore.playerListInterval = setInterval(function () {
+			self.requestPlayerList(server.address);
 			luaRun("PingServer( %s )", server.address);
 		}, 10000);
 	},
 
-	requestPlayerList(address) {
+	requestPlayerList: function (address) {
 		luaRun("GetPlayerList( %s )", address);
 	},
 
-	changeOrder(gm, order) {
+	changeOrder: function (gm, order) {
 		if (gm.orderByMain === order) {
 			gm.orderReverse = !gm.orderReverse;
 			return;
@@ -165,13 +168,13 @@ const ServerActions = {
 		gm.orderReverse = false;
 	},
 
-	gamemodeName(gm) {
+	gamemodeName: function (gm) {
 		if (!gm) return "Unknown Gamemode";
 		if (gm.info && gm.info.title) return StripWeirdSymbols(gm.info.title);
 		return StripWeirdSymbols(gm.name);
 	},
 
-	joinServer(srv) {
+	joinServer: function (srv) {
 		clearInterval(ServersStore.playerListInterval);
 		ServersStore.joinIfHasSlot = false;
 
@@ -183,7 +186,7 @@ const ServerActions = {
 		this.stopRefresh();
 	},
 
-	toggleFavorite(server) {
+	toggleFavorite: function (server) {
 		server.favorite = !server.favorite;
 
 		if (server.favorite)
@@ -198,39 +201,39 @@ const ServerActions = {
 			);
 	},
 
-	installGamemode(gm) {
+	installGamemode: function (gm) {
 		if (!gm || !gm.info || !gm.info.workshopid) return;
 		luaRun("steamworks.Subscribe( %s )", String(gm.info.workshopid));
 	},
 
-	shouldShowInstall(gm) {
+	shouldShowInstall: function (gm) {
 		if (!gm || !gm.info) return false;
-		const wsid = gm.info.workshopid;
+		var wsid = gm.info.workshopid;
 		if (!wsid || wsid === "") return false;
 		return !Subscriptions.contains(String(wsid));
 	},
 
-	filterFlag(flag) {
-		const current = ServersStore.currentGamemode;
+	filterFlag: function (flag) {
+		var current = ServersStore.currentGamemode;
 		if (!current) return;
 
 		if (current.filterFlags[flag] === false) {
-			delete current.filterFlags[flag];
+			delKey(current.filterFlags, flag);
 		} else if (current.filterFlags[flag] === true) {
-			current.filterFlags[flag] = undefined;
+			setKey(current.filterFlags, flag, undefined);
 		} else {
-			current.filterFlags[flag] = true;
+			setKey(current.filterFlags, flag, true);
 		}
 
-		current.hasPreferFlags = Object.values(current.filterFlags).some(
+		current.hasPreferFlags = objValues(current.filterFlags).some(
 			function (v) {
 				return v === true;
 			},
 		);
 	},
 
-	filterFlagClass(flag) {
-		const flags = ServersStore.currentGamemode
+	filterFlagClass: function (flag) {
+		var flags = ServersStore.currentGamemode
 			? ServersStore.currentGamemode.filterFlags
 			: {};
 		if (flags[flag] === undefined) return "";
@@ -238,9 +241,9 @@ const ServerActions = {
 		return "avoid";
 	},
 
-	serverFilter(server) {
-		const current = ServersStore.currentGamemode;
-		const f = ServersStore.filters;
+	serverFilter: function (server) {
+		var current = ServersStore.currentGamemode;
+		var f = ServersStore.filters;
 
 		if (
 			current.search &&
@@ -268,10 +271,10 @@ const ServerActions = {
 		return true;
 	},
 
-	gamemodeFilter(gm) {
+	gamemodeFilter: function (gm) {
 		if (ServersStore.gmSearch) {
-			const search = ServersStore.gmSearch.toLowerCase();
-			let found = gm.name.toLowerCase().indexOf(search) !== -1;
+			var search = ServersStore.gmSearch.toLowerCase();
+			var found = gm.name.toLowerCase().indexOf(search) !== -1;
 			if (
 				!found &&
 				gm.info &&
@@ -291,7 +294,7 @@ const ServerActions = {
 		return true;
 	},
 
-	findServersAtAddress() {
+	findServersAtAddress: function () {
 		ServersStore.foundServers = [];
 		if (ServersStore.findServerString.length <= 0) return;
 
@@ -301,11 +304,11 @@ const ServerActions = {
 		);
 	},
 
-	updateInfiniteScroll(elem) {
-		const current = ServersStore.currentGamemode;
+	updateInfiniteScroll: function (elem) {
+		var current = ServersStore.currentGamemode;
 		if (!current) return;
 
-		let offset = Math.max(
+		var offset = Math.max(
 			Math.floor(elem.scrollTop / 26) - ServersStore.serversPerPage / 4,
 			0,
 		);
@@ -315,7 +318,7 @@ const ServerActions = {
 };
 
 function CalculateRank(server) {
-	let recommended = server.ping;
+	var recommended = server.ping;
 
 	if (server.players === 0) recommended += 75;
 	if (server.pass || server.version_c < 0) recommended += 300;
@@ -331,10 +334,10 @@ function CalculateRank(server) {
 }
 
 function GetHighestKey(obj) {
-	let h = 0;
-	let v = "";
+	var h = 0;
+	var v = "";
 
-	for (const k in obj) {
+	for (var k in obj) {
 		if (h === 0 || obj[k] > h) {
 			h = obj[k];
 			v = k;
@@ -375,7 +378,7 @@ function AddServer(
 	if (gmcat && ServersStore.gmCats.indexOf(gmcat) === -1) gmcat = "";
 	if (loc && !loc.match(/^[a-zA-Z]+$/)) loc = "";
 
-	const data = {
+	var data = {
 		ping: parseInt(ping),
 		name: StripWeirdSymbols(name.trim()),
 		desc: desc,
@@ -406,7 +409,7 @@ function AddServer(
 
 	data.hasmap = DoWeHaveMap(data.map);
 
-	const actualDate = new Date(data.lastplayed);
+	var actualDate = new Date(data.lastplayed);
 	data.lastplayedDate =
 		pad(actualDate.getDate()) +
 		"." +
@@ -421,7 +424,7 @@ function AddServer(
 	data.listen = data.desc.indexOf("[L]") >= 0;
 	if (data.listen) data.desc = data.desc.substr(4);
 
-	const gm = ServerActions.getGamemode(data.gamemode, type);
+	var gm = ServerActions.getGamemode(data.gamemode, type);
 	if (!gm) return;
 
 	gm.servers.push(data);
@@ -438,16 +441,20 @@ function AddServer(
 
 	gm.order = gm.sort_players;
 
-	ServersStore.serverCount[type] = (ServersStore.serverCount[type] || 0) + 1;
+	setKey(
+		ServersStore.serverCount,
+		type,
+		(ServersStore.serverCount[type] || 0) + 1,
+	);
 }
 
 function UpdateGamemodeInfo(server, type, gm) {
-	const gi = GetGamemodeInfo(server.gamemode);
-
-	if (!gi.titles) gi.titles = {};
+	var gi = GetGamemodeInfo(server.gamemode);
 
 	if (server.desc == server.gamemode.toLowerCase()) {
-		for (const name of Object.keys(gi.titles)) {
+		var names = Object.keys(gi.titles);
+		for (var i = 0; i < names.length; i++) {
+			var name = names[i];
 			if (
 				name != name.toLowerCase() &&
 				name.toLowerCase() == server.gamemode.toLowerCase()
@@ -458,21 +465,20 @@ function UpdateGamemodeInfo(server, type, gm) {
 		}
 	}
 
-	if (!gi.titles[server.desc]) gi.titles[server.desc] = 0;
-	gi.titles[server.desc] += Math.min(server.players, 10);
+	gi.titles[server.desc] =
+		(gi.titles[server.desc] || 0) + Math.min(server.players, 10);
 	if (server.desc == server.gamemode) gi.titles[server.desc] = 0;
 	gi.title = GetHighestKey(gi.titles);
 
 	if (server.category !== "") {
-		if (!gi.categories) gi.categories = {};
-		if (!gi.categories[server.category]) gi.categories[server.category] = 1;
-		else gi.categories[server.category]++;
+		gi.categories[server.category] =
+			(gi.categories[server.category] || 0) + 1;
 		gi.tag = GetHighestKey(gi.categories);
 		if (gi.tag) gi.tag_set = true;
 	}
 
 	if (!gi.tag_set) {
-		const title = gi.title || "";
+		var title = gi.title || "";
 		if (
 			title.toLowerCase().indexOf("roleplay") !== -1 ||
 			title.indexOf(" RP") !== -1 ||
@@ -484,23 +490,21 @@ function UpdateGamemodeInfo(server, type, gm) {
 	}
 
 	if (server.workshopid != "" && server.workshopid != "0") {
-		if (!gi.wsid) gi.wsid = {};
-		if (!gi.wsid[server.workshopid]) gi.wsid[server.workshopid] = 1;
-		else gi.wsid[server.workshopid]++;
+		gi.wsid[server.workshopid] =
+			(gi.wsid[server.workshopid] || 0) + 1;
 		gi.workshopid = GetHighestKey(gi.wsid);
 	}
 
 	if (server.flag !== "") {
-		if (!gm.flags) gm.flags = {};
-		gm.flags[server.flag] = true;
+		setKey(gm.flags, server.flag, true);
 		gm.hasflags = true;
 	}
 }
 
 function SetPlayerList(serverip, players) {
-	const current = ServersStore.currentGamemode;
+	var current = ServersStore.currentGamemode;
 	if (!current || !current.selected) return;
 	if (current.selected.address != serverip) return;
 
-	current.selected.playerlist = players;
+	setKey(current.selected, "playerlist", players);
 }

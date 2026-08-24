@@ -1,8 +1,8 @@
 function luaFormat(cmd, args) {
-	let str = "";
-	let arg = 0;
+	var str = "";
+	var arg = 0;
 
-	for (let i = 0; i < cmd.length; i++) {
+	for (var i = 0; i < cmd.length; i++) {
 		if (cmd[i] === "%") {
 			i++;
 
@@ -24,9 +24,15 @@ function luaFormat(cmd, args) {
 	return str;
 }
 
-function luaRun(cmd, ...args) {
+function luaArgs(args) {
+	return Array.prototype.slice.call(args);
+}
+
+function luaRun(cmd) {
+	var args = luaArgs(arguments).slice(1);
+
 	if (typeof lua !== "undefined" && typeof lua.Run === "function") {
-		lua.Run(cmd, ...args);
+		lua.Run.apply(lua, [cmd].concat(args));
 		return;
 	}
 

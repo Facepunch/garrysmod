@@ -1,13 +1,13 @@
-const NewsStore = Vue.reactive({
+var NewsStore = Vue.observable({
 	list: [],
 	currentItem: null,
 	hideNews: false,
 	anyNewItems: false,
 });
 
-const NewsActions = {
-	isNewItem(item) {
-		const date = Date.parse(item.Date);
+var NewsActions = {
+	isNewItem: function (item) {
+		var date = Date.parse(item.Date);
 		if (!isNaN(date) && date > Date.now() - 302400000) {
 			NewsStore.anyNewItems = true;
 			this.setHideNews(false);
@@ -16,16 +16,16 @@ const NewsActions = {
 		return false;
 	},
 
-	selectItem(item) {
+	selectItem: function (item) {
 		this.setHideNews(false, true);
 		NewsStore.currentItem = item;
 	},
 
-	openInSteam(url) {
+	openInSteam: function (url) {
 		luaRun("gui.OpenURL( %s )", url);
 	},
 
-	setHideNews(hide, save) {
+	setHideNews: function (hide, save) {
 		NewsStore.hideNews = hide;
 
 		if (save) {
@@ -33,13 +33,13 @@ const NewsActions = {
 		}
 	},
 
-	toggleNewsList() {
+	toggleNewsList: function () {
 		this.setHideNews(!NewsStore.hideNews, true);
 	},
 
-	updateList(newslist, hide) {
+	updateList: function (newslist, hide) {
 		if (newslist && typeof newslist.length === "undefined") {
-			newslist = Object.values(newslist);
+			newslist = objValues(newslist);
 		}
 
 		this.setHideNews(hide);
@@ -48,6 +48,7 @@ const NewsActions = {
 		NewsStore.anyNewItems = false;
 		NewsStore.currentItem = NewsStore.list[0] || null;
 
-		for (const item of NewsStore.list) this.isNewItem(item);
+		for (var i = 0; i < NewsStore.list.length; i++)
+			this.isNewItem(NewsStore.list[i]);
 	},
 };

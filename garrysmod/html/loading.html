@@ -26,19 +26,25 @@
 		</div>
 
 		<script type="text/javascript">
-			document.addEventListener("DOMContentLoaded", function () {
-				const today = new Date();
+			function addClass(element, name) {
+				var cls = element.className || "";
+				if ((" " + cls + " ").indexOf(" " + name + " ") === -1)
+					element.className = (cls + " " + name).trim();
+			}
 
-				const isHalloween =
+			document.addEventListener("DOMContentLoaded", function () {
+				var today = new Date();
+
+				var isHalloween =
 					(today.getMonth() == 9 && today.getDate() >= 15) ||
 					(today.getMonth() == 10 && today.getDate() <= 5);
-				const darkMode =
+				var darkMode =
 					today.getHours() >= 19 || today.getHours() <= 7;
 
 				const versionMatch = navigator.userAgent.match(/Chrome\/(\d+)/);
 				const supportsSystemDarkMode =
 					versionMatch && parseInt(versionMatch[1]) >= 76;
-				const systemDarkMode = window.matchMedia(
+				var systemDarkMode = window.matchMedia(
 					"(prefers-color-scheme: dark)",
 				).matches;
 
@@ -46,7 +52,7 @@
 					isHalloween ||
 					(supportsSystemDarkMode ? systemDarkMode : darkMode)
 				) {
-					document.body.classList.add("dark");
+					addClass(document.body, "dark");
 				}
 			});
 
@@ -61,7 +67,7 @@
 				lang,
 				gamemodeNice,
 			) {
-				const mapImg = "asset://mapimage/" + mapname;
+				var mapImg = "asset://mapimage/" + mapname;
 
 				document.querySelector("#serverName").innerText = servername;
 				document.querySelector("#serverMap").innerText = mapname;
@@ -70,7 +76,10 @@
 				document.querySelector("#mapimg").setAttribute("src", mapImg);
 				document.body.style.backgroundImage = "url('" + mapImg + "')";
 
-				document.querySelector(".server-info").classList.add("visible");
+				addClass(
+					document.querySelector(".server-info"),
+					"visible",
+				);
 			}
 
 			function DownloadingFile(file) {

@@ -8,7 +8,7 @@ function getNiceSize(size) {
 }
 
 function StripWeirdSymbols(name) {
-	let ret = String(name).replace(
+	var ret = String(name).replace(
 		/[\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g,
 		"",
 	);
@@ -23,9 +23,9 @@ function pad(num) {
 function FormatVersion(ver) {
 	if (!ver) return "Unknown version";
 
-	const y = Math.floor(ver / 10000);
-	const m = Math.floor((ver - y * 10000) / 100);
-	const d = ver - y * 10000 - m * 100;
+	var y = Math.floor(ver / 10000);
+	var m = Math.floor((ver - y * 10000) / 100);
+	var d = ver - y * 10000 - m * 100;
 	return (y > 99 ? pad(y) : "20" + pad(y)) + "." + pad(m) + "." + pad(d);
 }
 
@@ -45,34 +45,58 @@ function resolvePath(obj, path) {
 		}, obj);
 }
 
+function objValues(obj) {
+	var out = [];
+	for (var k in obj) {
+		if (Object.prototype.hasOwnProperty.call(obj, k)) out.push(obj[k]);
+	}
+	return out;
+}
+
+function setKey(obj, key, value) {
+	if (!obj) return;
+	if (Object.prototype.hasOwnProperty.call(obj, key)) obj[key] = value;
+	else Vue.set(obj, key, value);
+}
+
+function delKey(obj, key) {
+	if (obj && Object.prototype.hasOwnProperty.call(obj, key))
+		Vue.delete(obj, key);
+}
+
 function sortByKeys(list, keys, reverse) {
-	const specs = Array.isArray(keys) ? keys.slice() : [keys];
+	var specs = Array.isArray(keys) ? keys.slice() : [keys];
 	if (reverse) specs.push("__reverse__");
 
 	return list.slice().sort(function (a, b) {
-		for (const spec of specs) {
-			let dir = 1;
-			let key = spec;
+		for (var i = 0; i < specs.length; i++) {
+			var dir = 1;
+			var key = specs[i];
 
 			if (key === "__reverse__") {
 				dir = -1;
 				key = null;
-			} else if (typeof key === "string" && key.startsWith("-")) {
+			} else if (typeof key === "string" && key.indexOf("-") === 0) {
 				dir = -1;
 				key = key.substr(1);
 			}
 
-			const av = key === null ? a : resolvePath(a, key);
-			const bv = key === null ? b : resolvePath(b, key);
+			var av = key === null ? a : resolvePath(a, key);
+			var bv = key === null ? b : resolvePath(b, key);
 
 			if (av === bv) continue;
 
-			const result =
-				typeof av === "string" || typeof bv === "string"
-					? String(av ?? "").localeCompare(String(bv ?? ""))
-					: (av ?? 0) < (bv ?? 0)
-						? -1
-						: 1;
+			var result;
+
+			if (typeof av === "string" || typeof bv === "string") {
+				result = String(av == null ? "" : av).localeCompare(
+					String(bv == null ? "" : bv),
+				);
+			} else {
+				var an = av == null ? 0 : av;
+				var bn = bv == null ? 0 : bv;
+				result = an < bn ? -1 : 1;
+			}
 
 			return result * dir;
 		}

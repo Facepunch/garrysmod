@@ -1,47 +1,47 @@
-const SubscriptionsStore = Vue.reactive({
+var SubscriptionsStore = Vue.observable({
 	files: {},
 	filesUGC: {},
 });
 
-const Subscriptions = {
-	contains(id) {
+var Subscriptions = {
+	contains: function (id) {
 		id = String(id);
 		if (SubscriptionsStore.filesUGC[id] != null) return true;
 		return SubscriptionsStore.files[id] != null;
 	},
 
-	enabled(id) {
+	enabled: function (id) {
 		return SubscriptionsStore.files[String(id)]
 			? SubscriptionsStore.files[String(id)].mounted
 			: false;
 	},
 
-	getInvalidReason(id) {
-		const file = SubscriptionsStore.files[String(id)];
+	getInvalidReason: function (id) {
+		var file = SubscriptionsStore.files[String(id)];
 		if (!file) return undefined;
 		return file.invalid_reason;
 	},
 
-	setAllEnabled(b) {
-		for (const k in SubscriptionsStore.files) {
+	setAllEnabled: function (b) {
+		for (var k in SubscriptionsStore.files) {
 			this.setShouldMountAddon(k, b);
 		}
 	},
 
-	subscribe(wsid) {
+	subscribe: function (wsid) {
 		luaRun("steamworks.Subscribe( %s )", String(wsid));
 	},
-	unsubscribe(wsid) {
+	unsubscribe: function (wsid) {
 		luaRun("steamworks.Unsubscribe( %s )", String(wsid));
 	},
-	markUnused(wsid) {
+	markUnused: function (wsid) {
 		luaRun("steamworks.MarkDownloadedItemAsUnused( %s )", String(wsid));
 	},
-	applyChanges() {
+	applyChanges: function () {
 		luaRun("steamworks.ApplyAddons()");
 	},
 
-	setShouldMountAddon(wsid, b) {
+	setShouldMountAddon: function (wsid, b) {
 		luaRun(
 			"steamworks.SetShouldMountAddon( %s, " +
 				(b ? "true" : "false") +
@@ -50,47 +50,47 @@ const Subscriptions = {
 		);
 	},
 
-	unsubscribeAll() {
-		for (const k in SubscriptionsStore.files) {
+	unsubscribeAll: function () {
+		for (var k in SubscriptionsStore.files) {
 			this.unsubscribe(k);
 		}
 	},
 
-	getAll() {
+	getAll: function () {
 		return SubscriptionsStore.files;
 	},
 
-	getCount() {
+	getCount: function () {
 		return Object.keys(SubscriptionsStore.files).length;
 	},
 
-	Update(json) {
-		const oldNum = Object.keys(SubscriptionsStore.files).length;
+	Update: function (json) {
+		var oldNum = Object.keys(SubscriptionsStore.files).length;
 
-		const files = {};
-		for (const k in json) {
-			const wsid = String(json[k].wsid);
+		var files = {};
+		for (var k in json) {
+			var wsid = String(json[k].wsid);
 			if (wsid === "0") continue;
 			files[wsid] = json[k];
 		}
 
 		SubscriptionsStore.files = files;
 
-		const newNum = Object.keys(files).length;
+		var newNum = Object.keys(files).length;
 		if (oldNum < newNum) OnSubscriptionsChanged();
 	},
 
-	UpdateUGC(json) {
-		const oldNum = Object.keys(SubscriptionsStore.filesUGC).length;
+	UpdateUGC: function (json) {
+		var oldNum = Object.keys(SubscriptionsStore.filesUGC).length;
 
-		const files = {};
-		for (const k in json) {
+		var files = {};
+		for (var k in json) {
 			files[String(json[k].wsid)] = json[k];
 		}
 
 		SubscriptionsStore.filesUGC = files;
 
-		const newNum = Object.keys(files).length;
+		var newNum = Object.keys(files).length;
 		if (oldNum < newNum) OnSubscriptionsChanged();
 	},
 };

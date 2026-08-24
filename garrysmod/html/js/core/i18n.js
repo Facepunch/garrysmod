@@ -1,26 +1,26 @@
-const Lang = Vue.reactive({
+var Lang = Vue.observable({
 	cache: {},
 });
 
 function t(str) {
 	if (str == null) return "";
 
-	const parts = String(str).split(" ");
-	const key = parts.shift();
-	const suffix = parts.join(" ");
+	var parts = String(str).split(" ");
+	var key = parts.shift();
+	var suffix = parts.join(" ");
 
-	let base = Lang.cache[key];
+	var base = Lang.cache[key];
 
 	if (base == null) {
 		base = key;
 
 		if (window.language) {
-			const cached = language.Update(key, function (outStr) {
-				Lang.cache[key] = outStr;
+			var cached = language.Update(key, function (outStr) {
+				Vue.set(Lang.cache, key, outStr);
 			});
 
 			if (cached != null) {
-				Lang.cache[key] = cached;
+				Vue.set(Lang.cache, key, cached);
 				base = cached;
 			}
 		}

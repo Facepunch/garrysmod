@@ -9,7 +9,7 @@ function SetShowFavButton(show, fav) {
 
 function UpdateGamemodes(gm) {
 	MenuStore.gamemodes = [];
-	for (const k in gm) {
+	for (var k in gm) {
 		MenuStore.gamemodes.push(gm[k]);
 	}
 }
@@ -19,7 +19,8 @@ function UpdateCurrentGamemode(gm) {
 
 	MenuStore.gamemode = gm;
 
-	for (const g of MenuStore.gamemodes) {
+	for (var i = 0; i < MenuStore.gamemodes.length; i++) {
+		var g = MenuStore.gamemodes[i];
 		if (g.name === gm) MenuStore.gamemodeTitle = g.title;
 	}
 }
@@ -38,21 +39,21 @@ function UpdateVersion(version, netVersion, branch) {
 
 function UpdateLanguages(lang) {
 	MenuStore.languages = [];
-	for (const k in lang) {
+	for (var k in lang) {
 		MenuStore.languages.push(lang[k].substr(0, lang[k].length - 4));
 	}
 }
 
 function UpdateLanguage(lang) {
 	MenuStore.language = lang;
-	for (const k in Lang.cache) delete Lang.cache[k];
+	for (var k in Lang.cache) Vue.delete(Lang.cache, k);
 }
 
 function UpdateGames(games) {
 	MenuStore.games = [];
 
-	for (const k in games) {
-		const game = games[k];
+	for (var k in games) {
+		var game = games[k];
 		game.mounted = Number(game.mounted) == 1;
 		game.installed = Number(game.installed) == 1;
 		game.owned = Number(game.owned) == 1;
@@ -70,17 +71,17 @@ function UpdateAddonMaps(inmaps) {
 }
 
 function UpdateMaps(inmaps) {
-	const mapList = [];
-	const favList = {};
-	const mapIndex = {};
+	var mapList = [];
+	var favList = {};
+	var mapIndex = {};
 
-	for (const k in inmaps) {
-		let order = k;
+	for (var k in inmaps) {
+		var order = k;
 		if (k === "Sandbox") order = "2";
 		if (k === "Favourites") order = "1";
 
-		const maps = [];
-		for (const v in inmaps[k]) {
+		var maps = [];
+		for (var v in inmaps[k]) {
 			maps.push(inmaps[k][v]);
 			mapIndex[inmaps[k][v].toLowerCase()] = true;
 			if (k === "Favourites") favList[inmaps[k][v].toLowerCase()] = true;
@@ -110,8 +111,8 @@ function UpdateServerSettings(sttngs) {
 	sttngs.sv_lan = Number(sttngs.sv_lan) == 1;
 
 	if (sttngs.settings) {
-		for (const k in sttngs.settings) {
-			const s = sttngs.settings[k];
+		for (var k in sttngs.settings) {
+			var s = sttngs.settings[k];
 			if (!s.text) s.text = s.name;
 
 			if (s.type === "CheckBox") {
@@ -125,11 +126,12 @@ function UpdateServerSettings(sttngs) {
 		}
 	}
 
-	Object.assign(NewGameStore.serverSettings, sttngs);
+	for (var key in sttngs)
+		setKey(NewGameStore.serverSettings, key, sttngs[key]);
 }
 
 function FinishedServers(type) {
-	ServersStore.refreshing[type] = false;
+	setKey(ServersStore.refreshing, type, false);
 }
 
 function UpdateServer(
@@ -142,13 +144,13 @@ function UpdateServer(
 	botplayers,
 	pass,
 ) {
-	const current = ServersStore.currentGamemode;
+	var current = ServersStore.currentGamemode;
 	if (!current || !current.selected) {
 		clearInterval(ServersStore.playerListInterval);
 		return;
 	}
 
-	const server = current.selected;
+	var server = current.selected;
 	if (server.address != address) return;
 
 	server.ping = parseInt(ping);
@@ -173,7 +175,7 @@ function UpdateAddonDisabledState(noaddons, noworkshop) {
 }
 
 function ReceivedChildAddonInfo(info) {
-	compatState.childTitles[String(info.id)] = info.title;
+	setKey(compatState.childTitles, String(info.id), info.title);
 }
 
 function OnImportPresetFailed() {

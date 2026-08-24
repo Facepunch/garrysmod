@@ -1,5 +1,5 @@
 function createWorkshopStore(nameSpace) {
-	const store = Vue.reactive({
+	var store = Vue.observable({
 		nameSpace: nameSpace,
 
 		offset: 0,
@@ -22,6 +22,8 @@ function createWorkshopStore(nameSpace) {
 		iconMax: 181,
 
 		searchTimer: 0,
+
+		saveEnabled: false,
 	});
 
 	store.go = function (delta) {
@@ -37,7 +39,7 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.goToPage = function (page) {
-		const offset = (page - 1) * store.perPage;
+		var offset = (page - 1) * store.perPage;
 
 		if (offset >= store.totalResults) return;
 		if (offset < 0) return;
@@ -68,13 +70,13 @@ function createWorkshopStore(nameSpace) {
 		store.offset = offset;
 		store.loading = true;
 
-		let filter = "";
+		var filter = "";
 		if (store.filterEnabledOnly) filter = "enabledonly";
 		if (store.filterDisabledOnly) filter = "disabledonly";
 
 		store.updatePageNav();
 
-		let tag = store.tagged;
+		var tag = store.tagged;
 		if (store.mapName && store.tagged)
 			tag = store.tagged + "," + store.mapName;
 		else if (store.mapName) tag = store.mapName;
@@ -185,19 +187,25 @@ function createWorkshopStore(nameSpace) {
 		store.numResults = data.numresults;
 
 		store.files = [];
-		for (const k in data.results) {
+		for (var k in data.results) {
 			store.files.push({
 				order: k,
 				id: data.results[k],
 				filled: false,
 				info: {},
-				extra: data.extraresults ? data.extraresults[k] : {},
+				extra: {},
+				background: null,
 			});
+			setKey(
+				store.files[store.files.length - 1],
+				"extra",
+				data.extraresults ? data.extraresults[k] : {},
+			);
 		}
 
 		store.filesOther = [];
 		if (data.otherresults) {
-			for (const j in data.otherresults) {
+			for (var j in data.otherresults) {
 				store.filesOther.push(data.otherresults[j]);
 			}
 		}
@@ -206,7 +214,8 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.ReceiveFileInfo = function (id, data) {
-		for (const file of store.files) {
+		for (var i = 0; i < store.files.length; i++) {
+			var file = store.files[i];
 			if (String(file.id) !== String(id)) continue;
 
 			file.filled = true;
@@ -215,7 +224,8 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.ReceiveFileUserInfo = function (id, data) {
-		for (const file of store.files) {
+		for (var i = 0; i < store.files.length; i++) {
+			var file = store.files[i];
 			if (String(file.id) !== String(id)) continue;
 
 			if (file.info) {
@@ -227,7 +237,8 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.ReceiveUserName = function (id, data) {
-		for (const file of store.files) {
+		for (var i = 0; i < store.files.length; i++) {
+			var file = store.files[i];
 			if (!file.filled || !file.info || file.info.owner != id) continue;
 
 			file.info.ownername = data;
@@ -235,7 +246,8 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.ReceiveImage = function (id, url) {
-		for (const file of store.files) {
+		for (var i = 0; i < store.files.length; i++) {
+			var file = store.files[i];
 			if (String(file.id) !== String(id)) continue;
 
 			file.background = url;
@@ -243,16 +255,16 @@ function createWorkshopStore(nameSpace) {
 	};
 
 	store.refreshDimensions = function () {
-		const container = document.querySelector("workshopcontainer");
-		const rect = container
+		var container = document.querySelector("workshopcontainer");
+		var rect = container
 			? container.getBoundingClientRect()
 			: { width: 1024, height: 768 };
 
-		const w = Math.max(180, rect.width - 16);
-		const h = Math.max(180, rect.height - 16 - 48);
+		var w = Math.max(180, rect.width - 16);
+		var h = Math.max(180, rect.height - 16 - 48);
 
-		let iconswide = Math.floor(w / 180);
-		let iconstall = Math.floor(h / 180);
+		var iconswide = Math.floor(w / 180);
+		var iconstall = Math.floor(h / 180);
 
 		if (iconswide > 6) iconswide = 6;
 		if (iconstall > 4) iconstall = 4;
@@ -267,15 +279,15 @@ function createWorkshopStore(nameSpace) {
 	store.updatePageNav = function () {
 		store.page = Math.floor(store.offset / store.perPage) + 1;
 
-		const maxPages = 32;
-		const realMaxPages = Math.ceil(store.totalResults / store.perPage);
+		var maxPages = 32;
+		var realMaxPages = Math.ceil(store.totalResults / store.perPage);
 
-		const pageOfPages = Math.floor((store.page - 1) / maxPages);
-		const pageOffset = pageOfPages * maxPages;
+		var pageOfPages = Math.floor((store.page - 1) / maxPages);
+		var pageOffset = pageOfPages * maxPages;
 
 		store.pages = [];
 		for (
-			let i = pageOffset + 1;
+			var i = pageOffset + 1;
 			i < Math.min(realMaxPages + 1, pageOffset + 1 + maxPages);
 			i++
 		) {

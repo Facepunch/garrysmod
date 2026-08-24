@@ -1,7 +1,8 @@
-const NewGameStore = Vue.reactive({
+var NewGameStore = Vue.observable({
 	mapList: [],
 	mapListFav: {},
 	addonMapList: {},
+	mapIndex: {},
 
 	savedMap: null,
 	savedCategory: null,
@@ -15,6 +16,7 @@ const NewGameStore = Vue.reactive({
 		Text: [],
 		Numeric: [],
 		CheckBox: [],
+		settings: {},
 	},
 
 	map: "gm_flatgrass",
@@ -30,17 +32,17 @@ function DoWeHaveMap(map) {
 	return NewGameStore.mapIndex[map.toLowerCase()] || false;
 }
 
-const NewGameActions = {
-	filterMaps(maps, search) {
+var NewGameActions = {
+	filterMaps: function (maps, search) {
 		if (!search) return maps;
 
-		const addonMaps = [];
-		for (const addonName in NewGameStore.addonMapList) {
+		var addonMaps = [];
+		for (var addonName in NewGameStore.addonMapList) {
 			if (addonName.toLowerCase().indexOf(search.toLowerCase()) === -1)
 				continue;
 
-			for (const m of NewGameStore.addonMapList[addonName])
-				addonMaps.push(m);
+			var list = NewGameStore.addonMapList[addonName];
+			for (var i = 0; i < list.length; i++) addonMaps.push(list[i]);
 		}
 
 		return maps.filter(function (map) {
@@ -49,42 +51,42 @@ const NewGameActions = {
 		});
 	},
 
-	countFiltered(maps) {
+	countFiltered: function (maps) {
 		if (!NewGameStore.search) return maps.length;
 		return this.filterMaps(maps, NewGameStore.search).length;
 	},
 
-	switchCategory(category) {
+	switchCategory: function (category) {
 		NewGameStore.currentCategory = category;
 	},
 
-	selectMap(map) {
+	selectMap: function (map) {
 		NewGameStore.map = map;
 		NewGameStore.lastCategory = NewGameStore.currentCategory;
 	},
 
-	isFavMap(map) {
+	isFavMap: function (map) {
 		return NewGameStore.mapListFav[map.toLowerCase()] || false;
 	},
 
-	toggleFavMap(map) {
+	toggleFavMap: function (map) {
 		luaRun("ToggleFavourite( %s )", map);
 	},
 
-	mapIcon(map, category) {
+	mapIcon: function (map, category) {
 		if (category === "INFRA") return "img/incompatible.png";
 		if (NewGameStore.currentCategory !== category)
 			return "img/downloading.png";
 		return "asset://mapimage/" + map;
 	},
 
-	updateMaxPlayers(num) {
+	updateMaxPlayers: function (num) {
 		NewGameStore.maxPlayers = num;
 		localStorage.MaxPlayers = num;
 	},
 
-	onCheckboxChange() {
-		const s = NewGameStore.serverSettings;
+	onCheckboxChange: function () {
+		var s = NewGameStore.serverSettings;
 		s.sv_lan = Number(s.sv_lan) == 1;
 		s.p2p_enabled = Number(s.p2p_enabled) == 1;
 
@@ -102,8 +104,8 @@ const NewGameActions = {
 		this._oldSvLan = s.sv_lan;
 	},
 
-	startGame() {
-		const state = NewGameStore;
+	startGame: function () {
+		var state = NewGameStore;
 
 		luaRun("SaveLastMap( %s, %s )", state.map, state.lastCategory);
 
@@ -120,28 +122,28 @@ const NewGameActions = {
 			luaRun('RunConsoleCommand( "sv_cheats", "0" )');
 		}
 
-		const saved = JSON.parse(JSON.stringify(state.serverSettings));
+		var saved = JSON.parse(JSON.stringify(state.serverSettings));
 
 		setTimeout(function () {
-			for (const k in saved.Numeric)
+			for (var k in saved.Numeric)
 				luaRun(
 					"RunConsoleCommand( %s, %s )",
 					saved.Numeric[k].name,
 					String(saved.Numeric[k].Value),
 				);
 
-			for (const k in saved.Text)
+			for (var j in saved.Text)
 				luaRun(
 					"RunConsoleCommand( %s, %s )",
-					saved.Text[k].name,
-					saved.Text[k].Value,
+					saved.Text[j].name,
+					saved.Text[j].Value,
 				);
 
-			for (const k in saved.CheckBox)
+			for (var m in saved.CheckBox)
 				luaRun(
 					"RunConsoleCommand( %s, %s )",
-					saved.CheckBox[k].name,
-					saved.CheckBox[k].Value ? "1" : "0",
+					saved.CheckBox[m].name,
+					saved.CheckBox[m].Value ? "1" : "0",
 				);
 
 			luaRun('RunConsoleCommand( "hostname", %s )', saved.hostname);

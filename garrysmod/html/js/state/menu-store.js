@@ -1,4 +1,4 @@
-const MenuStore = Vue.reactive({
+var MenuStore = Vue.observable({
 	version: "0",
 	branch: "unknown",
 	problemCount: 0,
@@ -30,12 +30,22 @@ const MenuStore = Vue.reactive({
 });
 
 function GetGamemodeInfo(name) {
-	const key = String(name).toLowerCase();
+	var key = String(name).toLowerCase();
 	if (!MenuStore.gamemodeDetails[key]) {
-		MenuStore.gamemodeDetails[key] = Vue.reactive({
-			title: name,
-			name: key,
-		});
+		Vue.set(
+			MenuStore.gamemodeDetails,
+			key,
+			Vue.observable({
+				title: name,
+				name: key,
+				titles: {},
+				categories: {},
+				wsid: {},
+				tag: "",
+				tag_set: false,
+				workshopid: "",
+			}),
+		);
 	}
 	return MenuStore.gamemodeDetails[key];
 }
@@ -44,33 +54,33 @@ function ResetGamemodeInfo() {
 	MenuStore.gamemodeDetails = {};
 }
 
-const MenuActions = {
-	togglePopup(name) {
+var MenuActions = {
+	togglePopup: function (name) {
 		MenuStore.popup = MenuStore.popup === name ? null : name;
 	},
-	closePopups() {
+	closePopups: function () {
 		MenuStore.popup = null;
 	},
 
-	selectGamemode(gm) {
+	selectGamemode: function (gm) {
 		MenuStore.gamemode = gm.name;
 		MenuStore.gamemodeTitle = gm.title;
 		luaRun('RunConsoleCommand( "gamemode", %s )', gm.name);
 		MenuStore.popup = null;
 	},
 
-	selectLanguage(lang) {
+	selectLanguage: function (lang) {
 		MenuStore.language = lang;
-		for (const k in Lang.cache) delete Lang.cache[k];
+		for (var lk in Lang.cache) Vue.delete(Lang.cache, lk);
 		luaRun('RunConsoleCommand( "gmod_language", %s )', lang);
 		MenuStore.popup = null;
 	},
 
-	menuOption(command) {
+	menuOption: function (command) {
 		luaRun("RunGameUICommand( %s )", command);
 	},
 
-	gameMountChanged(mount) {
+	gameMountChanged: function (mount) {
 		luaRun(
 			"engine.SetMounted( %s, " +
 				(mount.mounted ? "true" : "false") +
@@ -79,11 +89,11 @@ const MenuActions = {
 		);
 	},
 
-	backToGame() {
+	backToGame: function () {
 		luaRun("gui.HideGameUI()");
 	},
 
-	toggleServerFavorites(add) {
+	toggleServerFavorites: function (add) {
 		luaRun(
 			"server-list.AddCurrentServerToFavorites( " +
 				(add ? "true" : "false") +
@@ -91,24 +101,24 @@ const MenuActions = {
 		);
 	},
 
-	disconnect() {
+	disconnect: function () {
 		luaRun("RunConsoleCommand( 'disconnect' )");
 	},
 
-	openWorkshopFile(id) {
+	openWorkshopFile: function (id) {
 		if (!id) return;
 		gmod.OpenWorkshopFile(String(id));
 	},
 
-	openFolder(foldername) {
+	openFolder: function (foldername) {
 		luaRun("OpenFolder( %s )", String(foldername));
 	},
 
-	openWorkshop() {
+	openWorkshop: function () {
 		luaRun("steamworks.OpenWorkshop()");
 	},
 
-	showNews() {
+	showNews: function () {
 		if (MenuStore.branch !== "unknown")
 			return luaRun(
 				"gui.OpenURL( 'https://commits.facepunch.com/r/garrysmod.main' )",
@@ -117,28 +127,28 @@ const MenuActions = {
 		luaRun("gui.OpenURL( 'http://gmod.facepunch.com/changes/' )");
 	},
 
-	toggleProblems() {
+	toggleProblems: function () {
 		luaRun("OpenProblemsPanel()");
 	},
 
-	updateKinect() {
-		const kinect = MenuStore.kinect;
+	updateKinect: function () {
+		var kinect = MenuStore.kinect;
 
 		if (kinect.showColor) luaRun("motionsensor.Start()");
 
-		const positions = {
+		var positions = {
 			topleft: ["32", "32"],
 			topright: ["-32", "32"],
 			bottomright: ["-32", "-32"],
 			bottomleft: ["32", "-32"],
 		};
-		const pos = positions[kinect.color];
+		var pos = positions[kinect.color];
 		if (pos) {
 			luaRun('RunConsoleCommand( "sensor_color_x", %s )', pos[0]);
 			luaRun('RunConsoleCommand( "sensor_color_y", %s )', pos[1]);
 		}
 
-		const scales = { small: "0.4", medium: "0.7", large: "1.0" };
+		var scales = { small: "0.4", medium: "0.7", large: "1.0" };
 		if (scales[kinect.colorSize]) {
 			luaRun(
 				'RunConsoleCommand( "sensor_color_scale", %s )',
@@ -164,17 +174,36 @@ if (
 	});
 }
 
+function matchesSelector(el, selector) {
+	if (!el || el.nodeType !== 1) return false;
+	if (el.matches) return el.matches(selector);
+	if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
+	return false;
+}
+
+function closestElement(el, selector) {
+	var node = el;
+	while (node && node.nodeType === 1) {
+		if (matchesSelector(node, selector)) return node;
+		node = node.parentNode;
+	}
+	return null;
+}
+
 function setupSoundHooks() {
 	document.addEventListener("mouseover", function (e) {
-		const target = e.target.closest(".options a, .noisy, .ui-sound-return");
+		var target = closestElement(
+			e.target,
+			".options a, .noisy, .ui-sound-return",
+		);
 		if (target && (!e.relatedTarget || !target.contains(e.relatedTarget)))
 			luaPlaySound("garrysmod/ui_hover.wav");
 	});
 
 	document.addEventListener("click", function (e) {
-		if (e.target.closest(".options a, .noisy"))
+		if (closestElement(e.target, ".options a, .noisy"))
 			luaPlaySound("garrysmod/ui_click.wav");
-		else if (e.target.closest(".ui-sound-return"))
+		else if (closestElement(e.target, ".ui-sound-return"))
 			luaPlaySound("garrysmod/ui_return.wav");
 	});
 }

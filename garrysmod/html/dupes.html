@@ -11,7 +11,7 @@
 	<body>
 		<div id="app"></div>
 
-		<script type="text/javascript" src="js/lib/vue.global.prod.js"></script>
+		<script type="text/javascript" src="js/lib/vue2.min.js"></script>
 
 		<script type="text/javascript" src="js/core/env.js"></script>
 		<script type="text/javascript" src="js/core/lua.js"></script>
@@ -27,10 +27,6 @@
 			src="js/state/workshop-store.js"
 		></script>
 		<script type="text/javascript" src="js/state/menu-store.js"></script>
-		<script type="text/javascript" src="js/state/news-store.js"></script>
-		<script type="text/javascript" src="js/state/newgame-store.js"></script>
-		<script type="text/javascript" src="js/state/servers-store.js"></script>
-		<script type="text/javascript" src="js/state/addons-store.js"></script>
 		<script type="text/javascript" src="js/state/stores.js"></script>
 
 		<script type="text/javascript" src="js/core/api.js"></script>
@@ -40,6 +36,69 @@
 			type="text/javascript"
 			src="js/pages/page-creations.js"
 		></script>
+
+		<script type="text/x-template" id="tpl-creations-app">
+			<div class="options">
+				<ul>
+					<li class="headline">{{ t(titleKey) }}</li>
+					<li class="subtitle"></li>
+
+					<li v-for="cat in myCategories" :key="'m' + cat">
+						<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+						<ul v-if="cat === store.category && cat !== 'local'" style="margin-top: 4px; margin-bottom: 15px;">
+							<li v-for="tag in subCategories" :key="'m' + cat + tag">
+								<a :href="'#/list/' + cat + '/' + tag + '/'" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="spacer">&nbsp;</li>
+
+					<li v-for="cat in categories" :key="cat">
+						<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+						<ul v-if="cat === store.category" style="margin-top: 4px; margin-bottom: 15px;">
+							<li v-for="tag in subCategories" :key="cat + tag">
+								<a :href="'#/list/' + cat + '/' + tag + '/'" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="spacer">&nbsp;</li>
+
+					<li v-for="cat in categoriesSecondary" :key="'s' + cat">
+						<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+						<ul v-if="cat === store.category" style="margin-top: 4px; margin-bottom: 15px;">
+							<li v-for="tag in subCategories" :key="'s' + cat + tag">
+								<a :href="'#/list/' + cat + '/' + tag + '/'" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="spacer">&nbsp;</li>
+
+					<li><button @click="saveAction()" :disabled="saveDisabled"
+						:class="[isSavesFlag ? 'savegamebutton' : 'savedupebutton', saveDisabled ? 'disabled' : '']">..
+					</button></li>
+				</ul>
+			</div>
+		</script>
+
+		<script type="text/x-template" id="tpl-creations-content">
+			<div class="page">
+				<div style="position: absolute; left: 0px; top: 0px; bottom: 0px; right: 0px;">
+					<workshopcontainer>
+						<workshopmessage v-if="store.loading">{{ t(titleKey + '.loading') }}</workshopmessage>
+						<workshopmessage v-if="(store.totalResults === 0 || store.numResults === 0) && !store.loading">{{ t(titleKey + '.noneonmap') }}</workshopmessage>
+
+						<WbEntry v-for="file in store.files" :key="file.order" :file="file" :store="store" :mode="titleKey === 'saves' ? 'saves' : 'dupes'" standalone></WbEntry>
+
+						<center>
+							<WbPagination :store="store"></WbPagination>
+						</center>
+					</workshopcontainer>
+				</div>
+			</div>
+		</script>
 
 		<script type="text/javascript">
 			window.addEventListener("DOMContentLoaded", function () {

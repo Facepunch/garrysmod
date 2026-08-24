@@ -1,6 +1,6 @@
-const Router = Vue.reactive({ path: "/" });
+var Router = Vue.observable({ path: "/" });
 
-const Routes = {
+var Routes = {
 	"/": "MainPage",
 	"/newgame/": "NewGamePage",
 	"/servers/": "ServersPage",
@@ -11,9 +11,10 @@ const Routes = {
 };
 
 function currentRoutePath() {
-	let hash = window.location.hash.replace(/^#/, "");
+	var hash = window.location.hash.replace(/^#/, "");
 	if (!Routes[hash]) {
-		const normalized = hash.endsWith("/") ? hash : hash + "/";
+		var normalized =
+			hash.charAt(hash.length - 1) === "/" ? hash : hash + "/";
 		if (Routes[normalized]) return normalized;
 		return "/";
 	}
@@ -31,51 +32,48 @@ window.addEventListener("hashchange", function () {
 
 Router.path = currentRoutePath();
 
-const App = {
-	setup() {
+var App = {
+	data: function () {
 		return {
-			currentPage: Vue.computed(function () {
-				return Routes[Router.path] || "MainPage";
-			}),
-			MenuStore,
-			MenuActions,
-			t,
+			Router: Router,
+			MenuStore: MenuStore,
+			MenuActions: MenuActions,
+			t: t,
 		};
 	},
-	template: `
-<div id="version" @click="MenuActions.showNews()" v-show="MenuStore.version">
-	<span v-if="MenuStore.branch !== 'unknown'">You are on the {{ MenuStore.branch }} branch. Click here to find out more. ( </span>{{ MenuStore.version }}<span v-if="MenuStore.branch !== 'unknown'"> )</span>
-</div>
-
-<component :is="currentPage"></component>
-
-<NavBar></NavBar>`,
+	computed: {
+		pageComponent: function () {
+			return Routes[this.Router.path] || "MainPage";
+		},
+	},
 };
+
+function registerComponents() {
+	Vue.component("NavBar", NavBar);
+	Vue.component("WbPagination", WbPagination);
+	Vue.component("WbEntry", WbEntry);
+
+	Vue.component("MainPage", MainPage);
+	Vue.component("NewGamePage", NewGamePage);
+	Vue.component("ServersPage", ServersPage);
+	Vue.component("AddonsPage", AddonsPage);
+	Vue.component("SavesPage", SavesPage);
+	Vue.component("DupesPage", DupesPage);
+	Vue.component("DemosPage", DemosPage);
+}
 
 function startApp() {
 	luaRun("UpdateMapList()");
 	luaRun("UpdateLanguages()");
 	luaRun("LoadNewsList()");
 
-	const app = Vue.createApp(App);
+	Vue.config.ignoredElements = CUSTOM_ELEMENTS;
 
-	app.config.compilerOptions.isCustomElement = function (tag) {
-		return CUSTOM_ELEMENTS.includes(tag);
-	};
+	registerComponents();
 
-	app.component("NavBar", NavBar);
-	app.component("WbPagination", WbPagination);
-	app.component("WbEntry", WbEntry);
+	App.template = "#tpl-app";
 
-	app.component("MainPage", MainPage);
-	app.component("NewGamePage", NewGamePage);
-	app.component("ServersPage", ServersPage);
-	app.component("AddonsPage", AddonsPage);
-	app.component("SavesPage", SavesPage);
-	app.component("DupesPage", DupesPage);
-	app.component("DemosPage", DemosPage);
-
-	app.mount("#app");
+	new Vue(App).$mount("#app");
 
 	setupSoundHooks();
 }

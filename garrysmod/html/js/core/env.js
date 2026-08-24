@@ -1,6 +1,6 @@
-let GMOD_VERSION_INT = 0;
+var GMOD_VERSION_INT = 0;
 
-const CUSTOM_ELEMENTS = [
+var CUSTOM_ELEMENTS = [
 	"workshopcontainer",
 	"workshopmessage",
 	"workshopicon",

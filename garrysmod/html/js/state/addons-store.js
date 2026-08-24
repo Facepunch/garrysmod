@@ -1,4 +1,4 @@
-const AddonsStore = Vue.reactive({
+var AddonsStore = Vue.observable({
 	disabled: false,
 
 	settingsOpen: false,
@@ -27,27 +27,28 @@ const AddonsStore = Vue.reactive({
 	importSource: "",
 });
 
-const AddonActions = {
-	isSubscribed(file) {
+var AddonActions = {
+	isSubscribed: function (file) {
 		return Subscriptions.contains(file.id);
 	},
-	isSubscribedID(id) {
+	isSubscribedID: function (id) {
 		return Subscriptions.contains(id);
 	},
-	isEnabled(file) {
+	isEnabled: function (file) {
 		return Subscriptions.enabled(file.id);
 	},
 
-	subscribe(file) {
-		if (!file.info) file.info = { children: [] };
+	subscribe: function (file) {
+		if (!file.info) setKey(file, "info", { children: [] });
 
 		if (file.info.children && file.info.children.length > 0) {
-			const needsWarning = file.info.children.some(function (wsid) {
+			var needsWarning = file.info.children.some(function (wsid) {
 				return !Subscriptions.contains(wsid);
 			});
 
 			if (needsWarning) {
-				for (const wsid of file.info.children) {
+				for (var i = 0; i < file.info.children.length; i++) {
+					var wsid = file.info.children[i];
 					luaRun("MenuGetAddonData( %s )", String(wsid));
 				}
 
@@ -62,11 +63,11 @@ const AddonActions = {
 		Subscriptions.subscribe(file.id);
 	},
 
-	unsubscribe(file) {
+	unsubscribe: function (file) {
 		Subscriptions.unsubscribe(file.id);
 	},
 
-	markUnused(file) {
+	markUnused: function (file) {
 		Subscriptions.markUnused(file.id);
 		addonStore.switchWithTag(
 			addonStore.category,
@@ -76,35 +77,35 @@ const AddonActions = {
 		);
 	},
 
-	uninstallAllSubscribed() {
+	uninstallAllSubscribed: function () {
 		Subscriptions.unsubscribeAll();
 		Subscriptions.applyChanges();
 	},
-	disableAllSubscribed() {
+	disableAllSubscribed: function () {
 		Subscriptions.setAllEnabled(false);
 		Subscriptions.applyChanges();
 	},
-	enableAllSubscribed() {
+	enableAllSubscribed: function () {
 		Subscriptions.setAllEnabled(true);
 		Subscriptions.applyChanges();
 	},
 
-	disable(file) {
+	disable: function (file) {
 		Subscriptions.setShouldMountAddon(String(file.id), false);
 		Subscriptions.applyChanges();
 	},
-	enable(file) {
+	enable: function (file) {
 		Subscriptions.setShouldMountAddon(String(file.id), true);
 		Subscriptions.applyChanges();
 	},
 
-	displayPopupMessage(key, func) {
+	displayPopupMessage: function (key, func) {
 		AddonsStore.popupMessage = true;
 		AddonsStore.popupMessageKey = key;
 		AddonsStore.popupAction = func || null;
 	},
 
-	closePopupMessage(keepPresets) {
+	closePopupMessage: function (keepPresets) {
 		AddonsStore.popupMessage = false;
 		AddonsStore.popupMessageFiles = [];
 		AddonsStore.createPresetOpen = false;
@@ -115,37 +116,66 @@ const AddonActions = {
 		}
 	},
 
-	executePopupAction() {
-		const action = AddonsStore.popupAction;
+	executePopupAction: function () {
+		var action = AddonsStore.popupAction;
 		this.closePopupMessage(true);
 		if (action) action();
 	},
 
-	unselectAll() {
-		for (const k in AddonsStore.selectedItems)
+	warnEnableAll: function () {
+		this.displayPopupMessage("addons.enableall.warning", function () {
+			AddonActions.enableAllSubscribed();
+		});
+	},
+
+	warnDisableAll: function () {
+		this.displayPopupMessage("addons.disableall.warning", function () {
+			AddonActions.disableAllSubscribed();
+		});
+	},
+
+	warnUninstallAll: function () {
+		this.displayPopupMessage("addons.uninstallall.warning", function () {
+			AddonActions.uninstallAllSubscribed();
+		});
+	},
+
+	warnUninstallSelected: function () {
+		this.displayPopupMessage(
+			"addons.uninstall_selected.warning",
+			function () {
+				AddonActions.uninstallAllSelected();
+			},
+		);
+	},
+
+	unselectAll: function () {
+		for (var k in AddonsStore.selectedItems)
 			AddonsStore.selectedItems[k] = false;
 	},
 
-	selectAllPage() {
-		for (const file of addonStore.files) {
+	selectAllPage: function () {
+		for (var i = 0; i < addonStore.files.length; i++) {
+			var file = addonStore.files[i];
 			if (parseInt(file.id) < 1) continue;
-			AddonsStore.selectedItems[file.id] = true;
+			setKey(AddonsStore.selectedItems, file.id, true);
 		}
 	},
 
-	selectAll() {
+	selectAll: function () {
 		this.unselectAll();
 
 		if (!addonStore.filesOther) return;
 
-		for (const wsid of addonStore.filesOther) {
+		for (var i = 0; i < addonStore.filesOther.length; i++) {
+			var wsid = addonStore.filesOther[i];
 			if (parseInt(wsid) < 1) continue;
-			AddonsStore.selectedItems[wsid] = true;
+			setKey(AddonsStore.selectedItems, wsid, true);
 		}
 	},
 
-	toggleSelect(file, event) {
-		const tag = event.target.nodeName.toLowerCase();
+	toggleSelect: function (file, event) {
+		var tag = event.target.nodeName.toLowerCase();
 		if (
 			tag !== "controls" &&
 			tag !== "description" &&
@@ -153,13 +183,20 @@ const AddonActions = {
 		)
 			return;
 
-		AddonsStore.selectedItems[file.id] =
-			!AddonsStore.selectedItems[file.id];
+		setKey(
+			AddonsStore.selectedItems,
+			file.id,
+			!AddonsStore.selectedItems[file.id],
+		);
 		event.stopPropagation();
 	},
 
-	applyMountToSelected(b) {
-		for (const k in AddonsStore.selectedItems) {
+	toggleCheckboxSelect: function (file, checked) {
+		setKey(AddonsStore.selectedItems, file.id, checked);
+	},
+
+	applyMountToSelected: function (b) {
+		for (var k in AddonsStore.selectedItems) {
 			if (!AddonsStore.selectedItems[k] || k < 1) continue;
 			Subscriptions.setShouldMountAddon(k, b);
 			AddonsStore.selectedItems[k] = false;
@@ -167,15 +204,15 @@ const AddonActions = {
 		Subscriptions.applyChanges();
 	},
 
-	enableAllSelected() {
+	enableAllSelected: function () {
 		this.applyMountToSelected(true);
 	},
-	disableAllSelected() {
+	disableAllSelected: function () {
 		this.applyMountToSelected(false);
 	},
 
-	uninstallAllSelected() {
-		for (const k in AddonsStore.selectedItems) {
+	uninstallAllSelected: function () {
+		for (var k in AddonsStore.selectedItems) {
 			if (!AddonsStore.selectedItems[k]) continue;
 			Subscriptions.unsubscribe(k);
 			AddonsStore.selectedItems[k] = false;
@@ -183,21 +220,21 @@ const AddonActions = {
 		Subscriptions.applyChanges();
 	},
 
-	isAnySelected() {
-		return Object.values(AddonsStore.selectedItems).some(function (v) {
+	isAnySelected: function () {
+		return objValues(AddonsStore.selectedItems).some(function (v) {
 			return v;
 		});
 	},
-	getSelectedCount() {
-		return Object.values(AddonsStore.selectedItems).filter(function (v) {
+	getSelectedCount: function () {
+		return objValues(AddonsStore.selectedItems).filter(function (v) {
 			return v;
 		}).length;
 	},
-	getSubscribedCount() {
+	getSubscribedCount: function () {
 		return Subscriptions.getCount();
 	},
 
-	openCreatePresetMenu() {
+	openCreatePresetMenu: function () {
 		AddonsStore.saveEnabled = true;
 		AddonsStore.saveDisabled = true;
 		AddonsStore.presetNewAction = "";
@@ -205,25 +242,25 @@ const AddonActions = {
 		AddonsStore.createPresetOpen = true;
 	},
 
-	openImportPresetMenu() {
+	openImportPresetMenu: function () {
 		this.openCreatePresetMenu();
 		AddonsStore.importSource = "";
 		AddonsStore.createPresetOpen = false;
 		AddonsStore.importPresetOpen = true;
 	},
 
-	createNewPreset() {
+	createNewPreset: function () {
 		if (AddonsStore.presetName === "") return;
 
-		const preset = {
+		var preset = {
 			enabled: [],
 			disabled: [],
 			name: AddonsStore.presetName,
 			newAction: AddonsStore.presetNewAction,
 		};
 
-		for (const id in Subscriptions.getAll()) {
-			const mounted = SubscriptionsStore.files[id].mounted;
+		for (var id in Subscriptions.getAll()) {
+			var mounted = SubscriptionsStore.files[id].mounted;
 			if (mounted && AddonsStore.saveEnabled) preset.enabled.push(id);
 			if (!mounted && AddonsStore.saveDisabled) preset.disabled.push(id);
 		}
@@ -233,7 +270,7 @@ const AddonActions = {
 		AddonsStore.createPresetOpen = false;
 	},
 
-	openLoadPresetMenu() {
+	openLoadPresetMenu: function () {
 		luaRun("ListAddonPresets()");
 		AddonsStore.loadPresetMenuOpen = true;
 		AddonsStore.loadPresetResub = false;
@@ -241,13 +278,12 @@ const AddonActions = {
 		AddonsStore.presetSearchText = "";
 	},
 
-	selectPreset(name, newAction) {
+	selectPreset: function (name, newAction) {
 		AddonsStore.selectedPreset = name;
 		AddonsStore.presetNewAction = newAction;
 	},
 
-	deletePreset(name) {
-		const self = this;
+	deletePreset: function (name) {
 		this.displayPopupMessage(
 			"addons.delete_preset_warn " + name,
 			function () {
@@ -257,35 +293,35 @@ const AddonActions = {
 		);
 	},
 
-	loadSelectedPreset() {
-		const presetList = compatState.presetList;
-		const preset = presetList[AddonsStore.selectedPreset];
-		const newAct = AddonsStore.presetNewAction;
+	loadSelectedPreset: function () {
+		var presetList = compatState.presetList;
+		var preset = presetList[AddonsStore.selectedPreset];
+		var newAct = AddonsStore.presetNewAction;
 
 		if (AddonsStore.loadPresetResub) {
-			for (const k in preset.disabled)
-				if (!Subscriptions.contains(preset.disabled[k]))
-					Subscriptions.subscribe(preset.disabled[k]);
+			for (var a in preset.disabled)
+				if (!Subscriptions.contains(preset.disabled[a]))
+					Subscriptions.subscribe(preset.disabled[a]);
 
-			for (const k in preset.enabled)
-				if (!Subscriptions.contains(preset.enabled[k]))
-					Subscriptions.subscribe(preset.enabled[k]);
+			for (var b in preset.enabled)
+				if (!Subscriptions.contains(preset.enabled[b]))
+					Subscriptions.subscribe(preset.enabled[b]);
 
 			Subscriptions.applyChanges();
 		}
 
-		const idsDone = {};
-		for (const k in preset.disabled) {
-			Subscriptions.setShouldMountAddon(preset.disabled[k], false);
-			idsDone[preset.disabled[k]] = true;
+		var idsDone = {};
+		for (var c in preset.disabled) {
+			Subscriptions.setShouldMountAddon(preset.disabled[c], false);
+			idsDone[preset.disabled[c]] = true;
 		}
-		for (const k in preset.enabled) {
-			Subscriptions.setShouldMountAddon(preset.enabled[k], true);
-			idsDone[preset.enabled[k]] = true;
+		for (var d in preset.enabled) {
+			Subscriptions.setShouldMountAddon(preset.enabled[d], true);
+			idsDone[preset.enabled[d]] = true;
 		}
 
 		if (newAct !== "") {
-			for (const id in Subscriptions.getAll()) {
+			for (var id in Subscriptions.getAll()) {
 				if (!idsDone[id]) {
 					Subscriptions.setShouldMountAddon(id, newAct == "enable");
 				}
@@ -297,25 +333,25 @@ const AddonActions = {
 		AddonsStore.selectedPreset = undefined;
 	},
 
-	copySelectedPreset() {
-		const presetList = compatState.presetList;
-		const copy = JSON.parse(
+	copySelectedPreset: function () {
+		var presetList = compatState.presetList;
+		var copy = JSON.parse(
 			JSON.stringify(presetList[AddonsStore.selectedPreset]),
 		);
 		delete copy.$$hashKey;
 		luaRun("SetClipboardText( %s )", JSON.stringify(copy));
 	},
 
-	importPreset() {
+	importPreset: function () {
 		if (AddonsStore.presetName === "") return;
 
 		AddonsStore.importPresetOpen = false;
 
-		const source = AddonsStore.importSource;
+		var source = AddonsStore.importSource;
 
 		if (source.indexOf("http") === 0 || /^([0-9]+)$/.test(source)) {
 			AddonsStore.importPresetLoading = true;
-			let match =
+			var match =
 				/https?:\/\/steamcommunity\.com\/sharedfiles\/filedetails\/\?(?:.*)id=([0-9]+)(?:.*)/.exec(
 					source,
 				);
@@ -326,7 +362,7 @@ const AddonActions = {
 				return;
 			}
 
-			const preset = {
+			var preset = {
 				enabled: [],
 				disabled: [],
 				name: AddonsStore.presetName,
@@ -339,22 +375,22 @@ const AddonActions = {
 			);
 		} else {
 			try {
-				const imported = JSON.parse(source);
-				const preset = {
+				var imported = JSON.parse(source);
+				var newPreset = {
 					enabled: imported.enabled || [],
 					disabled: imported.disabled || [],
 					name: AddonsStore.presetName,
 					newAction: AddonsStore.presetNewAction,
 				};
-				luaRun("CreateNewAddonPreset( %s )", JSON.stringify(preset));
+				luaRun("CreateNewAddonPreset( %s )", JSON.stringify(newPreset));
 			} catch (err) {
 				onImportPresetFailed();
 			}
 		}
 	},
 
-	addonClasses(file) {
-		const classes = [];
+	addonClasses: function (file) {
+		var classes = [];
 		if (this.isSubscribed(file)) {
 			classes.push(this.isEnabled(file) ? "installed" : "disabled");
 			if (Subscriptions.getInvalidReason(file.id))
@@ -364,12 +400,12 @@ const AddonActions = {
 		return classes.join(" ");
 	},
 
-	addonDescription(file) {
-		const invalid = Subscriptions.getInvalidReason(file.id);
+	addonDescription: function (file) {
+		var invalid = Subscriptions.getInvalidReason(file.id);
 		if (invalid) return invalid;
 		if (!file.info) return "ERROR?";
 		return file.info.description;
 	},
 };
 
-const compatState = Vue.reactive({ presetList: {}, childTitles: {} });
+var compatState = Vue.observable({ presetList: {}, childTitles: {} });
