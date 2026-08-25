@@ -204,6 +204,7 @@ workshopicon controls {
 	z-index: 10;
 	bottom: -32px;
 	-webkit-transition: bottom 100ms ease-in 0ms;
+	opacity: 0;
 }
 
 workshopicon:hover controls {
