@@ -36,8 +36,14 @@ function startCreationsApp(kind) {
 					"mine",
 				],
 				t: t,
-				saveDisabled: !isSaves,
+				saveCooldown: false,
 			};
+		},
+		computed: {
+			saveDisabled: function () {
+				if (!isSaves) return !store.saveEnabled;
+				return this.saveCooldown;
+			},
 		},
 		methods: {
 			applyRoute: function () {
@@ -56,7 +62,7 @@ function startCreationsApp(kind) {
 				}
 			},
 			saveAction: function () {
-				this.saveDisabled = true;
+				this.saveCooldown = true;
 
 				if (isSaves) gmod.SaveSave();
 				else gmod.SaveDupe();
@@ -64,7 +70,7 @@ function startCreationsApp(kind) {
 				if (isSaves) {
 					var self = this;
 					setTimeout(function () {
-						self.saveDisabled = false;
+						self.saveCooldown = false;
 					}, 5000);
 				}
 			},

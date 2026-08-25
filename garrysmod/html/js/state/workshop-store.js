@@ -100,9 +100,7 @@ function createWorkshopStore(nameSpace) {
 		);
 	};
 
-	store.handleFilterChange = function (which) {
-		if (which === 1) store.filterEnabledOnly = false;
-		if (which === 0) store.filterDisabledOnly = false;
+	store.handleFilterChange = function () {
 		store.switchWithTag(store.category, 0, store.tagged, store.mapName);
 	};
 
@@ -200,14 +198,9 @@ function createWorkshopStore(nameSpace) {
 				id: data.results[k],
 				filled: false,
 				info: {},
-				extra: {},
+				extra: data.extraresults ? data.extraresults[k] : {},
 				background: null,
 			});
-			setKey(
-				store.files[store.files.length - 1],
-				"extra",
-				data.extraresults ? data.extraresults[k] : {}
-			);
 		}
 
 		store.filesOther = [];

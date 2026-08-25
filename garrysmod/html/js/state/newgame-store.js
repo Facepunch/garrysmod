@@ -87,8 +87,6 @@ var NewGameActions = {
 
 	onCheckboxChange: function () {
 		var s = NewGameStore.serverSettings;
-		s.sv_lan = Number(s.sv_lan) == 1;
-		s.p2p_enabled = Number(s.p2p_enabled) == 1;
 
 		if (this._oldSvLan !== s.sv_lan && s.sv_lan && s.p2p_enabled) {
 			s.p2p_enabled = false;

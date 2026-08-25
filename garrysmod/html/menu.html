@@ -601,8 +601,8 @@
 					<div v-if="store.category === 'subscribed'" class="settings-panel" :class="AddonsStore.settingsOpen ? 'active' : 'hidden'">
 						<div class="settings-column">
 							<span>{{ t('addons.filter_by') }}</span>
-							<input type="checkbox" v-model="AddonsStore.filterEnabledOnly" @change="store.handleFilterChange( 1 )" id="FilterEnabledOnly"/><label for="FilterEnabledOnly">{{ t('addons.enabled_only') }}</label><br/>
-							<input type="checkbox" v-model="AddonsStore.filterDisabledOnly" @change="store.handleFilterChange( 0 )" id="FilterDisabledOnly"/><label for="FilterDisabledOnly">{{ t('addons.disabled_only') }}</label>
+							<input type="checkbox" v-model="AddonsStore.filterEnabledOnly" @change="store.handleFilterChange()" id="FilterEnabledOnly"/><label for="FilterEnabledOnly">{{ t('addons.enabled_only') }}</label><br/>
+							<input type="checkbox" v-model="AddonsStore.filterDisabledOnly" @change="store.handleFilterChange()" id="FilterDisabledOnly"/><label for="FilterDisabledOnly">{{ t('addons.disabled_only') }}</label>
 						</div>
 						<div class="settings-column">
 							<span>{{ t('addons.sort_by') }}</span>
@@ -726,9 +726,9 @@
 						<span v-if="isUninstallWarning()">{{ t('addons.cannotundo') }}</span>
 
 						<div style="margin-bottom: 5px;">
-							<div v-for="fileid in AddonsStore.popupMessageFiles" :key="fileid" class="button" :class="{ subbed: AddonActions.isSubscribedID( fileid ) }">
+							<div v-for="fileid in AddonsStore.popupMessageFiles" :key="fileid" class="button" :class="{ subbed: Subscriptions.contains( fileid ) }">
 								<wstitle @click="MenuActions.openWorkshopFile( fileid )" class="wstitle">{{ childTitle( fileid ) }}</wstitle>
-								<wsbut v-if="AddonActions.isSubscribedID( fileid )" class="wssub"><img src="img/tick.png"/></wsbut>
+								<wsbut v-if="Subscriptions.contains( fileid )" class="wssub"><img src="img/tick.png"/></wsbut>
 								<wsbut v-else @click="Subscriptions.subscribe( fileid )" class="wssub"><img src="img/plus.png"></wsbut>
 							</div>
 						</div>

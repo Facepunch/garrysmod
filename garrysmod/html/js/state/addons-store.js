@@ -31,9 +31,6 @@ var AddonActions = {
 	isSubscribed: function (file) {
 		return Subscriptions.contains(file.id);
 	},
-	isSubscribedID: function (id) {
-		return Subscriptions.contains(id);
-	},
 	isEnabled: function (file) {
 		return Subscriptions.enabled(file.id);
 	},
@@ -164,8 +161,6 @@ var AddonActions = {
 
 	selectAll: function () {
 		this.unselectAll();
-
-		if (!addonStore.filesOther) return;
 
 		for (var i = 0; i < addonStore.filesOther.length; i++) {
 			var wsid = addonStore.filesOther[i];
@@ -338,7 +333,6 @@ var AddonActions = {
 		var copy = JSON.parse(
 			JSON.stringify(presetList[AddonsStore.selectedPreset])
 		);
-		delete copy.$$hashKey;
 		luaRun("SetClipboardText( %s )", JSON.stringify(copy));
 	},
 
