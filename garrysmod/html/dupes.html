@@ -77,7 +77,7 @@
 					<li class="spacer">&nbsp;</li>
 
 					<li><button @click="saveAction()" :disabled="saveDisabled"
-						:class="[isSavesFlag ? 'savegamebutton' : 'savedupebutton', saveDisabled ? 'disabled' : '']">..
+						:class="['savedupebutton', saveDisabled ? 'disabled' : '']">..
 					</button></li>
 				</ul>
 			</div>
@@ -88,9 +88,9 @@
 				<div style="position: absolute; left: 0px; top: 0px; bottom: 0px; right: 0px;">
 					<workshopcontainer>
 						<workshopmessage v-if="store.loading">{{ t(titleKey + '.loading') }}</workshopmessage>
-						<workshopmessage v-if="(store.totalResults === 0 || store.numResults === 0) && !store.loading">{{ t(titleKey + '.noneonmap') }}</workshopmessage>
+						<workshopmessage v-if="(store.totalResults === 0 || store.numResults === 0) && !store.loading">{{ t(titleKey + '.none') }}</workshopmessage>
 
-						<WbEntry v-for="file in store.files" :key="file.order" :file="file" :store="store" :mode="titleKey === 'saves' ? 'saves' : 'dupes'" standalone></WbEntry>
+						<WbEntry v-for="file in store.files" :key="file.order" :file="file" :store="store" standalone></WbEntry>
 
 						<center>
 							<WbPagination :store="store"></WbPagination>
@@ -98,6 +98,51 @@
 					</workshopcontainer>
 				</div>
 			</div>
+		</script>
+
+		<script type="text/x-template" id="tpl-wb-pagination">
+			<pagination v-if="!store.loading && store.totalResults > 0">
+				<a class="back" @click="store.go( store.perPage * -1 )">&nbsp;</a>
+				<a class="next" @click="store.go( store.perPage * 1 )">&nbsp;</a>
+				<div class="pages">
+					<span v-for="p in store.pages" :key="p"><a :class="{ active: p === store.page }" class="page-link" @click="store.goToPage( p )"><img src="img/pagination_page.png?1" /></a></span><br/>
+				</div>
+				<span class="page-num">{{ store.page }}</span>
+			</pagination>
+		</script>
+
+		<script type="text/x-template" id="tpl-wb-entry">
+			<workshopicon v-if="!store.loading" :style="iconStyle()" :class="{ installed: isSubscribed() }">
+				<preview v-if="file.background" :style="previewStyle()">
+					<img :src="'../' + file.background" :style="imageStyle()" loading="lazy"/>
+				</preview>
+
+				<name>
+					<label @click="openWorkshopFile()">{{ (file.info && file.info.title) || t('ugc.loading') }}</label>
+				</name>
+				<author v-if="!file.local">{{ file.info.ownername }}<span v-if="!file.info.ownername">{{ t('ugc.loading') }}</span></author>
+				<votes v-if="!file.local && upvotes() > 0" style="color: #4a4">+{{ num0(upvotes()) }}</votes>
+				<votes v-if="!file.local && upvotes() < 0" style="color: #a44">{{ num0(upvotes()) }}</votes>
+				<description>{{ file.info.description }}</description>
+
+				<controls>
+					<left>
+						<control :class="{ disabled: file.info.voted_up }" v-if="!file.local" @click="rate(true)"><img src="img/thumb-up.png"/></control>
+						<control :class="{ disabled: file.info.voted_down }" v-if="!file.local" @click="rate(false)"><img src="img/thumb-down.png"/></control>
+						<control v-if="!file.local && !file.info.favorite" @click="favorite(true)"><img src="img/favourite_addon.png"/></control>
+						<control v-if="!file.local && file.info.favorite" @click="favorite(false)"><img src="img/favourite_addon_remove.png"/></control>
+						<control v-if="file.local" @click="publishLocal()">{{ t('dupes.publish') }}</control>
+						<control v-if="file.local" @click="deleteLocal()">{{ t('dupes.delete') }}</control>
+						<control v-if="standalone && !file.local" @click="openWorkshopFile()">{{ t('dupes.commentandrate') }}</control>
+					</left>
+
+					<right>
+						<control @click="armDupe()">{{ t('dupes.arm') }}</control>
+						<control v-if="!file.local && !isSubscribed()" @click="subscribe()">{{ t('ugc.subscribe') }}</control>
+						<control v-if="!file.local && isSubscribed()" @click="unsubscribe()">{{ t('ugc.unsubscribe') }}</control>
+					</right>
+				</controls>
+			</workshopicon>
 		</script>
 
 		<script type="text/javascript">

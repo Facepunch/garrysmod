@@ -21,14 +21,6 @@ function startCreationsApp(kind) {
 		store.switch("local", 0);
 	};
 
-	window.WindowResized = function () {
-		store.refreshDimensions();
-		store.updatePageNav();
-		setTimeout(function () {
-			store.go(0);
-		}, 500);
-	};
-
 	var CreationApp = {
 		data: function () {
 			return {
@@ -46,11 +38,6 @@ function startCreationsApp(kind) {
 				t: t,
 				saveDisabled: !isSaves,
 			};
-		},
-		computed: {
-			isSavesFlag: function () {
-				return isSaves;
-			},
 		},
 		methods: {
 			applyRoute: function () {
@@ -81,12 +68,6 @@ function startCreationsApp(kind) {
 					}, 5000);
 				}
 			},
-			categoryLink: function (cat) {
-				return "#/list/" + cat + "/";
-			},
-			tagLink: function (cat, tag) {
-				return "#/list/" + cat + "/" + tag + "/";
-			},
 		},
 		mounted: function () {
 			store.refreshDimensions();
@@ -112,6 +93,9 @@ function startCreationsApp(kind) {
 
 	Vue.config.ignoredElements = CUSTOM_ELEMENTS;
 
+	Vue.component("WbPagination", WbPagination);
+	Vue.component("WbEntry", WbEntry);
+
 	new Vue({
 		el: "#app",
 		template:
@@ -119,8 +103,6 @@ function startCreationsApp(kind) {
 		components: {
 			CreationsApp: CreationApp,
 			ContentPage: ContentPage,
-			WbPagination: WbPagination,
-			WbEntry: WbEntry,
 		},
 	});
 }
