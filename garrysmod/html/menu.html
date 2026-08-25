@@ -45,10 +45,7 @@
 		<script type="text/javascript" src="js/pages/page-newgame.js"></script>
 		<script type="text/javascript" src="js/pages/page-servers.js"></script>
 		<script type="text/javascript" src="js/pages/page-addons.js"></script>
-		<script
-			type="text/javascript"
-			src="js/pages/pages-workshop.js"
-		></script>
+		<script type="text/javascript" src="js/pages/page-workshop.js"></script>
 
 		<script type="text/javascript" src="js/app.js"></script>
 
@@ -127,24 +124,22 @@
 							</p>
 
 							<div v-if="MenuStore.kinect.showColor">
-								<span>{{ t('motionsensor.colorpos') }}</span>
-								<p style="margin-left: 5px;">
-									<label v-for="option in MenuStore.kinect.colorOptions" :key="option" style="display: block">
-										<input type="radio" name="kinect.color" :value="option" v-model="MenuStore.kinect.color" @change="MenuActions.updateKinect()">
-										<span>{{ t('motionsensor.showcolor.' + option) }}</span>
-									</label>
-								</p>
-							</div>
+							<span>{{ t('motionsensor.colorpos') }}</span>
+							<p style="margin-left: 5px;">
+								<label v-for="option in MenuStore.kinect.colorOptions" :key="option" style="display: block">
+									<input type="radio" name="kinect.color" :value="option" v-model="MenuStore.kinect.color" @change="MenuActions.updateKinect()">
+									<span>{{ t('motionsensor.showcolor.' + option) }}</span>
+								</label>
+							</p>
 
-							<div v-if="MenuStore.kinect.showColor">
-								<span>{{ t('motionsensor.colorsize') }}</span>
-								<p style="margin-left: 5px;">
-									<label v-for="option in MenuStore.kinect.sizeOptions" :key="option" style="display: block">
-										<input type="radio" name="kinect.color_size" :value="option" v-model="MenuStore.kinect.colorSize" @change="MenuActions.updateKinect()">
-										<span>{{ t('motionsensor.colorsize.' + option) }}</span>
-									</label>
-								</p>
-							</div>
+							<span>{{ t('motionsensor.colorsize') }}</span>
+							<p style="margin-left: 5px;">
+								<label v-for="option in MenuStore.kinect.sizeOptions" :key="option" style="display: block">
+									<input type="radio" name="kinect.color_size" :value="option" v-model="MenuStore.kinect.colorSize" @change="MenuActions.updateKinect()">
+									<span>{{ t('motionsensor.colorsize.' + option) }}</span>
+								</label>
+							</p>
+						</div>
 						</div>
 					</li>
 				</ul>
@@ -204,9 +199,7 @@
 								class="noisy category" :class="{ active: cat.category === NewGameStore.currentCategory }"
 								@click="NewGameActions.switchCategory( cat.category )">
 								<div class='name'>
-									<span v-if="cat.category !== 'Favourites' && cat.category !== 'Other'">{{ cat.category }}</span>
-									<span v-if="cat.category === 'Favourites'">{{ t('newgame_favorite_maps') }}</span>
-									<span v-if="cat.category === 'Other'">{{ t('spawnmenu.category.other') }}</span>
+									<span>{{ categoryLabel( cat ) }}</span>
 								</div>
 								<div class='count'>{{ NewGameActions.countFiltered( cat.maps ) }}</div>
 							</li>
@@ -220,8 +213,8 @@
 					<div class="scrollable" style="margin: 0px; top: 0px; left: 200px">
 						<ul class="category" v-for="cat in categories" :key="'list-' + cat.category" v-show="cat.category === NewGameStore.currentCategory">
 							<li>
-								<span v-if="cat.category !== 'Favourites' && cat.category !== 'Other'">{{ cat.category }}</span><span v-if="cat.category === 'Favourites'">{{ t('newgame_favorite_maps') }}</span><span v-if="cat.category === 'Other'">{{ t('spawnmenu.category.other') }}</span>
-								<small class="count-note">{{ NewGameActions.countFiltered( cat.maps ) }} {{ NewGameActions.countFiltered( cat.maps ) === 1 ? t('newgame_map') : t('newgame_maps') }}</small>
+								<span>{{ categoryLabel( cat ) }}</span>
+								<small class="count-note">{{ countText( NewGameActions.countFiltered( cat.maps ) ) }}</small>
 							</li>
 
 							<li v-for="map in mapsInCategory( cat )" :key="cat.category + '-' + map"

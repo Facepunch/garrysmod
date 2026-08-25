@@ -306,3 +306,8 @@ function createWorkshopStore(nameSpace) {
 
 	return store;
 }
+
+var addonStore = createWorkshopStore("addon");
+var saveStore = createWorkshopStore("ws_save");
+var dupeStore = createWorkshopStore("ws_dupe");
+var demoStore = createWorkshopStore("demo");

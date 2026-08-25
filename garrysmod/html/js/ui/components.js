@@ -1,7 +1,3 @@
-function num0(value) {
-	return Math.round(Number(value) || 0).toLocaleString("en-US");
-}
-
 var WbPagination = {
 	props: ["store"],
 	template: "#tpl-wb-pagination",

@@ -67,6 +67,10 @@ function startApp() {
 	luaRun("UpdateLanguages()");
 	luaRun("LoadNewsList()");
 
+	if (typeof util !== "undefined") {
+		MenuStore.kinect.available = !!util.MotionSensorAvailable();
+	}
+
 	Vue.config.ignoredElements = CUSTOM_ELEMENTS;
 
 	registerComponents();

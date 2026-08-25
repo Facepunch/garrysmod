@@ -7,6 +7,10 @@ function getNiceSize(size) {
 	return Math.round(size / (1000 * 1000 * 1000), 2) + " GB";
 }
 
+function num0(value) {
+	return Math.round(Number(value) || 0).toLocaleString("en-US");
+}
+
 function pad(num) {
 	return (num < 10 ? "0" : "") + num.toString();
 }

@@ -1,8 +1,3 @@
-var addonStore = createWorkshopStore("addon");
-var saveStore = createWorkshopStore("ws_save");
-var dupeStore = createWorkshopStore("ws_dupe");
-var demoStore = createWorkshopStore("demo");
-
 window.addon = addonStore;
 window.save = saveStore;
 window.dupe = dupeStore;
