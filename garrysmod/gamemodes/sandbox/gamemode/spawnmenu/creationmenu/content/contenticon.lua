@@ -489,8 +489,8 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	if ( SWEPinfo ) then
 		local extraInfo = ""
 		-- These 2 really should be one
-		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Purpose end
-		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Instructions end
+		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( SWEPinfo.Purpose ) end
+		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( SWEPinfo.Instructions ) end
 
 		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. SWEPinfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
