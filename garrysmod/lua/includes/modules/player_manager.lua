@@ -1,26 +1,34 @@
 
-local ErrorNoHalt = ErrorNoHalt
+local ErrorNoHaltWithStack = ErrorNoHaltWithStack
+local error = error
 local baseclass = baseclass
 local setmetatable = setmetatable
 local SERVER = SERVER
 local string = string
 local table = table
 local util = util
+local pairs = pairs
+local isstring = isstring
+local type = type
 
 module( "player_manager" )
 
 -- Stores a table of valid player models
 local ModelList = {}
-local ModelListRev = {}
+local ModelNameDict = {}
 local HandNames = {}
 
 --[[---------------------------------------------------------
 	Utility to add models to the acceptable model list
 -----------------------------------------------------------]]
-function AddValidModel( name, model )
+function AddValidModel( name, model, title, category )
 
-	ModelList[ name ] = model
-	ModelListRev[ string.lower( model ) ] = name
+	-- Badly made existing addons
+	if ( name != nil && !isstring( name ) ) then ErrorNoHaltWithStack( "player_manager.AddValidModel - bad argument #3 (string expected, got " .. type( name ) .. ")" ) title = nil end
+	if ( category != nil && !isstring( category ) ) then ErrorNoHaltWithStack( "player_manager.AddValidModel - bad argument #4 (string expected, got " .. type( category ) .. ")" ) category = nil end
+
+	ModelList[ name ] = { model = model, title = title or name, category = category or "#spawnmenu.category.other" }
+	ModelNameDict[ string.lower( model ) ] = name
 
 end
 
@@ -36,10 +44,36 @@ end
 --[[---------------------------------------------------------
 	Return list of all valid player models
 -----------------------------------------------------------]]
-function AllValidModels( )
-	return ModelList
+function AllValidModels()
+
+	local list = {}
+	for name, data in pairs( ModelList ) do
+		list[ name ] = data.model
+	end
+	return list
+
 end
 
+function GetAllPlayerModels()
+
+	return table.Copy( ModelList )
+
+end
+
+--[[---------------------------------------------------------
+	Remove a player model
+-----------------------------------------------------------]]
+function RemoveValidModel( name )
+
+	if ( !isstring( name ) ) then error( "bad argument #1 to 'RemoveValidModel' (string expected, got " .. type( name ) .. ")", 2 ) end
+	if ( !ModelList[ name ] ) then return end
+
+	local modelPath = string.lower( ModelList[ name ].model )
+	ModelList[ name ] = nil
+	HandNames[ name ] = nil
+	ModelNameDict[ modelPath ] = nil
+
+end
 
 --[[---------------------------------------------------------
 	Translate the simple name of a model
@@ -48,10 +82,11 @@ end
 function TranslatePlayerModel( name )
 
 	if ( ModelList[ name ] != nil ) then
-		return ModelList[ name ]
+		return ModelList[ name ].model
 	end
 
 	return "models/player/kleiner.mdl"
+
 end
 
 -- Translate from the full model name to simple model name
@@ -59,11 +94,12 @@ function TranslateToPlayerModelName( model )
 
 	model = string.lower( model )
 
-	if ( ModelListRev[ model ] != nil ) then
-		return ModelListRev[ model ]
+	if ( ModelNameDict[ model ] != nil ) then
+		return ModelNameDict[ model ]
 	end
 
 	return "kleiner"
+
 end
 
 --
@@ -76,219 +112,138 @@ function TranslatePlayerHands( name )
 	end
 
 	return { model = "models/weapons/c_arms_citizen.mdl", skin = 0, body = "100000000" }
+
 end
 
 --[[---------------------------------------------------------
-	Compile a list of valid player models
+	Compile a list of default valid player models
 -----------------------------------------------------------]]
 
-AddValidModel( "alyx",			"models/player/alyx.mdl" )
-AddValidHands( "alyx",			"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
+local Category = "Half-Life 2"
+local HandsCitizen = "models/weapons/c_arms_citizen.mdl"
+local HandsRefugee = "models/weapons/c_arms_refugee.mdl"
+local HandsCombine = "models/weapons/c_arms_combine.mdl"
 
-AddValidModel( "barney",		"models/player/barney.mdl" )
-AddValidHands( "barney",		"models/weapons/c_arms_combine.mdl",		0, "0000000" )
+local function AddPlayerModel( name, title, model, handsModel, handsSkin, handsBody )
+	AddValidModel( name, model, title, Category )
+	if ( handsModel ) then AddValidHands( name, handsModel, handsSkin, handsBody ) end
+end
 
-AddValidModel( "breen",			"models/player/breen.mdl" )
-AddValidHands( "breen",			"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
+-- Main cast
+AddPlayerModel( "alyx",		"#npc_alyx",		"models/player/alyx.mdl",		HandsCitizen, 0, "0000000" )
+AddPlayerModel( "breen",	"#npc_breen",		"models/player/breen.mdl",		HandsCitizen, 0, "0000000" )
+AddPlayerModel( "eli",		"#npc_eli",			"models/player/eli.mdl",		HandsCitizen, 1, "0000000" ) -- Black skin
+AddPlayerModel( "gman",		"#npc_gman",		"models/player/gman_high.mdl",	HandsCitizen, 0, "0000000" )
+AddPlayerModel( "kleiner",	"#npc_kleiner",		"models/player/kleiner.mdl",	HandsCitizen, 0, "0000000" )
+AddPlayerModel( "monk",		"#npc_monk",		"models/player/monk.mdl",		HandsCitizen, 0, "0000000" )
+AddPlayerModel( "odessa",	"#npc_odessa",		"models/player/odessa.mdl",		HandsCitizen, 0, "0000000" )
+AddPlayerModel( "barney",	"#npc_barney",		"models/player/barney.mdl",		HandsCombine, 0, "0000000" )
+AddPlayerModel( "magnusson",		"#npc_magnusson",		"models/player/magnusson.mdl",		HandsCitizen, 0, "0000000" )
+AddPlayerModel( "mossman",			"#npc_mossman",			"models/player/mossman.mdl",		HandsCitizen, 0, "0000000" )
+AddPlayerModel( "mossmanarctic",	"#npc_mossman_arctic",	"models/player/mossman_arctic.mdl",	HandsCitizen, 0, "0100000" ) -- Gloves bodygroup
 
-AddValidModel( "charple",		"models/player/charple.mdl" )
-AddValidHands( "charple",		"models/weapons/c_arms_citizen.mdl",		2, "0000000" )
+-- Baddies
+AddPlayerModel( "combine",			"#npc_combine_s",			"models/player/combine_soldier.mdl",				HandsCombine, 0, "0000000" )
+AddPlayerModel( "combineprison",	"#npc_combine_s_prison",	"models/player/combine_soldier_prisonguard.mdl",	HandsCombine, 0, "0000000" )
+AddPlayerModel( "combineelite",		"#npc_combine_s_elite",		"models/player/combine_super_soldier.mdl",			HandsCombine, 0, "0000000" )
+AddPlayerModel( "police",		"#npc_metropolice",			"models/player/police.mdl",				HandsCombine, 0, "0000000" )
+AddPlayerModel( "policefem",	"#npc_metropolice_female",	"models/player/police_fem.mdl",			HandsCombine, 0, "0000000" )
+AddPlayerModel( "stripped",		"#npc_combine_s_stripped",	"models/player/soldier_stripped.mdl",	HandsCitizen, 0, "0000000" )
 
-AddValidModel( "chell",			"models/player/p2_chell.mdl" )
-AddValidHands( "chell",			"models/weapons/c_arms_chell.mdl",			0, "0000000" )
+Category = "Half-Life 2 - Zombies"
+-- Zombies
+AddPlayerModel( "charple",		"#plrmdl.charple",	"models/player/charple.mdl",		HandsCitizen, 2, "0000000" ) -- Bloody hands
+AddPlayerModel( "corpse",		"#plrmdl.corpse",	"models/player/corpse1.mdl",		HandsCitizen, 2, "0000000" )
+AddPlayerModel( "skeleton",		"#plrmdl.skeleton",	"models/player/skeleton.mdl",		HandsCitizen, 2, "0000000" )
+AddPlayerModel( "zombie",		"#npc_zombie",		"models/player/zombie_classic.mdl",	HandsCitizen, 2, "0000000" )
+AddPlayerModel( "zombiefast",	"#npc_fastzombie",	"models/player/zombie_fast.mdl",	HandsCitizen, 2, "0000000" )
+AddPlayerModel( "zombine",		"#npc_zombine",		"models/player/zombie_soldier.mdl",	HandsCombine, 0, "0000000" )
 
-AddValidModel( "corpse",		"models/player/corpse1.mdl" )
-AddValidHands( "corpse",		"models/weapons/c_arms_citizen.mdl",		2, "0000000" )
+Category = "Half-Life 2 - Citizens"
+-- Citizens
+AddPlayerModel( "female01", "#plrmdl.citizen_female_1", "models/player/Group01/female_01.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "female02", "#plrmdl.citizen_female_2", "models/player/Group01/female_02.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "female03", "#plrmdl.citizen_female_3", "models/player/Group01/female_03.mdl", HandsCitizen, 1, "0000000" )
+AddPlayerModel( "female04", "#plrmdl.citizen_female_4", "models/player/Group01/female_04.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "female05", "#plrmdl.citizen_female_5", "models/player/Group01/female_05.mdl", HandsCitizen, 1, "0000000" )
+AddPlayerModel( "female06", "#plrmdl.citizen_female_6", "models/player/Group01/female_06.mdl", HandsCitizen, 0, "0000000" )
 
-AddValidModel( "combine",		"models/player/combine_soldier.mdl" )
-AddValidHands( "combine",		"models/weapons/c_arms_combine.mdl",		0, "0000000" )
+AddPlayerModel( "female07", "#plrmdl.rebel_female_1", "models/player/Group03/female_01.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "female08", "#plrmdl.rebel_female_2", "models/player/Group03/female_02.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "female09", "#plrmdl.rebel_female_3", "models/player/Group03/female_03.mdl", HandsRefugee, 1, "0100000" )
+AddPlayerModel( "female10", "#plrmdl.rebel_female_4", "models/player/Group03/female_04.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "female11", "#plrmdl.rebel_female_5", "models/player/Group03/female_05.mdl", HandsRefugee, 1, "0100000" )
+AddPlayerModel( "female12", "#plrmdl.rebel_female_6", "models/player/Group03/female_06.mdl", HandsRefugee, 0, "0100000" )
 
-AddValidModel( "combineprison",	"models/player/combine_soldier_prisonguard.mdl" )
-AddValidHands( "combineprison",	"models/weapons/c_arms_combine.mdl",		0, "0000000" )
+AddPlayerModel( "male01", "#plrmdl.citizen_male_1", "models/player/Group01/male_01.mdl", HandsCitizen, 1, "0000000" )
+AddPlayerModel( "male02", "#plrmdl.citizen_male_2", "models/player/Group01/male_02.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "male03", "#plrmdl.citizen_male_3", "models/player/Group01/male_03.mdl", HandsCitizen, 1, "0000000" )
+AddPlayerModel( "male04", "#plrmdl.citizen_male_4", "models/player/Group01/male_04.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "male05", "#plrmdl.citizen_male_5", "models/player/Group01/male_05.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "male06", "#plrmdl.citizen_male_6", "models/player/Group01/male_06.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "male07", "#plrmdl.citizen_male_7", "models/player/Group01/male_07.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "male08", "#plrmdl.citizen_male_8", "models/player/Group01/male_08.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "male09", "#plrmdl.citizen_male_9", "models/player/Group01/male_09.mdl", HandsCitizen, 0, "0000000" )
 
-AddValidModel( "combineelite",	"models/player/combine_super_soldier.mdl" )
-AddValidHands( "combineelite",	"models/weapons/c_arms_combine.mdl",		0, "0000000" )
+AddPlayerModel( "male10", "#plrmdl.rebel_male_1", "models/player/Group03/male_01.mdl", HandsRefugee, 1, "0100000" )
+AddPlayerModel( "male11", "#plrmdl.rebel_male_2", "models/player/Group03/male_02.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "male12", "#plrmdl.rebel_male_3", "models/player/Group03/male_03.mdl", HandsRefugee, 1, "0000000" )
+AddPlayerModel( "male13", "#plrmdl.rebel_male_4", "models/player/Group03/male_04.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "male14", "#plrmdl.rebel_male_5", "models/player/Group03/male_05.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "male15", "#plrmdl.rebel_male_6", "models/player/Group03/male_06.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "male16", "#plrmdl.rebel_male_7", "models/player/Group03/male_07.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "male17", "#plrmdl.rebel_male_8", "models/player/Group03/male_08.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "male18", "#plrmdl.rebel_male_9", "models/player/Group03/male_09.mdl", HandsRefugee, 0, "0100000" )
 
-AddValidModel( "eli",			"models/player/eli.mdl" )
-AddValidHands( "eli",			"models/weapons/c_arms_citizen.mdl",		1, "0000000" )
+AddPlayerModel( "medic01", "#plrmdl.medic_male_1", "models/player/Group03m/male_01.mdl", HandsRefugee, 1, "0100000" )
+AddPlayerModel( "medic02", "#plrmdl.medic_male_2", "models/player/Group03m/male_02.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "medic03", "#plrmdl.medic_male_3", "models/player/Group03m/male_03.mdl", HandsRefugee, 1, "0100000" )
+AddPlayerModel( "medic04", "#plrmdl.medic_male_4", "models/player/Group03m/male_04.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "medic05", "#plrmdl.medic_male_5", "models/player/Group03m/male_05.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "medic06", "#plrmdl.medic_male_6", "models/player/Group03m/male_06.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "medic07", "#plrmdl.medic_male_7", "models/player/Group03m/male_07.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "medic08", "#plrmdl.medic_male_8", "models/player/Group03m/male_08.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "medic09", "#plrmdl.medic_male_9", "models/player/Group03m/male_09.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "medic10", "#plrmdl.medic_female_1", "models/player/Group03m/female_01.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "medic11", "#plrmdl.medic_female_2", "models/player/Group03m/female_02.mdl", HandsRefugee, 0, "0000000" )
+AddPlayerModel( "medic12", "#plrmdl.medic_female_3", "models/player/Group03m/female_03.mdl", HandsRefugee, 1, "0000000" )
+AddPlayerModel( "medic13", "#plrmdl.medic_female_4", "models/player/Group03m/female_04.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "medic14", "#plrmdl.medic_female_5", "models/player/Group03m/female_05.mdl", HandsRefugee, 0, "0100000" )
+AddPlayerModel( "medic15", "#plrmdl.medic_female_6", "models/player/Group03m/female_06.mdl", HandsRefugee, 1, "0100000" )
 
-AddValidModel( "gman",			"models/player/gman_high.mdl" )
-AddValidHands( "gman",			"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "kleiner",		"models/player/kleiner.mdl" )
-AddValidHands( "kleiner",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "monk",			"models/player/monk.mdl" )
-AddValidHands( "monk",			"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "mossman",		"models/player/mossman.mdl" )
-AddValidHands( "mossman",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "mossmanarctic",	"models/player/mossman_arctic.mdl" )
-AddValidHands( "mossmanarctic",	"models/weapons/c_arms_citizen.mdl",		0, "0100000" )
-
-AddValidModel( "odessa",		"models/player/odessa.mdl" )
-AddValidHands( "odessa",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "police",		"models/player/police.mdl" )
-AddValidHands( "police",		"models/weapons/c_arms_combine.mdl",		0, "0000000" )
-
-AddValidModel( "policefem",		"models/player/police_fem.mdl" )
-AddValidHands( "policefem",		"models/weapons/c_arms_combine.mdl",		0, "0000000" )
-
-AddValidModel( "magnusson",		"models/player/magnusson.mdl" )
-AddValidHands( "magnusson",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "stripped",		"models/player/soldier_stripped.mdl" )
-AddValidHands( "stripped",		"models/weapons/c_arms_hev.mdl",			2, "0000000" )
-
-AddValidModel( "zombie",		"models/player/zombie_classic.mdl" )
-AddValidHands( "zombie",		"models/weapons/c_arms_citizen.mdl",		2, "0000000" )
-
-AddValidModel( "zombiefast",	"models/player/zombie_fast.mdl" )
-AddValidHands( "zombiefast",	"models/weapons/c_arms_citizen.mdl",		2, "0000000" )
-
-AddValidModel( "female01",		"models/player/Group01/female_01.mdl" )
-AddValidHands( "female01",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "female02",		"models/player/Group01/female_02.mdl" )
-AddValidHands( "female02",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "female03",		"models/player/Group01/female_03.mdl" )
-AddValidHands( "female03",		"models/weapons/c_arms_citizen.mdl",		1, "0000000" )
-AddValidModel( "female04",		"models/player/Group01/female_04.mdl" )
-AddValidHands( "female04",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "female05",		"models/player/Group01/female_05.mdl" )
-AddValidHands( "female05",		"models/weapons/c_arms_citizen.mdl",		1, "0000000" )
-AddValidModel( "female06",		"models/player/Group01/female_06.mdl" )
-AddValidHands( "female06",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "female07",		"models/player/Group03/female_01.mdl" )
-AddValidHands( "female07",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "female08",		"models/player/Group03/female_02.mdl" )
-AddValidHands( "female08",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "female09",		"models/player/Group03/female_03.mdl" )
-AddValidHands( "female09",		"models/weapons/c_arms_refugee.mdl",		1, "0100000" )
-AddValidModel( "female10",		"models/player/Group03/female_04.mdl" )
-AddValidHands( "female10",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "female11",		"models/player/Group03/female_05.mdl" )
-AddValidHands( "female11",		"models/weapons/c_arms_refugee.mdl",		1, "0100000" )
-AddValidModel( "female12",		"models/player/Group03/female_06.mdl" )
-AddValidHands( "female12",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-
-AddValidModel( "male01",		"models/player/Group01/male_01.mdl" )
-AddValidHands( "male01",		"models/weapons/c_arms_citizen.mdl",		1, "0000000" )
-AddValidModel( "male02",		"models/player/Group01/male_02.mdl" )
-AddValidHands( "male02",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "male03",		"models/player/Group01/male_03.mdl" )
-AddValidHands( "male03",		"models/weapons/c_arms_citizen.mdl",		1, "0000000" )
-AddValidModel( "male04",		"models/player/Group01/male_04.mdl" )
-AddValidHands( "male04",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "male05",		"models/player/Group01/male_05.mdl" )
-AddValidHands( "male05",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "male06",		"models/player/Group01/male_06.mdl" )
-AddValidHands( "male06",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "male07",		"models/player/Group01/male_07.mdl" )
-AddValidHands( "male07",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "male08",		"models/player/Group01/male_08.mdl" )
-AddValidHands( "male08",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "male09",		"models/player/Group01/male_09.mdl" )
-AddValidHands( "male09",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-
-AddValidModel( "male10",		"models/player/Group03/male_01.mdl" )
-AddValidHands( "male10",		"models/weapons/c_arms_refugee.mdl",		1, "0100000" )
-AddValidModel( "male11",		"models/player/Group03/male_02.mdl" )
-AddValidHands( "male11",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "male12",		"models/player/Group03/male_03.mdl" )
-AddValidHands( "male12",		"models/weapons/c_arms_refugee.mdl",		1, "0000000" )
-AddValidModel( "male13",		"models/player/Group03/male_04.mdl" )
-AddValidHands( "male13",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "male14",		"models/player/Group03/male_05.mdl" )
-AddValidHands( "male14",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "male15",		"models/player/Group03/male_06.mdl" )
-AddValidHands( "male15",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "male16",		"models/player/Group03/male_07.mdl" )
-AddValidHands( "male16",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "male17",		"models/player/Group03/male_08.mdl" )
-AddValidHands( "male17",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "male18",		"models/player/Group03/male_09.mdl" )
-AddValidHands( "male18",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-
-AddValidModel( "medic01",		"models/player/Group03m/male_01.mdl" )
-AddValidHands( "medic01",		"models/weapons/c_arms_refugee.mdl",		1, "0100000" )
-AddValidModel( "medic02",		"models/player/Group03m/male_02.mdl" )
-AddValidHands( "medic02",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "medic03",		"models/player/Group03m/male_03.mdl" )
-AddValidHands( "medic03",		"models/weapons/c_arms_refugee.mdl",		1, "0100000" )
-AddValidModel( "medic04",		"models/player/Group03m/male_04.mdl" )
-AddValidHands( "medic04",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "medic05",		"models/player/Group03m/male_05.mdl" )
-AddValidHands( "medic05",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "medic06",		"models/player/Group03m/male_06.mdl" )
-AddValidHands( "medic06",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "medic07",		"models/player/Group03m/male_07.mdl" )
-AddValidHands( "medic07",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "medic08",		"models/player/Group03m/male_08.mdl" )
-AddValidHands( "medic08",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "medic09",		"models/player/Group03m/male_09.mdl" )
-AddValidHands( "medic09",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "medic10",		"models/player/Group03m/female_01.mdl" )
-AddValidHands( "medic10",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "medic11",		"models/player/Group03m/female_02.mdl" )
-AddValidHands( "medic11",		"models/weapons/c_arms_refugee.mdl",		0, "0000000" )
-AddValidModel( "medic12",		"models/player/Group03m/female_03.mdl" )
-AddValidHands( "medic12",		"models/weapons/c_arms_refugee.mdl",		1, "0000000" )
-AddValidModel( "medic13",		"models/player/Group03m/female_04.mdl" )
-AddValidHands( "medic13",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "medic14",		"models/player/Group03m/female_05.mdl" )
-AddValidHands( "medic14",		"models/weapons/c_arms_refugee.mdl",		0, "0100000" )
-AddValidModel( "medic15",		"models/player/Group03m/female_06.mdl" )
-AddValidHands( "medic15",		"models/weapons/c_arms_refugee.mdl",		1, "0100000" )
-
-AddValidModel( "refugee01",		"models/player/Group02/male_02.mdl" )
-AddValidHands( "refugee01",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "refugee02",		"models/player/Group02/male_04.mdl" )
-AddValidHands( "refugee02",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "refugee03",		"models/player/Group02/male_06.mdl" )
-AddValidHands( "refugee03",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
-AddValidModel( "refugee04",		"models/player/Group02/male_08.mdl" )
-AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
+AddPlayerModel( "refugee01", "#plrmdl.refugee_male_1", "models/player/Group02/male_02.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "refugee02", "#plrmdl.refugee_male_2", "models/player/Group02/male_04.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "refugee03", "#plrmdl.refugee_male_3", "models/player/Group02/male_06.mdl", HandsCitizen, 0, "0000000" )
+AddPlayerModel( "refugee04", "#plrmdl.refugee_male_4", "models/player/Group02/male_08.mdl", HandsCitizen, 0, "0000000" )
 
 --
 -- Game specific player models! (EP2, CSS, DOD)
 -- Moving them to here since we're now shipping all required files / fallbacks
+--
 
-AddValidModel( "magnusson",	"models/player/magnusson.mdl" )
-AddValidHands( "magnusson",	"models/weapons/c_arms_citizen.mdl", 0, "0000000" )
-AddValidModel( "skeleton",	"models/player/skeleton.mdl" )
-AddValidHands( "skeleton",	"models/weapons/c_arms_citizen.mdl", 2, "0000000" )
-AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
-AddValidHands( "zombine",	"models/weapons/c_arms_combine.mdl", 0, "0000000" )
+Category = "Counter-Strike"
+local HandsCSS = "models/weapons/c_arms_cstrike.mdl"
+AddPlayerModel( "hostage01",	"#plrmdl.css_hostage1",	"models/player/hostage/hostage_01.mdl" )
+AddPlayerModel( "hostage02",	"#plrmdl.css_hostage2",	"models/player/hostage/hostage_02.mdl" )
+AddPlayerModel( "hostage03",	"#plrmdl.css_hostage3",	"models/player/hostage/hostage_03.mdl" )
+AddPlayerModel( "hostage04",	"#plrmdl.css_hostage4",	"models/player/hostage/hostage_04.mdl" )
 
-AddValidModel( "hostage01",	"models/player/hostage/hostage_01.mdl" )
-AddValidModel( "hostage02",	"models/player/hostage/hostage_02.mdl" )
-AddValidModel( "hostage03",	"models/player/hostage/hostage_03.mdl" )
-AddValidModel( "hostage04",	"models/player/hostage/hostage_04.mdl" )
+AddPlayerModel( "css_arctic",	"#plrmdl.css_arctic",	"models/player/arctic.mdl",		HandsCSS, 0, "0000000" )
+AddPlayerModel( "css_gasmask",	"#plrmdl.css_gasmask",	"models/player/gasmask.mdl",	HandsCSS, 0, "0000000" )
+AddPlayerModel( "css_guerilla",	"#plrmdl.css_guerilla",	"models/player/guerilla.mdl",	HandsCSS, 0, "0000000" )
+AddPlayerModel( "css_leet",		"#plrmdl.css_leet",		"models/player/leet.mdl",		HandsCSS, 0, "0000000" )
+AddPlayerModel( "css_phoenix",	"#plrmdl.css_phoenix",	"models/player/phoenix.mdl",	HandsCSS, 0, "0000000" )
+AddPlayerModel( "css_riot",		"#plrmdl.css_riot",		"models/player/riot.mdl",		HandsCSS, 0, "0000000" )
+AddPlayerModel( "css_swat",		"#plrmdl.css_swat",		"models/player/swat.mdl",		HandsCSS, 0, "0000000" )
+AddPlayerModel( "css_urban",	"#plrmdl.css_urban",	"models/player/urban.mdl",		HandsCSS, 0, "0000000" )
 
-AddValidModel( "css_arctic",	"models/player/arctic.mdl" )
-AddValidHands( "css_arctic",	"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
-AddValidModel( "css_gasmask",	"models/player/gasmask.mdl" )
-AddValidHands( "css_gasmask",	"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
-AddValidModel( "css_guerilla",	"models/player/guerilla.mdl" )
-AddValidHands( "css_guerilla",	"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
-AddValidModel( "css_leet",		"models/player/leet.mdl" )
-AddValidHands( "css_leet",		"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
-AddValidModel( "css_phoenix",	"models/player/phoenix.mdl" )
-AddValidHands( "css_phoenix",	"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
-AddValidModel( "css_riot",		"models/player/riot.mdl" )
-AddValidHands( "css_riot",		"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
-AddValidModel( "css_swat",		"models/player/swat.mdl" )
-AddValidHands( "css_swat",		"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
-AddValidModel( "css_urban",		"models/player/urban.mdl" )
-AddValidHands( "css_urban",		"models/weapons/c_arms_cstrike.mdl", 7, "10000000" )
+Category = nil
+--Category = "Portal"
+AddPlayerModel( "chell", "#plrmdl.chell", "models/player/p2_chell.mdl", "models/weapons/c_arms_chell.mdl", 0, "0000000" )
 
-AddValidModel( "dod_german",	"models/player/dod_german.mdl" )
-AddValidHands( "dod_german",	"models/weapons/c_arms_dod.mdl", 0, "10000000" )
-AddValidModel( "dod_american",	"models/player/dod_american.mdl" )
-AddValidHands( "dod_american",	"models/weapons/c_arms_dod.mdl", 1, "10000000" )
+--Category = "Day of Defeat: Source"
+AddPlayerModel( "dod_german",	"#plrmdl.dod_german",	"models/player/dod_german.mdl",		"models/weapons/c_arms_dod.mdl", 0, "0000000" )
+AddPlayerModel( "dod_american",	"#plrmdl.dod_american",	"models/player/dod_american.mdl",	"models/weapons/c_arms_dod.mdl", 1, "0000000" )
 
 
 --
@@ -357,7 +312,7 @@ function RegisterClass( name, tab, base )
 	--
 	if ( base ) then
 
-		if ( !Type[ name ] ) then ErrorNoHalt( "RegisterClass - deriving " .. name .. " from unknown class " .. base .. "!\n" ) end
+		if ( !Type[ name ] ) then ErrorNoHaltWithStack( "RegisterClass - deriving " .. name .. " from unknown class " .. base .. "!" ) end
 		setmetatable( Type[ name ], { __index = Type[ base ] } )
 
 	end
@@ -376,7 +331,7 @@ end
 
 function SetPlayerClass( ply, classname )
 
-	if ( !Type[ classname ] ) then ErrorNoHalt( "SetPlayerClass - attempt to use unknown player class " .. classname .. "!\n" ) end
+	if ( !Type[ classname ] ) then ErrorNoHaltWithStack( "SetPlayerClass - attempt to use unknown player class " .. classname .. "!" ) end
 
 	local id = util.NetworkStringToID( classname )
 	ply:SetClassID( id )
@@ -420,7 +375,7 @@ function RunClass( ply, funcname, ... )
 	if ( !class ) then return end
 
 	local func = class[ funcname ]
-	if ( !func ) then ErrorNoHalt( "Function " .. funcname .. " not found on player class!\n" ) return end
+	if ( !func ) then ErrorNoHaltWithStack( "Function " .. funcname .. " not found on player class!" ) return end
 
 	return func( class, ... )
 
