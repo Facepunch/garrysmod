@@ -276,7 +276,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	if ( !ENTinfo ) then ENTinfo = list.GetEntry( "SpawnableEntities", obj.spawnname ) end
 	if ( ENTinfo ) then
 		local extraInfo = ""
-		if ( ENTinfo.Information and ENTinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. ENTinfo.Information end
+		if ( ENTinfo.Information and ENTinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( ENTinfo.Information ) end
 		if ( ENTinfo.Author and ENTinfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. ENTinfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
@@ -324,7 +324,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	local VehInfo = list.GetEntry( "Vehicles", obj.spawnname )
 	if ( VehInfo ) then
 		local extraInfo = ""
-		if ( VehInfo.Information and VehInfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. VehInfo.Information end
+		if ( VehInfo.Information and VehInfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( VehInfo.Information ) end
 		if ( VehInfo.Author and VehInfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .." " .. VehInfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
@@ -378,7 +378,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	if ( !NPCinfo ) then NPCinfo = list.GetEntry( "NPC", obj.spawnname ) end
 	if ( NPCinfo ) then
 		local extraInfo = ""
-		if ( NPCinfo.Information and NPCinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. NPCinfo.Information end
+		if ( NPCinfo.Information and NPCinfo.Information != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( NPCinfo.Information ) end
 		if ( NPCinfo.Author and NPCinfo.Author != "" ) then extraInfo = extraInfo .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. NPCinfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
 	end
@@ -489,8 +489,8 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	if ( SWEPinfo ) then
 		local extraInfo = ""
 		-- These 2 really should be one
-		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Purpose end
-		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. SWEPinfo.Instructions end
+		if ( SWEPinfo.Purpose and SWEPinfo.Purpose != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( SWEPinfo.Purpose ) end
+		if ( SWEPinfo.Instructions and SWEPinfo.Instructions != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( SWEPinfo.Instructions ) end
 
 		if ( SWEPinfo.Author and SWEPinfo.Author != "" ) then toolTip = toolTip .. "\n" .. language.GetPhrase( "entityinfo.author" ) .. " " .. SWEPinfo.Author end
 		if ( #extraInfo > 0 ) then toolTip = toolTip .. "\n" .. extraInfo end
