@@ -447,7 +447,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		local CustomIcons = list.Get( "ContentCategoryIcons" )
 		for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
 			if ( table.HasValue( obj.weapon, v.class ) ) then continue end
-	
+
 			local cat = ( v.category or "" ):lower()
 			groupedWeps[ cat ] = groupedWeps[ cat ] or {}
 			groupedWeps[ cat ][ language.GetPhrase( v.title ) ] = { class = v.class, icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
