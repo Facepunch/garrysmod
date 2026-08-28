@@ -407,7 +407,8 @@ AddNPC( {
 	Class = "npc_combinedropship",
 	Category = Category,
 	Offset = 300,
-	KeyValues = { SquadName = "overwatch" },
+	Health = 1000,
+	KeyValues = { SquadName = "overwatch", CanTakeDamageAndDie = "1" },
 	NoDrop = true
 } )
 
