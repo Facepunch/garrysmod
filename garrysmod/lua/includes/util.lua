@@ -537,6 +537,13 @@ if ( CLIENT ) then
 
 end
 
+if ( language ) then
+	-- Convenience function to format a language string
+	function language.FormatPhrase( phrase, ... )
+		return language.GetPhrase( phrase ):format( ... )
+	end
+end
+
 --
 -- This is supposed to be clientside, but was exposed to both states for years due to a bug.
 --

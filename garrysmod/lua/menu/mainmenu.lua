@@ -434,7 +434,7 @@ function GetServers( category, id )
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
 			SendServer( pnlMainMenu, category, id,
-				2000, language.GetPhrase( "server_noresponse" ):format( address ), language.GetPhrase( "server_gamemode_unreachable" ), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				2000, language.FormatPhrase( "server_noresponse", address ), language.GetPhrase( "server_gamemode_unreachable" ), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]
@@ -500,7 +500,7 @@ function FindServersAtAddress( inputStr )
 
 			if ( !name ) then
 				table.insert( output, {
-					name = language.GetPhrase("server_noresponse"):format(addr),
+					name = language.FormatPhrase( "server_noresponse", addr ),
 					address = addr, ping = 2000, favorite = false,
 					players = 0, maxplayers = 0, botplayers = 0,
 					map = "", gamemode = ""
