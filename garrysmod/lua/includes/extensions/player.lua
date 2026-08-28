@@ -245,17 +245,12 @@ timer.Create( "PlayerVoice", 0.1, 0, function()
 		if ( !IsValid(pl) or pl:IsBot() ) then continue end
 
 		if ( pl:IsSpeaking() and !pl.m_bWasTalking ) then
-
 			pl.m_bWasTalking = true
-			hook.Run("PlayerStartVoice", pl )
-
+			hook.Run( "PlayerStartVoice", pl, pl:EntIndex() )
 		elseif ( !pl:IsSpeaking() and pl.m_bWasTalking ) then
-
 			pl.m_bWasTalking = false
-			hook.Run("PlayerEndVoice", pl )
-
+			hook.Run( "PlayerEndVoice", pl, pl:EntIndex() )
 		end
-
 	end
 
 end)
@@ -264,7 +259,7 @@ hook.Add("PlayerDisconnected", "PlayerVoice_Cleanup", function(ply)
 
 	if ply.m_bWasTalking then
 		ply.m_bWasTalking = false
-		hook.Run("PlayerEndVoice", ply )
+		hook.Run("PlayerEndVoice", ply, ply:EntIndex())
 	end
 
 end)
