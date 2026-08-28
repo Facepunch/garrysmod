@@ -1437,6 +1437,12 @@
 		1 : "Yes"
 	]
 
+	CanTakeDamageAndDie(Choices) : "Can take damage and die" : 0 : "If enabled, the dropship can be damaged by explosions, and die if its health is depleted. This feature is exclusive to Garry's Mod." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
 	CrateType(Choices) : "Crate Type" : 2 =
 	[
 		-3 : "Jeep (No crate)"
