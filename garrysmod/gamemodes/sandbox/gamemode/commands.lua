@@ -44,19 +44,13 @@ local function GetSpawnTrace( ply )
 	return util.TraceLine( trace )
 end
 
---[[---------------------------------------------------------
-	Name: CCSpawn
-	Desc: Console Command for a player to spawn different items
------------------------------------------------------------]]
-function CCSpawn( ply, command, arguments )
+local function Spawn_SandboxModel( ply, modelName, iSkin, strBody, traceOverride )
 
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
 
 	-- Player is dead, don't allow them to spam stuff
 	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
-
-	local modelName = arguments[ 1 ]
 
 	-- Make sure the model path is valid
 	if ( modelName == nil ) then return end
@@ -78,32 +72,44 @@ function CCSpawn( ply, command, arguments )
 	-- Make sure the model is valid
 	if ( !util.IsValidModel( modelName ) ) then return end
 
-	local iSkin = tonumber( arguments[ 2 ] ) or 0
-	local strBody = arguments[ 3 ] or nil
-
 	-- Give the gamemode an opportunity to prevent spawning
 	-- TODO: Give strBody to the hook as well?
 	if ( !gamemode.Call( "PlayerSpawnObject", ply, modelName, iSkin ) ) then return end
 
 	if ( util.IsValidProp( modelName ) ) then
 
-		GMODSpawnProp( ply, modelName, iSkin, strBody )
+		GMODSpawnProp( ply, modelName, iSkin, strBody, traceOverride )
 		return
 
 	end
 
 	if ( util.IsValidRagdoll( modelName ) ) then
 
-		GMODSpawnRagdoll( ply, modelName, iSkin, strBody )
+		GMODSpawnRagdoll( ply, modelName, iSkin, strBody, traceOverride )
 		return
 
 	end
 
 	-- Not a ragdoll or prop.. must be an 'effect' - spawn it as one
-	GMODSpawnEffect( ply, modelName, iSkin, strBody )
+	GMODSpawnEffect( ply, modelName, iSkin, strBody, traceOverride )
 
 end
-concommand.Add( "gm_spawn", CCSpawn, nil, "Spawns props/ragdolls" )
+
+
+
+--[[---------------------------------------------------------
+	Name: CCSpawn
+	Desc: Console Command for a player to spawn different items
+-----------------------------------------------------------]]
+function CCSpawn( ply, command, arguments, argumentsStr, traceOverride )
+
+	local iSkin = tonumber( arguments[ 2 ] ) or 0
+	local strBody = arguments[ 3 ] or nil
+
+	Spawn_SandboxModel( ply, arguments[ 1 ], iSkin, strBody, traceOverride )
+
+end
+concommand.Add( "gm_spawn", CCSpawn, nil, "Spawn sandbox props, ragdolls, and effects." )
 
 local function MakeRagdoll( ply, _, _, model, _, data )
 
@@ -136,11 +142,11 @@ duplicator.RegisterEntityClass( "prop_ragdoll", MakeRagdoll, "Pos", "Ang", "Mode
 --[[---------------------------------------------------------
 	Name: GMODSpawnRagdoll - player spawns a ragdoll
 -----------------------------------------------------------]]
-function GMODSpawnRagdoll( ply, model, iSkin, strBody )
+function GMODSpawnRagdoll( ply, model, iSkin, strBody, tr )
 
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
 
-	local ragdoll = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody )
+	local ragdoll = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody, tr )
 	if ( !IsValid( ragdoll ) ) then return end -- Must've hit edict limit
 
 	if ( IsValid( ply ) ) then
@@ -268,11 +274,11 @@ end
 --[[---------------------------------------------------------
 	Name: GMODSpawnProp - player spawns a prop
 -----------------------------------------------------------]]
-function GMODSpawnProp( ply, model, iSkin, strBody )
+function GMODSpawnProp( ply, model, iSkin, strBody, tr )
 
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnProp", ply, model ) ) then return end
 
-	local e = DoPlayerEntitySpawn( ply, "prop_physics", model, iSkin, strBody )
+	local e = DoPlayerEntitySpawn( ply, "prop_physics", model, iSkin, strBody, tr )
 	if ( !IsValid( e ) ) then return end
 
 	if ( IsValid( ply ) ) then
@@ -298,11 +304,11 @@ end
 --[[---------------------------------------------------------
 	Name: GMODSpawnEffect
 -----------------------------------------------------------]]
-function GMODSpawnEffect( ply, model, iSkin, strBody )
+function GMODSpawnEffect( ply, model, iSkin, strBody, tr )
 
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then return end
 
-	local e = DoPlayerEntitySpawn( ply, "prop_effect", model, iSkin, strBody )
+	local e = DoPlayerEntitySpawn( ply, "prop_effect", model, iSkin, strBody, tr )
 	if ( !IsValid( e ) ) then return end
 
 	if ( IsValid( ply ) ) then
@@ -326,9 +332,9 @@ end
 	Name: DoPlayerEntitySpawn
 	Desc: Utility function for player entity spawning functions
 -----------------------------------------------------------]]
-function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
+function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody, tr )
 
-	local tr = GetSpawnTrace( ply )
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	-- Prevent spawning too close
 	--[[if ( !tr.Hit or tr.Fraction < 0.05 ) then
@@ -601,9 +607,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	-- Give the gamemode an opportunity to deny spawning
 	if ( !gamemode.Call( "PlayerSpawnNPC", ply, NPCClassName, WeaponName ) ) then return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	local NPCData = list.GetEntry( "NPC", NPCClassName )
 
@@ -640,7 +644,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	return SpawnedNPC
 
 end
-concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end )
+concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end, nil, "Spawn sandbox NPCs." )
 
 -- This should be in base_npcs.lua really
 local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, data )
@@ -817,9 +821,7 @@ function Spawn_SENT( ply, EntityName, tr )
 	-- Ask the gamemode if it's OK to spawn this
 	if ( !gamemode.Call( "PlayerSpawnSENT", ply, EntityName ) ) then return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	local entity = nil
 	local PrintName = EntityName
@@ -915,7 +917,7 @@ function Spawn_SENT( ply, EntityName, tr )
 	return entity
 
 end
-concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end )
+concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end, nil, "Spawn sandbox scripted entities." )
 
 --[[---------------------------------------------------------
 	-- Give a swep.
@@ -951,7 +953,7 @@ function CCGiveSWEP( ply, command, arguments )
 	ply:SelectWeapon( swep.ClassName )
 
 end
-concommand.Add( "gm_giveswep", CCGiveSWEP )
+concommand.Add( "gm_giveswep", CCGiveSWEP, nil, "Give a sandbox weapons directly to the executing player." )
 
 --[[---------------------------------------------------------
 	-- Spawn a SWEP on the ground
@@ -1025,7 +1027,7 @@ function Spawn_Weapon( ply, wepname, tr )
 	return entity
 
 end
-concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
+concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end, nil, "Spawn sandbox weapons where the player is looking at." )
 
 -- Do not allow people to undo weapons from player's hands
 hook.Add( "WeaponEquip", "SpawnWeaponUndoRemoval", function( wep, ply )
@@ -1120,9 +1122,7 @@ function Spawn_Vehicle( ply, vname, tr )
 	local vehicle = list.GetEntry( "Vehicles", vname )
 	if ( !vehicle ) then return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	local Angles = ply:GetAngles()
 	Angles.pitch = 0
@@ -1156,7 +1156,7 @@ function Spawn_Vehicle( ply, vname, tr )
 	return Ent
 
 end
-concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply, args[1] ) end )
+concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply, args[1] ) end, nil, "Spawn sandbox vehicles." )
 
 local function VehicleMemDupe( ply, ent, Data )
 
