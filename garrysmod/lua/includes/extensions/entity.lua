@@ -77,6 +77,14 @@ function meta:__newindex( key, value )
 
 end
 
+meta.SetTableInternal = meta.SetTableInternal or meta.SetTable
+
+function meta:SetTable( tab )
+	EntityTablesCache[ self ] = nil
+
+	return meta.SetTableInternal( self, tab )
+end
+
 --[[---------------------------------------------------------
 	Name: Short cut to add entities to the table
 -----------------------------------------------------------]]
