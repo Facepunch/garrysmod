@@ -40,12 +40,19 @@
 	input SetLightingOriginHack(target_destination) : "Sets the relative lighting origin entity. This will make this entity sample lighting from the given entity's position"
 ]
 
-// Also all CBaseAnimating entities
+// Also all CBaseAnimating entities, but we limit where it appears to avoid potential "it no worky" issues
 @BaseClass = GMODModelScale
 [
-	modelscale(float) : "Model Scale" : "1.0" : "Scales the model by precentage given. 1 = 100%, 0.5 = 50%, 2 = 200%, etc."
+	modelscale(float) : "Model Scale" : "1.0" : "Scales the model by precentage given.\n1 = 100%, 0.5 = 50%, 2 = 200%, etc."
 
-	input SetModelScale(float) : "Scales the model by precentage given. 1 = 100%, 0.5 = 50%, 2 = 200%, etc."
+	input SetModelScale(string) : "Takes two values separated by a space. The first is the target model scale. (1 = 100%, 0.5 = 50%, 2 = 200%, etc.) The second value is the number of seconds the change in scale will be spread over."
+]
+
+@BaseClass = CBaseAnimating
+[
+	input SetModel(string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
+	input SetCycle(float) : "Skip to a specific point in the current animation"
+	input SetPlaybackRate(float) : "Change the animation speed multiplier"
 ]
 
 // GMOD Note: This fixes brush model bounds being in world space, which is useful for good parenting.
@@ -82,7 +89,7 @@
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 ]
 
-@BaseClass base(GMODSandbox, ToggleDraw, Shadow, Skin) = Studiomodel
+@BaseClass base(GMODSandbox, CBaseAnimating, ToggleDraw, Shadow, Skin) = Studiomodel
 [
 	model(*studio) : "World model" : "" : "The model this entity should use."
 
@@ -157,7 +164,7 @@
 
 @BaseClass = RenderFxChoices
 [
-	renderfx(choices) :"Render FX" : 0 =
+	renderfx(choices) :"Render FX" : 0 : "Custom rendering effects." =
 	[
 		0: "Normal"
 		1: "Slow Pulse"
@@ -1284,12 +1291,14 @@
 	]
 
 	// Inputs
-	input SetTonemapScale(float) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
-	input BlendTonemapScale(string) : "Blend from the player's current tonemap scale to a new one. The parameter syntax is as follows: <target tonemap scale> <blend duration>. For example: '0.5 10' would blend from the current tonemap scale to 0.5 over a period of 10 seconds. Tonemap scale is a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
+	// GMOD: These 2 never worked.
+	//input SetTonemapScale(float) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
+	//input BlendTonemapScale(string) : "Blend from the player's current tonemap scale to a new one. The parameter syntax is as follows: <target tonemap scale> <blend duration>. For example: '0.5 10' would blend from the current tonemap scale to 0.5 over a period of 10 seconds. Tonemap scale is a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
 	input UseDefaultAutoExposure(void) : "Revert to using the default tonemap auto exposure."
 	input SetAutoExposureMin(float) : "Set a custom tonemap auto exposure minimum."
 	input SetAutoExposureMax(float) : "Set a custom tonemap auto exposure maximum."
 	input SetBloomScale(float) : "Set a custom bloom scale."
+	input UseDefaultBloomScale(void) : "Revert to using the default bloom scale."
 	input SetTonemapRate(float) : "Set the rate for autoexposure adjustment."
 ]
 
@@ -1338,7 +1347,7 @@
 @PointClass base(Parentname) size( -16 -16 0, 16 16 4 ) color(255 128 255)= info_ladder_dismount :
 	"An entity to handle endpoints for multiple ladders that are too close to each other."
 [
-	target(target_destination) : "LadderName" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
+	target(target_destination) : "Ladder Name" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
 ]
 
 @SolidClass base(Targetname) color(0 128 255) sphere(FadeStartDist) sphere(FadeDist) = func_areaportalwindow :
@@ -2269,7 +2278,7 @@
 	input SparkOnce(void) : "Spark once."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) = env_sprite :
+@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(140 140 20) = env_sprite :
 	"An entity that controls the drawing of a sprite in the world."
 [
 	framerate(float) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -2411,6 +2420,7 @@
 
 	// Inputs
 	input SetAmmoModifier(float): "Adjust the ammo modifier."
+	input SetMaxPieces(integer): "Adjust the maximum amount of the specified weapon type allowed in the world."
 ]
 
 @PointClass base(Targetname) iconsprite("editor/game_end.vmt") = game_end :
@@ -2611,17 +2621,18 @@
 //	input Command(string) : "Command to execute."
 //]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor :
-	"An entity that relays bonus maps changes."
-[
-	filename(string) : "File Name" : ""
-	mapname(string) : "Map Name" : ""
-
-	// Inputs
-	input Unlock(void) : "Unlocks the filename/map combination."
-	input Complete(void) : "Completes the filename/map combination."
-	input Save(void) : "Saves bonus map data."
-]
+// GMOD: Useless in GMod, was removed
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor :
+//	"An entity that relays bonus maps changes."
+//[
+//	filename(string) : "File Name" : ""
+//	mapname(string) : "Map Name" : ""
+//
+//	// Inputs
+//	input Unlock(void) : "Unlocks the filename/map combination."
+//	input Complete(void) : "Completes the filename/map combination."
+//	input Save(void) : "Saves bonus map data."
+//]
 
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = game_ui :
 	"An entity used to override player input when the player is looking at it."
@@ -2733,13 +2744,13 @@
 @PointClass base(Targetname) size(-1 -1 0, 1 1 1) color(80 150 225) studio("models/editor/overlay_helper.mdl") sphere(fademindist) sphere(fademaxdist) overlay() = info_overlay :
 	"An entity that places an overlay on the world."
 [
-	material(material) : "Material"
-	sides(sidelist) : "Brush faces"
+	material(material) : "Material" : : "The material to overlay. It must be a decal shader material."
+	sides(sidelist) : "Brush faces" : : "Surfaces that this overlay should apply to."
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
-	StartU(float) : "U Start" : "0.0"
-	EndU(float) : "U End" : "1.0"
-	StartV(float) : "V Start" : "0.0"
-	EndV(float) : "V End" : "1.0"
+	StartU(float) : "U Start" : "0.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - left edge, 1 - right edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
+	EndU(float) : "U End" : "1.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - left edge, 1 - right edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
+	StartV(float) : "V Start" : "0.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - top edge, 1 - bottom edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
+	EndV(float) : "V End" : "1.0" : "Allows specifying normalized texture cooridiates via UV mapping. 0 - top edge, 1 - bottom edge. Default is start 0 to end 1, but any combination can be used, for example start 1 to end 0 will flip the texture on that axis. start 0 to end 2 will repeat it twice."
 	BasisOrigin(Vector) readonly : "Overlay Basis Origin (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
 	BasisU(Vector) readonly : "Overlay Basis U (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
 	BasisV(Vector) readonly : "Overlay Basis V (Read-Only)" : "" : "This value is generated automatically. Do not edit it!"
@@ -2795,7 +2806,7 @@
 @PointClass base(Targetname, Parentname, Angles) studio("models/editor/cone_helper.mdl") line(255 255 255, targetname, cpoint1) line(255 255 255, targetname, cpoint2) line(255 255 255, targetname, cpoint3) line(255 255 255, targetname, cpoint4) line(255 255 255, targetname, cpoint5) line(255 255 255, targetname, cpoint6) line(255 255 255, targetname, cpoint7) line(255 255 255, targetname, cpoint8) line(255 255 255, targetname, cpoint9) line(255 255 255, targetname, cpoint10) line(255 255 255, targetname, cpoint11) line(255 255 255, targetname, cpoint12) line(255 255 255, targetname, cpoint13) line(255 255 255, targetname, cpoint14) line(255 255 255, targetname, cpoint15) line(255 255 255, targetname, cpoint16) line(255 255 255, targetname, cpoint17) line(255 255 255, targetname, cpoint18) line(255 255 255, targetname, cpoint19) line(255 255 255, targetname, cpoint20) line(255 255 255, targetname, cpoint21) line(255 255 255, targetname, cpoint22) line(255 255 255, targetname, cpoint23) line(255 255 255, targetname, cpoint24) line(255 255 255, targetname, cpoint25) line(255 255 255, targetname, cpoint26) line(255 255 255, targetname, cpoint27) line(255 255 255, targetname, cpoint28) line(255 255 255, targetname, cpoint29) line(255 255 255, targetname, cpoint30) line(255 255 255, targetname, cpoint31) line(255 255 255, targetname, cpoint32) line(255 255 255, targetname, cpoint33) line(255 255 255, targetname, cpoint34) line(255 255 255, targetname, cpoint35) line(255 255 255, targetname, cpoint36) line(255 255 255, targetname, cpoint37) line(255 255 255, targetname, cpoint38) line(255 255 255, targetname, cpoint39) line(255 255 255, targetname, cpoint40) line(255 255 255, targetname, cpoint41) line(255 255 255, targetname, cpoint42) line(255 255 255, targetname, cpoint43) line(255 255 255, targetname, cpoint44) line(255 255 255, targetname, cpoint45) line(255 255 255, targetname, cpoint46) line(255 255 255, targetname, cpoint47) line(255 255 255, targetname, cpoint48) line(255 255 255, targetname, cpoint49) line(255 255 255, targetname, cpoint50) line(255 255 255, targetname, cpoint51) line(255 255 255, targetname, cpoint52) line(255 255 255, targetname, cpoint53) line(255 255 255, targetname, cpoint54) line(255 255 255, targetname, cpoint55) line(255 255 255, targetname, cpoint56) line(255 255 255, targetname, cpoint57) line(255 255 255, targetname, cpoint58) line(255 255 255, targetname, cpoint59) line(255 255 255, targetname, cpoint60) line(255 255 255, targetname, cpoint61) line(255 255 255, targetname, cpoint62) line(255 255 255, targetname, cpoint63) = info_particle_system :
 	"An entity that spawns a particle system built using the particle editor."
 [
-	effect_name(particlesystem) : "Particle System Name"
+	effect_name(*particlesystem) : "Particle System Name"
 	start_active(choices) : "Start Active?" : 0 =
 	[
 		0 : "No"
@@ -3934,7 +3945,7 @@
 		3 : "Ajar (use Ajar Angles)"
 	]
 
-	axis(axis) : "Hinge Axis (Non functional)" : : "This field does not function."
+	//axis(axis) : "Hinge Axis (Non functional)" : : "This field does not function."
 	distance(float) : "Rotation Distance (deg)" : 90 : "The amount, in degrees, that the door should rotate when opened."
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
 	soundopenoverride(sound) : "Fully Open Sound" : : "Sound played when the door has finished opening."

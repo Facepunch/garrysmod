@@ -1,7 +1,7 @@
 
 var IS_SPAWN_MENU = false;
 
-var App = angular.module( 'MenuApp', [ 'ngRoute', 'tranny' ] );
+var App = angular.module( 'MenuApp', [ 'ngRoute', 'ngLocalize' ] );
 
 App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {

@@ -3,6 +3,13 @@ if ( SERVER ) then AddCSLuaFile() return end
 
 local default_animations = { "idle_all_01", "menu_walk" }
 
+local function SetDefaultColorFromConVar( panel, convarName )
+	local color = Vector( GetConVar( convarName ):GetDefault() ):ToColor()
+	if ( color ) then
+		panel.HSV:SetDefaultColor( color )
+	end
+end
+
 list.Set( "DesktopWindows", "PlayerEditor", {
 
 	title		= "#smwidget.playermodel",
@@ -13,27 +20,42 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 	init		= function( widgetIcon, window )
 
 		window:SetTitle( "#smwidget.playermodel_title" )
-		window:SetSize( math.min( ScrW() - 16, window:GetWide() ), math.min( ScrH() - 16, window:GetTall() ) )
+		window:SetSize( math.max( ScrW() * 0.8, window:GetWide() ), math.max( ScrH() * 0.8, window:GetTall() ) )
 		window:SetSizable( true )
-		window:SetMinWidth( window:GetWide() )
-		window:SetMinHeight( window:GetTall() )
+		window:SetMinWidth( 400 )
+		window:SetMinHeight( 250 )
 		window:Center()
 
-		local mdl = window:Add( "DModelPanel" )
-		mdl:Dock( FILL )
-		mdl:SetFOV( 36 )
-		mdl:SetCamPos( vector_origin )
-		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
-		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
-		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
+		local divider = window:Add( "DHorizontalDivider" )
+		divider:Dock( FILL )
+		divider:SetLeftWidth( window:GetWide() / 2 )
+		divider:SetLeftMin( 150 )
+		divider:SetRightMin( 250 )
+		divider:SetCookieName( "PlayerModelSelectorDivider" )
+
+		--
+		-- Model preview
+		--
+		local mdl = divider:Add( "DModelPanel" )
+		divider:SetLeft( mdl )
+
+		-- Undo defaults
+		mdl:SetDirectionalLight( BOX_FRONT, nil )
+		mdl:SetDirectionalLight( BOX_TOP, nil )
+		mdl:SetAmbientLight( Color( 32, 32, 32 ) ) -- Still show the phong a little
+
 		mdl:SetAnimated( true )
 		mdl.Angles = angle_zero
-		mdl:SetLookAt( Vector( -100, 0, -22 ) )
+		mdl:SetLookAt( Vector( 0, 0, 37 ) )
+		mdl:SetCamPos( Vector( 100, 0, 59 ) )
 
-		local sheet = window:Add( "DPropertySheet" )
-		sheet:Dock( RIGHT )
-		sheet:SetWide( 430 )
+		local sheet = divider:Add( "DPropertySheet" )
+		sheet:SetWide( window:GetWide() / 2 )
+		divider:SetRight( sheet )
 
+		--
+		-- Model List
+		--
 		local modelListPnl = window:Add( "DPanel" )
 		modelListPnl:DockPadding( 8, 8, 8, 8 )
 
@@ -46,27 +68,49 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local PanelSelect = modelListPnl:Add( "DPanelSelect" )
 		PanelSelect:Dock( FILL )
 
-		for name, model in SortedPairs( player_manager.AllValidModels() ) do
+		local cateorized = {}
+		for name, info in pairs( player_manager.GetAllPlayerModels() ) do
+			local catName = language.GetPhrase( info.category or "#spawnmenu.category.other" )
+			cateorized[ catName ] = cateorized[ catName ] or {}
+			table.insert( cateorized[ catName ], { title = language.GetPhrase( info.title ), model = info.model, name = name } )
+		end
 
-			local icon = vgui.Create( "SpawnIcon" )
-			icon:SetModel( model )
-			icon:SetSize( 64, 64 )
-			icon:SetTooltip( name )
-			icon.playermodel = name
-			icon.model_path = model
-			icon.OpenMenu = function( button )
-				local menu = DermaMenu()
-				menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
-				menu:Open()
+		for catName, items in SortedPairs( cateorized ) do
+
+			local label = vgui.Create( "DLabel" )
+			label:SetFont( "DermaLarge" )
+			label:SetText( catName )
+			label:SetTall( 32 )
+			label:SetDark( true )
+			label:SizeToContentsX()
+			label.m_strLineState = "ownline"
+			PanelSelect:AddPanel( label )
+			label.DoClick = function () end -- Unselectable
+
+			for _, info in SortedPairsByMemberValue( items, "title" ) do
+
+				local icon = vgui.Create( "SpawnIcon" )
+				icon:SetModel( info.model )
+				icon:SetSize( 64, 64 )
+				icon:SetTooltip( info.title )
+				icon.playermodel = info.name
+				icon.model_path = info.model
+				icon.OpenMenu = function( button )
+					local menu = DermaMenu()
+					menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( info.model ) end ):SetIcon( "icon16/page_copy.png" )
+					menu:Open()
+				end
+
+				PanelSelect:AddPanel( icon, { cl_playermodel = info.name } )
+
 			end
-
-			PanelSelect:AddPanel( icon, { cl_playermodel = name } )
 
 		end
 
 		SearchBar.OnValueChange = function( s, str )
 			for id, pnl in pairs( PanelSelect:GetItems() ) do
-				if ( !pnl.playermodel:find( str, 1, true ) && !pnl.model_path:find( str, 1, true ) ) then
+				if ( pnl.playermodel == nil ) then pnl:SetVisible( str == "" ) continue end
+				if ( !pnl.playermodel:lower():find( str, 1, true ) && !pnl.model_path:lower():find( str, 1, true ) && !pnl:GetTooltip():lower():find( str, 1, true ) ) then
 					pnl:SetVisible( false )
 				else
 					pnl:SetVisible( true )
@@ -77,43 +121,45 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		sheet:AddSheet( "#smwidget.model", modelListPnl, "icon16/user.png" )
 
-		local controls = window:Add( "DPanel" )
-		controls:DockPadding( 8, 8, 8, 8 )
+		--
+		-- Colors
+		--
+		local colorPickerSize = math.min( window:GetTall() / 3, 260 )
 
-		local lbl = controls:Add( "DLabel" )
-		lbl:SetText( "#smwidget.color_plr" )
-		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
-		lbl:Dock( TOP )
+		local controlsTop = window:Add( "DPanel" )
+		controlsTop:DockPadding( 8, 8, 8, 8 )
 
-		local plycol = controls:Add( "DColorMixer" )
-		plycol:SetAlphaBar( false )
-		plycol:SetPalette( false )
+		local plycol = controlsTop:Add( "DColorMixer" )
 		plycol:Dock( TOP )
-		plycol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
+		plycol:SetLabel( "#smwidget.color_plr" )
+		plycol:SetTall( colorPickerSize )
+		plycol:SetAlphaBar( false )
+		plycol:SetPaletteName( "plrmdlslct_ply_clr" )
+		SetDefaultColorFromConVar( plycol, "cl_playercolor" )
 
-		local lbl = controls:Add( "DLabel" )
-		lbl:SetText( "#smwidget.color_wep" )
-		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
-		lbl:DockMargin( 0, 32, 0, 0 )
-		lbl:Dock( TOP )
-
-		local wepcol = controls:Add( "DColorMixer" )
-		wepcol:SetAlphaBar( false )
-		wepcol:SetPalette( false )
+		local wepcol = controlsTop:Add( "DColorMixer" )
 		wepcol:Dock( TOP )
-		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
+		wepcol:DockMargin( 0, 32, 0, 0 )
+		wepcol:SetLabel( "#smwidget.color_wep" )
+		wepcol:SetTall( colorPickerSize )
 		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
+		wepcol:SetAlphaBar( false )
+		wepcol:SetPaletteName( "plrmdlslct_wep_clr" )
+		SetDefaultColorFromConVar( wepcol, "cl_weaponcolor" )
 
-		sheet:AddSheet( "#smwidget.colors", controls, "icon16/color_wheel.png" )
+		sheet:AddSheet( "#smwidget.colors", controlsTop, "icon16/color_wheel.png" )
 
-		local bdcontrols = window:Add( "DPanel" )
-		bdcontrols:DockPadding( 8, 8, 8, 8 )
+		--
+		-- Bodygroups
+		--
+		local bgControls = window:Add( "DPanel" )
+		bgControls:DockPadding( 8, 8, 8, 8 )
 
-		local bdcontrolspanel = bdcontrols:Add( "DPanelList" )
+		local bdcontrolspanel = bgControls:Add( "DPanelList" )
 		bdcontrolspanel:EnableVerticalScrollbar()
 		bdcontrolspanel:Dock( FILL )
 
-		local bgtab = sheet:AddSheet( "#smwidget.bodygroups", bdcontrols, "icon16/cog.png" )
+		local bgTab = sheet:AddSheet( "#smwidget.bodygroups", bgControls, "icon16/cog.png" )
 
 		-- Helper functions
 		local function PlayPreviewAnimation( panel, playermodel )
@@ -154,7 +200,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local function RebuildBodygroupTab()
 			bdcontrolspanel:Clear()
 
-			bgtab.Tab:SetVisible( false )
+			bgTab.Tab:SetVisible( false )
 
 			local nskins = mdl.Entity:SkinCount() - 1
 			if ( nskins > 0 ) then
@@ -173,7 +219,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
 
-				bgtab.Tab:SetVisible( true )
+				bgTab.Tab:SetVisible( true )
 			end
 
 			local groups = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
@@ -196,7 +242,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				mdl.Entity:SetBodygroup( k, groups[ k + 1 ] or 0 )
 
-				bgtab.Tab:SetVisible( true )
+				bgTab.Tab:SetVisible( true )
 			end
 
 			sheet.tabScroller:InvalidateLayout()
@@ -211,7 +257,6 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			util.PrecacheModel( modelname )
 			mdl:SetModel( modelname )
 			mdl.Entity.GetPlayerColor = function() return Vector( GetConVarString( "cl_playercolor" ) ) end
-			mdl.Entity:SetPos( Vector( -100, 0, -61 ) )
 
 			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) )
 			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
@@ -246,24 +291,66 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		-- Hold to rotate
 
-		function mdl:DragMousePress()
+		function mdl:DragMousePress( btnId )
+			if ( btnId != MOUSE_LEFT and btnId != MOUSE_RIGHT and btnId != MOUSE_MIDDLE ) then return end
+
 			self.PressX, self.PressY = input.GetCursorPos()
-			self.Pressed = true
+			self.Pressed = btnId
 		end
 
-		function mdl:DragMouseRelease() self.Pressed = false end
+		function mdl:DragMouseRelease() self.Pressed = nil end
 
+		function mdl:PreDrawModel()
+			self.LocalLights = {
+				-- left
+				{
+					type = MATERIAL_LIGHT_POINT,
+					pos = Vector( 0, -100, 72 + math.sin( CurTime() * 1 + 5 ) * 90 ) ,
+					color = Vector( 0.3, 0.6, 1 )
+				},
+				-- right
+				{
+					type = MATERIAL_LIGHT_POINT,
+					pos = Vector( 0, 100, 72 + math.sin( CurTime() * 1 + 9 ) * 90 ) ,
+					color = Vector( 1, 0.6, 0.3 )
+				},
+				-- front
+				{
+					type = MATERIAL_LIGHT_POINT,
+					pos = Vector( 100, 0, 60 + math.sin( CurTime() * 1 ) * 90 ),
+					color = Vector( 1, 1, 1 )
+				}
+			}
+
+			-- Use local lights as it produces much better looking rendering than the light box
+			render.SetLocalModelLights( self.LocalLights )
+
+			return true
+		end
+
+		mdl.StoredFOV = 47
+		mdl:SetFOV( mdl.StoredFOV )
 		function mdl:LayoutEntity( ent )
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
 				local mx, my = input.GetCursorPos()
-				self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
+
+				if ( self.Pressed == MOUSE_LEFT ) then
+					self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
+				end
 
 				self.PressX, self.PressY = mx, my
+
 			end
 
 			ent:SetAngles( self.Angles )
+
+			-- Not ideal, but handles resizing the panel well enough
+			self:SetFOV( self.StoredFOV * math.min( mdl:GetWide() / mdl:GetTall(), 2.5 ) )
+
+			mdl.Entity:SetEyeTarget( mdl:GetCamPos() )
+
 		end
 
 	end

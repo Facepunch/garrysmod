@@ -474,10 +474,10 @@ function TOOL:RightClick( trace )
 	if ( !IsValid( ent ) || ent:IsPlayer() ) then self:SetHand( NULL, 0 ) return true end
 	--if ( ent:GetClass() != "prop_ragdoll" && ent:GetClass() != "prop_dynamic" && !ent:IsNPC() ) then return false end
 
-	if ( CLIENT ) then return false end
-
 	local LeftHandMatrix, RightHandMatrix = self:GetHandPositions( ent )
 	if ( !LeftHandMatrix ) then return false end
+
+	if ( CLIENT ) then return true end
 
 	local LeftHand = ( LeftHandMatrix:GetTranslation() - trace.HitPos ):Length()
 	local RightHand = ( RightHandMatrix:GetTranslation() - trace.HitPos ):Length()

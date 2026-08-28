@@ -124,7 +124,7 @@ local function IdentifyCommand(ply, cmd, args)
    ply.search_id = nil
 
    local rag = Entity(eidx)
-   if IsValid(rag) and rag.player_ragdoll and rag:GetPos():Distance(ply:GetPos()) < 128 then
+   if IsValid(rag) and rag.player_ragdoll and rag:GetPos():DistToSqr(ply:GetPos()) < 16384 then
       if not CORPSE.GetFound(rag, false) then
          IdentifyBody(ply, rag)
       end
@@ -144,7 +144,7 @@ local function CallDetective(ply, cmd, args)
    local rag = Entity(eidx)
    if not (IsValid(rag) and rag.player_ragdoll) then return end
 
-   if ((rag.last_detective_call or 0) < (CurTime() - 5)) and (rag:GetPos():Distance(ply:GetPos()) < 128) then
+   if ((rag.last_detective_call or 0) < (CurTime() - 5)) and (rag:GetPos():DistToSqr(ply:GetPos()) < 16384) then
 
       rag.last_detective_call = CurTime()
 

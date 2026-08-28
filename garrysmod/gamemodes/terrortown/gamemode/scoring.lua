@@ -1,6 +1,5 @@
 ---- Customized scoring
 
-local math = math
 local string = string
 local table = table
 local pairs = pairs
@@ -156,9 +155,7 @@ function SCORE:ApplyEventLogScores(wintype)
       end
    end
 
-   -- individual scores, and count those left alive
-   local alive = {traitors = 0, innos = 0}
-   local dead = {traitors = 0, innos = 0}
+   -- individual scores
    local scored_log = ScoreEventLog(self.Events, scores, traitors, detectives)
    local ply = nil
    for sid64, s in pairs(scored_log) do
@@ -232,14 +229,14 @@ function SCORE:StreamToClients()
 
       repeat
          net.Start("TTT_ReportStream_Part")
-            net.WriteData(string.sub(events, curpos + 1, curpos + MaxStreamLength + 1), MaxStreamLength)
+            net.WriteData(string.sub(events, curpos + 1, curpos + MaxStreamLength), MaxStreamLength)
          net.Broadcast()
 
-         curpos = curpos + MaxStreamLength + 1
+         curpos = curpos + MaxStreamLength
       until(len - curpos <= MaxStreamLength)
 
       net.Start("TTT_ReportStream")
-         net.WriteUInt(len, 16)
+         net.WriteUInt(len - curpos, 16)
          net.WriteData(string.sub(events, curpos + 1, len), len - curpos)
       net.Broadcast()
    end

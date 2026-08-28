@@ -221,6 +221,7 @@ function SWEP:DoToolTrace()
 
 		if ( IsValid( hulltrace.Entity ) ) then
 			trace = hulltrace
+			trace.HullTrace = true
 		end
 	end
 	if ( !trace.Hit ) then return end

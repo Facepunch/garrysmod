@@ -8,28 +8,15 @@ if ( CLIENT ) then
 	CreateConVar( "cl_drawthrusterseffects", "1", 0, "Should Sandbox Thruster effects be visible?" )
 end
 
-function ENT:SetEffect( name )
-	self:SetNWString( "Effect", name )
-end
+function ENT:SetupDataTables()
 
-function ENT:GetEffect()
-	return self:GetNWString( "Effect", "" )
-end
+	self:NetworkVar( "String", 0, "Effect" )
+	self:NetworkVar( "Vector", 0, "Offset" )
+	self:NetworkVar( "Bool", 0, "On" )
 
-function ENT:SetOn( on )
-	self:SetNWBool( "On", on )
-end
+	-- Backwards compat, use :GetOn instead
+	self.IsOn = self.GetOn
 
-function ENT:IsOn()
-	return self:GetNWBool( "On", false )
-end
-
-function ENT:SetOffset( v )
-	self:SetNWVector( "Offset", v )
-end
-
-function ENT:GetOffset()
-	return self:GetNWVector( "Offset" )
 end
 
 function ENT:Initialize()
@@ -77,7 +64,7 @@ end
 if ( CLIENT ) then
 	function ENT:DrawEffects()
 
-		if ( !self:IsOn() ) then return	end
+		if ( !self:GetOn() ) then return end
 		if ( self.ShouldDraw == false ) then return end
 
 		if ( self:GetEffect() == "" or self:GetEffect() == "none" ) then return end
@@ -115,7 +102,7 @@ function ENT:Think()
 
 		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" ) != 0
 
-		if ( !self:IsOn() ) then self.OnStart = nil return end
+		if ( !self:GetOn() ) then self.OnStart = nil return end
 		self.OnStart = self.OnStart or CurTime()
 
 		if ( self.ShouldDraw == false ) then return end
@@ -200,9 +187,6 @@ if ( SERVER ) then
 			self:SetOffset( self.ThrustOffsetR )
 		end
 
-		self:SetNWVector( "1", self.ForceAngle )
-		self:SetNWVector( "2", self.ForceLinear )
-
 		self:SetOverlayText( "Force: " .. math.floor( self.force ) )
 
 	end
@@ -248,7 +232,7 @@ if ( SERVER ) then
 
 	function ENT:PhysicsSimulate( phys, deltatime )
 
-		if ( !self:IsOn() ) then return SIM_NOTHING end
+		if ( !self:GetOn() ) then return SIM_NOTHING end
 
 		return self.ForceAngle, self.ForceLinear, SIM_LOCAL_ACCELERATION
 
@@ -284,7 +268,7 @@ if ( SERVER ) then
 		if ( self.SoundName == sound ) then return end
 
 		-- Gracefully shutdown
-		if ( self:IsOn() ) then
+		if ( self:GetOn() ) then
 			self:StopThrustSound()
 		end
 
@@ -292,7 +276,7 @@ if ( SERVER ) then
 		self.Sound = nil
 
 		-- Now start the new sound
-		if ( self:IsOn() ) then
+		if ( self:GetOn() ) then
 			self:StartThrustSound()
 		end
 
@@ -368,6 +352,12 @@ list.Set( "ThrusterEffects", "#thrustereffect.none", { thruster_effect = "none" 
 
 local matHeatWave = Material( "sprites/heatwave" )
 local matFire = Material( "effects/fire_cloud1" )
+
+local clrFireBlue = Color( 0, 0, 255, 128 )
+local clrFireWhite = Color( 255, 255, 255, 128 )
+local clrFireWhiteEmpty = Color( 255, 255, 255, 0 )
+local clrFireEmpty = Color( 0, 0, 0, 0 )
+
 list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 	thruster_effect = "fire",
 	effectDraw = function( self )
@@ -384,9 +374,9 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		render.SetMaterial( matFire )
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size * Scale, scroll, Color( 0, 0, 255, 128 ) )
-			render.AddBeam( vOffset + vNormal * 60 * Scale, 32 * Scale, scroll + 1, Color( 255, 255, 255, 128 ) )
-			render.AddBeam( vOffset + vNormal * 148 * Scale, 32 * Scale, scroll + 3, Color( 255, 255, 255, 0 ) )
+			render.AddBeam( vOffset, size * Scale, scroll, clrFireBlue )
+			render.AddBeam( vOffset + vNormal * 60 * Scale, 32 * Scale, scroll + 1, clrFireWhite )
+			render.AddBeam( vOffset + vNormal * 148 * Scale, 32 * Scale, scroll + 3, clrFireWhiteEmpty )
 		render.EndBeam()
 
 		scroll = scroll * 0.5
@@ -394,23 +384,27 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		render.UpdateRefractTexture()
 		render.SetMaterial( matHeatWave )
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size * Scale, scroll, Color( 0, 0, 255, 128 ) )
+			render.AddBeam( vOffset, size * Scale, scroll, clrFireBlue )
 			render.AddBeam( vOffset + vNormal * 32 * Scale, 32 * Scale, scroll + 2, color_white )
-			render.AddBeam( vOffset + vNormal * 128 * Scale, 48 * Scale, scroll + 5, Color( 0, 0, 0, 0 ) )
+			render.AddBeam( vOffset + vNormal * 128 * Scale, 48 * Scale, scroll + 5, clrFireEmpty )
 		render.EndBeam()
 
 
 		scroll = scroll * 1.3
 		render.SetMaterial( matFire )
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size * Scale, scroll, Color( 0, 0, 255, 128 ) )
-			render.AddBeam( vOffset + vNormal * 60 * Scale, 16 * Scale, scroll + 1, Color( 255, 255, 255, 128 ) )
-			render.AddBeam( vOffset + vNormal * 148 * Scale, 16 * Scale, scroll + 3, Color( 255, 255, 255, 0 ) )
+			render.AddBeam( vOffset, size * Scale, scroll, clrFireBlue )
+			render.AddBeam( vOffset + vNormal * 60 * Scale, 16 * Scale, scroll + 1, clrFireWhite )
+			render.AddBeam( vOffset + vNormal * 148 * Scale, 16 * Scale, scroll + 3, clrFireWhiteEmpty )
 		render.EndBeam()
 	end
 } )
 
 local matPlasma = Material( "effects/strider_muzzle" )
+
+local clrPlasmaBlue = Color( 0, 255, 255, 255 )
+local clrPlasmaBlueEmpty = Color( 0, 255, 255, 0 )
+
 list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 	thruster_effect = "plasma",
 	effectDraw = function( self )
@@ -427,25 +421,25 @@ list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 		scroll = scroll * 0.9
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
+			render.AddBeam( vOffset, size, scroll, clrPlasmaBlue )
 			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, color_white )
-			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
+			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, clrPlasmaBlueEmpty )
 		render.EndBeam()
 
 		scroll = scroll * 0.9
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
+			render.AddBeam( vOffset, size, scroll, clrPlasmaBlue )
 			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, color_white )
-			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
+			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, clrPlasmaBlueEmpty )
 		render.EndBeam()
 
 		scroll = scroll * 0.9
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
+			render.AddBeam( vOffset, size, scroll, clrPlasmaBlue )
 			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, color_white )
-			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
+			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, clrPlasmaBlueEmpty )
 		render.EndBeam()
 	end
 } )

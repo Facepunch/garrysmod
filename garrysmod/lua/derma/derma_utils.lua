@@ -1,5 +1,10 @@
 
-local matBlurScreen = Material( "pp/blurscreen" )
+local matBlurScreen = nil
+
+-- Menu cannot do blur, so don't load the material
+if ( !MENU_DLL ) then
+	matBlurScreen = Material( "pp/blurscreen" )
+end
 
 --[[
 	This is designed for Paint functions..

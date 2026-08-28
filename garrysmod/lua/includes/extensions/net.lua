@@ -108,6 +108,29 @@ function net.ReadColor( readAlpha )
 
 end
 
+local function HasCyclicReferences( tab )
+	local function check( t, visited )
+		if ( visited[ t ] ) then return true end
+		visited[ t ] = true
+
+		for k, v in pairs( t ) do
+			if ( istable( k ) ) then
+				if ( check( k, visited ) ) then return true end
+			end
+			if ( istable( v ) ) then
+				if ( check( v, visited ) ) then return true end
+			end
+		end
+
+		visited[ t ] = nil
+
+		return false
+	end
+
+	local visited = {}
+	return check( tab, visited )
+end
+
 --
 -- Write a whole table to the stream
 -- This is less optimal than writing each
@@ -115,6 +138,12 @@ end
 -- because it adds type information before each var
 --
 function net.WriteTable( tab, seq )
+
+	-- Check for cyclic references in the table. Trying to write such a table will cause a stack overflow,
+	-- So we display a more friendly error message instead.
+	if ( HasCyclicReferences( tab ) ) then
+		error( "net.WriteTable: Cyclic table detected. Cannot write tables with cyclic references.", 2 )
+	end
 
 	if ( seq ) then
 

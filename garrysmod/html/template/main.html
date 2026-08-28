@@ -7,26 +7,26 @@
 
 				<li><img ng-src='../gamemodes/{{Gamemode}}/logo.png' /></li>
 				<li>&nbsp;</li>
-				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Tranny="'resume_game'"></a></li>
+				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Localize="'resume_game'"></a></li>
 				<li ng-show="InGame">&nbsp;</li>
-				<li><a ng-href="#/newgame/" ng-Tranny="'new_game'"></a></li>
+				<li><a ng-href="#/newgame/" ng-Localize="'new_game'"></a></li>
 
-				<li><a ng-href="#/servers/" ng-Tranny="'find_mp_game'"></a></li>
-
-				<li>&nbsp;</li>
-				<li><a ng-href="#/addons/" ng-Tranny="'addons'"></a></li>
-				<li><a ng-href="#/dupes/" ng-Tranny="'dupes'"></a></li>
-				<li><a ng-href="#/saves/" ng-Tranny="'saves'"></a></li>
-				<li><a ng-href="#/demos/" ng-Tranny="'demos'"></a></li>
+				<li><a ng-href="#/servers/" ng-Localize="'find_mp_game'"></a></li>
 
 				<li>&nbsp;</li>
-				<li><a ng-click="MenuOption( this, 'OpenOptionsDialog')" ng-Tranny="'options'"></a></li>
+				<li><a ng-href="#/addons/" ng-Localize="'addons'"></a></li>
+				<li><a ng-href="#/dupes/" ng-Localize="'dupes'"></a></li>
+				<li><a ng-href="#/saves/" ng-Localize="'saves'"></a></li>
+				<li><a ng-href="#/demos/" ng-Localize="'demos'"></a></li>
+
+				<li>&nbsp;</li>
+				<li><a ng-click="MenuOption( this, 'OpenOptionsDialog')" ng-Localize="'options'"></a></li>
 
 				<li>&nbsp;</li>
 				<li ng-show="InGame">
-					<a ng-click="MenuOption( this, 'Disconnect');" ng-Tranny="'disconnect'"></a>
+					<a ng-click="MenuOption( this, 'Disconnect');" ng-Localize="'disconnect'"></a>
 				</li>
-				<li><a ng-click="MenuOption( this, 'Quit')" ng-Tranny="'quit'"></a></li>
+				<li><a ng-click="MenuOption( this, 'Quit')" ng-Localize="'quit'"></a></li>
 
 			</ul>
 

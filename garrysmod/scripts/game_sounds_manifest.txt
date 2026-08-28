@@ -142,6 +142,7 @@ game_sounds_manifest
 	// Counter-Strike: Source
 	"precache_file"		"scripts/sounds/cs_game_sounds_radio.txt"
 	"precache_file"		"scripts/sounds/cs_game_sounds_weapons.txt"
+	"precache_file"		"scripts/sounds/cs_game_sounds_world.txt"
 
 	// Day of Defeat
 	"precache_file"		"scripts/sounds/dod_game_sounds_weapons.txt"
@@ -176,6 +177,28 @@ game_sounds_manifest
 	// Stanley Parable
 	"precache_file"		"scripts/soundscapes_stanley.txt"
 	"precache_file"		"scripts/npc_sounds_narration.txt"
+
+	// Black Mesa
+	"precache_file"		"scripts/game_sounds_bm_ambience.txt"
+	"precache_file"		"scripts/game_sounds_bm_objects.txt"
+	"precache_file"		"scripts/game_sounds_bm_scripted.txt"
+	"precache_file"		"scripts/game_sounds_scenes.txt"
+	"precache_file"		"scripts/game_sounds_scenes_am.txt"
+	"precache_file"		"scripts/game_sounds_scenes_app.txt"
+	"precache_file"		"scripts/game_sounds_scenes_bp.txt"
+	"precache_file"		"scripts/game_sounds_scenes_endgame.txt"
+	"precache_file"		"scripts/game_sounds_scenes_faf.txt"
+	"precache_file"		"scripts/game_sounds_scenes_gonarch.txt"
+	"precache_file"		"scripts/game_sounds_scenes_ib.txt"
+	"precache_file"		"scripts/game_sounds_scenes_interloper.txt"
+	"precache_file"		"scripts/game_sounds_scenes_lc.txt"
+	"precache_file"		"scripts/game_sounds_scenes_oar.txt"
+	"precache_file"		"scripts/game_sounds_scenes_oc.txt"
+	"precache_file"		"scripts/game_sounds_scenes_pu.txt"
+	"precache_file"		"scripts/game_sounds_scenes_qe.txt"
+	"precache_file"		"scripts/game_sounds_scenes_st.txt"
+	"precache_file"		"scripts/game_sounds_scenes_uc.txt"
+	"precache_file"		"scripts/game_sounds_scenes_wgh.txt"
 
 	// Leaving this here for now, they need to be prefixed in the future
 	"precache_file"		"scripts/game_sounds_vo.txt"

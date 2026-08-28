@@ -231,7 +231,7 @@ function PANEL:OnMouseReleased()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	local titlePush = 0
 
@@ -243,17 +243,17 @@ function PANEL:PerformLayout()
 
 	end
 
-	self.btnClose:SetPos( self:GetWide() - 31 - 4, 0 )
+	self.btnClose:SetPos( w - 31 - 4, 0 )
 	self.btnClose:SetSize( 31, 24 )
 
-	self.btnMaxim:SetPos( self:GetWide() - 31 * 2 - 4, 0 )
+	self.btnMaxim:SetPos( w - 31 * 2 - 4, 0 )
 	self.btnMaxim:SetSize( 31, 24 )
 
-	self.btnMinim:SetPos( self:GetWide() - 31 * 3 - 4, 0 )
+	self.btnMinim:SetPos( w - 31 * 3 - 4, 0 )
 	self.btnMinim:SetSize( 31, 24 )
 
 	self.lblTitle:SetPos( 8 + titlePush, 2 )
-	self.lblTitle:SetSize( self:GetWide() - 25 - titlePush, 20 )
+	self.lblTitle:SetSize( w - 25 - titlePush, 20 )
 
 end
 

@@ -130,7 +130,7 @@ function PANEL:OnModified()
 
 end
 
-function PANEL:ContentsToTable( contentpanel )
+function PANEL:ContentsToTable()
 
 	local tab = {}
 
@@ -186,10 +186,10 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 				pnl:GetParent():Layout()
 				pnl:SetModel( pnl:GetModelName(), pnl:GetSkinID(), pnl:GetBodyGroup() )
 			end
+			
+		end, language.FormatPhrase( "spawnmenu.menu.resizex", spawnicons ) )
 
-		end, language.GetPhrase( "spawnmenu.menu.resizex" ):format( spawnicons ) )
-
-		menu:AddOption( language.GetPhrase( "spawnmenu.menu.rerenderx" ):format( spawnicons ), function()
+		menu:AddOption( language.FormatPhrase( "spawnmenu.menu.rerenderx", spawnicons ), function()
 			for id, pnl in pairs( selected ) do
 				if ( !pnl.RebuildSpawnIcon ) then continue end
 				pnl:RebuildSpawnIcon()
@@ -199,7 +199,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 
 	menu:AddSpacer()
 
-	menu:AddOption( language.GetPhrase( "spawnmenu.menu.deletex" ):format( #selected ), function()
+	menu:AddOption( language.FormatPhrase( "spawnmenu.menu.deletex", #selected ), function()
 
 		for k, v in pairs( selected ) do
 			v:Remove()

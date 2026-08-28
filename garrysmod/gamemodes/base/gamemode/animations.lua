@@ -230,7 +230,7 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 		if ( Vehicle:GetClass() == "prop_vehicle_prisoner_pod" ) then
 			-- No steering in seats (when overridden to use jeep animations)
 			-- So that it doesn't stick to random value it had before
-			steer = 0
+			steer = 0.5
 
 			-- Fix weapon aiming poseparam in vehicle
 			ply:SetPoseParameter( "aim_yaw", math.NormalizeAngle( ply:GetAimVector():Angle().y - Vehicle:GetAngles().y - 90 ) )

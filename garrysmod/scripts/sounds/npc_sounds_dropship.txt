@@ -52,3 +52,26 @@
 
 	"wave"			"npc/combine_gunship/dropship_dropping_pod_loop1.wav"
 }
+
+// GMOD: Play SOME sound on death and pain. Addons can overwrite the soundscripts if wanted
+"NPC_CombineDropship.DyingSound"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"75,85"
+
+	"soundlevel"	"SNDLVL_130dB"
+
+	"wave"			"npc/combine_gunship/dropship_death.wav"
+}
+
+"NPC_CombineDropship.Pain"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"75,85"
+
+	"soundlevel"	"SNDLVL_120dB"
+
+	"wave"			"npc/combine_gunship/gunship_pain.wav"
+}

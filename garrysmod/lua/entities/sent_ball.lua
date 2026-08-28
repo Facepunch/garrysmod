@@ -52,6 +52,8 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	end
 
 	local ent = ents.Create( ClassName )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetPos( SpawnPos )
 	ent:SetBallSize( size )
 	ent:Spawn()

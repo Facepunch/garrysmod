@@ -166,7 +166,7 @@ end
 function GM:EntityKeyValue( ent, key, value )
 
 	-- Physgun not allowed on this prop..
-	if ( key == "gmod_allowphysgun" && value == '0' ) then
+	if ( key == "gmod_allowphysgun" && value == "0" ) then
 		ent.PhysgunDisabled = true
 	end
 

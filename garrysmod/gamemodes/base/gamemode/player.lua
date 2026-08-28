@@ -180,9 +180,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	local flags = 0
-	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
+	if ( attacker:IsNPC() and attacker:Disposition( ply ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
+	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, flags )
 
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 
@@ -240,7 +240,7 @@ function GM:PlayerSpawn( pl, transiton )
 	end
 
 	-- Stop observer mode
-	pl:UnSpectate()
+	if ( !transiton ) then pl:UnSpectate() end
 
 	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
@@ -408,7 +408,7 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		LoadSpawnpointNamesFromGModPlayerSpawn()
 
 		self.SpawnPoints = {}
-		for _, ent in ipairs( ents.GetAll() ) do
+		for _, ent in ents.Iterator() do
 			if ( SpawnPointEntityClasses[ ent:GetClass() ] ) then
 				self.SpawnPoints[#self.SpawnPoints + 1] = ent
 

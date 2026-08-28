@@ -127,6 +127,8 @@ end
 
 function PANEL:OnMouseReleased( mcode )
 
+	if ( !self.Dragging ) then return end
+
 	-- This is a hack. Panel.Hovered is not updated when dragging a panel (Source's dragging, not Lua Drag'n'drop)
 	self.Knob.Hovered = vgui.GetHoveredPanel() == self.Knob
 

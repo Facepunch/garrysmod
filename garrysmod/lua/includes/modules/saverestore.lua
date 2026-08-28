@@ -63,7 +63,7 @@ end
 	Name: GetTypeStr
 	Desc: Given a string returns a TYPE_
 -----------------------------------------------------------]]
-local function GetTypeStr( name )
+local function GetTypeStr( name, bRead )
 
 	if ( name == "function" ) then return TYPE_NONE end
 
@@ -91,7 +91,7 @@ local function GetTypeStr( name )
 	if ( name == "CEffectData" ) then return TYPE_NONE end
 
 	-- Bitch about it incase I've forgot to hook a savable type up
-	ErrorNoHaltWithStack( "Can't save or load unknown type " .. name .. "\n" )
+	ErrorNoHaltWithStack( "Can't " .. ( bRead and "read" or "write" ) .. " unknown type " .. name )
 	return TYPE_NONE
 
 end
@@ -102,7 +102,7 @@ end
 -----------------------------------------------------------]]
 local function GetType( var )
 
-	return GetTypeStr( type(var) )
+	return GetTypeStr( type( var ) )
 
 end
 
@@ -170,7 +170,7 @@ function WriteVar( var, save )
 		elseif ( itype == TYPE_TABLE ) then
 			WriteTable( var, save )
 		else
-			ErrorNoHaltWithStack( "Error! Saving unsupported Type: " .. type( var ) .. "\n" )
+			ErrorNoHaltWithStack( "Error! Saving unsupported Type: " .. type( var ) )
 		end
 
 	save:EndBlock()
@@ -187,7 +187,7 @@ function ReadVar( restore )
 	local retval = 0
 	local typename = restore:StartBlock()
 
-		local itype = GetTypeStr( typename )
+		local itype = GetTypeStr( typename, true )
 
 		if ( itype == TYPE_FLOAT ) then
 			retval = restore:ReadFloat()
@@ -204,7 +204,7 @@ function ReadVar( restore )
 		elseif ( itype == TYPE_TABLE ) then
 			retval = ReadTable( restore )
 		else
-			ErrorNoHaltWithStack( "Error! Loading unsupported Type: " .. typename .. "\n" )
+			ErrorNoHaltWithStack( "Error! Loading unsupported Type: " .. typename )
 		end
 
 	restore:EndBlock()
@@ -220,9 +220,12 @@ end
 function WriteTable( tab, save )
 
 	-- Write a blank table (because read will be expecting one)
+	-- GMOD TODO: I don't think this code path is ever hit, remove?
 	if ( tab == nil ) then
 
 		save:StartBlock( "Table" )
+			save:WriteInt( -1 ) -- Bogus value, but reading code expects something here
+			save:WriteInt( 0 )
 		save:EndBlock()
 
 	end
@@ -294,7 +297,7 @@ function ReadTable( restore )
 			tab = TableRefs[ iRef ]
 		end
 
-		for i = 0, iCount - 1 do
+		for i = 1, iCount do
 
 			local k = ReadVar( restore )
 			local v = ReadVar( restore )

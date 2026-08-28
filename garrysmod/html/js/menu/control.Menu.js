@@ -206,7 +206,7 @@ function SetShowFavButton( bShow, bFav )
 function UpdateGamemodes( gm )
 {
 	gScope.Gamemodes = [];
-	for ( k in gm )
+	for ( var k in gm )
 	{
 		var gi = GetGamemodeInfo( gm[k].name );
 		gi.title = gm[k].title
@@ -224,7 +224,7 @@ function UpdateCurrentGamemode( gm )
 
 	gScope.Gamemode = gm;
 
-	for ( k in gScope.Gamemodes )
+	for ( var k in gScope.Gamemodes )
 	{
 		if ( gScope.Gamemodes[k].name == gm )
 			gScope.GamemodeTitle = gScope.Gamemodes[k].title;
@@ -241,6 +241,11 @@ function GetGamemodeInfo( name )
 	return GamemodeDetails[nameL];
 }
 
+function ResetGamemodeInfo()
+{
+	GamemodeDetails = {};
+}
+
 function UpdateAddonMaps( inmaps )
 {
 	gScope.AddonMapList = inmaps;
@@ -252,14 +257,14 @@ function UpdateMaps( inmaps )
 	var mapList = [];
 	var favList = {};
 
-	for ( k in inmaps )
+	for ( var k in inmaps )
 	{
 		var order = k;
 		if ( k == "Sandbox" ) order = "2";
 		if ( k == "Favourites" ) order = "1";
 
 		var maps = []
-		for ( v in inmaps[k] )
+		for ( var v in inmaps[k] )
 		{
 			maps.push( inmaps[k][v] );
 			MapIndex[ inmaps[k][v].toLowerCase() ] = true;
@@ -288,7 +293,7 @@ function UpdateLanguages( lang )
 {
 	gScope.Languages = [];
 
-	for ( k in lang )
+	for ( var k in lang )
 	{
 		gScope.Languages.push( lang[k].substr( 0, lang[k].length - 4 ) )
 	}
@@ -305,7 +310,7 @@ function UpdateGames( games )
 {
 	gScope.Games = [];
 
-	for ( k in games )
+	for ( var k in games )
 	{
 		games[k].mounted	= games[k].mounted == 1;
 		games[k].installed	= games[k].installed == 1;

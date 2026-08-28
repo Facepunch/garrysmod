@@ -63,7 +63,7 @@ function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
 
 	-- Calculate the spawn position
-	local startPos = owner:GetShootPos() - Vector( 0, 0, 0 )
+	local startPos = owner:GetShootPos()
 
 	local fwd = owner:GetAimVector()
 	local targetPos = startPos + fwd * 32

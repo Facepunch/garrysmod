@@ -95,6 +95,8 @@ if SERVER then
 	function Magnet( pl, pos, angle, model, material, key, maxobjects, strength, nopull, allowrot, alwayson, toggle, Vel, aVel, frozen )
 
 		local magnet = ents.Create( "phys_magnet" )
+		if ( !IsValid( magnet ) ) then return NULL end
+
 		magnet:SetPos( pos )
 		magnet:SetAngles( angle )
 		magnet:SetModel( model )

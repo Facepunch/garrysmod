@@ -64,6 +64,8 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	SpawnAng.y = SpawnAng.y + 180
 
 	local ent = ents.Create( ClassName )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetCreator( ply )
 	ent:SetPos( SpawnPos )
 	ent:SetAngles( SpawnAng )

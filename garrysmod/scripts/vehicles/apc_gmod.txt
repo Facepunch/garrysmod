@@ -123,8 +123,33 @@
 	// List gears in order from lowest speed to highest speed
 	"gear"
 	{
-		"max_speed"		"1.0"
-		"speed_approach_factor" "0.1"
+		"max_speed"		"0.27"
+		"speed_approach_factor" "1.0"
+	}
+	"gear"
+	{
+		"max_speed"		"0.5"
+		"speed_approach_factor" "0.05"
+	}
+	"gear"
+	{
+		"max_speed"		"0.75"
+		"speed_approach_factor" "0.052"
+	}
+	"gear"
+	{
+		"max_speed"		"0.95"
+		"speed_approach_factor" "0.034"
+	}
+	"gear"
+	{
+		"max_speed"		"1.5"
+		"speed_approach_factor" "0.033"
+	}
+	"gear"
+	{
+		"max_speed"		"2.0"
+		"speed_approach_factor" "0.03"
 	}
 	
 	// Engine sounds
@@ -132,6 +157,7 @@
 	{
 		"name"		"SS_START_IDLE"
 		"sound"		"apc_engine_start"
+		"min_time"	"1.0"
 	}
 	"state"
 	{
@@ -156,28 +182,86 @@
 	"state"
 	{
 		"name"		"SS_REVERSE"
-		"sound"		"apc_firstgear" // fixme?
+		"sound"		"apc_reverse"
 		"min_time"	"0.5"
 	}
 	"state"
 	{
 		"name"		"SS_GEAR_0"
 		"sound"		"apc_firstgear"
+		"min_time"	"0.25"
 	}
 	"state"
 	{
 		"name"		"SS_GEAR_0_RESUME"
+		"sound"		"apc_firstgear_resume"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_1"
 		"sound"		"apc_firstgear"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_1_RESUME"
+		"sound"		"apc_firstgear_resume"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_2"
+		"sound"		"apc_firstgear"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_2_RESUME"
+		"sound"		"apc_firstgear_resume"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_3"
+		"sound"		"apc_firstgear"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_3_RESUME"
+		"sound"		"apc_firstgear_resume"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_4"
+		"sound"		"apc_firstgear"
+		"min_time"	"0.25"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_4_RESUME"
+		"sound"		"apc_firstgear_resume"
+		"min_time"	"0.25"
 	}
 	"state"
 	{
 		"name"		"SS_SLOWDOWN_HIGHSPEED"
 		"sound"		"apc_throttleoff_fastspeed"
+		"min_time"	"2.0"
 	}
 	"state"
 	{
 		"name"		"SS_SLOWDOWN"
 		"sound"		"apc_throttleoff_slowspeed"
+		"min_time"	"2.0"
+	}
+	"state"
+	{
+		"name"		"SS_TURBO"
+		"sound"		"APC_turbo_on"
+		"min_time"	"2.5"
 	}
 
 	// Crash sounds
