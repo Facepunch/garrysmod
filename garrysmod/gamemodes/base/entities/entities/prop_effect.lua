@@ -131,6 +131,9 @@ function ENT:OnEntityCopyTableFinish( tab )
 	-- Not the one we have here.
 	tab.Model = self.AttachedEntity:GetModel()
 
+	-- Make it use the actual bounds, not the watermelon ones
+	tab.Mins, tab.Maxs	= self.AttachedEntity:GetModelBounds()
+
 	-- Store the attached entity's table so we can restore it after being pasted
 	tab.AttachedEntityInfo = table.Copy( duplicator.CopyEntTable( self.AttachedEntity ) )
 	tab.AttachedEntityInfo.Pos = nil -- Don't even save angles and position, we are a parented entity
