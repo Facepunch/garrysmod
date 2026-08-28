@@ -242,15 +242,14 @@ end
 timer.Create( "PlayerVoice", 0.1, 0, function()
 
 	for _, pl in player.Iterator() do
-		
-		if not IsValid(pl) or pl:IsBot() then continue end
-	
-		if pl:IsSpeaking() and not pl.m_bWasTalking then
+		if ( !IsValid(pl) or pl:IsBot() ) then continue end
+
+		if ( pl:IsSpeaking() and !pl.m_bWasTalking ) then
 
 			pl.m_bWasTalking = true
 			hook.Run("PlayerStartVoice", pl )
 
-		elseif not pl:IsSpeaking() and pl.m_bWasTalking then
+		elseif ( !pl:IsSpeaking() and pl.m_bWasTalking ) then
 
 			pl.m_bWasTalking = false
 			hook.Run("PlayerEndVoice", pl )
