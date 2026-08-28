@@ -55,7 +55,7 @@ function meta:__index( key )
 	-- Legacy: sometimes use self.Owner to get the owner.. so lets carry on supporting that stupidness
 	-- This needs to be retired, just like self.Entity was.
 	--
-	if ( key == "Owner" ) then return meta.GetOwner( self ) end
+	if ( key == "Owner" and not meta.IsPlayer( self ) ) then return meta.GetOwner( self ) end
 
 	return nil
 
