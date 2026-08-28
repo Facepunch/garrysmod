@@ -71,7 +71,9 @@ function meta:__newindex( key, value )
 		end
 	end
 
-	tab[ key ] = value
+	if ( tab ) then
+		tab[ key ] = value
+	end
 
 end
 
