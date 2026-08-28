@@ -15,7 +15,7 @@ function TOOL:LeftClick( trace )
 
 	if ( ( self.NextWindSound or 0 ) <= CurTime() ) then
 
-		self:GetOwner():EmitSound( "ambient/wind/wind_hit2.wav", SNDLVL_75dB, math.random( 75, 125 ) )
+		self:GetOwner():EmitSound( "ambient/wind/wind_hit2.wav", 75, math.random( 75, 125 ) )
 		self.NextWindSound = CurTime() + 0.5
 
 	end
