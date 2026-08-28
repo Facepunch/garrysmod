@@ -80,9 +80,11 @@ end
 meta.SetTableInternal = meta.SetTableInternal or meta.SetTable
 
 function meta:SetTable( tab )
+
 	EntityTablesCache[ self ] = nil
 
 	return meta.SetTableInternal( self, tab )
+
 end
 
 --[[---------------------------------------------------------
@@ -181,6 +183,7 @@ local function DoDieFunction( ent )
 
 	local tab = EntityTablesCache[ ent ]
 	if tab then
+		-- Clear this entity's table from the cache and make sure it doesn't get cached again
 		tab.__DoNotCacheEntityTable = true
 		EntityTablesCache[ ent ] = nil
 	end
