@@ -257,7 +257,7 @@ end)
 
 hook.Add("PlayerDisconnected", "PlayerVoice_Cleanup", function(ply)
 
-	if ply.m_bWasTalking then
+	if ( ply.m_bWasTalking ) then
 		ply.m_bWasTalking = false
 		hook.Run("PlayerEndVoice", ply, ply:EntIndex())
 	end
