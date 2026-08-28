@@ -155,6 +155,9 @@ local playercolor_mode = CreateConVar("ttt_playercolor_mode", "1")
 function GM:TTTPlayerColor(model)
    local mode = playercolor_mode:GetInt()
    if mode == 1 then
+      if model == "models/player/arctic.mdl" then
+         return COLOR_WHITE
+      end
       return table.Random(ttt_playercolors.serious)
    elseif mode == 2 then
       return table.Random(ttt_playercolors.all)
