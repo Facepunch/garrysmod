@@ -147,7 +147,7 @@ local function AddSearchProvider( listname, ctype, stype )
 					local contentIconData = {
 						nicename = name or name_c,
 						spawnname = name_c,
-						material = "entities/" .. name_c .. ".png",
+						material = v.IconOverride or "entities/" .. name_c .. ".png",
 						admin = v.AdminOnly
 					}
 
