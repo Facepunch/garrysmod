@@ -51,9 +51,9 @@ end
 
 function StartFires(pos, tr, num, lifetime, explode, dmgowner)
    for i=1, num do
-      local ang = Angle(-math.Rand(0, 180), math.Rand(0, 360), math.Rand(0, 360))
-
       local flame = ents.Create("ttt_flame")
+      if not IsValid(flame) then print( "Failed to spawn flame entities!" ) return end
+
       flame:SetPos(pos)
       if IsValid(dmgowner) and dmgowner:IsPlayer() then
          flame:SetDamageParent(dmgowner)
@@ -69,6 +69,7 @@ function StartFires(pos, tr, num, lifetime, explode, dmgowner)
       if IsValid(phys) then
          -- the balance between mass and force is subtle, be careful adjusting
          phys:SetMass(2)
+         local ang = Angle(-math.Rand(0, 180), math.Rand(0, 360), math.Rand(0, 360))
          phys:ApplyForceCenter(ang:Forward() * 500)
          phys:AddAngleVelocity(Vector(ang.p, ang.r, ang.y))
       end
