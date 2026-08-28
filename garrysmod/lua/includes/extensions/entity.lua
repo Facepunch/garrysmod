@@ -24,6 +24,7 @@ function meta:SetShouldPlayPickupSound( bPlaySound )
 	self.m_bPlayPickupSound = tobool( bPlaySound ) or false
 end
 
+local EntityTablesCache = {}
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
 --
@@ -33,15 +34,19 @@ function meta:__index( key )
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
 	local val = meta[ key ]
-	if ( val != nil ) then return val end
+	if ( val ~= nil ) then return val end
 
 	--
 	-- Search the entity table
 	--
-	local tab = meta.GetTable( self )
+	local tab = EntityTablesCache[ self ]
+	if ( not tab ) then
+		tab = meta.GetTable( self )
+		EntityTablesCache[ self ] = tab
+	end
 	if ( tab ) then
 		local tabval = tab[ key ]
-		if ( tabval != nil ) then return tabval end
+		if ( tabval ~= nil ) then return tabval end
 	end
 
 	--
@@ -51,6 +56,18 @@ function meta:__index( key )
 	if ( key == "Owner" ) then return meta.GetOwner( self ) end
 
 	return nil
+
+end
+
+function meta:__newindex( key, value )
+
+	local tab = EntityTablesCache[ self ]
+	if ( not tab ) then
+		tab = meta.GetTable( self )
+		EntityTablesCache[ self ] = tab
+	end
+
+	tab[ key ] = value
 
 end
 
@@ -147,6 +164,8 @@ end
 	Simple mechanism for calling the die functions.
 -----------------------------------------------------------]]
 local function DoDieFunction( ent )
+
+	EntityTablesCache[ ent ] = nil
 
 	if ( !ent.OnDieFunctions ) then return end
 
