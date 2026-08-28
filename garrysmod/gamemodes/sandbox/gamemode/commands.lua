@@ -1142,7 +1142,6 @@ function Spawn_Vehicle( ply, vname, tr )
 
 	if ( vehicle.Members ) then
 		table.Merge( Ent, vehicle.Members )
-		duplicator.StoreEntityModifier( Ent, "VehicleMemDupe", vehicle.Members )
 	end
 
 	undo.Create( "Vehicle" )
@@ -1157,10 +1156,3 @@ function Spawn_Vehicle( ply, vname, tr )
 
 end
 concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply, args[1] ) end, nil, "Spawn sandbox vehicles." )
-
-local function VehicleMemDupe( ply, ent, Data )
-
-	table.Merge( ent, Data )
-
-end
-duplicator.RegisterEntityModifier( "VehicleMemDupe", VehicleMemDupe )
