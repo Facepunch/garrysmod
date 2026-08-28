@@ -253,7 +253,7 @@ function ENT:Explode(tr)
 
       -- extra push
       local phexp = ents.Create("env_physexplosion")
-      if ( IsValid( phexp ) ) then
+      if IsValid(phexp) then
          phexp:SetPos(pos)
          phexp:SetKeyValue("magnitude", self:GetDmg())
          phexp:SetKeyValue("radius", r_outer)
