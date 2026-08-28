@@ -151,7 +151,7 @@ end
 if SERVER then
    function ENT:BecomeWeapon()
       local wep = ents.Create("weapon_ttt_knife")
-      if not IsValid(wep) then return NULL end
+      if not IsValid(wep) then print("Knife failed to become a weapon!") return NULL end
 
       self.Weaponised = true
 

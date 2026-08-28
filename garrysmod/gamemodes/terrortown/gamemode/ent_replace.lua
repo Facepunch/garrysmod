@@ -18,7 +18,7 @@ local function ReplaceSingle(ent, newname)
    ent:SetSolid(SOLID_NONE)
 
    local rent = ents.Create(newname)
-   if not IsValid(rent) then return end
+   if not IsValid(rent) then print("Failed to create replacement entity: " .. newname) return end
 
    rent:SetPos(ent:GetPos())
    rent:SetAngles(ent:GetAngles())
@@ -355,7 +355,7 @@ local function PlaceWeapon(swep, pos, ang)
 
    -- Create the weapon, somewhat in the air in case the spot hugs the ground.
    local ent = ents.Create(cls)
-   if not IsValid(ent) then return NULL end
+   if not IsValid(ent) then print("Failed to create weapon entity: " .. cls) return NULL end
 
    pos.z = pos.z + 3
    ent:SetPos(pos)
