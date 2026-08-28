@@ -569,6 +569,9 @@ end
 
 function UpdateSubscribedAddons()
 
+	-- Addon unsubbed before main menu initialized
+	if ( !IsValid( pnlMainMenu ) ) then return end
+
 	local subscriptions = engine.GetAddons()
 	local json = util.TableToJSON( subscriptions )
 	pnlMainMenu:Call( "subscriptions.Update( " .. json .. " )" )
