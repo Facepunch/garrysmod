@@ -1,0 +1,289 @@
+#NavBar {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 50px;
+	display: -webkit-box;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#NavBar .group {
+	display: -webkit-box;
+}
+
+#NavBar .group.left {
+	padding-left: 5px;
+}
+
+#NavBar .group.right {
+	-webkit-box-flex: 1;
+	-webkit-box-pack: end;
+}
+
+#NavBar .button,
+.popup li {
+	box-sizing: border-box;
+	position: relative;
+	display: inline-block;
+	height: 40px;
+	margin-top: 5px;
+	margin-right: 3px;
+	padding-left: 35px;
+	background-color: #fff;
+	border-radius: 4px;
+	color: inherit;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+#NavBar .button:hover {
+	box-shadow: 0 0 20px #fff;
+}
+
+#NavBar .smallicon {
+	min-width: 40px;
+	padding: 0;
+	text-align: center;
+}
+
+#NavBar .smallicon.hidelabel span {
+	padding-left: 35px;
+}
+
+#NavBar .smallicon img {
+	margin-top: 7px;
+	margin-left: 7px;
+}
+
+#NavBar .bigicon {
+	min-width: 5px;
+}
+
+#NavBar .bigicon img {
+	margin-top: -1px;
+	margin-left: -1px;
+}
+
+#NavBar .button span,
+.popup.gamemode-list li span,
+.popup.language-list li span {
+	position: relative;
+	top: 13px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #333;
+}
+
+#NavBar .button img,
+.popup.gamemode-list li img,
+.popup.language-list li img {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+}
+
+#NavBar #BackToMenu {
+	padding-right: 5px;
+}
+
+#NavBar #BackToMenu span {
+	top: 14px;
+	margin-left: 2px;
+}
+
+#NavBar #BackToMenu img {
+	margin-left: 0;
+	margin-top: -1px;
+}
+
+#NavBar number {
+	position: absolute;
+	left: -7px;
+	top: -10px;
+	padding: 5px;
+	background: #d9d9d9;
+	border-radius: 4px;
+}
+
+#NavBar number.severity1 {
+	background: #ffc800;
+}
+
+#NavBar number.severity2 {
+	background: #ff4000;
+	color: white;
+}
+
+.popup {
+	position: absolute;
+	right: 10px;
+	bottom: 50px;
+	width: 230px;
+	margin: 3px;
+	padding: 0;
+	list-style: none;
+	background-color: #333;
+	border-radius: 3px;
+	z-index: 1000;
+}
+
+.popup.games-popup {
+	right: 150px;
+	width: 240px;
+	padding: 0;
+	background-color: #eee;
+	border: 3px solid #333;
+}
+
+.games-legend {
+	display: -webkit-box;
+	-webkit-box-pack: center;
+	padding: 8px 8px 2px;
+	color: #555;
+	font-size: 11px;
+}
+
+.games-legend span {
+	display: -webkit-box;
+	margin: 0 6px;
+	white-space: nowrap;
+}
+
+.games-legend img {
+	margin-right: 4px;
+	vertical-align: middle;
+}
+
+.games-items {
+	list-style: none;
+	max-height: 320px;
+	margin: 0;
+	padding: 2px 4px 4px;
+	overflow: auto;
+}
+
+.popup .games-items li {
+	display: block;
+	height: 24px;
+	line-height: 24px;
+	margin-bottom: 2px;
+	padding: 0 4px;
+	background-color: transparent;
+	border-radius: 3px;
+	color: #333;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.popup .games-items li:hover {
+	background-color: #fff;
+}
+
+.popup .games-items li.notowned,
+.popup .games-items li.notinstalled {
+	opacity: 0.55;
+	cursor: default;
+}
+
+.popup .games-items input[type="checkbox"] {
+	margin: 0 4px 0 0;
+	vertical-align: middle;
+}
+
+.popup .games-items img {
+	vertical-align: middle;
+}
+
+.popup .games-items .state-icon {
+	margin-right: 3px;
+}
+
+.popup .games-items .game-title {
+	padding-left: 4px;
+}
+
+.popup.gamemode-list {
+	max-height: 80%;
+	overflow: auto;
+	border: 3px solid #333;
+}
+
+.popup.gamemode-list li {
+	display: block;
+	margin: 0 0 2px 0;
+	background-color: #fff;
+	border-radius: 0;
+	cursor: pointer;
+}
+
+.popup.gamemode-list li:hover {
+	background-color: #e7f0ff;
+}
+
+.popup.gamemode-list li:first-child {
+	border-radius: 3px 3px 0 0;
+}
+
+.popup.gamemode-list li:last-child {
+	margin-bottom: 0;
+	border-radius: 0 0 3px 3px;
+}
+
+.popup.language-list {
+	right: 100px;
+	background-color: #eee;
+	text-align: center;
+	border: 3px solid #333;
+	padding-bottom: 4px;
+}
+
+.popup.language-list li {
+	margin-right: 3px;
+	display: inline-block;
+	width: 26px;
+	height: 24px;
+	padding: 0;
+	background-color: transparent;
+}
+
+.popup.language-list li img {
+	position: absolute;
+	left: 4px;
+	top: 6px;
+	border: 1px solid #888;
+}
+
+.popup.language-list li:hover {
+	background-color: #fff;
+}
+
+.kinect-settings {
+	right: 150px;
+	width: 230px;
+	max-height: 300px;
+	padding: 0;
+	overflow: auto;
+	border: 3px solid #333;
+}
+
+.kinect-settings li {
+	display: block !important;
+	height: auto !important;
+	margin: 0 !important;
+	padding: 2px 16px !important;
+}
+
+@media (max-width: 940px) {
+	#NavBar .hidelabel span {
+		display: none;
+	}
+}

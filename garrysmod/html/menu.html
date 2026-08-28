@@ -1,145 +1,865 @@
-<html>
-<head>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Garry's Mod Main Menu</title>
 
-	<title>Garry's Mod Main Menu</title>
+		<link rel="stylesheet" type="text/css" href="css/Base.css" />
+		<link rel="stylesheet" type="text/css" href="css/NavBar.css" />
+		<link rel="stylesheet" type="text/css" href="css/Main.css" />
+		<link rel="stylesheet" type="text/css" href="css/NewGame.css" />
+		<link rel="stylesheet" type="text/css" href="css/Servers.css" />
+		<link rel="stylesheet" type="text/css" href="css/Addons.css" />
+	</head>
 
-	<link rel="stylesheet" type="text/css" href="css/menu/Menu.css" />
-	<link rel="stylesheet" type="text/css" href="css/menu/NavBar.css" />
-	<link rel="stylesheet" type="text/css" href="css/menu/PageOptions.css" />
-	<link rel="stylesheet" type="text/css" href="css/menu/NewGame.css" />
-	<link rel="stylesheet" type="text/css" href="css/menu/Servers.css" />
-	<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
+	<body>
+		<div id="app"></div>
 
-	<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
-	<script type="text/javascript" src="js/thirdparty/angular.js"></script>
-	<script type="text/javascript" src="js/thirdparty/angular-route.js"></script>
+		<script type="text/javascript" src="js/lib/vue2.min.js"></script>
 
-	<script type="text/javascript" src="js/menu/WorkshopFiles.js"></script>
-	<script type="text/javascript" src="js/menu/Subscriptions.js"></script>
-	<script type="text/javascript" src="js/menu/menuApp.js"></script>
-	<script type="text/javascript" src="js/menu/common.js"></script>
-	<script type="text/javascript" src="js/menu/control.Menu.js"></script>
-	<script type="text/javascript" src="js/menu/control.Main.js"></script>
-	<script type="text/javascript" src="js/menu/control.NewGame.js"></script>
-	<script type="text/javascript" src="js/menu/control.Servers.js"></script>
-	<script type="text/javascript" src="js/menu/control.Addons.js"></script>
-	<script type="text/javascript" src="js/menu/control.Demos.js"></script>
-	<script type="text/javascript" src="js/menu/control.Saves.js"></script>
-	<script type="text/javascript" src="js/menu/control.Dupes.js"></script>
+		<script type="text/javascript" src="js/core/env.js"></script>
+		<script type="text/javascript" src="js/core/lua.js"></script>
+		<script type="text/javascript" src="js/core/i18n.js"></script>
+		<script type="text/javascript" src="js/core/utils.js"></script>
 
-	<script type="text/javascript" src="js/ngLocalize.js"></script>
+		<script
+			type="text/javascript"
+			src="js/state/subscriptions-store.js"
+		></script>
+		<script
+			type="text/javascript"
+			src="js/state/workshop-store.js"
+		></script>
+		<script type="text/javascript" src="js/state/menu-store.js"></script>
+		<script type="text/javascript" src="js/state/news-store.js"></script>
+		<script type="text/javascript" src="js/state/newgame-store.js"></script>
+		<script type="text/javascript" src="js/state/servers-store.js"></script>
+		<script type="text/javascript" src="js/state/addons-store.js"></script>
+		<script type="text/javascript" src="js/state/stores.js"></script>
 
-	<script type="text/javascript" src="js/menu/TestData.js"></script>
-	<script type="text/javascript" src="js/menu/TestServers.js"></script>
-	<script type="text/javascript" src="js/menu/TestWorkshop.js"></script>
+		<script type="text/javascript" src="js/core/api.js"></script>
 
-</head>
+		<script type="text/javascript" src="js/ui/components.js"></script>
+		<script type="text/javascript" src="js/ui/navbar.js"></script>
 
-<body ng-app="MenuApp" ng-controller="MenuController">
+		<script type="text/javascript" src="js/pages/page-main.js"></script>
+		<script type="text/javascript" src="js/pages/page-newgame.js"></script>
+		<script type="text/javascript" src="js/pages/page-servers.js"></script>
+		<script type="text/javascript" src="js/pages/page-addons.js"></script>
+		<script type="text/javascript" src="js/pages/page-workshop.js"></script>
 
-<div id="version" ng-click="ShowNews()" ng-show="Branch"><span ng-show="Branch != 'unknown'">You are on the {{Branch}} branch. Click here to find out more. ( </span>{{Version}}<span ng-show="Branch != 'unknown'"> )</span></div>
+		<script type="text/javascript" src="js/app.js"></script>
 
-<div ng-view>
+		<script type="text/x-template" id="tpl-app">
+			<div id="app-root">
+				<div id="version" @click="MenuActions.showNews()" v-show="MenuStore.version">
+					<span v-if="MenuStore.branch !== 'unknown'">You are on the {{ MenuStore.branch }} branch. Click here to find out more. ( </span>{{ MenuStore.version }}<span v-if="MenuStore.branch !== 'unknown'"> )</span>
+				</div>
 
-</div>
+				<component :is="pageComponent"></component>
 
-<div id="NavBar">
-
-	<div class="group left">
-
-		<a href="#/" class="button ui_sound_return" ng-show="ShowBack" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span ng-Localize="'back_to_main_menu'" ></span></a>
-
-	</div>
-
-	<div class="group center">
-		<!--
-		<div class="button" ng-show="InGame" ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Localize="'disconnect'"></span></a></div>
-		-->
-		<div class="button bigicon" ng-show="InGame" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span ng-Localize="'back_to_game'"></span></a></div>
-		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && !IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Localize="'favorite_this_server'"></span></a></div>
-		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Localize="'unfavorite_this_server'"></span></a></div>
-	</div>
-	
-	<div class="group right">
-		<div class="button smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/error.png'>
-			<span ng-Localize="'problems'"></span>
-			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSeverity > 0, 'severity' + ProblemSeverity, '' )}}">{{ProblemCount}}</number>
-		</div>
-		<div class="button smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png' loading="lazy"><span></span></div>
-		<div class="button smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Localize="'games'"></span></div>
-		<div class="button smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></div>
-		<div class="button bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></div>
-	</div>
-
-</div>
-
-<ul class="gamemode_list popup">
-	<li ng-repeat="gm in Gamemodes|filter:{menusystem:true}|orderBy:'name'" ng-click="SelectGamemode( gm )">
-		<img ng-src='../gamemodes/{{gm.name}}/icon24.png' loading="lazy"><span>{{gm.title}}</span>
-	</li>
-</ul>
-
-<ul class="language_list popup">
-	<li ng-repeat="lang in Languages" ng-click="SelectLanguage( lang )">
-		<img ng-src='../resource/localization/{{lang}}.png' loading="lazy">
-	</li>
-</ul>
-
-<ul class="games_list popup">
-
-	<li class="notowned"><img src='img/notowned.png' width="16" height="16" loading="lazy"> <span ng-Localize="'game_not_owned'"></span></li>
-	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16" loading="lazy"> <span ng-Localize="'game_not_installed'"></span></li>
-	<hr/>
-	<li ng-repeat="game in Games|orderBy:['-installed','-owned','title']" class="game-item {{ !game.owned ? 'notowned' : '' }} {{ !game.installed ? 'notinstalled' : '' }}">
-		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/>
-		<img src='img/notowned.png' ng-show="!game.owned" width="16" height="16" loading="lazy">
-		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width="16" height="16" loading="lazy">
-		<img ng-src='../materials/games/16/{{game.folder}}.png' style="margin-left: 20px;" loading="lazy">
-		<span style="margin-left: 16px;">{{game.title}}</span>
-	</li>
-
-</ul>
-
-<ul class="kinect_settings popup">
-
-	<li>
-		<div>
-
-			<p>
-				<label style="display: block">
-					<input type="checkbox" ng-model="kinect.show_color" ng-change="kinect.update()">  <span ng-Localize="'motionsensor.showcolor'"></span>
-				</label>
-			</p>
-
-
-			<div ng-show="kinect.show_color">
-
-				<span ng-Localize="'motionsensor.colorpos'"></span>
-
-				<p style="margin-left: 5px;">
-					<label ng-repeat="option in kinect.color_options" style="display: block">
-						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">
-						<span ng-Localize="'motionsensor.showcolor.'+ option"></span>
-					</label>
-				</p>
+				<NavBar></NavBar>
 			</div>
+		</script>
 
-			<div  ng-show="kinect.show_color">
-				<span ng-Localize="'motionsensor.colorsize'"></span>
+		<script type="text/x-template" id="tpl-navbar">
+			<div id="navbar-root">
+				<div id="NavBar">
 
-				<p style="margin-left: 5px;">
-					<label ng-repeat="option in kinect.size_options" style="display: block">
-						<input type="radio" name="kinect.color_size" ng-model="kinect.color_size" value="{{option}}" ng-change="kinect.update()">
-						<span ng-Localize="'motionsensor.colorsize.'+ option"></span>
-					</label>
-				</p>
+					<div class="group left">
+						<a href="#/" class="button ui-sound-return" v-show="Router.path !== '/'" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span>{{ t('back_to_main_menu') }}</span></a>
+						<div class="button bigicon" v-if="MenuStore.inGame" @click="MenuActions.backToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span>{{ t('back_to_game') }}</span></a></div>
+						<div class="button bigicon hidelabel" v-if="MenuStore.inGame && MenuStore.showFavButton && !MenuStore.isCurrentServerFav" @click="MenuActions.toggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span>{{ t('favorite_this_server') }}</span></a></div>
+						<div class="button bigicon hidelabel" v-if="MenuStore.inGame && MenuStore.showFavButton && MenuStore.isCurrentServerFav" @click="MenuActions.toggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span>{{ t('unfavorite_this_server') }}</span></a></div>
+					</div>
+
+					<div class="group right">
+						<div class="button smallicon hidelabel" style="overflow: visible;" @click="MenuActions.toggleProblems()"><img src='img/error.png'>
+							<span>{{ t('problems') }}</span>
+							<number v-if="MenuStore.problemCount > 0" :class="MenuStore.problemSeverity > 0 ? 'severity' + MenuStore.problemSeverity : ''">{{ MenuStore.problemCount }}</number>
+						</div>
+						<div class="button smallicon" v-if="MenuStore.kinect.available" @click="MenuActions.togglePopup( 'kinect' )"><img src='img/kinect.png' loading="lazy"><span></span></div>
+						<div class="button smallicon hidelabel" @click="MenuActions.togglePopup( 'games' )"><img src='img/games.png'><span>{{ t('games') }}</span></div>
+						<div class="button smallicon" @click="MenuActions.togglePopup( 'language' )"><img style="margin-top: 9px;" :src="'../resource/localization/' + MenuStore.language + '.png'"><span></span></div>
+						<div class="button bigicon" @click="MenuActions.togglePopup( 'gamemode' )"><img :src="'../gamemodes/' + MenuStore.gamemode + '/icon24.png'"><span>{{ MenuStore.gamemodeTitle }}</span></div>
+					</div>
+
+				</div>
+
+				<ul class="gamemode-list popup" v-show="MenuStore.popup === 'gamemode'">
+					<li v-for="gm in sortedGamemodes" :key="gm.name" @click="MenuActions.selectGamemode( gm )">
+						<img :src="'../gamemodes/' + gm.name + '/icon24.png'" loading="lazy"><span>{{ gm.title }}</span>
+					</li>
+				</ul>
+
+				<ul class="language-list popup" v-show="MenuStore.popup === 'language'">
+					<li v-for="lang in MenuStore.languages" :key="lang" @click="MenuActions.selectLanguage( lang )">
+						<img :src="'../resource/localization/' + lang + '.png'">
+					</li>
+				</ul>
+
+				<div class="popup games-popup" v-show="MenuStore.popup === 'games'">
+					<div class="games-legend">
+						<span><img src='img/notowned.png' width="16" height="16"> {{ t('game_not_owned') }}</span>
+						<span><img src='img/notinstalled.png' width="16" height="16"> {{ t('game_not_installed') }}</span>
+					</div>
+					<ul class="games-items">
+						<li v-for="game in sortedGames" :key="game.folder || game.title"
+							class="game-item" :class="{ notowned: !game.owned, notinstalled: !game.installed }">
+							<input type="checkbox" v-model="game.mounted" v-if="game.installed" @change="MenuActions.gameMountChanged( game )"/>
+							<img v-if="!game.owned" class="state-icon" src='img/notowned.png' width="16" height="16">
+							<img v-if="game.owned && !game.installed" class="state-icon" src='img/notinstalled.png' width="16" height="16">
+							<img class="game-icon" :src="'../materials/games/16/' + game.folder + '.png'" width="16" height="16">
+							<span class="game-title">{{ game.title }}</span>
+						</li>
+					</ul>
+				</div>
+
+				<ul class="kinect-settings popup" v-show="MenuStore.popup === 'kinect'">
+					<li>
+						<div>
+							<p>
+								<label style="display: block">
+									<input type="checkbox" v-model="MenuStore.kinect.showColor" @change="MenuActions.updateKinect()"> <span>{{ t('motionsensor.showcolor') }}</span>
+								</label>
+							</p>
+
+							<div v-if="MenuStore.kinect.showColor">
+							<span>{{ t('motionsensor.colorpos') }}</span>
+							<p style="margin-left: 5px;">
+								<label v-for="option in MenuStore.kinect.colorOptions" :key="option" style="display: block">
+									<input type="radio" name="kinect.color" :value="option" v-model="MenuStore.kinect.color" @change="MenuActions.updateKinect()">
+									<span>{{ t('motionsensor.showcolor.' + option) }}</span>
+								</label>
+							</p>
+
+							<span>{{ t('motionsensor.colorsize') }}</span>
+							<p style="margin-left: 5px;">
+								<label v-for="option in MenuStore.kinect.sizeOptions" :key="option" style="display: block">
+									<input type="radio" name="kinect.color_size" :value="option" v-model="MenuStore.kinect.colorSize" @change="MenuActions.updateKinect()">
+									<span>{{ t('motionsensor.colorsize.' + option) }}</span>
+								</label>
+							</p>
+						</div>
+						</div>
+					</li>
+				</ul>
 			</div>
+		</script>
 
-		</div>
+		<script type="text/x-template" id="tpl-main-page">
+			<div class="page">
 
-	</li>
+				<div class="options">
+					<ul>
+						<li><img :src="'../gamemodes/' + MenuStore.gamemode + '/logo.png'" /></li>
+						<li class="spacer">&nbsp;</li>
+						<li v-if="MenuStore.inGame"><a @click="MenuActions.backToGame()">{{ t('resume_game') }}</a></li>
+						<li v-if="MenuStore.inGame">&nbsp;</li>
+						<li><a href="#/newgame/">{{ t('new_game') }}</a></li>
+						<li><a href="#/servers/">{{ t('find_mp_game') }}</a></li>
+						<li class="spacer">&nbsp;</li>
+						<li><a href="#/addons/">{{ t('addons') }}</a></li>
+						<li><a href="#/dupes/">{{ t('dupes') }}</a></li>
+						<li><a href="#/saves/">{{ t('saves') }}</a></li>
+						<li><a href="#/demos/">{{ t('demos') }}</a></li>
+						<li class="spacer">&nbsp;</li>
+						<li><a @click="MenuActions.menuOption( 'OpenOptionsDialog' )">{{ t('options') }}</a></li>
+						<li class="spacer">&nbsp;</li>
+						<li v-if="MenuStore.inGame"><a @click="MenuActions.menuOption( 'Disconnect' )">{{ t('disconnect') }}</a></li>
+						<li><a @click="MenuActions.menuOption( 'Quit' )">{{ t('quit') }}</a></li>
+					</ul>
+				</div>
 
-</ul>
+				<div class="news" v-show="NewsStore.list.length > 0">
+					<div class="news-item" v-if="NewsStore.currentItem" :style="{ backgroundImage: 'url(' + NewsStore.currentItem.HeaderImage + ')' }" v-show="!NewsStore.hideNews">
+						<div>
+							<span @click="NewsActions.openInSteam( NewsStore.currentItem.Url )">{{ NewsStore.currentItem.Title }}</span>
+							<font>{{ NewsStore.currentItem.SummaryHtml }}</font>
+						</div>
+					</div>
+					<div class='news-buttons'>
+						<div @click="NewsActions.toggleNewsList()" v-show="!NewsStore.hideNews && !NewsStore.anyNewItems"><img src="../materials/icon16/cross.png"></div>
+						<div v-for="item in sortedNewsList" :key="item.Url"
+							:class="{ selected: item.Url === NewsStore.currentItem.Url }"
+							@click="NewsActions.selectItem(item)"></div>
+					</div>
+				</div>
 
-</body>
+			</div>
+		</script>
+
+		<script type="text/x-template" id="tpl-newgame-page">
+			<div class="page">
+
+				<div class="maplist icons">
+
+					<div class="controls">
+						<ul>
+							<li v-for="cat in categories" :key="cat.category"
+								class="noisy category" :class="{ active: cat.category === NewGameStore.currentCategory }"
+								@click="NewGameActions.switchCategory( cat.category )">
+								<div class='name'>
+									<span>{{ categoryLabel( cat ) }}</span>
+								</div>
+								<div class='count'>{{ NewGameActions.countFiltered( cat.maps ) }}</div>
+							</li>
+						</ul>
+
+						<div class='search'>
+							<input type="text" class="search" v-model="NewGameStore.search" :placeholder="t('searchbar_placeholder')" />
+						</div>
+					</div>
+
+					<div class="scrollable" style="margin: 0px; top: 0px; left: 200px">
+						<ul class="category" v-for="cat in categories" :key="'list-' + cat.category" v-show="cat.category === NewGameStore.currentCategory">
+							<li>
+								<span>{{ categoryLabel( cat ) }}</span>
+								<small class="count-note">{{ countText( NewGameActions.countFiltered( cat.maps ) ) }}</small>
+							</li>
+
+							<li v-for="map in mapsInCategory( cat )" :key="cat.category + '-' + map"
+								class="icon mapicon" :class="[mapClass( map ), favClass( map )]">
+								<img @click.stop="NewGameActions.toggleFavMap( map )" class="favtoggle" src="img/empty.png"/>
+								<img @click="NewGameActions.selectMap( map )" @dblclick="NewGameActions.startGame()" :src="NewGameActions.mapIcon( map, cat.category )" class="thumbnail"/><br />
+								<span>{{ map }}</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<gamesettings>
+					<div class="dropdown" style="margin: 10px;">
+						<div class="label" @click="state.playersDropdown = !state.playersDropdown">
+							<span>{{ t(maxPlayersLabel) }}</span>
+							<i class='caret'></i>
+						</div>
+						<div class="contents" v-show="state.playersDropdown" @click="state.playersDropdown = false">
+							<div v-for="num in maxPlayersOptions" :key="num" @click="NewGameActions.updateMaxPlayers( num )">
+								{{ t('maxplayers_' + num) }}
+							</div>
+						</div>
+					</div>
+
+					<div class="scrollable" style="bottom: 80px; top: 32px">
+						<div class='control control-text' v-if="NewGameStore.maxPlayers > 1">
+							<label for="ServerSettings_hostname">{{ t('server_name') }}</label>
+							<input id="ServerSettings_hostname" type="text" v-model="NewGameStore.serverSettings.hostname" />
+						</div>
+
+						<div class='control' v-if="NewGameStore.maxPlayers > 1">
+							<input id="ServerSettings_sv_lan" type="checkbox" v-model="NewGameStore.serverSettings.sv_lan" @change="NewGameActions.onCheckboxChange()" />
+							<label for="ServerSettings_sv_lan">{{ t('lan_server') }}</label>
+						</div>
+
+						<div class='control' v-if="NewGameStore.maxPlayers > 1">
+							<input id="ServerSettings_p2p_enabled" type="checkbox" v-model="NewGameStore.serverSettings.p2p_enabled" @change="NewGameActions.onCheckboxChange()" />
+							<label for="ServerSettings_p2p_enabled">{{ t('p2p_server') }}</label>
+						</div>
+
+						<div class='control control-sub' v-if="NewGameStore.maxPlayers > 1">
+							<input id="p2p_friendsonly" type="checkbox" v-model="NewGameStore.serverSettings.p2p_friendsonly" :disabled="!NewGameStore.serverSettings.p2p_enabled" />
+							<label for="p2p_friendsonly">{{ t('p2p_server_friendsonly') }}</label>
+						</div>
+
+						<div class='control control-text' v-for="s in NewGameStore.serverSettings.Text" :key="'t-' + s.name" v-show="NewGameStore.maxPlayers > 1 || s.Singleplayer">
+							<label :for="'ServerSettings_text_' + s.name">{{ t(s.text) }}</label>
+							<input :id="'ServerSettings_text_' + s.name" type="text" v-model="s.Value"/>
+						</div>
+
+						<div class='control control-numeric' v-for="s in NewGameStore.serverSettings.Numeric" :key="'n-' + s.name" v-show="NewGameStore.maxPlayers > 1 || s.Singleplayer">
+							<label :for="'ServerSettings_num_' + s.name">{{ t(s.text) }}</label>
+							<input :id="'ServerSettings_num_' + s.name" type="text" v-model="s.Value"/>
+						</div>
+
+						<div class='control' v-for="s in NewGameStore.serverSettings.CheckBox" :key="'c-' + s.name" v-show="NewGameStore.maxPlayers > 1 || s.Singleplayer">
+							<input :id="'ServerSettings_check_' + s.name" type="checkbox" v-model="s.Value" />
+							<label :for="'ServerSettings_check_' + s.name">{{ t(s.text) }}</label>
+						</div>
+					</div>
+
+					<bottom>
+						<button class='btn-primary' @click="NewGameActions.startGame()">{{ t('start_game') }}</button>
+					</bottom>
+				</gamesettings>
+
+			</div>
+		</script>
+
+		<script type="text/x-template" id="tpl-servers-page">
+			<div class="page server-browser">
+
+				<div class="options">
+					<ul>
+						<li><h2>{{ t('server_list') }}</h2></li>
+						<li class="small" style="margin-top: -1.5em;">{{ ServersStore.serverCount[ServersStore.type] || 0 }} {{ t('servers_servercount') }}</li>
+						<li class="small">{{ typeData ? typeData.list.length : 0 }} {{ t('servers_gmcount') }}</li>
+						<li class="spacer">&nbsp;</li>
+						<li><a :class="{ active: ServersStore.type === 'internet' }" @click="ServerActions.switchType( 'internet' )">{{ t('servers_internet') }}</a></li>
+						<li><a :class="{ active: ServersStore.type === 'favorite' }" @click="ServerActions.switchType( 'favorite' )">{{ t('servers_favorites') }}</a></li>
+						<li><a :class="{ active: ServersStore.type === 'history' }" @click="ServerActions.switchType( 'history' )">{{ t('servers_history') }}</a></li>
+						<li><a :class="{ active: ServersStore.type === 'lan' }" @click="ServerActions.switchType( 'lan' )">{{ t('servers_local') }}</a></li>
+						<li v-if="(ServersStore.currentGamemode == null && !ServersStore.refreshing[ServersStore.type]) || ServersStore.refreshing[ServersStore.type]" class="spacer">&nbsp;</li>
+						<li v-if="ServersStore.currentGamemode == null && !ServersStore.refreshing[ServersStore.type]"><a @click="ServerActions.refresh()">{{ t('servers_refresh') }}</a></li>
+						<li v-if="ServersStore.refreshing[ServersStore.type]"><a @click="ServerActions.stopRefresh()">{{ t('servers_stoprefresh') }}</a></li>
+						<li class="spacer">&nbsp;</li>
+						<li><a @click="MenuActions.menuOption( 'OpenServerBrowser' )">{{ t('legacy_browser') }}</a></li>
+						<li class="spacer">&nbsp;</li>
+						<li class="filters-separator"></li>
+
+						<li class="filters" v-if="ServersStore.currentGamemode == null">
+							<label class="filter-title">{{ t('addons.sort_by') }}</label>
+							<div class="filter-row"><input id="gms_players" type="radio" value="-order" v-model="ServersStore.gmSort"/><label for="gms_players">{{ t('gmsort_players') }}</label></div>
+							<div class="filter-row"><input id="gms_servers" type="radio" value="-num_servers" v-model="ServersStore.gmSort"/><label for="gms_servers">{{ t('gmsort_servers') }}</label></div>
+							<div class="filter-row"><input id="gms_name" type="radio" value="info.title" v-model="ServersStore.gmSort"/><label for="gms_name">{{ t('gmsort_name') }}</label></div>
+
+							<div class="filter-hides">
+								<label class="filter-title">{{ t('addons.filter_by') }}</label>
+								<div class="filter-row" v-for="cat in ServersStore.gmCats" :key="cat">
+									<input type="checkbox" :id="'gmfltr_hide_' + cat" :checked="!!ServersStore.gmFilterTags[cat]" @change="toggleGmTag( cat, $event.target.checked )"/>
+									<label :for="'gmfltr_hide_' + cat">{{ t('gmfltr_hide_' + cat) }}</label>
+									<img class="filter-reverse" src="img/remove.png" @click="reverseGmTag( cat )"/>
+								</div>
+
+								<div class="filter-row">
+									<input type="text" v-model="ServersStore.gmSearch" class="gamemode-search" :placeholder="t('gmsearch_placeholder')" />
+								</div>
+							</div>
+						</li>
+
+						<li class="filters" v-if="ServersStore.currentGamemode != null">
+							<label class="filter-title" for="SVFilterPlyMin">{{ t('svfltr_ply_limit') }}</label>
+							<div class="filter-row">
+								<input id="SVFilterPlyMin" v-model.number="ServersStore.filters.plyMin" type="number" class="input-small" placeholder="0" min="0" max="128" step="8"/>
+								<span class="filter-sep">-</span>
+								<input v-model.number="ServersStore.filters.plyMax" type="number" class="input-small" placeholder="128" min="0" max="128" step="8"/>
+							</div>
+
+							<label class="filter-title" for="SVFilterMaxPing">{{ t('svfltr_ping_limit') }}</label>
+							<div class="filter-row">
+								<input id="SVFilterMaxPing" v-model.number="ServersStore.filters.maxPing" type="number" class="input-small" placeholder="2000" min="0" max="2500" step="20"/>
+							</div>
+
+							<div class="filter-hides">
+								<div class="filter-row"><input type="checkbox" id="sv_notfull" v-model="ServersStore.filters.notFull"/><label for="sv_notfull">{{ t('svfltr_not_full') }}</label></div>
+								<div class="filter-row"><input type="checkbox" id="sv_notempty" v-model="ServersStore.filters.hasPlayers"/><label for="sv_notempty">{{ t('svfltr_has_players') }}</label></div>
+								<div class="filter-row"><input type="checkbox" id="sv_nopass" v-model="ServersStore.filters.hidePassword"/><label for="sv_nopass"><span>{{ t('svfltr_no_password') }}</span> <img class="passworded" src='img/server-passworded.png'/></label></div>
+								<div class="filter-row"><input type="checkbox" id="sv_outdated" v-model="ServersStore.filters.hideOutdated"/><label for="sv_outdated">{{ t('svfltr_outdated') }}</label></div>
+							</div>
+
+							<div class="flags-filter" v-if="ServersStore.currentGamemode.hasflags">
+								<img v-for="flag in gmFlags()" :key="flag"
+									class="flag" :class="ServerActions.filterFlagClass( flag )"
+									:src="'asset://garrysmod/materials/flags16/' + flag + '.png'"
+									@click="ServerActions.filterFlag( flag )" @error="flagIcon"/>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div class="innerpage" v-if="ServersStore.currentGamemode == null">
+					<h1 class="menu-header">
+						<span>{{ t('servers_gamemodes') }}</span>
+						<small>{{ t('servers_gamemodes.subtitle') }}</small>
+					</h1>
+
+					<div class='gamemodes-panel'>
+						<div class="gamemodes-scroll scrollable">
+							<div v-for="gm in gamemodeList" :key="gm.name" class='gamemode' :class="gm.element_class" @click="ServerActions.selectGamemode( gm )">
+								<img :src="'../gamemodes/' + gm.name + '/icon24.png'" @error="gmIconError"/>
+								<div class='stats'>{{ gm.num_players }} <span>{{ playerOnLabel( gm.num_players ) }}</span> {{ gm.num_servers }} <span>{{ serverLabel( gm.num_servers ) }}</span></div>
+								<div class='name'>
+									{{ ServerActions.gamemodeName( gm ) }}<tag v-if="gm.info && gm.info.tag">{{ t('gmfltr_hide_' + gm.info.tag) }}</tag>
+								</div>
+								<span class='install-gamemode' v-if="ServerActions.shouldShowInstall( gm )" @click.stop="ServerActions.installGamemode( gm )">&nbsp;</span>
+							</div>
+						</div>
+
+						<div class='add-favorite' v-if="ServersStore.type === 'favorite'">
+							<div class="header">
+								<span>{{ t('servers_find_title') }}</span>
+								<div class="fav-inputs">
+									<input type="text" v-model="ServersStore.findServerString" placeholder="127.0.0.1:27015"/>
+									<button @click="ServerActions.findServersAtAddress(); ServerActions.refresh();">{{ t('servers_find') }}</button>
+								</div>
+							</div>
+
+							<div class="found-servers server-list" v-if="ServersStore.foundServers.length > 0">
+								<div v-for="server in ServersStore.foundServers" :key="server.address" class="server">
+									<name>
+										<a class='favbutton' :class="{ favorited: server.favorite }" @click="ServerActions.toggleFavorite( server ); ServerActions.refresh();"></a>
+										<img class="passworded" src='img/server-passworded.png' v-if="server.pass"/>
+										<span>{{ server.name }}</span>
+									</name>
+									<ping>{{ server.ping }}</ping>
+									<players>{{ server.players }} / {{ server.maxplayers }}</players>
+									<map>{{ server.map }}</map>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="innerpage" v-if="ServersStore.currentGamemode != null">
+
+					<h1 class="menu-header">
+						<span>{{ ServerActions.gamemodeName( ServersStore.currentGamemode ) }}</span>
+						<small>{{ t('join_a_server') }}</small>
+					</h1>
+
+					<div class='install-gamemode' v-if="ServerActions.shouldShowInstall( ServersStore.currentGamemode )" @click="ServerActions.installGamemode( ServersStore.currentGamemode )">{{ t('servers_install_gamemode') }}</div>
+
+					<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
+						<input type="text" v-model="ServersStore.currentGamemode.search" class="searchbox" :placeholder="t('svsearch_placeholder')" />
+						<a class='btn-blue' @click="ServerActions.selectGamemode(null)"><img src='img/bg_arrow_left.png' /> {{ t('return_to_gamemodes') }}</a>
+					</div>
+
+					<div class="server-layout">
+						<div class='server-list'>
+							<div class='header'>
+								<name @click="ServerActions.changeOrder( ServersStore.currentGamemode, 'name' )">{{ t('server_name_header') }}</name>
+								<map @click="ServerActions.changeOrder( ServersStore.currentGamemode, 'map' )">{{ t('server_mapname') }}</map>
+								<players @click="ServerActions.changeOrder( ServersStore.currentGamemode, '-players' )">{{ t('server_players') }}</players>
+								<ping @click="ServerActions.changeOrder( ServersStore.currentGamemode, 'ping' )">{{ t('server_ping') }}</ping>
+								<rank @click="ServerActions.changeOrder( ServersStore.currentGamemode, 'recommended' )">{{ t('server_ranking') }}</rank>
+							</div>
+
+							<div class='body scrollable' @scroll="onScroll">
+								<div :style="{ height: (ServersStore.currentGamemode.server_offset * 26) + 'px' }"></div>
+
+								<div v-for="server in sortedServers" :key="server.address"
+									class="server" :class="serverClass( server )"
+									@mouseup="ServerActions.selectServer( server, $event )" @dblclick="ServerActions.joinServer( server )">
+									<name>
+										<a class='favbutton' :class="{ favorited: server.favorite }" @click.stop="ServerActions.toggleFavorite( server )"></a>
+										<img class="flag" :src="'asset://garrysmod/materials/flags16/' + server.flag + '.png'" @error="flagIcon" v-if="server.flag"/>
+										<img class="passworded" src='img/server-passworded.png' v-if="server.pass"/>
+										<span>{{ server.name }}
+											<tag :class="{ future: server.version_c > 0 }" v-if="server.version_c !== 0"><ver_str>{{ server.version_c > 0 ? t('server_ver_new') : t('server_ver_old') }}</ver_str>: {{ server.version }}</tag>
+										</span>
+									</name>
+									<lastvisited v-if="server.lastplayed !== 0"><lbl>{{ t('server_lastvisit') }}</lbl> {{ server.lastplayedDate }} <span class='lasttime'>{{ server.lastplayedTime }}</span></lastvisited>
+									<map>{{ server.map }}</map>
+									<players>{{ server.players }} / {{ server.maxplayers }}</players>
+									<ping>{{ server.ping }}</ping>
+									<rank :class="serverRank( server )"><span class='bar'></span></rank>
+								</div>
+
+								<div :style="{ height: postPlaceholderHeight + 'px' }"></div>
+							</div>
+						</div>
+
+						<div class='serverinfo' v-if="ServersStore.currentGamemode.selected">
+							<span class="close-btn" @click="ServerActions.selectServer( null, $event )"></span>
+							<div>
+								<header>
+									<div class="cell" style="padding-bottom: 5px; padding-right: 8px;">
+										<name>{{ ServersStore.currentGamemode.selected.name }}</name>
+										<address>{{ ServersStore.currentGamemode.selected.address }}</address>
+									</div>
+								</header>
+
+								<players>
+									<table style="font-size: 12px; padding: 8px; width: 100%;">
+										<tr style="color: #999; font-weight: bold;">
+											<td class="pname">{{ t('playerlist_name') }}</td>
+											<td style="text-align: center;">{{ t('playerlist_score') }}</td>
+											<td style="text-align: right;">{{ t('playerlist_time') }}</td>
+										</tr>
+										<tr v-for="player in selectedPlayerList" :key="player.name">
+											<td class="pname">{{ player.name }}</td>
+											<td style="text-align: center;">{{ player.score }}</td>
+											<td style="text-align: right;">{{ playerTime( player.time ) }}</td>
+										</tr>
+									</table>
+								</players>
+
+								<footer>
+									<div class="cell" style="padding-top: 5px;">
+										<input type='password' v-model="ServersStore.currentGamemode.selected.password" v-if="ServersStore.currentGamemode.selected.pass" @keyup.enter="ServerActions.joinServer( ServersStore.currentGamemode.selected )" :placeholder="t('password')" />
+
+										<div v-if="ServersStore.currentGamemode.selected.players >= ServersStore.currentGamemode.selected.maxplayers">
+											<input type="checkbox" v-model="ServersStore.joinIfHasSlot" id="join_if_not_full" />
+											<label for="join_if_not_full">{{ t('sv_join_if_not_full') }}</label>
+										</div>
+
+										<button :class="ServersStore.currentGamemode.selected.players < ServersStore.currentGamemode.selected.maxplayers ? 'btn-primary' : 'btn-primary-disabled'"
+											@click="ServerActions.joinServer( ServersStore.currentGamemode.selected )">
+											{{ ServersStore.currentGamemode.selected.players < ServersStore.currentGamemode.selected.maxplayers ? t('servers_join_server') : t('servers_join_server_full') }}
+										</button>
+									</div>
+								</footer>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</script>
+
+		<script type="text/x-template" id="tpl-addons-page">
+			<div class="page">
+
+				<div class="options">
+					<ul>
+						<li><h2>{{ t('addons') }}</h2></li>
+
+						<li>
+							<a :class="{ active: store.category === 'subscribed' }" @click="store.switch( 'subscribed', 0 )">{{ t('addons.subscribed') }}</a>
+							<ul v-if="store.category === 'subscribed'" class="submenu">
+								<li v-for="tag in addonTypes" :key="tag">
+									<a @click="store.switchWithTag( 'subscribed', 0, tag )" :class="{ active: store.tagged === tag }">{{ t('addons.' + tag) }}</a>
+								</li>
+								<li><input type="text" class="search-bar" v-model="AddonsStore.subscriptionSearchText" @input="store.handleOnSearch()" :placeholder="t('addons.search')"/></li>
+							</ul>
+						</li>
+
+						<li class="spacer">&nbsp;</li>
+
+						<li v-for="cat in categories" :key="cat">
+							<a @click="store.switchWithTag( cat, 0, 'Addon' )" :class="{ active: store.category === cat }">{{ t('addons.' + cat) }}</a>
+							<ul v-if="store.category === cat" class="submenu">
+								<li v-for="tag in addonTypes" :key="cat + tag">
+									<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t('addons.' + tag) }}</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="spacer">&nbsp;</li>
+
+						<li v-for="cat in categoriesSecondary" :key="'s-' + cat">
+							<a @click="store.switchWithTag( cat, 0, 'Addon' )" :class="{ active: store.category === cat }">{{ t('addons.' + cat) }}</a>
+							<ul v-if="store.category === cat && cat !== 'downloaded_ugc'" class="submenu">
+								<li v-for="tag in addonTypes" :key="cat + tag">
+									<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t('addons.' + tag) }}</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="spacer">&nbsp;</li>
+
+						<li><a @click="MenuActions.openWorkshop()">{{ t('addons.openworkshop') }}</a></li>
+					</ul>
+				</div>
+
+				<div class="page-content">
+					<h1 class="menu-header">
+						<span>{{ t(headerKey) }}</span>
+						<small>{{ t(headerSubKey) }}</small>
+					</h1>
+
+					<workshopcontainer>
+						<workshopmessage v-if="store.loading">{{ t('addons.loading') }}</workshopmessage>
+						<workshopmessage v-if="(store.totalResults === 0 || store.numResults === 0) && !store.loading && (!AddonsStore.disabled || store.category !== 'subscribed')">{{ t('addons.none') }}</workshopmessage>
+						<workshopmessage v-if="store.totalResults === 0 && !store.loading && AddonsStore.disabled && store.category === 'subscribed'">{{ t('addons.disabled') }}</workshopmessage>
+
+						<workshopicon v-for="file in store.files" :key="file.order" v-show="!store.loading"
+							@click="AddonActions.toggleSelect( file, $event )"
+							:style="iconStyle()"
+							:class="entryClass( file )">
+							<preview :style="previewStyle()">
+								<img :src="backgroundImage( file )" :style="imageStyle()"/>
+								<disabled></disabled>
+							</preview>
+
+							<name :class="{ subscription: store.category === 'subscribed' }">
+								<label @click="MenuActions.openWorkshopFile( file.id )">{{ (file.extra && file.extra.title) || (file.info && file.info.title) || t('ugc.loading') }}</label>
+							</name>
+							<author v-if="!file.local">{{ file.info.ownername }}<span v-if="!file.info.ownername">{{ t('ugc.loading') }}</span></author>
+							<size v-if="fileHasSize( file )">{{ getNiceSize( file.info.size ) }}</size>
+							<votes v-if="!file.local && fileUpvotes( file ) > 0">+{{ num0(fileUpvotes( file )) }}</votes>
+							<votes v-if="!file.local && fileUpvotes( file ) < 0" class="negative">{{ num0(fileUpvotes( file )) }}</votes>
+							<description>{{ entryDescription( file ) }}</description>
+							<input type="checkbox" class="checkbox" v-if="showCheckbox( file )" :checked="AddonsStore.selectedItems[file.id]" @change="AddonActions.toggleCheckboxSelect( file, $event.target.checked )" />
+
+							<controls v-if="!hasFloatingInfo( file )">
+								<left>
+									<control :class="{ disabled: file.info.voted_up }" v-if="!file.local" @click.stop="store.rate( file, true )"><img src='img/thumb-up.png'/></control>
+									<control :class="{ disabled: file.info.voted_down }" v-if="!file.local" @click.stop="store.rate( file, false )"><img src='img/thumb-down.png'/></control>
+									<control v-if="!file.local && !file.info.favorite" @click.stop="store.favorite( file, true )"><img src='img/favourite_addon.png'/></control>
+									<control v-if="!file.local && file.info.favorite" @click.stop="store.favorite( file, false )"><img src='img/favourite_addon_remove.png'/></control>
+								</left>
+
+								<right>
+									<control v-if="isSubscribed( file ) && isEnabledFile( file )" @click.stop="AddonActions.disable( file )">{{ t('addon.disable') }}</control>
+									<control v-if="isSubscribed( file ) && !isEnabledFile( file )" @click.stop="AddonActions.enable( file )">{{ t('addon.enable') }}</control>
+									<control v-if="!isSubscribed( file )" @click.stop="AddonActions.subscribe( file )">{{ t('addon.subscribe') }}</control>
+									<control v-if="isSubscribed( file )" @click.stop="AddonActions.unsubscribe( file )">{{ t('addon.unsubscribe') }}</control>
+									<control v-if="store.category === 'downloaded_ugc'" @click.stop="AddonActions.markUnused( file )">{{ t('addon.mark_unused') }}</control>
+								</right>
+							</controls>
+						</workshopicon>
+					</workshopcontainer>
+
+					<center>
+						<WbPagination :store="store"></WbPagination>
+					</center>
+
+					<a v-if="store.category === 'subscribed'" class="settings-toggle" @click="AddonsStore.settingsOpen = !AddonsStore.settingsOpen">
+						<img src="img/settings.png">
+					</a>
+
+					<div v-if="store.category === 'subscribed'" class="settings-panel" :class="AddonsStore.settingsOpen ? 'active' : 'hidden'">
+						<div class="settings-column">
+							<span>{{ t('addons.filter_by') }}</span>
+							<input type="checkbox" v-model="AddonsStore.filterEnabledOnly" @change="store.handleFilterChange()" id="FilterEnabledOnly"/><label for="FilterEnabledOnly">{{ t('addons.enabled_only') }}</label><br/>
+							<input type="checkbox" v-model="AddonsStore.filterDisabledOnly" @change="store.handleFilterChange()" id="FilterDisabledOnly"/><label for="FilterDisabledOnly">{{ t('addons.disabled_only') }}</label>
+						</div>
+						<div class="settings-column">
+							<span>{{ t('addons.sort_by') }}</span>
+							<input type="radio" name="sort" value="title" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_title"/><label for="UGCSortMethod_title">{{ t('addons.name') }}</label><br/>
+							<input type="radio" name="sort" value="size" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_size"/><label for="UGCSortMethod_size">{{ t('addons.size') }}</label><br/>
+							<input type="radio" name="sort" value="updated" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_updated"/><label for="UGCSortMethod_updated">{{ t('addons.update_date') }}</label><br/>
+							<input type="radio" name="sort" value="subscribed" v-model="AddonsStore.ugcSortMethod" @change="store.handleSortChange()" id="UGCSortMethod_subscribed"/><label for="UGCSortMethod_subscribed">{{ t('addons.sub_date') }}</label>
+						</div>
+						<div class="settings-column">
+							<div v-if="!AddonActions.isAnySelected()">
+								<a @click="AddonActions.selectAll()">{{ t('addons.selectall') }}</a>
+								<a @click="AddonActions.selectAllPage()">{{ t('addons.selectpage') }}</a>
+								<a @click="AddonActions.warnEnableAll()">{{ t('addons.enableall') }}</a>
+								<a @click="AddonActions.warnDisableAll()">{{ t('addons.disableall') }}</a>
+								<a @click="AddonActions.warnUninstallAll()">{{ t('addons.uninstallall') }}</a>
+							</div>
+							<div v-else>
+								<a @click="AddonActions.unselectAll()">{{ t('addons.unselectall') }}</a>
+								<a @click="AddonActions.selectAllPage()">{{ t('addons.selectpage') }}</a>
+								<a @click="AddonActions.enableAllSelected();">{{ t('addons.enable_selected') }}</a>
+								<a @click="AddonActions.disableAllSelected();">{{ t('addons.disable_selected') }}</a>
+								<a @click="AddonActions.warnUninstallSelected()">{{ t('addons.uninstall_selected') }}</a>
+							</div>
+						</div>
+						<div class="settings-column">
+							<a @click="AddonActions.openCreatePresetMenu()">{{ t('addons.create_preset') }}</a>
+							<a @click="AddonActions.openLoadPresetMenu()">{{ t('addons.load_preset') }}</a>
+							<a @click="AddonActions.openImportPresetMenu()">{{ t('addons.import_preset') }}</a>
+						</div>
+						<div class="settings-column">
+							<span><font>{{ t('addons.total_subscriptions') }}</font> {{ AddonActions.getSubscribedCount() }}</span>
+							<span><font>{{ t('addons.total_selected') }}</font> {{ AddonActions.getSelectedCount() }}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="modaldialog" v-if="AddonsStore.createPresetOpen">
+					<div class="centermessage left modal-preset">
+						<b>{{ t('addons.create_preset') }}</b>
+						<br/><br/>
+						<input type="text" class="preset-name" v-model="AddonsStore.presetName" :placeholder="t('addons.preset_name_placeholder')"/><br/>
+						<br/>
+						<input type="checkbox" v-model="AddonsStore.saveEnabled" id="CreatePresetSaveEnabled"/><label for="CreatePresetSaveEnabled">{{ t('addons.preset_save_enabled') }}</label><br/>
+						<input type="checkbox" v-model="AddonsStore.saveDisabled" id="CreatePresetSaveDisabled"/><label for="CreatePresetSaveDisabled">{{ t('addons.preset_save_disabled') }}</label><br/>
+						<br/>
+						<b>{{ t('addons.preset_new_action') }}</b><br/>
+						<input type="radio" name="createpreset_newitems" value="" v-model="AddonsStore.presetNewAction" id="cp_nothing"/><label for="cp_nothing">{{ t('addons.action_nothing') }}</label><br/>
+						<input type="radio" name="createpreset_newitems" value="disable" v-model="AddonsStore.presetNewAction" id="cp_disable"/><label for="cp_disable">{{ t('addons.action_disable') }}</label><br/>
+						<input type="radio" name="createpreset_newitems" value="enable" v-model="AddonsStore.presetNewAction" id="cp_enable"/><label for="cp_enable">{{ t('addons.action_enable') }}</label><br/>
+						<br/>
+						<a @click="AddonActions.createNewPreset()" :class="{ disabled: AddonsStore.presetName === '' }" class="create big">{{ t('addons.create_preset') }}</a>
+						<hr>
+						<a @click="AddonActions.closePopupMessage()">{{ t('addons.cancel') }}</a>
+					</div>
+				</div>
+
+				<div class="modaldialog" v-if="AddonsStore.importPresetOpen">
+					<div class="centermessage left modal-preset">
+						<b>{{ t('addons.import_preset') }}</b>
+						<br/><br/>
+						<input type="text" class="preset-name" v-model="AddonsStore.importSource" :placeholder="t('addons.preset_source')"/><br/>
+						<br/><br/>
+						<input type="text" class="preset-name" v-model="AddonsStore.presetName" :placeholder="t('addons.preset_name_placeholder')"/><br/>
+						<br/>
+						<b>{{ t('addons.preset_new_action') }}</b><br/>
+						<input type="radio" name="importpreset_newitems" value="" v-model="AddonsStore.presetNewAction" id="ip_nothing"/><label for="ip_nothing">{{ t('addons.action_nothing') }}</label><br/>
+						<input type="radio" name="importpreset_newitems" value="disable" v-model="AddonsStore.presetNewAction" id="ip_disable"/><label for="ip_disable">{{ t('addons.action_disable') }}</label><br/>
+						<input type="radio" name="importpreset_newitems" value="enable" v-model="AddonsStore.presetNewAction" id="ip_enable"/><label for="ip_enable">{{ t('addons.action_enable') }}</label><br/>
+						<br/>
+						<a @click="AddonActions.importPreset()" :class="{ disabled: AddonsStore.importSource === '' || AddonsStore.presetName === '' }">{{ t('addons.import_preset') }}</a>
+						<hr>
+						<a @click="AddonActions.closePopupMessage()">{{ t('addons.cancel') }}</a>
+					</div>
+				</div>
+
+				<div class="modaldialog" v-if="AddonsStore.importPresetLoading">
+					<div class="centermessage left modal-preset">
+						<h1>{{ t('dupes.loading') }}</h1>
+					</div>
+				</div>
+
+				<div class="modaldialog" v-if="AddonsStore.loadPresetMenuOpen">
+					<div class="centermessage left">
+						<b>{{ t('addons.load_preset') }}</b>
+						<br/><br/>
+
+						<div class="preset-content">
+							<div class="preset-side">
+								<input type="text" v-model="AddonsStore.presetSearchText" :placeholder="t('addons.filter_preset')"/>
+								<div class="preset-list">
+									<font v-for="preset in presetNames" :key="preset.name" @click="AddonActions.selectPreset( preset.name, preset.newAction );" :class="{ active: preset.name === AddonsStore.selectedPreset }">{{ preset.name }}</font>
+								</div>
+							</div>
+							<div class="preset-data" v-if="selectedPresetData">
+								<b>{{ t('addons.preset_name') }}</b> {{ selectedPresetData.name }}<br/>
+								<b>{{ t('addons.preset_enabled') }}</b> {{ selectedPresetData.enabled.length }}<br/>
+								<b>{{ t('addons.preset_disabled') }}</b> {{ selectedPresetData.disabled.length }}<br/>
+								<input type="checkbox" v-model="AddonsStore.loadPresetResub" id="LoadPresetResub"/><label for="LoadPresetResub">{{ t('addons.preset_resub_missing') }}</label><br/>
+
+								<br><b>{{ t('addons.preset_new_action') }}</b><br>
+								<input type="radio" name="loadpreset_newitems" value="" v-model="AddonsStore.presetNewAction" id="lp_nothing"/><label for="lp_nothing">{{ t('addons.action_nothing') }}</label><br/>
+								<input type="radio" name="loadpreset_newitems" value="disable" v-model="AddonsStore.presetNewAction" id="lp_disable"/><label for="lp_disable">{{ t('addons.action_disable') }}</label><br/>
+								<input type="radio" name="loadpreset_newitems" value="enable" v-model="AddonsStore.presetNewAction" id="lp_enable"/><label for="lp_enable">{{ t('addons.action_enable') }}</label><br/>
+
+								<br>
+								<a @click="AddonActions.loadSelectedPreset()" class="create">{{ t('addons.load_preset') }}</a>
+								<a @click="AddonActions.copySelectedPreset()">{{ t('addons.copy_preset') }}</a>
+								<br><br>
+								<a @click="AddonActions.deletePreset( AddonsStore.selectedPreset )" class="warning">{{ t('addons.delete_preset') }}</a>
+							</div>
+						</div>
+
+						<a @click="AddonActions.closePopupMessage()">{{ t('addons.cancel') }}</a>
+					</div>
+				</div>
+
+				<div class="modaldialog" v-if="AddonsStore.popupMessage">
+					<div class="centermessage">
+						<span>{{ t('addons.warning') }}</span>
+						<span>{{ t(AddonsStore.popupMessageKey) }}</span>
+						<span v-if="isUninstallWarning()">{{ t('addons.cannotundo') }}</span>
+
+						<div style="margin-bottom: 5px;">
+							<div v-for="fileid in AddonsStore.popupMessageFiles" :key="fileid" class="button" :class="{ subbed: Subscriptions.contains( fileid ) }">
+								<wstitle @click="MenuActions.openWorkshopFile( fileid )" class="wstitle">{{ childTitle( fileid ) }}</wstitle>
+								<wsbut v-if="Subscriptions.contains( fileid )" class="wssub"><img src="img/tick.png"/></wsbut>
+								<wsbut v-else @click="Subscriptions.subscribe( fileid )" class="wssub"><img src="img/plus.png"></wsbut>
+							</div>
+						</div>
+
+						<a @click="AddonActions.executePopupAction()" :class="popupConfirmClass()">{{ t('addons.confirm') }}</a>
+						<a @click="AddonActions.closePopupMessage( true )" v-if="AddonsStore.popupAction != null">{{ t('addons.cancel') }}</a>
+					</div>
+				</div>
+
+			</div>
+		</script>
+
+		<script type="text/x-template" id="tpl-workshop-page">
+			<div class="page">
+
+				<div class="options">
+					<ul>
+						<li><h2>{{ t(titleKey) }}</h2></li>
+
+						<li v-for="cat in myCategories" :key="'m' + cat">
+							<a @click="store.switch( cat, 0 )" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+							<ul v-if="store.category === cat && cat !== 'local' && subCategories.length > 0" class="submenu" style="margin-top: 4px; margin-bottom: 15px;">
+								<li v-for="tag in subCategories" :key="cat + tag">
+									<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="spacer">&nbsp;</li>
+
+						<li v-for="cat in categories" :key="cat">
+							<a @click="store.switch( cat, 0 )" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+							<ul v-if="store.category === cat && subCategories.length > 0" class="submenu" style="margin-top: 4px; margin-bottom: 15px;">
+								<li v-for="tag in subCategories" :key="cat + tag">
+									<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="spacer">&nbsp;</li>
+
+						<li v-for="cat in categoriesSecondary" :key="'s' + cat">
+							<a @click="store.switch( cat, 0 )" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+							<ul v-if="store.category === cat && subCategories.length > 0" class="submenu" style="margin-top: 4px; margin-bottom: 15px;">
+								<li v-for="tag in subCategories" :key="cat + tag">
+									<a @click="store.switchWithTag( cat, 0, tag )" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="spacer">&nbsp;</li>
+
+						<li><a @click="MenuActions.openFolder( mode )">{{ t(titleKey + '.openfolder') }}</a></li>
+					</ul>
+				</div>
+
+				<div class="page-content">
+
+					<h1 class="menu-header"><span>{{ t(titleKey + '.' + store.category) }}</span><small>{{ t(titleKey + '.' + store.category + '.subtitle') }}</small></h1>
+
+					<workshopcontainer>
+						<workshopmessage v-if="store.loading">{{ t(titleKey + '.loading') }}</workshopmessage>
+						<workshopmessage v-if="(store.totalResults === 0 || store.numResults === 0) && !store.loading && (!AddonsStore.disabled || store.category !== 'subscribed_ugc')">{{ t(titleKey + '.none') }}</workshopmessage>
+						<workshopmessage v-if="store.totalResults === 0 && !store.loading && AddonsStore.disabled && store.category === 'subscribed_ugc'">{{ t('ugc.disabled') }}</workshopmessage>
+
+						<WbEntry v-for="file in store.files" :key="file.order" :file="file" :store="store" :mode="mode" v-show="!store.loading"></WbEntry>
+
+						<center>
+							<WbPagination :store="store"></WbPagination>
+						</center>
+					</workshopcontainer>
+
+				</div>
+
+			</div>
+		</script>
+
+		<script type="text/x-template" id="tpl-wb-pagination">
+			<pagination v-if="!store.loading && store.totalResults > 0">
+				<a class="back" @click="store.go( store.perPage * -1 )">&nbsp;</a>
+				<a class="next" @click="store.go( store.perPage * 1 )">&nbsp;</a>
+				<div class="pages">
+					<span v-for="p in store.pages" :key="p"><a :class="{ active: p === store.page }" class="page-link" @click="store.goToPage( p )"><img src="img/pagination_page.png?1" /></a></span><br/>
+				</div>
+				<span class="page-num">{{ store.page }}</span>
+			</pagination>
+		</script>
+
+		<script type="text/x-template" id="tpl-wb-entry">
+			<workshopicon v-if="!store.loading" :style="iconStyle()" :class="{ installed: isSubscribed() }">
+				<preview v-if="file.background" :style="previewStyle()">
+					<img :src="'../' + file.background" :style="imageStyle()" loading="lazy"/>
+				</preview>
+
+				<name>
+					<label @click="openWorkshopFile()">{{ (file.info && file.info.title) || t('ugc.loading') }}</label>
+				</name>
+				<author v-if="!file.local">{{ file.info.ownername }}<span v-if="!file.info.ownername">{{ t('ugc.loading') }}</span></author>
+				<votes v-if="!file.local && upvotes() > 0" style="color: #4a4">+{{ num0(upvotes()) }}</votes>
+				<votes v-if="!file.local && upvotes() < 0" style="color: #a44">{{ num0(upvotes()) }}</votes>
+				<description>{{ file.info.description }}</description>
+
+				<controls>
+					<left>
+						<control :class="{ disabled: file.info.voted_up }" v-if="!file.local" @click="rate(true)"><img src="img/thumb-up.png"/></control>
+						<control :class="{ disabled: file.info.voted_down }" v-if="!file.local" @click="rate(false)"><img src="img/thumb-down.png"/></control>
+						<control v-if="!file.local && !file.info.favorite" @click="favorite(true)"><img src="img/favourite_addon.png"/></control>
+						<control v-if="!file.local && file.info.favorite" @click="favorite(false)"><img src="img/favourite_addon_remove.png"/></control>
+						<control v-if="file.local" @click="publishLocal()">{{ t(mode+'.publish') }}</control>
+						<control v-if="file.local" @click="deleteLocal()">{{ t(mode+'.delete') }}</control>
+						<control v-if="standalone && !file.local" @click="openWorkshopFile()">{{ t(mode+'.commentandrate') }}</control>
+					</left>
+
+					<right>
+						<control v-if="mode === 'saves'" @click="loadSave()">{{ t('saves.load') }}</control>
+						<control v-if="mode === 'dupes'" @click="armDupe()">{{ t('dupes.arm') }}</control>
+						<template v-if="mode === 'demos'">
+							<control @click="demoToVideo()">{{ t('demos.video') }}</control>
+							<control @click="playDemo()">{{ t('demos.play') }}</control>
+						</template>
+						<template v-else>
+							<control v-if="!file.local && !isSubscribed()" @click="subscribe()">{{ t('ugc.subscribe') }}</control>
+							<control v-if="!file.local && isSubscribed()" @click="unsubscribe()">{{ t('ugc.unsubscribe') }}</control>
+						</template>
+					</right>
+				</controls>
+			</workshopicon>
+		</script>
+
+		<script type="text/javascript">
+			window.addEventListener("DOMContentLoaded", startApp);
+		</script>
+	</body>
 </html>

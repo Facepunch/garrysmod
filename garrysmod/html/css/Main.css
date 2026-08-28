@@ -1,0 +1,112 @@
+#version {
+	position: absolute;
+	right: 3px;
+	top: 3px;
+	padding: 5px;
+	color: #aaa;
+	font-size: 11px;
+	font-weight: bold;
+	background-color: rgba(0, 0, 0, 1);
+	border-radius: 3px;
+	cursor: pointer;
+	z-index: 1000;
+}
+
+.news {
+	position: absolute;
+	right: 50px;
+	top: 75px;
+}
+
+.news-item {
+	position: relative;
+	width: 512px;
+	height: 256px;
+	margin-left: auto;
+	margin-right: 0;
+	background: #333;
+	background-size: cover;
+	border-radius: 8px;
+	box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.4);
+}
+
+.news-item div {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 0 0 8px 8px;
+	color: #fff;
+	font-size: x-large;
+	font-weight: bold;
+	text-align: right;
+	text-shadow: 2px 2px 1px #000;
+	cursor: default;
+}
+
+.news-item div span:hover {
+	color: #ffa;
+	cursor: pointer;
+}
+
+.news-item div font {
+	display: block;
+	font-weight: normal;
+	font-size: small;
+	text-shadow: none;
+}
+
+.news-buttons {
+	display: block;
+	margin-top: 3px;
+}
+
+.news-buttons div {
+	display: block;
+	float: right;
+	width: 16px;
+	height: 16px;
+	margin-left: 3px;
+	background: #666;
+	border-radius: 3px;
+	box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.4);
+	cursor: pointer;
+}
+
+.news-buttons div.new {
+	background: #f55;
+}
+
+.news-buttons div.selected {
+	background: #eee;
+}
+
+.news-buttons div.selected.new {
+	background: #fcc;
+}
+
+@media (max-width: 800px) {
+	.news-item {
+		width: 256px;
+		height: 128px;
+	}
+
+	.news-item div font {
+		font-size: x-small;
+	}
+
+	.news-item div {
+		font-size: medium;
+	}
+}
+
+@media (max-width: 640px) {
+	.news {
+		right: 5px;
+		top: 65px;
+	}
+}

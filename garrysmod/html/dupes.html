@@ -1,89 +1,151 @@
-<html>
-<head>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Dupes</title>
 
-	<title>Creations</title>
+		<link rel="stylesheet" type="text/css" href="css/Base.css" />
+		<link rel="stylesheet" type="text/css" href="css/Addons.css" />
+		<link rel="stylesheet" type="text/css" href="css/Creations.css" />
+	</head>
 
-	<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
-	<link rel="stylesheet" type="text/css" href="css/creations/Creations.css" />
+	<body>
+		<div id="app"></div>
 
-	<script type="text/javascript" src="js/lua.js"></script>
+		<script type="text/javascript" src="js/lib/vue2.min.js"></script>
 
-	<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
-	<script type="text/javascript" src="js/thirdparty/angular.js"></script>
-	<script type="text/javascript" src="js/thirdparty/angular-route.js"></script>
+		<script type="text/javascript" src="js/core/env.js"></script>
+		<script type="text/javascript" src="js/core/lua.js"></script>
+		<script type="text/javascript" src="js/core/i18n.js"></script>
+		<script type="text/javascript" src="js/core/utils.js"></script>
 
-	<script type="text/javascript" src="js/menu/WorkshopFiles.js"></script>
-	<script type="text/javascript" src="js/ngLocalize.js"></script>
+		<script
+			type="text/javascript"
+			src="js/state/subscriptions-store.js"
+		></script>
+		<script
+			type="text/javascript"
+			src="js/state/workshop-store.js"
+		></script>
+		<script type="text/javascript" src="js/state/menu-store.js"></script>
+		<script type="text/javascript" src="js/state/stores.js"></script>
 
-	<script type="text/javascript" src="js/creations/dupes.js"></script>
-	<script type="text/javascript" src="js/menu/common.js"></script>
-	<script type="text/javascript" src="js/menu/control.Dupes.js"></script>
+		<script type="text/javascript" src="js/core/api.js"></script>
 
-	<script type="text/javascript" src="js/menu/TestWorkshop.js"></script>
+		<script type="text/javascript" src="js/ui/components.js"></script>
+		<script type="text/javascript" src="js/creations.js"></script>
 
-</head>
+		<script type="text/x-template" id="tpl-creations-app">
+			<div class="options">
+				<ul>
+					<li class="headline">{{ t(titleKey) }}</li>
+					<li class="subtitle"></li>
 
-<body ng-app="CDupesApp" ng-controller="CDupes" onresize="WindowResized()">
-
-	<div class="options">
-
-		<!-- DUPES -->
-
-		<ul>
-
-			<li class="headline" ng-Localize="'dupes'"></li>
-			<li class="subtitle"></li>
-
-			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-href='#/list/{{cat}}/' ng-Localize="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
-
-				<ul ng-show="cat == Category && cat != 'local'" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
-						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Localize="'dupes.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li v-for="cat in myCategories" :key="'m' + cat">
+						<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+						<ul v-if="cat === store.category && cat !== 'local'" style="margin-top: 4px; margin-bottom: 15px;">
+							<li v-for="tag in subCategories" :key="'m' + cat + tag">
+								<a :href="'#/list/' + cat + '/' + tag + '/'" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+							</li>
+						</ul>
 					</li>
-				</ul>
-			</li>
 
-			<li>&nbsp;</li>
+					<li class="spacer">&nbsp;</li>
 
-			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-href='#/list/{{cat}}/' ng-Localize="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
-
-				<ul ng-show="cat == Category" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
-						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Localize="'dupes.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li v-for="cat in categories" :key="cat">
+						<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+						<ul v-if="cat === store.category" style="margin-top: 4px; margin-bottom: 15px;">
+							<li v-for="tag in subCategories" :key="cat + tag">
+								<a :href="'#/list/' + cat + '/' + tag + '/'" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+							</li>
+						</ul>
 					</li>
-				</ul>
-			</li>
 
-			<li>&nbsp;</li>
+					<li class="spacer">&nbsp;</li>
 
-			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-href='#/list/{{cat}}/' ng-Localize="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
-
-				<ul ng-show="cat == Category" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
-						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Localize="'dupes.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li v-for="cat in categoriesSecondary" :key="'s' + cat">
+						<a :href="'#/list/' + cat + '/'" :class="{ active: store.category === cat }">{{ t(titleKey + '.' + cat) }}</a>
+						<ul v-if="cat === store.category" style="margin-top: 4px; margin-bottom: 15px;">
+							<li v-for="tag in subCategories" :key="'s' + cat + tag">
+								<a :href="'#/list/' + cat + '/' + tag + '/'" :class="{ active: store.tagged === tag }">{{ t(titleKey + '.' + tag) }}</a>
+							</li>
+						</ul>
 					</li>
+
+					<li class="spacer">&nbsp;</li>
+
+					<li><button @click="saveAction()" :disabled="saveDisabled"
+						:class="['savedupebutton', saveDisabled ? 'disabled' : '']">..
+					</button></li>
 				</ul>
-			</li>
+			</div>
+		</script>
 
-			<li>&nbsp;</li>
+		<script type="text/x-template" id="tpl-creations-content">
+			<div class="page">
+				<div style="position: absolute; left: 0px; top: 0px; bottom: 0px; right: 0px;">
+					<workshopcontainer>
+						<workshopmessage v-if="store.loading">{{ t(titleKey + '.loading') }}</workshopmessage>
+						<workshopmessage v-if="(store.totalResults === 0 || store.numResults === 0) && !store.loading">{{ t(titleKey + '.none') }}</workshopmessage>
 
-			<li><button ng-click="SaveDupe();" ng-Localize="'dupes.savedupe'" class="savedupebutton {{DupeDisabled}}" enabled="false">..</button></li>
+						<WbEntry v-for="file in store.files" :key="file.order" :file="file" :store="store" standalone></WbEntry>
 
-		</ul>
+						<center>
+							<WbPagination :store="store"></WbPagination>
+						</center>
+					</workshopcontainer>
+				</div>
+			</div>
+		</script>
 
-		<!--
-		<input type="button" value="Reload Page" onClick="document.location.reload(true)">
-		-->
+		<script type="text/x-template" id="tpl-wb-pagination">
+			<pagination v-if="!store.loading && store.totalResults > 0">
+				<a class="back" @click="store.go( store.perPage * -1 )">&nbsp;</a>
+				<a class="next" @click="store.go( store.perPage * 1 )">&nbsp;</a>
+				<div class="pages">
+					<span v-for="p in store.pages" :key="p"><a :class="{ active: p === store.page }" class="page-link" @click="store.goToPage( p )"><img src="img/pagination_page.png?1" /></a></span><br/>
+				</div>
+				<span class="page-num">{{ store.page }}</span>
+			</pagination>
+		</script>
 
-	</div>
+		<script type="text/x-template" id="tpl-wb-entry">
+			<workshopicon v-if="!store.loading" :style="iconStyle()" :class="{ installed: isSubscribed() }">
+				<preview v-if="file.background" :style="previewStyle()">
+					<img :src="'../' + file.background" :style="imageStyle()" loading="lazy"/>
+				</preview>
 
-	<div ng-view>
+				<name>
+					<label @click="openWorkshopFile()">{{ (file.info && file.info.title) || t('ugc.loading') }}</label>
+				</name>
+				<author v-if="!file.local">{{ file.info.ownername }}<span v-if="!file.info.ownername">{{ t('ugc.loading') }}</span></author>
+				<votes v-if="!file.local && upvotes() > 0" style="color: #4a4">+{{ num0(upvotes()) }}</votes>
+				<votes v-if="!file.local && upvotes() < 0" style="color: #a44">{{ num0(upvotes()) }}</votes>
+				<description>{{ file.info.description }}</description>
 
-	</div>
+				<controls>
+					<left>
+						<control :class="{ disabled: file.info.voted_up }" v-if="!file.local" @click="rate(true)"><img src="img/thumb-up.png"/></control>
+						<control :class="{ disabled: file.info.voted_down }" v-if="!file.local" @click="rate(false)"><img src="img/thumb-down.png"/></control>
+						<control v-if="!file.local && !file.info.favorite" @click="favorite(true)"><img src="img/favourite_addon.png"/></control>
+						<control v-if="!file.local && file.info.favorite" @click="favorite(false)"><img src="img/favourite_addon_remove.png"/></control>
+						<control v-if="file.local" @click="publishLocal()">{{ t('dupes.publish') }}</control>
+						<control v-if="file.local" @click="deleteLocal()">{{ t('dupes.delete') }}</control>
+						<control v-if="standalone && !file.local" @click="openWorkshopFile()">{{ t('dupes.commentandrate') }}</control>
+					</left>
 
-</body>
+					<right>
+						<control @click="armDupe()">{{ t('dupes.arm') }}</control>
+						<control v-if="!file.local && !isSubscribed()" @click="subscribe()">{{ t('ugc.subscribe') }}</control>
+						<control v-if="!file.local && isSubscribed()" @click="unsubscribe()">{{ t('ugc.unsubscribe') }}</control>
+					</right>
+				</controls>
+			</workshopicon>
+		</script>
+
+		<script type="text/javascript">
+			window.addEventListener("DOMContentLoaded", function () {
+				startCreationsApp("dupes");
+			});
+		</script>
+	</body>
 </html>
-

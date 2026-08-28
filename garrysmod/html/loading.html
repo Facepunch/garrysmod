@@ -1,88 +1,102 @@
-<html>
+<html lang="en">
 	<head>
+		<meta charset="utf-8" />
 		<title>Loading..</title>
-		<link rel="stylesheet" type="text/css" href="loading.css" />
+		<link rel="stylesheet" type="text/css" href="css/Loading.css" />
 	</head>
 	<body>
-
 		<div id="background">
 			<div id="container">
-
-				<img id="logo" src='img/gmod_logo_brave.png'/>
-				
+				<img id="logo" src="img/gmod_logo_brave.png" alt="" />
 				<div>
 					<div class="walk">:v</div>
 				</div>
-
 			</div>
 
-			<div class="server_info">
-				<img id="mapimg" src="asset://mapimage/invalid_map" />
+			<div class="server-info">
+				<img id="mapimg" src="asset://mapimage/invalid_map" alt="" />
 				<div class="text">
-					<div id="serverName">A really long server name will be here that will be too long to fit on the loading screen</div>
-					<div id="serverMap">gm_hilldirt</div>
-					<div id="serverGamemode">Snadbox</div>
+					<div id="serverName"></div>
+					<div id="serverMap"></div>
+					<div id="serverGamemode"></div>
 				</div>
 			</div>
 
-			<div id="spambox">
-			</div>
-
+			<div id="spambox"></div>
 		</div>
 
 		<script type="text/javascript">
-			document.addEventListener( "DOMContentLoaded", function() {
+			function addClass(element, name) {
+				var cls = element.className || "";
+				if ((" " + cls + " ").indexOf(" " + name + " ") === -1)
+					element.className = (cls + " " + name).trim();
+			}
+
+			document.addEventListener("DOMContentLoaded", function () {
 				var today = new Date();
 
-				// Force it to dark on Spooktober or when it's late
-				var isHalloween = today.getMonth() == 9 && today.getDate() >= 15 || today.getMonth() == 10 && today.getDate() <= 5;
-				var darkMode = today.getHours() >= 19 || today.getHours() <= 7;
+				var isHalloween =
+					(today.getMonth() == 9 && today.getDate() >= 15) ||
+					(today.getMonth() == 10 && today.getDate() <= 5);
+				var darkMode =
+					today.getHours() >= 19 || today.getHours() <= 7;
 
-				var isSupportsSystemDarkMode = navigator.userAgent.match(/Chrome\/(\d+)/)[1] >= 76;
-				var systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				var versionMatch = navigator.userAgent.match(/Chrome\/(\d+)/);
+				var supportsSystemDarkMode =
+					versionMatch && parseInt(versionMatch[1]) >= 76;
+				var systemDarkMode = window.matchMedia(
+					"(prefers-color-scheme: dark)"
+				).matches;
 
-				if ( isHalloween || ( isSupportsSystemDarkMode ? systemDarkMode : darkMode ) )
-				{
-					document.body.classList.add( "dark" );
+				if (
+					isHalloween ||
+					(supportsSystemDarkMode ? systemDarkMode : darkMode)
+				) {
+					addClass(document.body, "dark");
 				}
-			} );
+			});
 
-			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
-			{
+			function GameDetails(
+				servername,
+				serverurl,
+				mapname,
+				maxplayers,
+				steamid,
+				gamemode,
+				volume,
+				lang,
+				gamemodeNice
+			) {
 				var mapImg = "asset://mapimage/" + mapname;
-				
+
 				document.querySelector("#serverName").innerText = servername;
 				document.querySelector("#serverMap").innerText = mapname;
-				document.querySelector("#serverGamemode").innerText = gamemodeNice;
-				document.querySelector("#mapimg").setAttribute( "src", mapImg );
+				document.querySelector("#serverGamemode").innerText =
+					gamemodeNice;
+				document.querySelector("#mapimg").setAttribute("src", mapImg);
 				document.body.style.backgroundImage = "url('" + mapImg + "')";
 
-				document.querySelector(".server_info").classList.add( "visible" );
-
-				// Do with these what you will :)
-				// this function gets called only when joining a multiplayer server
-				/*document.querySelector("#spambox").innerHTML += "serverurl: " + serverurl + "<br>";
-				document.querySelector("#spambox").innerHTML += "servername: " + servername + "<br>";
-				document.querySelector("#spambox").innerHTML += "maxplayers: " + maxplayers + "<br>";
-				document.querySelector("#spambox").innerHTML += "steamid: " + steamid + "<br>";
-				document.querySelector("#spambox").innerHTML += "gamemode: " + gamemode + "<br>";
-				document.querySelector("#spambox").innerHTML += "mapname: " + mapname + "<br>";
-				document.querySelector("#spambox").innerHTML += "volume: " + volume + "<br>";
-				document.querySelector("#spambox").innerHTML += "lang: " + lang + "<br>";*/
+				addClass(
+					document.querySelector(".server-info"),
+					"visible"
+				);
 			}
 
-			// A file has begun downloading
-			function DownloadingFile( file )
-			{
-				//document.querySelector("#spambox").innerHTML = "<span style='color:red'>" + file + "</span><br>" + document.querySelector("#spambox").innerHTML;
+			function DownloadingFile(file) {
+				if (window.OnFileDownloading) OnFileDownloading(file);
 			}
 
-			// This will not be called when DownloadingFile() is
-			function SetStatusChanged( status )
-			{
-				//document.querySelector("#spambox").innerHTML = status + "<br>" + document.querySelector("#spambox").innerHTML;
+			function SetStatusChanged(status) {
+				if (window.OnStatusChanged) OnStatusChanged(status);
+			}
+
+			function SetFilesNeeded(needed) {
+				if (window.OnFilesNeeded) OnFilesNeeded(needed);
+			}
+
+			function SetFilesTotal(total) {
+				if (window.OnFilesTotal) OnFilesTotal(total);
 			}
 		</script>
-
 	</body>
 </html>
