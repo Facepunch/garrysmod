@@ -9,11 +9,16 @@ var UpdateInterval = undefined;
 
 function StripWeirdSymbols( name )
 {
-	// Weird symbols
-	var ret = name.replace( /[\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
+	// Weird 2 byte symbols
+	var ret = name.replace( /[\u1400-\u167F\u1680-\u169F\u16A0-\u16FF\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2A00-\u2AFF\u2B00-\u2BFF\u2900-\u297F\u3000-\u303F]/g, "" );
+
+	// Weird 4 byte symbols
+	ret = ret.replace( /([\uD808|\uD809|\uD835][\uDC00-\uDFFF])/g, "" );
 
 	// Emojis
 	ret = ret.replace( /([\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF])/g, "" );
+	ret = ret.replace( /(\u3299\uFE0F)/g, "" ); // ???
+
 	return ret;
 }
 
