@@ -42,7 +42,9 @@ function meta:__index( key )
 	local tab = EntityTablesCache[ self ]
 	if ( not tab ) then
 		tab = meta.GetTable( self )
-		EntityTablesCache[ self ] = tab
+		if ( tab and not tab.__DoNotCacheEntityTable ) then
+			EntityTablesCache[ self ] = tab
+		end
 	end
 	if ( tab ) then
 		local tabval = tab[ key ]
@@ -64,7 +66,9 @@ function meta:__newindex( key, value )
 	local tab = EntityTablesCache[ self ]
 	if ( not tab ) then
 		tab = meta.GetTable( self )
-		EntityTablesCache[ self ] = tab
+		if ( tab and not tab.__DoNotCacheEntityTable ) then
+			EntityTablesCache[ self ] = tab
+		end
 	end
 
 	tab[ key ] = value
@@ -165,7 +169,11 @@ end
 -----------------------------------------------------------]]
 local function DoDieFunction( ent )
 
-	EntityTablesCache[ ent ] = nil
+	local tab = EntityTablesCache[ ent ]
+	if tab then
+		tab.__DoNotCacheEntityTable = true
+		EntityTablesCache[ ent ] = nil
+	end
 
 	if ( !ent.OnDieFunctions ) then return end
 
