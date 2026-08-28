@@ -1135,3 +1135,6 @@ L.equip_sort_default = "По умолчанию"
 L.equip_sort_slot    = "Слот"
 
 L.set_hide_unbuyable = "Перемещать непокупаемое снаряжение в конец списка."
+
+-- 2026-07-24
+L.flame_burn = "ОГОНЬ! ОН ЖЖЁТ!"
