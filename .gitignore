@@ -25,6 +25,13 @@
 !/garrysmod/gameinfo.txt
 !/garrysmod/lights.rad
 
+# Ignore fonts and icons
+/garrysmod/resource/*.ttf
+/garrysmod/resource/fonts/*
+/garrysmod/resource/*.bmp
+/garrysmod/resource/*.ico
+/garrysmod/resource/*.icns
+
 # Don't add user config files
 /garrysmod/cfg/*
 garrysmod/settings/addonpresets.txt

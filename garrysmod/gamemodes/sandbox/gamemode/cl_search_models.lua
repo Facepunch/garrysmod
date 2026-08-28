@@ -55,6 +55,8 @@ end )
 local model_list = nil
 search.AddProvider( function( str )
 
+	local searchTerms = string.Explode( " ", str )
+
 	if ( model_list == nil ) then
 
 		model_list = {}
@@ -66,23 +68,30 @@ search.AddProvider( function( str )
 
 	for k, v in ipairs( model_list ) do
 
-		-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
-		local modelpath = v
-		if ( modelpath:StartsWith( "models/" ) and modelpath:EndsWith( ".mdl" ) and !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
+		for srchId, srchTxt in ipairs( searchTerms ) do
+			-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
+			-- We do this for each search term individually, just to avoid edge cases where searching for x.mdl functions differently if it's the last search term or not
+			local modelpath = v
+			if ( modelpath:StartsWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !srchTxt:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
 
-		if ( modelpath:find( str, nil, true ) ) then
+			if ( !modelpath:find( srchTxt, nil, true ) ) then
 
-			if ( IsUselessModel( v ) ) then continue end
+				break
 
-			local entry = {
-				text = v:GetFileFromFilename(),
-				func = function() RunConsoleCommand( "gm_spawn", v ) end,
-				icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
-				words = { v }
-			}
+			elseif ( srchId == #searchTerms ) then
 
-			table.insert( models, entry )
+				if ( IsUselessModel( v ) ) then continue end
 
+				local entry = {
+					text = v:GetFileFromFilename(),
+					func = function() RunConsoleCommand( "gm_spawn", v ) end,
+					icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
+					words = { v }
+				}
+
+				table.insert( models, entry )
+
+			end
 		end
 
 		if ( #models >= sbox_search_maxresults:GetInt() / 2 ) then break end
@@ -112,6 +121,8 @@ end )
 local function AddSearchProvider( listname, ctype, stype )
 	search.AddProvider( function( str )
 
+		local searchTerms = string.Explode( " ", str )
+
 		local results = {}
 		for name_c, v in pairs( list.Get( listname ) ) do
 			if ( !istable( v ) ) then continue end -- Some mod doing something wrong
@@ -121,26 +132,36 @@ local function AddSearchProvider( listname, ctype, stype )
 			if ( !isstring( name ) and !isstring( name_c ) ) then continue end
 
 			local name_lang = ( isstring( name ) and language.GetPhrase( name ) or name )
-			if ( ( isstring( name_lang ) and name_lang:lower():find( str, nil, true ) ) or
-				 ( isstring( name_c ) and name_c:lower():find( str, nil, true ) ) ) then
 
-				local contentIconData = {
-					nicename = name or name_c,
-					spawnname = name_c,
-					material = "entities/" .. name_c .. ".png",
-					admin = v.AdminOnly
-				}
+			for srchId, srchTxt in ipairs( searchTerms ) do
 
-				if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
+				if ( !(
+					( isstring( name_lang ) and name_lang:lower():find( srchTxt, nil, true ) ) or
+					( isstring( name_c ) and name_c:lower():find( srchTxt, nil, true ) )
+				) ) then
 
-				local entry = {
-					text = name or name_c,
-					icon = spawnmenu.CreateContentIcon( ctype or "entity", nil, contentIconData ),
-					words = { v }
-				}
+					break
 
-				table.insert( results, entry )
+				elseif ( srchId == #searchTerms ) then
 
+					local contentIconData = {
+						nicename = name or name_c,
+						spawnname = name_c,
+						material = v.IconOverride or "entities/" .. name_c .. ".png",
+						admin = v.AdminOnly
+					}
+
+					if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
+
+					local entry = {
+						text = name or name_c,
+						icon = spawnmenu.CreateContentIcon( ctype or "entity", nil, contentIconData ),
+						words = { v }
+					}
+
+					table.insert( results, entry )
+
+				end
 			end
 
 			if ( #results >= sbox_search_maxresults:GetInt() / 4 ) then break end

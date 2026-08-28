@@ -1125,3 +1125,6 @@ L.equip_sort_default = "Varsayılan"
 L.equip_sort_slot    = "Yuva"
 
 L.set_hide_unbuyable = "Satın alınamayan ekipman ögelerini listenin altına taşı."
+
+-- 2026-07-24
+L.flame_burn = "ATEŞ! YANIYOR!"

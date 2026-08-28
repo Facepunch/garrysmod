@@ -44,7 +44,10 @@ function TOOL:LeftClick( trace )
 
 	elseif ( type == 4 ) then
 
-		CCSpawn( self:GetOwner(), nil, { name } ) -- Props
+		local skinAndGroups = {}
+		local override = self:GetOwner():GetInfo( "creator_override" )
+		if ( override != "" ) then skinAndGroups = string.Split( override, " " ) end
+		CCSpawn( self:GetOwner(), nil, { name, unpack( skinAndGroups ) }, name, trace ) -- Props, Ragdolls, Effects
 
 	end
 

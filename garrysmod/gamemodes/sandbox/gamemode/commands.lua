@@ -44,23 +44,24 @@ local function GetSpawnTrace( ply )
 	return util.TraceLine( trace )
 end
 
---[[---------------------------------------------------------
-	Name: CCSpawn
-	Desc: Console Command for a player to spawn different items
------------------------------------------------------------]]
-function CCSpawn( ply, command, arguments )
+local function ReportErrorToPlayer( player, error )
+	if ( IsValid( player ) ) then
+		--player:ChatPrint( "#spawnmenu.error." .. error )
+		player:SendLua( [[GAMEMODE:AddNotify( "#spawnmenu.error.]] .. error .. [[", NOTIFY_ERROR, 4 ) surface.PlaySound( "buttons/button10.wav" )]] )
+	end
+end
+
+local function Spawn_SandboxModel( ply, modelName, iSkin, strBody, traceOverride )
 
 	-- We don't support this command from dedicated server console
 	if ( !IsValid( ply ) ) then return end
 
 	-- Player is dead, don't allow them to spam stuff
-	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
-
-	local modelName = arguments[ 1 ]
+	if ( not ply:Alive() and not ply:IsAdmin() ) then ReportErrorToPlayer( ply, "dead" ) return end
 
 	-- Make sure the model path is valid
-	if ( modelName == nil ) then return end
-	if ( modelName:find( "%.[/\\]" ) ) then return end
+	if ( modelName == nil ) then ReportErrorToPlayer( ply, "bad_model" ) return end
+	if ( modelName:find( "%.[/\\]" ) ) then ReportErrorToPlayer( ply, "bad_model" ) return end
 
 	-- Clean up the path from attempted blacklist bypasses
 	modelName = modelName:gsub( "\\\\+", "/" )
@@ -73,37 +74,49 @@ function CCSpawn( ply, command, arguments )
 	modelName = modelName:gsub( "\\+", "/" )
 
 	-- Only models are allowed
-	if ( !modelName:StartsWith( "models/" ) || !modelName:EndsWith( ".mdl" ) ) then return end
+	if ( !modelName:StartsWith( "models/" ) || !modelName:EndsWith( ".mdl" ) ) then ReportErrorToPlayer( ply, "bad_model" ) return end
 
 	-- Make sure the model is valid
-	if ( !util.IsValidModel( modelName ) ) then return end
-
-	local iSkin = tonumber( arguments[ 2 ] ) or 0
-	local strBody = arguments[ 3 ] or nil
+	if ( !util.IsValidModel( modelName ) ) then ReportErrorToPlayer( ply, "bad_model" ) return end
 
 	-- Give the gamemode an opportunity to prevent spawning
 	-- TODO: Give strBody to the hook as well?
-	if ( !gamemode.Call( "PlayerSpawnObject", ply, modelName, iSkin ) ) then return end
+	if ( !gamemode.Call( "PlayerSpawnObject", ply, modelName, iSkin ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
 	if ( util.IsValidProp( modelName ) ) then
 
-		GMODSpawnProp( ply, modelName, iSkin, strBody )
+		GMODSpawnProp( ply, modelName, iSkin, strBody, traceOverride )
 		return
 
 	end
 
 	if ( util.IsValidRagdoll( modelName ) ) then
 
-		GMODSpawnRagdoll( ply, modelName, iSkin, strBody )
+		GMODSpawnRagdoll( ply, modelName, iSkin, strBody, traceOverride )
 		return
 
 	end
 
 	-- Not a ragdoll or prop.. must be an 'effect' - spawn it as one
-	GMODSpawnEffect( ply, modelName, iSkin, strBody )
+	GMODSpawnEffect( ply, modelName, iSkin, strBody, traceOverride )
 
 end
-concommand.Add( "gm_spawn", CCSpawn, nil, "Spawns props/ragdolls" )
+
+
+
+--[[---------------------------------------------------------
+	Name: CCSpawn
+	Desc: Console Command for a player to spawn different items
+-----------------------------------------------------------]]
+function CCSpawn( ply, command, arguments, argumentsStr, traceOverride )
+
+	local iSkin = tonumber( arguments[ 2 ] ) or 0
+	local strBody = arguments[ 3 ] or nil
+
+	Spawn_SandboxModel( ply, arguments[ 1 ], iSkin, strBody, traceOverride )
+
+end
+concommand.Add( "gm_spawn", CCSpawn, nil, "Spawn sandbox props, ragdolls, and effects." )
 
 local function MakeRagdoll( ply, _, _, model, _, data )
 
@@ -136,24 +149,25 @@ duplicator.RegisterEntityClass( "prop_ragdoll", MakeRagdoll, "Pos", "Ang", "Mode
 --[[---------------------------------------------------------
 	Name: GMODSpawnRagdoll - player spawns a ragdoll
 -----------------------------------------------------------]]
-function GMODSpawnRagdoll( ply, model, iSkin, strBody )
+function GMODSpawnRagdoll( ply, model, iSkin, strBody, tr )
 
-	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
-	local e = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody )
+	local ragdoll = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody, tr )
+	if ( !IsValid( ragdoll ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end -- Must've hit edict limit
 
 	if ( IsValid( ply ) ) then
-		gamemode.Call( "PlayerSpawnedRagdoll", ply, model, e )
+		gamemode.Call( "PlayerSpawnedRagdoll", ply, model, ragdoll )
 	end
 
-	DoPropSpawnedEffect( e )
+	DoPropSpawnedEffect( ragdoll )
 
 	undo.Create( "prop_ragdoll" )
 		undo.SetPlayer( ply )
-		undo.AddEntity( e )
+		undo.AddEntity( ragdoll )
 	undo.Finish( "#prop_ragdoll (" .. tostring( model ) .. ")" )
 
-	ply:AddCleanup( "ragdolls", e )
+	ply:AddCleanup( "ragdolls", ragdoll )
 
 end
 
@@ -267,12 +281,12 @@ end
 --[[---------------------------------------------------------
 	Name: GMODSpawnProp - player spawns a prop
 -----------------------------------------------------------]]
-function GMODSpawnProp( ply, model, iSkin, strBody )
+function GMODSpawnProp( ply, model, iSkin, strBody, tr )
 
-	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnProp", ply, model ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnProp", ply, model ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
-	local e = DoPlayerEntitySpawn( ply, "prop_physics", model, iSkin, strBody )
-	if ( !IsValid( e ) ) then return end
+	local e = DoPlayerEntitySpawn( ply, "prop_physics", model, iSkin, strBody, tr )
+	if ( !IsValid( e ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
 
 	if ( IsValid( ply ) ) then
 		gamemode.Call( "PlayerSpawnedProp", ply, model, e )
@@ -297,12 +311,12 @@ end
 --[[---------------------------------------------------------
 	Name: GMODSpawnEffect
 -----------------------------------------------------------]]
-function GMODSpawnEffect( ply, model, iSkin, strBody )
+function GMODSpawnEffect( ply, model, iSkin, strBody, tr )
 
-	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
-	local e = DoPlayerEntitySpawn( ply, "prop_effect", model, iSkin, strBody )
-	if ( !IsValid( e ) ) then return end
+	local e = DoPlayerEntitySpawn( ply, "prop_effect", model, iSkin, strBody, tr )
+	if ( !IsValid( e ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
 
 	if ( IsValid( ply ) ) then
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, e )
@@ -325,9 +339,9 @@ end
 	Name: DoPlayerEntitySpawn
 	Desc: Utility function for player entity spawning functions
 -----------------------------------------------------------]]
-function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
+function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody, tr )
 
-	local tr = GetSpawnTrace( ply )
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	-- Prevent spawning too close
 	--[[if ( !tr.Hit or tr.Fraction < 0.05 ) then
@@ -593,22 +607,20 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	if ( !IsValid( ply ) ) then return end
 
 	-- Player is dead, don't allow them to spam stuff
-	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
+	if ( not ply:Alive() and not ply:IsAdmin() ) then ReportErrorToPlayer( ply, "dead" ) return end
 
-	if ( !NPCClassName ) then return end
+	if ( !NPCClassName ) then ReportErrorToPlayer( ply, "bad_npc" ) return end
 
 	-- Give the gamemode an opportunity to deny spawning
-	if ( !gamemode.Call( "PlayerSpawnNPC", ply, NPCClassName, WeaponName ) ) then return end
+	if ( !gamemode.Call( "PlayerSpawnNPC", ply, NPCClassName, WeaponName ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	local NPCData = list.GetEntry( "NPC", NPCClassName )
 
 	-- Create the NPC if you can.
 	local SpawnedNPC = InternalSpawnNPC( NPCData, ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
-	if ( !IsValid( SpawnedNPC ) ) then return end
+	if ( !IsValid( SpawnedNPC ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
 
 	TryFixPropPosition( ply, SpawnedNPC, tr.HitPos )
 
@@ -639,10 +651,10 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	return SpawnedNPC
 
 end
-concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end )
+concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end, nil, "Spawn sandbox NPCs." )
 
 -- This should be in base_npcs.lua really
-local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, data )
+local function GenericNPCDuplicator( ply, class, equipment, spawnflags, data )
 
 	-- Match the behavior of Spawn_NPC above - class should be the one in the list, NOT the entity class!
 	if ( data.NPCName ) then class = data.NPCName end
@@ -684,87 +696,46 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 
 end
 
--- Huuuuuuuuhhhh
-local function AddNPCToDuplicator( class ) duplicator.RegisterEntityClass( class, GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" ) end
+-- Duplicator support for all base NPCs
+local NPCClassList = {
+	-- Half-Life 2
+	"npc_alyx", "npc_breen", "npc_kleiner",
+	"npc_antlion", "npc_antlionguard", "npc_barnacle",
+	"npc_barney", "npc_combine_s", "npc_crow", "npc_cscanner",
+	"npc_clawscanner", "npc_dog", "npc_eli", "npc_gman", "npc_headcrab",
+	"npc_headcrab_black", "npc_headcrab_poison","npc_headcrab_fast",
+	"npc_manhack", "npc_metropolice", "npc_monk", "npc_mossman",
+	"npc_pigeon", "npc_rollermine", "npc_strider",
+	"npc_helicopter", "npc_combinegunship", "npc_combinedropship",
+	"npc_turret_ceiling", "npc_combine_camera", "npc_turret_floor",
+	"npc_vortigaunt", "npc_sniper", "npc_seagull", "npc_citizen",
+	"npc_stalker", "npc_zombie", "npc_zombie_torso", "npc_zombine",
+	"npc_poisonzombie", "npc_fastzombie", "npc_fastzombie_torso",
 
--- HL2
-AddNPCToDuplicator( "npc_alyx" )
-AddNPCToDuplicator( "npc_breen" )
-AddNPCToDuplicator( "npc_kleiner" )
-AddNPCToDuplicator( "npc_antlion" )
-AddNPCToDuplicator( "npc_antlionguard" )
-AddNPCToDuplicator( "npc_barnacle" )
-AddNPCToDuplicator( "npc_barney" )
-AddNPCToDuplicator( "npc_combine_s" )
-AddNPCToDuplicator( "npc_crow" )
-AddNPCToDuplicator( "npc_cscanner" )
-AddNPCToDuplicator( "npc_clawscanner" )
-AddNPCToDuplicator( "npc_dog" )
-AddNPCToDuplicator( "npc_eli" )
-AddNPCToDuplicator( "npc_gman" )
-AddNPCToDuplicator( "npc_headcrab" )
-AddNPCToDuplicator( "npc_headcrab_black" )
-AddNPCToDuplicator( "npc_headcrab_poison" )
-AddNPCToDuplicator( "npc_headcrab_fast" )
-AddNPCToDuplicator( "npc_manhack" )
-AddNPCToDuplicator( "npc_metropolice" )
-AddNPCToDuplicator( "npc_monk" )
-AddNPCToDuplicator( "npc_mossman" )
-AddNPCToDuplicator( "npc_pigeon" )
-AddNPCToDuplicator( "npc_rollermine" )
-AddNPCToDuplicator( "npc_strider" )
-AddNPCToDuplicator( "npc_helicopter" )
-AddNPCToDuplicator( "npc_combinegunship" )
-AddNPCToDuplicator( "npc_combinedropship" )
-AddNPCToDuplicator( "npc_turret_ceiling" )
-AddNPCToDuplicator( "npc_combine_camera" )
-AddNPCToDuplicator( "npc_turret_floor" )
-AddNPCToDuplicator( "npc_vortigaunt" )
-AddNPCToDuplicator( "npc_sniper" )
-AddNPCToDuplicator( "npc_seagull" )
-AddNPCToDuplicator( "npc_citizen" )
-AddNPCToDuplicator( "npc_stalker" )
-AddNPCToDuplicator( "npc_zombie" )
-AddNPCToDuplicator( "npc_zombie_torso" )
-AddNPCToDuplicator( "npc_zombine" )
-AddNPCToDuplicator( "npc_poisonzombie" )
-AddNPCToDuplicator( "npc_fastzombie" )
-AddNPCToDuplicator( "npc_fastzombie_torso" )
--- EP2
-AddNPCToDuplicator( "npc_hunter" )
-AddNPCToDuplicator( "npc_antlion_worker" )
-AddNPCToDuplicator( "npc_antlion_grub" )
-AddNPCToDuplicator( "npc_magnusson" )
+	-- Episode 2
+	"npc_hunter", "npc_antlion_worker", "npc_antlion_grub", "npc_magnusson",
 
-AddNPCToDuplicator( "npc_fisherman" )
+	-- Lost Coast
+	"npc_fisherman",
 
--- HL1
-AddNPCToDuplicator( "monster_alien_grunt" )
-AddNPCToDuplicator( "monster_alien_slave" )
-AddNPCToDuplicator( "monster_alien_controller" )
-AddNPCToDuplicator( "monster_barney" )
-AddNPCToDuplicator( "monster_bigmomma" )
-AddNPCToDuplicator( "monster_bullchicken" )
-AddNPCToDuplicator( "monster_babycrab" )
-AddNPCToDuplicator( "monster_cockroach" )
-AddNPCToDuplicator( "monster_houndeye" )
-AddNPCToDuplicator( "monster_headcrab" )
-AddNPCToDuplicator( "monster_gargantua" )
-AddNPCToDuplicator( "monster_human_assassin" )
-AddNPCToDuplicator( "monster_human_grunt" )
-AddNPCToDuplicator( "monster_scientist" )
-AddNPCToDuplicator( "monster_snark" )
-AddNPCToDuplicator( "monster_nihilanth" )
-AddNPCToDuplicator( "monster_tentacle" )
-AddNPCToDuplicator( "monster_zombie" )
-AddNPCToDuplicator( "monster_turret" )
-AddNPCToDuplicator( "monster_miniturret" )
-AddNPCToDuplicator( "monster_sentry" )
+	-- Half-Life Source
+	"monster_alien_grunt", "monster_alien_slave", "monster_alien_controller",
+	"monster_barney", "monster_bigmomma", "monster_bullchicken",
+	"monster_babycrab", "monster_cockroach", "monster_houndeye",
+	"monster_headcrab", "monster_gargantua", "monster_human_assassin",
+	"monster_human_grunt", "monster_scientist", "monster_snark",
+	"monster_nihilanth", "monster_tentacle", "monster_zombie",
+	"monster_turret", "monster_miniturret", "monster_sentry",
 
--- Portal
-AddNPCToDuplicator( "npc_portal_turret_floor" )
-AddNPCToDuplicator( "npc_rocket_turret" )
-AddNPCToDuplicator( "npc_security_camera" )
+	-- Portal
+	"npc_portal_turret_floor",
+	"npc_rocket_turret",
+	"npc_security_camera",
+}
+
+for _, v in ipairs( NPCClassList ) do
+	duplicator.RegisterEntityClass( v, GenericNPCDuplicator, "Class", "Equipment", "SpawnFlags", "Data" )
+end
 
 --[[---------------------------------------------------------
 	Name: CanPlayerSpawnSENT
@@ -779,19 +750,19 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 
 		-- Is the entity spawnable?
 		local EntTable = list.GetEntry( "SpawnableEntities", EntityName )
-		if ( !EntTable ) then return false end
-		if ( EntTable.AdminOnly && !isAdmin ) then return false end
+		if ( !EntTable ) then ReportErrorToPlayer( ply, "bad_sent" ) return false end
+		if ( EntTable.AdminOnly && !isAdmin ) then ReportErrorToPlayer( ply, "bad_sent" ) return false end
 		return true
 
 	end
 
 	-- We need a spawn function. The SENT can then spawn itself properly
 	local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
-	if ( !isfunction( SpawnFunction ) ) then return false end
+	if ( !isfunction( SpawnFunction ) ) then ReportErrorToPlayer( ply, "bad_sent" ) return false end
 
 	-- You're not allowed to spawn this unless you're an admin!
-	if ( !scripted_ents.GetMember( EntityName, "Spawnable" ) && !isAdmin ) then return false end
-	if ( scripted_ents.GetMember( EntityName, "AdminOnly" ) && !isAdmin ) then return false end
+	if ( !scripted_ents.GetMember( EntityName, "Spawnable" ) && !isAdmin ) then ReportErrorToPlayer( ply, "admin" )  return false end
+	if ( scripted_ents.GetMember( EntityName, "AdminOnly" ) && !isAdmin ) then ReportErrorToPlayer( ply, "admin" ) return false end
 
 	return true
 
@@ -807,18 +778,16 @@ function Spawn_SENT( ply, EntityName, tr )
 	if ( !IsValid( ply ) ) then return end
 
 	-- Player is dead, don't allow them to spam stuff
-	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
+	if ( not ply:Alive() and not ply:IsAdmin() ) then ReportErrorToPlayer( ply, "dead" ) return end
 
-	if ( EntityName == nil ) then return end
+	if ( EntityName == nil ) then ReportErrorToPlayer( ply, "bad_sent" ) return end
 
 	if ( !CanPlayerSpawnSENT( ply, EntityName ) ) then return end
 
 	-- Ask the gamemode if it's OK to spawn this
-	if ( !gamemode.Call( "PlayerSpawnSENT", ply, EntityName ) ) then return end
+	if ( !gamemode.Call( "PlayerSpawnSENT", ply, EntityName ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	local entity = nil
 	local PrintName = EntityName
@@ -831,7 +800,7 @@ function Spawn_SENT( ply, EntityName, tr )
 		ClassName = EntityName
 
 			local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
-			if ( !SpawnFunction ) then return end -- Fallback to default behavior below?
+			if ( !SpawnFunction ) then ReportErrorToPlayer( ply, "no_entity" ) return end -- Fallback to default behavior below?
 
 			entity = SpawnFunction( sentTable, ply, tr, EntityName )
 
@@ -847,7 +816,7 @@ function Spawn_SENT( ply, EntityName, tr )
 
 		-- Spawn from list table
 		local EntTable = list.GetEntry( "SpawnableEntities", EntityName )
-		if ( !EntTable ) then return end
+		if ( !EntTable ) then ReportErrorToPlayer( ply, "bad_sent" ) return end
 
 		PrintName = EntTable.PrintName
 
@@ -866,6 +835,8 @@ function Spawn_SENT( ply, EntityName, tr )
 		end
 
 		entity = ents.Create( EntTable.ClassName )
+		if ( !IsValid( entity ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
+
 		entity:SetPos( SpawnPos )
 
 		if ( EntTable.KeyValues ) then
@@ -890,7 +861,7 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	end
 
-	if ( !IsValid( entity ) ) then return end
+	if ( !IsValid( entity ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
 
 	TryFixPropPosition( ply, entity, tr.HitPos )
 
@@ -912,7 +883,7 @@ function Spawn_SENT( ply, EntityName, tr )
 	return entity
 
 end
-concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end )
+concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end, nil, "Spawn sandbox scripted entities." )
 
 --[[---------------------------------------------------------
 	-- Give a swep.
@@ -923,13 +894,13 @@ function CCGiveSWEP( ply, command, arguments )
 	if ( !IsValid( ply ) ) then return end
 
 	-- Player is dead, don't allow them to spam stuff
-	if ( !ply:Alive() ) then return end
+	if ( !ply:Alive() ) then ReportErrorToPlayer( ply, "dead" ) return end
 
-	if ( arguments[1] == nil ) then return end
+	if ( arguments[1] == nil ) then ReportErrorToPlayer( ply, "bad_weapon" ) return end
 
 	-- Make sure this is a SWEP
 	local swep = list.GetEntry( "Weapon", arguments[1] )
-	if ( swep == nil ) then return end
+	if ( swep == nil ) then ReportErrorToPlayer( ply, "bad_weapon" ) return end
 
 	-- You're not allowed to spawn this!
 	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
@@ -937,7 +908,7 @@ function CCGiveSWEP( ply, command, arguments )
 		return
 	end
 
-	if ( !gamemode.Call( "PlayerGiveSWEP", ply, arguments[1], swep ) ) then return end
+	if ( !gamemode.Call( "PlayerGiveSWEP", ply, arguments[1], swep ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
 	if ( !ply:HasWeapon( swep.ClassName ) ) then
 		MsgAll( "Giving " .. ply:Nick() .. " a " .. swep.ClassName .. "\n" )
@@ -948,7 +919,7 @@ function CCGiveSWEP( ply, command, arguments )
 	ply:SelectWeapon( swep.ClassName )
 
 end
-concommand.Add( "gm_giveswep", CCGiveSWEP )
+concommand.Add( "gm_giveswep", CCGiveSWEP, nil, "Give a sandbox weapons directly to the executing player." )
 
 --[[---------------------------------------------------------
 	-- Spawn a SWEP on the ground
@@ -959,37 +930,35 @@ function Spawn_Weapon( ply, wepname, tr )
 	if ( !IsValid( ply ) ) then return end
 
 	-- Player is dead, don't allow them to spam stuff
-	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
+	if ( not ply:Alive() and not ply:IsAdmin() ) then ReportErrorToPlayer( ply, "dead" ) return end
 
-	if ( wepname == nil ) then return end
+	if ( wepname == nil ) then ReportErrorToPlayer( ply, "bad_weapon" ) return end
 
 	-- Make sure this is a SWEP
 	local swep = list.GetEntry( "Weapon", wepname )
-	if ( swep == nil ) then return end
+	if ( swep == nil ) then ReportErrorToPlayer( ply, "bad_weapon" ) return end
 
 	-- You're not allowed to spawn this!
 	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
 	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
+		ReportErrorToPlayer( ply, "admin" )
 		return
 	end
 
 	-- Do not allow spawning weapons with no model
 	local swepTable = weapons.Get( swep.ClassName )
 	if ( swepTable && swepTable.WorldModel == "" && !isAdmin ) then
+		ReportErrorToPlayer( ply, "bad_weapon" )
 		return
 	end
 
-	if ( !gamemode.Call( "PlayerSpawnSWEP", ply, wepname, swep ) ) then return end
+	if ( !gamemode.Call( "PlayerSpawnSWEP", ply, wepname, swep ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
-
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 	if ( !tr.Hit ) then return end
 
 	local entity = ents.Create( swep.ClassName )
-
-	if ( !IsValid( entity ) ) then return end
+	if ( !IsValid( entity ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
 
 	DoPropSpawnedEffect( entity )
 
@@ -1026,7 +995,7 @@ function Spawn_Weapon( ply, wepname, tr )
 	return entity
 
 end
-concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
+concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end, nil, "Spawn sandbox weapons where the player is looking at." )
 
 -- Do not allow people to undo weapons from player's hands
 hook.Add( "WeaponEquip", "SpawnWeaponUndoRemoval", function( wep, ply )
@@ -1097,11 +1066,13 @@ local function MakeVehicle( ply, pos, ang, model, className, VName, data )
 
 end
 
-duplicator.RegisterEntityClass( "prop_vehicle_jeep_old", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
-duplicator.RegisterEntityClass( "prop_vehicle_jeep", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
-duplicator.RegisterEntityClass( "prop_vehicle_apc", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
-duplicator.RegisterEntityClass( "prop_vehicle_airboat", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
-duplicator.RegisterEntityClass( "prop_vehicle_prisoner_pod", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
+local VehicleClassList = {
+	"prop_vehicle_jeep_old", "prop_vehicle_jeep", "prop_vehicle_apc",
+	"prop_vehicle_airboat", "prop_vehicle_prisoner_pod"
+}
+for _, v in ipairs( VehicleClassList ) do
+	duplicator.RegisterEntityClass( v, MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "Data" )
+end
 
 --[[---------------------------------------------------------
 	Name: Spawn_Vehicle
@@ -1113,17 +1084,15 @@ function Spawn_Vehicle( ply, vname, tr )
 	if ( !IsValid( ply ) ) then return end
 
 	-- Player is dead, don't allow them to spam stuff
-	if ( not ply:Alive() and not ply:IsAdmin() ) then return end
+	if ( not ply:Alive() and not ply:IsAdmin() ) then ReportErrorToPlayer( ply, "dead" ) return end
 
-	if ( !vname ) then return end
+	if ( !vname ) then ReportErrorToPlayer( ply, "bad_vehicle" ) return end
 
 	-- Is it a valid vehicle to be spawning..
 	local vehicle = list.GetEntry( "Vehicles", vname )
-	if ( !vehicle ) then return end
+	if ( !vehicle ) then ReportErrorToPlayer( ply, "bad_vehicle" ) return end
 
-	if ( !tr ) then
-		tr = GetSpawnTrace( ply )
-	end
+	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	local Angles = ply:GetAngles()
 	Angles.pitch = 0
@@ -1136,14 +1105,13 @@ function Spawn_Vehicle( ply, vname, tr )
 	end
 
 	local Ent = MakeVehicle( ply, pos, Angles, vehicle.Model, vehicle.Class, vname )
-	if ( !IsValid( Ent ) ) then return end
+	if ( !IsValid( Ent ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
 
 	-- Unstable for Jeeps
 	-- TryFixPropPosition( ply, Ent, tr.HitPos )
 
 	if ( vehicle.Members ) then
 		table.Merge( Ent, vehicle.Members )
-		duplicator.StoreEntityModifier( Ent, "VehicleMemDupe", vehicle.Members )
 	end
 
 	undo.Create( "Vehicle" )
@@ -1157,11 +1125,4 @@ function Spawn_Vehicle( ply, vname, tr )
 	return Ent
 
 end
-concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply, args[1] ) end )
-
-local function VehicleMemDupe( ply, ent, Data )
-
-	table.Merge( ent, Data )
-
-end
-duplicator.RegisterEntityModifier( "VehicleMemDupe", VehicleMemDupe )
+concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply, args[1] ) end, nil, "Spawn sandbox vehicles." )

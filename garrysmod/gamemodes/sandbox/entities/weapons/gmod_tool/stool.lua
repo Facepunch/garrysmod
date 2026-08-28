@@ -203,25 +203,40 @@ end )
 --
 search.AddProvider( function( str )
 
+	local searchTerms = string.Explode( " ", str )
+
 	local list = {}
 
 	for k, v in pairs( TOOLS_LIST ) do
 
+		-- If a tool isn't in the tool menu, then clicking on its contenticon won't do anything, so exclude it
+		if ( v.AddToMenu == false ) then continue end
+
 		local niceName = v.Name or ( "#" .. k )
-		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
+		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName ) end
 
-		if ( !k:lower():find( str, nil, true ) and !niceName:lower():find( str, nil, true ) ) then continue end
+		for srchId, srchTxt in ipairs( searchTerms ) do
 
-		local entry = {
-			text = niceName,
-			icon = spawnmenu.CreateContentIcon( "tool", nil, {
-				spawnname = k,
-				nicename = v.Name or ( "#" .. k )
-			} ),
-			words = { k }
-		}
+			if ( !k:lower():find( srchTxt, nil, true ) and !niceName:lower():find( srchTxt, nil, true ) ) then
 
-		table.insert( list, entry )
+				break
+
+			elseif ( srchId == #searchTerms ) then
+
+				local entry = {
+					text = niceName,
+					icon = spawnmenu.CreateContentIcon( "tool", nil, {
+						spawnname = k,
+						nicename = v.Name or ( "#" .. k )
+					} ),
+					words = { k }
+				}
+
+				table.insert( list, entry )
+
+			end
+
+		end
 
 		if ( #list >= GetConVarNumber( "sbox_search_maxresults" ) / 32 ) then break end
 
@@ -229,7 +244,7 @@ search.AddProvider( function( str )
 
 	return list
 
-end )
+end, "tools" )
 
 --
 -- Tool spawnmenu icon

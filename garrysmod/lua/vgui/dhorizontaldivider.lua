@@ -44,15 +44,20 @@ function PANEL:Init()
 
 	self.m_DragBar = vgui.Create( "DHorizontalDividerBar", self )
 
-	self._OldCookieW = 0
-
 end
 
 
 function PANEL:LoadCookies()
 
-	self:SetLeftWidth( self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) )
-	self._OldCookieW = self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() )
+	if ( self:GetCookieNumber( "LeftWidthPct" ) ) then
+		self._iLeftWidthPct = self:GetCookieNumber( "LeftWidthPct" )
+		self:SetLeftWidth( math.floor( self._iLeftWidthPct * self:GetWide() ) )
+		self._iLastWidth = self:GetWide()
+		self._OldCookiePct = self:GetCookieNumber( "LeftWidthPct" )
+	else
+		-- Legacy stored value
+		self:SetLeftWidth( self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) )
+	end
 
 end
 
@@ -86,9 +91,17 @@ function PANEL:SetRight( pnl )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	self:SetLeftWidth( math.Clamp( self:GetLeftWidth(), self:GetLeftMin(), math.max( self:GetWide() - self:GetRightMin() - self:GetDividerWidth(), self:GetLeftMin() ) ) )
+	-- On resize, use the percent to set the left width, so that it re-scales with the size of the panel
+	if ( self._iLeftWidthPct && self._iLastWidth && self._iLastWidth != w ) then
+		self:SetLeftWidth( math.floor( self._iLeftWidthPct * w ) )
+	end
+
+	self._iLastWidth = self:GetWide()
+
+	-- Clamp the size to minimums
+	self:SetLeftWidth( math.Clamp( self:GetLeftWidth(), self:GetLeftMin(), math.max( w - self:GetRightMin() - self:GetDividerWidth(), self:GetLeftMin() ) ), true )
 
 	if ( IsValid( self.m_pLeft ) ) then
 
@@ -127,6 +140,7 @@ function PANEL:OnCursorMoved( x, y )
 	x = math.Clamp( x - self:GetHoldPos(), self:GetLeftMin(), self:GetWide() - self:GetRightMin() - self:GetDividerWidth() )
 
 	self:SetLeftWidth( x )
+	self._iLeftWidthPct = x / self:GetWide()
 	if ( oldLeftWidth != x ) then self:InvalidateLayout() end
 
 end
@@ -134,7 +148,7 @@ end
 function PANEL:Think()
 
 	-- If 2 or more panels use the same cookie name, make every panel resize automatically to the same size
-	if ( self._OldCookieW != self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) && !self:GetDragging() ) then
+	if ( self._OldCookiePct && self._OldCookiePct != self:GetCookieNumber( "LeftWidthPct", self._OldCookiePct ) && !self:GetDragging() ) then
 		self:LoadCookies()
 		self:InvalidateLayout()
 	end
@@ -159,7 +173,9 @@ function PANEL:OnMouseReleased( mcode )
 		self:SetCursor( "none" )
 		self:SetDragging( false )
 		self:MouseCapture( false )
-		self:SetCookie( "LeftWidth", self:GetLeftWidth() )
+
+		-- Store left width as percentage, this helps when resizing panels, and with screen resolution changes
+		self:SetCookie( "LeftWidthPct", self._iLeftWidthPct )
 	end
 
 end

@@ -1347,7 +1347,7 @@
 @PointClass base(Parentname) size( -16 -16 0, 16 16 4 ) color(255 128 255)= info_ladder_dismount :
 	"An entity to handle endpoints for multiple ladders that are too close to each other."
 [
-	target(target_destination) : "LadderName" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
+	target(target_destination) : "Ladder Name" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
 ]
 
 @SolidClass base(Targetname) color(0 128 255) sphere(FadeStartDist) sphere(FadeDist) = func_areaportalwindow :
@@ -3945,7 +3945,7 @@
 		3 : "Ajar (use Ajar Angles)"
 	]
 
-	axis(axis) : "Hinge Axis (Non functional)" : : "This field does not function."
+	//axis(axis) : "Hinge Axis (Non functional)" : : "This field does not function."
 	distance(float) : "Rotation Distance (deg)" : 90 : "The amount, in degrees, that the door should rotate when opened."
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
 	soundopenoverride(sound) : "Fully Open Sound" : : "Sound played when the door has finished opening."

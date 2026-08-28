@@ -111,7 +111,7 @@ function PANEL:SetChecked( val )
 	self.Button:SetChecked( val )
 end
 
-function PANEL:GetChecked( val )
+function PANEL:GetChecked()
 	return self.Button:GetChecked()
 end
 

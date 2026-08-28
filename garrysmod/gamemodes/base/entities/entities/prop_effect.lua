@@ -20,18 +20,23 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self.AttachedEntity = ents.Create( "prop_dynamic" )
-		self.AttachedEntity:SetModel( self:GetModel() )
-		self.AttachedEntity:SetAngles( self:GetAngles() )
-		self.AttachedEntity:SetPos( self:GetPos() )
-		self.AttachedEntity:SetSkin( self:GetSkin() )
-		self.AttachedEntity:Spawn()
-		self.AttachedEntity:SetParent( self )
-		self.AttachedEntity:DrawShadow( false )
 
+		-- This can happen at entity limit
+		if ( IsValid( self.AttachedEntity ) ) then
+			self.AttachedEntity:SetModel( self:GetModel() )
+			self.AttachedEntity:SetAngles( self:GetAngles() )
+			self.AttachedEntity:SetPos( self:GetPos() )
+			self.AttachedEntity:SetSkin( self:GetSkin() )
+			self.AttachedEntity:Spawn()
+			self.AttachedEntity:SetParent( self )
+			self.AttachedEntity:DrawShadow( false )
+
+			self:DeleteOnRemove( self.AttachedEntity )
+			self.AttachedEntity:DeleteOnRemove( self )
+		end
+
+		self.OriginalModel = self:GetModel() -- Used for duplicator in case attached entity is gone for whatever reason
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
-
-		self:DeleteOnRemove( self.AttachedEntity )
-		self.AttachedEntity:DeleteOnRemove( self )
 
 		-- Don't use the model's physics - create a box instead
 		self:PhysicsInitBox( mins, maxs )
@@ -59,11 +64,8 @@ function ENT:Initialize()
 		if ( tab && IsValid( tab[ 1 ] ) ) then self.AttachedEntity = tab[ 1 ] end
 
 		-- Selectively inherit BeingLookedAtByLocalPlayer from base_gmodentity so we don't have to copy paste it
-		local base_gmodentity = scripted_ents.Get( "base_gmodentity" )
-		if ( base_gmodentity ) then
-			self.BeingLookedAtByLocalPlayer = base_gmodentity.BeingLookedAtByLocalPlayer
-			self.MaxWorldTipDistance = base_gmodentity.MaxWorldTipDistance
-		end
+		self.BeingLookedAtByLocalPlayer = scripted_ents.GetMember( "base_gmodentity", "BeingLookedAtByLocalPlayer" )
+		self.MaxWorldTipDistance = scripted_ents.GetMember( "base_gmodentity", "MaxWorldTipDistance" )
 	end
 
 	-- Set collision bounds exactly
@@ -74,7 +76,7 @@ end
 function ENT:Draw( flags )
 
 	-- Draw the actual model when we are grabbed by physics gun, etc.
-	if ( halo.RenderedEntity() == self ) then
+	if ( halo.RenderedEntity() == self && IsValid( self.AttachedEntity ) ) then
 		self.AttachedEntity:DrawModel( flags )
 	end
 
@@ -119,9 +121,18 @@ end
 
 function ENT:OnEntityCopyTableFinish( tab )
 
+	-- This entity is in an invalid state, still try to store something useful for the duplicator
+	if ( !IsValid( self.AttachedEntity ) ) then
+		tab.Model = self.OriginalModel
+		return
+	end
+
 	-- We need to store the model of the attached entity
 	-- Not the one we have here.
 	tab.Model = self.AttachedEntity:GetModel()
+
+	-- Make it use the actual bounds, not the watermelon ones
+	tab.Mins, tab.Maxs	= self.AttachedEntity:GetModelBounds()
 
 	-- Store the attached entity's table so we can restore it after being pasted
 	tab.AttachedEntityInfo = table.Copy( duplicator.CopyEntTable( self.AttachedEntity ) )
