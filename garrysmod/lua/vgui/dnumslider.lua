@@ -25,6 +25,29 @@ function PANEL:Init()
 	end
 	Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
 
+	-- Prevent Mouse3/4/5 from sliding the slider.
+	-- Done this way to not touch the base class, which could affect addons
+	local KnobOnMousePressed = self.Slider.Knob.OnMousePressed
+	self.Slider.Knob.OnMousePressed = function( panel, btnId )
+		if ( btnId == MOUSE_RIGHT ) then
+			self:DoRightClick()
+			return true
+		end
+		if ( btnId != MOUSE_LEFT ) then return true end
+
+		KnobOnMousePressed( panel, btnId )
+	end
+	local SliderOnMousePressed = self.Slider.OnMousePressed
+	self.Slider.OnMousePressed = function( panel, btnId )
+		if ( btnId == MOUSE_RIGHT ) then
+			self:DoRightClick()
+			return true
+		end
+		if ( btnId != MOUSE_LEFT ) then return true end
+
+		SliderOnMousePressed( panel, btnId )
+	end
+
 	self.Label = vgui.Create ( "DLabel", self )
 	self.Label:Dock( LEFT )
 	self.Label:SetMouseInputEnabled( true )
@@ -47,6 +70,15 @@ function PANEL:Init()
 	-- .. but if you are, this might stop your code from fucking us both.
 	--
 	self.Wang = self.Scratch
+
+end
+
+function PANEL:DoRightClick()
+
+	local m = DermaMenu()
+	if ( self:GetDefaultValue() ) then m:AddOption( "#tool.reset_to_default", function() self:ResetToDefaultValue() end ):SetIcon( "icon16/arrow_rotate_clockwise.png" ) end
+	m:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetValue() ) end ):SetIcon( "icon16/page_copy.png" )
+	m:Open()
 
 end
 

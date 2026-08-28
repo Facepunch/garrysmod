@@ -10,6 +10,16 @@ function PANEL:Init()
 
 	self:SetImage( "vgui/minixhair" )
 	self.Knob:NoClipping( false )
+	local KnobOnMousePressed = self.Knob.OnMousePressed
+	self.Knob.OnMousePressed = function( panel, btnId )
+		if ( btnId == MOUSE_RIGHT ) then
+			self:DoRightClick()
+			return true
+		end
+		if ( btnId != MOUSE_LEFT ) then return true end
+
+		KnobOnMousePressed( panel, btnId )
+	end
 
 	self.BGSaturation = vgui.Create( "DImage", self )
 	self.BGSaturation:SetImage( "vgui/gradient-r" )
@@ -89,6 +99,25 @@ end
 function PANEL:OnUserChanged( color )
 
 	-- Override me
+
+end
+
+function PANEL:DoRightClick()
+
+	local m = DermaMenu()
+	m:AddOption( "#tool.reset_to_default", function() self:ResetToDefaultValue() end ):SetIcon( "icon16/arrow_rotate_clockwise.png" )
+	m:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( table.concat( self.m_OutRGB:ToTable(), " " ) ) end ):SetIcon( "icon16/page_copy.png" )
+	m:Open()
+
+end
+
+function PANEL:OnMousePressed( btnId )
+
+	if ( btnId == MOUSE_MIDDLE ) then self:ResetToDefaultValue() return true end
+	if ( btnId == MOUSE_RIGHT ) then self:DoRightClick() return true end
+	if ( btnId != MOUSE_LEFT ) then return true end
+
+	return self.BaseClass.OnMousePressed( self, btnId )
 
 end
 

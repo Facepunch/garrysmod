@@ -49,8 +49,9 @@ function PANEL:Init()
 	end
 	self.Palette.OnRightClickButton = function( ctrl, btn )
 		local m = DermaMenu()
-		m:AddOption( "Save Color", function() ctrl:SaveColor( btn, self:GetColor() ) end )
-		m:AddOption( "Reset Palette", function() ctrl:ResetSavedColors() end )
+		-- TODO: Find a way to let the player know which palette(s) are going to be affected
+		m:AddOption( "#spawnmenu.menu.save_palette", function() ctrl:SaveColor( btn, self:GetColor() ) end ):SetIcon( "icon16/disk.png" )
+		m:AddOption( "#spawnmenu.menu.reset_palette", function() ctrl:ResetSavedColors() end ):SetIcon( "icon16/arrow_rotate_clockwise.png" )
 		m:Open()
 	end
 	self:SetPalette( true )
@@ -163,6 +164,14 @@ function PANEL:SetPalette( bEnabled )
 	self:InvalidateLayout()
 end
 
+function PANEL:SetPaletteName( name )
+	self.Palette:SetCookieName( name )
+
+	-- Load the palette colors. Is there a better way?
+	-- One that that does not create all the panels in DColorPalette:Init() regardless
+	self.Palette:Reset()
+end
+
 function PANEL:SetAlphaBar( bEnabled )
 	self.m_bAlpha = bEnabled
 
@@ -226,6 +235,17 @@ function PANEL:PerformLayout( w, h )
 	local hue, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
 	self.RGB.LastY = ( 1 - hue / 360 ) * self.RGB:GetTall()
 
+	-- Figure out perfect row count to fit buttons exactly and pad the palette to center it
+	local buttons = #self.Palette:GetChildren()
+	local buttonSize = self.Palette:GetButtonSize()
+	local btnsPerRow = math.floor( w / buttonSize )
+	local rows = math.ceil( buttons / btnsPerRow )
+	local idealWidth = math.ceil( buttons / rows ) * buttonSize -- This is not ideal
+
+	--self.Palette:SetWide( idealWidth )
+	local leftPad = math.floor( ( w - idealWidth ) * 0.5 )
+	self.Palette:DockMargin( leftPad, 8, leftPad, 0 )
+
 end
 
 function PANEL:Paint()
@@ -245,7 +265,7 @@ end
 
 function PANEL:SetVector( vec )
 
-	self:SetColor( Color( vec.x * 255, vec.y * 255, vec.z * 255, 255 ) )
+	self:SetColor( vec:ToColor() )
 
 end
 
@@ -303,10 +323,10 @@ function PANEL:UpdateColor( color )
 		self.txtA.notuserchange = nil
 	end
 
+	self.m_Color = color
+
 	self:UpdateConVars( color )
 	self:ValueChanged( color )
-
-	self.m_Color = color
 
 end
 
