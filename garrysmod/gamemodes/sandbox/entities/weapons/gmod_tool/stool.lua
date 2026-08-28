@@ -213,7 +213,7 @@ search.AddProvider( function( str )
 		if ( v.AddToMenu == false ) then continue end
 
 		local niceName = v.Name or ( "#" .. k )
-		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
+		if ( niceName:StartsWith( "#" ) ) then niceName = language.GetPhrase( niceName ) end
 
 		for srchId, srchTxt in ipairs( searchTerms ) do
 
