@@ -258,6 +258,12 @@ function GetPlayerClasses()
 
 end
 
+function GetStoredPlayerClass( name )
+
+	return Type[ name ]
+
+end
+
 local function LookupPlayerClass( ply )
 
 	local id = ply:GetClassID()
