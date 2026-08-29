@@ -482,9 +482,26 @@ end
 --[[---------------------------------------------------------
 	Name: gamemode:OnAchievementAchieved()
 -----------------------------------------------------------]]
+local function ParseAchievement( str )
+    local result = {}
+
+    local textInitial = str:match("^([^<]+)")
+    if ( textInitial != "" ) then
+        table.insert(result, textInitial)
+    end
+
+    for r, g, b, text in str:gmatch("<(%d+), (%d+), (%d+)>([^<]+)") do
+        table.insert(result, Color( tonumber(r), tonumber(g), tonumber(b) ) )
+        table.insert(result, text)
+    end
+
+    return result
+end
+
 function GM:OnAchievementAchieved( ply, achid )
 
-	chat.AddText( ply, Color( 230, 230, 230 ), " " .. language.GetPhrase("achievement.unlocked") .. " ", Color( 255, 200, 0 ), achievements.GetName( achid ) )
+    local achievement = ParseAchievement( string.format( language.GetPhrase( "achievement.unlocked" ), ply, achievements.GetName( achid ) ) )
+    chat.AddText( unpack( achievement ) )
 
 end
 
