@@ -66,14 +66,13 @@ function meta:__newindex( key, value )
 	local tab = EntityTablesCache[ self ]
 	if ( not tab ) then
 		tab = meta.GetTable( self )
-		if ( tab and not tab.__DoNotCacheEntityTable ) then
+		if ( not tab ) then return end
+		if ( not tab.__DoNotCacheEntityTable ) then
 			EntityTablesCache[ self ] = tab
 		end
 	end
 
-	if ( tab ) then
-		tab[ key ] = value
-	end
+	tab[ key ] = value
 
 end
 
