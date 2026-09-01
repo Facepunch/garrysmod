@@ -955,7 +955,6 @@ function Spawn_Weapon( ply, wepname, tr )
 	if ( !gamemode.Call( "PlayerSpawnSWEP", ply, wepname, swep ) ) then ReportErrorToPlayer( ply, "hook" ) return end
 
 	if ( !tr ) then tr = GetSpawnTrace( ply ) end
-	if ( !tr.Hit ) then return end
 
 	local entity = ents.Create( swep.ClassName )
 	if ( !IsValid( entity ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end

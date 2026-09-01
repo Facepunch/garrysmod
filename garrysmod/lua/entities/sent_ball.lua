@@ -35,8 +35,6 @@ end
 --
 function ENT:SpawnFunction( ply, tr, ClassName )
 
-	if ( !tr.Hit ) then return end
-
 	local size = math.random( 16, 48 )
 	local SpawnPos = tr.HitPos + tr.HitNormal * size
 
