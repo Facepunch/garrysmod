@@ -828,6 +828,8 @@ function Paste( Player, entityList, constraintList )
 				e:RestoreNetworkVars( v.DT )
 			end
 
+			hook.Run( "OnEntityPasted", e, v )
+
 			if ( e.OnDuplicated ) then
 				e:OnDuplicated( v )
 			end
@@ -1046,3 +1048,4 @@ function DoGeneric( ent, data )
 	EntitySaver.Load( data, ent )
 
 end
+
