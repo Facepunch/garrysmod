@@ -23,7 +23,7 @@ function PANEL:Init()
 	self.Avatar:Dock( LEFT )
 	self.Avatar:SetSize( 32, 32 )
 
-	--self.TeamColor = color_transparent
+	self.Color = color_transparent -- Team Color. This property is used by addons, so cannot comment it out or rename it.
 	self.VolumeColor = Color( 0, 255, 0, 240 )
 
 	self:SetSize( VoicePanelWide, 32 + 8 )
@@ -58,7 +58,7 @@ function PANEL:Paint( w, h )
 	draw.RoundedBox( 4, 0, 0, w, h, self.VolumeColor )
 
 	-- I don't know how to make it look decent. Just commenting it out for now.
-	--draw.RoundedBox( 0, 8, h - 2, w - 16, 1, self.TeamColor )
+	--draw.RoundedBox( 0, 8, h - 2, w - 16, 1, self.Color )
 
 end
 
@@ -74,11 +74,11 @@ function PANEL:UpdatePlayerInfo()
 	if ( IsValid( self.ply ) ) then
 		self:SetText( self.ply:Nick() )
 		self.Avatar:SetPlayer( self.ply )
-		--self.TeamColor = hook.Run( "GetTeamColor", self.ply )
+		self.Color = hook.Run( "GetTeamColor", self.ply )
 	else
 		self:SetText( "Unknown Player " .. self.plyIndex )
 		self.Avatar:SetPlayer( NULL )
-		--self.TeamColor = hook.Run( "GetTeamColor", NULL )
+		self.Color = hook.Run( "GetTeamColor", NULL )
 	end
 
 end
@@ -118,7 +118,7 @@ function GM:PlayerStartVoice( ply, playerIndex )
 	if ( !IsValid( g_VoicePanelList ) ) then return end
 
 	-- Backwards compat with old addons
-	if ( playerIndex == nil ) then playerIndex = ply:EntIndex() end
+	if ( playerIndex == nil && IsValid( ply ) ) then playerIndex = ply:EntIndex() end
 	if ( playerIndex == nil ) then return end
 
 	-- There'd be an exta one if voice_loopback is on, so remove it.
@@ -163,7 +163,7 @@ timer.Create( "VoiceClean", 10, 0, VoiceClean )
 function GM:PlayerEndVoice( ply, playerIndex )
 
 	-- Backwards compat with old addons
-	if ( playerIndex == nil ) then playerIndex = ply:EntIndex() end
+	if ( playerIndex == nil && IsValid( ply ) ) then playerIndex = ply:EntIndex() end
 	if ( playerIndex == nil ) then return end
 
 	if ( IsValid( PlayerVoicePanels[ playerIndex ] ) ) then
