@@ -150,7 +150,7 @@ function PANEL:GetTextValue()
 
 	local iDecimals = self:GetDecimals()
 	if ( iDecimals == 0 ) then
-		return tostring( math.floor( self:GetFloatValue() ) )
+		return Format( "%i", self:GetFloatValue() )
 	end
 
 	return Format( "%." .. iDecimals .. "f", self:GetFloatValue() )
