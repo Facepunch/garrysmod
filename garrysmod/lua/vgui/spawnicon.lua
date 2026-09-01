@@ -198,6 +198,7 @@ function PANEL:BodyGroupChanged( k, v )
 end
 
 -- A little hack to prevent code duplication
+local sizes = { 64, 128, 256, 512 }
 function PANEL:InternalAddResizeMenu( menu, callback, label )
 
 	local submenu_r, submenu_r_option = menu:AddSubMenu( label or "#spawnmenu.menu.resize", function() end )
@@ -211,10 +212,9 @@ function PANEL:InternalAddResizeMenu( menu, callback, label )
 
 	end
 
-	local sizes = { 64, 128, 256, 512 }
-	for id, size in pairs( sizes ) do
+	for id, size in ipairs( sizes ) do
 
-		for _, size2 in pairs( sizes ) do
+		for _, size2 in ipairs( sizes ) do
 			AddSizeOption( submenu_r, size, size2, self:GetWide(), self:GetTall() )
 		end
 
