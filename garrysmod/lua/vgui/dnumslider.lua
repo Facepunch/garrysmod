@@ -33,7 +33,7 @@ function PANEL:Init()
 			self:DoRightClick()
 			return true
 		end
-		if ( btnId != MOUSE_LEFT ) then return true end
+		if ( btnId != MOUSE_LEFT && btnId != MOUSE_MIDDLE ) then return true end
 
 		KnobOnMousePressed( panel, btnId )
 	end
