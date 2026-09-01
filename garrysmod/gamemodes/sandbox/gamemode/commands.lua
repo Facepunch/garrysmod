@@ -800,7 +800,7 @@ function Spawn_SENT( ply, EntityName, tr )
 		ClassName = EntityName
 
 			local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
-			if ( !SpawnFunction ) then ReportErrorToPlayer( ply, "no_entity" ) return end -- Fallback to default behavior below?
+			if ( !SpawnFunction ) then ReportErrorToPlayer( ply, "bad_entity" ) return end -- Fallback to default behavior below?
 
 			entity = SpawnFunction( sentTable, ply, tr, EntityName )
 
@@ -861,7 +861,11 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	end
 
-	if ( !IsValid( entity ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
+	if ( !IsValid( entity ) ) then
+		-- Existing addons doing weird things...
+		if ( entity != nil ) then ReportErrorToPlayer( ply, "no_entity" ) end
+		return
+	end
 
 	TryFixPropPosition( ply, entity, tr.HitPos )
 
