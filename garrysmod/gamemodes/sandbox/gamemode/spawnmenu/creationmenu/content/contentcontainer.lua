@@ -168,7 +168,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 	-- This is less than ideal
 	local spawnicons = 0
 	local icon = nil
-	for id, pnl in pairs( selected ) do
+	for id, pnl in ipairs( selected ) do
 		if ( pnl.InternalAddResizeMenu ) then
 			spawnicons = spawnicons + 1
 			icon = pnl
@@ -178,7 +178,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 	if ( spawnicons > 0 ) then
 		icon:InternalAddResizeMenu( menu, function( w, h )
 
-			for id, pnl in pairs( selected ) do
+			for id, pnl in ipairs( selected ) do
 				if ( !pnl.InternalAddResizeMenu ) then continue end
 				pnl:SetSize( w, h )
 				pnl:InvalidateLayout( true )
@@ -190,7 +190,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 		end, language.FormatPhrase( "spawnmenu.menu.resizex", spawnicons ) )
 
 		menu:AddOption( language.FormatPhrase( "spawnmenu.menu.rerenderx", spawnicons ), function()
-			for id, pnl in pairs( selected ) do
+			for id, pnl in ipairs( selected ) do
 				if ( !pnl.RebuildSpawnIcon ) then continue end
 				pnl:RebuildSpawnIcon()
 			end
@@ -201,7 +201,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 
 	menu:AddOption( language.FormatPhrase( "spawnmenu.menu.deletex", #selected ), function()
 
-		for k, v in pairs( selected ) do
+		for k, v in ipairs( selected ) do
 			v:Remove()
 		end
 
