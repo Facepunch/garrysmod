@@ -61,6 +61,8 @@ function meta:__index( key )
 
 end
 
+meta.__newindex_Internal = meta.__newindex_Internal or meta.__newindex
+
 function meta:__newindex( key, value )
 
 	local tab = EntityTablesCache[ self ]
@@ -70,6 +72,10 @@ function meta:__newindex( key, value )
 		if ( not tab.__DoNotCacheEntityTable ) then
 			EntityTablesCache[ self ] = tab
 		end
+	end
+
+	if key == "RenderOverride" then
+		return meta.__newindex_Internal( self, key, value )
 	end
 
 	tab[ key ] = value
