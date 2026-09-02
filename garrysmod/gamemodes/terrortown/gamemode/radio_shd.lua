@@ -13,12 +13,20 @@ TRADIO = {}
 -- serial: If true, play through the sound table in sequential order instead of randomly.
 -- times: The number of times to repeat the sound. If set to a table, randomizes the number of times within the range {min, max}.
 -- delay: The delay between sound repetitions. If set to a table, randomizes the delay within the range {min, max}.
--- ampl: The sound level. See https://wiki.facepunch.com/gmod/Enums/SNDLVL
+--
+-- The settings below control the emitted sound. See https://wiki.facepunch.com/gmod/Entity:EmitSound
+--
+-- ampl: The sound level. If set to a table, randomizes the level within the range {min, max}.
+-- pitch: The sound pitch. If set to a table, randomizes the pitch within the range {min, max}.
+-- vol: The sound volume. If set to a table, randomizes the volume within the range {min, max}.
+-- chan: The sound channel.
+-- flags: Sound flags.
+-- dsp: Sound DSP preset.
 --
 -- If serial = true, you can nest multiple sound tables within the sound table.
 -- This will cause the radio to choose a random sound from the first table,
 -- then on the next repetition, choose a random sound from the next table,
--- and so on. See footsteps (lines 70-80) for an example of this.
+-- and so on. See "footsteps" for an example of this.
 --
 --
 -- If you want to add custom sounds to the radio, use TRADIO.AddNewSound in a shared lua file.
