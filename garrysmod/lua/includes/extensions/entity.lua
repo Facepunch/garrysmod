@@ -61,24 +61,50 @@ function meta:__index( key )
 
 end
 
-meta.__newindex_Internal = meta.__newindex_Internal or meta.__newindex
+if ( CLIENT ) then
 
-function meta:__newindex( key, value )
+	meta.__newindex_Internal = meta.__newindex_Internal or meta.__newindex
 
-	local tab = EntityTablesCache[ self ]
-	if ( not tab ) then
-		tab = meta.GetTable( self )
-		if ( not tab ) then return end
-		if ( not tab.__DoNotCacheEntityTable ) then
-			EntityTablesCache[ self ] = tab
+	function meta:__newindex( key, value )
+
+		local tab = EntityTablesCache[ self ]
+		if ( not tab ) then
+			tab = meta.GetTable( self )
+			if ( not tab ) then return end
+			if ( not tab.__DoNotCacheEntityTable ) then
+				EntityTablesCache[ self ] = tab
+			end
 		end
+
+		if (
+				key == "CalcAbsolutePosition" or
+				key == "RenderOverride" or
+				key == "m_RenderAngles" or
+				key == "m_RenderOrigin"
+		) then
+			return meta.__newindex_Internal( self, key, value )
+		end
+
+		tab[ key ] = value
+
 	end
 
-	if key == "RenderOverride" then
-		return meta.__newindex_Internal( self, key, value )
-	end
+else
 
-	tab[ key ] = value
+	function meta:__newindex( key, value )
+
+		local tab = EntityTablesCache[ self ]
+		if ( not tab ) then
+			tab = meta.GetTable( self )
+			if ( not tab ) then return end
+			if ( not tab.__DoNotCacheEntityTable ) then
+				EntityTablesCache[ self ] = tab
+			end
+		end
+
+		tab[ key ] = value
+
+	end
 
 end
 
