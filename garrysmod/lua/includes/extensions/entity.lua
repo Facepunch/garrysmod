@@ -24,6 +24,7 @@ function meta:SetShouldPlayPickupSound( bPlaySound )
 	self.m_bPlayPickupSound = tobool( bPlaySound ) or false
 end
 
+local EntityTablesCache = {}
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
 --
@@ -33,24 +34,87 @@ function meta:__index( key )
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
 	local val = meta[ key ]
-	if ( val != nil ) then return val end
+	if ( val ~= nil ) then return val end
 
 	--
 	-- Search the entity table
 	--
-	local tab = meta.GetTable( self )
+	local tab = EntityTablesCache[ self ]
+	if ( not tab ) then
+		tab = meta.GetTable( self )
+		if ( tab and not tab.__DoNotCacheEntityTable ) then
+			EntityTablesCache[ self ] = tab
+		end
+	end
 	if ( tab ) then
 		local tabval = tab[ key ]
-		if ( tabval != nil ) then return tabval end
+		if ( tabval ~= nil ) then return tabval end
 	end
 
 	--
 	-- Legacy: sometimes use self.Owner to get the owner.. so lets carry on supporting that stupidness
 	-- This needs to be retired, just like self.Entity was.
 	--
-	if ( key == "Owner" ) then return meta.GetOwner( self ) end
+	if ( key == "Owner" and not self:IsPlayer() ) then return meta.GetOwner( self ) end
 
 	return nil
+
+end
+
+if ( CLIENT ) then
+
+	meta.__newindex_Internal = meta.__newindex_Internal or meta.__newindex
+
+	function meta:__newindex( key, value )
+
+		local tab = EntityTablesCache[ self ]
+		if ( not tab ) then
+			tab = meta.GetTable( self )
+			if ( not tab ) then return end
+			if ( not tab.__DoNotCacheEntityTable ) then
+				EntityTablesCache[ self ] = tab
+			end
+		end
+
+		if (
+				key == "CalcAbsolutePosition" or
+				key == "RenderOverride" or
+				key == "m_RenderAngles" or
+				key == "m_RenderOrigin"
+		) then
+			return meta.__newindex_Internal( self, key, value )
+		end
+
+		tab[ key ] = value
+
+	end
+
+else
+
+	function meta:__newindex( key, value )
+
+		local tab = EntityTablesCache[ self ]
+		if ( not tab ) then
+			tab = meta.GetTable( self )
+			if ( not tab ) then return end
+			if ( not tab.__DoNotCacheEntityTable ) then
+				EntityTablesCache[ self ] = tab
+			end
+		end
+
+		tab[ key ] = value
+
+	end
+
+end
+
+meta.SetTableInternal = meta.SetTableInternal or meta.SetTable
+
+function meta:SetTable( tab )
+
+	EntityTablesCache[ self ] = nil
+
+	return meta.SetTableInternal( self, tab )
 
 end
 
@@ -147,6 +211,13 @@ end
 	Simple mechanism for calling the die functions.
 -----------------------------------------------------------]]
 local function DoDieFunction( ent )
+
+	local tab = EntityTablesCache[ ent ]
+	if tab then
+		-- Clear this entity's table from the cache and make sure it doesn't get cached again
+		tab.__DoNotCacheEntityTable = true
+		EntityTablesCache[ ent ] = nil
+	end
 
 	if ( !ent.OnDieFunctions ) then return end
 
