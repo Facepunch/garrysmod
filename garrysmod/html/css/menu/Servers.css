@@ -695,6 +695,7 @@ input[type=number]::-webkit-inner-spin-button
 	padding-bottom: 0px; /*Done by the flags*/
 	border-radius: 4px;
 	text-align: center;
+	font-size: 0px;
 }
 
 .flags_filter .flag
