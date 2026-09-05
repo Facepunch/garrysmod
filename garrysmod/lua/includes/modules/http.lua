@@ -74,6 +74,36 @@ function Post( url, params, onsuccess, onfailure, header )
 
 end
 
+function Get( url, params, onsuccess, onfailure, header )
+
+	local request = {
+		url			= url,
+		method		= "get",
+		parameters	= params,
+		headers		= header or {},
+
+		success = function( code, body, headers )
+
+			if ( !onsuccess ) then return end
+
+			onsuccess( body, body:len(), headers, code )
+
+		end,
+
+		failed = function( err )
+
+			if ( !onfailure ) then return end
+
+			onfailure( err )
+
+		end
+	}
+
+	local success = HTTP( request )
+	if ( !success && onfailure ) then onfailure( "HTTP failed" ) end
+
+end
+
 --[[
 
 Or use HTTP( table )
