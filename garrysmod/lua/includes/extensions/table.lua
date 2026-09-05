@@ -29,7 +29,7 @@ function table.Copy( t, lookup_table )
 	if ( t == nil ) then return nil end
 
 	local copy = {}
-	setmetatable( copy, debug.getmetatable( t ) )
+	
 	for i, v in pairs( t ) do
 		if ( !istable( v ) ) then
 			copy[ i ] = v
@@ -43,7 +43,8 @@ function table.Copy( t, lookup_table )
 			end
 		end
 	end
-	return copy
+
+	return setmetatable( copy, debug.getmetatable( t ) )
 end
 
 --[[---------------------------------------------------------
