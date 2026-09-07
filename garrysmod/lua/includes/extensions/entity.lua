@@ -61,9 +61,9 @@ function meta:__index( key )
 
 end
 
-if ( CLIENT ) then
+meta.__newindex_Internal = meta.__newindex_Internal or meta.__newindex
 
-	meta.__newindex_Internal = meta.__newindex_Internal or meta.__newindex
+if ( CLIENT ) then
 
 	function meta:__newindex( key, value )
 
@@ -100,6 +100,10 @@ else
 			if ( not tab.__DoNotCacheEntityTable ) then
 				EntityTablesCache[ self ] = tab
 			end
+		end
+
+		if ( key == "CalcAbsolutePosition" ) then
+			return meta.__newindex_Internal( self, key, value )
 		end
 
 		tab[ key ] = value
