@@ -201,13 +201,13 @@ end
 	Examples: string.FormattedTime( 123.456, "%02i:%02i:%02i")	==> "02:03:45"
 			  string.FormattedTime( 123.456, "%02i:%02i")		==> "02:03"
 			  string.FormattedTime( 123.456, "%2i:%02i")		==> " 2:03"
-			  string.FormattedTime( 123.456 )					==> { h = 0, m = 2, s = 3, ms = 45 }
+			  string.FormattedTime( 123.456 )					==> { h = 0, m = 2, s = 3, ms = 456 }
 -------------------------------------------------------------------]]
 function string.FormattedTime( seconds, format )
 	if ( not seconds ) then seconds = 0 end
 	local hours = math.floor( seconds / 3600 )
 	local minutes = math.floor( ( seconds / 60 ) % 60 )
-	local millisecs = ( seconds - math.floor( seconds ) ) * 100
+	local millisecs = ( seconds - math.floor( seconds ) ) * 1000
 	seconds = math.floor( seconds % 60 )
 
 	if ( format ) then
