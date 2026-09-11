@@ -47,7 +47,7 @@ function ENT:Initialize()
 
 		self:SetForce( 2000 )
 
-		self:SetEffect( "Fire" )
+		self:SetEffect( "fire" )
 
 		self:SetOffset( self.ThrustOffset )
 		self:StartMotionController()
@@ -366,6 +366,9 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 
 		local scroll = self.Seed + ( CurTime() * -10 )
 
+		-- Deal with high curtime, since the value is cast to a float later on, causing the effect to render weird
+		scroll = scroll % 1000
+
 		local size = self:OBBMaxs() - self:OBBMins()
 		size = math.min( size.x, size.y, 50 )
 
@@ -413,6 +416,10 @@ list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 		local vNormal = ( vOffset - self:GetPos() ):GetNormalized()
 
 		local scroll = self.Seed + ( CurTime() * -20 )
+
+		-- Deal with high curtime
+		scroll = scroll % 1000
+
 		local size = self:OBBMaxs() - self:OBBMins()
 		size = math.min( size.x, size.y ) * 1.5
 
