@@ -170,6 +170,9 @@
 		0 : "Team 0"
 		1 : "Team 1"
 	]
+
+	// GMOD
+	input Toggle(void) : "Toggles the state of this entity."
 ]
 
 @SolidClass base(Targetname, EnableDisable) = func_nav_prefer : "Influence bots to prefer this region by decreasing the pathfinding cost within it."
@@ -182,6 +185,9 @@
 		0 : "Team 0"
 		1 : "Team 1"
 	]
+
+	// GMOD
+	input Toggle(void) : "Toggles the state of this entity."
 ]
 
 @PointClass base(Targetname) sphere(ball_size, 255, 255, 255, diameter) iconsprite("sprites/sent_ball_hammer.vmt") = sent_ball :
