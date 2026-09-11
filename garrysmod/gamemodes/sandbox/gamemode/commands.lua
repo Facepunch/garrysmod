@@ -46,6 +46,8 @@ end
 
 local function ReportErrorToPlayer( player, error )
 	if ( IsValid( player ) ) then
+		if ( error == "hook" && player.__lastLimitHitTime && engine.TickCount() == player.__lastLimitHitTime ) then return end
+
 		--player:ChatPrint( "#spawnmenu.error." .. error )
 		player:SendLua( [[GAMEMODE:AddNotify( "#spawnmenu.error.]] .. error .. [[", NOTIFY_ERROR, 4 ) surface.PlaySound( "buttons/button10.wav" )]] )
 	end
