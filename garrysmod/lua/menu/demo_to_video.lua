@@ -8,7 +8,8 @@ local stats = {
 	encodetime = 0,
 
 	starttime = 0,
-	last_encodetime = 0
+	last_encodetime = 0,
+	timeremaining = 0
 }
 
 concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
@@ -79,10 +80,10 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	inSize:AddChoice( sw .. " x " .. sh .. " (highest)", { sw, sh }, true )
 
 	sw, sh = sw * 0.66666, sh * 0.66666
-	inSize:AddChoice( math.ceil( sw ) .. " x " .. math.ceil( sh ), { sw, sh }, true )
+	inSize:AddChoice( math.ceil( sw ) .. " x " .. math.ceil( sh ), { sw, sh } )
 
 	sw, sh = sw * 0.5, sh * 0.5
-	inSize:AddChoice( math.ceil( sw ) .. " x " .. math.ceil( sh ), { sw, sh }, true )
+	inSize:AddChoice( math.ceil( sw ) .. " x " .. math.ceil( sh ), { sw, sh } )
 
 	inFrameBlend.OnSelect = function( _, index, value, data ) settings.frameblend = data end
 	inFrameBlend:AddChoice( "Off", 1, true )
@@ -143,6 +144,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 		settings.name = cleanname
 
 		PrintTable( settings )
+		local error = ""
 		ActiveVideo, error = video.Record( settings )
 
 		if ( !ActiveVideo ) then
