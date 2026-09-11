@@ -143,7 +143,7 @@ end
 
 --[[---------------------------------------------------------
 	Cubic hermite spline
-	p0, p1 - points; m0, m1 - tangets; frac - fraction along the curve (0-1)
+	p0, p1 - points; m0, m1 - tangents; frac - fraction along the curve (0-1)
 -----------------------------------------------------------]]
 function math.CHSpline( frac, p0, m0, p1, m1 )
 	if ( frac >= 1 ) then return p1 end

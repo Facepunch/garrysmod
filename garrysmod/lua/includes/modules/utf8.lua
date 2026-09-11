@@ -68,7 +68,7 @@ local function decode( str, startPos )
 	local endPos    = startPos + contByteCount
 	local codePoint = 0
 
-	-- The string doesn't have enough data for this many continutation bytes
+	-- The string doesn't have enough data for this many continuation bytes
 	if #str < endPos then
 		return nil
 	end
@@ -349,7 +349,7 @@ local function strRelToAbsChar( str, pos )
 end
 
 --
--- UTF-8 compilant version of str[idx]
+-- UTF-8 compliant version of str[idx]
 --
 function GetChar( str, idx )
 	idx = strRelToAbsChar( str, idx )
@@ -362,7 +362,7 @@ function GetChar( str, idx )
 end
 
 --
--- UTF-8 compilant version of string.sub
+-- UTF-8 compliant version of string.sub
 --
 function sub( str, charstart, charend )
 	charstart = strRelToAbsChar( str, charstart )

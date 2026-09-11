@@ -25,7 +25,7 @@ function ENT:Initialize()
 
 		self.ShouldDraw = true
 
-		-- Make the render bounds a bigger so the effect doesn't get snipped off
+		-- Make the render bounds bigger so the effect doesn't get snipped off
 		local mx, mn = self:GetRenderBounds()
 		self:SetRenderBounds( mn + Vector( 0, 0, 128 ), mx )
 
