@@ -204,8 +204,8 @@ function math.ApproachAngle( cur, target, inc )
 	return math.Approach( cur, cur + math.AngleDifference( target, cur ), inc )
 end
 
-function math.TimeFraction( Start, End, Current )
-	return ( Current - Start ) / ( End - Start )
+function math.TimeFraction( start, _end, current )
+	return ( current - start ) / ( _end - start )
 end
 
 function math.Remap( value, inMin, inMax, outMin, outMax )
