@@ -10,12 +10,13 @@ local function AddNPC( t, class )
 end
 
 
-
-local Category = "#spawnmenu.category.humans_resistance"
+local Category = "Half-Life 2"
+local SubCategory = "#spawnmenu.category.humans_resistance"
 
 AddNPC( {
 	Class = "npc_alyx",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "weapon_alyxgun", "weapon_smg1", "weapon_shotgun" },
 	KeyValues = { SquadName = "resistance" }
 } )
@@ -23,6 +24,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_barney",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" },
 	KeyValues = { SquadName = "resistance" }
 } )
@@ -30,36 +32,42 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_breen",
 	Category = Category,
+	SubCategory = SubCategory,
 	SpawnFlags = 131072, -- SF_BREEN_GMOD_SPAWNMENU, makes him be a combine for NPC relationships
 	Weapons = { "" }
 } )
 
 AddNPC( {
 	Class = "npc_dog",
-	Category = Category
+	Category = Category,
+	SubCategory = SubCategory,
 } )
 
 AddNPC( {
 	Class = "npc_eli",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "" }
 } )
 
 AddNPC( {
 	Class = "npc_gman",
-	Category = Category
+	Category = Category,
+	SubCategory = SubCategory,
 } )
 
 -- Did you know that this MAN can shoot annabelle like he's been doing it his whole life?
 AddNPC( {
 	Class = "npc_kleiner",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "" }
 } )
 
 AddNPC( {
 	Class = "npc_mossman",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "" }
 } )
 
@@ -67,6 +75,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_vortigaunt",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "resistance" }
 } )
 
@@ -74,12 +83,14 @@ AddNPC( {
 	Name = "#npc_vortigaunt_slave",
 	Class = "npc_vortigaunt",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/vortigaunt_slave.mdl"
 }, "VortigauntSlave" )
 
 AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" },
 	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons, but doesn't have any default ones
 } )
@@ -88,6 +99,7 @@ AddNPC( {
 	Name = "#npc_citizen_rebel",
 	Class = "npc_citizen",
 	Category = Category,
+	SubCategory = SubCategory,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
@@ -96,6 +108,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/odessa.mdl",
 	KeyValues = { citizentype = CT_UNIQUE, SquadName = "resistance" },
 	Weapons = { "" }
@@ -105,6 +118,7 @@ AddNPC( {
 	Name = "#npc_citizen_medic",
 	Class = "npc_citizen",
 	Category = Category,
+	SubCategory = SubCategory,
 	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2" }
@@ -114,6 +128,7 @@ AddNPC( {
 	Name = "#npc_citizen_refugee",
 	Class = "npc_citizen",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1" }
 }, "Refugee" )
@@ -122,6 +137,7 @@ AddNPC( {
 	Name = "#npc_vortigaunt_uriah",
 	Class = "npc_vortigaunt",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/vortigaunt_doctor.mdl",
 	KeyValues = { SquadName = "resistance" }
 }, "VortigauntUriah" )
@@ -129,6 +145,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_magnusson",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "" }
 } )
 
@@ -136,6 +153,7 @@ if ( IsMounted( "lostcoast" ) ) then
 	AddNPC( {
 		Class = "npc_fisherman",
 		Category = Category,
+		SubCategory = SubCategory,
 		Weapons = { "weapon_oldmanharpoon" }
 	} ) -- Has no death sequence/ragdoll
 end
@@ -143,6 +161,7 @@ end
 AddNPC( {
 	Class = "npc_turret_floor",
 	Category = Category,
+	SubCategory = SubCategory,
 	OnFloor = true,
 	TotalSpawnFlags = SF_FLOOR_TURRET_CITIZEN,
 	Rotate = Angle( 0, 180, 0 ),
@@ -153,55 +172,74 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_rollermine",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 20,
 	KeyValues = { SquadName = "resistance" },
 	SpawnFlags = 262144, -- SF_ROLLERMINE_HACKED
 	NoDrop = true
 }, "npc_rollermine_hacked" )
 
+-- It is still considered an enemy by friendly NPCs (so that it chases them)
+AddNPC( {
+	Class = "npc_rollermine",
+	Category = Category,
+	SubCategory = SubCategory,
+	Offset = 20,
+	KeyValues = { SquadName = "overwatch" },
+	SpawnFlags = 65536, -- SF_ROLLERMINE_FRIENDLY
+	NoDrop = true
+}, "npc_rollermine_friendly" )
+
 AddNPC( {
 	Class = "npc_manhack",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "resistance" },
 	SpawnFlags = 2097152, -- SF_MANHACK_HACKED
 	NoDrop = true
 }, "npc_manhack_hacked" )
 
-Category = "#spawnmenu.category.zombies_aliens"
+SubCategory = "#spawnmenu.category.zombies_aliens"
 
 AddNPC( {
 	Class = "npc_zombie",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_zombie_torso",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_poisonzombie",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
 	Class = "npc_antlion",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "antlions" }
 } )
 
 AddNPC( {
 	Class = "npc_antlionguard",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "antlions" }
 } )
 
 AddNPC( {
 	Class = "npc_barnacle",
 	Category = Category,
+	SubCategory = SubCategory,
 	OnCeiling = true,
 	Offset = 2
 } )
@@ -209,48 +247,56 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_fastzombie",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_headcrab",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_headcrab_black",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
 	Class = "npc_headcrab_fast",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_fastzombie_torso",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_zombine",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Class = "npc_antlionguard",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" }
 }, "npc_antlionguardian" )
 
 AddNPC( {
 	Class = "npc_antlion_grub",
 	Category = Category,
+	SubCategory = SubCategory,
 	NoDrop = true,
 	Offset = 1
 } )
@@ -258,44 +304,50 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_antlion_worker",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "antlions" }
 } )
 
 
 
-Category = "#spawnmenu.category.animals"
+SubCategory = "#spawnmenu.category.animals"
 
 AddNPC( {
 	Class = "npc_monk",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "weapon_annabelle" }
 } )
 
 AddNPC( {
 	Class = "npc_crow",
 	Category = Category,
+	SubCategory = SubCategory,
 	NoDrop = true
 } )
 
 AddNPC( {
 	Class = "npc_pigeon",
 	Category = Category,
+	SubCategory = SubCategory,
 	NoDrop = true
 } )
 
 AddNPC( {
 	Class = "npc_seagull",
 	Category = Category,
+	SubCategory = SubCategory,
 	NoDrop = true
 } )
 
 
 
-Category = "#spawnmenu.category.combine"
+SubCategory = "#spawnmenu.category.combine"
 
 AddNPC( {
 	Class = "npc_metropolice",
 	Category = Category,
+	SubCategory = SubCategory,
 	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
 	SpawnFlags = SF_NPC_DROP_HEALTHKIT,
 	KeyValues = { SquadName = "overwatch" }
@@ -304,24 +356,16 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_rollermine",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 20,
 	KeyValues = { SquadName = "overwatch" },
 	NoDrop = true
 } )
 
--- It is still considered an enemy by friendly NPCs (so that it chases them)
-AddNPC( {
-	Class = "npc_rollermine",
-	Category = Category,
-	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
-	SpawnFlags = 65536, -- SF_ROLLERMINE_FRIENDLY
-	NoDrop = true
-}, "npc_rollermine_friendly" )
-
 AddNPC( {
 	Class = "npc_turret_floor",
 	Category = Category,
+	SubCategory = SubCategory,
 	OnFloor = true,
 	TotalSpawnFlags = 0,
 	Rotate = Angle( 0, 180, 0 ),
@@ -332,6 +376,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_combine_s",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/combine_soldier.mdl",
 	Skin = 0,
 	Weapons = { "weapon_smg1", "weapon_ar2" },
@@ -342,6 +387,7 @@ AddNPC( {
 	Name = "#npc_combine_s_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/combine_soldier.mdl",
 	Skin = 1,
 	Weapons = { "weapon_shotgun" },
@@ -352,6 +398,7 @@ AddNPC( {
 	Name = "#npc_combine_s_prison",
 	Class = "npc_combine_s",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/combine_soldier_prisonguard.mdl",
 	Skin = 0,
 	Weapons = { "weapon_smg1", "weapon_ar2" },
@@ -362,6 +409,7 @@ AddNPC( {
 	Name = "#npc_combine_s_prison_shotgun",
 	Class = "npc_combine_s",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/combine_soldier_prisonguard.mdl",
 	Skin = 1,
 	Weapons = { "weapon_shotgun" },
@@ -372,6 +420,7 @@ AddNPC( {
 	Name = "#npc_combine_s_elite",
 	Class = "npc_combine_s",
 	Category = Category,
+	SubCategory = SubCategory,
 	Model = "models/combine_super_soldier.mdl",
 	Skin = 0,
 	Weapons = { "weapon_ar2" },
@@ -382,6 +431,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_cscanner",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 20,
 	KeyValues = { SquadName = "overwatch", SpotlightLength = 500, SpotlightWidth = 100 },
 	NoDrop = true
@@ -390,6 +440,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_clawscanner",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 20,
 	KeyValues = { SquadName = "overwatch", SpotlightLength = 500, SpotlightWidth = 100 },
 	NoDrop = true
@@ -398,6 +449,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_combinegunship",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 300,
 	KeyValues = { SquadName = "overwatch" },
 	NoDrop = true
@@ -406,6 +458,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_combinedropship",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 300,
 	Health = 1000,
 	KeyValues = { SquadName = "overwatch", CanTakeDamageAndDie = "1" },
@@ -415,6 +468,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_helicopter",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 300,
 	Health = 600,
 	KeyValues = { SquadName = "overwatch" },
@@ -424,6 +478,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_combine_camera",
 	Category = Category,
+	SubCategory = SubCategory,
 	OnCeiling = true,
 	Offset = 2,
 	KeyValues = { SquadName = "overwatch" },
@@ -433,6 +488,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_turret_ceiling",
 	Category = Category,
+	SubCategory = SubCategory,
 	SpawnFlags = 32, -- SF_NPC_TURRET_AUTOACTIVATE
 	OnCeiling = true,
 	Offset = 0,
@@ -442,6 +498,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_strider",
 	Category = Category,
+	SubCategory = SubCategory,
 	Offset = 100,
 	KeyValues = { SquadName = "overwatch" }
 } )
@@ -449,6 +506,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_stalker",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "npc_stalker_squad" },
 	Offset = 10
 } )
@@ -456,6 +514,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_manhack",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "overwatch" },
 	NoDrop = true
 } )
@@ -465,6 +524,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "overwatch", Hostile = "1" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun", "weapon_rpg" }
 }, "npc_citizen_rebel_enemy" )
@@ -472,6 +532,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_hunter",
 	Category = Category,
+	SubCategory = SubCategory,
 	KeyValues = { SquadName = "overwatch" }
 } )
 
