@@ -140,7 +140,8 @@ end
 
 hook.Add( "PostDrawEffects", "RenderHalos", function()
 
-	hook.Run( "PreDrawHalos" )
+	local call = hook.Run( "PreDrawHalos" )
+	if ( call ) then return end
 
 	if ( #List == 0 ) then return end
 
@@ -151,3 +152,4 @@ hook.Add( "PostDrawEffects", "RenderHalos", function()
 	List = {}
 
 end )
+
