@@ -220,7 +220,13 @@ function GM:ClearClientState()
 
    client:SetRole(ROLE_INNOCENT)
 
-   client.equipment_items = EQUIP_NONE
+   client.equipment_items = EQUIP_NONE -- deprecated
+
+   client.equipment_items_tbl = {}
+   for i = 1, EQUIP.GetBitChunk(EQUIP_MAX) do
+      client.equipment_items_tbl[i] = EQUIP_NONE
+   end
+
    client.equipment_credits = 0
    client.bought = {}
    client.last_id = nil

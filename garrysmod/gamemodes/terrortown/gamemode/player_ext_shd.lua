@@ -90,16 +90,15 @@ end
 
 function plymeta:GetCredits() return self.equipment_credits or 0 end
 
-function plymeta:GetEquipmentItems() return self.equipment_items or EQUIP_NONE end
+function plymeta:GetEquipmentItems(tbl)
+   if not self.equipment_items_tbl then return tbl and {EQUIP_NONE} or EQUIP_NONE end
+   return tbl and self.equipment_items_tbl or unpack(self.equipment_items_tbl)
+end
 
 -- Given an equipment id, returns if player owns this. Given nil, returns if
 -- player has any equipment item.
 function plymeta:HasEquipmentItem(id)
-   if not id then
-      return self:GetEquipmentItems() != EQUIP_NONE
-   else
-      return util.BitSet(self:GetEquipmentItems(), id)
-   end
+   return EQUIP.HasItem(self:GetEquipmentItems(true), id)
 end
 
 function plymeta:HasEquipment()
@@ -114,7 +113,7 @@ function plymeta:GetEyeTrace(mask)
 
    if CLIENT then
       local framenum = FrameNumber()
-      
+
       if self.LastPlayerTrace == framenum and self.LastPlayerTraceMask == mask then
          return self.PlayerTrace
       end
