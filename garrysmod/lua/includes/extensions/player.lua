@@ -8,6 +8,9 @@ if ( !meta ) then return end
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
 --
+setmetatable(meta, { __index = entity })
+
+local Entity_GetTable = entity.GetTable
 function meta:__index( key )
 
 	--
@@ -17,15 +20,9 @@ function meta:__index( key )
 	if ( val ~= nil ) then return val end
 
 	--
-	-- Search the entity metatable
-	--
-	local entval = entity[key]
-	if ( entval ~= nil ) then return entval end
-
-	--
 	-- Search the entity table
 	--
-	local tab = entity.GetTable( self )
+	local tab = Entity_GetTable( self )
 	if ( tab ) then
 		return tab[ key ]
 	end
