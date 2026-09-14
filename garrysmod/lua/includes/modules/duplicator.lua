@@ -470,6 +470,12 @@ function DoBoneManipulator( ent, bones )
 
 end
 
+local strictDuplicator = CreateConVar(
+	"duplicator_strict",
+	"0", { FCVAR_ARCHIVE },
+	"Prevents entities from being duped with unauthorized data. Can fix certain exploits at the cost of some entities potentially duping incorrectly"
+)
+
 --[[---------------------------------------------------------
    Generic function for duplicating stuff
 -----------------------------------------------------------]]
@@ -502,7 +508,9 @@ function GenericDuplicatorFunction( ply, data )
 
 	EntityPhysics.Load( data.PhysicsObjects, Entity )
 
-	table.Merge( Entity:GetTable(), data )
+	if ( !strictDuplicator:GetBool() ) then
+		table.Merge( Entity:GetTable(), data )
+	end
 
 	return Entity
 
