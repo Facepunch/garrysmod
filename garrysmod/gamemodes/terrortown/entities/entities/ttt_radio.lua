@@ -33,10 +33,8 @@ function ENT:Initialize()
    end
 
    -- Register with owner
-   if CLIENT then
-      if LocalPlayer() == self:GetOwner() then
-         LocalPlayer().radio = self
-      end
+   if CLIENT and LocalPlayer() == self:GetOwner() then
+      LocalPlayer().radio = self
    end
 
    self.SoundQueue = {}
@@ -77,10 +75,8 @@ function ENT:OnTakeDamage(dmginfo)
 end
 
 function ENT:OnRemove()
-   if CLIENT then
-      if LocalPlayer() == self:GetOwner() then
-         LocalPlayer().radio = nil
-      end
+   if CLIENT and LocalPlayer() == self:GetOwner() then
+      LocalPlayer().radio = nil
    end
 end
 
@@ -90,12 +86,12 @@ function ENT:AddSound(snd)
    end
 end
 
-function ENT:PlayDelayedSound(snd, ampl, last)
+function ENT:PlayDelayedSound(snd, ampl, last, pitch, vol, chan, flags, dsp)
    if istable(snd) then
       snd = table.Random(snd)
    end
 
-   self:BroadcastSound(snd, ampl)
+   self:BroadcastSound(snd, ampl, pitch, vol, chan, flags, dsp, true)
 
    self.Playing = not last
 
@@ -109,7 +105,12 @@ function ENT:PlaySound(snd)
    if hook.Run("TTTRadioPlaySound", self, snd, soundData) == true then return end
 
    local sndlist = soundData.sound
-   local ampl = soundData.ampl
+   local ampl, pitch, vol = soundData.ampl, soundData.pitch, soundData.vol
+   local chan, flags, dsp = soundData.chan, soundData.flags, soundData.dsp
+
+   local a = istable(ampl) and math.random(ampl[1], ampl[2]) or ampl
+   local p = istable(pitch) and math.random(pitch[1], pitch[2]) or pitch
+   local v = istable(vol) and math.Rand(vol[1], vol[2]) or vol
 
    local serial = soundData.serial
    local times = soundData.times
@@ -135,11 +136,15 @@ function ENT:PlaySound(snd)
                            -- maybe we can get destroyed while a timer is still up
                            if not IsValid(self) then return end
 
-                           self:PlayDelayedSound(sndpath, ampl, i == times)
+                           self:PlayDelayedSound(sndpath, a, i == times, p, v, chan, flags, dsp)
                         end)
 
             local d = istable(delay) and math.Rand(delay[1], delay[2]) or delay
             t = t + d
+
+            a = istable(ampl) and math.random(ampl[1], ampl[2]) or ampl
+            p = istable(pitch) and math.random(pitch[1], pitch[2]) or pitch
+            v = istable(vol) and math.Rand(vol[1], vol[2]) or vol
 
             if serial then
                idx = idx + 1
@@ -151,7 +156,7 @@ function ENT:PlaySound(snd)
       end
    end
 
-   self:PlayDelayedSound(sndlist, ampl, true)
+   self:PlayDelayedSound(sndlist, a, true, p, v, chan, flags, dsp)
 end
 
 local nextplay = 0
