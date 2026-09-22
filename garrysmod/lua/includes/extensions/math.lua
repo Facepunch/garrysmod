@@ -143,7 +143,7 @@ end
 
 --[[---------------------------------------------------------
 	Cubic hermite spline
-	p0, p1 - points; m0, m1 - tangets; frac - fraction along the curve (0-1)
+	p0, p1 - points; m0, m1 - tangents; frac - fraction along the curve (0-1)
 -----------------------------------------------------------]]
 function math.CHSpline( frac, p0, m0, p1, m1 )
 	if ( frac >= 1 ) then return p1 end
@@ -204,8 +204,8 @@ function math.ApproachAngle( cur, target, inc )
 	return math.Approach( cur, cur + math.AngleDifference( target, cur ), inc )
 end
 
-function math.TimeFraction( Start, End, Current )
-	return ( Current - Start ) / ( End - Start )
+function math.TimeFraction( start, _end, current )
+	return ( current - start ) / ( _end - start )
 end
 
 function math.Remap( value, inMin, inMax, outMin, outMax )

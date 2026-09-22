@@ -35,7 +35,7 @@ function GM:LimitHit( name )
 	local translated = language.GetPhrase( str )
 	if ( str == translated ) then
 		-- No translation available, apply our own
-		translated = string.format( language.GetPhrase( "hint.hitXlimit" ), language.GetPhrase( name ) )
+		translated = language.FormatPhrase( "hint.hitXlimit", language.GetPhrase( name ) )
 	end
 
 	self:AddNotify( translated, NOTIFY_ERROR, 6 )
@@ -53,7 +53,7 @@ function GM:OnUndo( name, strCustomString )
 		text = language.GetPhrase( strId )
 		if ( strId == text ) then
 			-- No custom translation available, make a generic one
-			text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( name ) )
+			text = language.FormatPhrase( "hint.undoneX", language.GetPhrase( name ) )
 			overwritten = true
 		end
 	end
@@ -62,7 +62,7 @@ function GM:OnUndo( name, strCustomString )
 		-- HACK: Try to translate existing English-only translations
 		local strMatch = string.match( text, "^Undone (.*)$" )
 		if ( strMatch ) then
-			text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( strMatch ) )
+			text = language.FormatPhrase( "hint.undoneX", language.GetPhrase( strMatch ) )
 		end
 	end
 
@@ -79,7 +79,7 @@ function GM:OnCleanup( name )
 	local translated = language.GetPhrase( str )
 	if ( str == translated ) then
 		-- No translation available, apply our own
-		translated = string.format( language.GetPhrase( "hint.cleanedX" ), language.GetPhrase( name ) )
+		translated = language.FormatPhrase( "hint.cleanedX", language.GetPhrase( name ) )
 	end
 
 	self:AddNotify( translated, NOTIFY_CLEANUP, 5 )
@@ -91,7 +91,7 @@ end
 
 function GM:UnfrozeObjects( num )
 
-	self:AddNotify( string.format( language.GetPhrase( "hint.unfrozeX" ), num ), NOTIFY_GENERIC, 3 )
+	self:AddNotify( language.FormatPhrase( "hint.unfrozeX", num ), NOTIFY_GENERIC, 3 )
 
 	-- Find a better sound :X
 	surface.PlaySound( "npc/roller/mine/rmine_chirp_answer1.wav" )

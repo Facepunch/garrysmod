@@ -275,12 +275,10 @@ end
 
 -- Used to be in Think/Tick, now in a timer
 function WaitingForPlayersChecker()
-   if GetRoundState() == ROUND_WAIT then
-      if EnoughPlayers() then
-         timer.Create("wait2prep", 1, 1, PrepareRound)
+   if GetRoundState() == ROUND_WAIT and EnoughPlayers() then
+      timer.Create("wait2prep", 1, 1, PrepareRound)
 
-         timer.Stop("waitingforply")
-      end
+      timer.Stop("waitingforply")
    end
 end
 
@@ -367,6 +365,28 @@ function StopWinChecks()
    timer.Stop("winchecker")
 end
 
+local function StopRoundTimers()
+   -- remove all timers
+   timer.Stop("wait2prep")
+   timer.Stop("prep2begin")
+   timer.Stop("end2prep")
+   timer.Stop("winchecker")
+end
+
+-- Make sure we have the players to do a round, people can leave during our
+-- preparations so we'll call this numerous times
+local function CheckForAbort()
+   if not EnoughPlayers() then
+      LANG.Msg("round_minplayers")
+      StopRoundTimers()
+
+      WaitForPlayers()
+      return true
+   end
+
+   return false
+end
+
 local function SpawnEntities()
    local et = ents.TTT
    -- Spawn weapons from script if there is one
@@ -400,6 +420,13 @@ local function CleanUp()
    game.CleanUpMap(false, nil, function()
       et.FixParentedPostCleanup()
       SpawnEntities()
+
+      if CheckForAbort() then return end
+
+      -- Tell hooks and map we started prep
+      hook.Call("TTTPrepareRound")
+
+      et.TriggerRoundStateOutputs(ROUND_PREP)
    end)
 
    -- Strip players now, so that their weapons are not seen by ReplaceEntities
@@ -413,28 +440,6 @@ local function CleanUp()
    hook.Remove("PlayerSay", "ULXMeCheck")
 end
 
-
-local function StopRoundTimers()
-   -- remove all timers
-   timer.Stop("wait2prep")
-   timer.Stop("prep2begin")
-   timer.Stop("end2prep")
-   timer.Stop("winchecker")
-end
-
--- Make sure we have the players to do a round, people can leave during our
--- preparations so we'll call this numerous times
-local function CheckForAbort()
-   if not EnoughPlayers() then
-      LANG.Msg("round_minplayers")
-      StopRoundTimers()
-
-      WaitForPlayers()
-      return true
-   end
-
-   return false
-end
 
 function GM:TTTDelayRoundStartForVote()
    -- Can be used for custom voting systems
@@ -503,11 +508,6 @@ function PrepareRound()
 
    -- In case client's cleanup fails, make client set all players to innocent role
    timer.Simple(1, SendRoleReset)
-
-   -- Tell hooks and map we started prep
-   hook.Call("TTTPrepareRound")
-
-   ents.TTT.TriggerRoundStateOutputs(ROUND_PREP)
 end
 
 function SetRoundEnd(endtime)
@@ -564,12 +564,15 @@ function SpawnWillingPlayers(dead_only)
       local num_spawns = #GetSpawnEnts()
 
       local to_spawn = {}
-      for _, ply in RandomPairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          if IsValid(ply) and ply:ShouldSpawn() then
             table.insert(to_spawn, ply)
             GAMEMODE:PlayerSpawnAsSpectator(ply)
          end
       end
+
+      -- Shuffle the table of queued players to randomize the spawn order
+      table.Shuffle(to_spawn)
 
       local sfn = function()
                      local c = 0
@@ -681,7 +684,7 @@ function BeginRound()
 
    hook.Call("TTTBeginRound")
 
-   ents.TTT.TriggerRoundStateOutputs(ROUND_BEGIN)
+   ents.TTT.TriggerRoundStateOutputs(ROUND_ACTIVE)
 end
 
 function PrintResultMessage(type)

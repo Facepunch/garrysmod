@@ -268,12 +268,13 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		end
 
 		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( obj.model, "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( icon:GetModelName(), "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
 
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
 			RunConsoleCommand( "gmod_tool", "creator" )
 			RunConsoleCommand( "creator_type", "4" )
-			RunConsoleCommand( "creator_name", obj.model )
+			RunConsoleCommand( "creator_name", icon:GetModelName() )
+			RunConsoleCommand( "creator_override", table.concat( { icon:GetSkinID(), icon:GetBodyGroup() }, " " ) )
 		end ):SetIcon( "icon16/brick_add.png" )
 
 		local submenu, submenu_opt = menu:AddSubMenu( "#spawnmenu.menu.rerender", function()

@@ -11,7 +11,7 @@ WeaponData
 	"bucket_position"		"1"
 
 	"clip_size"			"30"
-	"default_clip"			"60"
+	"default_clip"			"30"
 
 	"clip2_size"			"-1"
 	"default_clip2"			"-1"

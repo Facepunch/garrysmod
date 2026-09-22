@@ -5,18 +5,6 @@
 
 if ( SERVER ) then AddCSLuaFile( "utilities_menu.lua" ) return end
 
-local function Undo( pnl )
-
-	-- This is added by the undo module dynamically
-
-end
-
-local function User_Cleanup( pnl )
-
-	-- This is added by the cleanup module dynamically
-
-end
-
 local function LoadInConvarDefaults( cvars )
 	for k, v in pairs( cvars ) do
 		local convar = GetConVar( k )
@@ -248,13 +236,10 @@ end
 -- Tool Menu
 hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", function()
 
-	spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
-	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo", "#spawnmenu.utilities.undo", "", "", Undo )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "PhysgunSettings", "#spawnmenu.utilities.physgunsettings", "", "", PhysgunSettings )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "SandboxClientSettings", "#spawnmenu.utilities.sandbox_settings", "", "", SandboxClientSettings )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "PlayerModelSelector", "#smwidget.playermodel_title", "", "", PlayerOptions )
 
-	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "ServerSettings", "#spawnmenu.utilities.server_settings", "", "", ServerSettings )
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "SandboxSettings", "#spawnmenu.utilities.sandbox_settings", "", "", SandboxSettings )
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "PhysgunSVSettings", "#spawnmenu.utilities.physgunsettings", "", "", PhysgunSVSettings )

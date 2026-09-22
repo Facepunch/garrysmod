@@ -86,7 +86,7 @@ end
 
 function PANEL:StartDownloading( id, iImageID, title, iSize )
 
-	self.Label:SetText( language.GetPhrase( "ugc.downloadingX" ):format( title ) )
+	self.Label:SetText( language.FormatPhrase( "ugc.downloadingX", title ) )
 
 	self.Rocket:Charging( id, iImageID )
 
@@ -180,7 +180,7 @@ function PANEL:UpdateProgress( downloaded, expected )
 	self.Progress = downloaded / expected
 
 	if ( self.Progress > 0 ) then
-		self.ProgressLabel:SetText( language.GetPhrase( "ugc.XoutofY" ):format( Format( "%.0f%%", self.Progress * 100 ), string.NiceSize( expected ) ) )
+		self.ProgressLabel:SetText( language.FormatPhrase( "ugc.XoutofY", Format( "%.0f%%", self.Progress * 100 ), string.NiceSize( expected ) ) )
 	else
 		self.ProgressLabel:SetText( string.NiceSize( expected ) )
 	end
@@ -189,7 +189,7 @@ end
 
 function PANEL:ExtractProgress( title, percent )
 
-	self.Label:SetText( language.GetPhrase( "ugc.extractingX" ):format( title ) )
+	self.Label:SetText( language.FormatPhrase( "ugc.extractingX", title ) )
 	self.Progress = percent / 100
 
 	if ( self.Progress > 0 ) then
@@ -202,7 +202,7 @@ end
 
 function PANEL:UpdateTotalProgress( iCurrent, iTotal )
 
-	self.TotalsLabel:SetText( language.GetPhrase( "ugc.addonXofY" ):format( iCurrent, iTotal ) )
+	self.TotalsLabel:SetText( language.FormatPhrase( "ugc.addonXofY", iCurrent, iTotal ) )
 	self.TotalProgress = iCurrent / iTotal
 
 end
@@ -215,6 +215,6 @@ function PANEL:SubscriptionsProgress( iCurrent, iTotal )
 	self.Progress = iCurrent / iTotal
 
 	self.ProgressLabel:Show()
-	self.ProgressLabel:SetText( language.GetPhrase( "ugc.XofY" ):format( iCurrent, iTotal ) )
+	self.ProgressLabel:SetText( language.FormatPhrase( "ugc.XofY", iCurrent, iTotal ) )
 
 end

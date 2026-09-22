@@ -66,13 +66,16 @@ end
 function PANEL:ScreenshotScan( folder )
 
 	local bReturn = false
-
 	local Screenshots = file.Find( folder .. "*.*", "GAME" )
-	for k, v in RandomPairs( Screenshots ) do
 
+	-- The system will always check materials/ folder first, and the default backgrounds are one folder up
+	-- So optimize the lookup by having it check the correct folder to begin with
+	-- Doesn't work well for workshop mounted gamemode content, so we only do it for base game backgrounds
+	if ( folder == "backgrounds/" ) then folder = "../" .. folder end
+
+	for _, v in ipairs( Screenshots ) do
 		AddBackgroundImage( folder .. v )
 		bReturn = true
-
 	end
 
 	return bReturn
@@ -240,6 +243,8 @@ function UpdateServerSettings()
 
 			array.settings = {}
 			for k, v in pairs( Settings.settings ) do
+				if ( !v.name ) then continue end
+
 				local cvar = GetConVar( v.name )
 				if ( !cvar ) then continue end
 
@@ -429,7 +434,7 @@ function GetServers( category, id )
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
 			SendServer( pnlMainMenu, category, id,
-				2000, language.GetPhrase( "server_noresponse" ):format( address ), language.GetPhrase( "server_gamemode_unreachable" ), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				2000, language.FormatPhrase( "server_noresponse", address ), language.GetPhrase( "server_gamemode_unreachable" ), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]
@@ -495,7 +500,7 @@ function FindServersAtAddress( inputStr )
 
 			if ( !name ) then
 				table.insert( output, {
-					name = language.GetPhrase("server_noresponse"):format(addr),
+					name = language.FormatPhrase( "server_noresponse", addr ),
 					address = addr, ping = 2000, favorite = false,
 					players = 0, maxplayers = 0, botplayers = 0,
 					map = "", gamemode = ""
@@ -563,6 +568,9 @@ function UpdateGames()
 end
 
 function UpdateSubscribedAddons()
+
+	-- Addon unsubbed before main menu initialized
+	if ( !IsValid( pnlMainMenu ) ) then return end
 
 	local subscriptions = engine.GetAddons()
 	local json = util.TableToJSON( subscriptions )

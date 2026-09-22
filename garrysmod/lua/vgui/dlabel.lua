@@ -84,8 +84,11 @@ end
 
 function PANEL:SetDisabled( bDisabled )
 
+	local changed = self.m_bDisabled != bDisabled
 	self.m_bDisabled = bDisabled
-	self:InvalidateLayout()
+	if ( changed ) then
+		self:InvalidateLayout()
+	end
 
 end
 

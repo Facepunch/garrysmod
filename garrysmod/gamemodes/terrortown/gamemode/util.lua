@@ -250,7 +250,7 @@ local gsub = string.gsub
 -- returns "Bob killed Joe"
 -- No spaces or special chars in parameter name, just alphanumerics.
 function string.Interp(str, tbl)
-   return gsub(str, '{(%w+)}', tbl)
+   return gsub(str, "{(%w+)}", tbl)
 end
 
 -- Short helper for input.LookupBinding, returns capitalised key or a default

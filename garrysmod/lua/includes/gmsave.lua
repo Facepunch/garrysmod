@@ -13,14 +13,14 @@ function gmsave.LoadMap( strMapContents, ply, callback )
 	-- TODO: Do this in engine before sending it to this function.
 
 	-- Strip off any crap before the start char..
-	local startchar = string.find( strMapContents, '' )
+	local startchar = string.find( strMapContents, "\2" )
 	if ( startchar != nil ) then
 		strMapContents = string.sub( strMapContents, startchar )
 	end
 
 	-- Strip off any crap after the end char..
 	strMapContents = strMapContents:reverse()
-	local startchar = string.find( strMapContents, '' )
+	local startchar = string.find( strMapContents, "\1" )
 	if ( startchar != nil ) then
 		strMapContents = string.sub( strMapContents, startchar )
 	end

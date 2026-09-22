@@ -216,14 +216,15 @@
 		"tall"	 "480"
 	}
 
-	HudMOTD
-	{
-		"fieldName" "HudMOTD"
-		"visible" "1"
-		"enabled" "1"
-		"wide"	 "640"
-		"tall"	 "480"
-	}
+	// GMOD: Nope
+	//HudMOTD
+	//{
+	//	"fieldName" "HudMOTD"
+	//	"visible" "1"
+	//	"enabled" "1"
+	//	"wide"	 "640"
+	//	"tall"	 "480"
+	//}
 
 	HudMessage
 	{
@@ -398,42 +399,44 @@
 
 	}
 	
-	HUDAutoAim
-	{
-		"fieldName" "HUDAutoAim"
-		"visible" "1"
-		"enabled" "1"
-		"wide"	 "640"
-		"tall"	 "480"
-	}
+	// GMOD: Gone
+	//HUDAutoAim
+	//{
+	//	"fieldName" "HUDAutoAim"
+	//	"visible" "1"
+	//	"enabled" "1"
+	//	"wide"	 "640"
+	//	"tall"	 "480"
+	//}
 
-	HudCommentary
-	{
-		"fieldName" "HudCommentary"
-		"xpos"	"c-190"
-		"ypos"	"350"
-		"wide"	"380"
-		"tall"  "40"
-		"visible" "1"
-		"enabled" "1"
-		
-		"PaintBackgroundType"	"2"
-		
-		"bar_xpos"		"50"
-		"bar_ypos"		"20"
-		"bar_height"	"8"
-		"bar_width"		"320"
-		"speaker_xpos"	"50"
-		"speaker_ypos"	"8"
-		"count_xpos_from_right"	"10"	// Counts from the right side
-		"count_ypos"	"8"
-		
-		"icon_texture"	"vgui/hud/icon_commentary"
-		"icon_xpos"		"0"
-		"icon_ypos"		"0"		
-		"icon_width"	"40"
-		"icon_height"	"40"
-	}
+	// GMOD: Gone
+	//HudCommentary
+	//{
+	//	"fieldName" "HudCommentary"
+	//	"xpos"	"c-190"
+	//	"ypos"	"350"
+	//	"wide"	"380"
+	//	"tall"  "40"
+	//	"visible" "1"
+	//	"enabled" "1"
+	//	
+	//	"PaintBackgroundType"	"2"
+	//	
+	//	"bar_xpos"		"50"
+	//	"bar_ypos"		"20"
+	//	"bar_height"	"8"
+	//	"bar_width"		"320"
+	//	"speaker_xpos"	"50"
+	//	"speaker_ypos"	"8"
+	//	"count_xpos_from_right"	"10"	// Counts from the right side
+	//	"count_ypos"	"8"
+	//	
+	//	"icon_texture"	"vgui/hud/icon_commentary"
+	//	"icon_xpos"		"0"
+	//	"icon_ypos"		"0"		
+	//	"icon_width"	"40"
+	//	"icon_height"	"40"
+	//}
 	
 	HudHDRDemo
 	{

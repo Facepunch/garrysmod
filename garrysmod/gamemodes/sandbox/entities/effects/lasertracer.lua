@@ -9,12 +9,28 @@ function EFFECT:Init( data )
 	local ent = data:GetEntity()
 	local attid = data:GetAttachment()
 
+	-- if ( data:GetFlags() & TRACER_FLAG_USEATTACHMENT ) then
 	if ( IsValid( ent ) && attid > 0 ) then
-		if ( ent.Owner == LocalPlayer() && LocalPlayer():GetViewModel() == LocalPlayer() ) then ent = ent.Owner:GetViewModel() end
+		local posOverride = nil
+		if ( ent:IsWeapon() && ent.GetTracerOrigin ) then posOverride = ent:GetTracerOrigin() end
 
-		local att = ent:GetAttachment( attid )
-		if ( att ) then
-			self.StartPos = att.Pos
+		if ( posOverride ) then
+			self.StartPos = posOverride
+		else
+			-- If local player is not looking through some entity, try to use the current view model
+			local ply = LocalPlayer()
+			if ( ent:IsWeapon() && ply:GetViewEntity() == ply ) then
+				local owner = ent:GetOwner()
+				if ( owner == ply || ( owner != ply && ply:GetObserverTarget() == owner ) ) then
+					-- No viewmodel FOV adjustments are done on the local player here
+					ent = owner:GetViewModel()
+				end
+			end
+
+			local att = ent:GetAttachment( attid )
+			if ( att ) then
+				self.StartPos = att.Pos
+			end
 		end
 	end
 

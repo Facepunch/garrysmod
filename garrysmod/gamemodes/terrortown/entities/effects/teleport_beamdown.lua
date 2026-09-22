@@ -2,10 +2,7 @@
 local loopsound = Sound("ambient/levels/labs/teleport_mechanism_windup1.wav")
 
 local mat_rising = Material( "models/props_combine/stasisshield_sheet")
-local mat_sparkle = Material("models/effects/comball_tape")
-local top = 80
-local mid = 32
-local final_height = top
+local final_height = 80
 
 function EFFECT:Init(data)
    self.Owner = data:GetEntity()

@@ -20,10 +20,10 @@ AddCSLuaFile( "save_load.lua" )
 AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "gui/IconEditor.lua" )
 
-include( 'shared.lua' )
-include( 'commands.lua' )
-include( 'player.lua' )
-include( 'spawnmenu/init.lua' )
+include( "shared.lua" )
+include( "commands.lua" )
+include( "player.lua" )
+include( "spawnmenu/init.lua" )
 
 --
 -- Make BaseClass available

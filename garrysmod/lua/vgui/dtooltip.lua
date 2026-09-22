@@ -72,7 +72,7 @@ function PANEL:PositionTooltip()
 		return
 	end
 
-	self:InvalidateLayout( true )
+	self:PerformLayout()
 
 	local x, y = input.GetCursorPos()
 	local w, h = self:GetSize()

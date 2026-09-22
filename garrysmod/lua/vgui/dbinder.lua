@@ -35,16 +35,26 @@ function PANEL:DoClick()
 
 end
 
-function PANEL:DoMiddleClick()
+function PANEL:ResetToDefaultValue()
 
 	local def = self:GetDefaultNumber()
 	if ( def != 0 ) then self:SetValue( def ) end
 
 end
 
+function PANEL:DoMiddleClick()
+
+	self:ResetToDefaultValue()
+
+end
+
 function PANEL:DoRightClick()
 
-	self:SetValue( 0 )
+	
+	local m = DermaMenu()
+	if ( self:GetDefaultNumber() != 0 ) then m:AddOption( "#tool.reset_to_default", function() self:ResetToDefaultValue() end ):SetIcon( "icon16/arrow_rotate_clockwise.png" ) end
+	m:AddOption( "#tool.clear", function() self:SetValue( 0 ) end ):SetIcon( "icon16/stop_cross.png" )
+	m:Open()
 
 end
 

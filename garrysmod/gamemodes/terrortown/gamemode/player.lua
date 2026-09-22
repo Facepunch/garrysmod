@@ -769,7 +769,7 @@ function GM:ScalePlayerDamage(ply, hitgroup, dmginfo)
       local wep = util.WeaponFromDamage(dmginfo)
 
       if IsValid(wep) then
-         local s = wep:GetHeadshotMultiplier(ply, dmginfo) or 2
+         local s = wep.GetHeadshotMultiplier and wep:GetHeadshotMultiplier(ply, dmginfo) or 2
          dmginfo:ScaleDamage(s)
       end
    elseif (hitgroup == HITGROUP_LEFTARM or
@@ -1089,6 +1089,7 @@ function GM:Tick()
          end
 
          -- Run DNA Scanner think also when it is not deployed
+         local wep = ply:GetActiveWeapon()
          if IsValid(ply.scanner_weapon) and wep != ply.scanner_weapon then
             ply.scanner_weapon:Think()
          end

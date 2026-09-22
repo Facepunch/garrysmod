@@ -4,7 +4,6 @@ include("sb_info.lua")
 
 
 local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 
 local ttt_highlight_admins = CreateConVar("ttt_highlight_admins", "1", FCVAR_REPLICATED)
 

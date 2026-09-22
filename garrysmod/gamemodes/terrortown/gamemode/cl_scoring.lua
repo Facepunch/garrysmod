@@ -23,7 +23,7 @@ include("scoring_shd.lua")
 local skull_icon = Material("HUD/killicons/default")
 
 surface.CreateFont("WinHuge", {
-   font = "Tahoma",
+   font = GAMEMODE_DEFAULT_UI_FONT,
    size = 72,
    weight = 1000,
    shadow = true,

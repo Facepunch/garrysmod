@@ -82,7 +82,7 @@ function ENT:TraitorUse(ply)
    if not (IsValid(ply) and ply:IsActiveTraitor()) then return false end
    if not self:IsUsable() then return false end
 
-   if self:GetPos():Distance(ply:GetPos()) > self:GetUsableRange() then return false end
+   if self:GetPos():DistToSqr(ply:GetPos()) > self:GetUsableRange() ^ 2 then return false end
 
    local use, message = hook.Run("TTTCanUseTraitorButton", self, ply)
    if not use then

@@ -164,10 +164,10 @@ function PANEL:GetExplainerText()
 
 	-- Not a workshop addon, or a floating .gma (WSID=0)
 	if ( self.AddonID and self.AddonID:len() < 2 ) then
-		return language.GetPhrase( "problems.addon_lua_error" ):format( self.Title )
+		return language.FormatPhrase( "problems.addon_lua_error", self.Title )
 	end
 
-	return language.GetPhrase( "problems.workshop_lua_error" ):format( self.Title )
+	return language.FormatPhrase( "problems.workshop_lua_error", self.Title )
 
 end
 

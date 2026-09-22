@@ -206,6 +206,7 @@
 	"stepleft"	"Dirt.StepLeft"
 	"stepright"	"Dirt.StepRight"
 	"impacthard"	"Dirt.Impact"
+	"impactsoft"	"Dirt.Impact"
 	"scraperough"	"Dirt.Scrape"
 	"bulletimpact"	"Dirt.BulletImpact"
 
@@ -691,6 +692,7 @@
 	"density"	"900"
 	"bulletimpact"	"Watermelon.BulletImpact"
 	"impacthard"	"Watermelon.Impact"
+	"impactsoft"	"Watermelon.Impact"
 	"scraperough"	"Watermelon.Scrape"
 
 	"audiohardnessfactor" "0.25"
@@ -734,6 +736,7 @@
 	"friction"	"0.8"
 
 	"impacthard"	"Carpet.Impact"
+	"impactsoft"	"Carpet.Impact"
 	"bulletimpact"	"Carpet.BulletImpact"
 	"scraperough"	"Carpet.Scrape"
 

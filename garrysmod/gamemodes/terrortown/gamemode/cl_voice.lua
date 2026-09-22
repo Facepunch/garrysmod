@@ -18,7 +18,7 @@ local function LastWordsRecv()
    local death_type = net.ReadUInt(2)
 
    -- only append "--" if there's no ending interpunction
-   local final = string.match(words, "[\\.\\!\\?]$") != nil
+   local final = string.match(words, "[.!?]$") != nil
    local lastWordsStr = words .. (final and " " or "-- ")
 
    -- add optional context relating to death type
@@ -497,6 +497,7 @@ function GM:PlayerStartVoice( ply )
    end
 
    local pnl = g_VoicePanelList:Add("VoiceNotify")
+   pnl.Color = color_transparent
    pnl:Setup(ply)
    pnl:Dock(TOP)
 

@@ -207,7 +207,7 @@ function KARMA.RoundIncrement()
          KARMA.GiveReward(ply, bonus)
 
          if IsDebug() then
-            print(ply, "gets roundincr", incr)
+            print(ply, "gets roundincr", bonus)
          end
       end
    end

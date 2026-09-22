@@ -111,7 +111,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	if ( IsValid( inflictor ) and attacker == inflictor and ( inflictor:IsPlayer() or inflictor:IsNPC() ) ) then
 
 		inflictor = inflictor:GetActiveWeapon()
-		if ( !IsValid( attacker ) ) then inflictor = attacker end
+		if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	end
 

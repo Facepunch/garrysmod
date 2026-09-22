@@ -43,7 +43,8 @@ if ( SERVER ) then
 
 	function ENT:HandleQueuedExplosions()
 
-		for k, v in ipairs( self.QueuedExplosions ) do
+		for k = #self.QueuedExplosions, 1, -1 do
+			local v = self.QueuedExplosions[ k ]
 			if ( v.when <= CurTime() ) then
 				self:Explode( 0, v.player )
 				table.remove( self.QueuedExplosions, k )

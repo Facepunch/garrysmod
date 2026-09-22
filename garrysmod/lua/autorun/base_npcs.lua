@@ -159,6 +159,14 @@ AddNPC( {
 	NoDrop = true
 }, "npc_rollermine_hacked" )
 
+AddNPC( {
+	Class = "npc_manhack",
+	Category = Category,
+	KeyValues = { SquadName = "resistance" },
+	SpawnFlags = 2097152, -- SF_MANHACK_HACKED
+	NoDrop = true
+}, "npc_manhack_hacked" )
+
 Category = "#spawnmenu.category.zombies_aliens"
 
 AddNPC( {
@@ -237,8 +245,7 @@ AddNPC( {
 AddNPC( {
 	Class = "npc_antlionguard",
 	Category = Category,
-	KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
-	Material = "Models/antlion_guard/antlionGuard2"
+	KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" }
 }, "npc_antlionguardian" )
 
 AddNPC( {
@@ -400,7 +407,8 @@ AddNPC( {
 	Class = "npc_combinedropship",
 	Category = Category,
 	Offset = 300,
-	KeyValues = { SquadName = "overwatch" },
+	Health = 1000,
+	KeyValues = { SquadName = "overwatch", CanTakeDamageAndDie = "1" },
 	NoDrop = true
 } )
 
@@ -481,6 +489,7 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	AddNPC( { Class = "monster_human_assassin", Category = Category } )
 	AddNPC( { Class = "monster_babycrab", Category = Category } )
 	AddNPC( { Class = "monster_human_grunt", Category = Category } )
+	--AddNPC( { Class = "monster_human_grunt", Category = Category, KeyValues = { weapons = "8" } }, "monster_human_grunt_shotgun" )
 	AddNPC( { Class = "monster_cockroach", Category = Category } )
 	AddNPC( { Class = "monster_houndeye", Category = Category } )
 	AddNPC( { Class = "monster_scientist", Category = Category, KeyValues = { body = "-1" } } )
@@ -489,6 +498,7 @@ if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 	AddNPC( { Class = "monster_headcrab", Category = Category } )
 	AddNPC( { Class = "monster_alien_controller", Category = Category, NoDrop = true } )
 	AddNPC( { Class = "monster_barney", Category = Category } )
+	--AddNPC( { Class = "monster_gman", Category = Category } )
 
 	-- Hack to have it not invert angles again
 	local turretOnDupe = function( npc, data ) npc:SetKeyValue( "spawnflags", bit.bor( npc.SpawnFlags, 2048 ) ) end

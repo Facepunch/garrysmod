@@ -40,6 +40,8 @@ end
 
 function PLAYER:Loadout()
 
+	-- This would make sense, but breaks existing mods
+	--self.Player:StripWeapons()
 	self.Player:RemoveAllAmmo()
 
 	if ( cvars.Bool( "sbox_weapons", true ) ) then

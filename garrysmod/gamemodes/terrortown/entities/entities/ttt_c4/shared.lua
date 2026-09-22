@@ -253,12 +253,14 @@ function ENT:Explode(tr)
 
       -- extra push
       local phexp = ents.Create("env_physexplosion")
-      phexp:SetPos(pos)
-      phexp:SetKeyValue("magnitude", self:GetDmg())
-      phexp:SetKeyValue("radius", r_outer)
-      phexp:SetKeyValue("spawnflags", "19")
-      phexp:Spawn()
-      phexp:Fire("Explode")
+      if IsValid(phexp) then
+         phexp:SetPos(pos)
+         phexp:SetKeyValue("magnitude", self:GetDmg())
+         phexp:SetKeyValue("radius", r_outer)
+         phexp:SetKeyValue("spawnflags", "19")
+         phexp:Spawn()
+         phexp:Fire("Explode")
+      end
 
 
       -- few fire bits to ignite things
@@ -438,7 +440,6 @@ if SERVER then
 
       -- random selection process, lot like traitor selection
       local safe_count = self.SafeWiresForTime(time)
-      local safes = {}
       local picked = 0
       while picked < safe_count do
          local pick = math.random(1, #choices)
@@ -476,7 +477,7 @@ if SERVER then
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
 
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             -- These cases should never arise in normal play, so no messages
             return
          elseif time < C4_MINIMUM_TIME or time > C4_MAXIMUM_TIME then
@@ -512,7 +513,7 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and not bomb.DisarmCausedExplosion and bomb:GetArmed() then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             return
          elseif bomb.SafeWires[wire] or ply:IsTraitor() or ply == bomb:GetOwner() then
             LANG.Msg(ply, "c4_disarmed")
@@ -540,7 +541,7 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             return
          elseif not ply:CanCarryType(WEAPON_EQUIP1) then
             LANG.Msg(ply, "c4_no_room")
@@ -571,7 +572,7 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+         if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             return
          else
             -- spark to show onlookers we destroyed this bomb
@@ -587,7 +588,7 @@ end
 
 if CLIENT then
    surface.CreateFont("C4ModelTimer", {
-                         font = "Tahoma",
+                         font = GAMEMODE_DEFAULT_UI_FONT,
                          size = 13,
                          weight = 0,
                          antialias = false

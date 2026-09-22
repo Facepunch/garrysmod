@@ -1,6 +1,9 @@
 
 include( "controlpanel.lua" )
 
+local cvar_hide_disabled = CreateClientConVar( "spawnmenu_hide_disabled_tools", "0", true, false,
+								"Whether to hide disabled tools in the spawn menu or not." )
+
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_TabID", "TabID" )
@@ -18,14 +21,28 @@ function PANEL:Init()
 
 	local leftContainer = vgui.Create( "Panel", self.HorizontalDivider )
 
-	self.SearchBar = vgui.Create( "DTextEntry", leftContainer )
-	self.SearchBar:SetWidth( 130 )
+	local searchContainer = vgui.Create( "Panel", leftContainer )
+	searchContainer:Dock( TOP )
+	searchContainer:SetTall( 21 )  -- For the checkbox to fit neatly
+	searchContainer:DockMargin( 0, 0, 0, 5 )
+
+	self.SearchBar = vgui.Create( "DTextEntry", searchContainer )
 	self.SearchBar:SetPlaceholderText( "#spawnmenu.quick_filter" )
-	self.SearchBar:DockMargin( 0, 0, 0, 5 )
-	self.SearchBar:Dock( TOP )
+	self.SearchBar:DockMargin( 0, 0, 0, 0 )
+	self.SearchBar:Dock( FILL )
 	self.SearchBar:SetUpdateOnType( true )
 	self.SearchBar.OnValueChange = function( s, text )
 		self:PerformToolFiltering( text:Trim():lower() )
+	end
+
+	self.HideDeactivated = vgui.Create( "DCheckBox", searchContainer )
+	self.HideDeactivated:SetTooltip( "#spawnmenu.tools.hide_disabled" )
+	self.HideDeactivated:Dock( RIGHT )
+	self.HideDeactivated:DockMargin( 3, 3, 0, 3 )
+	self.HideDeactivated:SetConVar( cvar_hide_disabled:GetName() )
+
+	self.HideDeactivated.OnChange = function( s )
+		self.LastUpdate = 0 -- Force an update on the next think
 	end
 
 	self.List = vgui.Create( "DCategoryList", leftContainer )
@@ -57,19 +74,19 @@ function PANEL:Think()
 
 	if ( !self.IsToolTab ) then return end
 
-	if ( self.LastUpdate + 0.5 < SysTime() ) then
+	if ( self.LastUpdate + 1.5 < SysTime() ) then
 		self.LastUpdate = SysTime()
 
 		self:UpdateToolDisabledStatus()
 
 		local disabled = false
-		local noToolgun = IsValid( LocalPlayer() ) && !LocalPlayer():HasWeapon( "gmod_tool" )
+		local noToolgun = IsValid( LocalPlayer() ) and !LocalPlayer():HasWeapon( "gmod_tool" )
 		if ( self.ActiveCPName ) then
 			local cvar = GetConVar( "toolmode_allow_" .. self.ActiveCPName )
 			if ( cvar ) then disabled = !cvar:GetBool() end
 		end
 
-		self.WarningLabel.Text = noToolgun and "You do not have the Tool Gun to use tools!" or "Currently selected tool is disabled by the server!"
+		self.WarningLabel.Text = noToolgun and language.GetPhrase( "#spawnmenu.tools.no_toolgun" ) or language.GetPhrase( "#spawnmenu.tools.disabled_selected" )
 		if ( ( disabled or noToolgun ) != self.WarningLabel:IsVisible() ) then
 			self.WarningLabel:SetVisible( disabled or noToolgun )
 			self:InvalidateLayout()
@@ -81,30 +98,26 @@ end
 function PANEL:PerformToolFiltering( text )
 
 	for cid, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
-		local count = 0
+		local numInCat = 0
 		local category_matched = false
 
-		if ( string.find( category.Header:GetText():lower(), text, nil, true ) ) then
+		if ( text == "" or string.find( category.Header:GetText():lower(), text, nil, true ) ) then
 			category_matched = true
 		end
 
 		for id, item in ipairs( category:GetChildren() ) do
 			if ( item == category.Header ) then continue end
 
-			local str = item.Text
-			if ( str:StartsWith( "#" ) ) then str = str:sub( 2 ) end
-			str = language.GetPhrase( str )
-
-			if ( !category_matched && !string.find( str:lower(), text, nil, true ) ) then
+			local str = language.GetPhrase( item.Text )
+			if ( ( !category_matched and !string.find( str:lower(), text, nil, true ) ) or item._disabledHidden ) then
 				item:SetVisible( false )
 			else
 				item:SetVisible( true )
-				count = count + 1
+				numInCat = numInCat + 1
 			end
-			item:InvalidateLayout()
 		end
 
-		if ( count < 1 && !category_matched ) then
+		if ( numInCat < 1 and !category_matched ) then
 			category:SetVisible( false )
 		else
 			category:SetVisible( true )
@@ -122,6 +135,7 @@ function PANEL:PerformToolFiltering( text )
 		end
 		category:InvalidateLayout()
 	end
+
 	self.List.pnlCanvas:InvalidateLayout()
 	self.List:InvalidateLayout()
 
@@ -129,32 +143,61 @@ end
 
 function PANEL:UpdateToolDisabledStatus()
 
+	local shouldHide = cvar_hide_disabled:GetBool()
+	local searchText = self.SearchBar:GetText():Trim():lower()
+	local fakeTrace = { Entity = game.GetWorld(), Hit = false }
+	local anyChanged = false
+
 	for cid, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
+		local numInCat = 0
 
 		for id, item in ipairs( category:GetChildren() ) do
 			if ( item == category.Header ) then continue end
 
-			local cvar = GetConVar( "toolmode_allow_" .. item.Name )
-			if ( !cvar ) then continue end
+			-- Only tools have ConVars, some addons mix and match tool and non tool tabs
+			local enabled = !item.ConVar || item.ConVar:GetBool()
+			if ( item.ConVar && enabled and !hook.Run( "CanTool", LocalPlayer(), fakeTrace, item.Name, LocalPlayer():GetTool( item.Name ), 4 ) ) then
+				enabled = false
+			end
 
-			local enabled = cvar:GetBool()
-			if ( enabled ) then
-				if ( !hook.Run( "CanTool", LocalPlayer(), { Entity = game.GetWorld() }, item.Name, LocalPlayer():GetTool( item.Name ), 4 ) ) then
-					enabled = false
+			if ( enabled != item:IsEnabled() ) then
+				item:SetEnabled( enabled )
+				item:SetTooltip( !enabled and "#spawnmenu.tools.disabled" or nil )
+				anyChanged = true
+			end
+
+			local visible = !shouldHide or enabled
+
+			-- If searching, don't stomp the search resulsts
+			if ( searchText == "" ) then
+				if ( item:IsVisible() != visible ) then
+					item:SetVisible( visible )
+					anyChanged = true
 				end
-			end
-			
-			if ( enabled == item:IsEnabled() ) then continue end
 
-			item:SetEnabled( enabled )
-
-			if ( enabled ) then
-				item:SetTooltip()
-			else
-				item:SetTooltip( "#spawnmenu.tools.disabled" )
+				if ( visible ) then numInCat = numInCat + 1 end
 			end
+
+			item._disabledHidden = !visible
 		end
 
+		-- If searching, don't stomp the search resulsts
+		if ( searchText == "" ) then
+			category:SetVisible( numInCat > 0 )
+		end
+
+		if ( anyChanged ) then category:InvalidateLayout() end
+
+	end
+
+	if ( anyChanged ) then
+		self.List.pnlCanvas:InvalidateLayout()
+		self.List:InvalidateLayout()
+	end
+
+	-- If searching, re-run the search to hide disabled tools, so we don't stomp on search results
+	if ( searchText != "" ) then
+		self:PerformToolFiltering( searchText )
 	end
 
 end
@@ -174,7 +217,7 @@ function PANEL:LoadToolsFromTable( inTable )
 			v.ItemName = nil
 			v.Text = nil
 
-			if ( v[ 1 ] && v[ 1 ].Command and v[ 1 ].Command:StartsWith( "gmod_tool " ) ) then
+			if ( v[ 1 ] and v[ 1 ].Command and v[ 1 ].Command:StartsWith( "gmod_tool " ) ) then
 				self.IsToolTab = true
 			end
 
@@ -183,6 +226,8 @@ function PANEL:LoadToolsFromTable( inTable )
 		end
 
 	end
+
+	self.HideDeactivated:SetVisible( self.IsToolTab )
 
 end
 
@@ -193,10 +238,10 @@ function PANEL:AddCategory( name, catName, tItems )
 	Category:SetCookieName( "ToolMenu." .. tostring( self:GetTabID() ) .. "." .. tostring( name ) )
 
 	local tools = {}
-	for k, v in pairs( tItems ) do
-		local name = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
-		if ( name:StartsWith( "#" ) ) then name = name:sub( 2 ) end
-		tools[ language.GetPhrase( name ) ] = v
+	for k, v in ipairs( tItems ) do
+		local toolName = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
+		if ( toolName:StartsWith( "#" ) ) then toolName = toolName:sub( 2 ) end
+		tools[ language.GetPhrase( toolName ) ] = v
 	end
 
 	local currentMode = GetConVar( "gmod_toolmode" ):GetString()
@@ -220,6 +265,7 @@ function PANEL:AddCategory( name, catName, tItems )
 		item.Name						= v.ItemName
 		item.Controls					= v.Controls
 		item.Text						= v.Text
+		item.ConVar						= GetConVar( "toolmode_allow_" .. v.ItemName )
 
 		-- Mark this button as the one to select on first spawnmenu open
 		if ( currentMode == v.ItemName ) then

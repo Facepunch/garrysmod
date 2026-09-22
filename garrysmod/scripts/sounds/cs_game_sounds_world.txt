@@ -1,0 +1,45 @@
+
+"BrassBell.C"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"pitch"		"100,100"
+	"soundlevel"	"SNDLVL_80db"
+	"wave"		"ambient/misc/brass_bell_C.wav"
+}
+
+"BrassBell.D"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"pitch"		"100,100"
+	"soundlevel"	"SNDLVL_80db"
+	"wave"		"ambient/misc/brass_bell_D.wav"
+}
+
+"BrassBell.E"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"pitch"		"100,100"
+	"soundlevel"	"SNDLVL_80db"
+	"wave"		"ambient/misc/brass_bell_E.wav"
+}
+
+"BrassBell.F"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"pitch"		"100,100"
+	"soundlevel"	"SNDLVL_80db"
+	"wave"		"ambient/misc/brass_bell_F.wav"
+}
+
+"Door.GateInferno"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1"
+	"soundlevel"  "SNDLVL_75dB"
+	"pitch"		"90,110"
+	"wave"	"doors/door_metal_gate_move2.wav"
+}
