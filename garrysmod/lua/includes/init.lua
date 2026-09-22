@@ -84,6 +84,7 @@ end
 	Shared modules
 -----------------------------------------------------------]]
 include( "gmsave.lua" )
+include( "util/network_channel.lua" )
 
 --[[---------------------------------------------------------
 	Extensions
