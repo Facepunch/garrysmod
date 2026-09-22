@@ -122,7 +122,7 @@ function PANEL:Paint( w, h )
 	render.SetColorModulation( self.colColor.r / 255, self.colColor.g / 255, self.colColor.b / 255 )
 	render.SetBlend( ( self:GetAlpha() / 255 ) * ( self.colColor.a / 255 ) ) -- * surface.GetAlphaMultiplier()
 
-	for i = 0, 6 do
+	for i = 0, 5 do
 		local col = self.DirectionalLight[ i ]
 		if ( col ) then
 			render.SetModelLighting( i, col.r / 255, col.g / 255, col.b / 255 )

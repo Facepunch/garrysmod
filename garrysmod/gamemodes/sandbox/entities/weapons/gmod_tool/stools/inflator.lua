@@ -109,6 +109,7 @@ function TOOL:LeftClick( trace, scale )
 	local bone = trace.Entity:TranslatePhysBoneToBone( trace.PhysicsBone )
 	ScaleBone( trace.Entity, bone, scale or 1 )
 	self:GetWeapon():SetNextPrimaryFire( CurTime() + 0.01 )
+	self:GetWeapon():SetNextSecondaryFire( CurTime() + 0.01 )
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( trace.HitPos )

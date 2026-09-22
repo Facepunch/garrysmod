@@ -425,7 +425,7 @@ function PANEL:Init()
 		end
 
 		local exp1 = self.LightPresets:Add( "DButton" )
-		exp1:SetText( "Experimental Lighting" )
+		exp1:SetText( "Experimental Character Lighting" )
 		exp1:Dock( TOP )
 		exp1:DockMargin( 0, 0, 0, 3 )
 		exp1.DoClick = function( p )
@@ -443,13 +443,13 @@ function PANEL:Init()
 				-- left
 				{
 					type = MATERIAL_LIGHT_POINT,
-					pos = Vector( -100, -50, 72 ) ,
+					pos = Vector( -100, -50, 72 ),
 					color = Vector( 0.3, 0.6, 1 ) * 0.3
 				},
 				-- right
 				{
 					type = MATERIAL_LIGHT_POINT,
-					pos = Vector( 0, 100, 72 ) ,
+					pos = Vector( 0, 100, 72 ),
 					color = Vector( 1, 0.6, 0.3 ) * 0.1
 				},
 				-- front
@@ -622,7 +622,7 @@ function PANEL:RenderIcon()
 	tab.cam_fov = self.ModelPanel:GetFOV()
 	tab.lightbox = {}
 
-	for i = 0, 6 do
+	for i = 0, 5 do
 		local col = self.ModelPanel.DirectionalLight[ i ]
 		if ( col ) then
 			table.insert( tab.lightbox, Vector( col.r / 255, col.g / 255, col.b / 255 ) )

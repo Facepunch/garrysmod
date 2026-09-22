@@ -497,9 +497,9 @@ function GM:PlayerStartVoice( ply )
    end
 
    local pnl = g_VoicePanelList:Add("VoiceNotify")
+   pnl.Color = color_transparent
    pnl:Setup(ply)
    pnl:Dock(TOP)
-   pnl.Color = color_transparent
 
    local oldThink = pnl.Think
    pnl.Think = function( self )

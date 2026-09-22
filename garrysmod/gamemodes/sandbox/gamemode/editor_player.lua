@@ -325,6 +325,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			-- Use local lights as it produces much better looking rendering than the light box
 			render.SetLocalModelLights( self.LocalLights )
 
+			-- This allows us to have consistent preview, regardless of current map location
+			render.BindLocalCubemap( "editor/cubemap" )
 			return true
 		end
 

@@ -152,7 +152,12 @@ if ( SERVER ) then
 
 	function meta:LimitHit( str )
 
+		-- Prevent spamming the same limit hit message within the same tick
+		if ( self.__lastLimitHit && self.__lastLimitHit == str && self.__lastLimitHitTime && engine.TickCount() == self.__lastLimitHitTime ) then return end
+
 		self:SendLua( string.format( "hook.Run('LimitHit',%q)", str ) )
+		self.__lastLimitHitTime = engine.TickCount()
+		self.__lastLimitHit = str
 
 	end
 

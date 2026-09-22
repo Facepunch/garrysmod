@@ -69,23 +69,23 @@ function PANEL:SetText( text )
 	self.LabelName:SetText( text )
 end
 
-function PANEL:UpdatePlayerInfo()
+function PANEL:UpdatePlayerInfo( setColor )
 
 	if ( IsValid( self.ply ) ) then
 		self:SetText( self.ply:Nick() )
 		self.Avatar:SetPlayer( self.ply )
-		self.Color = hook.Run( "GetTeamColor", self.ply )
+		if ( !setColor ) then self.Color = hook.Run( "GetTeamColor", self.ply ) end
 	else
 		self:SetText( "Unknown Player " .. self.plyIndex )
 		self.Avatar:SetPlayer( NULL )
-		self.Color = hook.Run( "GetTeamColor", NULL )
+		if ( !setColor ) then self.Color = hook.Run( "GetTeamColor", NULL ) end
 	end
 
 end
 
 function PANEL:Think()
 
-	self:UpdatePlayerInfo()
+	self:UpdatePlayerInfo( true )
 
 	if ( self.fadeAnim ) then
 		self.fadeAnim:Run()

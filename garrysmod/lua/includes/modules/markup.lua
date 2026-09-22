@@ -138,6 +138,7 @@ local function ExtractParams( p1, p2, p3 )
 				for k, v in string.gmatch( p2, "(%d+),?" ) do
 					rgba[ x[ n ] ] = tonumber( k )
 					n = n + 1
+					if ( n > 4 ) then break end
 				end
 			end
 

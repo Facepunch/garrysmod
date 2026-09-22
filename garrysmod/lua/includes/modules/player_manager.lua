@@ -24,7 +24,9 @@ local HandNames = {}
 function AddValidModel( name, model, title, category )
 
 	-- Badly made existing addons
-	if ( name != nil && !isstring( name ) ) then ErrorNoHaltWithStack( "player_manager.AddValidModel - bad argument #3 (string expected, got " .. type( name ) .. ")" ) title = nil end
+	if ( name != nil && !isstring( name ) ) then ErrorNoHaltWithStack( "player_manager.AddValidModel - bad argument #1 (string expected, got " .. type( name ) .. ")" ) return end
+	if ( model != nil && !isstring( model ) ) then ErrorNoHaltWithStack( "player_manager.AddValidModel - bad argument #2 (string expected, got " .. type( model ) .. ")" ) return end
+	if ( title != nil && !isstring( title ) ) then ErrorNoHaltWithStack( "player_manager.AddValidModel - bad argument #3 (string expected, got " .. type( title ) .. ")" ) title = nil end
 	if ( category != nil && !isstring( category ) ) then ErrorNoHaltWithStack( "player_manager.AddValidModel - bad argument #4 (string expected, got " .. type( category ) .. ")" ) category = nil end
 
 	ModelList[ name ] = { model = model, title = title or name, category = category or "#spawnmenu.category.other" }
