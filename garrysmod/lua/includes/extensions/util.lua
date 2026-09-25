@@ -416,3 +416,47 @@ function util.IsBinaryModuleInstalled( name )
 
 	return false
 end
+
+--[[---------------------------------------------------------
+	Name: IsSteamID( steamid, blockBot )
+	Desc: Returns true if the argument is a valid SteamID
+-----------------------------------------------------------]]
+function util.IsSteamID( steamid, blockBot)
+	if ( !isstring( steamid ) or steamid == "" ) then return false end
+	if ( steamid == "BOT" and !blockBot ) then return true end
+	if ( steamid:len() ~= 19 ) then return false end 
+
+	return steamid:match( "^STEAM_[01]:[01]:[0-9]+$" ) ~= nil
+end
+
+--[[---------------------------------------------------------
+	Name: IsSteamID64( steamid, blockBot )
+	Desc: Returns true if the argument is a valid SteamID64
+-----------------------------------------------------------]]
+function util.IsSteamID64( steamid, blockBot )
+	if ( !isstring( steamid ) or steamid == "" ) then return false end
+	if ( steamid:len() ~= 17 ) then return false end
+	if ( steamid:match( "9007199%d+" ) and !blockBot ) then return true end
+
+	return steamid:match( "7656119%d+" ) ~= nil
+end
+
+--[[---------------------------------------------------------
+	Name: SteamIDToAccountID( steamid )
+	Desc: Converts a SteamID to an AccountID
+-----------------------------------------------------------]]
+function util.SteamIDToAccountID( steamid )
+	if ( !util.IsSteamID( steamid, true ) ) then return 0 end
+
+	return tonumber( steamid:sub( 11 ) ) * 2 + tonumber( steamid:sub( 9, 9 ) )
+end
+
+--[[---------------------------------------------------------
+	Name: SteamID64ToAccountID( steamid64 )
+	Desc: Converts a SteamID64 to an AccountID
+-----------------------------------------------------------]]
+function util.SteamID64ToAccountID( steamid64 )
+	if ( !util.IsSteamID64( steamid64, true ) ) then return 0 end
+
+	return util.SteamIDToAccountID( util.SteamIDFrom64( steamid64 ) )
+end
