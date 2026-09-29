@@ -335,7 +335,7 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 		-- This is not ideal because it is tested on the server, but whatever. Better than checking "RopeMaterials" list.
 		local mat = Material( material )
 		local shader = mat:GetShader():lower()
-		local shaderGood = shader == "cable_dx9" or shader == "cable_dx8" or shader == "cable" or shader == "unlitgeneric" or shader == "splinerope"
+		local shaderGood = string.find( shader, "cable" ) or shader == "unlitgeneric" or shader == "splinerope"
 		if ( mat and !mat:IsError() and shaderGood ) then
 			rope:SetKeyValue( "RopeMaterial", material )
 		end
