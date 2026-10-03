@@ -118,7 +118,7 @@ function GM:PostRenderVGUI()
 
 end
 
-local PhysgunHalos = {}
+local physgunHalos = {}
 
 --[[---------------------------------------------------------
 	Name: gamemode:DrawPhysgunBeam()
@@ -126,11 +126,59 @@ local PhysgunHalos = {}
 -----------------------------------------------------------]]
 function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
-	if ( physgun_halo:GetInt() == 0 ) then return true end
+	if ( !physgun_halo:GetBool() ) then 
+		
+		physgunHalos = nil
+		
+		return true 
 
-	if ( IsValid( target ) ) then
-		PhysgunHalos[ ply ] = target
 	end
+
+	if ( !IsValid( target ) ) then return true end
+
+	physgunHalos = physgunHalos || {}
+
+	local entsToHalo = {}
+
+	local haloColor = ply:GetWeaponColor() + VectorRand() * 0.3
+	local haloSize = math.random( 1, 2 )
+
+	haloColor = Color( haloColor.r * 255, haloColor.g * 255, haloColor.b * 255, 255 )
+
+	local DeterminePhysgunHalo = target.DeterminePhysgunHalo 
+	
+	if ( DeterminePhysgunHalo ) then
+
+		local val, color, size = DeterminePhysgunHalo( target, ply, haloColor, haloSize, weapon, boneid, pos )
+
+		if ( val != nil ) then
+
+			haloColor = color or haloColor
+			haloSize = size or haloSize
+
+			if ( isentity( val ) ) then
+
+				entsToHalo[ 1 ] = val
+
+			elseif ( istable( val ) ) then
+
+				entsToHalo = val
+
+			end
+
+		end
+
+	else
+
+		entsToHalo[ 1 ] = target
+
+	end
+
+	-- We put these in the table for convenience
+	entsToHalo.color = haloColor
+	entsToHalo.size = haloSize
+
+	physgunHalos[ ply ] = entsToHalo
 
 	return true
 
@@ -138,23 +186,26 @@ end
 
 hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
-	if ( !PhysgunHalos || table.IsEmpty( PhysgunHalos ) ) then return end
+	if ( !physgunHalos ) then return end
 
-	for k, v in pairs( PhysgunHalos ) do
+	for ply, entsToHalo in pairs( physgunHalos ) do
 
-		if ( !IsValid( k ) ) then continue end
+		if ( !IsValid( ply ) or !entsToHalo[ 1 ] ) then continue end
 
-		local size = math.random( 1, 2 )
-		local colr = k:GetWeaponColor() + VectorRand() * 0.3
+		local size = entsToHalo.size
+		local color = entsToHalo.color
 
-		halo.Add( PhysgunHalos, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
+		-- Remove these from the table, we got what we needed - halo.Add only accepts entities
+		entsToHalo.size = nil
+		entsToHalo.color = nil
+
+		halo.Add( entsToHalo, color, size, size, 1, true, false )
 
 	end
 
-	PhysgunHalos = {}
+	physgunHalos = {}
 
 end )
-
 
 --[[---------------------------------------------------------
 	Name: gamemode:NetworkEntityCreated()
