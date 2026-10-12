@@ -6,8 +6,8 @@ local pp_dof_spacing = CreateClientConVar( "pp_dof_spacing", "512", true, false 
 
 -- Global table to hold the DoF effect
 DOF_Ents = {}
-DOF_SPACING = 0
-DOF_OFFSET = 0
+DOF_SPACING = pp_dof_spacing:GetFloat()
+DOF_OFFSET = pp_dof_initlength:GetFloat()
 
 local NUM_DOF_NODES = 16
 
@@ -45,11 +45,12 @@ function DOF_Start()
 
 end
 
-hook.Add( "Think", "DOFThink", function()
+cvars.AddChangeCallback( "pp_dof_initlength", function( name, oldvalue, newvalue )
+	DOF_OFFSET = tonumber( newvalue )
+end )
 
-	DOF_SPACING = pp_dof_spacing:GetFloat()
-	DOF_OFFSET = pp_dof_initlength:GetFloat()
-
+cvars.AddChangeCallback( "pp_dof_spacing", function( name, oldvalue, newvalue )
+	DOF_SPACING = tonumber( newvalue )
 end )
 
 cvars.AddChangeCallback( "pp_dof", function( name, oldvalue, newvalue )
