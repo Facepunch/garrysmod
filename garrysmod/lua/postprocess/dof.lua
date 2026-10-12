@@ -6,8 +6,8 @@ local pp_dof_spacing = CreateClientConVar( "pp_dof_spacing", "512", true, false 
 
 -- Global table to hold the DoF effect
 DOF_Ents = {}
-DOF_SPACING = pp_dof_initlength:GetFloat()
-DOF_OFFSET = pp_dof_spacing:GetFloat()
+DOF_SPACING = pp_dof_spacing:GetFloat()
+DOF_OFFSET = pp_dof_initlength:GetFloat()
 
 local NUM_DOF_NODES = 16
 
