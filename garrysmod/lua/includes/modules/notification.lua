@@ -19,79 +19,87 @@ NOTIFY_CLEANUP	= 4
 
 module( "notification", package.seeall )
 
-local NoticeMaterial = {}
-
-NoticeMaterial[ NOTIFY_GENERIC ]	= Material( "vgui/notices/generic" )
-NoticeMaterial[ NOTIFY_ERROR ]		= Material( "vgui/notices/error" )
-NoticeMaterial[ NOTIFY_UNDO ]		= Material( "vgui/notices/undo" )
-NoticeMaterial[ NOTIFY_HINT ]		= Material( "vgui/notices/hint" )
-NoticeMaterial[ NOTIFY_CLEANUP ]	= Material( "vgui/notices/cleanup" )
+local Notices = {}
+local NoticeIcons = {}
 
 local NOTIF_START_X = 200 -- Pixels
 local NOTIF_CHARGE_X = 0.04 -- Percent of screen size
 local NOTIF_GAP_X = 0.015
 local NOTIF_ANCHOR_Y = 0.8
 
-local Notices = {}
+NoticeIcons[ NOTIFY_GENERIC ]	= "vgui/notices/generic"
+NoticeIcons[ NOTIFY_ERROR ]		= "vgui/notices/error"
+NoticeIcons[ NOTIFY_UNDO ]		= "vgui/notices/undo"
+NoticeIcons[ NOTIFY_HINT ]		= "vgui/notices/hint"
+NoticeIcons[ NOTIFY_CLEANUP ]	= "vgui/notices/cleanup"
 
-function AddProgress( uid, text, frac )
-
-	if ( IsValid( Notices[ uid ] ) ) then
-
-		Notices[ uid ].StartTime = SysTime()
-		Notices[ uid ].Length = -1
-		Notices[ uid ]:SetText( text )
-		Notices[ uid ]:SetProgress( frac )
-		return
-
-	end
+local function CreateNotice( msg, length )
 
 	local parent = nil
 	if ( GetOverlayPanel ) then parent = GetOverlayPanel() end
 
-	local Panel = vgui.Create( "NoticePanel", parent )
-	Panel.StartTime = SysTime()
-	Panel.Length = -1
-	Panel.VelX = -5
-	Panel.VelY = 0
-	Panel.fx = ScrW() + NOTIF_START_X
-	Panel.fy = ScrH()
-	Panel:SetAlpha( 255 )
-	Panel:SetText( text )
-	Panel:SetPos( Panel.fx, Panel.fy )
-	Panel:SetProgress( frac )
+	local notice = vgui.Create( "NoticePanel", parent )
+	notice.StartTime = SysTime()
+	notice.Length = length
+	notice.VelX = -5
+	notice.VelY = 0
+	notice.fx = ScrW() + NOTIF_START_X
+	notice.fy = ScrH()
+	notice:SetAlpha( 255 )
+	notice:SetText( msg )
+	notice:SetPos( notice.fx, notice.fy )
 
-	Notices[ uid ] = Panel
+	return notice
 
 end
 
-function Kill( uid )
+function Add( text, length, icon, color )
 
-	if ( !IsValid( Notices[ uid ] ) ) then return end
+	local notice = CreateNotice( text, math.max( length or 5, 0 ) )
+	notice:SetIcon( icon or "vgui/notices/generic" )
 
-	Notices[ uid ].StartTime = SysTime()
-	Notices[ uid ].Length = 0.8
+	if ( color ) then
+	  	notice.Label:SetTextColor( color )
+	end
+
+	return table.insert( Notices, notice )
 
 end
 
 function AddLegacy( text, type, length )
 
-	local parent = nil
-	if ( GetOverlayPanel ) then parent = GetOverlayPanel() end
+	Add( text, length or 0, NoticeIcons[ type ] )
 
-	local Panel = vgui.Create( "NoticePanel", parent )
-	Panel.StartTime = SysTime()
-	Panel.Length = math.max( length, 0 )
-	Panel.VelX = -5
-	Panel.VelY = 0
-	Panel.fx = ScrW() + NOTIF_START_X
-	Panel.fy = ScrH()
-	Panel:SetAlpha( 255 )
-	Panel:SetText( text )
-	Panel:SetLegacyType( type )
-	Panel:SetPos( Panel.fx, Panel.fy )
+end
 
-	table.insert( Notices, Panel )
+function AddProgress( uid, text, frac )
+
+	local notice = Notices[ uid ]
+
+	if ( IsValid( notice ) ) then
+
+		notice.StartTime = SysTime()
+		notice.Length = -1
+		notice:SetText( text )
+		notice:SetProgress( frac )
+		return
+
+	end
+
+	notice = CreateNotice( text, -1 )
+	notice:SetProgress( frac )
+
+	Notices[ uid ] = notice
+
+end
+
+function Kill( uid )
+
+	local notice = Notices[ uid ]
+	if ( !IsValid( notice ) ) then return end
+
+	notice.StartTime = SysTime()
+	notice.Length = 0.8
 
 end
 
@@ -227,12 +235,12 @@ function PANEL:SizeToContents()
 
 end
 
-function PANEL:SetLegacyType( t )
+function PANEL:SetIcon( icon )
 
 	if ( IsValid( self.Image ) ) then self.Image:Remove() end
 
 	self.Image = vgui.Create( "DImage", self )
-	self.Image:SetMaterial( NoticeMaterial[ t ] )
+	self.Image:SetMaterial( Material( icon ) )
 	self.Image:SetSize( iconH, iconH )
 	self.Image:Dock( LEFT )
 
@@ -246,6 +254,12 @@ function PANEL:SetLegacyType( t )
 	end
 
 	self:SizeToContents()
+
+end
+
+function PANEL:SetLegacyType( t )
+
+	self:SetIcon( NoticeIcons[ t ] )
 
 end
 
