@@ -63,6 +63,74 @@ function PANEL:Call( js )
 	self:QueueJavascript( js )
 end
 
+local function BuildFunction( func, ... )
+
+	--
+	-- Build a Javascript-safe JS function call.
+	-- To be run by either panel:RunFunction or panel:QueueFunction
+	--
+	-- First parameter is the JS function name,
+	-- additional parameters are the values to provide to the function call.
+	-- The values provided to the function call are treated as strings except where noted below.
+	--
+
+	local formatArgs = {}
+	local safeArgs = {}
+
+	for k, v in ipairs( { ... } ) do
+
+		if isbool( v ) then -- Booleans
+
+			formatArgs[ k ] = '%s'
+			safeArgs[ k ] = v and true or false
+
+		elseif isnumber( v ) then -- Numbers
+
+			formatArgs[ k ] = '%s'
+			safeArgs[ k ] = v
+
+		elseif IsColor( v ) then -- Colors, convert to CSS hex color string
+
+			formatArgs[ k ] = '"%s"'
+			safeArgs[ k ] = v:ToHex() -- "#rrggbb"/"#rrggbbaa"
+
+		elseif istable( v ) then -- Tables, convert to json object
+
+			formatArgs[ k ] = 'JSON.parse("%s")'
+			safeArgs[ k ] = string.JavascriptSafe( util.TableToJSON( v ) )
+
+		else -- Strings, and all else treated as strings
+
+			formatArgs[ k ] = '"%s"'
+			safeArgs[ k ] = string.JavascriptSafe( tostring( v ) )
+
+		end
+
+	end
+
+	func = string.gsub( func, "[^%w%._]", "" ) -- Function name is limited to alphanumeric, underscore "_", dot "."
+	return string.format( [[ %s( ]] .. table.concat( formatArgs, ", " ) .. [[ ); ]], func, unpack( safeArgs ) )
+
+end
+
+function PANEL:RunFunction( func, ... )
+
+	--
+	-- Build and Run a Javascript function immediately.
+	--
+	self:RunJavascript( BuildFunction( func, ... ) )
+	
+end
+
+function PANEL:QueueFunction( func, ... )
+
+	--
+	-- Build and Queue a Javascript function.
+	--
+	self:QueueJavascript( BuildFunction( func, ... ) )
+	
+end
+
 function PANEL:ConsoleMessage( msg, file, line, severity )
 
 	if ( !isstring( msg ) ) then msg = "*js variable*" end
