@@ -104,8 +104,8 @@ end
 -- Quick hack to limit hats to models that fit them well
 local Hattables = { "phoenix.mdl", "arctic.mdl", "Group01", "monk.mdl" }
 local function CanWearHat(ply)
-   local path = string.Explode("/", ply:GetModel())
-   if #path == 1 then path = string.Explode("\\", path[1]) end
+   local path = string.Split(ply:GetModel(), "/")
+   if #path == 1 then path = string.Split(path[1], "\\") end
 
    return table.HasValue(Hattables, path[3])
 end

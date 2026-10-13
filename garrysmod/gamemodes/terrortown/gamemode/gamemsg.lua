@@ -130,7 +130,7 @@ function GM:PlayerSay(ply, text, team_only)
       local team = ply:Team() == TEAM_SPEC
       if team and not DetectiveMode() then
          local filtered = {}
-         for k, v in ipairs(string.Explode(" ", text)) do
+         for k, v in ipairs(string.Split(text, " ")) do
             -- grab word characters and whitelisted interpunction
             -- necessary or leetspeek will be used (by trolls especially)
             local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")

@@ -113,7 +113,7 @@ function MSTACK:WrapText(text, width)
    end
    
    local lines = {""}
-   for i, wrd in ipairs(string.Explode(" ", text)) do -- No spaces means you're screwed
+   for i, wrd in ipairs(string.Split(text, " ")) do -- No spaces means you're screwed
       local l = #lines
       local added = lines[l] .. " " .. wrd
       w, _ = surface.GetTextSize(added)

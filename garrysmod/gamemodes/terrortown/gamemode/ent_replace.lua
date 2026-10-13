@@ -581,7 +581,7 @@ local function ImportSettings(map)
 
    local settings = {}
 
-   local lines = string.Explode("\n", buf)
+   local lines = string.Split(buf, "\n")
    for k, line in pairs(lines) do
       if string.match(line, "^setting") then
          local key, val = string.match(line, "^setting:\t(%w*) ([0-9]*)")
@@ -607,9 +607,9 @@ local function ImportEntities(map)
    if not fname then return end
 
    local num = 0
-   for k, line in ipairs(string.Explode("\n", file.Read(fname, "GAME"))) do
+   for k, line in ipairs(string.Split(file.Read(fname, "GAME"), "\n")) do
       if (not string.match(line, "^#")) and (not string.match(line, "^setting")) and line != "" and string.byte(line) != 0 then
-         local data = string.Explode("\t", line)
+         local data = string.Split(line, "\t")
 
          local fail = true -- pessimism
 
@@ -618,16 +618,16 @@ local function ImportEntities(map)
             local ang = nil
             local pos = nil
 
-            local posraw = string.Explode(" ", data[2])
+            local posraw = string.Split(data[2], " ")
             pos = Vector(tonumber(posraw[1]), tonumber(posraw[2]), tonumber(posraw[3]))
 
-            local angraw = string.Explode(" ", data[3])
+            local angraw = string.Split(data[3], " ")
             ang = Angle(tonumber(angraw[1]), tonumber(angraw[2]), tonumber(angraw[3]))
 
             -- Random weapons have a useful keyval
             local kv = {}
             if data[4] then
-               local kvraw = string.Explode(" ", data[4])
+               local kvraw = string.Split(data[4], " ")
                local key = kvraw[1]
                local val = tonumber(kvraw[2])
 

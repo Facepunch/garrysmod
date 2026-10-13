@@ -9,9 +9,9 @@
 function ENT:StoreOutput( name, info )
 
 	-- Newer Source Engine games use this symbol as a delimiter
-	local rawData = string.Explode( "\x1B", info )
+	local rawData = string.Split( info, "\x1B" )
 	if ( #rawData < 2 ) then
-		rawData = string.Explode( ",", info )
+		rawData = string.Split( info, "," )
 	end
 
 	local Output = {}

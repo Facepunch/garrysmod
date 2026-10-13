@@ -198,7 +198,7 @@ function FireProblemFromEngine( id, severity, params )
 		-- missing_addon_file
 		-- addon_download_failed = title;reason
 		local text = language.GetPhrase( "problem." .. id )
-		text = text:format( unpack( string.Explode( ";", params ) ) )
+		text = text:format( unpack( string.Split( params, ";" ) ) )
 
 		FireProblem( { id = id .. params, text = text, severity = severity, type = "addons" } )
 	end

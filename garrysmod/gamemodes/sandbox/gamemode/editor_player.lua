@@ -184,7 +184,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				mdl.Entity:SetBodygroup( pnl.typenum, math.floor( val ) )
 
-				local str = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+				local str = string.Split( GetConVarString( "cl_playerbodygroups" ), " " )
 				if ( #str < pnl.typenum + 1 ) then for i = 1, pnl.typenum + 1 do str[ i ] = str[ i ] or 0 end end
 				str[ pnl.typenum + 1 ] = math.floor( val )
 				RunConsoleCommand( "cl_playerbodygroups", table.concat( str, " " ) )
@@ -222,7 +222,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				bgTab.Tab:SetVisible( true )
 			end
 
-			local groups = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+			local groups = string.Split( GetConVarString( "cl_playerbodygroups" ), " " )
 			for k = 0, mdl.Entity:GetNumBodyGroups() - 1 do
 				if ( mdl.Entity:GetBodygroupCount( k ) <= 1 ) then continue end
 

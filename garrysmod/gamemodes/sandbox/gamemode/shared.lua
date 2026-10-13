@@ -172,7 +172,7 @@ function GM:EntityKeyValue( ent, key, value )
 
 	-- Prop has a list of tools that are allowed on it.
 	if ( key == "gmod_allowtools" ) then
-		ent.m_tblToolsAllowed = string.Explode( " ", value )
+		ent.m_tblToolsAllowed = string.Split( value, " " )
 	end
 
 end

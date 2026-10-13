@@ -203,7 +203,7 @@ end )
 --
 search.AddProvider( function( str )
 
-	local searchTerms = string.Explode( " ", str )
+	local searchTerms = string.Split( str, " " )
 
 	local list = {}
 

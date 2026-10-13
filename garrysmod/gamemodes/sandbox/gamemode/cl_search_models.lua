@@ -55,7 +55,7 @@ end )
 local model_list = nil
 search.AddProvider( function( str )
 
-	local searchTerms = string.Explode( " ", str )
+	local searchTerms = string.Split( str, " " )
 
 	if ( model_list == nil ) then
 
@@ -121,7 +121,7 @@ end )
 local function AddSearchProvider( listname, ctype, stype )
 	search.AddProvider( function( str )
 
-		local searchTerms = string.Explode( " ", str )
+		local searchTerms = string.Split( str, " " )
 
 		local results = {}
 		for name_c, v in pairs( list.Get( listname ) ) do

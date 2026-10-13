@@ -265,7 +265,7 @@ function string.Left( str, num ) return string_sub( str, 1, num ) end
 function string.Right( str, num ) return string_sub( str, -num ) end
 
 function string.Replace( str, tofind, toreplace )
-	local tbl = string.Explode( tofind, str )
+	local tbl = string.Split( str, tofind )
 	if ( tbl[ 1 ] ) then return table.concat( tbl, toreplace ) end
 	return str
 end
@@ -430,7 +430,7 @@ function string.NiceName( name )
 
 	-- Try to split text into words, where words would start with single uppercase character
 	local newParts = {}
-	for id, str in ipairs( string.Explode( " ", name ) ) do
+	for id, str in ipairs( string.Split( name, " " ) ) do
 		local wordStart = 1
 		for i = 2, str:len() do
 			local c = str[ i ]
