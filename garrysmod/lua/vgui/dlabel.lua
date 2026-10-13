@@ -183,14 +183,18 @@ function PANEL:OnMousePressed( mousecode )
 
 	end
 
-	-- Do not do selections if playing is spawning things while moving
-	local isPlyMoving = LocalPlayer && IsValid( LocalPlayer() ) && ( LocalPlayer():KeyDown( IN_FORWARD ) || LocalPlayer():KeyDown( IN_BACK ) || LocalPlayer():KeyDown( IN_MOVELEFT ) || LocalPlayer():KeyDown( IN_MOVERIGHT ) )
+	if ( mousecode == MOUSE_LEFT or mousecode == MOUSE_RIGHT ) then
 
-	-- If we're selectable and have shift held down then go up
-	-- the parent until we find a selection canvas and start box selection
-	if ( self:IsSelectable() && mousecode == MOUSE_LEFT && ( input.IsShiftDown() || input.IsControlDown() ) && !isPlyMoving ) then
+		-- Do not do selections if playing is spawning things while moving
+		local isPlyMoving = LocalPlayer && IsValid( LocalPlayer() ) && ( LocalPlayer():KeyDown( IN_FORWARD ) || LocalPlayer():KeyDown( IN_BACK ) || LocalPlayer():KeyDown( IN_MOVELEFT ) || LocalPlayer():KeyDown( IN_MOVERIGHT ) )
 
-		return self:StartBoxSelection()
+		-- If we're selectable and have shift held down then go up
+		-- the parent until we find a selection canvas and start box selection
+		if ( self:IsSelectable() && mousecode == MOUSE_LEFT && ( input.IsShiftDown() || input.IsControlDown() ) && !isPlyMoving ) then
+
+			return self:StartBoxSelection()
+
+		end
 
 	end
 
@@ -199,10 +203,14 @@ function PANEL:OnMousePressed( mousecode )
 	self:OnDepressed()
 	self:InvalidateLayout( true )
 
-	--
-	-- Tell DragNDrop that we're down, and might start getting dragged!
-	--
-	self:DragMousePress( mousecode )
+	if ( mousecode == MOUSE_LEFT or mousecode == MOUSE_RIGHT ) then
+
+		--
+		-- Tell DragNDrop that we're down, and might start getting dragged!
+		--
+		self:DragMousePress( mousecode )
+
+	end
 
 end
 
