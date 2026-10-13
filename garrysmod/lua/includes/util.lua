@@ -236,10 +236,12 @@ function Particle( name )
 	return name
 end
 
--- Some nice globals so we don't keep creating objects for no reason
-vector_origin		= Vector( 0, 0, 0 )
-vector_up			= Vector( 0, 0, 1 )
-angle_zero			= Angle( 0, 0, 0 )
+if ( !MENU_DLL ) then
+	-- Some nice globals so we don't keep creating objects for no reason
+	vector_origin		= Vector( 0, 0, 0 )
+	vector_up			= Vector( 0, 0, 1 )
+	angle_zero			= Angle( 0, 0, 0 )
+end
 
 color_white			= Color( 255, 255, 255, 255 )
 color_black			= Color( 0, 0, 0, 255 )

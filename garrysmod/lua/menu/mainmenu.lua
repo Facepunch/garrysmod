@@ -217,7 +217,7 @@ function OnMenuFailedToLoad()
 	btn_exit:Dock( TOP )
 	btn_exit:DockMargin( 0, 0, 0, 5 )
 	btn_exit:SetText( "#quit" )
-	btn_exit.DoClick = function() RunGameUICommand( "quit" ) end
+	btn_exit.DoClick = function() RunGameUICommand( "QuitNoConfirm" ) end
 end
 
 
@@ -233,7 +233,7 @@ function UpdateServerSettings()
 		p2p_friendsonly = GetConVarString( "p2p_friendsonly" )
 	}
 
-	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
+	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", "GAME" )
 
 	if ( settings_file ) then
 
