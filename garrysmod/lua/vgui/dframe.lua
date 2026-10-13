@@ -233,6 +233,9 @@ end
 
 function PANEL:PerformLayout( w, h )
 
+	-- Addons make me sad
+	w = w or self:GetWide()
+
 	local titlePush = 0
 
 	if ( IsValid( self.imgIcon ) ) then

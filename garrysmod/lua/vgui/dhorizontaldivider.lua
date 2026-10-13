@@ -93,6 +93,9 @@ end
 
 function PANEL:PerformLayout( w, h )
 
+	-- Addons make me sad
+	w = w or self:GetWide()
+
 	-- On resize, use the percent to set the left width, so that it re-scales with the size of the panel
 	if ( self._iLeftWidthPct && self._iLastWidth && self._iLastWidth != w ) then
 		self:SetLeftWidth( math.floor( self._iLeftWidthPct * w ) )
