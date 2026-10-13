@@ -95,7 +95,7 @@ function ENT:DrawTranslucent( flags )
 		return
 	end
 
-	if ( self:BeingLookedAtByLocalPlayer() ) then
+	if ( self.BeingLookedAtByLocalPlayer && self:BeingLookedAtByLocalPlayer() ) then
 		render.SetMaterial( self.GripMaterialHover )
 	else
 		render.SetMaterial( self.GripMaterial )
