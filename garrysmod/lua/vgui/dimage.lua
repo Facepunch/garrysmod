@@ -86,6 +86,22 @@ function PANEL:SetMaterial( Mat )
 		self.ActualHeight = self.m_Material:Height()
 	end
 
+	local SubRectPos = self.m_Material:GetString( "$pos" )
+	local SubRectSize = self.m_Material:GetString( "$size" )
+	if ( SubRectPos && SubRectSize ) then
+		self.SubRectPos = { string.match( SubRectPos, "([^%s]+)%s+([^%s]+)" ) }
+		self.SubRectSize = { string.match( SubRectSize, "([^%s]+)%s+([^%s]+)" ) }
+
+		-- HACK: try to avoid bordering texture areas leaking into ours
+		self.SubRectPos[ 1 ] = self.SubRectPos[ 1 ] + 0.5
+		self.SubRectPos[ 2 ] = self.SubRectPos[ 2 ] + 0.5
+		self.SubRectSize[ 1 ] = self.SubRectSize[ 1 ] - 1
+		self.SubRectSize[ 2 ] = self.SubRectSize[ 2 ] - 1
+	else
+		self.SubRectPos = nil
+		self.SubRectSize = nil
+	end
+
 end
 
 function PANEL:SetImage( strImage, strBackup )
@@ -115,11 +131,10 @@ function PANEL:FixVertexLitMaterial()
 	-- UnlitGeneric so it doesn't go dark when we enter a dark room
 	-- and flicker all about
 	--
-
 	local Mat = self:GetMaterial()
 	local strImage = Mat:GetName()
-
-	if ( string.find( Mat:GetShader(), "VertexLitGeneric" ) or string.find( Mat:GetShader(), "Cable" ) ) then
+	local strShader = Mat:GetShader():lower()
+	if ( string.find( strShader, "vertexlitgeneric" ) or string.find( strShader, "lightmappedgeneric" ) or string.find( strShader, "cable" ) ) then
 
 		local t = Mat:GetString( "$basetexture" )
 
@@ -129,6 +144,8 @@ function PANEL:FixVertexLitMaterial()
 			params[ "$basetexture" ] = t
 			params[ "$vertexcolor" ] = 1
 			params[ "$vertexalpha" ] = 1
+			params[ "$pos" ] = Mat:GetString( "$pos" )
+			params[ "$size" ] = Mat:GetString( "$size" )
 
 			Mat = CreateMaterial( strImage .. "_DImage", "UnlitGeneric", params )
 
@@ -168,50 +185,60 @@ function PANEL:PaintAt( x, y, dw, dh )
 		local w = self.ActualWidth
 		local h = self.ActualHeight
 
-		-- Image is bigger than panel, shrink to suitable size
-		if ( w > dw && h > dh ) then
-
-			if ( w > dw ) then
-
-				local diff = dw / w
-				w = w * diff
-				h = h * diff
-
-			end
-
-			if ( h > dh ) then
-
-				local diff = dh / h
-				w = w * diff
-				h = h * diff
-
-			end
-
+		if ( self.SubRectSize ) then
+			w = self.SubRectSize[1]
+			h = self.SubRectSize[2]
 		end
 
-		if ( w < dw ) then
+		if ( self.m_bKeepAspectFit ) then
 
-			local diff = dw / w
-			w = w * diff
-			h = h * diff
+			-- Fit the image within the panel while maintaining aspect ratio
+			local scale = math.min( dw / w, dh / h )
+			w = w * scale
+			h = h * scale
 
-		end
+		else
 
-		if ( h < dh ) then
-
-			local diff = dh / h
-			w = w * diff
-			h = h * diff
+			-- Fill the image to the panel while maintaining aspect ratio
+			local scale = math.max( dw / w, dh / h )
+			w = w * scale
+			h = h * scale
 
 		end
 
 		local OffX = ( dw - w ) * 0.5
 		local OffY = ( dh - h ) * 0.5
 
-		surface.DrawTexturedRect( OffX + x, OffY + y, w, h )
+		if ( self.SubRectPos && self.SubRectSize ) then
+
+			-- Apply subrect offset and size
+			local uS, vS, uE, vE =
+				self.SubRectPos[1] / self.ActualWidth,
+				self.SubRectPos[2] / self.ActualHeight,
+				( self.SubRectPos[1] + self.SubRectSize[1] ) / self.ActualWidth,
+				( self.SubRectPos[2] + self.SubRectSize[2] ) / self.ActualHeight
+			surface.DrawTexturedRectUV( OffX + x, OffY + y, w, h, uS, vS, uE, vE )
+
+		else
+			surface.DrawTexturedRect( OffX + x, OffY + y, w, h )
+		end
 
 	else
-		surface.DrawTexturedRect( x, y, dw, dh )
+
+		if ( self.SubRectPos && self.SubRectSize ) then
+
+			-- Apply subrect offset and size
+			local uS, vS, uE, vE =
+				self.SubRectPos[1] / self.ActualWidth,
+				self.SubRectPos[2] / self.ActualHeight,
+				( self.SubRectPos[1] + self.SubRectSize[1] ) / self.ActualWidth,
+				( self.SubRectPos[2] + self.SubRectSize[2] ) / self.ActualHeight
+			surface.DrawTexturedRectUV( x, y, dw, dh, uS, vS, uE, vE )
+
+		else
+			surface.DrawTexturedRect( x, y, dw, dh )
+		end
+
 	end
 
 	return true
