@@ -50,8 +50,12 @@ function PANEL:Init()
 	self.Palette.OnRightClickButton = function( ctrl, btn )
 		local m = DermaMenu()
 		-- TODO: Find a way to let the player know which palette(s) are going to be affected
-		m:AddOption( "#spawnmenu.menu.save_palette", function() ctrl:SaveColor( btn, self:GetColor() ) end ):SetIcon( "icon16/disk.png" )
-		m:AddOption( "#spawnmenu.menu.reset_palette", function() ctrl:ResetSavedColors() end ):SetIcon( "icon16/arrow_rotate_clockwise.png" )
+		m:AddOption( "#spawnmenu.menu.save_palette", function()
+			if ( IsValid( ctrl ) ) then ctrl:SaveColor( btn, self:GetColor() ) end
+		end ):SetIcon( "icon16/disk.png" )
+		m:AddOption( "#spawnmenu.menu.reset_palette", function()
+			if ( IsValid( ctrl ) ) then ctrl:ResetSavedColors() end
+		end ):SetIcon( "icon16/arrow_rotate_clockwise.png" )
 		m:Open()
 	end
 	self:SetPalette( true )

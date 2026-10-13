@@ -76,8 +76,12 @@ end
 function PANEL:DoRightClick()
 
 	local m = DermaMenu()
-	if ( self:GetDefaultValue() ) then m:AddOption( "#tool.reset_to_default", function() self:ResetToDefaultValue() end ):SetIcon( "icon16/arrow_rotate_clockwise.png" ) end
-	m:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetValue() ) end ):SetIcon( "icon16/page_copy.png" )
+	if ( self:GetDefaultValue() ) then m:AddOption( "#tool.reset_to_default", function()
+		if ( IsValid( self ) ) then self:ResetToDefaultValue() end
+	end ):SetIcon( "icon16/arrow_rotate_clockwise.png" ) end
+	m:AddOption( "#spawnmenu.menu.copy", function()
+		if ( IsValid( self ) ) then SetClipboardText( self:GetValue() ) end
+	end ):SetIcon( "icon16/page_copy.png" )
 	m:Open()
 
 end

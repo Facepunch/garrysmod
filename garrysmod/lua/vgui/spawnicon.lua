@@ -267,14 +267,21 @@ spawnmenu.AddContentType( "model", function( container, obj )
 			container = pnl:GetParent().ContentContainer
 		end
 
+		-- Cache these in case the icon gets deleted
+		local model = icon:GetModelName()
+		local skin = icon:GetSkinID() or 0
+		local body = icon:GetBodyGroup() or ""
+
 		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( icon:GetModelName(), "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:AddOption( "#spawnmenu.menu.copy", function()
+			SetClipboardText( string.gsub( model, "\\", "/" ) )
+		end ):SetIcon( "icon16/page_copy.png" )
 
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
 			RunConsoleCommand( "gmod_tool", "creator" )
 			RunConsoleCommand( "creator_type", "4" )
-			RunConsoleCommand( "creator_name", icon:GetModelName() )
-			RunConsoleCommand( "creator_override", table.concat( { icon:GetSkinID(), icon:GetBodyGroup() }, " " ) )
+			RunConsoleCommand( "creator_name", model )
+			RunConsoleCommand( "creator_override", table.concat( { skin, body }, " " ) )
 		end ):SetIcon( "icon16/brick_add.png" )
 
 		local submenu, submenu_opt = menu:AddSubMenu( "#spawnmenu.menu.rerender", function()

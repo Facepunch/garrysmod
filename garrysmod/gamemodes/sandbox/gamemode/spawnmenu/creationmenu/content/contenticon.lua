@@ -19,10 +19,14 @@ AccessorFunc( PANEL, "m_bIsNPCWeapon", "IsNPCWeapon" )
 
 function PANEL:OpenGenericSpawnmenuRightClickMenu()
 
+	local spawnName = self:GetSpawnName()
+
 	local menu = DermaMenu()
 
-		if ( self:GetSpawnName() and self:GetSpawnName() != "" ) then
-			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetSpawnName() ) end ):SetIcon( "icon16/page_copy.png" )
+		if ( spawnName and spawnName != "" ) then
+			menu:AddOption( "#spawnmenu.menu.copy", function()
+				SetClipboardText( spawnName )
+			end ):SetIcon( "icon16/page_copy.png" )
 		end
 
 		if ( isfunction( self.OpenMenuExtra ) ) then
@@ -34,6 +38,7 @@ function PANEL:OpenGenericSpawnmenuRightClickMenu()
 		if ( !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly() ) then
 			menu:AddSpacer()
 			menu:AddOption( "#spawnmenu.menu.delete", function()
+				if ( !IsValid( self ) ) then return end
 				self:Remove()
 				hook.Run( "SpawnlistContentChanged" )
 			end ):SetIcon( "icon16/bin_closed.png" )
@@ -446,6 +451,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		local groupedWeps = {}
 		local CustomIcons = list.Get( "ContentCategoryIcons" )
 		for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+			if ( !v.class ) then continue end
 			if ( table.HasValue( obj.weapon, v.class ) ) then continue end
 
 			local cat = ( v.category or "" ):lower()
@@ -522,8 +528,8 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 		end ):SetIcon( "icon16/brick_add.png" )
 
 		if ( self:GetIsNPCWeapon() ) then
-			local opt = menu:AddOption( "#spawnmenu.menu.use_as_npc_gun", function() RunConsoleCommand( "gmod_npcweapon", self:GetSpawnName() ) end )
-			if ( self:GetSpawnName() == GetConVarString( "gmod_npcweapon" ) ) then
+			local opt = menu:AddOption( "#spawnmenu.menu.use_as_npc_gun", function() RunConsoleCommand( "gmod_npcweapon", obj.spawnname ) end )
+			if ( obj.spawnname == GetConVarString( "gmod_npcweapon" ) ) then
 				opt:SetIcon( "icon16/monkey_tick.png" )
 			else
 				opt:SetIcon( "icon16/monkey.png" )

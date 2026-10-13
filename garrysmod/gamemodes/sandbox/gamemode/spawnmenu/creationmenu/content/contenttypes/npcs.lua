@@ -72,6 +72,7 @@ function PANEL:Init()
 	-- Sort the items by name, and group by category
 	local groupedWeps = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+		if ( !v.class ) then continue end
 		local cat = ( v.category or "" ):lower()
 		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
 		groupedWeps[ cat ][ v.class ] = { title = language.GetPhrase( v.title or v.class ), icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
