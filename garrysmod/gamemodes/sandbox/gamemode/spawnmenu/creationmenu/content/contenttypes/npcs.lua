@@ -74,7 +74,7 @@ function PANEL:Init()
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
 		local cat = ( v.category or "" ):lower()
 		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
-		groupedWeps[ cat ][ v.class ] = { title = language.GetPhrase( v.title ), icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
+		groupedWeps[ cat ][ v.class ] = { title = language.GetPhrase( v.title or v.class ), icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
 	end
 
 	for group, items in SortedPairs( groupedWeps ) do

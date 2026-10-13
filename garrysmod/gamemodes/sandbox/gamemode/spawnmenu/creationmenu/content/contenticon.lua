@@ -450,7 +450,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 
 			local cat = ( v.category or "" ):lower()
 			groupedWeps[ cat ] = groupedWeps[ cat ] or {}
-			groupedWeps[ cat ][ language.GetPhrase( v.title ) ] = { class = v.class, icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
+			groupedWeps[ cat ][ language.GetPhrase( v.title or v.class ) ] = { class = v.class, icon = CustomIcons[ v.category or "" ] or "icon16/gun.png" }
 		end
 		for group, items in SortedPairs( groupedWeps ) do
 			addWeps( wepMenu, creatorMenu, items )
