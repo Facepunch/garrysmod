@@ -13,142 +13,142 @@
 		"2"
 		{
 			"type"		"model"
-			"model"		"models/balloons/balloon_classicheart.mdl"
+			"model"		"models/maxofs2d/balloon_classic.mdl"
 		}
 		"3"
 		{
 			"type"		"model"
-			"model"		"models/balloons/balloon_dog.mdl"
+			"model"		"models/balloons/balloon_classicheart.mdl"
 		}
 		"4"
 		{
 			"type"		"model"
-			"model"		"models/balloons/balloon_star.mdl"
+			"model"		"models/balloons/balloon_dog.mdl"
 		}
 		"5"
 		{
 			"type"		"model"
-			"model"		"models/dav0r/camera.mdl"
+			"model"		"models/balloons/balloon_star.mdl"
 		}
 		"6"
 		{
 			"type"		"model"
-			"model"		"models/dav0r/hoverball.mdl"
+			"model"		"models/maxofs2d/balloon_gman.mdl"
 		}
 		"7"
 		{
 			"type"		"model"
-			"model"		"models/dav0r/thruster.mdl"
+			"model"		"models/maxofs2d/balloon_mossman.mdl"
 		}
 		"8"
 		{
 			"type"		"model"
-			"model"		"models/dav0r/buttons/button.mdl"
+			"model"		"models/dav0r/camera.mdl"
 		}
 		"9"
 		{
 			"type"		"model"
-			"model"		"models/dav0r/buttons/switch.mdl"
+			"model"		"models/dav0r/tnt/tnt.mdl"
 		}
 		"10"
 		{
 			"type"		"model"
-			"model"		"models/dav0r/tnt/tnt.mdl"
+			"model"		"models/dav0r/tnt/tnttimed.mdl"
 		}
 		"11"
 		{
 			"type"		"model"
-			"model"		"models/dav0r/tnt/tnttimed.mdl"
+			"model"		"models/dynamite/dynamite.mdl"
 		}
 		"12"
 		{
 			"type"		"model"
-			"model"		"models/dynamite/dynamite.mdl"
+			"model"		"models/dav0r/buttons/button.mdl"
 		}
 		"13"
 		{
 			"type"		"model"
-			"model"		"models/lamps/torch.mdl"
+			"model"		"models/maxofs2d/button_01.mdl"
 		}
 		"14"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/balloon_classic.mdl"
+			"model"		"models/maxofs2d/button_02.mdl"
 		}
 		"15"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/balloon_gman.mdl"
+			"model"		"models/maxofs2d/button_03.mdl"
 		}
 		"16"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/balloon_mossman.mdl"
+			"model"		"models/maxofs2d/button_04.mdl"
 		}
 		"17"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/button_01.mdl"
+			"model"		"models/maxofs2d/button_05.mdl"
 		}
 		"18"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/button_02.mdl"
+			"model"		"models/dav0r/buttons/switch.mdl"
 		}
 		"19"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/button_03.mdl"
+			"model"		"models/maxofs2d/button_06.mdl"
 		}
 		"20"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/button_04.mdl"
+			"model"		"models/maxofs2d/button_slider.mdl"
 		}
 		"21"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/button_05.mdl"
+			"model"		"models/maxofs2d/thruster_projector.mdl"
 		}
 		"22"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/button_06.mdl"
+			"model"		"models/maxofs2d/lamp_projector.mdl"
 		}
 		"23"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/button_slider.mdl"
+			"model"		"models/lamps/torch.mdl"
 		}
 		"24"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/thruster_projector.mdl"
+			"model"		"models/maxofs2d/lamp_flashlight.mdl"
 		}
 		"25"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/lamp_projector.mdl"
+			"model"		"models/maxofs2d/light_tubular.mdl"
 		}
 		"26"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/light_tubular.mdl"
+			"model"		"models/dav0r/thruster.mdl"
 		}
 		"27"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/thruster_propeller.mdl"
+			"model"		"models/thrusters/jetpack.mdl"
 		}
 		"28"
 		{
 			"type"		"model"
-			"model"		"models/thrusters/jetpack.mdl"
+			"model"		"models/maxofs2d/hover_plate.mdl"
 		}
 		"29"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/hover_plate.mdl"
+			"model"		"models/maxofs2d/thruster_propeller.mdl"
 		}
 		"30"
 		{
@@ -158,7 +158,7 @@
 		"31"
 		{
 			"type"		"model"
-			"model"		"models/maxofs2d/lamp_flashlight.mdl"
+			"model"		"models/dav0r/hoverball.mdl"
 		}
 		"32"
 		{

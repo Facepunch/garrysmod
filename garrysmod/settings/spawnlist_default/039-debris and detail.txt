@@ -3,8 +3,6 @@
 	"parentid"		"37"
 	"icon"		"icon16/page_link.png"
 	"id"		"39"
-	"name"		"Debris and Detail"
-	"version"		"3"
 	"contents"
 	{
 		"1"
@@ -3408,4 +3406,6 @@
 			"model"		"models/props/cs_office/snowman_nose.mdl"
 		}
 	}
+	"name"		"Debris and Detail"
+	"version"		"3"
 }

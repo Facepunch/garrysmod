@@ -273,17 +273,17 @@
 		"54"
 		{
 			"type"		"model"
-			"model"		"models/mechanics/robotics/claw_guide2.mdl"
+			"model"		"models/mechanics/robotics/claw_guide.mdl"
 		}
 		"55"
 		{
 			"type"		"model"
-			"model"		"models/mechanics/robotics/claw_guide2a.mdl"
+			"model"		"models/mechanics/robotics/claw_guide2.mdl"
 		}
 		"56"
 		{
 			"type"		"model"
-			"model"		"models/mechanics/robotics/claw_guide.mdl"
+			"model"		"models/mechanics/robotics/claw_guide2a.mdl"
 		}
 		"57"
 		{

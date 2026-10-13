@@ -18,144 +18,314 @@
 		"3"
 		{
 			"type"		"model"
-			"model"		"models/items/ammopack_large_bday.mdl"
+			"model"		"models/items/ammopack_medium.mdl"
 		}
 		"4"
 		{
 			"type"		"model"
-			"model"		"models/items/ammopack_medium.mdl"
+			"model"		"models/items/ammopack_small.mdl"
 		}
 		"5"
 		{
 			"type"		"model"
-			"model"		"models/items/ammopack_medium_bday.mdl"
+			"model"		"models/items/medkit_small.mdl"
 		}
 		"6"
 		{
 			"type"		"model"
-			"model"		"models/items/ammopack_small.mdl"
+			"model"		"models/items/medkit_medium.mdl"
 		}
 		"7"
 		{
 			"type"		"model"
-			"model"		"models/items/ammopack_small_bday.mdl"
+			"model"		"models/items/medkit_large.mdl"
 		}
 		"8"
 		{
 			"type"		"model"
-			"model"		"models/items/medkit_large.mdl"
+			"model"		"models/items/plate.mdl"
 		}
 		"9"
 		{
 			"type"		"model"
-			"model"		"models/items/plate.mdl"
+			"model"		"models/workshop/weapons/c_models/c_fishcake/plate_fishcake.mdl"
 		}
 		"10"
 		{
 			"type"		"model"
-			"model"		"models/items/plate_steak.mdl"
+			"model"		"models/workshop/weapons/c_models/c_chocolate/plate_chocolate.mdl"
 		}
 		"11"
 		{
 			"type"		"model"
-			"model"		"models/flag/briefcase.mdl"
+			"model"		"models/workshop/weapons/c_models/c_buffalo_steak/plate_buffalo_steak.mdl"
 		}
 		"12"
 		{
 			"type"		"model"
-			"model"		"models/flag/briefcase.mdl"
-			"skin"		"1"
+			"model"		"models/items/banana/plate_banana.mdl"
 		}
 		"13"
 		{
 			"type"		"model"
 			"model"		"models/flag/briefcase.mdl"
-			"skin"		"2"
 		}
 		"14"
 		{
 			"type"		"model"
-			"model"		"models/props_doomsday/australium_container.mdl"
+			"model"		"models/flag/briefcase.mdl"
+			"skin"		"1"
 		}
 		"15"
 		{
-			"type"		"header"
-			"text"		"Holiday"
+			"type"		"model"
+			"model"		"models/flag/briefcase.mdl"
+			"skin"		"2"
 		}
 		"16"
 		{
 			"type"		"model"
-			"model"		"models/items/medkit_large_bday.mdl"
+			"model"		"models/props_doomsday/australium_container.mdl"
 		}
 		"17"
 		{
-			"type"		"model"
-			"model"		"models/items/medkit_medium.mdl"
+			"type"		"header"
+			"text"		"Holiday"
 		}
 		"18"
 		{
 			"type"		"model"
-			"model"		"models/items/medkit_medium_bday.mdl"
+			"model"		"models/items/ammopack_small_bday.mdl"
 		}
 		"19"
 		{
 			"type"		"model"
-			"model"		"models/items/medkit_small.mdl"
+			"model"		"models/items/ammopack_medium_bday.mdl"
 		}
 		"20"
 		{
 			"type"		"model"
-			"model"		"models/items/medkit_small_bday.mdl"
+			"model"		"models/items/ammopack_large_bday.mdl"
 		}
 		"21"
 		{
 			"type"		"model"
-			"model"		"models/items/tf_gift.mdl"
+			"model"		"models/items/medkit_small_bday.mdl"
 		}
 		"22"
 		{
 			"type"		"model"
-			"model"		"models/props_halloween/halloween_gift.mdl"
+			"model"		"models/items/medkit_medium_bday.mdl"
 		}
 		"23"
 		{
 			"type"		"model"
-			"model"		"models/props_halloween/halloween_medkit_large.mdl"
+			"model"		"models/items/medkit_large_bday.mdl"
 		}
 		"24"
 		{
 			"type"		"model"
-			"model"		"models/props_halloween/halloween_medkit_medium.mdl"
+			"model"		"models/props_halloween/halloween_medkit_small.mdl"
 		}
 		"25"
 		{
 			"type"		"model"
-			"model"		"models/props_halloween/halloween_medkit_small.mdl"
+			"model"		"models/props_halloween/halloween_medkit_medium.mdl"
 		}
 		"26"
 		{
-			"type"		"header"
-			"text"		"Mann vs. Machine"
+			"type"		"model"
+			"model"		"models/props_halloween/halloween_medkit_large.mdl"
 		}
 		"27"
 		{
 			"type"		"model"
-			"model"		"models/items/plate_robo_sandwich.mdl"
+			"model"		"models/items/tf_gift.mdl"
 		}
 		"28"
 		{
 			"type"		"model"
-			"model"		"models/items/currencypack_large.mdl"
+			"model"		"models/props_halloween/halloween_gift.mdl"
 		}
 		"29"
 		{
 			"type"		"model"
-			"model"		"models/items/currencypack_medium.mdl"
+			"model"		"models/items/gift_festive.mdl"
 		}
 		"30"
 		{
 			"type"		"model"
+			"model"		"models/props_halloween/pumpkin_loot.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/items/crystal_ball_pickup.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/items/crystal_ball_pickup_major.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/player/items/all_class/bombonomicon.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_medieval/medieval_meat.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/items/plate_sandwich_xmas.mdl"
+		}
+		"36"
+		{
+			"type"		"header"
+			"text"		"Mann vs. Machine"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/items/plate_robo_sandwich.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/items/currencypack_large.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/items/currencypack_medium.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
 			"model"		"models/items/currencypack_small.mdl"
+		}
+		"41"
+		{
+			"type"		"header"
+			"text"		"Mannpower"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/pickups/emitter.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_crit.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_uber.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_agility.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_defense.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_haste.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_king.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_knockout.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_plague.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_precision.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_reflect.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_regen.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_resistance.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_strength.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_strength_arm.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_supernova.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_thorns.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/pickups/pickup_powerup_vampire.mdl"
+		}
+		"60"
+		{
+			"type"		"header"
+			"text"		"Other"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/passtime/ball/passtime_ball.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/passtime/ball/passtime_ball_halloween.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/items/paintkit_tool.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/items/festivizer.mdl"
 		}
 	}
 	"name"		"Pickups"

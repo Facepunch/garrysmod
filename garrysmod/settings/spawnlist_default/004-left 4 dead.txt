@@ -15,28 +15,28 @@
 			"type"		"model"
 			"model"		"models/survivors/survivor_biker.mdl"
 			"wide"		"128"
-			"tall"		"512"
+			"tall"		"256"
 		}
 		"3"
 		{
 			"type"		"model"
 			"model"		"models/survivors/survivor_manager.mdl"
 			"wide"		"128"
-			"tall"		"512"
+			"tall"		"256"
 		}
 		"4"
 		{
 			"type"		"model"
 			"model"		"models/survivors/survivor_namvet.mdl"
 			"wide"		"128"
-			"tall"		"512"
+			"tall"		"256"
 		}
 		"5"
 		{
 			"type"		"model"
 			"model"		"models/survivors/survivor_teenangst.mdl"
 			"wide"		"128"
-			"tall"		"512"
+			"tall"		"256"
 		}
 		"6"
 		{
@@ -306,282 +306,2207 @@
 		"59"
 		{
 			"type"		"model"
-			"model"		"models/props_fortifications/fortification_indoor_01.mdl"
+			"model"		"models/props_equipment/snack_machine.mdl"
 		}
 		"60"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/burgersign.mdl"
+			"model"		"models/props_equipment/snack_machine2.mdl"
 		}
 		"61"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/eastern_waterworks_sign.mdl"
+			"model"		"models/props_fortifications/fortification_indoor_01.mdl"
 		}
 		"62"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/highway_sign01.mdl"
+			"model"		"models/props_signs/burgersign.mdl"
 		}
 		"63"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/raisedbillboard.mdl"
+			"model"		"models/props_signs/eastern_waterworks_sign.mdl"
 		}
 		"64"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/sign_apartment.mdl"
+			"model"		"models/props_waterfront/rayford_shipping_sign.mdl"
 		}
 		"65"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/sign_bookstore.mdl"
+			"model"		"models/props_signs/highway_sign01.mdl"
 		}
 		"66"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/sign_bookstore_overhang.mdl"
+			"model"		"models/props_signs/raisedbillboard.mdl"
 		}
 		"67"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/sign_diner01.mdl"
+			"model"		"models/props_signs/sign_apartment.mdl"
 		}
 		"68"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/sign_eat01.mdl"
+			"model"		"models/props_signs/sign_bookstore.mdl"
 		}
 		"69"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/sign_riverside.mdl"
+			"model"		"models/props_signs/sign_bookstore_overhang.mdl"
 		}
 		"70"
 		{
 			"type"		"model"
-			"model"		"models/props_signs/sign_theater01.mdl"
+			"model"		"models/props_signs/sign_diner01.mdl"
 		}
 		"71"
 		{
 			"type"		"model"
-			"model"		"models/props_street/trashbin01.mdl"
+			"model"		"models/props_street/sign_parking_off.mdl"
 		}
 		"72"
 		{
 			"type"		"model"
-			"model"		"models/props_street/firehydrant.mdl"
+			"model"		"models/props_signs/sign_eat01.mdl"
 		}
 		"73"
 		{
 			"type"		"model"
-			"model"		"models/props_street/bus_stop.mdl"
+			"model"		"models/props_signs/sign_riverside.mdl"
 		}
 		"74"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/mopbucket01.mdl"
+			"model"		"models/props_exteriors/park_sign.mdl"
 		}
 		"75"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/luggagecart01.mdl"
+			"model"		"models/props_interiors/corkboardverticle01.mdl"
 		}
 		"76"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/mop01.mdl"
+			"model"		"models/props_misc/military_sign01.mdl"
 		}
 		"77"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/airport_monitors.mdl"
+			"model"		"models/props_misc/military_sign02.mdl"
 		}
 		"78"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/airport_monitors.mdl"
+			"model"		"models/props_unique/caboose01_pictureframe.mdl"
 		}
 		"79"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/atlas.mdl"
+			"model"		"models/props_signs/sign_horizontal_03.mdl"
 		}
 		"80"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/atlas_break_ball.mdl"
+			"model"		"models/props_street/sign_florist.mdl"
 		}
 		"81"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/carousel.mdl"
+			"model"		"models/props_signs/sign_theater01.mdl"
 		}
 		"82"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/line_post.mdl"
+			"model"		"models/props_downtown/sign_donotenter.mdl"
 		}
 		"83"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/luggage1.mdl"
+			"model"		"models/props_downtown/sign_stop.mdl"
 		}
 		"84"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/luggage2.mdl"
+			"model"		"models/props_unique/airport/standup_board.mdl"
 		}
 		"85"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/luggage3.mdl"
+			"model"		"models/props_street/firehydrant.mdl"
 		}
 		"86"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/luggage4.mdl"
+			"model"		"models/props_street/bus_stop.mdl"
 		}
 		"87"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/luggage_pile1.mdl"
+			"model"		"models/props_unique/mop01.mdl"
 		}
 		"88"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/phone_booth_airport.mdl"
+			"model"		"models/props_unique/airport/airport_monitors.mdl"
 		}
 		"89"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/skylight.mdl"
+			"model"		"models/props_unique/airport/atlas.mdl"
 		}
 		"90"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/standup_board.mdl"
+			"model"		"models/props_unique/airport/atlas_break_ball.mdl"
 		}
 		"91"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/temp_barricade.mdl"
+			"model"		"models/props_unique/airport/line_post.mdl"
 		}
 		"92"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/airport/trash_bin1.mdl"
+			"model"		"models/props_unique/airport/luggage1.mdl"
 		}
 		"93"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/hospital/exam_table.mdl"
+			"model"		"models/props_unique/airport/luggage2.mdl"
 		}
 		"94"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/hospital/gurney.mdl"
+			"model"		"models/props_unique/airport/luggage3.mdl"
 		}
 		"95"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/hospital/hospital_bed.mdl"
+			"model"		"models/props_unique/airport/luggage4.mdl"
 		}
 		"96"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/hospital/iv_pole.mdl"
+			"model"		"models/props_unique/airport/luggage_pile1.mdl"
 		}
 		"97"
 		{
 			"type"		"model"
-			"model"		"models/props_unique/hospital/surgery_lamp.mdl"
+			"model"		"models/props_unique/airport/carousel.mdl"
 		}
 		"98"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_autoshot_m4super.mdl"
+			"model"		"models/props_unique/airport/skylight.mdl"
 		}
 		"99"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_dual_pistol_1911.mdl"
+			"model"		"models/props_unique/airport/temp_barricade.mdl"
 		}
 		"100"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_eq_medkit.mdl"
+			"model"		"models/props_unique/hospital/exam_table.mdl"
 		}
 		"101"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_eq_molotov.mdl"
+			"model"		"models/props_unique/hospital/iv_pole.mdl"
 		}
 		"102"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_eq_painpills.mdl"
+			"model"		"models/props_unique/hospital/surgery_lamp.mdl"
 		}
 		"103"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_eq_pipebomb.mdl"
+			"model"		"models/effects/urban_puddle_model01a.mdl"
 		}
 		"104"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_minigun.mdl"
+			"model"		"models/effects/urban_puddle_model01a.mdl"
 		}
 		"105"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_pistol_1911.mdl"
+			"model"		"models/effects/urban_puddle_model02a.mdl"
 		}
 		"106"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_rifle_m16a2.mdl"
+			"model"		"models/effects/urban_puddle_model03a.mdl"
 		}
 		"107"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_shotgun.mdl"
+			"model"		"models/hybridphysx/lawnmower_bloodpool.mdl"
 		}
 		"108"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_smg_uzi.mdl"
+			"model"		"models/props_vents/ventbreakable01.mdl"
 		}
 		"109"
 		{
 			"type"		"model"
-			"model"		"models/w_models/weapons/w_sniper_mini14.mdl"
+			"model"		"models/props_crates/static_crate_40.mdl"
 		}
 		"110"
 		{
 			"type"		"model"
-			"model"		"models/effects/urban_puddle_model01a.mdl"
+			"model"		"models/props_crates/supply_crate01.mdl"
 		}
 		"111"
 		{
 			"type"		"model"
-			"model"		"models/effects/urban_puddle_model01a.mdl"
+			"model"		"models/props_crates/supply_crate02.mdl"
 		}
 		"112"
 		{
 			"type"		"model"
-			"model"		"models/effects/urban_puddle_model02a.mdl"
+			"model"		"models/props_interiors/sawhorse.mdl"
 		}
 		"113"
 		{
 			"type"		"model"
-			"model"		"models/effects/urban_puddle_model03a.mdl"
+			"model"		"models/props_fortifications/orange_cone001_reference.mdl"
 		}
 		"114"
 		{
 			"type"		"model"
-			"model"		"models/hybridphysx/lawnmower_bloodpool.mdl"
+			"model"		"models/props_fortifications/traffic_barrier001.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/mopbucket01.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/luggagecart01.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/wheelchair01.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/gnome.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/coffeemachine01.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/coffeepot01.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/elevator_pulley01.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/spawn_apartment/coffeeammo.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/spawn_apartment/pillow01.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/spawn_apartment/survivalmanual01.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/spawn_apartment/survivalmanual02.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_01.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_02.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_03.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_04.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_05.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_06.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_07.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/props_cemetery/grave_08.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/props_docks/marina_firehosebox.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/props_docks/mooringbollard_01.mdl"
+		}
+		"136"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/cigarettemachine.mdl"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/pooltable.mdl"
+		}
+		"138"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/concrete_block001_128_reference.mdl"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/concrete_post001_48.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/concrete_barrier01.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/concrete_wall001_96_reference.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/props_street/trashbin01.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/trashcan01.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/trashcankitchen01.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/garbage_can001.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/trash_bin1.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/outhouse001.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bbq_grill.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/tv.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/props_office/computer_monitor_01.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/vcr.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/copymachine01.mdl"
+		}
+		"153"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/printer.mdl"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toaster.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/alarm_clock.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toiletpaperdispenser_residential.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toiletpaperroll.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/towel_rack.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/water_cooler.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/waterbottle.mdl"
+		}
+		"161"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/cashregister01.mdl"
+		}
+		"162"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/clipboard01.mdl"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/clipboardwallpocket01.mdl"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/clipboardholder01.mdl"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/shelvinggrocery01.mdl"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/shelvingstore01.mdl"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/sink_industrial01.mdl"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/sink_kitchen.mdl"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/soap_dispenser.mdl"
+		}
+		"170"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/dish_soap.mdl"
+		}
+		"171"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/lamp-1.mdl"
+		}
+		"172"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/lamp_table02.mdl"
+		}
+		"173"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/lampbedside01.mdl"
+		}
+		"174"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/lamp_table01.mdl"
+		}
+		"175"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/lamp1.mdl"
+		}
+		"176"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/furniture_lamp01a.mdl"
+		}
+		"177"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/lamp_floor.mdl"
+		}
+		"178"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/lamp_floor_arch.mdl"
+		}
+		"179"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/lightsconce02.mdl"
+		}
+		"180"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/spawn_apartment/lantern.mdl"
+		}
+		"181"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/flashlight_dropped_01.mdl"
+		}
+		"182"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/spotlight_dropped_01.mdl"
+		}
+		"183"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/searchlight_small_01.mdl"
+		}
+		"184"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/semi_flush_002.mdl"
+		}
+		"185"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/lights_overhead.mdl"
+		}
+		"186"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/light_battery_rigged_01.mdl"
+		}
+		"187"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/light_construction.mdl"
+		}
+		"188"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/light_construction02.mdl"
+		}
+		"189"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/light_porch.mdl"
+		}
+		"190"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/lightfixture02.mdl"
+		}
+		"191"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/light_shop.mdl"
+		}
+		"192"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/lightfixture03.mdl"
+		}
+		"193"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/lightfixture04.mdl"
+		}
+		"194"
+		{
+			"type"		"model"
+			"model"		"models/props_lighting/lightfixture05.mdl"
+		}
+		"195"
+		{
+			"type"		"model"
+			"model"		"models/props_mall/cage_light_fixture.mdl"
+		}
+		"196"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/street_lamp_wall01.mdl"
+		}
+		"197"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/light_fixture01.mdl"
+		}
+		"198"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/porch_light001.mdl"
+		}
+		"199"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/inn_chandelier1.mdl"
+		}
+		"200"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pan-1.mdl"
+		}
+		"201"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pan-2.mdl"
+		}
+		"202"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pan-3.mdl"
+		}
+		"203"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pot-1.mdl"
+		}
+		"204"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/pot-2.mdl"
+		}
+		"205"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/rolling_pin-1.mdl"
+		}
+		"206"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/tea_pot-1.mdl"
+		}
+		"207"
+		{
+			"type"		"model"
+			"model"		"models/props_street/garbage_can.mdl"
+		}
+		"208"
+		{
+			"type"		"model"
+			"model"		"models/props_street/mail_dropbox.mdl"
+		}
+		"209"
+		{
+			"type"		"model"
+			"model"		"models/props_street/newspaper_dispensers.mdl"
+		}
+		"210"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/dumpster.mdl"
+		}
+		"211"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_shelf1.mdl"
+		}
+		"212"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_vent1.mdl"
+		}
+		"213"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/brickpallets.mdl"
+		}
+		"214"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/brickpallets_break01.mdl"
+		}
+		"215"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/brickpallets_break09.mdl"
+		}
+		"216"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/kiln_cart_bricks.mdl"
+		}
+		"217"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/kiln_cart.mdl"
+		}
+		"218"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/pallet01.mdl"
+		}
+		"219"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/pallet_stack01.mdl"
+		}
+		"220"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/tirestack.mdl"
+		}
+		"221"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/pallet_barrels_water01.mdl"
+		}
+		"222"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/pallet_barrels_water01_single.mdl"
+		}
+		"223"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/barrel_fuel.mdl"
+		}
+		"224"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/barrel_fire.mdl"
+		}
+		"225"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/processor_tank.mdl"
+		}
+		"226"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/oxygentank01.mdl"
+		}
+		"227"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/warehouse_shelf001.mdl"
+		}
+		"228"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/warehouse_shelf002.mdl"
+		}
+		"229"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/warehouse_shelf003.mdl"
+		}
+		"230"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/warehouse_shelf004.mdl"
+		}
+		"231"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/wire_spool_01.mdl"
+		}
+		"232"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/wire_spool_02.mdl"
+		}
+		"233"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/ac_wallunit.mdl"
+		}
+		"234"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/airportdeparturerampcontrol01.mdl"
+		}
+		"235"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bench_subway.mdl"
+		}
+		"236"
+		{
+			"type"		"model"
+			"model"		"models/props_highway/highway_sign_post001.mdl"
+		}
+		"237"
+		{
+			"type"		"model"
+			"model"		"models/props_highway/plywood_01.mdl"
+		}
+		"238"
+		{
+			"type"		"model"
+			"model"		"models/props_highway/plywood_02.mdl"
+		}
+		"239"
+		{
+			"type"		"model"
+			"model"		"models/props_highway/plywood_03.mdl"
+		}
+		"240"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/cargo_container01.mdl"
+		}
+		"241"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/cargo_container02.mdl"
+		}
+		"242"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/cargo_container04.mdl"
+		}
+		"243"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/cargo_container03.mdl"
+		}
+		"244"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/cart_utility_01.mdl"
+		}
+		"245"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/toolchest_01.mdl"
+		}
+		"246"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/ticketmachine.mdl"
+		}
+		"247"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/turnstile01.mdl"
+		}
+		"248"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/phone_booth.mdl"
+		}
+		"249"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/phone_booth_airport.mdl"
+		}
+		"250"
+		{
+			"type"		"model"
+			"model"		"models/props_street/window_washer_button.mdl"
+		}
+		"251"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/phone_booth_indoor.mdl"
+		}
+		"252"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/coffee_maker.mdl"
+		}
+		"253"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/makeshift_stove_battery.mdl"
+		}
+		"254"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/paper_towel_dispenser.mdl"
+		}
+		"255"
+		{
+			"type"		"model"
+			"model"		"models/props_normandy/haybale.mdl"
+		}
+		"256"
+		{
+			"type"		"model"
+			"model"		"models/props_street/manhole_cover.mdl"
+		}
+		"257"
+		{
+			"type"		"model"
+			"model"		"models/props_street/manhole_cover_surround.mdl"
+		}
+		"258"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/phone_motel.mdl"
+		}
+		"259"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/fairground_tent_open.mdl"
+		}
+		"260"
+		{
+			"type"		"model"
+			"model"		"models/props_misc/german_radio.mdl"
+		}
+		"261"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/acunit01.mdl"
+		}
+		"262"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/acunit2.mdl"
+		}
+		"263"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/acvent01.mdl"
+		}
+		"264"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/acvent04.mdl"
+		}
+		"265"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/acvent02.mdl"
+		}
+		"266"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/acvent03.mdl"
+		}
+		"267"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/acvent05.mdl"
+		}
+		"268"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/billboard01.mdl"
+		}
+		"269"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/billboard03.mdl"
+		}
+		"270"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/billboard06.mdl"
+		}
+		"271"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/roof_vent001.mdl"
+		}
+		"272"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/roof_vent003.mdl"
+		}
+		"273"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/rooftank01.mdl"
+		}
+		"274"
+		{
+			"type"		"model"
+			"model"		"models/props_rooftop/train_signalbox_01.mdl"
+		}
+		"275"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airportdeparturepodium01.mdl"
+		}
+		"276"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/grocerystorechiller01.mdl"
+		}
+		"277"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/air_conditioner001.mdl"
+		}
+		"278"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/chimney001.mdl"
+		}
+		"279"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/chimney002.mdl"
+		}
+		"280"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/chimney004_02.mdl"
+		}
+		"281"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/chimney005_02.mdl"
+		}
+		"282"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/chimney007_02.mdl"
+		}
+		"283"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney2.mdl"
+		}
+		"284"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney4.mdl"
+		}
+		"285"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/chimney5.mdl"
+		}
+		"286"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/tanks_liquid.mdl"
+		}
+		"287"
+		{
+			"type"		"model"
+			"model"		"models/props_exteriors/tanks_liquid_small.mdl"
+		}
+		"288"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/waterheater.mdl"
+		}
+		"289"
+		{
+			"type"		"model"
+			"model"		"models/props_industrial/pumpvertical01.mdl"
+		}
+		"290"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/ibeam_breakable01.mdl"
+		}
+		"291"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/magazine_rack.mdl"
+		}
+		"292"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/medicalcabinet02.mdl"
+		}
+		"293"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/soapdispenser01.mdl"
+		}
+		"294"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/stovehood01.mdl"
+		}
+		"295"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/teddy_bear.mdl"
+		}
+		"296"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toiletpaperdispenser_commercial.mdl"
+		}
+		"297"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital05_rooftop_cube01.mdl"
+		}
+		"298"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/surgicaltray_01.mdl"
+		}
+		"299"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/tsabin_01.mdl"
+		}
+		"300"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/tablegreenhouse01.mdl"
+		}
+		"301"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/luggagecarthotel01.mdl"
+		}
+		"302"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/paper_tray.mdl"
+		}
+		"303"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/generator_short.mdl"
+		}
+		"304"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/metal_door_112.mdl"
+		}
+		"305"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/window01_56_96_flat.mdl"
+		}
+		"306"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/window03_56_96_flat.mdl"
+		}
+		"307"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/window06_48_96_flat.mdl"
+		}
+		"308"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/window07_32_72_flat.mdl"
+		}
+		"309"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/window09_56_128_flat.mdl"
+		}
+		"310"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/window_interior01.mdl"
+		}
+		"311"
+		{
+			"type"		"model"
+			"model"		"models/props_windows/window_farmhouse_big.mdl"
+		}
+		"312"
+		{
+			"type"		"model"
+			"model"		"models/props_windows/window_urban_apt.mdl"
+		}
+		"313"
+		{
+			"type"		"model"
+			"model"		"models/props_windows/window_farmhouse_small.mdl"
+		}
+		"314"
+		{
+			"type"		"model"
+			"model"		"models/props_windows/window_industrial.mdl"
+		}
+		"315"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/zombiebreakwallcore01_main.mdl"
+		}
+		"316"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/infectedbreakwall01_2x4core_main.mdl"
+		}
+		"317"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/zombiebreakwallcore01_steel.mdl"
+		}
+		"318"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/infectedbreakwall01_lighthouse_main.mdl"
+		}
+		"319"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/infectedbreakwall01_woodsiding_lighthouse_main.mdl"
+		}
+		"320"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/breakwall01_woodsiding_lighthouse_angled_main.mdl"
+		}
+		"321"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/zombiebreakwallinterior01_woodsiding.mdl"
+		}
+		"322"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/zombiebreakwallexterior01_main.mdl"
+		}
+		"323"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/zombiebreakwallexteriorairport01_main.mdl"
+		}
+		"324"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/lighthouse_brick_breakwalli01.mdl"
+		}
+		"325"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/zombiebreakwallexteriorairportoffices01_main.mdl"
+		}
+		"326"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/zombiebreakwallhospitalexterior01_main.mdl"
+		}
+		"327"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/airport_baggage_cart2.mdl"
+		}
+		"328"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/airport_baggage_tractor.mdl"
+		}
+		"329"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/airport_catering_truck.mdl"
+		}
+		"330"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/deliveryvan_armored.mdl"
+		}
+		"331"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/racecar_damaged.mdl"
+		}
+		"332"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/airport_fuel_truck.mdl"
+		}
+		"333"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/ambulance.mdl"
+		}
+		"334"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/army_truck.mdl"
+		}
+		"335"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/cara_69sedan.mdl"
+		}
+		"336"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/cara_82hatchback.mdl"
+		}
+		"337"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/cara_84sedan.mdl"
+		}
+		"338"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/cara_95sedan.mdl"
+		}
+		"339"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/longnose_truck.mdl"
+		}
+		"340"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/flatnose_truck.mdl"
+		}
+		"341"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/flatnose_truck_wrecked_propercollision.mdl"
+		}
+		"342"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/pickup_truck_2004.mdl"
+		}
+		"343"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/taxi_city.mdl"
+		}
+		"344"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/pickup_truck_78.mdl"
+		}
+		"345"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/bus01.mdl"
+		}
+		"346"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/bus01_2.mdl"
+		}
+		"347"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/church_bus01.mdl"
+		}
+		"348"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/m119howitzer_01.mdl"
+		}
+		"349"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/tractor01.mdl"
+		}
+		"350"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/tankertrailer.mdl"
+		}
+		"351"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/semi_trailer.mdl"
+		}
+		"352"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/semi_trailer_freestanding.mdl"
+		}
+		"353"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_orecar.mdl"
+		}
+		"354"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/bridgecollapse_traina.mdl"
+		}
+		"355"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_box.mdl"
+		}
+		"356"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_box_small.mdl"
+		}
+		"357"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_boxwreck.mdl"
+		}
+		"358"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_engine_military.mdl"
+		}
+		"359"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_enginecar.mdl"
+		}
+		"360"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_flatcar.mdl"
+		}
+		"361"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_flatcar_small.mdl"
+		}
+		"362"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_tank.mdl"
+		}
+		"363"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/train_tank_small.mdl"
+		}
+		"364"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/coalbarge_tapered.mdl"
+		}
+		"365"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_fishing.mdl"
+		}
+		"366"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_fishing02_static.mdl"
+		}
+		"367"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_power.mdl"
+		}
+		"368"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_ski.mdl"
+		}
+		"369"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_smash.mdl"
+		}
+		"370"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_cabin35ft.mdl"
+		}
+		"371"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/sailboat.mdl"
+		}
+		"372"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_trailer20ft.mdl"
+		}
+		"373"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/boat_trailer35ft.mdl"
+		}
+		"374"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/floodlight_generator_nolight.mdl"
+		}
+		"375"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/floodlight_generator_nolight_static.mdl"
+		}
+		"376"
+		{
+			"type"		"header"
+			"text"		"Furniture & Interior"
+		}
+		"377"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital/gurney.mdl"
+		}
+		"378"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital/hospital_bed.mdl"
+		}
+		"379"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bed.mdl"
+		}
+		"380"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bed_motel.mdl"
+		}
+		"381"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/kids_bed.mdl"
+		}
+		"382"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bed_houseboat.mdl"
+		}
+		"383"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/baby_crib.mdl"
+		}
+		"384"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/cafe_cabinet1.mdl"
+		}
+		"385"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bookcase_48_96.mdl"
+		}
+		"386"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bookcase_64_96.mdl"
+		}
+		"387"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bookcase_small01.mdl"
+		}
+		"388"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bookcasehutch01.mdl"
+		}
+		"389"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/inn_mailbox1.mdl"
+		}
+		"390"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/dresser_short.mdl"
+		}
+		"391"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/dresser_tall.mdl"
+		}
+		"392"
+		{
+			"type"		"model"
+			"model"		"models/props_office/file_cabinet_03.mdl"
+		}
+		"393"
+		{
+			"type"		"model"
+			"model"		"models/props_office/filecabinet01.mdl"
+		}
+		"394"
+		{
+			"type"		"model"
+			"model"		"models/props_office/filecabinet01group.mdl"
+		}
+		"395"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/drawer1.mdl"
+		}
+		"396"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/dresser1.mdl"
+		}
+		"397"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_countertop1.mdl"
+		}
+		"398"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/kitchen_cabinet1.mdl"
+		}
+		"399"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/fireplace2.mdl"
+		}
+		"400"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/desk_executive.mdl"
+		}
+		"401"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/desk_motel.mdl"
+		}
+		"402"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/heavy_table.mdl"
+		}
+		"403"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_console.mdl"
+		}
+		"404"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_end.mdl"
+		}
+		"405"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_bedside.mdl"
+		}
+		"406"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/entertainment_unit.mdl"
+		}
+		"407"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/tv_cabinet.mdl"
+		}
+		"408"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/side_table_square.mdl"
+		}
+		"409"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/dining_table_round.mdl"
+		}
+		"410"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/dinning_table_oval.mdl"
+		}
+		"411"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/coffee_table_oval.mdl"
+		}
+		"412"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_motel.mdl"
+		}
+		"413"
+		{
+			"type"		"model"
+			"model"		"models/props_office/desk_01.mdl"
+		}
+		"414"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/piano_bench.mdl"
+		}
+		"415"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/coffee_table_rectangular.mdl"
+		}
+		"416"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/it_mkt_table2.mdl"
+		}
+		"417"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/booth_table.mdl"
+		}
+		"418"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/round_table001.mdl"
+		}
+		"419"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_cafeteria.mdl"
+		}
+		"420"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_kitchen.mdl"
+		}
+		"421"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/industrial_table01.mdl"
+		}
+		"422"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/desk_metal.mdl"
+		}
+		"423"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_folding.mdl"
+		}
+		"424"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_folding_folded.mdl"
+		}
+		"425"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/table_picnic.mdl"
+		}
+		"426"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/bench002.mdl"
+		}
+		"427"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/picnic_bench_toddler.mdl"
+		}
+		"428"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/ottoman01.mdl"
+		}
+		"429"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/couch.mdl"
+		}
+		"430"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/sofa01.mdl"
+		}
+		"431"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/sofa02.mdl"
+		}
+		"432"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/sofa_chair01.mdl"
+		}
+		"433"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/sofa_chair02.mdl"
+		}
+		"434"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/bench001.mdl"
+		}
+		"435"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/chairs_airport.mdl"
+		}
+		"436"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/booth.mdl"
+		}
+		"437"
+		{
+			"type"		"model"
+			"model"		"models/props_downtown/booth01.mdl"
+		}
+		"438"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/cafe_barstool1.mdl"
+		}
+		"439"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/chair2.mdl"
+		}
+		"440"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/chair01.mdl"
+		}
+		"441"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/foldingchair.mdl"
+		}
+		"442"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/furniture_chair03a.mdl"
+		}
+		"443"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/chair_office2.mdl"
+		}
+		"444"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/caboose01_chair.mdl"
+		}
+		"445"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/chair_thonet.mdl"
+		}
+		"446"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/chair_cafeteria.mdl"
+		}
+		"447"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/chair_cafeteria_atrium.mdl"
+		}
+		"448"
+		{
+			"type"		"model"
+			"model"		"models/props_urban/plastic_chair001.mdl"
+		}
+		"449"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/patio_chair2_white.mdl"
+		}
+		"450"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/chairlobby01.mdl"
+		}
+		"451"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/piano.mdl"
+		}
+		"452"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame1.mdl"
+		}
+		"453"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame10.mdl"
+		}
+		"454"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame11.mdl"
+		}
+		"455"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame2.mdl"
+		}
+		"456"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame4.mdl"
+		}
+		"457"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame6.mdl"
+		}
+		"458"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame7.mdl"
+		}
+		"459"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame8.mdl"
+		}
+		"460"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/picture_frame9.mdl"
+		}
+		"461"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/painting_landscape01.mdl"
+		}
+		"462"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/painting_portrait01.mdl"
+		}
+		"463"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/painting_portrait01_docks.mdl"
+		}
+		"464"
+		{
+			"type"		"model"
+			"model"		"models/props_furniture/bathtub1.mdl"
+		}
+		"465"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bathroomsink01.mdl"
+		}
+		"466"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/bathtub01.mdl"
+		}
+		"467"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/drinking_fountain.mdl"
+		}
+		"468"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toilet_b.mdl"
+		}
+		"469"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toilet.mdl"
+		}
+		"470"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toilet_b_breakable01.mdl"
+		}
+		"471"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toilet_c.mdl"
+		}
+		"472"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/toilet_d.mdl"
+		}
+		"473"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/urinal01.mdl"
+		}
+		"474"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/washer.mdl"
+		}
+		"475"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/dryer.mdl"
+		}
+		"476"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/prison_heater001a.mdl"
+		}
+		"477"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/refrigerator_industrial01.mdl"
+		}
+		"478"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/refrigerator03.mdl"
+		}
+		"479"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/refrigerator02_main.mdl"
+		}
+		"480"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/refrigerator02_lowerdoor.mdl"
+		}
+		"481"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/refrigerator02_freezerdoor.mdl"
+		}
+		"482"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/fridge_mini.mdl"
+		}
+		"483"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/stove02.mdl"
+		}
+		"484"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/stove03_industrial.mdl"
+		}
+		"485"
+		{
+			"type"		"model"
+			"model"		"models/props_interiors/stove04_industrial.mdl"
+		}
+		"486"
+		{
+			"type"		"header"
+			"text"		"Weapons & Items"
+		}
+		"487"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_medkit.mdl"
+		}
+		"488"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_molotov.mdl"
+		}
+		"489"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_painpills.mdl"
+		}
+		"490"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_pipebomb.mdl"
+		}
+		"491"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/50cal.mdl"
+		}
+		"492"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_minigun.mdl"
+		}
+		"493"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_dual_pistol_1911.mdl"
+		}
+		"494"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_pistol_1911.mdl"
+		}
+		"495"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_rifle_m16a2.mdl"
+		}
+		"496"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_autoshot_m4super.mdl"
+		}
+		"497"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_shotgun.mdl"
+		}
+		"498"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_smg_uzi.mdl"
+		}
+		"499"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_sniper_mini14.mdl"
 		}
 	}
 	"needsapp"		"left4dead"

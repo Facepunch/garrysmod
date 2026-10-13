@@ -7,198 +7,1458 @@
 	{
 		"1"
 		{
-			"type"		"model"
-			"model"		"models/weapons/w_models/w_baseball.mdl"
+			"type"		"header"
+			"text"		"Scout"
 		}
 		"2"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_bat.mdl"
+			"model"		"models/weapons/c_models/c_scattergun.mdl"
 		}
 		"3"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_bonesaw.mdl"
+			"model"		"models/weapons/c_models/c_double_barrel.mdl"
 		}
 		"4"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_bottle.mdl"
+			"model"		"models/weapons/c_models/c_xms_double_barrel.mdl"
 		}
 		"5"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_builder.mdl"
+			"model"		"models/weapons/c_models/c_soda_popper/c_soda_popper.mdl"
 		}
 		"6"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_cigarette_case.mdl"
+			"model"		"models/workshop/weapons/c_models/c_scatterdrum/c_scatterdrum.mdl"
 		}
 		"7"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_fireaxe.mdl"
+			"model"		"models/weapons/c_models/c_pep_scattergun.mdl"
 		}
 		"8"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_flaregun_shell.mdl"
+			"model"		"models/weapons/c_models/c_shortstop/c_shortstop.mdl"
 		}
 		"9"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_frontierjustice.mdl"
+			"model"		"models/weapons/c_models/c_pep_pistol/c_pep_pistol.mdl"
 		}
 		"10"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_grenade_grenadelauncher.mdl"
+			"model"		"models/weapons/c_models/c_winger_pistol/c_winger_pistol.mdl"
 		}
 		"11"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_grenadelauncher.mdl"
+			"model"		"models/workshop/weapons/c_models/c_invasion_pistol/c_invasion_pistol.mdl"
 		}
 		"12"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_knife.mdl"
+			"model"		"models/workshop/weapons/c_models/c_invasion_bat/c_invasion_bat.mdl"
 		}
 		"13"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_medigun.mdl"
+			"model"		"models/weapons/c_models/c_bat.mdl"
 		}
 		"14"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_medigun_overhealer.mdl"
+			"model"		"models/weapons/c_models/c_wooden_bat/c_wooden_bat.mdl"
 		}
 		"15"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_minigun.mdl"
+			"model"		"models/weapons/c_models/c_shogun_warfan/c_shogun_warfan.mdl"
 		}
 		"16"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_nail.mdl"
+			"model"		"models/weapons/c_models/c_scout_sword/c_scout_sword.mdl"
 		}
 		"17"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_pda_engineer.mdl"
+			"model"		"models/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
 		}
 		"18"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_pistol.mdl"
+			"model"		"models/weapons/c_models/c_rift_fire_mace/c_rift_fire_mace.mdl"
 		}
 		"19"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_revolver.mdl"
+			"model"		"models/weapons/c_models/c_holymackerel.mdl"
 		}
 		"20"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_rocket.mdl"
+			"model"		"models/weapons/c_models/c_holymackerel_xmas.mdl"
 		}
 		"21"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_rocketlauncher.mdl"
+			"model"		"models/weapons/c_models/c_bonk_bat/c_bonk_bat.mdl"
 		}
 		"22"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_sapper.mdl"
+			"model"		"models/weapons/c_models/c_boston_basher/c_boston_basher.mdl"
 		}
 		"23"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_scattergun.mdl"
+			"model"		"models/weapons/c_models/c_candy_cane/c_candy_cane.mdl"
 		}
 		"24"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_sd_sapper.mdl"
+			"model"		"models/weapons/c_models/c_xms_giftwrap/c_xms_giftwrap.mdl"
 		}
 		"25"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_shotgun.mdl"
+			"model"		"models/weapons/c_models/c_xms_festive_ornament.mdl"
 		}
 		"26"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_shovel.mdl"
+			"model"		"models/weapons/w_models/w_baseball.mdl"
 		}
 		"27"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_smg.mdl"
+			"model"		"models/weapons/c_models/c_energy_drink/c_energy_drink.mdl"
 		}
 		"28"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_sniperrifle.mdl"
+			"model"		"models/weapons/c_models/c_xms_energy_drink/c_xms_energy_drink.mdl"
 		}
 		"29"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_stickybomb.mdl"
+			"model"		"models/weapons/c_models/c_breadmonster/c_breadmonster_milk.mdl"
 		}
 		"30"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_stickybomb2.mdl"
+			"model"		"models/weapons/c_models/c_madmilk/c_madmilk.mdl"
 		}
 		"31"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_stickybomb3.mdl"
+			"model"		"models/weapons/w_models/w_nail.mdl"
 		}
 		"32"
 		{
-			"type"		"model"
-			"model"		"models/weapons/w_models/w_stickybomb_d.mdl"
+			"type"		"header"
+			"text"		"Soldier"
 		}
 		"33"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_stickybomb_launcher.mdl"
+			"model"		"models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
 		}
 		"34"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_syringe.mdl"
+			"model"		"models/weapons/c_models/c_directhit/c_directhit.mdl"
 		}
 		"35"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_syringegun.mdl"
+			"model"		"models/weapons/c_models/c_liberty_launcher/c_liberty_launcher.mdl"
 		}
 		"36"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_toolbox.mdl"
+			"model"		"models/weapons/c_models/c_bet_rocketlauncher/c_bet_rocketlauncher.mdl"
 		}
 		"37"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_ttg_max_gun.mdl"
+			"model"		"models/workshop/weapons/c_models/c_atom_launcher/c_atom_launcher.mdl"
 		}
 		"38"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_wrangler.mdl"
+			"model"		"models/weapons/c_models/c_blackbox/c_blackbox.mdl"
 		}
 		"39"
 		{
 			"type"		"model"
-			"model"		"models/weapons/w_models/w_wrench.mdl"
+			"model"		"models/weapons/c_models/c_blackbox/c_blackbox_xmas.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_drg_cowmangler/c_drg_cowmangler.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_dumpster_device/c_dumpster_device.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_rocketjumper/c_rocketjumper.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_drg_righteousbison/c_drg_righteousbison.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_trenchgun/c_trenchgun.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_reserve_shooter/c_reserve_shooter.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_buffpack/c_buffpack.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_buffpack/c_buffpack_xmas.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_battalion_buffpack/c_batt_buffpack.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shogun_warpack/c_shogun_warpack.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_paratooper_pack/c_paratrooper_pack.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_paratooper_pack/c_paratrooper_pack_open.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_paratooper_pack/c_paratrooper_parachute.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shogun_warbanner/c_shogun_warbanner.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_battalion_buffbanner/c_batt_buffbanner.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_buffbanner/c_buffbanner.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shogun_warhorn/c_shogun_warhorn.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_battalion_bugle/c_battalion_bugle.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bugle/c_bugle.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_rocketboots_soldier.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_market_gardener/c_market_gardener.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shovel/c_shovel.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_riding_crop/c_riding_crop.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shogun_katana/c_shogun_katana_soldier.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_rocket.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_rocket_airstrike/w_rocket_airstrike.mdl"
+		}
+		"66"
+		{
+			"type"		"header"
+			"text"		"Pyro"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_flamethrower/c_flamethrower.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_degreaser/c_degreaser.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_drg_phlogistinator/c_drg_phlogistinator.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_flameball/c_flameball.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/workshop_partner/weapons/c_models/c_ai_flamethrower/c_ai_flamethrower.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_flamethrower/c_backburner.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_flamethrower/c_backburner_xmas.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_rainblower/c_rainblower.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_drg_manmelter/c_drg_manmelter.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_reserve_shooter/c_reserve_shooter.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_flaregun_pyro/c_flaregun_pyro.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_scorch_shot/c_scorch_shot.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_xms_flaregun/c_xms_flaregun.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_detonator/c_detonator.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_rocketpack/c_rocketpack.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_gascan/c_gascan.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_slapping_glove/c_slapping_glove.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_fireaxe_pyro/c_fireaxe_pyro.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sledgehammer/c_sledgehammer.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_lollichop/c_lollichop.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_powerjack/c_powerjack.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_axtinguisher/c_axtinguisher_pyro.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_drg_thirddegree/c_drg_thirddegree.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_fireaxe_pyro/c_fireaxe_pyro_xmas.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_rift_fire_axe/c_rift_fire_axe.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_rfa_hammer/c_rfa_hammer.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_back_scratcher/c_back_scratcher.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sd_neonsign/c_sd_neonsign.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sd_neonsign/c_sd_neonsign_broken.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_mailbox/c_mailbox.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_flaregun_shell.mdl"
+		}
+		"98"
+		{
+			"type"		"header"
+			"text"		"Demo"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_grenadelauncher/c_grenadelauncher.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_grenadelauncher/c_grenadelauncher_xmas.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_demo_cannon/c_demo_cannon.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_quadball/c_quadball.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_lochnload/c_lochnload.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_scottish_resistance/c_scottish_resistance.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sticky_jumper/c_sticky_jumper.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_kingmaker_sticky/c_kingmaker_sticky.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_persian_shield/c_persian_shield.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_persian_shield/c_persian_shield_spike.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_persian_shield/c_persian_shield_all.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_persian_shield/c_persian_shield_arrow.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_targe/c_targe.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_targe/c_targe_xmas.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_wheel_shield/c_wheel_shield.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bottle/c_bottle.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bottle/c_bottle_broken.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_scotland_shard/c_scotland_shard.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_scotland_shard/c_scotland_shard_broken.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_caber/c_caber.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_caber/c_caber_exploded.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bigaxe/c_bigaxe.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_headtaker/c_headtaker.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shogun_katana/c_shogun_katana.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_demo_sultan_sword/c_demo_sultan_sword.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_battleaxe/c_battleaxe.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_claidheamohmor/c_claidheamohmor.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_claymore/c_claymore.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_claymore/c_claymore_xmas.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_golfclub/c_golfclub.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_grenade_grenadelauncher.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_cannonball.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_quadball/w_quadball_grenade.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_stickybomb2.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_stickybomb_d.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_stickybomb.mdl"
+		}
+		"136"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_stickybomb3.mdl"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_kingmaker_sticky/w_kingmaker_stickybomb.mdl"
+		}
+		"138"
+		{
+			"type"		"header"
+			"text"		"Heavy"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_minigun/c_minigun.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_minigun/c_minigun_natascha.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_iron_curtain/c_iron_curtain.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_gatling_gun/c_gatling_gun.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_tomislav/c_tomislav.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_canton/c_canton.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_russian_riot/c_russian_riot.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bear_claw/c_bear_claw.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_breadmonster_gloves/c_breadmonster_gloves.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sr3_punch/c_sr3_punch.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_boxing_gloves/c_boxing_gloves.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_boxing_gloves/c_boxing_gloves_xmas.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_xms_gloves/c_xms_gloves.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_fists_of_steel/c_fists_of_steel.mdl"
+		}
+		"153"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_eviction_notice/c_eviction_notice.mdl"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_buffalo_steak/c_buffalo_steak.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_chocolate/c_chocolate.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_fishcake/c_fishcake.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sandwich/c_robo_sandwich.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sandwich/c_sandwich.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sandwich/c_sandwich_xmas.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_banana/c_banana.mdl"
+		}
+		"161"
+		{
+			"type"		"header"
+			"text"		"Engineer"
+		}
+		"162"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_frontierjustice/c_frontierjustice.mdl"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_frontierjustice/c_frontierjustice_xmas.mdl"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_tele_shotgun/c_tele_shotgun.mdl"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_dex_shotgun/c_dex_shotgun.mdl"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_drg_pomson/c_drg_pomson.mdl"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_toolbox/c_toolbox.mdl"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_builder/c_builder.mdl"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_pda_engineer/c_pda_engineer.mdl"
+		}
+		"170"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_wrangler.mdl"
+		}
+		"171"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_wrangler_xmas.mdl"
+		}
+		"172"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_invasion_wrangler/c_invasion_wrangler.mdl"
+		}
+		"173"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_dex_arm/c_dex_arm.mdl"
+		}
+		"174"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_jag/c_jag.mdl"
+		}
+		"175"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_spikewrench/c_spikewrench.mdl"
+		}
+		"176"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_wrench/c_wrench.mdl"
+		}
+		"177"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_drg_wrenchmotron/c_drg_wrenchmotron.mdl"
+		}
+		"178"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_repair_claw.mdl"
+		}
+		"179"
+		{
+			"type"		"header"
+			"text"		"Medic"
+		}
+		"180"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_syringegun/c_syringegun.mdl"
+		}
+		"181"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_leechgun/c_leechgun.mdl"
+		}
+		"182"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_proto_syringegun/c_proto_syringegun.mdl"
+		}
+		"183"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow.mdl"
+		}
+		"184"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow_xmas.mdl"
+		}
+		"185"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_proto_medigun/c_proto_medigun.mdl"
+		}
+		"186"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_medigun/c_medigun.mdl"
+		}
+		"187"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_medigun_defense/c_medigun_defense.mdl"
+		}
+		"188"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_overhealer/c_overhealer.mdl"
+		}
+		"189"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_medigun_defense/c_medigun_defensepack.mdl"
+		}
+		"190"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_proto_backpack/c_proto_backpack.mdl"
+		}
+		"191"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_uberneedle/c_uberneedle.mdl"
+		}
+		"192"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ubersaw/c_ubersaw.mdl"
+		}
+		"193"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ubersaw/c_ubersaw_xmas.mdl"
+		}
+		"194"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_hippocrates_bust/c_hippocrates_bust.mdl"
+		}
+		"195"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_amputator/c_amputator.mdl"
+		}
+		"196"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bonesaw/c_bonesaw.mdl"
+		}
+		"197"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bonesaw/c_bonesaw_xmas.mdl"
+		}
+		"198"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_syringe.mdl"
+		}
+		"199"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_syringe_proj.mdl"
+		}
+		"200"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow_xmas_proj.mdl"
+		}
+		"201"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_leechgun/c_leech_proj.mdl"
+		}
+		"202"
+		{
+			"type"		"header"
+			"text"		"Sniper"
+		}
+		"203"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sniperrifle/c_sniperrifle.mdl"
+		}
+		"204"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_csgo_awp/c_csgo_awp.mdl"
+		}
+		"205"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_dex_sniperrifle/c_dex_sniperrifle.mdl"
+		}
+		"206"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_dartgun.mdl"
+		}
+		"207"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_pro_rifle/c_pro_rifle.mdl"
+		}
+		"208"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_invasion_sniperrifle/c_invasion_sniperrifle.mdl"
+		}
+		"209"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_tfc_sniperrifle/c_tfc_sniperrifle.mdl"
+		}
+		"210"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bazaar_sniper/c_bazaar_sniper.mdl"
+		}
+		"211"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bow/c_bow.mdl"
+		}
+		"212"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bow/c_bow_xmas.mdl"
+		}
+		"213"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bow/c_bow_thief.mdl"
+		}
+		"214"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_smg/c_smg.mdl"
+		}
+		"215"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_pro_smg/c_pro_smg.mdl"
+		}
+		"216"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_xms_urinejar.mdl"
+		}
+		"217"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/urinejar.mdl"
+		}
+		"218"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_breadmonster/c_breadmonster.mdl"
+		}
+		"219"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_croc_knife/c_croc_knife.mdl"
+		}
+		"220"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_machete/c_machete.mdl"
+		}
+		"221"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_scimitar/c_scimitar.mdl"
+		}
+		"222"
+		{
+			"type"		"model"
+			"model"		"models/workshop_partner/weapons/c_models/c_prinny_knife/c_prinny_knife.mdl"
+		}
+		"223"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_wood_machete/c_wood_machete.mdl"
+		}
+		"224"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_dart.mdl"
+		}
+		"225"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_arrow.mdl"
+		}
+		"226"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_arrow_xmas.mdl"
+		}
+		"227"
+		{
+			"type"		"header"
+			"text"		"Spy"
+		}
+		"228"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_revolver/c_revolver.mdl"
+		}
+		"229"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_revolver/c_revolver_xmas.mdl"
+		}
+		"230"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_snub_nose/c_snub_nose.mdl"
+		}
+		"231"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ambassador/c_ambassador.mdl"
+		}
+		"232"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ambassador/c_ambassador_xmas.mdl"
+		}
+		"233"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_dex_revolver/c_dex_revolver.mdl"
+		}
+		"234"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_letranger/c_letranger.mdl"
+		}
+		"235"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_p2rec/c_p2rec.mdl"
+		}
+		"236"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sapper/c_sapper_xmas.mdl"
+		}
+		"237"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_sapper/c_sapper.mdl"
+		}
+		"238"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_sapper.mdl"
+		}
+		"239"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_sd_sapper.mdl"
+		}
+		"240"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_breadmonster_sapper/c_breadmonster_sapper.mdl"
+		}
+		"241"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_knife/c_knife.mdl"
+		}
+		"242"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_eternal_reward/c_eternal_reward.mdl"
+		}
+		"243"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_voodoo_pin/c_voodoo_pin.mdl"
+		}
+		"244"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_switchblade/c_switchblade.mdl"
+		}
+		"245"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ava_roseknife/c_ava_roseknife.mdl"
+		}
+		"246"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_acr_hookblade/c_acr_hookblade.mdl"
+		}
+		"247"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shogun_kunai/c_shogun_kunai.mdl"
+		}
+		"248"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_xms_cold_shoulder/c_xms_cold_shoulder.mdl"
+		}
+		"249"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_xms_cold_shoulder/c_xms_cold_shoulder_festivizer.mdl"
+		}
+		"250"
+		{
+			"type"		"model"
+			"model"		"models/weapons/shells/shell_cigarrette.mdl"
+		}
+		"251"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_leather_watch/parts/c_leather_watch.mdl"
+		}
+		"252"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_spy_watch.mdl"
+		}
+		"253"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_pocket_watch/parts/c_pocket_watch.mdl"
+		}
+		"254"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_cigarette_case.mdl"
+		}
+		"255"
+		{
+			"type"		"header"
+			"text"		"Multi-Class"
+		}
+		"256"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ttg_max_gun/c_ttg_max_gun.mdl"
+		}
+		"257"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ttg_sam_gun/c_ttg_sam_gun.mdl"
+		}
+		"258"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_pistol/c_pistol.mdl"
+		}
+		"259"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_shotgun/c_shotgun.mdl"
+		}
+		"260"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_8mm_camera/c_8mm_camera.mdl"
+		}
+		"261"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_ham/c_ham.mdl"
+		}
+		"262"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_saxxy/c_saxxy.mdl"
+		}
+		"263"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_carnival_mallet/c_carnival_mallet.mdl"
+		}
+		"264"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_big_mallet/c_big_mallet.mdl"
+		}
+		"265"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_frying_pan/c_frying_pan.mdl"
+		}
+		"266"
+		{
+			"type"		"model"
+			"model"		"models/workshop/weapons/c_models/c_crossing_guard/c_crossing_guard.mdl"
+		}
+		"267"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_paintrain/c_paintrain.mdl"
+		}
+		"268"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_pickaxe/c_pickaxe.mdl"
+		}
+		"269"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_pickaxe/c_pickaxe_s2.mdl"
+		}
+		"270"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_skullbat/c_skullbat.mdl"
+		}
+		"271"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_skullbat/c_skullbat_s1.mdl"
+		}
+		"272"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_skullbat/c_skullbat_s2.mdl"
+		}
+		"273"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_skullbat/c_skullbat_s3.mdl"
+		}
+		"274"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_picket/c_picket.mdl"
+		}
+		"275"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_tw_eagle/c_tw_eagle.mdl"
+		}
+		"276"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_unarmed_combat/c_unarmed_combat.mdl"
+		}
+		"277"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_grapple_proj/c_grapple_proj.mdl"
+		}
+		"278"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_grappling_hook/c_grappling_hook.mdl"
+		}
+		"279"
+		{
+			"type"		"header"
+			"text"		"Misc"
+		}
+		"280"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/stattrack.mdl"
+		}
+		"281"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_breadmonster/w_breadmonster.mdl"
+		}
+		"282"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_models/w_breadmonster/w_breadmonster_jiggle.mdl"
+		}
+		"283"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_baguette.mdl"
+		}
+		"284"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_burnt.mdl"
+		}
+		"285"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_cinnamon.mdl"
+		}
+		"286"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_cornbread.mdl"
+		}
+		"287"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_crumpet.mdl"
+		}
+		"288"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_plainloaf.mdl"
+		}
+		"289"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_russianblack.mdl"
+		}
+		"290"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_pretzel.mdl"
+		}
+		"291"
+		{
+			"type"		"model"
+			"model"		"models/weapons/c_models/c_bread/c_bread_ration.mdl"
 		}
 	}
 	"name"		"Weapons"

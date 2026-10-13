@@ -2796,419 +2796,434 @@
 		"558"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/cargo_container01c.mdl"
+			"model"		"models/props_wasteland/cargo_container01d.mdl"
 		}
 		"559"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/boxcar_door.mdl"
+			"model"		"models/props_wasteland/cargo_container01c.mdl"
 		}
 		"560"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/trashdumpster02.mdl"
+			"model"		"models/props_wasteland/cargo_containerdoor01a.mdl"
 		}
 		"561"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/freightelevator.mdl"
+			"model"		"models/props_wasteland/cargo_containerdoor01b.mdl"
 		}
 		"562"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_jungle_gym01a.mdl"
+			"model"		"models/props_canal/boxcar_door.mdl"
 		}
 		"563"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_jungle_gym01b.mdl"
+			"model"		"models/props_junk/trashdumpster02.mdl"
 		}
 		"564"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_swingset01.mdl"
+			"model"		"models/props_lab/freightelevator.mdl"
 		}
 		"565"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playgroundslide01.mdl"
+			"model"		"models/props_c17/playground_jungle_gym01a.mdl"
 		}
 		"566"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/awning001a.mdl"
+			"model"		"models/props_c17/playground_jungle_gym01b.mdl"
 		}
 		"567"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/awning002a.mdl"
+			"model"		"models/props_c17/playground_swingset01.mdl"
 		}
 		"568"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/horizontalcoolingtank04.mdl"
+			"model"		"models/props_c17/playgroundslide01.mdl"
 		}
 		"569"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/generator01.mdl"
+			"model"		"models/props_c17/awning001a.mdl"
 		}
 		"570"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/generator02.mdl"
+			"model"		"models/props_c17/awning002a.mdl"
 		}
 		"571"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/substation_transformer01c.mdl"
+			"model"		"models/props_wasteland/horizontalcoolingtank04.mdl"
 		}
 		"572"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/substation_transformer01e.mdl"
+			"model"		"models/props_canal/generator01.mdl"
 		}
 		"573"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/substation_circuitbreaker01a.mdl"
+			"model"		"models/props_canal/generator02.mdl"
 		}
 		"574"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/substation_stripebox01a.mdl"
+			"model"		"models/props_c17/substation_transformer01c.mdl"
 		}
 		"575"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/substation_transformer01a.mdl"
+			"model"		"models/props_c17/substation_transformer01e.mdl"
 		}
 		"576"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/substation_transformer01b.mdl"
+			"model"		"models/props_c17/substation_circuitbreaker01a.mdl"
 		}
 		"577"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/prison_conduit001a.mdl"
+			"model"		"models/props_c17/substation_stripebox01a.mdl"
 		}
 		"578"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/prison_switchbox001a.mdl"
+			"model"		"models/props_c17/substation_transformer01a.mdl"
 		}
 		"579"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/trackswitch01.mdl"
+			"model"		"models/props_c17/substation_transformer01b.mdl"
 		}
 		"580"
 		{
 			"type"		"model"
-			"model"		"models/props_citizen_tech/guillotine001a_base01.mdl"
+			"model"		"models/props_wasteland/prison_conduit001a.mdl"
 		}
 		"581"
 		{
 			"type"		"model"
-			"model"		"models/props_citizen_tech/steamengine001a.mdl"
+			"model"		"models/props_wasteland/prison_switchbox001a.mdl"
 		}
 		"582"
 		{
 			"type"		"model"
-			"model"		"models/props_citizen_tech/windmill_blade002a.mdl"
+			"model"		"models/props_trainstation/trackswitch01.mdl"
 		}
 		"583"
 		{
 			"type"		"model"
-			"model"		"models/props_citizen_tech/windmill_blade004a.mdl"
+			"model"		"models/props_citizen_tech/guillotine001a_base01.mdl"
 		}
 		"584"
 		{
 			"type"		"model"
-			"model"		"models/cranes/crane_body_lod.mdl"
+			"model"		"models/props_citizen_tech/steamengine001a.mdl"
 		}
 		"585"
 		{
 			"type"		"model"
-			"model"		"models/cranes/crane_docks.mdl"
+			"model"		"models/props_citizen_tech/windmill_blade002a.mdl"
 		}
 		"586"
 		{
 			"type"		"model"
-			"model"		"models/cranes/crane_frame.mdl"
+			"model"		"models/props_citizen_tech/windmill_blade004a.mdl"
 		}
 		"587"
 		{
 			"type"		"model"
-			"model"		"models/cranes/crane_frame_interior.mdl"
+			"model"		"models/cranes/crane_body_lod.mdl"
 		}
 		"588"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/trap_crush01a.mdl"
+			"model"		"models/cranes/crane_docks.mdl"
 		}
 		"589"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/antlionhill.mdl"
+			"model"		"models/cranes/crane_frame.mdl"
 		}
 		"590"
 		{
 			"type"		"model"
-			"model"		"models/props_buildings/watertower_001a.mdl"
+			"model"		"models/cranes/crane_frame_interior.mdl"
 		}
 		"591"
 		{
 			"type"		"model"
-			"model"		"models/props_buildings/watertower_001c.mdl"
+			"model"		"models/props_c17/trap_crush01a.mdl"
 		}
 		"592"
 		{
 			"type"		"model"
-			"model"		"models/props_buildings/watertower_002a.mdl"
+			"model"		"models/props_wasteland/antlionhill.mdl"
 		}
 		"593"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/coolingtank01.mdl"
+			"model"		"models/props_buildings/watertower_001a.mdl"
 		}
 		"594"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/coolingtank02.mdl"
+			"model"		"models/props_buildings/watertower_001c.mdl"
 		}
 		"595"
 		{
 			"type"		"model"
-			"model"		"models/props_animated_breakable/smokestack.mdl"
+			"model"		"models/props_buildings/watertower_002a.mdl"
 		}
 		"596"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/column02a.mdl"
+			"model"		"models/props_wasteland/coolingtank01.mdl"
 		}
 		"597"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/trainstation_column001.mdl"
+			"model"		"models/props_wasteland/coolingtank02.mdl"
 		}
 		"598"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/fountain_01.mdl"
+			"model"		"models/props_animated_breakable/smokestack.mdl"
 		}
 		"599"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/statue_horse.mdl"
+			"model"		"models/props_c17/column02a.mdl"
 		}
 		"600"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/utilitypole01a.mdl"
+			"model"		"models/props_trainstation/trainstation_column001.mdl"
 		}
 		"601"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/utilitypole01b.mdl"
+			"model"		"models/props_c17/fountain_01.mdl"
 		}
 		"602"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/utilitypole01d.mdl"
+			"model"		"models/props_c17/statue_horse.mdl"
 		}
 		"603"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/utilitypole02b.mdl"
+			"model"		"models/props_c17/utilitypole01a.mdl"
 		}
 		"604"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/utilitypole03a.mdl"
+			"model"		"models/props_c17/utilitypole01b.mdl"
 		}
 		"605"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/lamppost03a_off.mdl"
+			"model"		"models/props_c17/utilitypole01d.mdl"
 		}
 		"606"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/lamppost03a_off_dynamic.mdl"
+			"model"		"models/props_c17/utilitypole02b.mdl"
 		}
 		"607"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/lamppost03a_on.mdl"
+			"model"		"models/props_c17/utilitypole03a.mdl"
 		}
 		"608"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/canal_bridge_railing_lamps.mdl"
+			"model"		"models/props_c17/lamppost03a_off.mdl"
 		}
 		"609"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/pole_384connection001a.mdl"
+			"model"		"models/props_c17/lamppost03a_off_dynamic.mdl"
 		}
 		"610"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/pole_384connection001b.mdl"
+			"model"		"models/props_c17/lamppost03a_on.mdl"
 		}
 		"611"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/pole_448connection001a.mdl"
+			"model"		"models/props_canal/canal_bridge_railing_lamps.mdl"
 		}
 		"612"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/powertower01.mdl"
+			"model"		"models/props_trainstation/pole_384connection001a.mdl"
 		}
 		"613"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/lights_industrialcluster01a.mdl"
+			"model"		"models/props_trainstation/pole_384connection001b.mdl"
 		}
 		"614"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/light_256ceilingmounted001a.mdl"
+			"model"		"models/props_trainstation/pole_448connection001a.mdl"
 		}
 		"615"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/canal_cap001.mdl"
+			"model"		"models/props_wasteland/powertower01.mdl"
 		}
 		"616"
 		{
 			"type"		"model"
-			"model"		"models/props_pipes/concrete_pipe001a.mdl"
+			"model"		"models/props_wasteland/lights_industrialcluster01a.mdl"
 		}
 		"617"
 		{
 			"type"		"model"
-			"model"		"models/props_pipes/concrete_pipe001b.mdl"
+			"model"		"models/props_trainstation/light_256ceilingmounted001a.mdl"
 		}
 		"618"
 		{
 			"type"		"model"
-			"model"		"models/props_pipes/concrete_pipe001c.mdl"
+			"model"		"models/props_canal/canal_cap001.mdl"
 		}
 		"619"
 		{
 			"type"		"model"
-			"model"		"models/props_pipes/concrete_pipe001d.mdl"
+			"model"		"models/props_pipes/concrete_pipe001a.mdl"
 		}
 		"620"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/locks_large.mdl"
+			"model"		"models/props_pipes/concrete_pipe001b.mdl"
 		}
 		"621"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/locks_large_b.mdl"
+			"model"		"models/props_pipes/concrete_pipe001c.mdl"
 		}
 		"622"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/locks_small.mdl"
+			"model"		"models/props_pipes/concrete_pipe001d.mdl"
 		}
 		"623"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/locks_small_b.mdl"
+			"model"		"models/props_canal/locks_large.mdl"
 		}
 		"624"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss02h.mdl"
+			"model"		"models/props_canal/locks_large_b.mdl"
 		}
 		"625"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss02g.mdl"
+			"model"		"models/props_canal/locks_small.mdl"
 		}
 		"626"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss02f.mdl"
+			"model"		"models/props_canal/locks_small_b.mdl"
 		}
 		"627"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss02e.mdl"
+			"model"		"models/props_c17/truss02h.mdl"
 		}
 		"628"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss02d.mdl"
+			"model"		"models/props_c17/truss02g.mdl"
 		}
 		"629"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss02c.mdl"
+			"model"		"models/props_c17/truss02f.mdl"
 		}
 		"630"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss03b.mdl"
+			"model"		"models/props_c17/truss02e.mdl"
 		}
 		"631"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss02a.mdl"
+			"model"		"models/props_c17/truss02d.mdl"
 		}
 		"632"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/truss03a.mdl"
+			"model"		"models/props_c17/truss02c.mdl"
 		}
 		"633"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/ceiling_arch001a.mdl"
+			"model"		"models/props_c17/truss03b.mdl"
 		}
 		"634"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/column_arch001a.mdl"
+			"model"		"models/props_c17/truss02a.mdl"
 		}
 		"635"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/ceiling_truss001a.mdl"
+			"model"		"models/props_c17/truss03a.mdl"
 		}
 		"636"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/light_signal001a.mdl"
+			"model"		"models/props_trainstation/ceiling_arch001a.mdl"
 		}
 		"637"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/light_signal001b.mdl"
+			"model"		"models/props_trainstation/column_arch001a.mdl"
 		}
 		"638"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/pole_448connection002b.mdl"
+			"model"		"models/props_trainstation/ceiling_truss001a.mdl"
 		}
 		"639"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/pole_448connection002a.mdl"
+			"model"		"models/props_trainstation/light_signal001a.mdl"
 		}
 		"640"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/trainstation_ornament001.mdl"
+			"model"		"models/props_trainstation/light_signal001b.mdl"
 		}
 		"641"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/pole_448connection002b.mdl"
+		}
+		"642"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/pole_448connection002a.mdl"
+		}
+		"643"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/trainstation_ornament001.mdl"
+		}
+		"644"
 		{
 			"type"		"model"
 			"model"		"models/props_trainstation/trainstation_arch001.mdl"

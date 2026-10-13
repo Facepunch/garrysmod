@@ -18,12 +18,12 @@
 		"3"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/trains/fsd-overrun.mdl"
+			"model"		"models/props_phx/trains/fsd-overrun2.mdl"
 		}
 		"4"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/trains/fsd-overrun2.mdl"
+			"model"		"models/props_phx/trains/fsd-overrun.mdl"
 		}
 		"5"
 		{

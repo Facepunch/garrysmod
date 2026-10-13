@@ -3,8 +3,6 @@
 	"parentid"		"37"
 	"icon"		"icon16/page.png"
 	"id"		"38"
-	"name"		"Map Props"
-	"version"		"3"
 	"contents"
 	{
 		"1"
@@ -1129,1898 +1127,1900 @@
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingb.mdl"
 		}
-		"224.5"
+		"225"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingc.mdl"
 		}
-		"225"
+		"226"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingd.mdl"
 		}
-		"226"
+		"227"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintinge.mdl"
 		}
-		"227"
+		"228"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingf.mdl"
 		}
-		"228"
+		"229"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingg.mdl"
 		}
-		"229"
+		"230"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingh.mdl"
 		}
-		"230"
+		"231"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingi.mdl"
 		}
-		"231"
+		"232"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingj.mdl"
 		}
-		"232"
+		"233"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingk.mdl"
 		}
-		"233"
+		"234"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingl.mdl"
 		}
-		"234"
+		"235"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingm.mdl"
 		}
-		"234.5"
+		"236"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingn.mdl"
 		}
-		"235"
+		"237"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/offpaintingo.mdl"
 		}
-		"236"
+		"238"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/picture1.mdl"
 		}
-		"237"
+		"239"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/picture2.mdl"
 		}
-		"238"
+		"240"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/picture3.mdl"
 		}
-		"239"
+		"241"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/mountedfish01.mdl"
 		}
-		"240"
+		"242"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/wood_pallet_01.mdl"
 		}
-		"241"
+		"243"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/crates_indoor.mdl"
 		}
-		"242"
+		"244"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/crates_outdoor.mdl"
 		}
-		"243"
+		"245"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/prodcratesa.mdl"
 		}
-		"244"
+		"246"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/prodcratesb.mdl"
 		}
-		"245"
+		"247"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/footlocker01_closed.mdl"
 		}
-		"246"
+		"248"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/footlocker01_open.mdl"
 		}
-		"247"
+		"249"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/ammo_can_02.mdl"
 		}
-		"248"
+		"250"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/ammo_can_01.mdl"
 		}
-		"249"
+		"251"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/ammo_can_03.mdl"
 		}
-		"250"
+		"252"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/concretebags.mdl"
 		}
-		"251"
+		"253"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/concretebags2.mdl"
 		}
-		"252"
+		"254"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/concretebags3.mdl"
 		}
-		"253"
+		"255"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/concretebags4.mdl"
 		}
-		"254"
+		"256"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet.mdl"
 		}
-		"255"
+		"257"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet02.mdl"
 		}
-		"256"
+		"258"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet02a.mdl"
 		}
-		"257"
+		"259"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet02b.mdl"
 		}
-		"258"
+		"260"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet02c.mdl"
 		}
-		"259"
+		"261"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet02d.mdl"
 		}
-		"260"
+		"262"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet02e.mdl"
 		}
-		"261"
+		"263"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet03.mdl"
 		}
-		"262"
+		"264"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet03a.mdl"
 		}
-		"263"
+		"265"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet03b.mdl"
 		}
-		"264"
+		"266"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet03c.mdl"
 		}
-		"265"
+		"267"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet03d.mdl"
 		}
-		"266"
+		"268"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet03e.mdl"
 		}
-		"267"
+		"269"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypalleta.mdl"
 		}
-		"268"
+		"270"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypalletb.mdl"
 		}
-		"269"
+		"271"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypalletc.mdl"
 		}
-		"270"
+		"272"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypalletd.mdl"
 		}
-		"271"
+		"273"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallete.mdl"
 		}
-		"272"
+		"274"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/crates_fruit1.mdl"
 		}
-		"273"
+		"275"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/crates_fruit1_p1.mdl"
 		}
-		"274"
+		"276"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/crates_fruit2.mdl"
 		}
-		"275"
+		"277"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/crates_fruit2_p1.mdl"
 		}
-		"276"
+		"278"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/crate_fruit_break.mdl"
 		}
-		"277"
+		"279"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/crate_fruit_break_p1.mdl"
 		}
-		"278"
+		"280"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/box_stack1.mdl"
 		}
-		"279"
+		"281"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/box_stack2.mdl"
 		}
-		"280"
+		"282"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/moneypallet_washerdryer.mdl"
 		}
-		"281"
+		"283"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/dryer_box.mdl"
 		}
-		"282"
+		"284"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/washer_box2.mdl"
 		}
-		"283"
+		"285"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/washer_box.mdl"
 		}
-		"284"
+		"286"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/dryer_box2.mdl"
 		}
-		"285"
+		"287"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/crate_extralarge.mdl"
 		}
-		"286"
+		"288"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/crate_extrasmall.mdl"
 		}
-		"287"
+		"289"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/crate_large.mdl"
 		}
-		"288"
+		"290"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/crate_extralargemill.mdl"
 		}
-		"289"
+		"291"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/crate_extrasmallmill.mdl"
 		}
-		"290"
+		"292"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/crate_small.mdl"
 		}
-		"291"
+		"293"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/du_crate_128x128.mdl"
 		}
-		"292"
+		"294"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/du_crate_64x64.mdl"
 		}
-		"293"
+		"295"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/du_crate_64x64_stone.mdl"
 		}
-		"294"
+		"296"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/du_crate_64x80.mdl"
 		}
-		"295"
+		"297"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/du_crate_96x96.mdl"
 		}
-		"296"
+		"298"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/stoneblock01a.mdl"
 		}
-		"297"
+		"299"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/stoneblocks48.mdl"
 		}
-		"298"
+		"300"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/boxes_frontroom.mdl"
 		}
-		"299"
+		"301"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/boxes_garage.mdl"
 		}
-		"300"
+		"302"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/boxes_garage_lower.mdl"
 		}
-		"301"
+		"303"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/crate_stackmill.mdl"
 		}
-		"302"
+		"304"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/nuclearcontainerboxclosed.mdl"
 		}
-		"303"
+		"305"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/hay_bails.mdl"
 		}
-		"304"
+		"306"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/hay_bail_stack.mdl"
 		}
-		"305"
+		"307"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/haybale_target.mdl"
 		}
-		"306"
+		"308"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/haybale_target_02.mdl"
 		}
-		"307"
+		"309"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/haybale_target_03.mdl"
 		}
-		"308"
+		"310"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/cinderblock.mdl"
 		}
-		"309"
+		"311"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/cinderblock_stack.mdl"
 		}
-		"310"
-		{
-			"type"		"model"
-			"model"		"models/props/de_inferno/clayoven.mdl"
-		}
-		"311"
-		{
-			"type"		"model"
-			"model"		"models/props/de_nuke/car_nuke_animation.mdl"
-		}
 		"312"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/car_nuke_animation.mdl"
-			"skin"		"1"
+			"model"		"models/props/de_inferno/clayoven.mdl"
 		}
 		"313"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/car_nuke_animation.mdl"
-			"skin"		"2"
 		}
 		"314"
 		{
 			"type"		"model"
-			"model"		"models/props/de_tides/truck.mdl"
+			"model"		"models/props/de_nuke/car_nuke_animation.mdl"
+			"skin"		"1"
 		}
 		"315"
 		{
 			"type"		"model"
-			"model"		"models/props/de_piranesi/pi_apc.mdl"
+			"model"		"models/props/de_nuke/car_nuke_animation.mdl"
+			"skin"		"2"
 		}
 		"316"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/tire1.mdl"
+			"model"		"models/props/de_tides/truck.mdl"
 		}
 		"317"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/tire2.mdl"
+			"model"		"models/props/de_piranesi/pi_apc.mdl"
 		}
 		"318"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/tirestack3.mdl"
+			"model"		"models/props/de_prodigy/tire1.mdl"
 		}
 		"319"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/tirestack.mdl"
+			"model"		"models/props/de_prodigy/tire2.mdl"
 		}
 		"320"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/tirestack2.mdl"
+			"model"		"models/props/de_prodigy/tirestack3.mdl"
 		}
 		"321"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/forklift.mdl"
+			"model"		"models/props/de_prodigy/tirestack.mdl"
 		}
 		"322"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/handtruck.mdl"
+			"model"		"models/props/de_prodigy/tirestack2.mdl"
 		}
 		"323"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/handtruck.mdl"
+			"model"		"models/props/cs_assault/forklift.mdl"
 		}
 		"324"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/pushcart.mdl"
+			"model"		"models/props/de_nuke/handtruck.mdl"
 		}
 		"325"
 		{
 			"type"		"model"
-			"model"		"models/props/de_dust/wagon.mdl"
+			"model"		"models/props/cs_assault/handtruck.mdl"
 		}
 		"326"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/wagon.mdl"
+			"model"		"models/props/de_prodigy/pushcart.mdl"
 		}
 		"327"
 		{
 			"type"		"model"
-			"model"		"models/props/de_tides/vending_cart_wheell.mdl"
+			"model"		"models/props/de_dust/wagon.mdl"
 		}
 		"328"
 		{
 			"type"		"model"
-			"model"		"models/props/de_tides/vending_cart_wheelr.mdl"
+			"model"		"models/props/de_inferno/wagon.mdl"
 		}
 		"329"
 		{
 			"type"		"model"
-			"model"		"models/props/de_tides/vending_cart_base.mdl"
+			"model"		"models/props/de_tides/vending_cart_wheell.mdl"
 		}
 		"330"
 		{
 			"type"		"model"
-			"model"		"models/props/de_tides/vending_cart_top.mdl"
+			"model"		"models/props/de_tides/vending_cart_wheelr.mdl"
 		}
 		"331"
 		{
 			"type"		"model"
-			"model"		"models/props/de_tides/vending_cart.mdl"
+			"model"		"models/props/de_tides/vending_cart_base.mdl"
 		}
 		"332"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/cannon_gun.mdl"
+			"model"		"models/props/de_tides/vending_cart_top.mdl"
 		}
 		"333"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/cannon_base.mdl"
+			"model"		"models/props/de_tides/vending_cart.mdl"
 		}
 		"334"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/cart_wheel.mdl"
+			"model"		"models/props/de_inferno/cannon_gun.mdl"
 		}
 		"335"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/ventilationduct02large.mdl"
+			"model"		"models/props/de_inferno/cannon_base.mdl"
 		}
 		"336"
 		{
 			"type"		"model"
-			"model"		"models/props/de_piranesi/pi_merlon.mdl"
+			"model"		"models/props/de_inferno/cart_wheel.mdl"
 		}
 		"337"
 		{
 			"type"		"model"
-			"model"		"models/props/de_piranesi/pi_orrery.mdl"
+			"model"		"models/props/de_nuke/ventilationduct02large.mdl"
 		}
 		"338"
 		{
 			"type"		"model"
-			"model"		"models/props/de_piranesi/pi_sundial.mdl"
+			"model"		"models/props/de_piranesi/pi_merlon.mdl"
 		}
 		"339"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/desk_console1b.mdl"
+			"model"		"models/props/de_piranesi/pi_orrery.mdl"
 		}
 		"340"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/desk_console1.mdl"
+			"model"		"models/props/de_piranesi/pi_sundial.mdl"
 		}
 		"341"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/desk_console1a.mdl"
+			"model"		"models/props/de_prodigy/desk_console1b.mdl"
 		}
 		"342"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/desk_console2.mdl"
+			"model"		"models/props/de_prodigy/desk_console1.mdl"
 		}
 		"343"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/desk_console3.mdl"
+			"model"		"models/props/de_prodigy/desk_console1a.mdl"
 		}
 		"344"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/spool.mdl"
+			"model"		"models/props/de_prodigy/desk_console2.mdl"
 		}
 		"345"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/spoolwire.mdl"
+			"model"		"models/props/de_prodigy/desk_console3.mdl"
 		}
 		"346"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/furnace01.mdl"
+			"model"		"models/props/de_prodigy/spool.mdl"
 		}
 		"347"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/transformer.mdl"
+			"model"		"models/props/de_prodigy/spoolwire.mdl"
 		}
 		"348"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/acunit1.mdl"
+			"model"		"models/props/cs_militia/furnace01.mdl"
 		}
 		"349"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/acunit2.mdl"
+			"model"		"models/props/de_prodigy/transformer.mdl"
 		}
 		"350"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/acunit01.mdl"
+			"model"		"models/props/de_train/acunit1.mdl"
 		}
 		"351"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/acunit02.mdl"
+			"model"		"models/props/de_train/acunit2.mdl"
 		}
 		"352"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/biohazardtank.mdl"
+			"model"		"models/props/cs_assault/acunit01.mdl"
 		}
 		"353"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/biohazardtank_dm_01.mdl"
+			"model"		"models/props/cs_assault/acunit02.mdl"
 		}
 		"354"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/biohazardtank_dm_02.mdl"
+			"model"		"models/props/de_train/biohazardtank.mdl"
 		}
 		"355"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/pallet_barrels.mdl"
+			"model"		"models/props/de_train/biohazardtank_dm_01.mdl"
 		}
 		"356"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/fuel_cask.mdl"
+			"model"		"models/props/de_train/biohazardtank_dm_02.mdl"
 		}
 		"357"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/storagetank.mdl"
+			"model"		"models/props/de_train/pallet_barrels.mdl"
 		}
 		"358"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/powerplanttank.mdl"
+			"model"		"models/props/de_nuke/fuel_cask.mdl"
 		}
 		"359"
 		{
 			"type"		"model"
-			"model"		"models/props_industrial/oil_storage.mdl"
+			"model"		"models/props/de_nuke/storagetank.mdl"
 		}
 		"360"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/de_train_signalbox_01.mdl"
+			"model"		"models/props/de_nuke/powerplanttank.mdl"
 		}
 		"361"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/processor.mdl"
+			"model"		"models/props_industrial/oil_storage.mdl"
 		}
 		"362"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/processor_nobase.mdl"
+			"model"		"models/props/de_train/de_train_signalbox_01.mdl"
 		}
 		"363"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/de_train_horizontalcoolingtank.mdl"
+			"model"		"models/props/de_train/processor.mdl"
 		}
 		"364"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/factorymachine01.mdl"
+			"model"		"models/props/de_train/processor_nobase.mdl"
 		}
 		"365"
 		{
 			"type"		"model"
-			"model"		"models/props_industrial/winch_deck.mdl"
+			"model"		"models/props/de_train/de_train_horizontalcoolingtank.mdl"
 		}
 		"366"
 		{
 			"type"		"model"
-			"model"		"models/props_industrial/winch_stern.mdl"
+			"model"		"models/props_c17/factorymachine01.mdl"
 		}
 		"367"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/ladderrung.mdl"
+			"model"		"models/props_industrial/winch_deck.mdl"
 		}
 		"368"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/ladderaluminium128.mdl"
+			"model"		"models/props_industrial/winch_stern.mdl"
 		}
 		"369"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/ladderaluminium.mdl"
+			"model"		"models/props/cs_militia/ladderrung.mdl"
 		}
 		"370"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/ladderwood.mdl"
+			"model"		"models/props/cs_assault/ladderaluminium128.mdl"
 		}
 		"371"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/ladder1.mdl"
+			"model"		"models/props/de_train/ladderaluminium.mdl"
 		}
 		"372"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/shelves.mdl"
+			"model"		"models/props/cs_militia/ladderwood.mdl"
 		}
 		"373"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/shelves_wood.mdl"
+			"model"		"models/props/cs_office/ladder1.mdl"
 		}
 		"374"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/shelves_metal.mdl"
+			"model"		"models/props/cs_militia/shelves.mdl"
 		}
 		"375"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_italy/it_mkt_shelf1.mdl"
+			"model"		"models/props/cs_militia/shelves_wood.mdl"
 		}
 		"376"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/shelves_metal1.mdl"
+			"model"		"models/props/cs_office/shelves_metal.mdl"
 		}
 		"377"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/shelves_metal2.mdl"
+			"model"		"models/props/cs_italy/it_mkt_shelf1.mdl"
 		}
 		"378"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/shelves_metal3.mdl"
+			"model"		"models/props/cs_office/shelves_metal1.mdl"
 		}
 		"379"
 		{
 			"type"		"model"
-			"model"		"models/props_industrial/warehouse_shelf001.mdl"
+			"model"		"models/props/cs_office/shelves_metal2.mdl"
 		}
 		"380"
 		{
 			"type"		"model"
-			"model"		"models/props_industrial/warehouse_shelf002.mdl"
+			"model"		"models/props/cs_office/shelves_metal3.mdl"
 		}
 		"381"
 		{
 			"type"		"model"
-			"model"		"models/props_industrial/warehouse_shelf003.mdl"
+			"model"		"models/props_industrial/warehouse_shelf001.mdl"
 		}
 		"382"
 		{
 			"type"		"model"
-			"model"		"models/props_industrial/warehouse_shelf004.mdl"
+			"model"		"models/props_industrial/warehouse_shelf002.mdl"
 		}
 		"383"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/consolepanelloadingbay.mdl"
+			"model"		"models/props_industrial/warehouse_shelf003.mdl"
 		}
 		"384"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/ticketmachine.mdl"
+			"model"		"models/props_industrial/warehouse_shelf004.mdl"
 		}
 		"385"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/electricalbox01.mdl"
+			"model"		"models/props/cs_assault/consolepanelloadingbay.mdl"
 		}
 		"386"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/electricalbox02.mdl"
+			"model"		"models/props/cs_assault/ticketmachine.mdl"
 		}
 		"387"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/nuclearcontrolbox.mdl"
+			"model"		"models/props/de_nuke/electricalbox01.mdl"
 		}
 		"388"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/nucleartestcabinet.mdl"
+			"model"		"models/props/de_nuke/electricalbox02.mdl"
 		}
 		"389"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/equipment1.mdl"
+			"model"		"models/props/de_nuke/nuclearcontrolbox.mdl"
 		}
 		"390"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/wall_console1.mdl"
+			"model"		"models/props/de_nuke/nucleartestcabinet.mdl"
 		}
 		"391"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/wall_console2.mdl"
+			"model"		"models/props/de_nuke/equipment1.mdl"
 		}
 		"392"
 		{
 			"type"		"model"
-			"model"		"models/props/de_prodigy/wall_console3.mdl"
+			"model"		"models/props/de_prodigy/wall_console1.mdl"
 		}
 		"393"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/lockers001a.mdl"
+			"model"		"models/props/de_prodigy/wall_console2.mdl"
 		}
 		"394"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/lockers_long.mdl"
+			"model"		"models/props/de_prodigy/wall_console3.mdl"
 		}
 		"395"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/equipment2.mdl"
+			"model"		"models/props/de_train/lockers001a.mdl"
 		}
 		"396"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/equipment3a.mdl"
+			"model"		"models/props/de_train/lockers_long.mdl"
 		}
 		"397"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/equipment3b.mdl"
+			"model"		"models/props/de_nuke/equipment2.mdl"
 		}
 		"398"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/fountain.mdl"
+			"model"		"models/props/de_nuke/equipment3a.mdl"
 		}
 		"399"
 		{
 			"type"		"model"
-			"model"		"models/props/de_tides/flowerbed.mdl"
+			"model"		"models/props/de_nuke/equipment3b.mdl"
 		}
 		"400"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/sheetrock_leaning.mdl"
+			"model"		"models/props/de_inferno/fountain.mdl"
 		}
 		"401"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/boulder01.mdl"
+			"model"		"models/props/de_tides/flowerbed.mdl"
 		}
 		"402"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/militiarock01.mdl"
+			"model"		"models/props/cs_militia/sheetrock_leaning.mdl"
 		}
 		"403"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/militiarock05.mdl"
+			"model"		"models/props/cs_militia/boulder01.mdl"
 		}
 		"404"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/militiarock02.mdl"
+			"model"		"models/props/cs_militia/militiarock01.mdl"
 		}
 		"405"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/militiarock03.mdl"
+			"model"		"models/props/cs_militia/militiarock05.mdl"
 		}
 		"406"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/de_inferno_boulder_01.mdl"
+			"model"		"models/props/cs_militia/militiarock02.mdl"
 		}
 		"407"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/de_inferno_boulder_02.mdl"
+			"model"		"models/props/cs_militia/militiarock03.mdl"
 		}
 		"408"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/de_inferno_boulder_03.mdl"
+			"model"		"models/props/de_inferno/de_inferno_boulder_01.mdl"
 		}
 		"409"
 		{
 			"type"		"model"
-			"model"		"models/props_debris/plaster_ceilingpile002a.mdl"
+			"model"		"models/props/de_inferno/de_inferno_boulder_02.mdl"
 		}
 		"410"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/rockcliff07e.mdl"
+			"model"		"models/props/de_inferno/de_inferno_boulder_03.mdl"
 		}
 		"411"
 		{
 			"type"		"model"
-			"model"		"models/props_wasteland/rockcliff_cluster01a.mdl"
+			"model"		"models/props_debris/plaster_ceilingpile002a.mdl"
 		}
 		"412"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_militia/roof_vent.mdl"
+			"model"		"models/props_wasteland/rockcliff07e.mdl"
 		}
 		"413"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/ventilationduct01.mdl"
+			"model"		"models/props_wasteland/rockcliff_cluster01a.mdl"
 		}
 		"414"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/ventilationduct02.mdl"
+			"model"		"models/props/cs_militia/roof_vent.mdl"
 		}
 		"415"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/wall_vent.mdl"
+			"model"		"models/props/cs_assault/ventilationduct01.mdl"
 		}
 		"416"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/ceiling_fan.mdl"
+			"model"		"models/props/cs_assault/ventilationduct02.mdl"
 		}
 		"417"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/ceiling_fan_blade.mdl"
+			"model"		"models/props/cs_assault/wall_vent.mdl"
 		}
 		"418"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/plant01.mdl"
+			"model"		"models/props/de_inferno/ceiling_fan.mdl"
 		}
 		"419"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/plant01_p1.mdl"
+			"model"		"models/props/de_inferno/ceiling_fan_blade.mdl"
 		}
 		"420"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/fountain_bowl.mdl"
+			"model"		"models/props/cs_office/plant01.mdl"
 		}
 		"421"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/pot_big.mdl"
+			"model"		"models/props/cs_office/plant01_p1.mdl"
 		}
 		"422"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/claypot03.mdl"
+			"model"		"models/props/de_inferno/fountain_bowl.mdl"
 		}
 		"423"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/claypot03_damage_01.mdl"
+			"model"		"models/props/de_inferno/pot_big.mdl"
 		}
 		"424"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/flower_barrel.mdl"
+			"model"		"models/props/de_inferno/claypot03.mdl"
 		}
 		"425"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/flower_barrel_p8.mdl"
+			"model"		"models/props/de_inferno/claypot03_damage_01.mdl"
 		}
 		"426"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/potted_plant1.mdl"
+			"model"		"models/props/de_inferno/flower_barrel.mdl"
 		}
 		"427"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/potted_plant1_p1.mdl"
+			"model"		"models/props/de_inferno/flower_barrel_p8.mdl"
 		}
 		"428"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/potted_plant2.mdl"
+			"model"		"models/props/de_inferno/potted_plant1.mdl"
 		}
 		"429"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/potted_plant2_p1.mdl"
+			"model"		"models/props/de_inferno/potted_plant1_p1.mdl"
 		}
 		"430"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/potted_plant3.mdl"
+			"model"		"models/props/de_inferno/potted_plant2.mdl"
 		}
 		"431"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/potted_plant3_p1.mdl"
+			"model"		"models/props/de_inferno/potted_plant2_p1.mdl"
 		}
 		"432"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_havana/pole_a.mdl"
+			"model"		"models/props/de_inferno/potted_plant3.mdl"
 		}
 		"433"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_italy/it_streetlampleg.mdl"
+			"model"		"models/props/de_inferno/potted_plant3_p1.mdl"
 		}
 		"434"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/spirea.mdl"
+			"model"		"models/props/cs_havana/pole_a.mdl"
 		}
 		"435"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/spireb.mdl"
+			"model"		"models/props/cs_italy/it_streetlampleg.mdl"
 		}
 		"436"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/monument.mdl"
+			"model"		"models/props/de_inferno/spirea.mdl"
 		}
 		"437"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/pillarc.mdl"
+			"model"		"models/props/de_inferno/spireb.mdl"
 		}
 		"438"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_havana/pillar_a.mdl"
+			"model"		"models/props/de_inferno/monument.mdl"
 		}
 		"439"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/churchprop01.mdl"
+			"model"		"models/props/de_inferno/pillarc.mdl"
 		}
 		"440"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/churchprop02.mdl"
+			"model"		"models/props/cs_havana/pillar_a.mdl"
 		}
 		"441"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/churchprop03.mdl"
+			"model"		"models/props/de_inferno/churchprop01.mdl"
 		}
 		"442"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/churchprop04.mdl"
+			"model"		"models/props/de_inferno/churchprop02.mdl"
 		}
 		"443"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/churchprop05.mdl"
+			"model"		"models/props/de_inferno/churchprop03.mdl"
 		}
 		"444"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/brickpillara.mdl"
+			"model"		"models/props/de_inferno/churchprop04.mdl"
 		}
 		"445"
 		{
 			"type"		"model"
-			"model"		"models/props/de_inferno/brickpillarb.mdl"
+			"model"		"models/props/de_inferno/churchprop05.mdl"
 		}
 		"446"
 		{
-			"type"		"header"
-			"text"		"Lights"
+			"type"		"model"
+			"model"		"models/props/de_inferno/brickpillara.mdl"
 		}
 		"447"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_italy/it_lantern1.mdl"
+			"model"		"models/props/de_inferno/brickpillarb.mdl"
 		}
 		"448"
 		{
-			"type"		"model"
-			"model"		"models/props/cs_italy/it_lantern2.mdl"
+			"type"		"header"
+			"text"		"Lights"
 		}
 		"449"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/wall_light_off.mdl"
+			"model"		"models/props/cs_italy/it_lantern1.mdl"
 		}
 		"450"
 		{
 			"type"		"model"
-			"model"		"models/props/de_nuke/wall_light.mdl"
+			"model"		"models/props/cs_italy/it_lantern2.mdl"
 		}
 		"451"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/floodlight01.mdl"
+			"model"		"models/props/de_nuke/wall_light_off.mdl"
 		}
 		"452"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_assault/floodlight02.mdl"
+			"model"		"models/props/de_nuke/wall_light.mdl"
 		}
 		"453"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/de_train_floodlights_01.mdl"
+			"model"		"models/props/cs_assault/floodlight01.mdl"
 		}
 		"454"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/light_security.mdl"
+			"model"		"models/props/cs_assault/floodlight02.mdl"
 		}
 		"455"
 		{
 			"type"		"model"
-			"model"		"models/props/cs_office/light_security.mdl"
+			"model"		"models/props/de_train/de_train_floodlights_01.mdl"
 		}
 		"456"
 		{
 			"type"		"model"
-			"model"		"models/props/de_train/floodlight.mdl"
+			"model"		"models/props/de_train/light_security.mdl"
 		}
 		"457"
+		{
+			"type"		"model"
+			"model"		"models/props/cs_office/light_security.mdl"
+		}
+		"458"
+		{
+			"type"		"model"
+			"model"		"models/props/de_train/floodlight.mdl"
+		}
+		"459"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/floodlight.mdl"
 			"skin"		"1"
 		}
-		"458"
+		"460"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/streetlight.mdl"
 		}
-		"459"
+		"461"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/light_outdoor_glass.mdl"
 		}
-		"460"
+		"462"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/light_outdoor.mdl"
 		}
-		"461"
+		"463"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/light_outsidewall.mdl"
 		}
-		"462"
+		"464"
 		{
 			"type"		"model"
 			"model"		"models/props/de_tides/tides_light_fixture.mdl"
 		}
-		"463"
+		"465"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/light_fixture.mdl"
 		}
-		"464"
+		"466"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/light_red1.mdl"
 		}
-		"465"
+		"467"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/spotlight.mdl"
 		}
-		"466"
+		"468"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/light_shop2.mdl"
 		}
-		"467"
+		"469"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/light_shop2.mdl"
 		}
-		"468"
+		"470"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/light_shop.mdl"
 		}
-		"469"
+		"471"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/ceiling_light.mdl"
 		}
-		"470"
+		"472"
 		{
 			"type"		"model"
 			"model"		"models/props_c17/light_industrialbell02_on.mdl"
 		}
-		"471"
+		"473"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/industriallight01.mdl"
 		}
-		"472"
+		"474"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/lightfixture01.mdl"
 		}
-		"473"
+		"475"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/lighthanging.mdl"
 		}
-		"474"
+		"476"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/wall_lamp2.mdl"
 		}
-		"475"
+		"477"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/wall_lamp3.mdl"
 		}
-		"476"
+		"478"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/light_ceiling.mdl"
 		}
-		"477"
+		"479"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/lightfixture01_base.mdl"
 		}
-		"478"
+		"480"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/light_inset.mdl"
 		}
-		"479"
+		"481"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/light_inset.mdl"
 		}
-		"480"
+		"482"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/emergency_lighta.mdl"
 		}
-		"481"
+		"483"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/emergency_lightb.mdl"
 		}
-		"482"
+		"484"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/light_red2.mdl"
 		}
-		"483"
+		"485"
 		{
 			"type"		"model"
 			"model"		"models/props/de_tides/lights_studio.mdl"
 		}
-		"484"
+		"486"
 		{
 			"type"		"model"
 			"model"		"models/props_interiors/lightbulb02a.mdl"
 		}
-		"485"
+		"487"
 		{
 			"type"		"model"
 			"model"		"models/props_c17/light_lightbare01_on.mdl"
 		}
-		"486"
+		"488"
 		{
 			"type"		"model"
 			"model"		"models/props/de_chateau/light_chandelier02.mdl"
 		}
-		"487"
+		"489"
 		{
 			"type"		"model"
 			"model"		"models/props_c17/light_floodlight02_off.mdl"
 		}
-		"488"
+		"490"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_assault/stoplight.mdl"
 		}
-		"489"
+		"491"
 		{
 			"type"		"model"
 			"model"		"models/props/de_tides/tides_streetlight.mdl"
 		}
-		"490"
+		"492"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/light_streetlight.mdl"
 		}
-		"491"
+		"493"
 		{
 			"type"		"header"
 			"text"		"Foliage"
 		}
-		"492"
+		"494"
 		{
 			"type"		"model"
 			"model"		"models/props/pi_fern.mdl"
 		}
-		"493"
+		"495"
 		{
 			"type"		"model"
 			"model"		"models/props/pi_shrub.mdl"
 		}
-		"494"
+		"496"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/fern01.mdl"
 		}
-		"495"
+		"497"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/fern01lg.mdl"
 		}
-		"496"
+		"498"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/tree_large_militia.mdl"
 		}
-		"497"
+		"499"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/trees1.mdl"
 		}
-		"498"
+		"500"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/trees2.mdl"
 		}
-		"499"
+		"501"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/trees3.mdl"
 		}
-		"500"
+		"502"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/du_palm_tree01_skybx.mdl"
 		}
-		"501"
+		"503"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/palm_tree_head_skybox.mdl"
 		}
-		"502"
+		"504"
 		{
 			"type"		"model"
 			"model"		"models/props/de_dust/palm_tree_trunk.mdl"
 		}
-		"503"
+		"505"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/bushgreenbig.mdl"
 		}
-		"504"
+		"506"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/bushgreensmall.mdl"
 		}
-		"505"
+		"507"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/cactus.mdl"
 		}
-		"506"
+		"508"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/cactus2.mdl"
 		}
-		"507"
+		"509"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/fountain_bowl_p10.mdl"
 		}
-		"508"
+		"510"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/fountain_bowl_p6.mdl"
 		}
-		"509"
+		"511"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/fountain_bowl_p7.mdl"
 		}
-		"510"
+		"512"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/fountain_bowl_p8.mdl"
 		}
-		"511"
+		"513"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/fountain_bowl_p9.mdl"
 		}
-		"512"
+		"514"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/fountain_plants.mdl"
 		}
-		"513"
+		"515"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/succulant.mdl"
 		}
-		"514"
+		"516"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/largebush01.mdl"
 		}
-		"515"
+		"517"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/largebush02.mdl"
 		}
-		"516"
+		"518"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/largebush03.mdl"
 		}
-		"517"
+		"519"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/largebush04.mdl"
 		}
-		"518"
+		"520"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/largebush05.mdl"
 		}
-		"519"
+		"521"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/largebush06.mdl"
 		}
-		"520"
+		"522"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/tree_group.mdl"
 		}
-		"521"
+		"523"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/tree_large.mdl"
 		}
-		"522"
+		"524"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/tree_small.mdl"
 		}
-		"523"
+		"525"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/vine_wall1.mdl"
 		}
-		"524"
+		"526"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/vine_wall2.mdl"
 		}
-		"525"
+		"527"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/prodgrassa.mdl"
 		}
-		"526"
+		"528"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/bush.mdl"
 		}
-		"527"
+		"529"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/bush2.mdl"
 		}
-		"528"
+		"530"
 		{
 			"type"		"model"
 			"model"		"models/props/de_tides/planter.mdl"
 		}
-		"529"
+		"531"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/planterplantsunlit.mdl"
 		}
-		"530"
+		"532"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/planterplantsvertex.mdl"
 		}
-		"531"
+		"533"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/vine_wall2.mdl"
 		}
-		"532"
+		"534"
 		{
 			"type"		"header"
 			"text"		"Misc. Models"
 		}
-		"533"
+		"535"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/chimney01.mdl"
 		}
-		"534"
+		"536"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/chimney02.mdl"
 		}
-		"535"
+		"537"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/platform.mdl"
 		}
-		"536"
+		"538"
 		{
 			"type"		"model"
 			"model"		"models/props_industrial/bridge_deck.mdl"
 		}
-		"537"
+		"539"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/housefence.mdl"
 		}
-		"538"
+		"540"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/housefence_door.mdl"
 		}
-		"539"
+		"541"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/nuclearfuelcontainer.mdl"
 		}
-		"540"
+		"542"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/rockpileramp01.mdl"
 		}
-		"541"
+		"543"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/rocksteppingstones01.mdl"
 		}
-		"542"
+		"544"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/gun_cabinet_glass.mdl"
 		}
-		"543"
+		"545"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/awning_long.mdl"
 		}
-		"544"
+		"546"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/awning_short.mdl"
 		}
-		"545"
+		"547"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/doorknob.mdl"
 		}
-		"546"
+		"548"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_office/doorknobb.mdl"
 		}
-		"547"
+		"549"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/de_train_doorhandle_01.mdl"
 		}
-		"548"
+		"550"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/archwaysupport.mdl"
 		}
-		"549"
+		"551"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/bell_large.mdl"
 		}
-		"550"
+		"552"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/bell_largeb.mdl"
 		}
-		"551"
+		"553"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/bell_small.mdl"
 		}
-		"552"
+		"554"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/bell_smallb.mdl"
 		}
-		"553"
+		"555"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/confessional.mdl"
 		}
-		"554"
+		"556"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/de_inferno_well.mdl"
 		}
-		"555"
+		"557"
 		{
 			"type"		"model"
 			"model"		"models/props/de_tides/tides_partyflags.mdl"
 		}
-		"556"
+		"558"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/fireplace.mdl"
 		}
-		"557"
+		"559"
 		{
 			"type"		"model"
 			"model"		"models/props_c17/elevator01.mdl"
 		}
-		"558"
+		"560"
 		{
 			"type"		"model"
 			"model"		"models/props_junk/food_pile01.mdl"
 		}
-		"559"
+		"561"
 		{
 			"type"		"model"
 			"model"		"models/props_junk/food_pile02.mdl"
 		}
-		"560"
+		"562"
 		{
 			"type"		"model"
 			"model"		"models/props_junk/food_pile03.mdl"
 		}
-		"561"
+		"563"
 		{
 			"type"		"model"
 			"model"		"models/props_industrial/light.mdl"
 		}
-		"562"
+		"564"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/scaffolding.mdl"
 		}
-		"563"
+		"565"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/laundrylineacross.mdl"
 		}
-		"564"
+		"566"
 		{
 			"type"		"model"
 			"model"		"models/props/de_inferno/laundrylineflat.mdl"
 		}
-		"565"
+		"567"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/craneb.mdl"
 		}
-		"566"
+		"568"
 		{
 			"type"		"model"
 			"model"		"models/props/de_port/portwalkway.mdl"
 		}
-		"567"
+		"569"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/fan.mdl"
 		}
-		"568"
+		"570"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/fanoff.mdl"
 		}
-		"569"
+		"571"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/fanhousing.mdl"
 		}
-		"570"
+		"572"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/turret.mdl"
 		}
-		"571"
+		"573"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/biohazardtank_dm_09.mdl"
 		}
-		"572"
+		"574"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/biohazardtank_dm_11.mdl"
 		}
-		"573"
+		"575"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/biohazardtank_dm_10.mdl"
 		}
-		"574"
+		"576"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/chainlinkgate.mdl"
 		}
-		"575"
+		"577"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/de_train_securityguard.mdl"
 		}
-		"576"
+		"578"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/trainbumperpost.mdl"
 		}
-		"577"
+		"579"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/railroadtracks128.mdl"
 		}
-		"578"
+		"580"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/railroadtracks256.mdl"
 		}
-		"579"
+		"581"
 		{
 			"type"		"model"
 			"model"		"models/props/de_prodigy/prodtracks.mdl"
 		}
-		"580"
+		"582"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/railroadtrackslong.mdl"
 		}
-		"581"
+		"583"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/diesel.mdl"
 		}
-		"582"
+		"584"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/flatcar.mdl"
 		}
-		"583"
+		"585"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/boxcar.mdl"
 		}
-		"584"
+		"586"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/boxcar2.mdl"
 		}
-		"585"
+		"587"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/tanker.mdl"
 		}
-		"586"
+		"588"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/train_wheels.mdl"
 		}
-		"587"
+		"589"
 		{
 			"type"		"model"
 			"model"		"models/props/de_piranesi/pi_boat.mdl"
 		}
-		"588"
+		"590"
 		{
 			"type"		"model"
 			"model"		"models/props/de_piranesi/pi_boat_metal.mdl"
 		}
-		"589"
+		"591"
 		{
 			"type"		"model"
 			"model"		"models/props/de_piranesi/pi_boat_wood.mdl"
 		}
-		"590"
+		"592"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/car_militia.mdl"
 		}
-		"591"
+		"593"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/car_nuke.mdl"
 		}
-		"592"
+		"594"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/car_nuke_black.mdl"
 		}
-		"593"
+		"595"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/car_nuke_red.mdl"
 		}
-		"594"
+		"596"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/car_nuke_glass.mdl"
 		}
-		"595"
+		"597"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/van.mdl"
 		}
-		"596"
+		"598"
 		{
 			"type"		"model"
 			"model"		"models/props/cs_militia/van_glass.mdl"
 		}
-		"597"
+		"599"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/utility_truck.mdl"
 		}
-		"598"
+		"600"
 		{
 			"type"		"model"
 			"model"		"models/props/de_train/utility_truck_windows.mdl"
 		}
-		"599"
+		"601"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/truck_nuke.mdl"
 		}
-		"600"
+		"602"
 		{
 			"type"		"model"
 			"model"		"models/props/de_nuke/truck_nuke_glass.mdl"
 		}
 	}
+	"name"		"Map Props"
+	"version"		"3"
 }
