@@ -38,6 +38,9 @@ function PANEL:Setup( ply, playerIndex )
 	self.ply = ply
 	self.plyIndex = playerIndex
 
+	-- For addon gamemodes that reuse this panel
+	if ( self.plyIndex and IsValid( ply ) ) then self.plyIndex = ply:EntIndex() end
+
 	self:UpdatePlayerInfo()
 
 	self:InvalidateLayout()
