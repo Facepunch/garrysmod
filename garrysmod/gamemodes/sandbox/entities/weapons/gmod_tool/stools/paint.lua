@@ -137,33 +137,27 @@ list.Add( "PaintMaterials", "Cross" )
 
 function TOOL.BuildCPanel( CPanel )
 
-	-- Remove duplicates.
-	local Options = {}
+	-- Remove duplicates
+	local OptionImages = {}
 	local seen = {}
 	for id, str in ipairs( list.Get( "PaintMaterials" ) ) do
-	    if ( !seen[ str ] ) then
-	        seen[ str ] = true
-	        table.insert( Options, str )
-	    end
-	end
-	table.sort( Options )
-
-	local listbox = vgui.Create( "DListView" )
-	listbox:SetMultiSelect( false )
-	listbox:AddColumn( "#tool.paint.texture" )
-	listbox:SetTall( 17 + table.Count( Options ) * 17 )
-	listbox:SortByColumn( 1, false )
-	function listbox:OnRowSelected( LineID, Line )
-		for k, v in pairs( Line.data ) do
-			RunConsoleCommand( k, v )
+		if ( !seen[ str ] ) then
+			seen[ str ] = true
+			OptionImages[ str ] = util.DecalMaterial( str )
 		end
 	end
-	for k, decal in ipairs( Options ) do
-		local line = listbox:AddLine( decal )
-		line.data = { paint_decal = decal, gmod_tool = "paint" }
 
-		if ( GetConVarString( "paint_decal" ) == tostring( decal ) ) then line:SetSelected( true ) end
+	local matlist = CPanel:MatSelect( "paint_decal", nil, true, 0.25, 0.25 )
+	for name, materialName in SortedPairs( OptionImages ) do
+		local imgBtn = matlist:AddMaterialEx( name, materialName, name, { paint_decal = name, gmod_tool = "paint" } )
+		imgBtn:SetKeepAspect( true )
+		imgBtn.m_Image.m_bKeepAspectFit = true
 	end
-	CPanel:AddItem( listbox )
+
+	-- Gotta make the background darker for contast
+	function matlist.List:Paint( w, h )
+		derma.SkinHook( "Paint", "Panel", self, w, h )
+		draw.RoundedBox( 6, 0, 0, w, h, Color( 0, 0, 0, 150 ) )
+	end
 
 end
