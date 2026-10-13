@@ -1110,7 +1110,7 @@ function Spawn_Vehicle( ply, vname, tr )
 	end
 
 	local Ent = MakeVehicle( ply, pos, Angles, vehicle.Model, vehicle.Class, vname )
-	if ( !IsValid( Ent ) ) then ReportErrorToPlayer( ply, "no_entity" ) return end
+	if ( !IsValid( Ent ) ) then ReportErrorToPlayer( ply, Ent == NULL and "no_entity" or "hook" ) return end
 
 	-- Unstable for Jeeps
 	-- TryFixPropPosition( ply, Ent, tr.HitPos )
