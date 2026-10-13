@@ -51,7 +51,7 @@ local PLAYER_LINE = {
 		self.Mute.PaintOver = function( s, w, h )
 			if ( !IsValid( self.Player ) ) then return end
 
-			if ( s.Hovered ) then  s.LastWheelTick = CurTime() end
+			if ( s.Hovered ) then s.LastWheelTick = CurTime() end
 
 			local time = math.Clamp( CurTime() - ( s.LastWheelTick or 0 ), 0, 0.75 ) / 0.75
 

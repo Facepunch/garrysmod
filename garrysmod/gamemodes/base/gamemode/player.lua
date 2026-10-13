@@ -379,7 +379,7 @@ local function LoadSpawnpointNamesFromGModPlayerSpawn()
 
 	for _, className in pairs( scripted_ents.GetMember( "gmod_player_start", "SpawnPointClasses" ) ) do
 		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
-		if (  className == "info_survivor_position" ) then continue end
+		if ( className == "info_survivor_position" ) then continue end
 
 		SpawnPointEntityClasses[ className ] = true
 	end

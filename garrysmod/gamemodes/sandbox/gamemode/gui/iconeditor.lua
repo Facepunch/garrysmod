@@ -690,7 +690,7 @@ function PANEL:Refresh()
 	if ( !self:GetModel() ) then return end
 
 	self.ModelPanel:SetModel( self:GetModel() )
-	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
+	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() ) end
 
 	local ent = self.ModelPanel:GetEntity()
 	if ( !IsValid( ent ) ) then return end

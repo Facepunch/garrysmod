@@ -110,7 +110,7 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 				end
 			end
 		else
-			MsgN( "Warning! Not opening '" .. node_path .. "' because we cannot search in it!"  )
+			MsgN( "Warning! Not opening '" .. node_path .. "' because we cannot search in it!" )
 		end
 
 		-- Switch to it

@@ -2,7 +2,7 @@
 local function AddRecursive( pnl, folder, path, wildcard )
 
 	local files, folders = file.Find( folder .. "*", path )
-	if ( !files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!"  ) return false end
+	if ( !files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!" ) return false end
 
 	local added = false
 
@@ -108,7 +108,7 @@ local function RefreshAddons( MyNode )
 
 			local anyAdded = AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
 			if ( !anyAdded ) then
-				local text = "<font=ContentHeader>" .. language.GetPhrase( "spawnmenu.failedtofindmodels" ) .. "\n\n" ..  tostring( addon.title ) .. " (ID: " .. tostring( addon.wsid ) .. ")" .. "</font>"
+				local text = "<font=ContentHeader>" .. language.GetPhrase( "spawnmenu.failedtofindmodels" ) .. "\n\n" .. tostring( addon.title ) .. " (ID: " .. tostring( addon.wsid ) .. ")" .. "</font>"
 
 				local msg = vgui.Create( "Panel", ViewPanel )
 				msg.Paint = function( s, w, h )

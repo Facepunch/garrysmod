@@ -18,7 +18,7 @@ if ( SERVER ) then
 		if ( !game.SinglePlayer() && !ply:IsAdmin() ) then return end
 
 		if ( ply.m_NextSave && ply.m_NextSave > CurTime() && !game.SinglePlayer() ) then
-			ServerLog( tostring( ply ) ..  " tried to save too quickly!\n" )
+			ServerLog( tostring( ply ) .. " tried to save too quickly!\n" )
 			return
 		end
 

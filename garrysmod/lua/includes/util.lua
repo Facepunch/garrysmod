@@ -165,7 +165,7 @@ function PrintTable( t, indent, done )
 		key = ( type( key ) == "string" ) and "[\"" .. key .. "\"]" || "[" .. tostring( key ) .. "]"
 		Msg( string.rep( "\t", indent ) )
 
-		if  ( istable( value ) and !done[ value ] ) then
+		if ( istable( value ) and !done[ value ] ) then
 
 			done[ value ] = true
 			Msg( key, ":\n" )

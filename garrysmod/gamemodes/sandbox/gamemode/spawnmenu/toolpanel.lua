@@ -23,7 +23,7 @@ function PANEL:Init()
 
 	local searchContainer = vgui.Create( "Panel", leftContainer )
 	searchContainer:Dock( TOP )
-	searchContainer:SetTall( 21 )  -- For the checkbox to fit neatly
+	searchContainer:SetTall( 21 ) -- For the checkbox to fit neatly
 	searchContainer:DockMargin( 0, 0, 0, 5 )
 
 	self.SearchBar = vgui.Create( "DTextEntry", searchContainer )

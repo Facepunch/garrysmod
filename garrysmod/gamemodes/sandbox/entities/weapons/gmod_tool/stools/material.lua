@@ -136,10 +136,10 @@ function TOOL.BuildCPanel( CPanel )
 	local materials = {}
 	local seen = {}
 	for id, str in ipairs( list.Get( "OverrideMaterials" ) ) do
-	    if ( !seen[ str ] ) then
-	        seen[ str ] = true
-	        table.insert( materials, str )
-	    end
+		if ( !seen[ str ] ) then
+			seen[ str ] = true
+			table.insert( materials, str )
+		end
 	end
 
 	local matlist = CPanel:MatSelect( "material_override", materials, true, 0.25, 0.25 )
