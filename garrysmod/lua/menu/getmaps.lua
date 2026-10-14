@@ -459,17 +459,17 @@ end
 
 function SaveLastMap( map, cat )
 
-	local t = string.Split( cookie.GetString( "lastmap", "" ), ";" )
+	local t = string.Split( cookie.GetString( "lastmap", "" ), "\n" )
 	if ( !map ) then map = t[ 1 ] or "gm_flatgrass" end
 	if ( !cat ) then cat = t[ 2 ] or "Sandbox" end
 
-	cookie.Set( "lastmap", map .. ";" .. cat )
+	cookie.Set( "lastmap", map .. "\n" .. cat )
 
 end
 
 function LoadLastMap()
 
-	local t = string.Split( cookie.GetString( "lastmap", "" ), ";" )
+	local t = string.Split( cookie.GetString( "lastmap", "" ), "\n" )
 
 	local map = t[ 1 ] or "gm_flatgrass"
 	local cat = t[ 2 ] or "Sandbox"
