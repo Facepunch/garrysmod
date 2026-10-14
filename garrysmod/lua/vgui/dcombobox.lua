@@ -173,11 +173,7 @@ function PANEL:IsMenuOpen()
 
 end
 
-function PANEL:OpenMenu( pControlOpener )
-
-	if ( pControlOpener && pControlOpener == self.TextEntry ) then
-		return
-	end
+function PANEL:OpenMenu()
 
 	-- Don't do anything if there aren't any options..
 	if ( #self.Choices == 0 ) then return end

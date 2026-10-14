@@ -339,7 +339,7 @@ function PANEL:OnMouseWheeled( dlta )
 
 end
 
-function PANEL:ClearSelection( dlta )
+function PANEL:ClearSelection()
 
 	for k, Line in pairs( self.Lines ) do
 		Line:SetSelected( false )
