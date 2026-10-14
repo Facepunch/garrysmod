@@ -793,11 +793,33 @@ if ( !table.move ) then
 			destTbl = sourceTbl
 		end
 
-		local buffer = { unpack( sourceTbl, from, to ) }
+		local window = to - from
 
-		dest = math.floor( dest - 1 )
-		for i = 1, to - from + 1 do
-			destTbl[ dest + i ] = buffer[ i ]
+		if destTbl == sourceTbl then
+
+			local windowEnd = dest + window
+
+			if dest <= to and windowEnd >= to then
+
+				local off = dest - from
+				local toOff = to - off
+
+				for i = 1, windowEnd - to do
+					sourceTbl[ to + i ] = sourceTbl[ toOff + i ]
+				end
+
+				for i = to, dest, -1 do
+					sourceTbl[ i ] = sourceTbl[ i - off ]
+				end
+
+				return sourceTbl
+
+			end
+
+		end
+
+		for i = 0, window do
+			destTbl[ dest + i ] = sourceTbl[ from + i ]
 		end
 
 		return destTbl
