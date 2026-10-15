@@ -55,10 +55,7 @@ function SWEP:Reload()
    if self:GetReloading() then return end
 
    if self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount( self.Primary.Ammo ) > 0 then
-
-      if self:StartReload() then
-         return
-      end
+      self:StartReload()
    end
 
 end
@@ -68,7 +65,7 @@ function SWEP:StartReload()
       return false
    end
 
-   self:SetIronsights( false )
+   self:SetIronsights( false, true )
 
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
@@ -103,7 +100,7 @@ function SWEP:PerformReload()
 
    if self:Clip1() >= self.Primary.ClipSize then return end
 
-   self:GetOwner():RemoveAmmo( 1, self.Primary.Ammo, false )
+   ply:RemoveAmmo( 1, self.Primary.Ammo, false )
    self:SetClip1( self:Clip1() + 1 )
 
    self:SendWeaponAnim(ACT_VM_RELOAD)
@@ -172,10 +169,6 @@ function SWEP:GetHeadshotMultiplier(victim, dmginfo)
    return 1 + math.max(0, (1.0 - 0.002 * (d ^ 1.25)))
 end
 
-function SWEP:SecondaryAttack()
-   if self.NoSights or (not self.IronSightsPos) or self:GetReloading() then return end
-
-   self:SetIronsights(not self:GetIronsights())
-
-   self:SetNextSecondaryFire(CurTime() + 0.3)
+function SWEP:CanIronsights(state)
+   return (not self.NoSights) and self.IronSightsPos and not self:GetReloading()
 end

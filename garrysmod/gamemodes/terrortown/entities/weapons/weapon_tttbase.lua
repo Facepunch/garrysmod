@@ -111,6 +111,7 @@ SWEP.Secondary.DefaultClip  = 1
 SWEP.Secondary.Automatic    = false
 SWEP.Secondary.Ammo         = "none"
 SWEP.Secondary.ClipMax      = -1
+SWEP.Secondary.Delay        = 0.3
 
 SWEP.HeadshotMultiplier = 2.7
 
@@ -121,6 +122,10 @@ SWEP.DeploySpeed = 1.4
 
 SWEP.PrimaryAnim = ACT_VM_PRIMARYATTACK
 SWEP.ReloadAnim = ACT_VM_RELOAD
+
+SWEP.IronSightsSpeed = 0.25
+SWEP.IronSightsSwayScale = 0.3
+SWEP.IronSightsBobScale = 0.1
 
 SWEP.fingerprints = {}
 
@@ -423,29 +428,42 @@ end
 
 function SWEP:DrawWeaponSelection() end
 
+function SWEP:CanIronsights(state)
+   return (not self.NoSights) and self.IronSightsPos
+end
+
 function SWEP:SecondaryAttack()
-   if self.NoSights or (not self.IronSightsPos) then return end
+   local state = not self:GetIronsights()
+   if not self:CanIronsights(state) then return end
 
-   self:SetIronsights(not self:GetIronsights())
+   self:SetIronsights(state)
 
-   self:SetNextSecondaryFire(CurTime() + 0.3)
+   self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 end
 
 function SWEP:Deploy()
-   self:SetIronsights(false)
+   self:SetIronsights(false, true)
+   return true
+end
+
+function SWEP:Holster()
+   self:SetIronsights(false, true)
    return true
 end
 
 function SWEP:Reload()
    if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
    self:DefaultReload(self.ReloadAnim)
-   self:SetIronsights( false )
+   self:SetIronsights(false, true)
 end
 
 
 function SWEP:OnRestore()
-   self.NextSecondaryAttack = 0
-   self:SetIronsights( false )
+   self:SetIronsights(false, true)
+end
+
+function SWEP:OnRemove()
+   self:SetIronsights(false, true)
 end
 
 function SWEP:Ammo1()
@@ -507,14 +525,14 @@ function SWEP:Equip(newowner)
          local newflags = bit.band(flags, bit.bnot(SF_WEAPON_START_CONSTRAINED))
          self:SetKeyValue("spawnflags", newflags)
       end
-   end
 
-   if SERVER and IsValid(newowner) and self.StoredAmmo > 0 and self.Primary.Ammo != "none" then
-      local ammo = newowner:GetAmmoCount(self.Primary.Ammo)
-      local given = math.min(self.StoredAmmo, self.Primary.ClipMax - ammo)
+      if IsValid(newowner) and self.StoredAmmo > 0 and self.Primary.Ammo != "none" then
+         local ammo = newowner:GetAmmoCount(self.Primary.Ammo)
+         local given = math.min(self.StoredAmmo, self.Primary.ClipMax - ammo)
 
-      newowner:GiveAmmo( given, self.Primary.Ammo)
-      self.StoredAmmo = 0
+         newowner:GiveAmmo( given, self.Primary.Ammo)
+         self.StoredAmmo = 0
+      end
    end
 end
 
@@ -523,16 +541,18 @@ end
 function SWEP:WasBought(buyer)
 end
 
-function SWEP:SetIronsights(b)
-   if (b != self:GetIronsights()) then
-      self:SetIronsightsPredicted(b)
-      self:SetIronsightsTime(CurTime())
+function SWEP:SetIronsights(b, reset)
+   self:SetIronsightsPredicted(b)
+   self:SetIronsightsTime(CurTime())
 
-      if game.SinglePlayer() then
-         self:CallOnClient("CalcViewModel")
-      elseif CLIENT then
-         self:CalcViewModel()
-      end
+   if game.SinglePlayer() then
+      self:CallOnClient("CalcViewModel")
+   elseif CLIENT then
+      self:CalcViewModel()
+   end
+
+   if self.OnIronsights then
+      self:OnIronsights(b, reset)
    end
 end
 function SWEP:GetIronsights()
@@ -580,7 +600,7 @@ function SWEP:Initialize()
    elseif SERVER then
       self.fingerprints = {}
 
-      self:SetIronsights(false)
+      self:SetIronsights(false, true)
    end
 
    self:SetDeploySpeed(self.DeploySpeed)
@@ -604,7 +624,6 @@ function SWEP:CalcViewModel()
    self.bIron = self:GetIronsights()
    self.fIronTime = self:GetIronsightsTime()
    self.fCurrentTime = CurTime()
-   self.fCurrentSysTime = SysTime()
 end
 
 -- Note that if you override Think in your SWEP, you should call
@@ -616,7 +635,7 @@ end
 function SWEP:DyingShot()
    local fired = false
    if self:GetIronsights() then
-      self:SetIronsights(false)
+      self:SetIronsights(false, true)
 
       if self:GetNextPrimaryFire() > CurTime() then
          return fired
@@ -649,33 +668,23 @@ local ttt_lowered = CreateConVar("ttt_ironsights_lowered", "1", FCVAR_ARCHIVE)
 local host_timescale = GetConVar("host_timescale")
 
 local LOWER_POS = Vector(0, 0, -2)
-
-local IRONSIGHT_TIME = 0.25
 function SWEP:GetViewModelPosition( pos, ang )
-   if (not self.IronSightsPos) or (self.bIron == nil) then return pos, ang end
-
    local bIron = self.bIron
-   local time = self.fCurrentTime + (SysTime() - self.fCurrentSysTime) * game.GetTimeScale() * host_timescale:GetFloat()
+   if (not self.IronSightsPos) or (bIron == nil) then return pos, ang end
 
-   if bIron then
-      self.SwayScale = 0.3
-      self.BobScale = 0.1
-   else
-      self.SwayScale = 1.0
-      self.BobScale = 1.0
-   end
+   local systime = SysTime()
+   local time = (systime - (self.fCurrentSysTime or systime)) * game.GetTimeScale() * host_timescale:GetFloat()
+   self.fCurrentSysTime = systime
 
-   local fIronTime = self.fIronTime
-   if (not bIron) and fIronTime < time - IRONSIGHT_TIME then
+   local mul = self.fIronMult or 0
+   if (not bIron) and mul == 0 then
       return pos, ang
    end
 
-   local mul = 1.0
-
-   if fIronTime > time - IRONSIGHT_TIME then
-      mul = math.Clamp( (time - fIronTime) / IRONSIGHT_TIME, 0, 1 )
-
-      if not bIron then mul = 1 - mul end
+   if (bIron and mul < 1) or (not bIron and mul > 0) then
+      mul = math.Approach(mul, bIron and 1 or 0, time / self.IronSightsSpeed)
+      self.SwayScale = Lerp(mul, 1.0, self.IronSightsSwayScale)
+      self.BobScale = Lerp(mul, 1.0, self.IronSightsBobScale)
    end
 
    local offset = self.IronSightsPos + (ttt_lowered:GetBool() and LOWER_POS or vector_origin)
@@ -690,6 +699,8 @@ function SWEP:GetViewModelPosition( pos, ang )
    pos = pos + offset.x * ang:Right() * mul
    pos = pos + offset.y * ang:Forward() * mul
    pos = pos + offset.z * ang:Up() * mul
+
+   self.fIronMult = mul
 
    return pos, ang
 end
