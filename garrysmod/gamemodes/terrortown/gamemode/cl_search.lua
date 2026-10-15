@@ -424,8 +424,6 @@ end
 
 local bitsRequired = util.BitsRequired
 
-local plyBits = bitsRequired(game.MaxPlayers())
-
 local search = {}
 local function ReceiveRagdollSearch()
    search = {}
@@ -433,7 +431,7 @@ local function ReceiveRagdollSearch()
    -- Basic info
    search.eidx = net.ReadUInt(16)
 
-   search.owner = Entity(net.ReadUInt(plyBits))
+   search.owner = Entity(net.ReadUInt(MAX_PLAYER_BITS))
    if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:IsTerror())) then
       search.owner = nil
    end
@@ -441,12 +439,12 @@ local function ReceiveRagdollSearch()
    search.nick = net.ReadString()
 
    -- Equipment
-   local eq = net.ReadInt(bitsRequired(EQUIP_MAX, true))
+   local eq = util.ReadBitFields(EQUIP.GetBitChunk(EQUIP_MAX), bitsRequired(EQUIP.GetBitFlag(EQUIP_MAX)))
 
    -- All equipment pieces get their own icon
-   search.eq_armor = util.BitSet(eq, EQUIP_ARMOR)
-   search.eq_radar = util.BitSet(eq, EQUIP_RADAR)
-   search.eq_disg = util.BitSet(eq, EQUIP_DISGUISE)
+   search.eq_armor = EQUIP.HasItem(eq, EQUIP_ARMOR)
+   search.eq_radar = EQUIP.HasItem(eq, EQUIP_RADAR)
+   search.eq_disg = EQUIP.HasItem(eq, EQUIP_DISGUISE)
 
    -- Traitor things
    search.role = net.ReadUInt(2)
@@ -464,16 +462,16 @@ local function ReceiveRagdollSearch()
    if num_kills > 0 then
       search.kills = {}
       for i=1,num_kills do
-         table.insert(search.kills, net.ReadUInt(plyBits))
+         table.insert(search.kills, net.ReadUInt(MAX_PLAYER_BITS))
       end
    else
       search.kills = nil
    end
 
-   search.lastid = {idx=net.ReadUInt(plyBits)}
+   search.lastid = {idx=net.ReadUInt(MAX_PLAYER_BITS)}
 
    -- should we show a menu for this result?
-   search.finder = net.ReadUInt(plyBits)
+   search.finder = net.ReadUInt(MAX_PLAYER_BITS)
 
    search.show = (LocalPlayer():EntIndex() == search.finder)
 
@@ -483,7 +481,7 @@ local function ReceiveRagdollSearch()
    local words = net.ReadString()
    search.words = (words != "") and words or nil
 
-   hook.Call("TTTBodySearchEquipment", nil, search, eq)
+   hook.Call("TTTBodySearchEquipment", nil, search, eq[1], eq)
 
    if search.show and hook.Run("TTTShowSearchScreen", search) != false then
       ShowSearchScreen(search)
