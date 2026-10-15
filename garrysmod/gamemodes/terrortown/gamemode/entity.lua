@@ -18,10 +18,11 @@ function meta:IsExplosive()
 end
 
 -- Some sounds are important enough that they shouldn't be affected by CPASAttenuationFilter
-function meta:BroadcastSound(snd, lvl, pitch, vol, channel, flags, dsp)
+function meta:BroadcastSound(snd, lvl, pitch, vol, channel, flags, dsp, unreliable)
    lvl = lvl or 75
 
-   local rf = RecipientFilter()
+   -- Set unreliable when playing sounds in rapid succession (e.g. automatic weapons)
+   local rf = RecipientFilter(unreliable)
 
    if lvl == 0 then
       rf:AddAllPlayers()
