@@ -19,7 +19,10 @@ function ENT:StoreOutput( name, info )
 	Output.input = rawData[2] or ""
 	Output.param = rawData[3] or ""
 	Output.delay = tonumber( rawData[4] ) or 0
-	Output.times = tonumber( rawData[5] ) or -1
+	Output.times = tonumber( rawData[5] )
+	if ( Output.times == nil or Output.times == 0 ) then
+		Output.times = -1
+	end
 
 	self.m_tOutputs = self.m_tOutputs or {}
 	self.m_tOutputs[ name ] = self.m_tOutputs[ name ] or {}
