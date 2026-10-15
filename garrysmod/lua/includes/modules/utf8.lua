@@ -5,6 +5,7 @@ local string	= string
 local table		= table
 local unpack	= unpack
 local math		= math
+local upperMap, lowerMap = include( "includes/util/utf8_casemap.lua" ) -- case mapping tables for upper/lower
 
 module( "utf8" )
 
@@ -374,4 +375,31 @@ function sub( str, charstart, charend )
 	end
 
 	return table.concat( buf )
+end
+
+
+--
+-- UTF-8 version of string.upper
+--
+function upper( str )
+
+	return ( string.gsub( str, charpattern, function( c )
+		local cp = codepoint( c )
+		local up = upperMap[ cp ]
+		return up and char( up ) or nil
+	end ) )
+
+end
+
+--
+-- UTF-8 version of string.lower
+--
+function lower( str )
+
+	return ( string.gsub( str, charpattern, function( c )
+		local cp = codepoint( c )
+		local lo = lowerMap[ cp ]
+		return lo and char( lo ) or nil
+	end ) )
+
 end
