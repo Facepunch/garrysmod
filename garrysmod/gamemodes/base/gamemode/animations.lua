@@ -344,9 +344,55 @@ IdleActivityTranslate[ ACT_MP_JUMP ]						= ACT_HL2MP_JUMP_SLAM
 IdleActivityTranslate[ ACT_MP_SWIM ]						= IdleActivity + 9
 IdleActivityTranslate[ ACT_LAND ]							= ACT_LAND
 
+local MPToHL2MPFlinch = { -- mapping according to GMOD Playermodels 
+	[ACT_MP_GESTURE_FLINCH]				= ACT_FLINCH,	   
+	[ACT_MP_GESTURE_FLINCH_CHEST]		= ACT_FLINCH_STOMACH,	   
+	[ACT_MP_GESTURE_FLINCH_HEAD]		= ACT_FLINCH_HEAD,
+	[ACT_MP_GESTURE_FLINCH_LEFTARM]		= ACT_FLINCH_SHOULDER_LEFT,
+	[ACT_MP_GESTURE_FLINCH_RIGHTARM]	= ACT_FLINCH_SHOULDER_RIGHT,
+	[ACT_MP_GESTURE_FLINCH_LEFTLEG]		= ACT_FLINCH_LEFTLEG,  
+	[ACT_MP_GESTURE_FLINCH_RIGHTLEG]	= ACT_FLINCH_RIGHTLEG,   
+	[ACT_MP_GESTURE_FLINCH_STOMACH]		= ACT_FLINCH_STOMACH 
+}
+
+local MPToHL2NPCFlinch = { -- mapping according to HL2 NPC flinch gestures 
+	[ACT_MP_GESTURE_FLINCH]				= ACT_SMALL_FLINCH,       
+	[ACT_MP_GESTURE_FLINCH_CHEST]		= ACT_FLINCH_CHEST,      
+	[ACT_MP_GESTURE_FLINCH_HEAD]		= ACT_FLINCH_HEAD,
+	[ACT_MP_GESTURE_FLINCH_LEFTARM]		= ACT_FLINCH_LEFTARM,
+	[ACT_MP_GESTURE_FLINCH_RIGHTARM]	= ACT_FLINCH_RIGHTARM,
+	[ACT_MP_GESTURE_FLINCH_LEFTLEG]		= ACT_FLINCH_LEFTLEG,                
+	[ACT_MP_GESTURE_FLINCH_RIGHTLEG]	= ACT_FLINCH_RIGHTLEG,                
+	[ACT_MP_GESTURE_FLINCH_STOMACH]		= ACT_FLINCH_STOMACH 
+}
+
+local eventToMPAct = {
+	[PLAYERANIMEVENT_FLINCH_CHEST]		= ACT_MP_GESTURE_FLINCH_CHEST,
+	[PLAYERANIMEVENT_FLINCH_HEAD]		= ACT_MP_GESTURE_FLINCH_HEAD,
+	[PLAYERANIMEVENT_FLINCH_LEFTARM]	= ACT_MP_GESTURE_FLINCH_LEFTARM,
+	[PLAYERANIMEVENT_FLINCH_RIGHTARM]	= ACT_MP_GESTURE_FLINCH_RIGHTARM,
+	[PLAYERANIMEVENT_FLINCH_LEFTLEG]	= ACT_MP_GESTURE_FLINCH_LEFTLEG,
+	[PLAYERANIMEVENT_FLINCH_RIGHTLEG]	= ACT_MP_GESTURE_FLINCH_RIGHTLEG 
+}
+
 -- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not translate through the weapon do it here
 function GM:TranslateActivity( ply, act )
-
+	
+	-- Before flinch animations are played, make sure they exist in model 
+	local playerFlinch = MPToHL2MPFlinch[act]
+    if ( playerFlinch and ply:SelectWeightedSequence(playerFlinch) != ACT_INVALID ) then
+        return playerFlinch
+    end 
+	
+	local npcFlinch = MPToHL2NPCFlinch[act]
+    if ( npcFlinch and ply:SelectWeightedSequence(npcFlinch) != ACT_INVALID ) then
+        return npcFlinch
+    end
+	
+	-- If mapping tree didn't result, default to main flinch animation 
+	if ( playerFlinch and ply:SelectWeightedSequence(ACT_FLINCH) != ACT_INVALID ) then return ACT_FLINCH end 
+	
+	-- Translate weapon activities 
 	local newact = ply:TranslateWeaponActivity( act )
 
 	-- select idle anims if the weapon didn't decide
@@ -400,6 +446,20 @@ function GM:DoAnimationEvent( ply, event, data )
 		ply:AnimResetGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD )
 
 		return ACT_INVALID
-	end
+	
+	elseif ( event >= PLAYERANIMEVENT_FLINCH_CHEST and event <= PLAYERANIMEVENT_FLINCH_LEFTLEG ) then 
+	
+		if ( data and data > ACT_INVALID ) then 
+			ply:AnimRestartGesture(GESTURE_SLOT_FLINCH, data) 
+		end 
+	
+		local act = eventToMPAct[event]
+		if !act then return ACT_INVALID end
+
+		ply:AnimRestartGesture(GESTURE_SLOT_FLINCH, act, true) 
+		-- print("DoAnimationEvent",CurTime()) 
+		return ACT_INVALID 
+
+	end 
 
 end
