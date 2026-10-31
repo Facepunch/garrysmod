@@ -14,7 +14,7 @@ function ToolObj:SetStage( i )
 end
 
 function ToolObj:GetStage()
-	return self:GetWeapon():GetNWInt( "Stage", 0 )
+	return self:GetWeapon():GetStage()
 end
 
 function ToolObj:SetOperation( i )
@@ -26,7 +26,7 @@ function ToolObj:SetOperation( i )
 end
 
 function ToolObj:GetOperation()
-	return self:GetWeapon():GetNWInt( "Op", 0 )
+	return self:GetWeapon():GetOperation()
 end
 
 
