@@ -101,8 +101,9 @@ properties.Add( "bone_manipulate_end", {
 	Order = 500,
 	MenuIcon = "icon16/vector_delete.png",
 
-	Filter = function( self, ent )
+	Filter = function( self, ent, ply )
 
+		if ( !gamemode.Call( "CanProperty", ply, "bonemanipulate", ent ) ) then return false end
 		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end -- If our ent has an attached entity, we want to use and modify its bones instead
 
 		return ents.FindByClassAndParent( "widget_bones", ent ) != nil
@@ -123,6 +124,8 @@ properties.Add( "bone_manipulate_end", {
 
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !gamemode.Call( "CanProperty", ply, "bonemanipulate", ent ) ) then return end
 		if ( !IsValid( ent.widget ) ) then return end
 
 		ent.widget:Remove()
