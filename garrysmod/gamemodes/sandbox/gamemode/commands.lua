@@ -1097,6 +1097,10 @@ function Spawn_Vehicle( ply, vname, tr )
 	local vehicle = list.GetEntry( "Vehicles", vname )
 	if ( !vehicle ) then ReportErrorToPlayer( ply, "bad_vehicle" ) return end
 
+	-- You're not allowed to spawn this!
+	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
+	if ( vehicle.AdminOnly && !isAdmin ) then ReportErrorToPlayer( ply, "admin" ) return end
+
 	if ( !tr ) then tr = GetSpawnTrace( ply ) end
 
 	local Angles = ply:GetAngles()
