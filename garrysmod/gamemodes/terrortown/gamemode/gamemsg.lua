@@ -251,6 +251,7 @@ local function MuteTeam(ply, cmd, args)
    end
 
    local t = tonumber(args[1])
+   if not MuteModes[t] then return end
    ply.mute_team = t
 
    -- remove all ifs
