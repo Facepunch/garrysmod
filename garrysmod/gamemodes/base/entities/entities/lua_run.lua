@@ -43,7 +43,7 @@ function ENT:KillGlobals()
 
 end
 
-local sv_allow_lua_run_entities = CreateConVar("sv_allow_lua_run_entities", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_LUA_SERVER}, "Allow the map to run lua_run.", 0, 1)
+local sv_allow_lua_run_entities = CreateConVar("sv_allow_lua_run_entities", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Allow the map to run lua_run.", 0, 1)
 function ENT:RunCode( activator, caller, code )
 	if not sv_allow_lua_run_entities:GetBool() then return end
 
