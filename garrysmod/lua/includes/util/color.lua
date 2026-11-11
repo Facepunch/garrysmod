@@ -42,7 +42,7 @@ end
 --[[---------------------------------------------------------
 	Different color represntations
 -----------------------------------------------------------]]
-function HSVToColor( h, s, v )
+function HSVToColor( h, s, v, out )
 
 	h = h % 360
 
@@ -65,15 +65,25 @@ function HSVToColor( h, s, v )
 		r, g, b = c, 0, x
 	end
 
-	return Color(
-		math.Clamp( math.floor( ( r + m ) * 255 ), 0, 255 ),
-		math.Clamp( math.floor( ( g + m ) * 255 ), 0, 255 ),
-		math.Clamp( math.floor( ( b + m ) * 255 ), 0, 255 )
-	)
+	r = math.Clamp( math.floor( ( r + m ) * 255 ), 0, 255 )
+	g = math.Clamp( math.floor( ( g + m ) * 255 ), 0, 255 )
+	b = math.Clamp( math.floor( ( b + m ) * 255 ), 0, 255 )
+
+	if ( out ) then
+
+		out.r = r
+		out.g = g
+		out.b = b
+
+		return out
+
+	end
+
+	return Color( r, g, b )
 
 end
 
-function HSLToColor( h, s, l )
+function HSLToColor( h, s, l, out )
 
 	h = h % 360
 
@@ -96,15 +106,25 @@ function HSLToColor( h, s, l )
 		r, g, b = c, 0, x
 	end
 
-	return Color(
-		math.Clamp( math.floor( ( r + m ) * 255 ), 0, 255 ),
-		math.Clamp( math.floor( ( g + m ) * 255 ), 0, 255 ),
-		math.Clamp( math.floor( ( b + m ) * 255 ), 0, 255 )
-	)
+	r = math.Clamp( math.floor( ( r + m ) * 255 ), 0, 255 )
+	g = math.Clamp( math.floor( ( g + m ) * 255 ), 0, 255 )
+	b = math.Clamp( math.floor( ( b + m ) * 255 ), 0, 255 )
+
+	if ( out ) then
+
+		out.r = r
+		out.g = g
+		out.b = b
+
+		return out
+
+	end
+
+	return Color( r, g, b )
 
 end
 
-function HWBToColor( h, w, b )
+function HWBToColor( h, w, b, out )
 
 	local v = 1 - b
 	local s = 0
@@ -112,7 +132,7 @@ function HWBToColor( h, w, b )
 		s = 1 - w / v
 	end
 
-	return HSVToColor( h, s, v )
+	return HSVToColor( h, s, v, out )
 
 end
 
@@ -121,10 +141,12 @@ for code = 48, 57 do hex_to_dec[ code ] = code - 48 end  -- '0'–'9'
 for code = 65, 70 do hex_to_dec[ code ] = code - 55 end  -- 'A'–'F'
 for code = 97, 102 do hex_to_dec[ code ] = code - 87 end -- 'a'–'f'
 
-function HexToColor( hex )
+function HexToColor( hex, out )
 
 	local idx = string.byte( hex, 1 ) == 35 and 2 or 1 -- '#' check without allocation
 	local len = #hex - ( idx - 1 )
+
+	local colR, colG, colB, colA
 
 	if ( len == 3 or len == 4 ) then
 
@@ -138,7 +160,10 @@ function HexToColor( hex )
 			return error( "invalid hex input: " .. hex )
 		end
 
-		return Color( r * 16 + r, g * 16 + g, b * 16 + b, a * 16 + a )
+		colR = r * 16 + r
+		colG = g * 16 + g
+		colB = b * 16 + b
+		colA = a * 16 + a
 
 	elseif ( len == 6 or len == 8 ) then
 
@@ -151,12 +176,30 @@ function HexToColor( hex )
 		if !( r1 and r2 and g1 and g2 and b1 and b2 and a1 and a2 ) then
 			return error( "invalid hex input: " .. hex )
 		end
-
-		return Color( r1 * 16 + r2, g1 * 16 + g2, b1 * 16 + b2, a1 * 16 + a2 )
+		
+		colR = r1 * 16 + r2
+		colG = g1 * 16 + g2
+		colB = b1 * 16 + b2
+		colA = a1 * 16 + a2
 
 	end
 
-	return error( "invalid hex input: " .. hex )
+	if ( !colR ) then
+		return error( "invalid hex input: " .. hex )
+	end
+
+	if ( out ) then
+
+		out.r = colR
+		out.g = colG
+		out.b = colB
+		out.a = colA
+
+		return out
+
+	end
+
+	return Color( colR, colG, colB, colA )
 
 end
 
