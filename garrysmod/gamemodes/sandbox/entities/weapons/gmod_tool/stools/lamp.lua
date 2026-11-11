@@ -108,21 +108,21 @@ function TOOL:RightClick( trace )
 	local ent = trace.Entity
 	local ply = self:GetOwner()
 
-	ply:ConCommand( "lamp_fov " .. ent:GetLightFOV() )
-	ply:ConCommand( "lamp_distance " .. ent:GetDistance() )
-	ply:ConCommand( "lamp_brightness " .. ent:GetBrightness() )
-	ply:ConCommand( "lamp_texture " .. ent:GetFlashlightTexture() )
+	ply:RunConsoleCommand( "lamp_fov", ent:GetLightFOV() )
+	ply:RunConsoleCommand( "lamp_distance", ent:GetDistance() )
+	ply:RunConsoleCommand( "lamp_brightness", ent:GetBrightness() )
+	ply:RunConsoleCommand( "lamp_texture", ent:GetFlashlightTexture() )
 
 	if ( ent:GetToggle() ) then
-		ply:ConCommand( "lamp_toggle 1" )
+		ply:RunConsoleCommand( "lamp_toggle", "1" )
 	else
-		ply:ConCommand( "lamp_toggle 0" )
+		ply:RunConsoleCommand( "lamp_toggle", "0" )
 	end
 
 	local clr = ent:GetColor()
-	ply:ConCommand( "lamp_r " .. clr.r )
-	ply:ConCommand( "lamp_g " .. clr.g )
-	ply:ConCommand( "lamp_b " .. clr.b )
+	ply:RunConsoleCommand( "lamp_r", clr.r )
+	ply:RunConsoleCommand( "lamp_g", clr.g )
+	ply:RunConsoleCommand( "lamp_b", clr.b )
 
 	return true
 

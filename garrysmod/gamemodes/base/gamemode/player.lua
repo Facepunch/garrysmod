@@ -197,7 +197,7 @@ function GM:PlayerInitialSpawn( pl, transiton )
 	pl:SetTeam( TEAM_UNASSIGNED )
 
 	if ( GAMEMODE.TeamBased ) then
-		pl:ConCommand( "gm_showteam" )
+		pl:RunConsoleCommand( "gm_showteam" )
 	end
 
 end

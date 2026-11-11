@@ -55,7 +55,7 @@ function TOOL:RightClick( trace )
 	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
-	self:GetOwner():ConCommand( "material_override " .. ent:GetMaterial() )
+	self:GetOwner():RunConsoleCommand( "material_override", ent:GetMaterial() )
 
 	return true
 

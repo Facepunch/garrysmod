@@ -110,7 +110,7 @@ if ( SERVER ) then
 		client.CurrentDupeArmed = true
 		client.CurrentDupe = Dupe
 
-		client:ConCommand( "gmod_tool duplicator" )
+		client:RunConsoleCommand( "gmod_tool", "duplicator" )
 
 		--
 		-- Tell the client we got a dupe on server, ready to paste
