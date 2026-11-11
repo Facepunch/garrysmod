@@ -16,21 +16,13 @@ function meta:__index( key )
 	local val = meta[key]
 	if ( val ~= nil ) then return val end
 
-	--
-	-- Search the entity metatable
-	--
-	local entval = entity[key]
-	if ( entval ~= nil ) then return entval end
+	return entity.__index( self, key )
 
-	--
-	-- Search the entity table
-	--
-	local tab = entity.GetTable( self )
-	if ( tab ) then
-		return tab[ key ]
-	end
+end
 
-	return nil
+function meta:__newindex( key, value )
+
+	return entity.__newindex( self, key, value )
 
 end
 
