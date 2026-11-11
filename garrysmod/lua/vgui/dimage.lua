@@ -180,6 +180,9 @@ function PANEL:PaintAt( x, y, dw, dh )
 	surface.SetMaterial( self.m_Material )
 	surface.SetDrawColor( self.m_Color.r, self.m_Color.g, self.m_Color.b, self.m_Color.a )
 
+	-- HACK TODO: Remove me after the update reaches every client
+	local UVFunc = surface.DrawTexturedRectRawUV and surface.DrawTexturedRectRawUV or surface.DrawTexturedRectUV
+
 	if ( self:GetKeepAspect() ) then
 
 		local w = self.ActualWidth
@@ -217,7 +220,7 @@ function PANEL:PaintAt( x, y, dw, dh )
 				self.SubRectPos[2] / self.ActualHeight,
 				( self.SubRectPos[1] + self.SubRectSize[1] ) / self.ActualWidth,
 				( self.SubRectPos[2] + self.SubRectSize[2] ) / self.ActualHeight
-			surface.DrawTexturedRectUV( OffX + x, OffY + y, w, h, uS, vS, uE, vE )
+			UVFunc( OffX + x, OffY + y, w, h, uS, vS, uE, vE )
 
 		else
 			surface.DrawTexturedRect( OffX + x, OffY + y, w, h )
@@ -233,7 +236,7 @@ function PANEL:PaintAt( x, y, dw, dh )
 				self.SubRectPos[2] / self.ActualHeight,
 				( self.SubRectPos[1] + self.SubRectSize[1] ) / self.ActualWidth,
 				( self.SubRectPos[2] + self.SubRectSize[2] ) / self.ActualHeight
-			surface.DrawTexturedRectUV( x, y, dw, dh, uS, vS, uE, vE )
+			UVFunc( x, y, dw, dh, uS, vS, uE, vE )
 
 		else
 			surface.DrawTexturedRect( x, y, dw, dh )
