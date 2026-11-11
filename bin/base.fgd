@@ -4634,6 +4634,8 @@
 	input Multiply(integer): "Multiply the counter by an amount and fire the OutValue output with the result."
 	input SetValue(integer): "Set the counter to a new value and fire the OutValue output with the result."
 	input SetValueNoFire(integer): "Set the counter to a new value without firing any outputs."
+	input SetMaxValueNoFire(integer): "Set the MaxValue without firing any outputs."
+	input SetMinValueNoFire(integer): "Set the MinValue without firing any outputs."
 	input Subtract(integer): "Subtract an amount from the counter and fire the OutValue output with the result."
 	input SetHitMax(integer): "Set the upper bound of the counter and fire the OutValue output with the current value."
 	input SetHitMin(integer): "Set the lower bound of the counter and fire the OutValue output with the current value."
@@ -4643,6 +4645,8 @@
 	output OutValue(integer) : "Fired when the counter value changes."
 	output OnHitMin(void) : "Fired when the counter value meets or goes below the min value. The counter must go back above the min value before the output will fire again."
 	output OnHitMax(void) : "Fired when the counter value meets or exceeds the max value. The counter must go below the max value before the output will fire again."
+	output OnChangedFromMin(void) : "Fired when the counter value changes from the minimum value."
+	output OnChangedFromMax(void) : "Fired when the counter value changes from the max value."
 	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
 ]
 
