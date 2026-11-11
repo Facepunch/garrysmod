@@ -209,6 +209,8 @@ hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canv
 
 	end ):SetIcon( "icon16/bin_closed.png" )
 
+	hook.Run( "SpawnmenuSelectionMenu", menu, selected, spawnicons )
+
 	menu:Open()
 
 end )
