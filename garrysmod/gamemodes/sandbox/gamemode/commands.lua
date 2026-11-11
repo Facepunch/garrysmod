@@ -753,7 +753,7 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 		-- Is the entity spawnable?
 		local EntTable = list.GetEntry( "SpawnableEntities", EntityName )
 		if ( !EntTable ) then ReportErrorToPlayer( ply, "bad_sent" ) return false end
-		if ( EntTable.AdminOnly && !isAdmin ) then ReportErrorToPlayer( ply, "bad_sent" ) return false end
+		if ( EntTable.AdminOnly && !isAdmin ) then ReportErrorToPlayer( ply, "admin" ) return false end
 		return true
 
 	end
@@ -911,6 +911,7 @@ function CCGiveSWEP( ply, command, arguments )
 	-- You're not allowed to spawn this!
 	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
 	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
+		ReportErrorToPlayer( ply, "admin" )
 		return
 	end
 
