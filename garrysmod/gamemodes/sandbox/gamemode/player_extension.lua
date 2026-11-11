@@ -103,6 +103,13 @@ function meta:GetCount( str, minus )
 
 end
 
+local function GetCountUpdate( ent, ply, countType, uid )
+	if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
+	if ( !IsValid( ply ) ) then QueueUpdateCleanup( uid, countType ) return end
+
+	QueueUpdateCounts( ply, countType )
+end
+
 function meta:AddCount( str, ent )
 
 	if ( SERVER ) then
@@ -119,12 +126,7 @@ function meta:AddCount( str, ent )
 		QueueUpdateCounts( self, str )
 
 		-- Update count on deletion
-		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, countType, uid )
-			if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
-			if ( !IsValid( ply ) ) then QueueUpdateCleanup( uid, countType ) return end
-
-			QueueUpdateCounts( ply, countType )
-		end, self, str, key )
+		ent:CallOnRemove( "GetCountUpdate", GetCountUpdate, self, str, key )
 
 	end
 
