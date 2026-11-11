@@ -90,6 +90,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	m:AddOption( "New", function() MsgN( "Chose New" ) end )
 	m:AddOption( "File", function() MsgN( "Chose File" ) end )
 	m:AddOption( "Exit", function() MsgN( "Chose Exit" ) end )
+	m:AddSpacer()
 
 	local m2 = ctrl:AddMenu( "Edit" )
 	m2:AddOption( "Copy", function() MsgN( "Chose Copy" ) end )

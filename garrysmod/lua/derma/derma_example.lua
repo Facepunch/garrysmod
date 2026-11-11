@@ -24,7 +24,9 @@ function PANEL:Init()
 	end
 
 	self:SetSize( 600, 450 )
-
+	self:SetSizable( true )
+	self:SetMinWidth( 600 )
+	self:SetMinHeight( 450 )
 end
 
 function PANEL:SwitchTo( name )
