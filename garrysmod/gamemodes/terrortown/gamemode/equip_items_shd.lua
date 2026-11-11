@@ -2,6 +2,7 @@
 -- This table is used by the client to show items in the equipment menu, and by
 -- the server to check if a certain role is allowed to buy a certain item.
 
+EQUIP = {}
 
 -- If you have custom items you want to add, consider using a separate lua
 -- script that uses table.insert to add an entry to this table. This method
@@ -101,7 +102,18 @@ EquipmentItems = {
       }
    }
 }
+EQUIP.Items = EquipmentItems
 
+
+local eq_lookup = {}
+for i = 0, 2 do
+   local id = tostring(2^i)
+   eq_lookup[id] = {idx = {[ROLE_TRAITOR] = i + 1}, flag = 2^i, chunk = 1}
+
+   if i != 2 then -- exclude EQUIP_DISGUISE
+      eq_lookup[id].idx[ROLE_DETECTIVE] = i + 1
+   end
+end
 
 -- Search if an item is in the equipment table of a given role, and return it if
 -- it exists, else return nil.
@@ -109,24 +121,83 @@ function GetEquipmentItem(role, id)
    local tbl = EquipmentItems[role]
    if not tbl then return end
 
-   for k, v in pairs(tbl) do
-      if v and v.id == id then
+   -- Converting ids into strings reliably allows number comparisons >= 2^47
+   id = tostring(id)
+
+   -- See if we've looked up this equipment item before
+   local eq = eq_lookup[id]
+   if eq and eq.idx then
+      local idx = eq.idx[role]
+      if idx then
+         return tbl[idx]
+      end
+   end
+
+   for k, v in ipairs(tbl) do
+      if v and tostring(v.id) == id then
+         if eq and eq.idx then
+            eq.idx[role] = k
+         end
+
          return v
       end
    end
 end
+EQUIP.GetItem = GetEquipmentItem
 
 -- GMod's bitwise library is limited to a 32-bit signed int
-local EQUIP_LIMIT = 2 ^ 31
+local equip_chunk_size = 32
 
 -- Utility function to register a new Equipment ID
 function GenerateNewEquipmentID()
    local new_max = EQUIP_MAX * 2
 
-   if new_max > EQUIP_LIMIT then
+   if new_max == math.huge then
       error("Passive equipment item limit reached. Things may break in strange ways!")
    end
 
    EQUIP_MAX = new_max
+
+   local equip_count = math.floor(math.log(EQUIP_MAX) / math.log(2))
+   eq_lookup[tostring(EQUIP_MAX)] = {
+      idx = {},
+      flag = bit.tobit(2 ^ (equip_count % equip_chunk_size)),
+      chunk = math.ceil(equip_count / (equip_chunk_size - 1))
+   }
+
    return EQUIP_MAX
+end
+EQUIP.GenerateNewID = GenerateNewEquipmentID
+
+
+-- Networking more than 32 equipment items at once requires
+-- splitting an equipment bit field into 32-bit chunks.
+function EQUIP.GetBitChunk(id)
+   local eq = eq_lookup[tostring(id)]
+   return eq and eq.chunk
+end
+
+-- Returns the bitflag used to access given
+-- equipment ID within its 32-bit chunk.
+function EQUIP.GetBitFlag(id)
+   local eq = eq_lookup[tostring(id)]
+   return eq and eq.flag
+end
+
+-- Given an equipment id, returns if it was found within given equipment table.
+-- Given nil, returns whether given equipment table has any equipment items.
+function EQUIP.HasItem(eq, id)
+   if not id then
+      for _, chunk in ipairs(eq) do
+         if chunk != EQUIP_NONE then return true end
+      end
+
+      return false
+   end
+
+   local chunkID = EQUIP.GetBitChunk(id)
+   if not chunkID then return false end
+
+   local chunk = eq[chunkID] or EQUIP_NONE
+   return util.BitSet(chunk, EQUIP.GetBitFlag(id))
 end

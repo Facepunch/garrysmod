@@ -66,28 +66,53 @@ end
 
 function plymeta:SendCredits()
    net.Start("TTT_Credits")
-       net.WriteUInt(self:GetCredits(), 8)
+      net.WriteUInt(self:GetCredits(), 8)
    net.Send(self)
 end
 
 --- Equipment items
 function plymeta:AddEquipmentItem(id)
    id = tonumber(id)
-   if id then
-      self.equipment_items = bit.bor(self.equipment_items, id)
-      self:SendEquipment()
+   if not id then return end
+
+   local flag, chunk = EQUIP.GetBitFlag(id), EQUIP.GetBitChunk(id)
+
+   local eq_chunk = self.equipment_items_tbl[chunk] or EQUIP_NONE
+   self.equipment_items_tbl[chunk] = bit.bor(eq_chunk, flag)
+
+   -- backwards compatibility
+   if chunk == 1 then
+      self.equipment_items = self.equipment_items_tbl[1]
    end
+
+   self:SendEquipment()
 end
 
 -- We do this instead of an NW var in order to limit the info to just this ply
 function plymeta:SendEquipment()
+   local eq = self.equipment_items_tbl
+
+   local max_chunk = EQUIP.GetBitChunk(EQUIP_MAX)
+   if #eq < max_chunk then
+      -- Prevent an error if equipment items are added after a round restart
+      for i = 1, max_chunk do
+         if not eq[i] then self.equipment_items_tbl[i] = EQUIP_NONE end
+      end
+   end
+
    net.Start("TTT_Equipment")
-      net.WriteInt(self.equipment_items, util.BitsRequired(EQUIP_MAX, true))
+      util.WriteBitFields(eq, util.BitsRequired(EQUIP.GetBitFlag(EQUIP_MAX)))
    net.Send(self)
 end
 
 function plymeta:ResetEquipment()
-   self.equipment_items = EQUIP_NONE
+   self.equipment_items = EQUIP_NONE -- deprecated
+
+   self.equipment_items_tbl = {}
+   for i = 1, EQUIP.GetBitChunk(EQUIP_MAX) do
+      self.equipment_items_tbl[i] = EQUIP_NONE
+   end
+
    self:SendEquipment()
 end
 
