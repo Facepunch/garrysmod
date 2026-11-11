@@ -291,10 +291,8 @@ function ENT:IsDetectiveNear()
          diff = center - ent:GetPos()
          d = diff:Dot(diff)
 
-         if d < r then
-            if ent:HasWeapon("weapon_ttt_defuser") then
-               return true
-            end
+         if d < r and ent:HasWeapon("weapon_ttt_defuser") then
+            return true
          end
       end
    end
@@ -438,9 +436,25 @@ if SERVER then
          table.insert(choices, i)
       end
 
+      -- if the owner already has an active c4, reuse their safe wire
+      -- this ensures that the wire shown on the owner's corpse will always defuse all of their c4s
+      local reuse_wire = false
+      local ply_wire = ply.bomb_wire
+      if ply_wire then
+         for _, ent in ipairs(ents.FindByClass("ttt_c4")) do
+            if IsValid(ent) and ent:GetArmed() and ent:GetOwner() == ply and ent.SafeWires[ply_wire] then
+               self.SafeWires[ply_wire] = true
+               table.remove(choices, ply_wire)
+
+               reuse_wire = true
+               break
+            end
+         end
+      end
+
       -- random selection process, lot like traitor selection
       local safe_count = self.SafeWiresForTime(time)
-      local picked = 0
+      local picked = table.Count(self.SafeWires)
       while picked < safe_count do
          local pick = math.random(1, #choices)
          local w = choices[pick]
@@ -449,8 +463,10 @@ if SERVER then
             self.SafeWires[w] = true
             table.remove(choices, pick)
 
-            -- owner will end up having the last safe wire on his corpse
-            ply.bomb_wire = w
+            -- owner will end up having the last safe wire on his corpse if he doesn't already have one
+            if not reuse_wire then
+               ply.bomb_wire = w
+            end
 
             picked = picked + 1
          end
