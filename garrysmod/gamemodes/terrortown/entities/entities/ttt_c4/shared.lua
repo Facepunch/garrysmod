@@ -513,8 +513,12 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and not bomb.DisarmCausedExplosion and bomb:GetArmed() then
+         local owner = bomb:GetOwner()
          if bomb:GetPos():DistToSqr(ply:GetPos()) > 65536 then
             return
+         elseif ply != owner and ply:IsTraitor() and IsValid(owner) and owner:Alive() and owner:IsTraitor() then
+            -- same rule as UseOverride, which only guards the menu
+            LANG.Msg(ply, "c4_no_disarm")
          elseif bomb.SafeWires[wire] or ply:IsTraitor() or ply == bomb:GetOwner() then
             LANG.Msg(ply, "c4_disarmed")
 
