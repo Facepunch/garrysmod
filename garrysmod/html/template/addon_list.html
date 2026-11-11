@@ -57,12 +57,15 @@
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" ng-click="ToggleSelect( file, $event )" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{GetAddonClasses( file )}}">
 
 				<preview style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='../{{file.background || "img/downloading.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
+					<img src='{{!file.info.blocked ? ( "../" + (file.background || "html/img/downloading.png") ) : "img/workshop_author_blocked.png"}}'
+						style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
 					<disabled></disabled>
 				</preview>
 
 				<name class="{{IfElse( Category == 'subscribed', 'subscription', '' )}}">
-					<label ng-click="OpenWorkshopFile( file.id )">{{file.extra.title || file.info.title}}
+					<label ng-click="OpenWorkshopFile( file.id )">
+						<span ng-if="!file.info.blocked">{{file.extra.title || file.info.title}}</span>
+						<span ng-if="file.info.blocked" ng-Localize="'ugc.blocked_title'"></span>
 						<span ng-if="!file.extra.title && !file.info.title" ng-Localize="'ugc.loading'"></span>
 					</label>
 				</name>
@@ -70,7 +73,8 @@
 				<size ng-hide="!file.info.size">{{GetNiceSize( file.info.size )}}</size>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" >+{{file.info.up-file.info.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" class="negative">{{file.info.up-file.info.down|number:0}}</votes>
-				<description>{{GetAddonDescription( file )}}</description>
+				<description ng-if="!file.info.blocked">{{GetAddonDescription( file )}}</description>
+				<description ng-if="file.info.blocked" ng-Localize="'ugc.blocked_desc'"></description>
 				<input type="checkbox" class="checkbox" ng-show="(Category == 'subscribed') && !file.info.floating" ng-model="SelectedItems[ file.id ]" />
 
 				<controls ng-show="!file.info.floating">

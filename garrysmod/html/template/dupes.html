@@ -62,16 +62,21 @@
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
 				<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
+					<img src='{{!file.info.blocked ? ( "../" + file.background ) : "img/workshop_author_blocked.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
 				</preview>
 
 				<name>
-					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}<span ng-if="!file.info.title" ng-Localize="'ugc.loading'"></label>
+					<label ng-click="OpenWorkshopFile( file.id )">
+						<span ng-if="!file.info.blocked">{{file.info.title}}</span>
+						<span ng-if="file.info.blocked" ng-Localize="'ugc.blocked_title'"></span>
+						<span ng-if="!file.info.title" ng-Localize="'ugc.loading'"></span>
+					</label>
 				</name>
 				<author ng-hide="file.local">{{file.info.ownername}}<span ng-if="!file.info.ownername" ng-Localize="'ugc.loading'"></span></author>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
-				<description>{{file.info.description}}</description>
+				<description ng-if="!file.info.blocked">{{file.info.description}}</description>
+				<description ng-if="file.info.blocked" ng-Localize="'ugc.blocked_desc'"></description>
 
 				<controls>
 
