@@ -10,3 +10,20 @@ function meta:ToColor()
 	return Color( x * 255, y * 255, z * 255 )
 
 end
+
+function meta:__index( k )
+
+	local method = meta[ k ]
+	if ( method ) then return method end
+
+	local x, y, z = meta.Unpack( self )
+
+	if ( k == 1 or k == "x" or k == "X" ) then
+		return x
+	elseif ( k == 2 or k == "y" or k == "Y" ) then
+		return y
+	elseif ( k == 3 or k == "z" or k == "Z" ) then
+		return z
+	end
+
+end
