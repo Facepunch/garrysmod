@@ -1,5 +1,12 @@
 
 <div class="page" ng-controller="ControllerDemos">
+	<style type="text/css">
+		workshopicon 
+		{
+			width: {{IconWidth}}px; 
+			height: {{IconHeight}}px;
+		}
+	</style>
 
 	<div class="options">
 
@@ -41,10 +48,10 @@
 			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Localize="'demos.none'">...</workshopmessage>
 			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed_ugc'" ng-Localize="'ugc.disabled'">...</workshopmessage>
 
-			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
-				<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='{{!file.info.blocked ? ( "../" + file.background ) : "img/workshop_author_blocked.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
+				<preview>
+					<img ng-if="file.background" ng-src="../{{file.background}}" loading="lazy"/>
 				</preview>
 
 				<name>

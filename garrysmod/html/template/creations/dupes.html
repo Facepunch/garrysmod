@@ -1,5 +1,12 @@
 
 <div class="page" ng-controller="ControllerDupes">
+	<style type="text/css">
+		workshopicon 
+		{
+			width: {{IconWidth}}px; 
+			height: {{IconHeight}}px;
+		}
+	</style>
 
 	<div style="position: absolute; left: 0px; top: 0px; bottom: 0px; right: 0px;">
 
@@ -8,10 +15,10 @@
 			<workshopmessage ng-show="Loading" ng-Localize="'dupes.loading'">...</workshopmessage>
 			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading" ng-Localize="'dupes.none'">...</workshopmessage>
 
-			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files">
 
-				<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='{{!file.info.blocked ? ( "../" + file.background ) : "img/workshop_author_blocked.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+				<preview>
+					<img ng-if="file.background" ng-src="../{{file.background}}" loading="lazy"/>
 				</preview>
 
 				<name>

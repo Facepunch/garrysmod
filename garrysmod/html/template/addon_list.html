@@ -1,4 +1,12 @@
 <div class="page" ng-controller="ControllerAddons">
+	<style type="text/css">
+		workshopicon 
+		{
+			width: {{IconWidth}}px; 
+			height: {{IconHeight}}px;
+		}
+	</style>
+
 	<div class="options">
 		<ul>
 			<li><h2 ng-Localize="'addons'"></h2></li>
@@ -54,12 +62,10 @@
 			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed' )" ng-Localize="'addons.none'">...</workshopmessage>
 			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed'" ng-Localize="'addons.disabled'">...</workshopmessage>
 
-			<workshopicon ng-hide="Loading" ng-repeat="file in Files" ng-click="ToggleSelect( file, $event )" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{GetAddonClasses( file )}}">
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" ng-click="ToggleSelect( file, $event )" class="{{GetAddonClasses( file )}}">
 
-				<preview style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='{{!file.info.blocked ? ( "../" + (file.background || "html/img/downloading.png") ) : "img/workshop_author_blocked.png"}}'
-						style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
-					<disabled></disabled>
+				<preview>
+					<img ng-src="../{{file.background}}" loading="lazy"/>
 				</preview>
 
 				<name class="{{IfElse( Category == 'subscribed', 'subscription', '' )}}">

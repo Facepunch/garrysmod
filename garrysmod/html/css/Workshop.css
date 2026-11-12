@@ -7,9 +7,8 @@ workshopicon
 	margin: 10px;
 	position: relative;
 	overflow: hidden;
-	background-color: #666;
-	background-position: center;
-	-webkit-box-shadow: 0px 0px 1px 1px rgba( 0, 0, 0, 0.3 );
+	background-color: white;
+	box-shadow: 0px 0px 1px 1px rgba( 0, 0, 0, 0.3 );
 	border-radius: 3px;
 	border: 3px solid white;
 }
@@ -17,24 +16,28 @@ workshopicon
 workshopicon preview
 {
 	position: absolute;
-	left: 50%;
-	top: 50%;
+	top: 22px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #666;
 }
 
-workshopicon disabled
+workshopicon preview img
 {
-	opacity: 0;
-
 	display: block;
 	width: 100%;
 	height: 100%;
-	background: #000;
-	position: absolute;
-	top: 0;
-	left: 0;
+	background: url("../img/downloading.png") no-repeat center / cover;
+	object-fit: cover;
 }
 
-workshopicon.disabled disabled
+workshopicon.disabled preview 
+{
+	background-color: black;
+}
+
+workshopicon.disabled preview img 
 {
 	opacity: 0.5;
 }
@@ -42,15 +45,14 @@ workshopicon.disabled disabled
 workshopicon controls
 {
 	z-index: 10;
-	bottom: -64px;
-	-webkit-transition: bottom 100ms ease-in 0ms;
+	-webkit-transform: translateY(100%);
+	-webkit-transition: -webkit-transform 100ms ease-in 0ms;
 }
 
 workshopicon:hover controls
 {
-	opacity: 1;
-	bottom: 0px;
-	-webkit-transition: bottom 100ms ease-in 200ms;
+	-webkit-transform: translateY(0%);
+	-webkit-transition-delay: 200ms;
 }
 
 workshopicon name
@@ -60,7 +62,7 @@ workshopicon name
 	top: 0;
 	right: 0;
 	text-align: left;
-	background-color: rgba( 255, 255, 255, 0.99 );
+	background-color: inherit;
 	font-size: 14px;
 	font-weight: bold;
 	letter-spacing: -1px;
@@ -106,11 +108,18 @@ workshopicon author, workshopicon votes, workshopicon size
 	text-overflow: ellipsis;
 	font-family: "Arial";
 	color: #333;
-	background-color: #fff;
+	background-color: inherit;
 	border-radius: 4px 0 0 0;
 	padding: 3px 6px;
-
+	-webkit-transition: right 100ms ease-out 200ms;
 }
+
+workshopicon:hover author, workshopicon:hover votes, workshopicon:hover size
+{
+	-webkit-transition-timing-function: ease-in;
+	-webkit-transition-delay: 0ms;
+}
+
 workshopicon size
 {
 	top: 22px;
@@ -121,20 +130,18 @@ workshopicon size
 workshopicon author, workshopicon size
 {
 	right: 0px;
-	-webkit-transition: right 100ms ease-out 200ms;
 }
 
 workshopicon:hover author, workshopicon:hover size
 {
 	right: -200px;
-	-webkit-transition: right 100ms ease-in 0ms;
 }
 
 workshopicon votes
 {
 	left: 0px;
 	color: #4a4;
-	-webkit-transition: left 100ms ease-out 200ms;
+	-webkit-transition-property: left;
 }
 
 workshopicon votes.negative
@@ -145,7 +152,6 @@ workshopicon votes.negative
 workshopicon:hover votes
 {
 	left: -200px;
-	-webkit-transition: left 100ms ease-in 0ms;
 }
 
 workshopicon votes
@@ -229,9 +235,7 @@ controls
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
-	padding: 3px;
-	margin: 6px 5px;
-	overflow: display;
+	padding: 9px 8px;
 }
 
 controls control
@@ -243,7 +247,7 @@ controls control
 	border-radius: 2px;
 	cursor: pointer;
 	height: 15px;
-	-webkit-box-shadow: 1px 1px 2px black;
+	box-shadow: 1px 1px 2px black;
 	position: relative;
 }
 
@@ -466,38 +470,27 @@ pagination a.page.active
 workshopicon.installed
 {
 	border-color: #d2fc7b;
-}
-workshopicon.installed name, workshopicon.installed author, workshopicon.installed votes, workshopicon.installed size
-{
-	background: #d2fc7b;
+	background-color: #d2fc7b;
 }
 
 workshopicon.disabled
 {
 	border-color: #cedcb1;
-}
-workshopicon.disabled name, workshopicon.disabled author, workshopicon.disabled votes, workshopicon.disabled size
-{
-	background: #cedcb1;
+	background-color: #cedcb1;
 }
 
 workshopicon.invalid
 {
 	border-color: #d22;
+	background-color: #d22;
 }
 workshopicon.invalid name, workshopicon.invalid author, workshopicon.invalid votes, workshopicon.invalid size
 {
-	background: #d22;
 	color: #fff;
 }
 
 workshopicon.invalid.disabled
 {
 	border-color: #922;
+	background-color: #922;
 }
-workshopicon.invalid.disabled name, workshopicon.invalid.disabled author, workshopicon.invalid.disabled votes, workshopicon.invalid.disabled size
-{
-	background: #922;
-	color: #fff;
-}
-
