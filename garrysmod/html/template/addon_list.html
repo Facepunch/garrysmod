@@ -12,10 +12,10 @@
 			<li><h2 ng-Localize="'addons'"></h2></li>
 
 			<li>
-				<a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Localize="'addons.subscribed'"></a>
+				<a ng-class="{ 'active': (Category == 'subscribed') }" ng-click="Switch( 'subscribed', 0 )" ng-Localize="'addons.subscribed'"></a>
 				<ul ng-show="Category == 'subscribed'" class="submenu">
-					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Localize="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li ng-repeat="tag in AddonTypes" class="clickable" ng-class="[ (Tagged == tag) ? 'active' : 'notactive' ]">
+						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Localize="'addons.'+tag" ng-show="tag != ''" ng-class="[ (Tagged == tag) ? 'active' : 'notactive' ]">{{subcat}}</a>
 					</li>
 					<li><input type="text" class="search_bar" ng-Localize="'addons.search'" ng-model="SubscriptionSearchText" ng-change="HandleOnSearch()"/></li>
 				</ul>
@@ -23,24 +23,24 @@
 
 			<li>&nbsp;</li>
 
-			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Localize="'addons.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+			<li ng-repeat="cat in Categories" class="clickable" ng-class="[ (Category == cat) ? 'active' : 'notactive' ]">
+				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Localize="'addons.'+cat" ng-show="cat != ''" ng-class="[ (Category == cat) ? 'active' : 'notactive' ]"></a>
 
 				<ul ng-show="Category == cat">
-					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li ng-repeat="tag in AddonTypes" class="clickable" ng-class="[ (Tagged == tag) ? 'active' : 'notactive' ]">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'addons.'+tag" ng-show="tag != ''" ng-class="[ (Tagged == tag) ? 'active' : 'notactive' ]">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Localize="'addons.' + cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+			<li ng-repeat="cat in CategoriesSecondary" class="clickable" ng-class="[ (Category == cat) ? 'active' : 'notactive' ]">
+				<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Localize="'addons.' + cat" ng-show="cat != ''" ng-class="[ (Category == cat) ? 'active' : 'notactive' ]"></a>
 
 				<ul ng-show="Category == cat && Category != 'downloaded_ugc'">
-					<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li ng-repeat="tag in AddonTypes" class="clickable" ng-class="[ (Tagged == tag) ? 'active' : 'notactive' ]">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'addons.'+tag" ng-show="tag != ''" ng-class="[ (Tagged == tag) ? 'active' : 'notactive' ]">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
@@ -68,7 +68,7 @@
 					<img ng-src="../{{file.background}}" loading="lazy"/>
 				</preview>
 
-				<name class="{{IfElse( Category == 'subscribed', 'subscription', '' )}}">
+				<name ng-class="{ 'subscription': (Category == 'subscribed') }">
 					<label ng-click="OpenWorkshopFile( file.id )">
 						<span ng-if="!file.info.blocked">{{file.extra.title || file.info.title}}</span>
 						<span ng-if="file.info.blocked" ng-Localize="'ugc.blocked_title'"></span>
@@ -85,8 +85,8 @@
 
 				<controls ng-show="!file.info.floating">
 					<left>
-						<control class="{{IfElse( file.info.voted_up, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, true )"><img src='img/thumb-up.png' loading="lazy"/></control>
-						<control class="{{IfElse( file.info.voted_down, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, false )"><img src='img/thumb-down.png' loading="lazy"/></control>
+						<control ng-class="{ 'disabled': file.info.voted_up }" ng-hide="file.local" ng-click="Rate( file, true )"><img src='img/thumb-up.png' loading="lazy"/></control>
+						<control ng-class="{ 'disabled': file.info.voted_down }" ng-hide="file.local" ng-click="Rate( file, false )"><img src='img/thumb-down.png' loading="lazy"/></control>
 						<control ng-hide="file.local || file.info.favorite" ng-click="Favorite( file, true )"><img src='img/favourite_addon.png' loading="lazy"/></control>
 						<control ng-hide="file.local || !file.info.favorite" ng-click="Favorite( file, false )"><img src='img/favourite_addon_remove.png' loading="lazy"/></control>
 						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Localize="'demos.publish'">..</control>
@@ -112,7 +112,7 @@
 				<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
 
 				<div class="pages">
-					<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+					<span ng-repeat="p in Pages"><a class="page" ng-class="{ 'active': (p == Page) }" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
 				</div>
 				<span class="pagenum">{{Page}}</span>
 			</pagination>
@@ -122,7 +122,7 @@
 			<img src="img/settings.png">
 		</a>
 
-		<div ng-show="Category == 'subscribed'" class="ugc_settings {{IfElse(UGCSettingsOpen, 'active', 'hidden')}}">
+		<div ng-show="Category == 'subscribed'" class="ugc_settings" ng-class="[ UGCSettingsOpen ? 'active' : 'hidden' ]">
 			<div class="ugc_settings_cat">
 				<span ng-Localize="'addons.filter_by'"></span>
 				<input type="checkbox" ng-model="FilterEnabledOnly" ng-change="HandleFilterChange( 1 )" id="FilterEnabledOnly"/><label for="FilterEnabledOnly" ng-Localize="'addons.enabled_only'"></label><br>
@@ -182,7 +182,7 @@
 			<input type="radio" name="createpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-Localize="'addons.action_enable'"></label><br/>
 			<br/>
 
-			<a ng-click="CreateNewPreset()" ng-Localize="'addons.create_preset'" class="create big {{IfElse( CreatePresetName == '', 'disabled', '' )}}"></a>
+			<a ng-click="CreateNewPreset()" ng-Localize="'addons.create_preset'" class="create big" ng-class="{ 'disabled': (CreatePresetName == '') }"></a>
 			<hr>
 			<a ng-click="ClosePopupMessage()" ng-Localize="'addons.cancel'"></a>
 		</div>
@@ -206,7 +206,7 @@
 			<input type="radio" name="importpreset_newitems" value="enable" ng-model="$parent.CreatePresetNewAct" id="CreatePresetNewAct_enable"/><label for="CreatePresetNewAct_enable" ng-Localize="'addons.action_enable'"></label><br/>
 			<br/>
 
-			<a ng-click="ImportPreset()" ng-Localize="'addons.import_preset'" class="create {{IfElse( ImportPresetSource == '' || CreatePresetName == '', 'disabled', '' )}}"></a>
+			<a ng-click="ImportPreset()" ng-Localize="'addons.import_preset'" class="create" ng-class="{ 'disabled': (ImportPresetSource == '' || CreatePresetName == '') }"></a>
 			<hr>
 			<a ng-click="ClosePopupMessage()" ng-Localize="'addons.cancel'"></a>
 		</div>
@@ -227,7 +227,7 @@
 				<div class="preset_side">
 					<input type="text" ng-model="$parent.PresetSearchText" ng-Localize="'addons.filter_preset'">
 					<div class="preset_list">
-						<font ng-repeat="file in PresetList" ng-hide="file.name.toLowerCase().indexOf(PresetSearchText.toLowerCase()) == -1" ng-click="SelectPreset( file.name, file.newAction );" class="{{IfElse( file.name == SelectedPreset, 'active', '' )}}">{{file.name}}</font>
+						<font ng-repeat="file in PresetList" ng-hide="file.name.toLowerCase().indexOf(PresetSearchText.toLowerCase()) == -1" ng-click="SelectPreset( file.name, file.newAction );" ng-class="{ 'active': (file.name == SelectedPreset) }">{{file.name}}</font>
 					</div>
 				</div>
 				<div class="preset_data" ng-show="SelectedPreset">
@@ -261,14 +261,14 @@
 			<span ng-Localize="'addons.cannotundo'" ng-show="PopupMessageDisplayedMessage == 'addons.uninstallall.warning' || PopupMessageDisplayedMessage == 'addons.uninstall_selected.warning'"></span>
 
 			<div style="margin-bottom: 5px;">
-				<div ng-repeat="fileid in PopupMessageFiles" class="button {{IfElse( IsSubscribedID( fileid ), 'subbed', '' )}}">
+				<div ng-repeat="fileid in PopupMessageFiles" class="button" ng-class="{ 'subbed': IsSubscribedID( fileid ) }">
 					<wstitle ng-click="OpenWorkshopFile( fileid )" id="wsid{{fileid}}" class="wstitle">{{fileid}}</wstitle>
 					<wsbut ng-show="IsSubscribedID( fileid )" class="wssub"><img src="img/tick.png" loading="lazy"/></wsbut>
 					<wsbut ng-hide="IsSubscribedID( fileid )" ng-click="SubscribeByID( fileid );" class="wssub"><img src="img/plus.png" loading="lazy"></img></wsbut>
 				</div>
 			</div>
 
-			<a ng-click="ExecutePopupFunction()" ng-Localize="'addons.confirm'" class="{{IfElse( PopupMessageFiles.length > 0, 'create', 'warning' )}} big"></a>
+			<a ng-click="ExecutePopupFunction()" ng-Localize="'addons.confirm'" class="big" ng-class="[ (PopupMessageFiles.length > 0) ? 'create' : 'warning' ]"></a>
 			<a ng-click="ClosePopupMessage( true )" ng-Localize="'addons.cancel'" ng-show="PopupMessageDisplayedFunc != undefined"></a>
 		</div>
 	</div>

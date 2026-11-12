@@ -64,7 +64,7 @@
 					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
 
 					<div class="pages">
-						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+						<span ng-repeat="p in Pages"><a class="page" ng-class="{ 'active': (p == Page) }" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
 					</div>
 					<span class="pagenum">{{Page}}</span>
 
