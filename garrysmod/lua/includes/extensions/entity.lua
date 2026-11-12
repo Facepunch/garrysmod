@@ -165,6 +165,23 @@ end
 
 hook.Add( "EntityRemoved", "DoDieFunction", DoDieFunction )
 
+--[[---------------------------------------------------------
+	PostEntityCreated, 
+	the entity will likely have it's model set, etc, by now
+-----------------------------------------------------------]]
+local function DoPostEntityCreated( ent )
+
+    timer.Simple( 0, function()
+
+        if not IsValid( ent ) then return end
+        hook.Run( "PostEntityCreated", ent )
+
+    end )
+
+end
+
+hook.Add( "OnEntityCreated", "DoPostEntityCreated", DoPostEntityCreated )
+
 function meta:PhysWake()
 
 	local phys = self:GetPhysicsObject()
