@@ -170,7 +170,7 @@ end
 --[[---------------------------------------------------------
 	Player Eye Trace
 -----------------------------------------------------------]]
-function meta:GetEyeTrace(limit)
+function meta:GetEyeTrace( limit )
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
@@ -193,7 +193,7 @@ end
 	GetEyeTraceIgnoreCursor
 	Like GetEyeTrace but doesn't use the cursor aim vector..
 -----------------------------------------------------------]]
-function meta:GetEyeTraceNoCursor(limit)
+function meta:GetEyeTraceNoCursor( limit )
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
