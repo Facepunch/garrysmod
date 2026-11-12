@@ -176,11 +176,12 @@ function meta:GetEyeTrace( maxDistance )
 
 		-- Cache the trace results for the current frame, unless we're serverside
 		-- in which case it wouldn't play well with lag compensation at all
-		if ( self.LastPlayerTrace == framenum ) then
+		if ( self.LastPlayerTrace == framenum && self.PlayerTraceDist == maxDistance ) then
 			return self.PlayerTrace
 		end
 
 		self.LastPlayerTrace = framenum
+		self.PlayerTraceDist = maxDistance
 	end
 
 	local tr = util.TraceLine( util.GetPlayerTrace( self, nil, maxDistance ) )
@@ -197,11 +198,12 @@ function meta:GetEyeTraceNoCursor( maxDistance )
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
-		if ( self.LastPlayerAimTrace == framenum ) then
+		if ( self.LastPlayerAimTrace == framenum && self.PlayerAimTraceDist == maxDistance ) then
 			return self.PlayerAimTrace
 		end
 
 		self.LastPlayerAimTrace = framenum
+		self.PlayerAimTraceDist = maxDistance
 	end
 
 	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward(), maxDistance ) )
