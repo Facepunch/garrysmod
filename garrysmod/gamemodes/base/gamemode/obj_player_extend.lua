@@ -170,7 +170,7 @@ end
 --[[---------------------------------------------------------
 	Player Eye Trace
 -----------------------------------------------------------]]
-function meta:GetEyeTrace()
+function meta:GetEyeTrace(limit)
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
@@ -183,7 +183,7 @@ function meta:GetEyeTrace()
 		self.LastPlayerTrace = framenum
 	end
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self ) )
+	local tr = util.TraceLine( util.GetPlayerTrace( self, nil, limit ) )
 	self.PlayerTrace = tr
 
 	return tr
@@ -193,7 +193,7 @@ end
 	GetEyeTraceIgnoreCursor
 	Like GetEyeTrace but doesn't use the cursor aim vector..
 -----------------------------------------------------------]]
-function meta:GetEyeTraceNoCursor()
+function meta:GetEyeTraceNoCursor(limit)
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
@@ -204,7 +204,7 @@ function meta:GetEyeTraceNoCursor()
 		self.LastPlayerAimTrace = framenum
 	end
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward() ) )
+	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward(), limit ) )
 	self.PlayerAimTrace = tr
 
 	return tr

@@ -34,14 +34,16 @@ end
 	Desc: Returns a generic trace table for the player
 			(dir is optional, defaults to the player's aim)
 -----------------------------------------------------------]]
-function util.GetPlayerTrace( ply, dir )
+local LIMIT_PLAYER_TRACE = 4096 * 8
+function util.GetPlayerTrace( ply, dir, limit )
 
 	dir = dir or ply:GetAimVector()
+	limit = limit or LIMIT_PLAYER_TRACE
 
 	local trace = {}
 
 	trace.start = ply:EyePos()
-	trace.endpos = trace.start + ( dir * ( 4096 * 8 ) )
+	trace.endpos = trace.start + ( dir * limit )
 	trace.filter = ply
 
 	return trace
