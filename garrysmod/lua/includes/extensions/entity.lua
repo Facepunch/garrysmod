@@ -27,6 +27,8 @@ end
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
 --
+local Entity_GetTable = meta.GetTable
+local Entity_GetOwner = meta.GetOwner
 function meta:__index( key )
 
 	--
@@ -38,7 +40,7 @@ function meta:__index( key )
 	--
 	-- Search the entity table
 	--
-	local tab = meta.GetTable( self )
+	local tab = Entity_GetTable( self )
 	if ( tab ) then
 		local tabval = tab[ key ]
 		if ( tabval != nil ) then return tabval end
@@ -48,7 +50,7 @@ function meta:__index( key )
 	-- Legacy: sometimes use self.Owner to get the owner.. so lets carry on supporting that stupidness
 	-- This needs to be retired, just like self.Entity was.
 	--
-	if ( key == "Owner" ) then return meta.GetOwner( self ) end
+	if ( key == "Owner" ) then return Entity_GetOwner( self ) end
 
 	return nil
 
