@@ -89,10 +89,13 @@ function SWEP:PrimaryAttack()
 	if ( !game.SinglePlayer() && SERVER ) then return end
 	if ( CLIENT && !IsFirstTimePredicted() ) then return end
 
+	local owner = self:GetOwner()
+	if ( not owner:IsPlayer() ) then return end
+
 	if ( CLIENT ) then
 		RunConsoleCommand( "jpeg" )
 	else
-		self:GetOwner():SendLua( [[RunConsoleCommand( "jpeg" )]] )
+		owner:SendLua( [[RunConsoleCommand( "jpeg" )]] )
 	end
 
 

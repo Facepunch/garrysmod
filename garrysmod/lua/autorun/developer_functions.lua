@@ -145,11 +145,12 @@ concommand.Add( "trace", function( ply )
 		start = ply:EyePos(),
 		endpos = ply:EyePos() + ply:GetAimVector() * 30000,
 		filter = ply,
-		//mask = MASK_OPAQUE_AND_NPCS,
+		--mask = MASK_OPAQUE_AND_NPCS,
 	} )
 
+	local surfData = util.GetSurfaceData( tr.SurfaceProps )
 	tr.Distance = ( tr.HitPos - tr.StartPos ):Length()
-	tr.SurfaceName = util.GetSurfaceData( tr.SurfaceProps ).name
+	if ( surfData ) then tr.SurfaceName = surfData.name end
 	if ( IsValid( tr.Entity ) ) then tr.Model = tr.Entity:GetModel() end
 	PrintTable( tr )
 

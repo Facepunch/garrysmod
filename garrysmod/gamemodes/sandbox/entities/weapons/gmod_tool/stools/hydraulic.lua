@@ -237,7 +237,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:NumSlider( "#tool.hydraulic.addlength", "hydraulic_addlength", -1000, 1000 )
 	CPanel:ControlHelp( "#tool.hydraulic.addlength.help" )
 
-	CPanel:NumSlider( "#tool.hydraulic.speed", "hydraulic_speed", 0, 50 )
+	CPanel:NumSlider( "#tool.hydraulic.speed", "hydraulic_speed", 0, 128 )
 	CPanel:ControlHelp( "#tool.hydraulic.speed.help" )
 
 	CPanel:CheckBox( "#tool.hydraulic.fixed", "hydraulic_fixed" )

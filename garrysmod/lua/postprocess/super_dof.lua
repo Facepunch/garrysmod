@@ -322,7 +322,7 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 		matFSB:SetFloat( "$alpha", 1 )
 		matFSB:SetTexture( "$basetexture", texFSB )
 		render.SetMaterial( matFSB )
-		render.DrawScreenQuad()
+		render.DrawScreenQuad( true ) -- Will be blurry, but at least won't tile
 
 	end
 
@@ -333,7 +333,7 @@ hook.Add( "RenderScene", "RenderSuperDoF", function( ViewOrigin, ViewAngles, Vie
 	if ( !IsValid( SuperDOFWindow ) ) then return end
 
 	-- Don't render it when the console is up
-	if ( FrameTime() == 0 ) then return end
+	if ( FrameTime() == 0 and Status != "ViewShot" ) then return end
 
 	RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 	return true

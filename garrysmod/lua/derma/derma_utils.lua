@@ -1,5 +1,10 @@
 
-local matBlurScreen = Material( "pp/blurscreen" )
+local matBlurScreen = nil
+
+-- Menu cannot do blur, so don't load the material
+if ( !MENU_DLL ) then
+	matBlurScreen = Material( "pp/blurscreen" )
+end
 
 --[[
 	This is designed for Paint functions..
@@ -64,7 +69,7 @@ function Derma_Message( strText, strTitle, strButtonText )
 	ButtonPanel:SetPaintBackground( false )
 
 	local Button = vgui.Create( "DButton", ButtonPanel )
-	Button:SetText( strButtonText or "OK" )
+	Button:SetText( strButtonText or "#dialog.ok" )
 	Button:SizeToContents()
 	Button:SetTall( 20 )
 	Button:SetWide( Button:GetWide() + 20 )
@@ -219,7 +224,7 @@ function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCanc
 	ButtonPanel:SetPaintBackground( false )
 
 	local Button = vgui.Create( "DButton", ButtonPanel )
-	Button:SetText( strButtonText or "OK" )
+	Button:SetText( strButtonText or "#dialog.ok" )
 	Button:SizeToContents()
 	Button:SetTall( 20 )
 	Button:SetWide( Button:GetWide() + 20 )
@@ -227,7 +232,7 @@ function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCanc
 	Button.DoClick = function() Window:Close() fnEnter( TextEntry:GetValue() ) end
 
 	local ButtonCancel = vgui.Create( "DButton", ButtonPanel )
-	ButtonCancel:SetText( strButtonCancelText or "Cancel" )
+	ButtonCancel:SetText( strButtonCancelText or "#dialog.cancel" )
 	ButtonCancel:SizeToContents()
 	ButtonCancel:SetTall( 20 )
 	ButtonCancel:SetWide( Button:GetWide() + 20 )

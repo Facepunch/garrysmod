@@ -180,9 +180,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	local flags = 0
-	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
+	if ( attacker:IsNPC() and attacker:Disposition( ply ) == D_LI ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
+	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, flags )
 
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 
@@ -197,7 +197,7 @@ function GM:PlayerInitialSpawn( pl, transiton )
 	pl:SetTeam( TEAM_UNASSIGNED )
 
 	if ( GAMEMODE.TeamBased ) then
-		pl:ConCommand( "gm_showteam" )
+		pl:RunConsoleCommand( "gm_showteam" )
 	end
 
 end
@@ -240,7 +240,7 @@ function GM:PlayerSpawn( pl, transiton )
 	end
 
 	-- Stop observer mode
-	pl:UnSpectate()
+	if ( !transiton ) then pl:UnSpectate() end
 
 	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
@@ -340,7 +340,7 @@ function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 
 	local Blockers = 0
 	for k, v in ipairs( ents.FindInBox( Pos + spawnpointmin, Pos + spawnpointmax ) ) do
-		if ( IsValid( v ) && v != pl && v:GetClass() == "player" && v:Alive() ) then
+		if ( IsValid( v ) && v != pl && v:IsPlayer() && v:Alive() ) then
 
 			Blockers = Blockers + 1
 
@@ -361,76 +361,29 @@ end
 local SpawnPointEntityClasses = {
 	-- Half-Life 2 (Deathmatch) Maps
 	["info_player_start"] = true,
-	["info_player_deathmatch"] = true,
 	["info_player_combine"] = true,
 	["info_player_rebel"] = true,
-
-	-- Portal 2 Coop
-	["info_coop_spawn"] = true,
-
-	-- CS Maps
-	["info_player_counterterrorist"] = true,
-	["info_player_terrorist"] = true,
-
-	-- DOD Maps
-	["info_player_axis"] = true,
-	["info_player_allies"] = true,
 
 	-- (Old) GMod Maps
 	["gmod_player_start"] = true,
 
 	-- TF Maps
 	["info_player_teamspawn"] = true,
-
-	-- INS Maps
-	["ins_spawnpoint"] = true,
-
-	-- AOC Maps
-	["aoc_spawnpoint"] = true,
-
-	-- Dystopia Maps
-	["dys_spawn_point"] = true,
-
-	-- PVKII Maps
-	["info_player_pirate"] = true,
-	["info_player_viking"] = true,
-	["info_player_knight"] = true,
-
-	-- DIPRIP Maps
-	["diprip_start_team_blue"] = true,
-	["diprip_start_team_red"] = true,
-
-	-- OB Maps
-	["info_player_red"] = true,
-	["info_player_blue"] = true,
-
-	-- SYN Maps
-	["info_player_coop"] = true,
-
-	-- ZPS Maps
-	["info_player_human"] = true,
-	["info_player_zombie"] = true,
-
-	-- ZM Maps
-	["info_player_zombiemaster"] = true,
-
-	-- FOF Maps
-	["info_player_fof"] = true,
-	["info_player_desperado"] = true,
-	["info_player_vigilante"] = true,
-
-	-- L4D Maps
-	["info_survivor_rescue"] = true,
-	-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
-	--["info_survivor_position"] = true,
-
-	-- NEOTOKYO Maps
-	["info_player_attacker"] = true,
-	["info_player_defender"] = true,
-
-	-- Fortress Forever Maps
-	["info_ff_teamspawn"] = true
 }
+
+-- Load the custom ones from the entity itself
+local loadedOnesFromEntity = false
+local function LoadSpawnpointNamesFromGModPlayerSpawn()
+	if ( loadedOnesFromEntity ) then return end
+	loadedOnesFromEntity = true;
+
+	for _, className in pairs( scripted_ents.GetMember( "gmod_player_start", "SpawnPointClasses" ) ) do
+		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
+		if ( className == "info_survivor_position" ) then continue end
+
+		SpawnPointEntityClasses[ className ] = true
+	end
+end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerSelectSpawn( player )
@@ -452,8 +405,10 @@ function GM:PlayerSelectSpawn( pl, transiton )
 		self.LastSpawnPoint = 0
 		self.HasMasterSpawnPoints = false
 
+		LoadSpawnpointNamesFromGModPlayerSpawn()
+
 		self.SpawnPoints = {}
-		for _, ent in ipairs( ents.GetAll() ) do
+		for _, ent in ents.Iterator() do
 			if ( SpawnPointEntityClasses[ ent:GetClass() ] ) then
 				self.SpawnPoints[#self.SpawnPoints + 1] = ent
 
@@ -507,10 +462,10 @@ function GM:PlayerSelectSpawn( pl, transiton )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:WeaponEquip( weapon )
+	Name: gamemode:WeaponEquip( weapon, owner )
 	Desc: Player just picked up (or was given) weapon
 -----------------------------------------------------------]]
-function GM:WeaponEquip( weapon )
+function GM:WeaponEquip( weapon, owner )
 end
 
 --[[---------------------------------------------------------
@@ -544,7 +499,7 @@ end
 	Name: gamemode:PlayerDeathSound()
 	Desc: Return true to not play the default sounds
 -----------------------------------------------------------]]
-function GM:PlayerDeathSound()
+function GM:PlayerDeathSound( ply )
 	return false
 end
 
@@ -809,9 +764,9 @@ end
 	Name: gamemode:NetworkIDValidated()
 	Desc: Called when Steam has validated this as a valid player
 -----------------------------------------------------------]]
-function GM:NetworkIDValidated( name, steamid )
+function GM:NetworkIDValidated( name, steamid, ownerSteamID )
 
-	-- MsgN( "GM:NetworkIDValidated", name, steamid )
+	-- MsgN( "GM:NetworkIDValidated", name, steamid, ownerSteamID )
 
 end
 

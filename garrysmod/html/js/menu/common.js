@@ -7,7 +7,22 @@ var IS_AWESOMIUM 	= navigator.userAgent.toLowerCase().indexOf("awesomium") != -1
 function UpdateDigest( scope, timeout )
 {
 	if ( !scope ) return;
-	if ( scope.DigestUpdate ) return;
+
+	var parentHasPendingUpdate = ParentHasDigestScheduled( scope );
+
+	if ( scope.DigestUpdate ) 
+	{
+		// Cancel scope's pending digest if parent already has one scheduled
+		if ( parentHasPendingUpdate )
+		{
+			clearTimeout( scope.DigestUpdate );
+			scope.DigestUpdate = 0;
+		}
+		return;
+	}
+
+	// Don't schedule new digest if scope's parent already has one scheduled
+	if ( parentHasPendingUpdate ) return;
 
 	scope.DigestUpdate = setTimeout( function()
 	{
@@ -15,6 +30,19 @@ function UpdateDigest( scope, timeout )
 		scope.$digest();
 
 	}, timeout );
+}
+
+// When a scope performs digest, it handles child scopes too. 
+// So checking if a parent already has a digest scheduled allows avoiding redundant digests.
+function ParentHasDigestScheduled( scope )
+{
+	// already at root, no parents to check
+	if ( scope == scope.$root ) return false; 
+
+	var parentScope = scope.$parent;
+	if ( parentScope.DigestUpdate ) return true;
+
+	return ParentHasDigestScheduled( parentScope );
 }
 
 // We already have a limitTo filter built-in to angular,

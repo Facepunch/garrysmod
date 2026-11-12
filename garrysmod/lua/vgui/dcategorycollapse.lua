@@ -317,6 +317,15 @@ function PANEL:LoadCookies()
 
 end
 
+function PANEL:Clear()
+
+	for k, panel in ipairs( self:GetChildren() ) do
+		if ( self.Header == panel ) then continue end
+		panel:Remove()
+	end
+
+end
+
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

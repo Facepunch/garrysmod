@@ -230,9 +230,9 @@ if CLIENT then
    end
 
 
-   function SWEP:DrawWorldModel()
+   function SWEP:DrawWorldModel(flags)
       if not IsValid(self:GetOwner()) then
-         self:DrawModel()
+         self:DrawModel(flags)
       end
    end
 

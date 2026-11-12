@@ -19,7 +19,7 @@ TEXT_ALIGN_TOP		= 3
 TEXT_ALIGN_BOTTOM	= 4
 
 --[[---------------------------------------------------------
-	Textures we use to get shit done
+	Textures we use to get stuff done
 -----------------------------------------------------------]]
 local tex_corner8	= surface.GetTextureID( "gui/corner8" )
 local tex_corner16	= surface.GetTextureID( "gui/corner16" )
@@ -130,7 +130,6 @@ function DrawText( text, font, x, y, colour, xalign )
 
 	local curX = x
 	local curY = y
-	local curString = ""
 
 	surface.SetFont( font )
 	local sizeX, lineHeight = GetTextSize( "\n" )
@@ -274,7 +273,6 @@ end
 
 --[[---------------------------------------------------------
 	Name: TextShadow( table )
-	Desc: Draws text from a table
 -----------------------------------------------------------]]
 function TextShadow( tab, distance, alpha )
 
@@ -297,7 +295,6 @@ end
 
 --[[---------------------------------------------------------
 	Name: TexturedQuad( table )
-	Desc: pawrapper
 -----------------------------------------------------------]]
 function TexturedQuad( tab )
 

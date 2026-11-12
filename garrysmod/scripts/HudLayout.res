@@ -23,7 +23,7 @@
 		"fieldName"		"HudSuit"
 		"xpos"	"140"
 		"ypos"	"432"
-		"wide"	"108"
+		"wide"	"102"
 		"tall"  "36"
 		"visible" "1"
 		"enabled" "1"
@@ -53,7 +53,7 @@
 		"text_ypos" "20"
 		"digit_xpos" "40" // GMOD: Was 44
 		"digit_ypos" "2"
-		"digit2_xpos" "98"
+		"digit2_xpos" "102" // GMOD: Was 98
 		"digit2_ypos" "16"
 	}
 
@@ -75,6 +75,9 @@
 		"text_ypos" "22"
 		"digit_xpos" "26" // GMOD: Was 36
 		"digit_ypos" "2"
+
+		"digit2_xpos" "88" // GMOD
+		"digit2_ypos" "16"
 	}
 	
 	HudSuitPower
@@ -160,7 +163,8 @@
 		"SmallBoxSize" "32"
 		"LargeBoxWide" "112"
 		"LargeBoxTall" "80"
-		"BoxGap" "8"
+		"LargeBoxUnselectedTall" "19"
+		"BoxGap" "6"
 		"SelectionNumberXPos" "4"
 		"SelectionNumberYPos" "4"
 		"SelectionGrowTime"	"0.4"
@@ -212,14 +216,15 @@
 		"tall"	 "480"
 	}
 
-	HudMOTD
-	{
-		"fieldName" "HudMOTD"
-		"visible" "1"
-		"enabled" "1"
-		"wide"	 "640"
-		"tall"	 "480"
-	}
+	// GMOD: Nope
+	//HudMOTD
+	//{
+	//	"fieldName" "HudMOTD"
+	//	"visible" "1"
+	//	"enabled" "1"
+	//	"wide"	 "640"
+	//	"tall"	 "480"
+	//}
 
 	HudMessage
 	{
@@ -394,42 +399,44 @@
 
 	}
 	
-	HUDAutoAim
-	{
-		"fieldName" "HUDAutoAim"
-		"visible" "1"
-		"enabled" "1"
-		"wide"	 "640"
-		"tall"	 "480"
-	}
+	// GMOD: Gone
+	//HUDAutoAim
+	//{
+	//	"fieldName" "HUDAutoAim"
+	//	"visible" "1"
+	//	"enabled" "1"
+	//	"wide"	 "640"
+	//	"tall"	 "480"
+	//}
 
-	HudCommentary
-	{
-		"fieldName" "HudCommentary"
-		"xpos"	"c-190"
-		"ypos"	"350"
-		"wide"	"380"
-		"tall"  "40"
-		"visible" "1"
-		"enabled" "1"
-		
-		"PaintBackgroundType"	"2"
-		
-		"bar_xpos"		"50"
-		"bar_ypos"		"20"
-		"bar_height"	"8"
-		"bar_width"		"320"
-		"speaker_xpos"	"50"
-		"speaker_ypos"	"8"
-		"count_xpos_from_right"	"10"	// Counts from the right side
-		"count_ypos"	"8"
-		
-		"icon_texture"	"vgui/hud/icon_commentary"
-		"icon_xpos"		"0"
-		"icon_ypos"		"0"		
-		"icon_width"	"40"
-		"icon_height"	"40"
-	}
+	// GMOD: Gone
+	//HudCommentary
+	//{
+	//	"fieldName" "HudCommentary"
+	//	"xpos"	"c-190"
+	//	"ypos"	"350"
+	//	"wide"	"380"
+	//	"tall"  "40"
+	//	"visible" "1"
+	//	"enabled" "1"
+	//	
+	//	"PaintBackgroundType"	"2"
+	//	
+	//	"bar_xpos"		"50"
+	//	"bar_ypos"		"20"
+	//	"bar_height"	"8"
+	//	"bar_width"		"320"
+	//	"speaker_xpos"	"50"
+	//	"speaker_ypos"	"8"
+	//	"count_xpos_from_right"	"10"	// Counts from the right side
+	//	"count_ypos"	"8"
+	//	
+	//	"icon_texture"	"vgui/hud/icon_commentary"
+	//	"icon_xpos"		"0"
+	//	"icon_ypos"		"0"		
+	//	"icon_width"	"40"
+	//	"icon_height"	"40"
+	//}
 	
 	HudHDRDemo
 	{

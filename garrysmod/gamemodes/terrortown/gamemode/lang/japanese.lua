@@ -1,6 +1,6 @@
 ---- Japanese language strings
 
-local L = LANG.CreateLanguage("日本語")
+local L = LANG.CreateLanguage("日本語", "ja")
 
 -- General text used in various places
 L.traitor = "Traitor"

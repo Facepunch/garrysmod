@@ -18,8 +18,6 @@ end
 
 function ENT:SpawnFunction( ply, tr, ClassName )
 
-	if ( !tr.Hit ) then return end
-
 	local SpawnPos = tr.HitPos + tr.HitNormal * 10
 	local SpawnAng = ply:EyeAngles()
 	SpawnAng.p = 0
@@ -37,6 +35,8 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	end
 
 	local ent = ents.Create( ClassName )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetPos( SpawnPos )
 	ent:SetAngles( SpawnAng )
 	ent:Spawn()

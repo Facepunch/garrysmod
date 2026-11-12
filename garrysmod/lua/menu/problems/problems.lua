@@ -198,7 +198,7 @@ function FireProblemFromEngine( id, severity, params )
 		-- missing_addon_file
 		-- addon_download_failed = title;reason
 		local text = language.GetPhrase( "problem." .. id )
-		text = text:format( unpack( string.Explode( ";", params ) ) )
+		text = text:format( unpack( string.Split( params, ";" ) ) )
 
 		FireProblem( { id = id .. params, text = text, severity = severity, type = "addons" } )
 	end
@@ -260,7 +260,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	if ( render.GetDXLevel() != 95 and render.GetDXLevel() != 90 ) then
-		FireProblem( { id = "mat_dxlevel", text = language.GetPhrase( "problem.mat_dxlevel" ):format( render.GetDXLevel() ), type = "config" } )
+		FireProblem( { id = "mat_dxlevel", text = language.FormatPhrase( "problem.mat_dxlevel", render.GetDXLevel() ), type = "config" } )
 	else
 		ClearProblem( "mat_dxlevel" )
 	end

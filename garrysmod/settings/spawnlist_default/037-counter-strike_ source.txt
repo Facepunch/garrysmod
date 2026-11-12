@@ -1,0 +1,346 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/cstrike.png"
+	"id"		"37"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"The Good Guys"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/player/ct_gign.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/player/ct_sas.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/player/ct_urban.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models//player/ct_gsg9.mdl"
+		}
+		"6"
+		{
+			"type"		"header"
+			"text"		"The Bad Guys"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/player/t_guerilla.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/player/t_leet.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/player/t_phoenix.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models//player/t_arctic.mdl"
+		}
+		"11"
+		{
+			"type"		"header"
+			"text"		"The Dumb Guys"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/Characters/Hostage_01.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/Characters/Hostage_02.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/Characters/hostage_03.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/Characters/hostage_04.mdl"
+		}
+		"16"
+		{
+			"type"		"header"
+			"text"		"Pistols"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_glock18.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_usp_silencer.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_deagle.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_fiveseven.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_p228.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_usp.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_elite_single.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_elite.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_elite_dropped.mdl"
+		}
+		"26"
+		{
+			"type"		"header"
+			"text"		"Rifles"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_galil.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_famas.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_ak47.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_m4a1.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_m4a1_silencer.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_sg552.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_aug.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_scout.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_awp.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_g3sg1.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_sg550.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_mach_m249para.mdl"
+		}
+		"39"
+		{
+			"type"		"header"
+			"text"		"SMGs & Shotguns"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_shot_m3super90.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_shot_xm1014.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_mac10.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_mp5.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_p90.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_tmp.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_ump45.mdl"
+		}
+		"47"
+		{
+			"type"		"header"
+			"text"		"Gear & Grenades"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_c4.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_c4_planted.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_defuser.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_eholster.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_eholster_elite.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_fraggrenade.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_fraggrenade_thrown.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_flashbang.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_flashbang_thrown.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_smokegrenade.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_smokegrenade_thrown.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_knife_ct.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_knife_t.mdl"
+		}
+		"61"
+		{
+			"type"		"header"
+			"text"		"Shells"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/shells/shell_12gauge.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/shells/shell_338mag.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/shells/shell_556.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/shells/shell_57.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/shells/shell_762nato.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/shells/shell_9mm.mdl"
+		}
+	}
+	"name"		"Counter-Strike: Source"
+	"version"		"3"
+}

@@ -25,10 +25,18 @@
 !/garrysmod/gameinfo.txt
 !/garrysmod/lights.rad
 
+# Ignore fonts and icons
+/garrysmod/resource/*.ttf
+/garrysmod/resource/fonts/*
+/garrysmod/resource/*.bmp
+/garrysmod/resource/*.ico
+/garrysmod/resource/*.icns
+
 # Don't add user config files
 /garrysmod/cfg/*
 garrysmod/settings/addonpresets.txt
 garrysmod/settings/permissions.bin
+garrysmod/settings/mapkeys.res
 
 # Don't add spawnlists
 /garrysmod/settings/spawnlist/*

@@ -44,10 +44,10 @@ function PANEL:AddMenu( label )
 	local b = self:Add( "DButton" )
 	b:SetText( label )
 	b:Dock( LEFT )
-	b:DockMargin( 5, 0, 0, 0 )
+	b:DockMargin( 0, 0, 1, 0 )
 	b:SetIsMenu( true )
 	b:SetPaintBackground( false )
-	b:SizeToContentsX( 16 )
+	b:SizeToContentsX( 20 )
 	b.DoClick = function()
 
 		if ( m:IsVisible() ) then

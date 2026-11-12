@@ -54,11 +54,11 @@ Event(EVENT_FINISH,
                end,
         icon = function(e)
                   if e.win == WIN_TRAITOR then
-                     return star_icon, "Traitors won"
+                     return star_icon, T("ev_win_traitor_tip")
                   elseif e.win == WIN_INNOCENT then
-                     return star_icon, "Innocents won"
+                     return star_icon, T("ev_win_inno_tip")
                   else
-                     return star_icon, "Timelimit"
+                     return star_icon, T("ev_win_time_tip")
                   end
                end
      })
@@ -69,7 +69,7 @@ Event(EVENT_GAME,
                   if e.state == ROUND_ACTIVE then return T("ev_start") end
                end,
         icon = function(e)
-                  return app_icon, "Game"
+                  return app_icon, T("ev_start_tip")
                end
      })
 
@@ -81,7 +81,7 @@ Event(EVENT_CREDITFOUND,
                                           player = e.b})
                end,
         icon = function(e)
-                  return credit_icon, "Credit found"
+                  return credit_icon, T("ev_credit_tip")
                end
      })
 
@@ -90,7 +90,7 @@ Event(EVENT_BODYFOUND,
                   return PT("ev_body", {finder = e.ni, victim = e.b})
                end,
         icon = function(e)
-                  return magnifier_icon, "Body discovered"
+                  return magnifier_icon, T("ev_body_tip")
                end
      })
 
@@ -101,7 +101,7 @@ Event(EVENT_C4DISARM,
                             {player = e.ni, owner = e.own or "aliens"})
                end,
         icon = function(e)
-                  return wrench_icon, "C4 disarm"
+                  return wrench_icon, T("ev_c4_disarm_tip")
                end
      })
 
@@ -110,7 +110,7 @@ Event(EVENT_C4EXPLODE,
                   return PT("ev_c4_boom", {player = e.ni})
                end,
         icon = function(e)
-                  return bomb_icon, "C4 exploded"
+                  return bomb_icon, T("ev_c4_boom_tip")
                end
      })
 
@@ -119,7 +119,7 @@ Event(EVENT_C4PLANT,
                   return PT("ev_c4_plant", {player = e.ni})
                end,
         icon = function(e)
-                  return bomb_icon, "C4 planted"
+                  return bomb_icon, T("ev_c4_plant_tip")
                end
      })
 
@@ -236,15 +236,15 @@ Event(EVENT_KILL,
       { text = KillText,
         icon = function(e)
                   if e.att.sid64 == e.vic.sid64 or e.att.sid64 == -1 then
-                     return smile_icon, "Suicide"
+                     return smile_icon, T("ev_suicide")
                   end
 
                   if e.att.tr == e.vic.tr then
-                     return wrong_icon, "Teamkill"
+                     return wrong_icon, T("ev_teamkill")
                   elseif e.att.tr then
-                     return right_icon, "Traitor killed innocent"
+                     return right_icon, T("ev_t_killed_i")
                   else
-                     return shield_icon, "Innocent killed traitor"
+                     return shield_icon, T("ev_i_killed_t")
                   end
                end
      })

@@ -22,7 +22,7 @@ local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 1.0
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 1.0
 
 		sensor[SENSORBONE.SHOULDER]:Add( spinestretch * 0.7 )
 		sensor[SENSORBONE.SHOULDER_RIGHT]:Add( spinestretch )

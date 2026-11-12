@@ -170,6 +170,9 @@
 		0 : "Team 0"
 		1 : "Team 1"
 	]
+
+	// GMOD
+	input Toggle(void) : "Toggles the state of this entity."
 ]
 
 @SolidClass base(Targetname, EnableDisable) = func_nav_prefer : "Influence bots to prefer this region by decreasing the pathfinding cost within it."
@@ -182,6 +185,9 @@
 		0 : "Team 0"
 		1 : "Team 1"
 	]
+
+	// GMOD
+	input Toggle(void) : "Toggles the state of this entity."
 ]
 
 @PointClass base(Targetname) sphere(ball_size, 255, 255, 255, diameter) iconsprite("sprites/sent_ball_hammer.vmt") = sent_ball :
@@ -192,4 +198,10 @@
 	ball_size(float) : "Ball Size" : 30 : "The size of the ball. Use the sphere helper for accurate in-world size."
 
 	rendercolor(color255) : "Ball Color (R G B)" : "255 255 255" : "The ball color"
+]
+
+@PointClass base(Angles) = env_detail_controller : "An entity that lets you control the fade distances for detail props."
+[
+	fademindist(float) : "Start Fade Dist/Pixels" : 400 : "Distance at which the prop starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 1200 : "Maximum distance at which the prop is visible."
 ]

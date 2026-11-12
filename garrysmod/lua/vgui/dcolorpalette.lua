@@ -102,8 +102,8 @@ end
 -- This stuff could be better
 function PANEL:NetworkColorChange()
 
-	for id, pnl in pairs( g_ColorPalettePanels ) do
-		if ( !IsValid( pnl ) ) then table.remove( g_ColorPalettePanels, id ) end
+	for id = #g_ColorPalettePanels, 1, -1 do
+		if ( !IsValid( g_ColorPalettePanels[ id ] ) ) then table.remove( g_ColorPalettePanels, id ) end
 	end
 
 	for id, pnl in pairs( g_ColorPalettePanels ) do

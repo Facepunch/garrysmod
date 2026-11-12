@@ -43,7 +43,7 @@ function ENT:GetOverlayText()
 
 	if ( text == "" ) then return "" end
 
-	local txt =  "\"" .. text .. "\""
+	local txt = "\"" .. text .. "\""
 
 	if ( txt == "" ) then return "" end
 	if ( game.SinglePlayer() ) then return txt end

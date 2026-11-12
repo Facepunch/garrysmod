@@ -42,7 +42,7 @@ workshopicon.disabled disabled
 workshopicon controls
 {
 	z-index: 10;
-	bottom: -32px;
+	bottom: -64px;
 	-webkit-transition: bottom 100ms ease-in 0ms;
 }
 

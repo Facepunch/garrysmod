@@ -215,12 +215,12 @@
 		"41"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/misc/smallcannonball.mdl"
+			"model"		"models/props_phx/cannonball_solid.mdl"
 		}
 		"42"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/cannonball_solid.mdl"
+			"model"		"models/props_phx/misc/smallcannonball.mdl"
 		}
 		"43"
 		{
@@ -300,27 +300,27 @@
 		"58"
 		{
 			"type"		"model"
-			"model"		"models/xqm/hoverboard.mdl"
+			"model"		"models/xqm/podremake.mdl"
 		}
 		"59"
 		{
 			"type"		"model"
-			"model"		"models/xqm/podremake.mdl"
+			"model"		"models/props_phx/facepunch_logo.mdl"
 		}
 		"60"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/facepunch_logo.mdl"
+			"model"		"models/props_phx/sp_screen.mdl"
 		}
 		"61"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/sp_screen.mdl"
+			"model"		"models/props_phx/rt_screen.mdl"
 		}
 		"62"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/rt_screen.mdl"
+			"model"		"models/xqm/hoverboard.mdl"
 		}
 		"63"
 		{

@@ -30,11 +30,17 @@ if ( CLIENT ) then
 		local Panel = controlpanel.Get( "Undo" )
 		if ( !IsValid( Panel ) ) then return end
 
-		Panel:Clear()
-		Panel:Help( "#spawnmenu.utilities.undo.help" )
+		local ComboBox = Panel.UndoListPanel
+		if ( !IsValid( ComboBox ) ) then
+			Panel:Clear()
+			Panel:Help( "#spawnmenu.utilities.undo.help" )
 
-		local ComboBox = Panel:ListBox()
-		ComboBox:SetTall( 500 )
+			ComboBox = Panel:ListBox()
+			ComboBox:SetTall( 500 )
+			Panel.UndoListPanel = ComboBox
+		else
+			ComboBox:Clear()
+		end
 
 		local Limit = 100
 		local Count = 0
@@ -166,7 +172,13 @@ if ( CLIENT ) then
 
 	end
 
-	hook.Add( "PostReloadToolsMenu", "BuildUndoUI", SetupUI )
+	hook.Add( "PopulateToolMenu", "Undo_RegisterToolMenu", function()
+
+		spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo", "#spawnmenu.utilities.undo", "", "", function( pnl )
+			SetupUI()
+		end )
+
+	end )
 
 end
 

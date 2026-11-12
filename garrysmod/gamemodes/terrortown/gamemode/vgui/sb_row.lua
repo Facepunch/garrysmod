@@ -4,7 +4,8 @@ include("sb_info.lua")
 
 
 local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
+
+local ttt_highlight_admins = CreateConVar("ttt_highlight_admins", "1", FCVAR_REPLICATED)
 
 local OpenedVoicePanels = {}
 local function HideVolumePanels()
@@ -32,9 +33,8 @@ function PANEL:Init()
    self:AddColumn( GetTranslation("sb_deaths"), function(ply) return ply:Deaths() end )
    self:AddColumn( GetTranslation("sb_score"), function(ply) return ply:Frags() end )
 
-   if KARMA.IsEnabled() then
-      self:AddColumn( GetTranslation("sb_karma"), function(ply) return math.Round(ply:GetBaseKarma()) end )
-   end
+   local kc = self:AddColumn( GetTranslation("sb_karma"), function(ply) return math.Round(ply:GetBaseKarma()) end )
+   kc.ShouldShow = KARMA.IsEnabled
 
    -- Let hooks add their custom columns
    hook.Call("TTTScoreboardColumns", nil, self)
@@ -98,7 +98,7 @@ function GM:TTTScoreboardColorForPlayer(ply)
 
    if ply:SteamID() == "STEAM_0:0:1963640" then
       return namecolor.dev
-   elseif ply:IsAdmin() and GetGlobalBool("ttt_highlight_admins", true) then
+   elseif ply:IsAdmin() and ttt_highlight_admins:GetBool() then
       return namecolor.admin
    end
    return namecolor.default
@@ -261,6 +261,10 @@ function PANEL:LayoutColumns()
       v:SizeToContents()
       cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, (SB_ROW_HEIGHT - v:GetTall()) / 2)
+
+      if v.ShouldShow then
+         v:SetVisible(v:ShouldShow())
+      end
    end
 
    self.tag:SizeToContents()

@@ -150,9 +150,11 @@ end
 -- weapon ent again. If it touches a player it sticks in it.
 if SERVER then
    function ENT:BecomeWeapon()
+      local wep = ents.Create("weapon_ttt_knife")
+      if not IsValid(wep) then print("Knife failed to become a weapon!") return NULL end
+
       self.Weaponised = true
 
-      local wep = ents.Create("weapon_ttt_knife")
       wep:SetPos(self:GetPos())
       wep:SetAngles(self:GetAngles())
       wep.IsDropped = true

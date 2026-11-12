@@ -23,7 +23,7 @@ local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.8
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 0.8
 
 		local acrossshoulders = ( sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT] ):GetNormal() * 0.08
 
@@ -32,10 +32,10 @@ local Builder =
 		sensor[SENSORBONE.SHOULDER_LEFT]:Add( spinestretch - acrossshoulders )
 		sensor[SENSORBONE.ELBOW_LEFT]:Add( spinestretch - acrossshoulders )
 		sensor[SENSORBONE.ELBOW_RIGHT]:Add( spinestretch + acrossshoulders )
-		sensor[SENSORBONE.WRIST_LEFT]:Add( spinestretch  - acrossshoulders )
+		sensor[SENSORBONE.WRIST_LEFT]:Add( spinestretch - acrossshoulders )
 		sensor[SENSORBONE.WRIST_RIGHT]:Add( spinestretch + acrossshoulders )
 		sensor[SENSORBONE.HAND_LEFT]:Add( spinestretch - acrossshoulders )
-		sensor[SENSORBONE.HAND_RIGHT]:Add( spinestretch  + acrossshoulders )
+		sensor[SENSORBONE.HAND_RIGHT]:Add( spinestretch + acrossshoulders )
 		sensor[SENSORBONE.HEAD]:Add( spinestretch * 0.8 )
 
 		local acrosships = ( sensor[SENSORBONE.HIP_LEFT] - sensor[SENSORBONE.HIP_RIGHT] ):GetNormal() * 0.08

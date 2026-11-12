@@ -131,39 +131,43 @@ function CanBeTargeted( ent, ply )
 	return !( ent:GetPhysicsObjectCount() < 1 && ent:GetSolid() == SOLID_NONE && bit.band( ent:GetSolidFlags(), FSOLID_USE_TRIGGER_BOUNDS ) == 0 && bit.band( ent:GetSolidFlags(), FSOLID_CUSTOMRAYTEST ) == 0 )
 end
 
-function GetHovered( eyepos, eyevec )
+if ( CLIENT ) then
 
-	local ply = LocalPlayer()
-	local filter = ply:GetViewEntity()
+	function GetHovered( eyepos, eyevec )
 
-	if ( filter == ply ) then
-		local veh = ply:GetVehicle()
+		local ply = LocalPlayer()
+		local filter = ply:GetViewEntity()
 
-		if ( veh:IsValid() && ( !veh:IsVehicle() || !veh:GetThirdPersonMode() ) ) then
-			-- A dirty hack for prop_vehicle_crane. util.TraceLine returns the vehicle but it hits phys_bone_follower - something that needs looking into
-			filter = { filter, veh, unpack( ents.FindByClass( "phys_bone_follower" ) ) }
+		if ( filter == ply ) then
+			local veh = ply:GetVehicle()
+
+			if ( veh:IsValid() && ( !veh:IsVehicle() || !veh:GetThirdPersonMode() ) ) then
+				-- A dirty hack for prop_vehicle_crane. util.TraceLine returns the vehicle but it hits phys_bone_follower - something that needs looking into
+				filter = { filter, veh, unpack( ents.FindByClass( "phys_bone_follower" ) ) }
+			end
 		end
-	end
 
-	local trace = util.TraceLine( {
-		start = eyepos,
-		endpos = eyepos + eyevec * 1024,
-		filter = filter
-	} )
-
-	-- Hit COLLISION_GROUP_DEBRIS and stuff
-	if ( !trace.Hit || !IsValid( trace.Entity ) ) then
-		trace = util.TraceLine( {
+		local trace = util.TraceLine( {
 			start = eyepos,
 			endpos = eyepos + eyevec * 1024,
-			filter = filter,
-			mask = MASK_ALL
+			filter = filter
 		} )
+
+		-- Hit COLLISION_GROUP_DEBRIS and stuff
+		if ( !trace.Hit || !IsValid( trace.Entity ) ) then
+			trace = util.TraceLine( {
+				start = eyepos,
+				endpos = eyepos + eyevec * 1024,
+				filter = filter,
+				mask = MASK_ALL
+			} )
+		end
+
+		if ( !trace.Hit || !IsValid( trace.Entity ) ) then return end
+
+		return trace.Entity, trace
+
 	end
-
-	if ( !trace.Hit || !IsValid( trace.Entity ) ) then return end
-
-	return trace.Entity, trace
 
 end
 
@@ -194,8 +198,7 @@ if ( CLIENT ) then
 
 		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
-		-- TODO: Remove this hack when every client has MainEyePos
-		local ent = GetHovered( MainEyePos and MainEyePos() or EyePos(), LocalPlayer():GetAimVector() )
+		local ent = GetHovered( MainEyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
 
 		local c = Color( 255, 255, 255, 255 )
@@ -214,7 +217,7 @@ if ( CLIENT ) then
 		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		if ( code == MOUSE_RIGHT && !input.IsButtonDown( MOUSE_LEFT ) ) then
-			OnScreenClick( MainEyePos and MainEyePos() or EyePos(), vector )
+			OnScreenClick( MainEyePos(), vector )
 		end
 
 	end )
@@ -240,7 +243,7 @@ if ( CLIENT ) then
 			--
 			-- Are we hovering an entity? If so, then stomp the action
 			--
-			local hovered = GetHovered( MainEyePos and MainEyePos() or EyePos(), ply:GetAimVector() )
+			local hovered = GetHovered( MainEyePos(), ply:GetAimVector() )
 
 			if ( IsValid( hovered ) ) then
 				wasPressed = true

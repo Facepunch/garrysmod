@@ -1,6 +1,6 @@
 ---- Russian language strings
 
-local L = LANG.CreateLanguage("Русский")
+local L = LANG.CreateLanguage("Русский", "ru")
 
 --- General text used in various places
 L.traitor    = "Предатель"
@@ -138,10 +138,6 @@ L.radio_button_huge    = "Выстрелы H.U.G.E"
 L.radio_button_c4      = "Пиканье С4"
 L.radio_button_burn    = "Горение"
 L.radio_button_steps   = "Шаги"
-L.radio_button_glock   = "Выстрелы Glock"
-L.radio_button_sipist  = "Выстрелы глушителя"
-L.radio_button_tele    = "Телепортация"
-L.radio_button_heal    = "Лечение"
 
 
 -- Intro screen shown after joining
@@ -261,7 +257,6 @@ L.set_fastswmenu_tip  = "Когда включена быстрая смена �
 L.set_wswitch         = "Выключить автозакрытие меню переключения оружия."
 L.set_wswitch_tip     = "По умолчанию меню переключения автоматически закрывается через несколько секунд после последней прокрутки. Если вы включите эту функцию, оно не будет закрываться."
 L.set_cues            = "Проигрывать звуки начала и конца раунда."
-L.set_msg_cue         = "Проигрывать звук при появлении уведомлений."
 
 
 L.set_title_play    = "Настройки игры"
@@ -1092,6 +1087,9 @@ L.sb_playervolume = "Громкость игрока"
 --- 2021-09-22
 L.tip41 = "Вы можете настроить громкость микрофона игрока, нажав правой кнопкой мыши по его иконке заглушения в таблице счёта."
 
+--- 2023-07-28
+L.set_msg_cue = "Проигрывать звук при появлении уведомлений."
+
 --- 2025-03-11
 L.set_title_cross = "Настройки прицела"
 
@@ -1100,3 +1098,43 @@ L.set_cross_color = "Собственный цвет"
 L.set_hip_cross_opacity = "Непрозрачность"
 L.set_cross_thickness = "Толщина"
 L.set_cross_outlinethickness = "Толщина обводки"
+
+--- 2025-09-04
+L.radio_button_glock   = "Выстрелы Glock"
+L.radio_button_sipist  = "Выстрелы глушителя"
+L.radio_button_tele    = "Телепортация"
+L.radio_button_heal    = "Лечение"
+
+--- 2026-02-27
+L.dead         = "Мёртв"
+L.disconnected = "Отключившийся"
+
+L.words_suicide = "убивает себя"
+L.words_fall    = "ХРУСТ"
+L.words_burn    = "тление"
+
+L.ev_win_traitor_tip = "Предатели победили"
+L.ev_win_inno_tip = "Невиновные победили"
+L.ev_win_time_tip = "Время истекло"
+
+L.ev_start_tip = "Игра"
+L.ev_credit_tip = "Найден кредит"
+L.ev_body_tip = "Найдено тело"
+
+L.ev_c4_disarm_tip = "C4 обезврежена"
+L.ev_c4_boom_tip = "C4 взорвалась"
+L.ev_c4_plant_tip = "C4 заложена"
+
+L.ev_suicide = "Самоубийство"
+L.ev_teamkill = "Убийство товарища"
+L.ev_t_killed_i = "Предатель убивает невиновного"
+L.ev_i_killed_t = "Невиновный убивает предателя"
+
+-- 2026-03-11
+L.equip_sort_default = "По умолчанию"
+L.equip_sort_slot    = "Слот"
+
+L.set_hide_unbuyable = "Перемещать непокупаемое снаряжение в конец списка."
+
+-- 2026-07-24
+L.flame_burn = "ОГОНЬ! ОН ЖЖЁТ!"

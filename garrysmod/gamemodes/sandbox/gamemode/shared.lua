@@ -135,7 +135,7 @@ function GM:PhysgunPickup( ply, ent )
 		if ( string.find( EntClass, "prop_door" ) ) then return false end
 
 		-- Don't move physboxes if the mapper logic says no
-		if ( EntClass == "func_physbox" && ent:HasSpawnFlags( SF_PHYSBOX_MOTIONDISABLED ) ) then return false  end
+		if ( EntClass == "func_physbox" && ent:HasSpawnFlags( SF_PHYSBOX_MOTIONDISABLED ) ) then return false end
 
 		-- If the physics object is frozen by the mapper, don't allow us to move it.
 		if ( string.find( EntClass, "prop_" ) && ( ent:HasSpawnFlags( SF_PHYSPROP_MOTIONDISABLED ) || ent:HasSpawnFlags( SF_PHYSPROP_PREVENT_PICKUP ) ) ) then return false end
@@ -166,13 +166,13 @@ end
 function GM:EntityKeyValue( ent, key, value )
 
 	-- Physgun not allowed on this prop..
-	if ( key == "gmod_allowphysgun" && value == '0' ) then
+	if ( key == "gmod_allowphysgun" && value == "0" ) then
 		ent.PhysgunDisabled = true
 	end
 
 	-- Prop has a list of tools that are allowed on it.
 	if ( key == "gmod_allowtools" ) then
-		ent.m_tblToolsAllowed = string.Explode( " ", value )
+		ent.m_tblToolsAllowed = string.Split( value, " " )
 	end
 
 end

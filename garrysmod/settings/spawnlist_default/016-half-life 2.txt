@@ -113,77 +113,77 @@
 		"22"
 		{
 			"type"		"model"
-			"model"		"models/editor/air_node.mdl"
+			"model"		"models/editor/playerstart.mdl"
 		}
 		"23"
 		{
 			"type"		"model"
-			"model"		"models/editor/air_node_hint.mdl"
+			"model"		"models/editor/scriptedsequence.mdl"
 		}
 		"24"
 		{
 			"type"		"model"
-			"model"		"models/editor/axis_helper.mdl"
+			"model"		"models/editor/air_node.mdl"
 		}
 		"25"
 		{
 			"type"		"model"
-			"model"		"models/editor/axis_helper_thick.mdl"
+			"model"		"models/editor/air_node_hint.mdl"
 		}
 		"26"
 		{
 			"type"		"model"
-			"model"		"models/editor/camera.mdl"
+			"model"		"models/editor/node_hint.mdl"
 		}
 		"27"
 		{
 			"type"		"model"
-			"model"		"models/editor/climb_node.mdl"
+			"model"		"models/editor/overlay_helper.mdl"
 		}
 		"28"
 		{
 			"type"		"model"
-			"model"		"models/editor/cone_helper.mdl"
+			"model"		"models/editor/ground_node.mdl"
 		}
 		"29"
 		{
 			"type"		"model"
-			"model"		"models/editor/ground_node.mdl"
+			"model"		"models/editor/ground_node_hint.mdl"
 		}
 		"30"
 		{
 			"type"		"model"
-			"model"		"models/editor/ground_node_hint.mdl"
+			"model"		"models/editor/climb_node.mdl"
 		}
 		"31"
 		{
 			"type"		"model"
-			"model"		"models/editor/node_hint.mdl"
+			"model"		"models/editor/axis_helper.mdl"
 		}
 		"32"
 		{
 			"type"		"model"
-			"model"		"models/editor/overlay_helper.mdl"
+			"model"		"models/editor/axis_helper_thick.mdl"
 		}
 		"33"
 		{
 			"type"		"model"
-			"model"		"models/editor/playerstart.mdl"
+			"model"		"models/editor/cone_helper.mdl"
 		}
 		"34"
 		{
 			"type"		"model"
-			"model"		"models/editor/scriptedsequence.mdl"
+			"model"		"models/editor/spot.mdl"
 		}
 		"35"
 		{
 			"type"		"model"
-			"model"		"models/editor/spot.mdl"
+			"model"		"models/editor/spot_cone.mdl"
 		}
 		"36"
 		{
 			"type"		"model"
-			"model"		"models/editor/spot_cone.mdl"
+			"model"		"models/editor/camera.mdl"
 		}
 	}
 	"name"		"Half-Life 2"

@@ -96,7 +96,7 @@
 // weapon_ar2.txt
 "Weapon_AR2.Empty"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_AUTO" // GMOD: Was CHAN_WEAPON
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 
@@ -429,7 +429,7 @@
 // weapon_irifle.txt
 "Weapon_IRifle.Empty"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_AUTO" // GMOD: Was CHAN_WEAPON
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 
@@ -703,7 +703,7 @@
 
 "Weapon_Pistol.Empty"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_AUTO" // GMOD: Was CHAN_WEAPON
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 
@@ -798,7 +798,7 @@
 // weapon_shotgun.txt
 "Weapon_Shotgun.Empty"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_AUTO" // GMOD: Was CHAN_WEAPON
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 	"pitch"			"95,100"
@@ -898,7 +898,7 @@
 
 "Weapon_SMG1.Empty"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_AUTO" // GMOD: Was CHAN_WEAPON
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 

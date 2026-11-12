@@ -74,14 +74,14 @@
 				"width"		"24"
 				"height"	"24"
 		}
-		"crosshair_xbox"
-		{
-				"file"		"vgui/hud/xbox_reticle"
-				"x"		"0"
-				"y"		"0"
-				"width"		"64"
-				"height"	"64"
-		}
+		//"crosshair_xbox"
+		//{
+		//		"file"		"vgui/hud/xbox_reticle"
+		//		"x"		"0"
+		//		"y"		"0"
+		//		"width"		"64"
+		//		"height"	"64"
+		//}
 		"viewhair"
 		{
 				"file"		"sprites/hud/v_crosshair2"
@@ -104,22 +104,22 @@
 				"character"	"Q"
 		}
 		
-		"ico_friend_indicator"
-		{
-			"file"		"vgui/ico_friend_indicator_alone"
-			"x"		"0"
-			"y"		"0"
-			"width"	"32"
-			"height" "32"
-		}				
-		"ico_friend_indicator_avatar"
-		{
-			"file"		"vgui/ico_friend_indicator_scoreboard"
-			"x"		"-1"
-			"y"		"-1"
-			"width"	"57"
-			"height" "36"
-		}
+		//"ico_friend_indicator"
+		//{
+		//	"file"		"vgui/ico_friend_indicator_alone"
+		//	"x"		"0"
+		//	"y"		"0"
+		//	"width"	"32"
+		//	"height" "32"
+		//}				
+		//"ico_friend_indicator_avatar"
+		//{
+		//	"file"		"vgui/ico_friend_indicator_scoreboard"
+		//	"x"		"-1"
+		//	"y"		"-1"
+		//	"width"	"57"
+		//	"height" "36"
+		//}
 		
 		"train"
 		{

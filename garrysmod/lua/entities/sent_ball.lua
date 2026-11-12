@@ -35,8 +35,6 @@ end
 --
 function ENT:SpawnFunction( ply, tr, ClassName )
 
-	if ( !tr.Hit ) then return end
-
 	local size = math.random( 16, 48 )
 	local SpawnPos = tr.HitPos + tr.HitNormal * size
 
@@ -52,6 +50,8 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	end
 
 	local ent = ents.Create( ClassName )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetPos( SpawnPos )
 	ent:SetBallSize( size )
 	ent:Spawn()

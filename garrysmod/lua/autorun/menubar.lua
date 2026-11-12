@@ -89,9 +89,10 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 
 	local groupedWeps = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+		if ( !v.class ) then continue end
 		local cat = ( v.category or "" ):lower()
 		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
-		groupedWeps[ cat ][ v.class ] = language.GetPhrase( v.title )
+		groupedWeps[ cat ][ v.class ] = language.GetPhrase( v.title or v.class )
 	end
 
 	for group, items in SortedPairs( groupedWeps ) do

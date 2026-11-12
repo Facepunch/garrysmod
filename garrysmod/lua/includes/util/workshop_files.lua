@@ -25,6 +25,9 @@ function WorkshopFileBase( namespace, requiredtags )
 		if ( type == "subscribed_ugc" ) then
 			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter, sort )
 		end
+		if ( type == "downloaded_ugc" ) then
+			return self:FetchDownloadedUGC( offset, perpage )
+		end
 
 		local userid = "0"
 		if ( type == "mine" ) then userid = "1" end
@@ -139,6 +142,43 @@ function WorkshopFileBase( namespace, requiredtags )
 		end
 
 		self:FillFileInfo( data, isUGC )
+
+	end
+
+	function ret:FetchDownloadedUGC( offset, perpage )
+
+		local downloads = steamworks.GetDownloadedItems()
+
+		-- Build the page!
+		local data = {
+			totalresults = #downloads,
+			extraresults = {}, -- The local info about the addon
+			otherresults = {}, -- The complete list of IDs that match the search query for the Addons menu UI
+			results = {}
+		}
+
+		-- Add the list of all items for "select all" in the UI
+		local i = 0
+		for id, itemWSID in ipairs( downloads ) do
+			data.otherresults[ i ] = itemWSID
+			i = i + 1
+		end
+
+		-- Add the actual results for the requested range
+		local p = 0
+		while ( p < perpage ) do
+
+			if ( downloads[ offset + p + 1 ] ) then
+
+				table.insert( data.results, downloads[ offset + p + 1 ] )
+
+			end
+
+			p = p + 1
+
+		end
+
+		self:FillFileInfo( data )
 
 	end
 

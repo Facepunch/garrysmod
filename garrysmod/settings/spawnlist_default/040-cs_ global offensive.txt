@@ -2,7 +2,7 @@
 {
 	"parentid"		"0"
 	"icon"		"games/16/csgo.png"
-	"id"		"41"
+	"id"		"40"
 	"needsapp"		"csgo"
 	"name"		"CS: Global Offensive"
 	"version"		"3"

@@ -30,7 +30,7 @@ Subscriptions.prototype.GetInvalidReason = function( id )
 
 Subscriptions.prototype.SetAllEnabled = function( bBool )
 {
-	for ( k in this.Files )
+	for ( var k in this.Files )
 	{
 		this.SetShouldMountAddon( k, bBool );
 	}
@@ -43,6 +43,10 @@ Subscriptions.prototype.Subscribe = function( wsid )
 Subscriptions.prototype.Unsubscribe = function( wsid )
 {
 	lua.Run( "steamworks.Unsubscribe( %s )", String( wsid ) );
+}
+Subscriptions.prototype.MarkUnused = function( wsid )
+{
+	lua.Run( "steamworks.MarkDownloadedItemAsUnused( %s )", String( wsid ) );
 }
 
 Subscriptions.prototype.ApplyChanges = function()
@@ -58,7 +62,7 @@ Subscriptions.prototype.SetShouldMountAddon = function( wsid, bBool )
 
 Subscriptions.prototype.UnsubscribeAll = function()
 {
-	for ( k in this.Files )
+	for ( var k in this.Files )
 	{
 		this.Unsubscribe( k );
 	}
@@ -87,7 +91,7 @@ Subscriptions.prototype.Update = function( json )
 
 	this.Files = {};
 
-	for ( k in json )
+	for ( var k in json )
 	{
 		var wsid = String( json[k].wsid );
 		if ( wsid == "0" ) continue; // local .gma
@@ -106,7 +110,7 @@ Subscriptions.prototype.UpdateUGC = function( json )
 
 	this.FilesUGC = {};
 
-	for ( k in json )
+	for ( var k in json )
 	{
 		this.FilesUGC[ String( json[k].wsid ) ] = json[ k ];
 	}

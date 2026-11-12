@@ -55,6 +55,7 @@ local function SetTrails( ply, ent, data )
 	data.StartSize = math.max( 0.0001, data.StartSize )
 
 	local trail_entity = util.SpriteTrail( ent, 0, data.Color, false, data.StartSize, data.EndSize, data.Length, 1 / ( ( data.StartSize + data.EndSize ) * 0.5 ), data.Material .. ".vmt" )
+	if ( !IsValid( trail_entity ) ) then return end
 
 	ent.SToolTrail = trail_entity
 
@@ -95,13 +96,13 @@ function TOOL:LeftClick( trace )
 		Material = mat
 	} )
 
-	if ( IsValid( trail ) ) then
-		undo.Create( "Trail" )
-			undo.AddEntity( trail )
-			undo.SetPlayer( self:GetOwner() )
-			undo.SetCustomUndoText( "Undone #tool.trails.name" )
-		undo.Finish( "#tool.trails.name" )
-	end
+	if ( !IsValid( trail ) ) then return false end
+
+	undo.Create( "Trail" )
+		undo.AddEntity( trail )
+		undo.SetPlayer( self:GetOwner() )
+		undo.SetCustomUndoText( "Undone #tool.trails.name" )
+	undo.Finish( "#tool.trails.name" )
 
 	return true
 

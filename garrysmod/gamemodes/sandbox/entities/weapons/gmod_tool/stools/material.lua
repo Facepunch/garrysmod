@@ -55,7 +55,7 @@ function TOOL:RightClick( trace )
 	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
-	self:GetOwner():ConCommand( "material_override " .. ent:GetMaterial() )
+	self:GetOwner():RunConsoleCommand( "material_override", ent:GetMaterial() )
 
 	return true
 
@@ -132,10 +132,12 @@ function TOOL.BuildCPanel( CPanel )
 	local filter = CPanel:TextEntry( "#spawnmenu.quick_filter_tool" )
 	filter:SetUpdateOnType( true )
 
-	-- Remove duplicate materials. table.HasValue is used to preserve material order
+	-- Remove duplicate materials, preserving order
 	local materials = {}
+	local seen = {}
 	for id, str in ipairs( list.Get( "OverrideMaterials" ) ) do
-		if ( !table.HasValue( materials, str ) ) then
+		if ( !seen[ str ] ) then
+			seen[ str ] = true
 			table.insert( materials, str )
 		end
 	end

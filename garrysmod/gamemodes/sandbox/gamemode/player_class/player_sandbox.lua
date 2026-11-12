@@ -40,6 +40,8 @@ end
 
 function PLAYER:Loadout()
 
+	-- This would make sense, but breaks existing mods
+	--self.Player:StripWeapons()
 	self.Player:RemoveAllAmmo()
 
 	if ( cvars.Bool( "sbox_weapons", true ) ) then
@@ -89,7 +91,7 @@ function PLAYER:SetModel()
 	local bodygroups = self.Player:GetInfo( "cl_playerbodygroups" )
 	if ( bodygroups == nil ) then bodygroups = "" end
 
-	local groups = string.Explode( " ", bodygroups )
+	local groups = string.Split( bodygroups, " " )
 	for k = 0, self.Player:GetNumBodyGroups() - 1 do
 		self.Player:SetBodygroup( k, tonumber( groups[ k + 1 ] ) or 0 )
 	end

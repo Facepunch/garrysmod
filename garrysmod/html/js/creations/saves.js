@@ -1,7 +1,7 @@
 
 var IS_SPAWN_MENU = true;
 
-App = angular.module( 'CSavesApp', [ 'ngRoute', 'tranny' ] );
+App = angular.module( 'CSavesApp', [ 'ngRoute', 'ngLocalize' ] );
 
 App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
@@ -92,9 +92,9 @@ function WindowResized()
 	save.UpdatePageNav();
 
 	// Refresh HTML
-	save.DigestUpdate = setTimeout( function()
+	save.DigestUpdateResize = setTimeout( function()
 	{
-		self.DigestUpdate = 0;
+		self.DigestUpdateResize = 0;
 		Scope.Go( 0 );
 	}, 500 )
 }

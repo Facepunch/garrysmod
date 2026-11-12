@@ -1,6 +1,6 @@
 -- Italian language strings
 
-local L = LANG.CreateLanguage("Italiano")
+local L = LANG.CreateLanguage("Italiano", "it")
 
 -- Testo generale usato in varie posizioni
 -- General text used in various places

@@ -27,7 +27,7 @@
 	<script type="text/javascript" src="js/menu/control.Saves.js"></script>
 	<script type="text/javascript" src="js/menu/control.Dupes.js"></script>
 
-	<script type="text/javascript" src="js/svc.Tranny.js"></script>
+	<script type="text/javascript" src="js/ngLocalize.js"></script>
 
 	<script type="text/javascript" src="js/menu/TestData.js"></script>
 	<script type="text/javascript" src="js/menu/TestServers.js"></script>
@@ -47,26 +47,26 @@
 
 	<div class="group left">
 
-		<a href="#/" class="button ui_sound_return" ng-show="ShowBack" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span ng-Tranny="'back_to_main_menu'" ></span></a>
+		<a href="#/" class="button ui_sound_return" ng-show="ShowBack" id="BackToMenu"><img src='img/back_to_main_menu.png' loading="lazy"><span ng-Localize="'back_to_main_menu'" ></span></a>
 
 	</div>
 
 	<div class="group center">
 		<!--
-		<div class="button" ng-show="InGame" ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></div>
+		<div class="button" ng-show="InGame" ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Localize="'disconnect'"></span></a></div>
 		-->
-		<div class="button bigicon" ng-show="InGame" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span ng-Tranny="'back_to_game'"></span></a></div>
-		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && !IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Tranny="'favorite_this_server'"></span></a></div>
-		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Tranny="'unfavorite_this_server'"></span></a></div>
+		<div class="button bigicon" ng-show="InGame" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png' loading="lazy"><span ng-Localize="'back_to_game'"></span></a></div>
+		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && !IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png' loading="lazy"><span ng-Localize="'favorite_this_server'"></span></a></div>
+		<div class="button bigicon hidelabel" ng-show="InGame && ShowFavButton && IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png' loading="lazy"><span ng-Localize="'unfavorite_this_server'"></span></a></div>
 	</div>
 	
 	<div class="group right">
 		<div class="button smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/error.png'>
-			<span ng-Tranny="'problems'"></span>
+			<span ng-Localize="'problems'"></span>
 			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSeverity > 0, 'severity' + ProblemSeverity, '' )}}">{{ProblemCount}}</number>
 		</div>
 		<div class="button smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png' loading="lazy"><span></span></div>
-		<div class="button smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Tranny="'games'"></span></div>
+		<div class="button smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Localize="'games'"></span></div>
 		<div class="button smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></div>
 		<div class="button bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></div>
 	</div>
@@ -87,8 +87,8 @@
 
 <ul class="games_list popup">
 
-	<li class="notowned"><img src='img/notowned.png' width="16" height="16" loading="lazy"> <span ng-Tranny="'game_not_owned'"></span></li>
-	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16" loading="lazy"> <span ng-Tranny="'game_not_installed'"></span></li>
+	<li class="notowned"><img src='img/notowned.png' width="16" height="16" loading="lazy"> <span ng-Localize="'game_not_owned'"></span></li>
+	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16" loading="lazy"> <span ng-Localize="'game_not_installed'"></span></li>
 	<hr/>
 	<li ng-repeat="game in Games|orderBy:['-installed','-owned','title']" class="game-item {{ !game.owned ? 'notowned' : '' }} {{ !game.installed ? 'notinstalled' : '' }}">
 		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/>
@@ -107,30 +107,30 @@
 
 			<p>
 				<label style="display: block">
-					<input type="checkbox" ng-model="kinect.show_color" ng-change="kinect.update()">  <span ng-Tranny="'motionsensor.showcolor'"></span>
+					<input type="checkbox" ng-model="kinect.show_color" ng-change="kinect.update()">  <span ng-Localize="'motionsensor.showcolor'"></span>
 				</label>
 			</p>
 
 
 			<div ng-show="kinect.show_color">
 
-				<span ng-Tranny="'motionsensor.colorpos'"></span>
+				<span ng-Localize="'motionsensor.colorpos'"></span>
 
 				<p style="margin-left: 5px;">
 					<label ng-repeat="option in kinect.color_options" style="display: block">
 						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">
-						<span ng-Tranny="'motionsensor.showcolor.'+ option"></span>
+						<span ng-Localize="'motionsensor.showcolor.'+ option"></span>
 					</label>
 				</p>
 			</div>
 
 			<div  ng-show="kinect.show_color">
-				<span ng-Tranny="'motionsensor.colorsize'"></span>
+				<span ng-Localize="'motionsensor.colorsize'"></span>
 
 				<p style="margin-left: 5px;">
 					<label ng-repeat="option in kinect.size_options" style="display: block">
 						<input type="radio" name="kinect.color_size" ng-model="kinect.color_size" value="{{option}}" ng-change="kinect.update()">
-						<span ng-Tranny="'motionsensor.colorsize.'+ option"></span>
+						<span ng-Localize="'motionsensor.colorsize.'+ option"></span>
 					</label>
 				</p>
 			</div>

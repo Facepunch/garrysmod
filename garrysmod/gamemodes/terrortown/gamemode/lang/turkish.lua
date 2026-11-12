@@ -1,6 +1,6 @@
 ---- Turkish language strings
 
-local L = LANG.CreateLanguage("Türkçe")
+local L = LANG.CreateLanguage("Türkçe", "tr")
 
 -- General text used in various places
 L.traitor    = "Hain"
@@ -45,9 +45,9 @@ L.karma_dmg_other  = "Karman {amount}. bu yüzden verdiğin hasar %{num} azaltı
 L.body_found       = "{finder}, {victim} adlı kişinin cesedini buldu. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "Onlar bir Haindi!"
-L.body_found_d     = "Onlar bir Dedektifti."
-L.body_found_i     = "Onlar bir Masumdu."
+L.body_found_t     = "O bir Haindi!"
+L.body_found_d     = "O bir Dedektifti."
+L.body_found_i     = "O bir Masumdu."
 
 L.body_confirm     = "{finder}, {victim} adlı kişinin ölümünü doğruladı."
 
@@ -138,10 +138,6 @@ L.radio_button_huge    = "H.U.G.E. patlaması"
 L.radio_button_c4      = "C4 bip sesi"
 L.radio_button_burn    = "Yanma sesi"
 L.radio_button_steps   = "Adım sesi"
-L.radio_button_glock   = "Glock atışları"
-L.radio_button_sipist  = "Susturuculu silah"
-L.radio_button_tele    = "Işınlanma"
-L.radio_button_heal    = "Sağlık edinimi"
 
 -- Intro screen shown after joining
 L.intro_help     = "Oyunda yeniyseniz, talimatlar için F1'e basın!"
@@ -181,31 +177,31 @@ L.search_role_d = "Bu kişi bir Dedektifti."
 L.search_role_i = "Bu kişi masum bir teröristti."
 
 L.search_words  = "İçinizden bir ses bu kişinin son sözlerinden bazılarının '{lastwords}' olduğunu söylüyor."
-L.search_armor  = "Standart olmayan vücut zırhı giyiyorlardı."
-L.search_disg   = "Kimliklerini gizleyebilecek bir cihaz taşıyorlardı."
-L.search_radar  = "Bir çeşit radar taşıyorlardı. Artık çalışmıyor."
+L.search_armor  = "Standart olmayan vücut zırhı giyiyordu."
+L.search_disg   = "Kimliğini gizleyebilecek bir cihaz taşıyordu."
+L.search_radar  = "Bir çeşit radar taşıyordu. Artık çalışmıyor."
 L.search_c4     = "Cebinde bir not buldun. {num} numaralı teli kesmenin bombayı güvenli bir şekilde etkisiz hale getireceğini belirtiyor."
 
-L.search_dmg_crush  = "Kemiklerinin çoğu kırılmış. Ağır bir nesnenin çarpması onları öldürmüş gibi görünüyor."
-L.search_dmg_bullet = "Vurularak öldürüldükleri belli."
-L.search_dmg_fall   = "Düşüp öldüler."
-L.search_dmg_boom   = "Yaraları ve yanmış kıyafetleri bir patlamanın sonlarına neden olduğunu gösteriyor."
-L.search_dmg_club   = "Ceset çürümüş ve hırpalanmış. Belli ki dövülerek öldürülmüşler."
+L.search_dmg_crush  = "Kemiklerinin çoğu kırılmış. Ağır bir nesnenin çarpması onu öldürmüş gibi görünüyor."
+L.search_dmg_bullet = "Vurularak öldürüldüğü belli."
+L.search_dmg_fall   = "Düşüp öldü."
+L.search_dmg_boom   = "Yarası ve yanmış kıyafeti bir patlamanın onun sonu olduğunu gösteriyor."
+L.search_dmg_club   = "Ceset çürümüş ve hırpalanmış. Belli ki dövülerek öldürülmüş."
 L.search_dmg_drown  = "Ceset boğulma belirtileri gösteriyor."
-L.search_dmg_stab   = "Kanamadan hızlı bir şekilde ölmeden önce bıçaklandılar ve kesildiler."
+L.search_dmg_stab   = "Kanamadan hızlı bir şekilde ölmeden önce bıçaklandı ve kesildi."
 L.search_dmg_burn   = "Buralar kızartılmış terörist gibi kokuyor..."
-L.search_dmg_tele   = "DNA'ları takyon emisyonları tarafından karıştırılmış gibi görünüyor!"
+L.search_dmg_tele   = "DNA'sı takyon emisyonları tarafından karıştırılmış gibi görünüyor!"
 L.search_dmg_car    = "Bu terörist yolu geçtiğinde, dikkatsiz bir sürücü tarafından ezildi."
 L.search_dmg_other  = "Bu teröristin ölümünün belirli bir nedenini bulamıyorsun."
 
-L.search_weapon = "Görünüşe göre onları öldürmek için bir {weapon} kullanılmış."
+L.search_weapon = "Görünüşe göre onu öldürmek için bir {weapon} kullanılmış."
 L.search_head   = "Ölümcül yara bir kafa vuruşuymuş. Çığlık atacak zaman yok."
-L.search_time   = "Siz aramayı yapmadan yaklaşık {time} önce öldüler."
+L.search_time   = "Siz aramayı yapmadan yaklaşık {time} önce öldü."
 L.search_dna    = "Bir DNA Tarayıcısı ile katilin DNA'sının bir örneğini alın. DNA örneği kabaca {time} sonra bozunacak."
 
 L.search_kills1 = "{player} oyuncusunun ölümünü doğrulayan bir leş listesi buldun."
 L.search_kills2 = "Bu adlara sahip bir leş listesi buldunuz:"
-L.search_eyes   = "Dedektiflik becerilerini kullanarak, {player} adlı oyuncuyu gördükleri son kişi olarak belirledin. Katil ya da bir tesadüf?"
+L.search_eyes   = "Dedektiflik becerilerini kullanarak, {player} adlı oyuncuyu gördüğü son kişi olarak belirledin. Katil ya da bir tesadüf?"
 
 
 -- Scoreboard
@@ -260,7 +256,6 @@ L.set_fastswmenu_tip  = "Hızlı silah değiştirme etkinleştirildiğinde, men�
 L.set_wswitch         = "Silah değiştirme menüsünü otomatik kapatmayı devre dışı bırak"
 L.set_wswitch_tip     = "Varsayılan olarak silah değiştirici, son kaydırmadan birkaç saniye sonra otomatik olarak kapanır. Açık kalması için bunu etkinleştirin."
 L.set_cues            = "Bir raunt başladığında veya bittiğinde ses işaretini çal"
-L.set_msg_cue         = "Bir bildirim göründüğünde ses işaretini çal"
 
 
 L.set_title_play    = "Oynanış Ayarları"
@@ -336,12 +331,12 @@ L.c4_remove_pickup   = "C4'ü al"
 L.c4_remove_destroy1 = "C4'ü yok et"
 L.c4_remove_destroy2 = "İmhayı onayla"
 
-L.c4_disarm       = "C4'ü devre dışı bırak"
+L.c4_disarm       = "C4'ü etkisiz hale getir"
 L.c4_disarm_cut   = "{num} telini kesmek için tıklayın"
 
 L.c4_disarm_t     = "Bombayı etkisiz hale getirmek için bir kablo kesin. Hain olduğun için her kablo güvende. Masumlar için iş o kadar kolay değil!"
 L.c4_disarm_owned = "Bombayı etkisiz hale getirmek için bir kablo kesin. Bu senin bomban, bu yüzden her kablo onu etkisiz hale getirecek."
-L.c4_disarm_other = "Bombayı etkisiz hale getirmek için bir kablo kesin. Yanlış yaparsan patlar!"
+L.c4_disarm_other = "Bombayı etkisiz hale getirmek için doğru kabloyu kesin. Yanlış yaparsan patlar!"
 
 L.c4_status_armed    = "KURULDU"
 L.c4_status_disarmed = "DEVRE DIŞI"
@@ -366,10 +361,8 @@ L.decoy_broken    = "Tuzağınız yok edildi!"
 L.decoy_help_pri  = "{primaryfire} tuzağı yerleştirir."
 
 L.decoy_desc = [[
-Dedektiflere sahte bir radar işareti gösterir,
-ve DNA tarayıcıları
-DNA'nızı taradıkları takdirde yemin yerini göstermesini sağlar
-.]]
+Dedektiflere sahte bir radar işareti gösterir. DNA tarayıcıları
+DNA'nızı taradıkları takdirde yemin yerini göstermesini sağlar.]]
 
 -- Defuser
 L.defuser_name    = "İmha Kiti"
@@ -387,8 +380,7 @@ L.flare_desc = [[
 Cesetleri yakmak için kullanılabilir, böylece
 asla bulunmazlar. Sınırlı cephane.
 
-Bir cesedi yakmak belirgin bir ses çıkarır
-.]]
+Bir cesedi yakmak belirgin bir ses çıkarır.]]
 
 -- Health station
 L.hstation_name   = "Sağlık İstasyonu"
@@ -482,7 +474,7 @@ Nesnelerden DNA örnekleri toplayın
 ve bunları DNA'nın sahibini bulmak için kullanın.
 
 Katilin DNA'sını almak için taze cesetler üzerinde kullanın
-ve onları takip edin.]]
+ve izini sürün.]]
 
 L.dna_menu_title  = "DNA Tarama Kontrolleri"
 L.dna_menu_sample = "{source} üzerinde bulunan DNA örneği"
@@ -510,7 +502,7 @@ L.magnet_help     = "Cesedi yüzeye tutturmak için {primaryfire}"
 L.grenade_smoke   = "Duman Bombası"
 L.grenade_fire    = "Yakıcı Bomba"
 
-L.unarmed_name    = "Gizlendi"
+L.unarmed_name    = "Silahı İndir"
 L.crowbar_name    = "Levye"
 L.pistol_name     = "Tabanca"
 L.rifle_name      = "Tüfek"
@@ -788,13 +780,13 @@ L.something      = "bir şey"
 L.ev_blowup      = "{victim} kendini havaya uçurdu"
 L.ev_blowup_trap = "{victim} {trap} tarafından havaya uçuruldu"
 
-L.ev_tele_self   = "{victim} kendilerini ışınlayarak öldürdü"
+L.ev_tele_self   = "{victim} kendini ışınlayarak öldürdü"
 L.ev_sui         = "{victim} bunu kaldıramadı ve kendini öldürdü"
 L.ev_sui_using   = "{victim}, {tool} kullanarak kendini öldürdü"
 
 L.ev_fall        = "{victim} ölümüne düştü"
-L.ev_fall_pushed = "{victim}, {attacker} onları ittikten sonra ölümüne düştü"
-L.ev_fall_pushed_using = "{victim}, {attacker} onları itmek için {trap} kullandıktan sonra ölümüne düştü"
+L.ev_fall_pushed = "{victim}, {attacker} onu ittikten sonra ölümüne düştü"
+L.ev_fall_pushed_using = "{victim}, {attacker} onu itmek için {trap} kullandıktan sonra ölümüne düştü"
 
 L.ev_shot        = "{victim} {attacker} tarafından vuruldu"
 L.ev_shot_using  = "{victim} bir {weapon} kullanılarak {attacker} tarafından vuruldu"
@@ -847,7 +839,7 @@ L.aw_sui2_title = "Yalnız ve Depresyonda"
 L.aw_sui2_text  = "kendini öldüren tek kişiydi."
 
 L.aw_exp1_title = "Patlayıcı Araştırma Hibesi"
-L.aw_exp1_text  = "patlamalar üzerine yaptıkları araştırmalarla tanındı. {num} denek yardımcı oldu."
+L.aw_exp1_text  = "patlamalar üzerine yaptığı araştırmalarla tanındı. {num} denek yardımcı oldu."
 
 L.aw_exp2_title = "Saha Araştırması"
 L.aw_exp2_text  = "patlamalara karşı kendi dirençlerini test etti. Yeterince yüksek değildi."
@@ -919,10 +911,10 @@ L.aw_cbr1_title = "Sırra Kadem Bas"
 L.aw_cbr1_text  = "levyeyi gelişigüzel sallar ve bunu {num} kurban öğrenir."
 
 L.aw_cbr2_title = "Freeman"
-L.aw_cbr2_text  = "levyelerini en az {num} kişinin beynine sapladı."
+L.aw_cbr2_text  = "levyesini en az {num} kişinin beynine sapladı."
 
 L.aw_pst1_title = "Israrcı Küçük Alçak"
-L.aw_pst1_text  = "tabancayı kullanarak {num} kişi öldürdü. Sonra birine ölümüne sarılmaya devam ettiler."
+L.aw_pst1_text  = "tabancayı kullanarak {num} kişi öldürdü. Sonra birine ölümüne sarılmaya devam etti."
 
 L.aw_pst2_title = "Küçük Kalibreli Kesim"
 L.aw_pst2_text  = "{num} kişilik küçük bir orduyu tabancayla öldürdü. Muhtemelen namlunun içine küçük bir av tüfeği yerleştirdi."
@@ -949,7 +941,7 @@ L.aw_mac1_title = "Dua Et ve Öldür"
 L.aw_mac1_text  = "MAC10 ile {num} kişiyi öldürdü, ama öldürmek için ne kadar mermiye ihtiyaç duyduğunu söylemeyecek."
 
 L.aw_mac2_title = "Gülümse ve Seyret"
-L.aw_mac2_text  = "iki MAC10 kullanabilseler ne olacağını merak ediyor. {num} çarpı iki?"
+L.aw_mac2_text  = "iki MAC10 kullanabilse ne olacağını merak ediyor. {num} çarpı iki?"
 
 L.aw_sip1_title = "Sessiz Ol"
 L.aw_sip1_text  = "{num} kişiyi susturulmuş tabancayla sustur."
@@ -976,7 +968,7 @@ L.aw_flg2_title = "İşaret Fişeği Ateşi Gösterir"
 L.aw_flg2_text  = "{num} erkeğe yanıcı kıyafet giymenin tehlikesini öğretti."
 
 L.aw_hug1_title = "H.U.G.E Felaketi"
-L.aw_hug1_text  = "H.U.G.E.'leriyle uyumluydu, bir şekilde mermilerini {num} kişiye isabet ettirmeyi başardı."
+L.aw_hug1_text  = "H.U.G.E. silahıyla uyumluydu, bir şekilde mermilerini {num} kişiye isabet ettirmeyi başardı."
 
 L.aw_hug2_title = "Sabırlı Er"
 L.aw_hug2_text  = "sadece ateş etmeye devam etti ve H.U.G.E.'nin sabrının {num} öldürme ile ödüllendirildiğini gördü."
@@ -988,25 +980,25 @@ L.aw_msx2_title = "Orta Menzil Çılgınlığı"
 L.aw_msx2_text  = "M16 ile hedefleri nasıl indireceğini bilir ve {num} düşman öldürür."
 
 L.aw_tkl1_title = "Sakar Şakir"
-L.aw_tkl1_text  = "tam bir arkadaşa nişan alırken parmakları kaydı."
+L.aw_tkl1_text  = "tam bir arkadaşa nişan alırken parmağı kaydı."
 
 L.aw_tkl2_title = "Çifte Sakar Şakir"
-L.aw_tkl2_text  = "iki kez Hain aldıklarını düşündüler, ancak her iki seferde de yanıldılar."
+L.aw_tkl2_text  = "iki Haini birden indirdiğini düşündü, ancak her ikisinde de yanıldı."
 
 L.aw_tkl3_title = "Karma bilincine sahip"
-L.aw_tkl3_text  = "iki takım arkadaşını öldürdükten sonra duramadı. Üç onların uğurlu sayısıdır."
+L.aw_tkl3_text  = "iki takım arkadaşını öldürdükten sonra duramadı. Üç onun uğurlu sayısıdır."
 
 L.aw_tkl4_title = "Takım Katili"
 L.aw_tkl4_text  = "tüm takımını öldürdü. ALLAH'INI SEVEN BANLASIN."
 
 L.aw_tkl5_title = "Rol Oyuncusu"
-L.aw_tkl5_text  = "deli bir adamı canlandırıyordu, gerçekten. Bu yüzden takımlarının çoğunu öldürdüler."
+L.aw_tkl5_text  = "deli bir adamı canlandırıyordu, gerçekten. Bu yüzden takımının çoğunu öldürdü."
 
 L.aw_tkl6_title = "Aptal"
-L.aw_tkl6_text  = "hangi tarafta olduklarını anlayamadılar ve yoldaşlarının yarısından fazlasını öldürdüler."
+L.aw_tkl6_text  = "hangi tarafta olduğunu anlayamadı ve yoldaşlarının yarısından fazlasını öldürdü."
 
 L.aw_tkl7_title = "Cahil"
-L.aw_tkl7_text  = "takım arkadaşlarının dörtte birinden fazlasını öldürerek bölgelerini gerçekten iyi korudu."
+L.aw_tkl7_text  = "takım arkadaşlarının dörtte birinden fazlasını öldürerek bölgesini gerçekten iyi korudu."
 
 L.aw_brn1_title = "Eskiden Büyükannemin Yaptığı Gibi"
 L.aw_brn1_text  = "birkaç kişiyi güzelce kızarttı."
@@ -1015,13 +1007,13 @@ L.aw_brn2_title = "Kundakçı"
 L.aw_brn2_text  = "kurbanlarından birini yaktıktan sonra yüksek sesle kıkırdadığı duyuldu."
 
 L.aw_brn3_title = "Kundakçının Ateşi Söner"
-L.aw_brn3_text  = "hepsini yaktı, ama şimdi hiç yakıcı el bombası kalmadı! Nasıl başa çıkacaklar!?"
+L.aw_brn3_text  = "hepsini yaktı, ama şimdi hiç yakıcı el bombası kalmadı! Nasıl başa çıkacak!?"
 
 L.aw_fnd1_title = "Adli tabip"
 L.aw_fnd1_text  = "etrafta {num} ceset buldu."
 
 L.aw_fnd2_title = "Hepsini Yakalamalıyım"
-L.aw_fnd2_text  = "koleksiyonları için {num} ceset buldu."
+L.aw_fnd2_text  = "koleksiyonu için {num} ceset buldu."
 
 L.aw_fnd3_title = "Ölüm Kokusu"
 L.aw_fnd3_text  = "bu rauntta {num} kez rastgele cesetler üzerinde tökezler."
@@ -1030,7 +1022,7 @@ L.aw_crd1_title = "Geri Dönüştürücü"
 L.aw_crd1_text  = "cesetlerden {num} kredi toplandı."
 
 L.aw_tod1_title = "Kundakçının Zaferi"
-L.aw_tod1_text  = "takımları raundu kazanmadan sadece saniyeler önce öldü."
+L.aw_tod1_text  = "takımı raundu kazanmadan sadece saniyeler önce öldü."
 
 L.aw_tod2_title = "Bu Oyundan Nefret Ediyorum"
 L.aw_tod2_text  = "raundun başlamasından hemen sonra öldü."
@@ -1085,6 +1077,9 @@ L.sb_playervolume = "Oyuncu Sesi"
 --- 2021-09-22
 L.tip41 = "Puan tablosundaki sessize alma simgesine sağ tıklayarak bir oyuncunun mikrofon sesini ayarlayabilirsin."
 
+--- 2023-07-28
+L.set_msg_cue = "Bir bildirim göründüğünde ses işaretini çal"
+
 --- 2025-03-11
 L.set_title_cross = "Nişangâh Ayarları"
 
@@ -1093,3 +1088,43 @@ L.set_cross_color = "Özel renk"
 L.set_hip_cross_opacity = "Opaklık"
 L.set_cross_thickness = "Kalınlık"
 L.set_cross_outlinethickness = "Dış çizgi kalınlığı"
+
+--- 2025-09-04
+L.radio_button_glock   = "Glock atışları"
+L.radio_button_sipist  = "Susturuculu silah"
+L.radio_button_tele    = "Işınlanma"
+L.radio_button_heal    = "Sağlık edinimi"
+
+--- 2026-02-27
+L.dead         = "Ölü"
+L.disconnected = "Sunucudan Ayrıldı"
+
+L.words_suicide = "kendini öldürdü"
+L.words_fall    = "KÜT"
+L.words_burn    = "çıtırtı"
+
+L.ev_win_traitor_tip = "Hainler kazandı"
+L.ev_win_inno_tip = "Masumlar kazandı"
+L.ev_win_time_tip = "Zaman Sınırı"
+
+L.ev_start_tip = "Oyun"
+L.ev_credit_tip = "Kredi bulundu"
+L.ev_body_tip = "Ceset bulundu"
+
+L.ev_c4_disarm_tip = "C4 etkisiz hale getirildi"
+L.ev_c4_boom_tip = "C4 patladı"
+L.ev_c4_plant_tip = "C4 kuruldu"
+
+L.ev_suicide = "İntihar"
+L.ev_teamkill = "Takım Öldürmesi"
+L.ev_t_killed_i = "Hain rolündeki oyuncu, masum rolündeki oyuncuyu öldürdü"
+L.ev_i_killed_t = "Masum rolündeki oyuncu, hain rolündeki oyuncuyu öldürdü"
+
+-- 2026-03-11
+L.equip_sort_default = "Varsayılan"
+L.equip_sort_slot    = "Yuva"
+
+L.set_hide_unbuyable = "Satın alınamayan ekipman ögelerini listenin altına taşı."
+
+-- 2026-07-24
+L.flame_burn = "ATEŞ! YANIYOR!"

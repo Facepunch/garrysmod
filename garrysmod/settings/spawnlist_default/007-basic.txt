@@ -693,37 +693,37 @@
 		"138"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/wood/wood_wire1x1x1.mdl"
+			"model"		"models/props_phx/construct/wood/wood_wire1x2b.mdl"
 		}
 		"139"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/wood/wood_wire1x2b.mdl"
+			"model"		"models/props_phx/construct/wood/wood_wire1x2.mdl"
 		}
 		"140"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/wood/wood_wire1x2.mdl"
+			"model"		"models/props_phx/construct/wood/wood_wire2x2b.mdl"
 		}
 		"141"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/wood/wood_wire1x1x2b.mdl"
+			"model"		"models/props_phx/construct/wood/wood_wire2x2.mdl"
 		}
 		"142"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/wood/wood_wire1x1x2.mdl"
+			"model"		"models/props_phx/construct/wood/wood_wire1x1x1.mdl"
 		}
 		"143"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/wood/wood_wire2x2b.mdl"
+			"model"		"models/props_phx/construct/wood/wood_wire1x1x2b.mdl"
 		}
 		"144"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/wood/wood_wire2x2.mdl"
+			"model"		"models/props_phx/construct/wood/wood_wire1x1x2.mdl"
 		}
 		"145"
 		{
@@ -843,12 +843,12 @@
 		"168"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/plastic/plastic_angle_90.mdl"
+			"model"		"models/props_phx/construct/plastic/plastic_angle_180.mdl"
 		}
 		"169"
 		{
 			"type"		"model"
-			"model"		"models/props_phx/construct/plastic/plastic_angle_180.mdl"
+			"model"		"models/props_phx/construct/plastic/plastic_angle_90.mdl"
 		}
 	}
 	"name"		"Basic"

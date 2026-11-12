@@ -78,7 +78,7 @@ hook.Add( "RenderScene", "RenderForDemo", function( ViewOrigin, ViewAngles, View
 		drawmonitors	= true
 	}
 
-	if ( VideoSettings.dofsteps && VideoSettings.dofpasses ) then
+	if ( VideoSettings.dofsteps > 0 && VideoSettings.dofpasses > 0 ) then
 
 		local trace = util.TraceHull( {
 			start	= view.origin,
@@ -88,8 +88,8 @@ hook.Add( "RenderScene", "RenderForDemo", function( ViewOrigin, ViewAngles, View
 			filter	= { GetViewEntity() }
 		} )
 
-		local focuspeed = math.Clamp( ( VideoSettings.doffocusspeed / FramesPerFrame ) * 0.2, 0, 1 )
-		AutoFocusPoint = LerpVector( focuspeed, AutoFocusPoint, trace.HitPos )
+		local focusSpeed = math.Clamp( ( VideoSettings.doffocusspeed / FramesPerFrame ) * 0.2, 0, 1 )
+		AutoFocusPoint = LerpVector( focusSpeed, AutoFocusPoint, trace.HitPos )
 		local UsableFocusPoint = view.origin + view.angles:Forward() * AutoFocusPoint:Distance( view.origin )
 
 		RenderDoF( view.origin, view.angles, UsableFocusPoint, VideoSettings.dofsize * 0.3, VideoSettings.dofsteps, VideoSettings.dofpasses, false, table.Copy( view ) )

@@ -13,6 +13,7 @@ local PANEL = {}
 function PANEL:Init()
 
 	self:Dock( FILL )
+	self:SetSize( ScrW(), ScrH() ) -- Do not wait for docking to set our size
 	self:SetKeyboardInputEnabled( true )
 	self:SetMouseInputEnabled( true )
 
@@ -45,6 +46,7 @@ function PANEL:Init()
 	self.HTML:SetKeyboardInputEnabled( true )
 	self.HTML:SetMouseInputEnabled( true )
 	self.HTML:RequestFocus()
+	self.HTML:SetSize( ScrW(), ScrH() )
 
 	ws_dupe.HTML = self.HTML
 	ws_save.HTML = self.HTML
@@ -64,13 +66,16 @@ end
 function PANEL:ScreenshotScan( folder )
 
 	local bReturn = false
-
 	local Screenshots = file.Find( folder .. "*.*", "GAME" )
-	for k, v in RandomPairs( Screenshots ) do
 
+	-- The system will always check materials/ folder first, and the default backgrounds are one folder up
+	-- So optimize the lookup by having it check the correct folder to begin with
+	-- Doesn't work well for workshop mounted gamemode content, so we only do it for base game backgrounds
+	if ( folder == "backgrounds/" ) then folder = "../" .. folder end
+
+	for _, v in ipairs( Screenshots ) do
 		AddBackgroundImage( folder .. v )
 		bReturn = true
-
 	end
 
 	return bReturn
@@ -115,7 +120,6 @@ end
 function PANEL:RefreshContent()
 
 	self:RefreshGamemodes()
-	self:RefreshAddons()
 
 end
 
@@ -126,12 +130,6 @@ function PANEL:RefreshGamemodes()
 	self:Call( "UpdateGamemodes( " .. json .. " )" )
 	self:UpdateBackgroundImages()
 	self:Call( "UpdateCurrentGamemode( '" .. engine.ActiveGamemode():JavascriptSafe() .. "' )" )
-
-end
-
-function PANEL:RefreshAddons()
-
-	-- TODO
 
 end
 
@@ -219,7 +217,7 @@ function OnMenuFailedToLoad()
 	btn_exit:Dock( TOP )
 	btn_exit:DockMargin( 0, 0, 0, 5 )
 	btn_exit:SetText( "#quit" )
-	btn_exit.DoClick = function() RunGameUICommand( "quit" ) end
+	btn_exit.DoClick = function() RunGameUICommand( "QuitNoConfirm" ) end
 end
 
 
@@ -235,7 +233,7 @@ function UpdateServerSettings()
 		p2p_friendsonly = GetConVarString( "p2p_friendsonly" )
 	}
 
-	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
+	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", "GAME" )
 
 	if ( settings_file ) then
 
@@ -245,6 +243,8 @@ function UpdateServerSettings()
 
 			array.settings = {}
 			for k, v in pairs( Settings.settings ) do
+				if ( !v.name ) then continue end
+
 				local cvar = GetConVar( v.name )
 				if ( !cvar ) then continue end
 
@@ -434,7 +434,7 @@ function GetServers( category, id )
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
 			SendServer( pnlMainMenu, category, id,
-				2000, language.GetPhrase("server_noresponse"):format(address), language.GetPhrase("server_gamemode_unreachable"), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
+				2000, language.FormatPhrase( "server_noresponse", address ), language.GetPhrase( "server_gamemode_unreachable" ), "no_map", 0, 2, 0, "false", 0, address, "unkn", "0",
 				"true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" )
 
 			return !ShouldStop[ category ]
@@ -442,7 +442,7 @@ function GetServers( category, id )
 		end,
 
 		Finished = function()
-			pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+			pnlMainMenu:Call( "FinishedServers( '" .. category:JavascriptSafe() .. "' )" )
 			Servers[ category ] = {}
 		end,
 
@@ -456,7 +456,7 @@ function GetServers( category, id )
 end
 
 function DoStopServers( category )
-	pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+	pnlMainMenu:Call( "FinishedServers( '" .. category:JavascriptSafe() .. "' )" )
 	ShouldStop[ category ] = true
 	Servers[ category ] = {}
 end
@@ -500,7 +500,7 @@ function FindServersAtAddress( inputStr )
 
 			if ( !name ) then
 				table.insert( output, {
-					name = language.GetPhrase("server_noresponse"):format(addr),
+					name = language.FormatPhrase( "server_noresponse", addr ),
 					address = addr, ping = 2000, favorite = false,
 					players = 0, maxplayers = 0, botplayers = 0,
 					map = "", gamemode = ""
@@ -568,6 +568,9 @@ function UpdateGames()
 end
 
 function UpdateSubscribedAddons()
+
+	-- Addon unsubbed before main menu initialized
+	if ( !IsValid( pnlMainMenu ) ) then return end
 
 	local subscriptions = engine.GetAddons()
 	local json = util.TableToJSON( subscriptions )
@@ -656,13 +659,16 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 	UpdateServerSettings()
 	UpdateSubscribedAddons()
 
+	-- Needs to have addons mounted
+	LoadLastMap()
+
 end )
 
-hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
+hook.Add( "LoadGModSaveFailed", "HandleUGCLoadFailure", function( str, wsid )
 	local button2 = nil
-	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "Open map on Steam Workshop" end
+	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "#ugc.open_map" end
 
-	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
+	Derma_Query( str, "#ugc.load_failed", "#dialog.ok", nil, button2, function() steamworks.ViewFile( wsid ) end )
 	gui.ActivateGameUI()
 end )
 
@@ -678,7 +684,6 @@ timer.Simple( 0, function()
 	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
-	LoadLastMap()
 
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()

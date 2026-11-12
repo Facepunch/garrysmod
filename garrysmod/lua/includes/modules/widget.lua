@@ -99,10 +99,14 @@ end
 ---  Render the widgets!
 ---
 
--- Function stub for backwards compatibility
-function widgets.RenderMe( ent )
-	-- We do this solely for backwards compatibility
-	ent._WantsWidgetRender = true
+if ( CLIENT ) then
+
+	-- Function stub for backwards compatibility
+	function widgets.RenderMe( ent )
+		-- We do this solely for backwards compatibility
+		ent._WantsWidgetRender = true
+	end
+
 end
 
 local function RenderWidgets()

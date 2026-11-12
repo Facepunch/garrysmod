@@ -505,12 +505,12 @@
 		"97"
 		{
 			"type"		"model"
-			"model"		"models/props/door_01_lftdoor_reference.mdl"
+			"model"		"models/props/door_01_rtdoor_reference.mdl"
 		}
 		"98"
 		{
 			"type"		"model"
-			"model"		"models/props/door_01_rtdoor_reference.mdl"
+			"model"		"models/props/door_01_lftdoor_reference.mdl"
 		}
 		"99"
 		{

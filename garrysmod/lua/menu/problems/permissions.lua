@@ -149,7 +149,7 @@ end
 
 function PANEL:ReceivePerms( perms, temp )
 
-	for id, str in pairs( string.Explode( ",", perms ) ) do
+	for id, str in pairs( string.Split( perms, "," ) ) do
 		self:ReceivePerm( str, temp )
 	end
 

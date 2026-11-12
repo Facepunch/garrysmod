@@ -223,7 +223,9 @@ function PANEL:OnRightClick( button )
 	-- For override
 
 	local menu = DermaMenu()
-	menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( button.Model ) end ):SetIcon( "icon16/page_copy.png" )
+	menu:AddOption( "#spawnmenu.menu.copy", function()
+		if ( IsValid( button ) ) then SetClipboardText( button.Model ) end
+	end ):SetIcon( "icon16/page_copy.png" )
 	menu:Open()
 
 end

@@ -37,7 +37,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, stack, addonti
 
 	-- We know the name, display it to the user
 	if ( isstring( addontitle ) ) then
-		text = string.format( language.GetPhrase( "errors.addon_p" ), addontitle )
+		text = language.FormatPhrase( "errors.addon_p", addontitle )
 	end
 
 	local error = {
@@ -80,7 +80,7 @@ hook.Add( "OnProblemReceived", "FireProblemNotification", function( problem )
 		last	= SysTime(),
 		times	= 1,
 		x		= 32,
-		text	= string.format( language.GetPhrase( "#errors.problem" ), shortdesc ),
+		text	= language.FormatPhrase( "#errors.problem", shortdesc ),
 		iserr   = true
 	}
 

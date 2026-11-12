@@ -1,7 +1,7 @@
 
 var IS_SPAWN_MENU = true;
 
-App = angular.module( 'CDupesApp', [ 'ngRoute', 'tranny' ] );
+App = angular.module( 'CDupesApp', [ 'ngRoute', 'ngLocalize' ] );
 
 App.config( function( $routeProvider, $compileProvider, $locationProvider, $controllerProvider )
 {
@@ -96,9 +96,9 @@ function WindowResized()
 	dupe.UpdatePageNav();
 
 	// Refresh HTML
-	dupe.DigestUpdate = setTimeout( function()
+	dupe.DigestUpdateResize = setTimeout( function()
 	{
-		self.DigestUpdate = 0;
+		self.DigestUpdateResize = 0;
 		Scope.Go( 0 );
 	}, 500 )
 }

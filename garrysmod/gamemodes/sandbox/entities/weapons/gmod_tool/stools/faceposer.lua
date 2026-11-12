@@ -28,12 +28,6 @@ local function IsUselessFaceFlex( strName )
 
 end
 
-local function GenerateDefaultFlexValue( ent, flexID )
-	local min, max = ent:GetFlexBounds( flexID )
-	if ( !max || max - min == 0 ) then return 0 end
-	return ( 0 - min ) / ( max - min )
-end
-
 function TOOL:FacePoserEntity()
 	return self:GetWeapon():GetNWEntity( 1 )
 end
@@ -67,11 +61,13 @@ function TOOL:Think()
 
 	local FlexNum = ent:GetFlexNum()
 	if ( FlexNum <= 0 ) then return end
+	if ( FlexNum > MAXSTUDIOFLEXCTRL ) then FlexNum = MAXSTUDIOFLEXCTRL end
 
-	for i = 0, FlexNum do
+	for i = 0, FlexNum - 1 do
 
 		local num = self:GetClientNumber( "flex" .. i )
-		ent:SetFlexWeight( i, num )
+		local min, max = ent:GetFlexBounds( i )
+		ent:SetFlexWeight( i, math.Remap( num, min, max, 0, 1 ) )
 
 	end
 
@@ -96,6 +92,7 @@ function TOOL:RightClick( trace )
 
 	local FlexNum = ent:GetFlexNum()
 	if ( FlexNum == 0 ) then return false end
+	if ( FlexNum > MAXSTUDIOFLEXCTRL ) then FlexNum = MAXSTUDIOFLEXCTRL end
 
 	if ( SERVER ) then
 
@@ -113,9 +110,10 @@ function TOOL:RightClick( trace )
 
 		local Weight = 0
 		if ( !ent:HasFlexManipulatior() ) then
-			Weight = GenerateDefaultFlexValue( ent, i )
+			Weight = 0
 		elseif ( i <= FlexNum ) then
-			Weight = ent:GetFlexWeight( i )
+			local min, max = ent:GetFlexBounds( i )
+			Weight = math.Remap( ent:GetFlexWeight( i ), 0, 1, min, max )
 		end
 
 		self:GetOwner():ConCommand( "faceposer_flex" .. i .. " " .. Weight )
@@ -151,7 +149,7 @@ if ( SERVER ) then
 
 	local function CC_Face_Randomize( ply, command, arguments )
 
-		for i = 0, MAXSTUDIOFLEXCTRL do
+		for i = 0, MAXSTUDIOFLEXCTRL - 1 do
 			local num = math.Rand( 0, 1 )
 			ply:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
 		end
@@ -165,7 +163,7 @@ end
 -- The rest of the code is clientside only, it is not used on server
 if ( SERVER ) then return end
 
-for i = 0, MAXSTUDIOFLEXCTRL do
+for i = 0, MAXSTUDIOFLEXCTRL - 1 do
 	TOOL.ClientConVar[ "flex" .. i ] = "0"
 end
 
@@ -191,8 +189,8 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 	QuickFace:SetAutoHeight( true )
 
 	local Clear = {}
-	for i = 0, MAXSTUDIOFLEXCTRL do
-		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( faceEntity, i )
+	for i = 0, MAXSTUDIOFLEXCTRL - 1 do
+		Clear[ "faceposer_flex" .. i ] = 0
 	end
 	QuickFace:AddMaterialEx( "#faceposer.clear", "vgui/face/clear", nil, Clear )
 
@@ -355,7 +353,7 @@ function TOOL.BuildCPanel( CPanel, faceEntity )
 			local min, max = faceEntity:GetFlexBounds( i )
 
 			flexGroups[ group ] = flexGroups[ group ] or { sortId = table.Count( flexGroups ), items = {} }
-			table.insert( flexGroups[ group ].items, { name = name, id = i, min = min, max = max, default = GenerateDefaultFlexValue( faceEntity, i ) } )
+			table.insert( flexGroups[ group ].items, { name = name, id = i, min = min, max = max, default = 0 } )
 		end
 	end
 

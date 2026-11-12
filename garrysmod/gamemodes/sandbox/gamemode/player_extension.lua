@@ -5,7 +5,7 @@ local meta = FindMetaTable( "Player" )
 if ( !meta ) then return end
 
 if ( SERVER ) then
-	g_SBoxObjects = {}
+	g_SBoxObjects = g_SBoxObjects or {}
 end
 
 function meta:CheckLimit( str )
@@ -103,6 +103,13 @@ function meta:GetCount( str, minus )
 
 end
 
+local function GetCountUpdate( ent, ply, countType, uid )
+	if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
+	if ( !IsValid( ply ) ) then QueueUpdateCleanup( uid, countType ) return end
+
+	QueueUpdateCounts( ply, countType )
+end
+
 function meta:AddCount( str, ent )
 
 	if ( SERVER ) then
@@ -119,12 +126,7 @@ function meta:AddCount( str, ent )
 		QueueUpdateCounts( self, str )
 
 		-- Update count on deletion
-		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, countType, uid )
-			if ( !IsValid( ply ) ) then ply = player.GetByUniqueID( uid ) end
-			if ( !IsValid( ply ) ) then QueueUpdateCleanup( uid, countType ) return end
-
-			QueueUpdateCounts( ply, countType )
-		end, self, str, key )
+		ent:CallOnRemove( "GetCountUpdate", GetCountUpdate, self, str, key )
 
 	end
 
@@ -152,7 +154,12 @@ if ( SERVER ) then
 
 	function meta:LimitHit( str )
 
-		self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
+		-- Prevent spamming the same limit hit message within the same tick
+		if ( self.__lastLimitHit && self.__lastLimitHit == str && self.__lastLimitHitTime && engine.TickCount() == self.__lastLimitHitTime ) then return end
+
+		self:SendLua( string.format( "hook.Run('LimitHit',%q)", str ) )
+		self.__lastLimitHitTime = engine.TickCount()
+		self.__lastLimitHit = str
 
 	end
 
@@ -161,7 +168,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( string.format( 'hook.Run("AddHint",%q,%d)', str, delay ) )
+		self:SendLua( string.format( "hook.Run('AddHint',%q,%d)", str, delay ) )
 		self.Hints[ str ] = true
 
 	end
@@ -171,7 +178,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( string.format( 'hook.Run("SuppressHint",%q)', str ) )
+		self:SendLua( string.format( "hook.Run('SuppressHint',%q)", str ) )
 		self.Hints[ str ] = true
 
 	end

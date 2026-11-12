@@ -36,7 +36,7 @@ end
 	Name: gamemode:PlayerBindPress()
 	Desc: A player pressed a bound key - return true to override action
 -----------------------------------------------------------]]
-function GM:PlayerBindPress( pl, bind, down )
+function GM:PlayerBindPress( pl, bind, down, keyCode )
 
 	return false
 
@@ -415,14 +415,14 @@ end
 		The return is a fraction of the normal sensitivity (0.5 would be half as sensitive)
 		Return -1 to not override.
 -----------------------------------------------------------]]
-function GM:AdjustMouseSensitivity( fDefault )
+function GM:AdjustMouseSensitivity( fDefault, fLocalFOV, fDefaultFOV )
 
 	local ply = LocalPlayer()
 	if ( !IsValid( ply ) ) then return -1 end
 
 	local wep = ply:GetActiveWeapon()
 	if ( wep && wep.AdjustMouseSensitivity ) then
-		return wep:AdjustMouseSensitivity()
+		return wep:AdjustMouseSensitivity( fDefault, fLocalFOV, fDefaultFOV )
 	end
 
 	return -1
@@ -445,14 +445,14 @@ end
 	Name: gamemode:PostPlayerDraw()
 	Desc: The player has just been drawn.
 -----------------------------------------------------------]]
-function GM:PostPlayerDraw( ply )
+function GM:PostPlayerDraw( ply, flags )
 end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PrePlayerDraw()
 	Desc: The player is just about to be drawn.
 -----------------------------------------------------------]]
-function GM:PrePlayerDraw( ply )
+function GM:PrePlayerDraw( ply, flags )
 end
 
 --[[---------------------------------------------------------
@@ -518,34 +518,34 @@ end
 	Name: gamemode:PreDrawOpaqueRenderables()
 	Desc: Called before drawing opaque entities
 -----------------------------------------------------------]]
-function GM:PreDrawOpaqueRenderables( bDrawingDepth, bDrawingSkybox )
+function GM:PreDrawOpaqueRenderables( bDrawingDepth, bDrawingSkybox, bDraw3DSkybox )
 
 	-- return true
 
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PreDrawOpaqueRenderables()
-	Desc: Called before drawing opaque entities
+	Name: gamemode:PostDrawOpaqueRenderables()
+	Desc: Called after drawing opaque entities
 -----------------------------------------------------------]]
-function GM:PostDrawOpaqueRenderables( bDrawingDepth, bDrawingSkybox )
+function GM:PostDrawOpaqueRenderables( bDrawingDepth, bDrawSkybox, bDraw3DSkybox )
 end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PreDrawOpaqueRenderables()
 	Desc: Called before drawing opaque entities
 -----------------------------------------------------------]]
-function GM:PreDrawTranslucentRenderables( bDrawingDepth, bDrawingSkybox )
+function GM:PreDrawTranslucentRenderables( bDrawingDepth, bDrawSkybox, bDraw3DSkybox )
 
 	-- return true
 
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PreDrawOpaqueRenderables()
-	Desc: Called before drawing opaque entities
+	Name: gamemode:PostDrawTranslucentRenderables()
+	Desc: Called after drawing translucent entities
 -----------------------------------------------------------]]
-function GM:PostDrawTranslucentRenderables( bDrawingDepth, bDrawingSkybox )
+function GM:PostDrawTranslucentRenderables( bDrawingDepth, bDrawingSkybox, bDraw3DSkybox )
 end
 
 --[[---------------------------------------------------------
@@ -609,7 +609,7 @@ function GM:PostDrawViewModel( vm, ply, wep, flags )
 			if ( not hook.Call( "PreDrawPlayerHands", self, hands, vm, ply, wep, flags ) ) then
 
 				if ( wep.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
-				hands:DrawModel()
+				hands:DrawModel( flags )
 				render.CullMode( MATERIAL_CULLMODE_CCW )
 
 			end
@@ -662,7 +662,7 @@ end
 	Name: gamemode:PreventScreenClicks()
 	Desc: The player is hovering over a ScreenClickable world
 -----------------------------------------------------------]]
-function GM:PreventScreenClicks( cmd )
+function GM:PreventScreenClicks()
 
 	--
 	-- Returning true in this hook will prevent screen clicking sending IN_ATTACK

@@ -59,7 +59,7 @@ function PANEL:OnMousePressed( mousecode )
 	if ( self:IsDraggable() ) then
 
 		self:MouseCapture( true )
-		self:DragMousePress( mousecode )
+		if ( mousecode == MOUSE_LEFT or mousecode == MOUSE_RIGHT ) then self:DragMousePress( mousecode ) end
 
 	end
 

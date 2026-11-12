@@ -56,7 +56,7 @@ function meta:SetSelected( bSet )
 
 end
 
-function meta:IsSelected( bSet )
+function meta:IsSelected()
 
 	if ( !self:IsSelectable() ) then return false end
 	return self.m_bSelected == true

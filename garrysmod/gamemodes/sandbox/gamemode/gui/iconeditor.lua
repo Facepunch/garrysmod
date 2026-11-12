@@ -7,25 +7,51 @@ AccessorFunc( PANEL, "m_bCustomIcon", "CustomIcon" )
 
 function PANEL:Init()
 
-	self:SetSize( 762, 502 )
 	self:SetTitle( "#smwidget.icon_editor" )
 
+	-- This is overwritten in SetIcon
+	self:SetSize( 750, 500 )
+
+	self:SetSizable( true )
+	self:SetMinWidth( 650 )
+	self:SetMinHeight( 270 )
+
 	local left = self:Add( "Panel" )
-	left:Dock( LEFT )
-	left:SetWide( 400 )
+	left:Dock( FILL )
 	self.LeftPanel = left
 
-		local bg = left:Add( "DPanel" )
-		bg:Dock( FILL )
-		bg:DockMargin( 0, 0, 0, 4 )
-		bg.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
+		local previewCont = left:Add( "Panel" )
+		previewCont:Dock( FILL )
+		previewCont:DockMargin( 0, 0, 0, 4 )
 
-		self.SpawnIcon = bg:Add( "SpawnIcon" )
+		self.SpawnIcon = previewCont:Add( "SpawnIcon" )
+		self.SpawnIcon:SetPaintedManually( true )
 		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
 
-		self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
-		self.ModelPanel:Dock( FILL )
+		local previewBG = previewCont:Add( "Panel" )
+		previewBG:DockMargin( 0, 0, 0, 4 )
+		previewBG.Paint = function( s, w, h )
+			draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) )
+
+			-- I kinda hate where this is positioned, but at least draw it over the background
+			self.SpawnIcon:PaintManual()
+		end
+		function previewBG.PerformLayout( thisPnl )
+			-- Generic "fit in box" algorithm
+			local icnW, icnH = self.SpawnIcon:GetSize()
+			local scale = math.min( previewCont:GetWide() / icnW,
+									previewCont:GetTall() / icnH )
+
+			thisPnl:SetSize( icnW * scale, icnH * scale )
+			thisPnl:Center()
+		end
+		function previewCont.PerformLayout( thisPnl )
+			previewBG:PerformLayout()
+		end
+
+		self.ModelPanel = previewBG:Add( "DAdjustableModelPanel" )
 		self.ModelPanel.FarZ = 32768
+		self.ModelPanel:Dock( FILL )
 
 		local mat_wireframe = Material( "models/wireframe" )
 		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
@@ -44,6 +70,16 @@ function PANEL:Init()
 				render.DrawBox( ent:GetPos(), ent:GetAngles(), mins * scale, maxs * scale )
 			end
 
+		end
+		function self.ModelPanel:PreDrawModel()
+			-- Use local lights as it produces much better looking rendering than the light box
+			if ( self.LocalLights ) then
+				render.SetLocalModelLights( self.LocalLights )
+			end
+
+			-- This allows us to have consistent preview, regardless of current map location
+			render.BindLocalCubemap( "editor/cubemap" )
+			return true
 		end
 
 	local controls = left:Add( "Panel" )
@@ -153,9 +189,10 @@ function PANEL:Init()
 		end
 
 	local right = self:Add( "DPropertySheet" )
-	right:Dock( FILL )
+	right:Dock( RIGHT )
 	right:SetPadding( 0 )
 	right:DockMargin( 4, 0, 0, 0 )
+	right:SetWide( 268 )
 	self.PropertySheet = right
 
 	-- Animations
@@ -368,18 +405,100 @@ function PANEL:Init()
 				self.ModelPanel:GetEntity():SetAngles( aang )
 			end
 		end
+
+	-- Lighting Setups
+
+	local lightPresets = right:Add( "Panel" )
+	lightPresets:Dock( FILL )
+	lightPresets:DockPadding( 7, 0, 7, 7 )
+	right:AddSheet( "Lights", lightPresets, "icon16/lightbulb.png" )
+
+		self.LightPresets = lightPresets:Add( "DScrollPanel" )
+		self.LightPresets:Dock( FILL )
+
+		local defLights = self.LightPresets:Add( "DButton" )
+		defLights:SetText( "Default Lighting" )
+		defLights:Dock( TOP )
+		defLights:DockMargin( 0, 0, 0, 3 )
+		defLights.DoClick = function( p )
+			self:SetDefaultLighting()
+		end
+
+		local exp1 = self.LightPresets:Add( "DButton" )
+		exp1:SetText( "Experimental Character Lighting" )
+		exp1:Dock( TOP )
+		exp1:DockMargin( 0, 0, 0, 3 )
+		exp1.DoClick = function( p )
+			-- Remove base lighting
+			local baseClr = Color( 0, 0, 0 )
+			self.ModelPanel:SetDirectionalLight( BOX_FRONT, baseClr )
+			self.ModelPanel:SetDirectionalLight( BOX_BACK, baseClr )
+			self.ModelPanel:SetDirectionalLight( BOX_RIGHT, baseClr )
+			self.ModelPanel:SetDirectionalLight( BOX_LEFT, baseClr )
+			self.ModelPanel:SetDirectionalLight( BOX_TOP, baseClr )
+			self.ModelPanel:SetDirectionalLight( BOX_BOTTOM, baseClr )
+
+			-- Apply CoOl lights
+			self.ModelPanel.LocalLights = {
+				-- left
+				{
+					type = MATERIAL_LIGHT_POINT,
+					pos = Vector( -100, -50, 72 ),
+					color = Vector( 0.3, 0.6, 1 ) * 0.3
+				},
+				-- right
+				{
+					type = MATERIAL_LIGHT_POINT,
+					pos = Vector( 0, 100, 72 ),
+					color = Vector( 1, 0.6, 0.3 ) * 0.1
+				},
+				-- front
+				{
+					type = MATERIAL_LIGHT_POINT,
+					pos = Vector( 100, 24, 72 ),
+					color = Vector( 1, 1, 1 ) * 1
+				}
+			}
+		end
+
+end
+
+function PANEL:OnKeyCodePressed( code )
+	if ( code != KEY_UP && code != KEY_DOWN ) then return end
+
+	local line = self.AnimList:GetSelectedLine()
+	if ( !line ) then return end
+	local direction = code == KEY_UP && -1 or 1
+
+	line = self.AnimList:GetLine( line + direction )
+	if ( !IsValid( line ) ) then return end
+
+	self.AnimList:ClearSelection()
+	self.AnimList:SelectItem( line )
 end
 
 function PANEL:SetDefaultLighting()
 
 	self.ModelPanel:SetAmbientLight( Color( 255 * 0.3, 255 * 0.3, 255 * 0.3 ) )
 
-	self.ModelPanel:SetDirectionalLight( BOX_FRONT, Color( 255 * 1.3, 255 * 1.3, 255 * 1.3 ) )
+	-- Since Color() clamps the values, we gotta do a little hack to match whats in the engine
+	local frontColor = Color( 255, 255, 255 )
+	frontColor.r = 255 * 1.3
+	frontColor.g = frontColor.r
+	frontColor.b = frontColor.r
+	local topColor = Color( 255, 255, 255 )
+	topColor.r = 255 * 2.3
+	topColor.g = topColor.r
+	topColor.b = topColor.r
+
+	self.ModelPanel:SetDirectionalLight( BOX_FRONT, frontColor )
 	self.ModelPanel:SetDirectionalLight( BOX_BACK, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
 	self.ModelPanel:SetDirectionalLight( BOX_RIGHT, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
 	self.ModelPanel:SetDirectionalLight( BOX_LEFT, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
-	self.ModelPanel:SetDirectionalLight( BOX_TOP, Color( 255 * 2.3, 255 * 2.3, 255 * 2.3 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_TOP, topColor )
 	self.ModelPanel:SetDirectionalLight( BOX_BOTTOM, Color( 255 * 0.1, 255 * 0.1, 255 * 0.1 ) )
+
+	self.ModelPanel.LocalLights = nil
 
 end
 
@@ -501,6 +620,16 @@ function PANEL:RenderIcon()
 	tab.cam_pos = self.ModelPanel:GetCamPos()
 	tab.cam_ang = self.ModelPanel:GetLookAng()
 	tab.cam_fov = self.ModelPanel:GetFOV()
+	tab.lightbox = {}
+
+	for i = 0, 5 do
+		local col = self.ModelPanel.DirectionalLight[ i ]
+		if ( col ) then
+			table.insert( tab.lightbox, Vector( col.r / 255, col.g / 255, col.b / 255 ) )
+		end
+	end
+
+	tab.lights = self.ModelPanel.LocalLights
 
 	self.SpawnIcon:RebuildSpawnIconEx( tab )
 
@@ -516,17 +645,24 @@ function PANEL:SetIcon( icon )
 	self.SpawnIcon:SetSize( icon:GetSize() )
 	self.SpawnIcon:InvalidateLayout( true )
 
+	-- Set some default sizes to match the icon's aspect ratio
 	local w, h = icon:GetSize()
 	if ( w / h < 1 ) then
-		self:SetSize( 700, 502 + 400 )
+		self:SetSize( 400 + 280, 500 + 400 - 1 )
 		self.LeftPanel:SetWide( 400 )
 	elseif ( w / h > 1 ) then
-		self:SetSize( 900, 502 - 100 )
+		self:SetSize( 600 + 280, 500 - 100 + 1 )
 		self.LeftPanel:SetWide( 600 )
 	else
-		self:SetSize( 700, 502 )
-		self.LeftPanel:SetWide( 400 )
+		local size = math.min( ScrW() * 0.6, ScrH() * 0.6 )
+		self:SetSize( size + 280, size + 100 )
+		self.LeftPanel:SetWide( size )
 	end
+
+	-- Needs work, but could replace the above
+	--local size = math.min( ScrW() * 0.6, ScrH() * 0.6 ) * w / h
+	--self:SetSize( size + 280, math.floor( size * h / w ) + 100 )
+	--self.LeftPanel:SetWide( size )
 
 	if ( !model or model == "" ) then
 
@@ -554,7 +690,7 @@ function PANEL:Refresh()
 	if ( !self:GetModel() ) then return end
 
 	self.ModelPanel:SetModel( self:GetModel() )
-	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
+	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() ) end
 
 	local ent = self.ModelPanel:GetEntity()
 	if ( !IsValid( ent ) ) then return end
@@ -580,7 +716,7 @@ function PANEL:FillAnimations( ent, filter )
 
 		seq = string.lower( seq )
 
-		if ( filter && !string.find( seq, filter, 1, true ) ) then continue end
+		if ( filter && !string.find( seq:lower(), filter:lower(), 1, true ) ) then continue end
 
 		table.insert( sequences, seq )
 	end

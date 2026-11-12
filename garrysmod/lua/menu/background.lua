@@ -28,7 +28,7 @@ local Images = {}
 local Active = nil
 local Outgoing = nil
 
-local function Think( tbl )
+local function Think( tbl, isOutgoing )
 
 	tbl.Angle = tbl.Angle + ( tbl.AngleVel * FrameTime() )
 	tbl.Size = tbl.Size + ( ( tbl.SizeVel / tbl.Size) * FrameTime() )
@@ -37,10 +37,9 @@ local function Think( tbl )
 		tbl.Alpha = tbl.Alpha - tbl.AlphaVel * FrameTime()
 	end
 
-	if ( tbl.DieTime > 0 ) then
-		tbl.DieTime = tbl.DieTime - FrameTime()
-
-		if ( tbl.DieTime <= 0 ) then
+	if ( !isOutgoing ) then
+		local DieTime = tbl.DieTime - ( CurTime() - tbl.StartTime )
+		if ( DieTime <= 0 ) then
 			ChangeBackground()
 		end
 	end
@@ -80,7 +79,7 @@ function DrawBackground()
 		end
 
 		if ( Outgoing ) then
-			Think( Outgoing )
+			Think( Outgoing, true )
 			Render( Outgoing )
 		end
 
@@ -151,6 +150,7 @@ function ChangeBackground( currentgm )
 		SizeVel = 0.3 / 30,
 		Alpha = 255,
 		DieTime = 30,
+		StartTime = CurTime(),
 		mat = mat,
 		Name = img
 	}

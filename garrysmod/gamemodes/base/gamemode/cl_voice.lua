@@ -2,10 +2,19 @@
 local PANEL = {}
 local PlayerVoicePanels = {}
 
+surface.CreateFont( "GModVoiceNotify", {
+	font	= "Arial",
+	size	= 21,
+	weight	= 0,
+	extended = true
+} )
+
+local VoicePanelWide = 250
+
 function PANEL:Init()
 
 	self.LabelName = vgui.Create( "DLabel", self )
-	self.LabelName:SetFont( "GModNotify" )
+	self.LabelName:SetFont( "GModVoiceNotify" )
 	self.LabelName:Dock( FILL )
 	self.LabelName:DockMargin( 8, 0, 0, 0 )
 	self.LabelName:SetTextColor( color_white )
@@ -14,22 +23,25 @@ function PANEL:Init()
 	self.Avatar:Dock( LEFT )
 	self.Avatar:SetSize( 32, 32 )
 
-	self.Color = color_transparent
+	self.Color = color_transparent -- Team Color. This property is used by addons, so cannot comment it out or rename it.
+	self.VolumeColor = Color( 0, 255, 0, 240 )
 
-	self:SetSize( 250, 32 + 8 )
+	self:SetSize( VoicePanelWide, 32 + 8 )
 	self:DockPadding( 4, 4, 4, 4 )
 	self:DockMargin( 2, 2, 2, 2 )
 	self:Dock( BOTTOM )
 
 end
 
-function PANEL:Setup( ply )
+function PANEL:Setup( ply, playerIndex )
 
 	self.ply = ply
-	self.LabelName:SetText( ply:Nick() )
-	self.Avatar:SetPlayer( ply )
+	self.plyIndex = playerIndex
 
-	self.Color = hook.Run( "GetTeamColor", ply )
+	-- For addon gamemodes that reuse this panel
+	if ( self.plyIndex and IsValid( ply ) ) then self.plyIndex = ply:EntIndex() end
+
+	self:UpdatePlayerInfo()
 
 	self:InvalidateLayout()
 
@@ -37,16 +49,46 @@ end
 
 function PANEL:Paint( w, h )
 
-	if ( !IsValid( self.ply ) ) then return end
-	draw.RoundedBox( 4, 0, 0, w, h, Color( 0, self.ply:VoiceVolume() * 255, 0, 240 ) )
+	local volume = 0
+	if ( IsValid( self.ply ) ) then
+		volume = self.ply:VoiceVolume()
+	else
+		local talking, vol = util.IsPlayerSpeaking( self.plyIndex )
+		if ( talking and vol ) then volume = vol end
+	end
+
+	self.VolumeColor.g = volume * 255
+	draw.RoundedBox( 4, 0, 0, w, h, self.VolumeColor )
+
+	-- I don't know how to make it look decent. Just commenting it out for now.
+	--draw.RoundedBox( 0, 8, h - 2, w - 16, 1, self.Color )
+
+end
+
+-- Prevent constant PerformLayout calls
+function PANEL:SetText( text )
+	if ( self.LastName == text ) then return end
+	self.LastName = text
+	self.LabelName:SetText( text )
+end
+
+function PANEL:UpdatePlayerInfo( setColor )
+
+	if ( IsValid( self.ply ) ) then
+		self:SetText( self.ply:Nick() )
+		self.Avatar:SetPlayer( self.ply )
+		if ( !setColor ) then self.Color = hook.Run( "GetTeamColor", self.ply ) end
+	else
+		self:SetText( "Unknown Player " .. self.plyIndex )
+		self.Avatar:SetPlayer( NULL )
+		if ( !setColor ) then self.Color = hook.Run( "GetTeamColor", NULL ) end
+	end
 
 end
 
 function PANEL:Think()
 
-	if ( IsValid( self.ply ) ) then
-		self.LabelName:SetText( self.ply:Nick() )
-	end
+	self:UpdatePlayerInfo( true )
 
 	if ( self.fadeAnim ) then
 		self.fadeAnim:Run()
@@ -58,9 +100,9 @@ function PANEL:FadeOut( anim, delta, data )
 
 	if ( anim.Finished ) then
 
-		if ( IsValid( PlayerVoicePanels[ self.ply ] ) ) then
-			PlayerVoicePanels[ self.ply ]:Remove()
-			PlayerVoicePanels[ self.ply ] = nil
+		if ( IsValid( PlayerVoicePanels[ self.plyIndex ] ) ) then
+			PlayerVoicePanels[ self.plyIndex ]:Remove()
+			PlayerVoicePanels[ self.plyIndex ] = nil
 			return
 		end
 
@@ -74,33 +116,34 @@ derma.DefineControl( "VoiceNotify", "", PANEL, "DPanel" )
 
 
 
-function GM:PlayerStartVoice( ply )
+function GM:PlayerStartVoice( ply, playerIndex )
 
 	if ( !IsValid( g_VoicePanelList ) ) then return end
 
+	-- Backwards compat with old addons
+	if ( playerIndex == nil && IsValid( ply ) ) then playerIndex = ply:EntIndex() end
+	if ( playerIndex == nil ) then return end
+
 	-- There'd be an exta one if voice_loopback is on, so remove it.
-	GAMEMODE:PlayerEndVoice( ply )
+	GAMEMODE:PlayerEndVoice( ply, playerIndex )
 
+	if ( IsValid( PlayerVoicePanels[ playerIndex ] ) ) then
 
-	if ( IsValid( PlayerVoicePanels[ ply ] ) ) then
-
-		if ( PlayerVoicePanels[ ply ].fadeAnim ) then
-			PlayerVoicePanels[ ply ].fadeAnim:Stop()
-			PlayerVoicePanels[ ply ].fadeAnim = nil
+		if ( PlayerVoicePanels[ playerIndex ].fadeAnim ) then
+			PlayerVoicePanels[ playerIndex ].fadeAnim:Stop()
+			PlayerVoicePanels[ playerIndex ].fadeAnim = nil
 		end
 
-		PlayerVoicePanels[ ply ]:SetAlpha( 255 )
+		PlayerVoicePanels[ playerIndex ]:SetAlpha( 255 )
 
 		return
 
 	end
 
-	if ( !IsValid( ply ) ) then return end
-
 	local pnl = g_VoicePanelList:Add( "VoiceNotify" )
-	pnl:Setup( ply )
+	pnl:Setup( ply, playerIndex )
 
-	PlayerVoicePanels[ ply ] = pnl
+	PlayerVoicePanels[ playerIndex ] = pnl
 
 end
 
@@ -108,8 +151,11 @@ local function VoiceClean()
 
 	for k, v in pairs( PlayerVoicePanels ) do
 
-		if ( !IsValid( k ) ) then
-			GAMEMODE:PlayerEndVoice( k )
+		if ( !IsValid( v.ply ) ) then
+			local talking = util.IsPlayerSpeaking( v.plyIndex )
+			if ( talking ) then continue end -- Game thinks they are still talking
+
+			GAMEMODE:PlayerEndVoice( v.ply, v.plyIndex )
 		end
 
 	end
@@ -117,14 +163,18 @@ local function VoiceClean()
 end
 timer.Create( "VoiceClean", 10, 0, VoiceClean )
 
-function GM:PlayerEndVoice( ply )
+function GM:PlayerEndVoice( ply, playerIndex )
 
-	if ( IsValid( PlayerVoicePanels[ ply ] ) ) then
+	-- Backwards compat with old addons
+	if ( playerIndex == nil && IsValid( ply ) ) then playerIndex = ply:EntIndex() end
+	if ( playerIndex == nil ) then return end
 
-		if ( PlayerVoicePanels[ ply ].fadeAnim ) then return end
+	if ( IsValid( PlayerVoicePanels[ playerIndex ] ) ) then
 
-		PlayerVoicePanels[ ply ].fadeAnim = Derma_Anim( "FadeOut", PlayerVoicePanels[ ply ], PlayerVoicePanels[ ply ].FadeOut )
-		PlayerVoicePanels[ ply ].fadeAnim:Start( 2 )
+		if ( PlayerVoicePanels[ playerIndex ].fadeAnim ) then return end
+
+		PlayerVoicePanels[ playerIndex ].fadeAnim = Derma_Anim( "FadeOut", PlayerVoicePanels[ playerIndex ], PlayerVoicePanels[ playerIndex ].FadeOut )
+		PlayerVoicePanels[ playerIndex ].fadeAnim:Start( 1 )
 
 	end
 
@@ -135,8 +185,8 @@ local function CreateVoiceVGUI()
 	g_VoicePanelList = vgui.Create( "DPanel" )
 
 	g_VoicePanelList:ParentToHUD()
-	g_VoicePanelList:SetPos( ScrW() - 300, 100 )
-	g_VoicePanelList:SetSize( 250, ScrH() - 200 )
+	g_VoicePanelList:SetPos( ScrW() - VoicePanelWide - 50, ScrH() * 0.13 )
+	g_VoicePanelList:SetSize( VoicePanelWide, ScrH() * 0.74 )
 	g_VoicePanelList:SetPaintBackground( false )
 
 end

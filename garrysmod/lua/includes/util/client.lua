@@ -225,10 +225,7 @@ function PositionSpawnIcon( model, pos, noAngles )
 
 	local mn, mx = model:GetRenderBounds()
 	local middle = ( mn + mx ) * 0.5
-	local size = 0
-	size = math.max( size, math.abs( mn.x ) + math.abs( mx.x ) )
-	size = math.max( size, math.abs( mn.y ) + math.abs( mx.y ) )
-	size = math.max( size, math.abs( mn.z ) + math.abs( mx.z ) )
+	local size = math.max( 0, mx.x - mn.x, mx.y - mn.y, mx.z - mn.z )
 
 	model:SetPos( pos )
 	if ( !noAngles ) then model:SetAngles( angle_zero ) end

@@ -9,11 +9,16 @@ var UpdateInterval = undefined;
 
 function StripWeirdSymbols( name )
 {
-	// Weird symbols
-	var ret = name.replace( /[\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2B00-\u2BFF]/g, "" );
+	// Weird 2 byte symbols
+	var ret = name.replace( /[\u1400-\u167F\u1680-\u169F\u16A0-\u16FF\u2100-\u23FF\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2700-\u27BF\u2A00-\u2AFF\u2B00-\u2BFF\u2900-\u297F\u3000-\u303F]/g, "" );
+
+	// Weird 4 byte symbols
+	ret = ret.replace( /([\uD808|\uD809|\uD835][\uDC00-\uDFFF])/g, "" );
 
 	// Emojis
-	ret = ret.replace( /\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDD10-\uDFFF]/g, "" );
+	ret = ret.replace( /([\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF])/g, "" );
+	ret = ret.replace( /(\u3299\uFE0F)/g, "" ); // ???
+
 	return ret;
 }
 
@@ -77,6 +82,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		ServerTypes[ RootScope.ServerType ].gamemodes = {};
 		ServerTypes[ RootScope.ServerType ].list.length = 0;
+		ResetGamemodeInfo();
 
 		if ( !IN_ENGINE ) TestUpdateServers( RootScope.ServerType, RequestNum[ RootScope.ServerType ] );
 
@@ -349,7 +355,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	}
 }
 
-function FinishedServeres( type )
+function FinishedServers( type )
 {
 	RootScope.Refreshing[type] = "false";
 	UpdateDigest( RootScope, 50 );
@@ -413,22 +419,6 @@ function CalculateRank( server )
 	return recommended;
 }
 
-// Generate a flag from sevrer name if the server doesn't have it set.
-// This is a temporary measure and should not be relied on, you should use sv_location
-var prefixes = { ru: "ru", rus: "ru", fr: "fr", usa: "us", uk: "gb", en: "gb", eng: "gb", ger: "de", pl: "pl", dk: "dk", eu: "eu" };
-function GenerateFlag( server )
-{
-	for ( var key in prefixes )
-	{
-		var s = server.name.toLowerCase().indexOf( "[" + key + "]" );
-		if ( s == -1 ) continue;
-		server.name = server.name.replace( server.name.substring( s, s + key.length + 2 ), "" ).trim();
-		return prefixes[ key ];
-	}
-
-	return "";
-}
-
 function UpdateInfiniteScroll( elem )
 {
 	if ( !RootScope.CurrentGamemode ) return;
@@ -450,7 +440,7 @@ function UpdateServer( address, ping, name, map, players, maxplayers, botplayers
 	if ( server.address != address ) return;
 
 	server.ping = parseInt( ping );
-	server.name = name;
+	server.name = StripWeirdSymbols( name.trim() );
 	server.map = map;
 	server.players = parseInt( players ) - parseInt( botplayers );
 	server.maxplayers = parseInt( maxplayers ) - parseInt( botplayers );
@@ -519,8 +509,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		favorite:		isFav == "true"
 	};
 
-	if ( !data.flag ) data.flag = GenerateFlag( data );
-	if ( data.flag == "eu" ) data.flag = "europeanunion"; // ew
+	if ( data.flag == "eu" ) data.flag = "europeanunion";
 
 	if ( !IN_ENGINE && !version ) data.version_c = 0;
 
@@ -629,7 +618,7 @@ function GetHighestKey( obj )
 	var h = 0;
 	var v = "";
 
-	for ( k in obj )
+	for ( var k in obj )
 	{
 		if ( h == 0 || obj[k] > h )
 		{

@@ -62,7 +62,8 @@ function Register( t, name )
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
 		ScriptedEntityType = t.ScriptedEntityType,
-		IconOverride = t.IconOverride
+		IconOverride = t.IconOverride,
+		SubCategory = t.SubCategory
 	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified
@@ -77,7 +78,7 @@ function Register( t, name )
 	if ( old != nil ) then
 
 		-- Update SWEP table of entities that are based on this SWEP
-		for _, e in ipairs( ents.GetAll() ) do
+		for _, e in ents.Iterator() do
 			local class = e:GetClass()
 
 			if ( class == name ) then

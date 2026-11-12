@@ -33,1024 +33,1184 @@
 		"6"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/Fast_Zombie_Legs.mdl"
+			"model"		"models/strider_parts/strider_brain.mdl"
 		}
 		"7"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/Fast_Zombie_Torso.mdl"
+			"model"		"models/Gibs/Fast_Zombie_Legs.mdl"
 		}
 		"8"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/Antlion_gib_Large_2.mdl"
+			"model"		"models/Gibs/Fast_Zombie_Torso.mdl"
 		}
 		"9"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/helicopter_brokenpiece_01.mdl"
+			"model"		"models/Gibs/Antlion_gib_Large_2.mdl"
 		}
 		"10"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/helicopter_brokenpiece_02.mdl"
+			"model"		"models/gibs/antlion_worker_gibs_head.mdl"
 		}
 		"11"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/helicopter_brokenpiece_03.mdl"
+			"model"		"models/Gibs/helicopter_brokenpiece_01.mdl"
 		}
 		"12"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/helicopter_brokenpiece_04_cockpit.mdl"
+			"model"		"models/Gibs/helicopter_brokenpiece_02.mdl"
 		}
 		"13"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/helicopter_brokenpiece_05_tailfan.mdl"
+			"model"		"models/Gibs/helicopter_brokenpiece_03.mdl"
 		}
 		"14"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/helicopter_brokenpiece_06_body.mdl"
+			"model"		"models/Gibs/helicopter_brokenpiece_04_cockpit.mdl"
 		}
 		"15"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/wood_gib01a.mdl"
+			"model"		"models/Gibs/helicopter_brokenpiece_05_tailfan.mdl"
 		}
 		"16"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/wood_gib01b.mdl"
+			"model"		"models/Gibs/helicopter_brokenpiece_06_body.mdl"
 		}
 		"17"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/wood_gib01c.mdl"
+			"model"		"models/Gibs/wood_gib01a.mdl"
 		}
 		"18"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/wood_gib01d.mdl"
+			"model"		"models/Gibs/wood_gib01b.mdl"
 		}
 		"19"
 		{
 			"type"		"model"
-			"model"		"models/Gibs/wood_gib01e.mdl"
+			"model"		"models/Gibs/wood_gib01c.mdl"
 		}
 		"20"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/bench01a.mdl"
+			"model"		"models/Gibs/wood_gib01d.mdl"
 		}
 		"21"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/cashregister01a.mdl"
+			"model"		"models/Gibs/wood_gib01e.mdl"
 		}
 		"22"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/chair_kleiner03a.mdl"
+			"model"		"models/props_c17/bench01a.mdl"
 		}
 		"23"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/chair_stool01a.mdl"
+			"model"		"models/props_c17/cashregister01a.mdl"
 		}
 		"24"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/chair_office01a.mdl"
+			"model"		"models/props_c17/chair_kleiner03a.mdl"
 		}
 		"25"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/clock01.mdl"
+			"model"		"models/props_c17/chair_stool01a.mdl"
 		}
 		"26"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/doll01.mdl"
+			"model"		"models/props_c17/chair_office01a.mdl"
 		}
 		"27"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/Frame002a.mdl"
+			"model"		"models/props_c17/clock01.mdl"
 		}
 		"28"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/gravestone001a.mdl"
+			"model"		"models/props/de_nuke/clock.mdl"
 		}
 		"29"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/gravestone002a.mdl"
+			"model"		"models/props_c17/doll01.mdl"
 		}
 		"30"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/gravestone003a.mdl"
+			"model"		"models/props_c17/Frame002a.mdl"
 		}
 		"31"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/gravestone004a.mdl"
+			"model"		"models/props_c17/gravestone001a.mdl"
 		}
 		"32"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/FurnitureWashingmachine001a.mdl"
+			"model"		"models/props_c17/gravestone002a.mdl"
 		}
 		"33"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/FurnitureToilet001a.mdl"
+			"model"		"models/props_c17/gravestone003a.mdl"
 		}
 		"34"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/FurnitureSink001a.mdl"
+			"model"		"models/props_c17/gravestone004a.mdl"
 		}
 		"35"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/lamp001a.mdl"
+			"model"		"models/props_c17/FurnitureWashingmachine001a.mdl"
 		}
 		"36"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/metalPot001a.mdl"
+			"model"		"models/props_c17/FurnitureToilet001a.mdl"
 		}
 		"37"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/metalPot002a.mdl"
+			"model"		"models/props_c17/FurnitureSink001a.mdl"
 		}
 		"38"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/pot02a.mdl"
+			"model"		"models/props_c17/lamp001a.mdl"
 		}
 		"39"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/pot01a.mdl"
+			"model"		"models/props_c17/metalPot001a.mdl"
 		}
 		"40"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/Cleaver.mdl"
+			"model"		"models/props_c17/metalPot002a.mdl"
 		}
 		"41"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/Ladel.mdl"
+			"model"		"models/props_interiors/pot02a.mdl"
 		}
 		"42"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_carousel01.mdl"
+			"model"		"models/props_interiors/pot01a.mdl"
 		}
 		"43"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_jungle_gym01a.mdl"
+			"model"		"models/props_lab/Cleaver.mdl"
 		}
 		"44"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_jungle_gym01b.mdl"
+			"model"		"models/props_lab/Ladel.mdl"
 		}
 		"45"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_swingset01.mdl"
+			"model"		"models/props_c17/playground_carousel01.mdl"
 		}
 		"46"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_swingset_seat01a.mdl"
+			"model"		"models/props_c17/playground_jungle_gym01a.mdl"
 		}
 		"47"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_teetertoter_seat.mdl"
+			"model"		"models/props_c17/playground_jungle_gym01b.mdl"
 		}
 		"48"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playground_teetertoter_stan.mdl"
+			"model"		"models/props_c17/playground_swingset01.mdl"
 		}
 		"49"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playgroundslide01.mdl"
+			"model"		"models/props_c17/playground_swingset_seat01a.mdl"
 		}
 		"50"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playgroundTick-tack-toe_block01a.mdl"
+			"model"		"models/props_c17/playground_teetertoter_seat.mdl"
 		}
 		"51"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/playgroundTick-tack-toe_post01.mdl"
+			"model"		"models/props_c17/playground_teetertoter_stan.mdl"
 		}
 		"52"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/statue_horse.mdl"
+			"model"		"models/props_c17/playgroundslide01.mdl"
 		}
 		"53"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign001c.mdl"
+			"model"		"models/props_c17/playgroundTick-tack-toe_block01a.mdl"
 		}
 		"54"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign002b.mdl"
+			"model"		"models/props_c17/playgroundTick-tack-toe_post01.mdl"
 		}
 		"55"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign003b.mdl"
+			"model"		"models/props_c17/statue_horse.mdl"
 		}
 		"56"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign004e.mdl"
+			"model"		"models/props_c17/streetsign001c.mdl"
 		}
 		"57"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign004f.mdl"
+			"model"		"models/props_c17/streetsign002b.mdl"
 		}
 		"58"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign005b.mdl"
+			"model"		"models/props_c17/streetsign003b.mdl"
 		}
 		"59"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign005c.mdl"
+			"model"		"models/props_c17/streetsign004e.mdl"
 		}
 		"60"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/streetsign005d.mdl"
+			"model"		"models/props_c17/streetsign004f.mdl"
 		}
 		"61"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/BriefCase001a.mdl"
+			"model"		"models/props_c17/streetsign005b.mdl"
 		}
 		"62"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/SuitCase001a.mdl"
+			"model"		"models/props_c17/streetsign005c.mdl"
 		}
 		"63"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/SuitCase_Passenger_Physics.mdl"
+			"model"		"models/props_c17/streetsign005d.mdl"
 		}
 		"64"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/tools_wrench01a.mdl"
+			"model"		"models/props_c17/BriefCase001a.mdl"
 		}
 		"65"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/mattpipe.mdl"
+			"model"		"models/props_c17/SuitCase001a.mdl"
 		}
 		"66"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/TrapPropeller_Blade.mdl"
+			"model"		"models/props_c17/SuitCase_Passenger_Physics.mdl"
 		}
 		"67"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/TrapPropeller_Engine.mdl"
+			"model"		"models/props_c17/tools_pliers01a.mdl"
 		}
 		"68"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/TrapPropeller_Lever.mdl"
+			"model"		"models/props_c17/tools_wrench01a.mdl"
 		}
 		"69"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/harpoon002a.mdl"
+			"model"		"models/props_canal/mattpipe.mdl"
 		}
 		"70"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/Shovel01a.mdl"
+			"model"		"models/props_c17/TrapPropeller_Blade.mdl"
 		}
 		"71"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/pushbroom.mdl"
+			"model"		"models/props_c17/TrapPropeller_Engine.mdl"
 		}
 		"72"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/meathook001a.mdl"
+			"model"		"models/props_c17/TrapPropeller_Lever.mdl"
 		}
 		"73"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/tv_monitor01.mdl"
+			"model"		"models/props_junk/harpoon002a.mdl"
 		}
 		"74"
 		{
 			"type"		"model"
-			"model"		"models/props_canal/canalmap001.mdl"
+			"model"		"models/props_junk/Shovel01a.mdl"
 		}
 		"75"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/breenbust.mdl"
+			"model"		"models/props_c17/pushbroom.mdl"
 		}
 		"76"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/breenchair.mdl"
+			"model"		"models/props_junk/meathook001a.mdl"
 		}
 		"77"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/breenclock.mdl"
+			"model"		"models/props_c17/tv_monitor01.mdl"
 		}
 		"78"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/breendesk.mdl"
+			"model"		"models/props_c17/pottery01a.mdl"
 		}
 		"79"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/breenglobe.mdl"
+			"model"		"models/props_c17/pottery02a.mdl"
 		}
 		"80"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/combine_interface001.mdl"
+			"model"		"models/props_c17/pottery03a.mdl"
 		}
 		"81"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/combine_intmonitor001.mdl"
+			"model"		"models/props_c17/pottery04a.mdl"
 		}
 		"82"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/combine_monitorbay.mdl"
+			"model"		"models/props_c17/pottery05a.mdl"
 		}
 		"83"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/CombineThumper001a.mdl"
+			"model"		"models/props_c17/pottery06a.mdl"
 		}
 		"84"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/CombineThumper002.mdl"
+			"model"		"models/props_c17/pottery07a.mdl"
 		}
 		"85"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/combinetower001.mdl"
+			"model"		"models/props_c17/pottery08a.mdl"
 		}
 		"86"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/health_charger001.mdl"
+			"model"		"models/props_c17/pottery09a.mdl"
 		}
 		"87"
 		{
 			"type"		"model"
-			"model"		"models/props_combine/suit_charger001.mdl"
+			"model"		"models/props_c17/pottery_large01a.mdl"
 		}
 		"88"
 		{
 			"type"		"model"
-			"model"		"models/props_doors/door03_slotted_left.mdl"
+			"model"		"models/props_canal/canalmap001.mdl"
 		}
 		"89"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/BathTub01a.mdl"
+			"model"		"models/props_combine/breenbust.mdl"
 		}
 		"90"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_chair01a.mdl"
+			"model"		"models/props_combine/breenchair.mdl"
 		}
 		"91"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_chair03a.mdl"
+			"model"		"models/props_combine/breenclock.mdl"
 		}
 		"92"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_Couch01a.mdl"
+			"model"		"models/props_combine/breendesk.mdl"
 		}
 		"93"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_Couch02a.mdl"
+			"model"		"models/props_combine/breenglobe.mdl"
 		}
 		"94"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_Lamp01a.mdl"
+			"model"		"models/props_combine/combine_interface001.mdl"
 		}
 		"95"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_Desk01a.mdl"
+			"model"		"models/props_combine/combine_interface002.mdl"
 		}
 		"96"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_shelf01a.mdl"
+			"model"		"models/props_combine/combine_interface003.mdl"
 		}
 		"97"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/Furniture_Vanity01a.mdl"
+			"model"		"models/props_combine/combine_intmonitor001.mdl"
 		}
 		"98"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/refrigerator01a.mdl"
+			"model"		"models/props_combine/combine_intmonitor003.mdl"
 		}
 		"99"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/refrigeratorDoor01a.mdl"
+			"model"		"models/props_combine/combine_monitorbay.mdl"
 		}
 		"100"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/refrigeratorDoor02a.mdl"
+			"model"		"models/props_combine/CombineThumper001a.mdl"
 		}
 		"101"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/SinkKitchen01a.mdl"
+			"model"		"models/props_combine/CombineThumper002.mdl"
 		}
 		"102"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/VendingMachineSoda01a.mdl"
+			"model"		"models/props_combine/combinetower001.mdl"
 		}
 		"103"
 		{
 			"type"		"model"
-			"model"		"models/props_interiors/VendingMachineSoda01a_door.mdl"
+			"model"		"models/props_combine/health_charger001.mdl"
 		}
 		"104"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/bicycle01a.mdl"
+			"model"		"models/props_combine/suit_charger001.mdl"
 		}
 		"105"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage128_composite001a.mdl"
+			"model"		"models/props_doors/door03_slotted_left.mdl"
 		}
 		"106"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage128_composite001b.mdl"
+			"model"		"models/props_interiors/BathTub01a.mdl"
 		}
 		"107"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage128_composite001c.mdl"
+			"model"		"models/props_interiors/Furniture_chair01a.mdl"
 		}
 		"108"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage128_composite001d.mdl"
+			"model"		"models/props_interiors/Furniture_chair03a.mdl"
 		}
 		"109"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage256_composite001a.mdl"
+			"model"		"models/props_interiors/Furniture_Couch01a.mdl"
 		}
 		"110"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage256_composite001b.mdl"
+			"model"		"models/props_interiors/Furniture_Couch02a.mdl"
 		}
 		"111"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage256_composite002a.mdl"
+			"model"		"models/props_interiors/Furniture_Lamp01a.mdl"
 		}
 		"112"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage256_composite002b.mdl"
+			"model"		"models/props_interiors/Furniture_Desk01a.mdl"
 		}
 		"113"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_bag001a.mdl"
+			"model"		"models/props_interiors/Furniture_shelf01a.mdl"
 		}
 		"114"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_carboard002a.mdl"
+			"model"		"models/props_interiors/Furniture_Vanity01a.mdl"
 		}
 		"115"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_coffeemug001a.mdl"
+			"model"		"models/props_interiors/refrigerator01a.mdl"
 		}
 		"116"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/PopCan01a.mdl"
+			"model"		"models/props_interiors/refrigeratorDoor01a.mdl"
 		}
 		"117"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/glassjug01.mdl"
+			"model"		"models/props_interiors/refrigeratorDoor02a.mdl"
 		}
 		"118"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/GlassBottle01a.mdl"
+			"model"		"models/props_interiors/SinkKitchen01a.mdl"
 		}
 		"119"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_glassbottle003a.mdl"
+			"model"		"models/props_interiors/VendingMachineSoda01a.mdl"
 		}
 		"120"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_glassbottle001a.mdl"
+			"model"		"models/props_interiors/VendingMachineSoda01a_door.mdl"
 		}
 		"121"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_glassbottle002a.mdl"
+			"model"		"models/props_junk/bicycle01a.mdl"
 		}
 		"122"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_plasticbottle003a.mdl"
+			"model"		"models/props_junk/trashcluster01a.mdl"
 		}
 		"123"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_metalcan001a.mdl"
+			"model"		"models/props_junk/garbage128_composite001a.mdl"
 		}
 		"124"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_metalcan002a.mdl"
+			"model"		"models/props_junk/garbage128_composite001b.mdl"
 		}
 		"125"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_milkcarton001a.mdl"
+			"model"		"models/props_junk/garbage128_composite001c.mdl"
 		}
 		"126"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_milkcarton002a.mdl"
+			"model"		"models/props_junk/garbage128_composite001d.mdl"
 		}
 		"127"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_newspaper001a.mdl"
+			"model"		"models/props_junk/garbage256_composite001a.mdl"
 		}
 		"128"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_plasticbottle001a.mdl"
+			"model"		"models/props_junk/garbage256_composite001b.mdl"
 		}
 		"129"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_plasticbottle002a.mdl"
+			"model"		"models/props_junk/garbage256_composite002a.mdl"
 		}
 		"130"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/jar01a.mdl"
+			"model"		"models/props_junk/garbage256_composite002b.mdl"
 		}
 		"131"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/jar01b.mdl"
+			"model"		"models/props_junk/garbage_bag001a.mdl"
 		}
 		"132"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/garbage_takeoutcarton001a.mdl"
+			"model"		"models/props_junk/garbage_carboard002a.mdl"
 		}
 		"133"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/plasticbucket001a.mdl"
+			"model"		"models/props_junk/garbage_coffeemug001a.mdl"
 		}
 		"134"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/metal_paintcan001a.mdl"
+			"model"		"models/props_junk/PopCan01a.mdl"
 		}
 		"135"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/metal_paintcan001b.mdl"
+			"model"		"models/props_junk/glassjug01.mdl"
 		}
 		"136"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/MetalBucket01a.mdl"
+			"model"		"models/props_junk/GlassBottle01a.mdl"
 		}
 		"137"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/MetalBucket02a.mdl"
+			"model"		"models/props_junk/garbage_glassbottle003a.mdl"
 		}
 		"138"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/metalgascan.mdl"
+			"model"		"models/props_junk/garbage_glassbottle001a.mdl"
 		}
 		"139"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/gascan001a.mdl"
+			"model"		"models/props_junk/garbage_glassbottle002a.mdl"
 		}
 		"140"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/PlasticCrate01a.mdl"
+			"model"		"models/props_junk/garbage_plasticbottle003a.mdl"
 		}
 		"141"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/ravenholmsign.mdl"
+			"model"		"models/props_junk/garbage_metalcan001a.mdl"
 		}
 		"142"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/sawblade001a.mdl"
+			"model"		"models/props_junk/garbage_metalcan002a.mdl"
 		}
 		"143"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/Shoe001a.mdl"
+			"model"		"models/props_junk/garbage_milkcarton001a.mdl"
 		}
 		"144"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/terracotta01.mdl"
+			"model"		"models/props_junk/garbage_milkcarton002a.mdl"
 		}
 		"145"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/cactus.mdl"
+			"model"		"models/props_junk/garbage_newspaper001a.mdl"
 		}
 		"146"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/TrashBin01a.mdl"
+			"model"		"models/props_junk/garbage_plasticbottle001a.mdl"
 		}
 		"147"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/TrafficCone001a.mdl"
+			"model"		"models/props_junk/garbage_plasticbottle002a.mdl"
 		}
 		"148"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/watermelon01.mdl"
+			"model"		"models/props_lab/jar01a.mdl"
 		}
 		"149"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/Wheebarrow01a.mdl"
+			"model"		"models/props_lab/jar01b.mdl"
 		}
 		"150"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bewaredog.mdl"
+			"model"		"models/props_junk/garbage_takeoutcarton001a.mdl"
 		}
 		"151"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/binderblue.mdl"
+			"model"		"models/props_junk/plasticbucket001a.mdl"
 		}
 		"152"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/binderbluelabel.mdl"
+			"model"		"models/props_junk/metal_paintcan001a.mdl"
 		}
 		"153"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergraylabel01a.mdl"
+			"model"		"models/props_junk/metal_paintcan001b.mdl"
 		}
 		"154"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergreen.mdl"
+			"model"		"models/props_junk/MetalBucket01a.mdl"
 		}
 		"155"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergraylabel01b.mdl"
+			"model"		"models/props_junk/MetalBucket02a.mdl"
 		}
 		"156"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergreenlabel.mdl"
+			"model"		"models/props_junk/metalgascan.mdl"
 		}
 		"157"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/binderredlabel.mdl"
+			"model"		"models/props_junk/gascan001a.mdl"
 		}
 		"158"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/blastwindow.mdl"
+			"model"		"models/props_junk/PlasticCrate01a.mdl"
 		}
 		"159"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/box01a.mdl"
+			"model"		"models/props_junk/ravenholmsign.mdl"
 		}
 		"160"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/box01b.mdl"
+			"model"		"models/props_junk/sawblade001a.mdl"
 		}
 		"161"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/chess.mdl"
+			"model"		"models/props_junk/Shoe001a.mdl"
 		}
 		"162"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/citizenradio.mdl"
+			"model"		"models/props_junk/terracotta01.mdl"
 		}
 		"163"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/clipboard.mdl"
+			"model"		"models/props_lab/cactus.mdl"
 		}
 		"164"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/corkboard001.mdl"
+			"model"		"models/props_junk/TrashBin01a.mdl"
 		}
 		"165"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/corkboard002.mdl"
+			"model"		"models/props_junk/TrafficCone001a.mdl"
 		}
 		"166"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/crematorcase.mdl"
+			"model"		"models/props_junk/watermelon01.mdl"
 		}
 		"167"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/desklamp01.mdl"
+			"model"		"models/props_outland/pumpkin01.mdl"
 		}
 		"168"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/eyescanner.mdl"
+			"model"		"models/props/cs_italy/bananna_bunch.mdl"
 		}
 		"169"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/frame001a.mdl"
+			"model"		"models/props/cs_italy/bananna.mdl"
 		}
 		"170"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/frame002a.mdl"
+			"model"		"models/props/cs_italy/orange.mdl"
 		}
 		"171"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/harddrive02.mdl"
+			"model"		"models/props_junk/Wheebarrow01a.mdl"
 		}
 		"172"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/harddrive01.mdl"
+			"model"		"models/props_junk/food_pile01.mdl"
 		}
 		"173"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/headcrabprep.mdl"
+			"model"		"models/props_junk/food_pile02.mdl"
 		}
 		"174"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/hevplate.mdl"
+			"model"		"models/props_junk/food_pile03.mdl"
 		}
 		"175"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/huladoll.mdl"
+			"model"		"models/props_lab/bewaredog.mdl"
 		}
 		"176"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/kennel_physics.mdl"
+			"model"		"models/props_lab/binderblue.mdl"
 		}
 		"177"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/partsbin01.mdl"
+			"model"		"models/props_lab/binderbluelabel.mdl"
 		}
 		"178"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/monitor01a.mdl"
+			"model"		"models/props_lab/bindergraylabel01a.mdl"
 		}
 		"179"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/monitor01b.mdl"
+			"model"		"models/props_lab/bindergreen.mdl"
 		}
 		"180"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/monitor02.mdl"
+			"model"		"models/props_lab/bindergraylabel01b.mdl"
 		}
 		"181"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/computer01_keyboard.mdl"
+			"model"		"models/props_lab/bindergreenlabel.mdl"
 		}
 		"182"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/consolebox01a.mdl"
+			"model"		"models/props_lab/binderredlabel.mdl"
 		}
 		"183"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/consolebox03a.mdl"
+			"model"		"models/props_lab/blastwindow.mdl"
 		}
 		"184"
 		{
 			"type"		"model"
-			"model"		"models/props_c17/consolebox05a.mdl"
+			"model"		"models/props_lab/box01a.mdl"
 		}
 		"185"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01a.mdl"
+			"model"		"models/props_lab/box01b.mdl"
 		}
 		"186"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01b.mdl"
+			"model"		"models/props_lab/chess.mdl"
 		}
 		"187"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01c.mdl"
+			"model"		"models/props_lab/citizenradio.mdl"
 		}
 		"188"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01d.mdl"
+			"model"		"models/props_lab/clipboard.mdl"
 		}
 		"189"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever_cart.mdl"
+			"model"		"models/props_lab/corkboard001.mdl"
 		}
 		"190"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/securitybank.mdl"
+			"model"		"models/props_lab/corkboard002.mdl"
 		}
 		"191"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/servers.mdl"
+			"model"		"models/props_lab/crematorcase.mdl"
 		}
 		"192"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/plotter.mdl"
+			"model"		"models/props_lab/desklamp01.mdl"
 		}
 		"193"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/tpplug.mdl"
+			"model"		"models/props_lab/eyescanner.mdl"
 		}
 		"194"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/tpplugholder_single.mdl"
+			"model"		"models/props_lab/frame001a.mdl"
 		}
 		"195"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/tpplugholder.mdl"
+			"model"		"models/props_lab/frame002a.mdl"
 		}
 		"196"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace001.mdl"
+			"model"		"models/props_lab/harddrive02.mdl"
 		}
 		"197"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace002.mdl"
+			"model"		"models/props_lab/harddrive01.mdl"
 		}
 		"198"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace003.mdl"
+			"model"		"models/props_lab/headcrabprep.mdl"
 		}
 		"199"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace004.mdl"
+			"model"		"models/props_lab/hevplate.mdl"
 		}
 		"200"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/BenchOutdoor01a.mdl"
+			"model"		"models/props_lab/huladoll.mdl"
 		}
 		"201"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/bench_indoor001a.mdl"
+			"model"		"models/props_junk/gnome.mdl"
 		}
 		"202"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/payphone001a.mdl"
+			"model"		"models/props_lab/kennel_physics.mdl"
 		}
 		"203"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/payphone_reciever001a.mdl"
+			"model"		"models/props_lab/partsbin01.mdl"
 		}
 		"204"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/traincar_seats001.mdl"
+			"model"		"models/props_lab/monitor01a.mdl"
 		}
 		"205"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/trainstation_clock001.mdl"
+			"model"		"models/props_lab/monitor01b.mdl"
 		}
 		"206"
 		{
 			"type"		"model"
-			"model"		"models/props_vehicles/carparts_axel01a.mdl"
+			"model"		"models/props_lab/monitor02.mdl"
 		}
 		"207"
 		{
 			"type"		"model"
-			"model"		"models/props_vehicles/carparts_door01a.mdl"
+			"model"		"models/props_silo/silo_launchroom_monitor.mdl"
 		}
 		"208"
 		{
 			"type"		"model"
-			"model"		"models/props_vehicles/carparts_muffler01a.mdl"
+			"model"		"models/props_c17/computer01_keyboard.mdl"
 		}
 		"209"
 		{
 			"type"		"model"
-			"model"		"models/props_vehicles/carparts_tire01a.mdl"
+			"model"		"models/props_c17/consolebox01a.mdl"
 		}
 		"210"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/consolebox03a.mdl"
+		}
+		"211"
+		{
+			"type"		"model"
+			"model"		"models/props_c17/consolebox05a.mdl"
+		}
+		"212"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/reciever01a.mdl"
+		}
+		"213"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/reciever01b.mdl"
+		}
+		"214"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/reciever01c.mdl"
+		}
+		"215"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/reciever01d.mdl"
+		}
+		"216"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/reciever_cart.mdl"
+		}
+		"217"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/securitybank.mdl"
+		}
+		"218"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/servers.mdl"
+		}
+		"219"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_a.mdl"
+		}
+		"220"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_b.mdl"
+		}
+		"221"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_c.mdl"
+		}
+		"222"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_server_d.mdl"
+		}
+		"223"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/plotter.mdl"
+		}
+		"224"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/tpplug.mdl"
+		}
+		"225"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/tpplugholder_single.mdl"
+		}
+		"226"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/tpplugholder.mdl"
+		}
+		"227"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/workspace001.mdl"
+		}
+		"228"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/workspace002.mdl"
+		}
+		"229"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/workspace003.mdl"
+		}
+		"230"
+		{
+			"type"		"model"
+			"model"		"models/props_lab/workspace004.mdl"
+		}
+		"231"
+		{
+			"type"		"model"
+			"model"		"models/props_silo/silo_workspace1.mdl"
+		}
+		"232"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/BenchOutdoor01a.mdl"
+		}
+		"233"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/bench_indoor001a.mdl"
+		}
+		"234"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/payphone001a.mdl"
+		}
+		"235"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/payphone_reciever001a.mdl"
+		}
+		"236"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/traincar_seats001.mdl"
+		}
+		"237"
+		{
+			"type"		"model"
+			"model"		"models/props_trainstation/trainstation_clock001.mdl"
+		}
+		"238"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/carparts_axel01a.mdl"
+		}
+		"239"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/carparts_door01a.mdl"
+		}
+		"240"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/carparts_muffler01a.mdl"
+		}
+		"241"
+		{
+			"type"		"model"
+			"model"		"models/props_vehicles/carparts_tire01a.mdl"
+		}
+		"242"
 		{
 			"type"		"model"
 			"model"		"models/props_vehicles/carparts_wheel01a.mdl"

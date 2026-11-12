@@ -26,7 +26,7 @@ local function CC_GMOD_Tool( ply, command, arguments )
 	if ( targetMode == nil ) then return end
 	if ( GetConVarNumber( "toolmode_allow_" .. targetMode ) != 1 ) then return end
 
-	ply:ConCommand( "gmod_toolmode " .. targetMode )
+	ply:RunConsoleCommand( "gmod_toolmode", targetMode )
 
 	-- Switch weapons
 	ply:SelectWeapon( "gmod_tool" )

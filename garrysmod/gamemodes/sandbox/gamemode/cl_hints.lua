@@ -13,10 +13,10 @@ local function LookupBinding( group )
 	local key = input.LookupBinding( group )
 
 	if ( !key ) then
-		return "'" ..  string.lower( group ) .. " not bound'"
+		return "'" .. string.lower( group ) .. " not bound'"
 	end
 
-	return "'" ..  string.upper( key ) .. "'"
+	return "'" .. string.upper( key ) .. "'"
 
 end
 

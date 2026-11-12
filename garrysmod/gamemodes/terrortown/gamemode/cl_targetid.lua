@@ -128,7 +128,7 @@ end
 
 ---- Crosshair affairs
 
-surface.CreateFont("TargetIDSmall2", {font = "Tahoma",
+surface.CreateFont("TargetIDSmall2", {font = GAMEMODE_DEFAULT_UI_FONT,
                                       size = 16,
                                       weight = 1000})
 

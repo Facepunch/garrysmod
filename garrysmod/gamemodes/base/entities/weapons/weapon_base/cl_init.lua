@@ -50,7 +50,7 @@ function SWEP:DrawWeaponSelection( x, y, wide, tall, alpha )
 	wide = wide - 20
 
 	-- Draw that mother
-	surface.DrawTexturedRect( x + fsin, y - fsin,  wide - fsin * 2 , ( wide / 2 ) + fsin )
+	surface.DrawTexturedRect( x + fsin, y - fsin, wide - fsin * 2 , ( wide / 2 ) + fsin )
 
 	-- Draw weapon info box
 	self:PrintWeaponInfo( x + wide + 20, y + tall * 0.95, alpha )
@@ -71,8 +71,8 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 		local str = "<font=HudSelectionText>"
 		if ( self.Author != "" ) then str = str .. title_color .. "#entityinfo.author</color>\t" .. text_color .. self.Author .. "</color>\n" end
 		if ( self.Contact != "" ) then str = str .. title_color .. "#entityinfo.contact</color>\t" .. text_color .. self.Contact .. "</color>\n\n" end
-		if ( self.Purpose != "" ) then str = str .. title_color .. "#entityinfo.purpose</color>\n" .. text_color .. self.Purpose .. "</color>\n\n" end
-		if ( self.Instructions != "" ) then str = str .. title_color .. "#entityinfo.instructions</color>\n" .. text_color .. self.Instructions .. "</color>\n" end
+		if ( self.Purpose != "" ) then str = str .. title_color .. "#entityinfo.purpose</color>\n" .. text_color .. language.GetPhrase( self.Purpose ) .. "</color>\n\n" end
+		if ( self.Instructions != "" ) then str = str .. title_color .. "#entityinfo.instructions</color>\n" .. text_color .. language.GetPhrase( self.Instructions ) .. "</color>\n" end
 		str = str .. "</font>"
 
 		self.InfoMarkup = markup.Parse( str, 250 )
@@ -141,9 +141,9 @@ end
 	Name: DrawWorldModel
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
-function SWEP:DrawWorldModel()
+function SWEP:DrawWorldModel( flags )
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end
 
@@ -151,9 +151,9 @@ end
 	Name: DrawWorldModelTranslucent
 	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
-function SWEP:DrawWorldModelTranslucent()
+function SWEP:DrawWorldModelTranslucent( flags )
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end
 

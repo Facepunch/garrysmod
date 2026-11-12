@@ -1,8 +1,0 @@
-"TableToKeyValues"
-{
-	"parentid"		"0"
-	"icon"		"games/16/cstrike.png"
-	"id"		"37"
-	"name"		"Counter-Strike"
-	"version"		"3"
-}

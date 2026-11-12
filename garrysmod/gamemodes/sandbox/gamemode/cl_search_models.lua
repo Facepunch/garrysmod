@@ -43,7 +43,7 @@ hook.Add( "Think", "sandbox_queued_search", function()
 	GetAllFiles( unpack( call ) )
 	table.remove( queuedSearch, 1 )
 
-	if ( !timer.Exists( "search_models_update" ) || #queuedSearch < 1 ) then
+	if ( !timer.Exists( "search_models_update" ) or #queuedSearch < 1 ) then
 		timer.Create( "search_models_update", 1, 1, function() hook.Run( "SearchUpdate" ) end )
 	end
 
@@ -54,6 +54,8 @@ end )
 --
 local model_list = nil
 search.AddProvider( function( str )
+
+	local searchTerms = string.Split( str, " " )
 
 	if ( model_list == nil ) then
 
@@ -66,23 +68,30 @@ search.AddProvider( function( str )
 
 	for k, v in ipairs( model_list ) do
 
-		-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
-		local modelpath = v
-		if ( modelpath:StartsWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
+		for srchId, srchTxt in ipairs( searchTerms ) do
+			-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
+			-- We do this for each search term individually, just to avoid edge cases where searching for x.mdl functions differently if it's the last search term or not
+			local modelpath = v
+			if ( modelpath:StartsWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !srchTxt:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
 
-		if ( modelpath:find( str, nil, true ) ) then
+			if ( !modelpath:find( srchTxt, nil, true ) ) then
 
-			if ( IsUselessModel( v ) ) then continue end
+				break
 
-			local entry = {
-				text = v:GetFileFromFilename(),
-				func = function() RunConsoleCommand( "gm_spawn", v ) end,
-				icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
-				words = { v }
-			}
+			elseif ( srchId == #searchTerms ) then
 
-			table.insert( models, entry )
+				if ( IsUselessModel( v ) ) then continue end
 
+				local entry = {
+					text = v:GetFileFromFilename(),
+					func = function() RunConsoleCommand( "gm_spawn", v ) end,
+					icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
+					words = { v }
+				}
+
+				table.insert( models, entry )
+
+			end
 		end
 
 		if ( #models >= sbox_search_maxresults:GetInt() / 2 ) then break end
@@ -112,43 +121,47 @@ end )
 local function AddSearchProvider( listname, ctype, stype )
 	search.AddProvider( function( str )
 
+		local searchTerms = string.Split( str, " " )
+
 		local results = {}
-		local entities = {}
+		for name_c, v in pairs( list.Get( listname ) ) do
+			if ( !istable( v ) ) then continue end -- Some mod doing something wrong
+			if ( listname == "Weapon" and !v.Spawnable ) then continue end
 
-		for k, v in pairs( list.Get( listname ) ) do
-			if ( listname == "Weapon" && !v.Spawnable ) then continue end
+			local name = v.PrintName or v.Name
+			if ( !isstring( name ) and !isstring( name_c ) ) then continue end
 
-			v.ClassName = k
-			v.PrintName = v.PrintName or v.Name
-			v.ScriptedEntityType = ctype
-			table.insert( entities, v )
-		end
+			local name_lang = ( isstring( name ) and language.GetPhrase( name ) or name )
 
-		for k, v in ipairs( entities ) do
+			for srchId, srchTxt in ipairs( searchTerms ) do
 
-			local name = v.PrintName
-			local name_c = v.ClassName
-			if ( !isstring( name ) && !isstring( name_c ) ) then continue end
+				if ( !(
+					( isstring( name_lang ) and name_lang:lower():find( srchTxt, nil, true ) ) or
+					( isstring( name_c ) and name_c:lower():find( srchTxt, nil, true ) )
+				) ) then
 
-			if ( ( isstring( name ) && name:lower():find( str, nil, true ) ) || ( isstring( name_c ) && name_c:lower():find( str, nil, true ) ) ) then
+					break
 
-				local contentIconData = {
-					nicename = v.PrintName or v.ClassName,
-					spawnname = v.ClassName,
-					material = "entities/" .. v.ClassName .. ".png",
-					admin = v.AdminOnly
-				}
+				elseif ( srchId == #searchTerms ) then
 
-				if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
+					local contentIconData = {
+						nicename = name or name_c,
+						spawnname = name_c,
+						material = v.IconOverride or "entities/" .. name_c .. ".png",
+						admin = v.AdminOnly
+					}
 
-				local entry = {
-					text = v.PrintName or v.ClassName,
-					icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, contentIconData ),
-					words = { v }
-				}
+					if ( listname == "NPC" ) then contentIconData.weapon = v.Weapons end
 
-				table.insert( results, entry )
+					local entry = {
+						text = name or name_c,
+						icon = spawnmenu.CreateContentIcon( ctype or "entity", nil, contentIconData ),
+						words = { v }
+					}
 
+					table.insert( results, entry )
+
+				end
 			end
 
 			if ( #results >= sbox_search_maxresults:GetInt() / 4 ) then break end

@@ -151,10 +151,12 @@ function SWEP:StabKill(tr, spos, sdest)
    ang:RotateAroundAxis(ang:Right(), -90)
    pos = pos - (ang:Forward() * 7)
 
-   local prints = self.fingerprints
    local ignore = self:GetOwner()
 
    target.effect_fn = function(rag)
+                         local knife = ents.Create("prop_physics")
+                         if not IsValid(knife) then print("Failed to create knife stab prop!") return end
+
                          -- we might find a better location
                          local rtr = util.TraceLine({start=pos, endpos=pos + norm * 40, filter=ignore, mask=MASK_SHOT_HULL})
 
@@ -167,7 +169,6 @@ function SWEP:StabKill(tr, spos, sdest)
 
                          end
 
-                         local knife = ents.Create("prop_physics")
                          knife:SetModel("models/weapons/w_knife_t.mdl")
                          knife:SetPos(pos)
                          knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)

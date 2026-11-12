@@ -32,7 +32,7 @@
 
 "Weapon_Alyx_Gun.Empty"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_AUTO" // GMOD: Was CHAN_WEAPON
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 
