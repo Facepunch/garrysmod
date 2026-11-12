@@ -35,15 +35,15 @@ end
 			(dir is optional, defaults to the player's aim)
 -----------------------------------------------------------]]
 local MAX_DISTANCE_PLAYER_TRACE = 4096 * 8
-function util.GetPlayerTrace( ply, dir, maxDistance )
+function util.GetPlayerTrace( ply, dir, maxDist )
 
 	dir = dir or ply:GetAimVector()
-	maxDistance = maxDistance or MAX_DISTANCE_PLAYER_TRACE
+	maxDist = maxDist or MAX_DISTANCE_PLAYER_TRACE
 
 	local trace = {}
 
 	trace.start = ply:EyePos()
-	trace.endpos = trace.start + ( dir * maxDistance )
+	trace.endpos = trace.start + ( dir * maxDist )
 	trace.filter = ply
 
 	return trace

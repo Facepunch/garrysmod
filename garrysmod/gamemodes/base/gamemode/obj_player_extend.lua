@@ -170,21 +170,21 @@ end
 --[[---------------------------------------------------------
 	Player Eye Trace
 -----------------------------------------------------------]]
-function meta:GetEyeTrace( maxDistance )
+function meta:GetEyeTrace( maxDist )
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
 		-- Cache the trace results for the current frame, unless we're serverside
 		-- in which case it wouldn't play well with lag compensation at all
-		if ( self.LastPlayerTrace == framenum && self.PlayerTraceDist == maxDistance ) then
+		if ( self.LastPlayerTrace == framenum && self.PlayerTraceDist == maxDist ) then
 			return self.PlayerTrace
 		end
 
 		self.LastPlayerTrace = framenum
-		self.PlayerTraceDist = maxDistance
+		self.PlayerTraceDist = maxDist
 	end
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self, nil, maxDistance ) )
+	local tr = util.TraceLine( util.GetPlayerTrace( self, nil, maxDist ) )
 	self.PlayerTrace = tr
 
 	return tr
@@ -194,19 +194,19 @@ end
 	GetEyeTraceIgnoreCursor
 	Like GetEyeTrace but doesn't use the cursor aim vector..
 -----------------------------------------------------------]]
-function meta:GetEyeTraceNoCursor( maxDistance )
+function meta:GetEyeTraceNoCursor( maxDist )
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
-		if ( self.LastPlayerAimTrace == framenum && self.PlayerAimTraceDist == maxDistance ) then
+		if ( self.LastPlayerAimTrace == framenum && self.PlayerAimTraceDist == maxDist ) then
 			return self.PlayerAimTrace
 		end
 
 		self.LastPlayerAimTrace = framenum
-		self.PlayerAimTraceDist = maxDistance
+		self.PlayerAimTraceDist = maxDist
 	end
 
-	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward(), maxDistance ) )
+	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward(), maxDist ) )
 	self.PlayerAimTrace = tr
 
 	return tr
