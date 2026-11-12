@@ -22,8 +22,10 @@
 		1  : "Run code on spawn": 0
 	]
 
-	input RunCode(void) : "Run Code that was defined in the entity"
+	input RunCode(string) : "Run code that was defined in the entity, optionally with an input parameter"
 	input RunPassedCode(string) : "Run code that was passed as a variable"
+
+	output OnCodeOut(string) : "Fires when code runs and OUTPUT has a value"
 ]
 
 @PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours. Requires the skybox material be set to 'painted' in Map => Map Properties."
