@@ -1,5 +1,12 @@
 
 <div class="page" ng-controller="ControllerDupes">
+	<style type="text/css">
+		workshopicon 
+		{
+			width: {{IconWidth}}px; 
+			height: {{IconHeight}}px;
+		}
+	</style>
 
 	<div class="options">
 
@@ -7,36 +14,36 @@
 
 			<li><h2 ng-Localize="'dupes'"></h2></li>
 
-			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Localize="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+			<li ng-repeat="cat in MyCategories" class="clickable" ng-class="[ Category == cat ? 'active' : 'notactive' ]">
+				<a ng-click="Switch( cat, 0 )" ng-Localize="'dupes.'+cat" ng-show="cat != ''" ng-class="[ Category == cat ? 'active' : 'notactive' ]"></a>
 
 				<ul ng-show="Category == cat && cat != 'local'" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li ng-repeat="tag in SubCategories" class="clickable" ng-class="[ Tagged == tag ? 'active' : 'notactive' ]">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'dupes.'+tag" ng-show="tag != ''" ng-class="[ Tagged == tag ? 'active' : 'notactive' ]">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Localize="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+			<li ng-repeat="cat in Categories" class="clickable" ng-class="[ Category == cat ? 'active' : 'notactive' ]">
+				<a ng-click="Switch( cat, 0 )" ng-Localize="'dupes.'+cat" ng-show="cat != ''" ng-class="[ Category == cat ? 'active' : 'notactive' ]"></a>
 
 				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li ng-repeat="tag in SubCategories" class="clickable" ng-class="[ Tagged == tag ? 'active' : 'notactive' ]">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'dupes.'+tag" ng-show="tag != ''" ng-class="[ Tagged == tag ? 'active' : 'notactive' ]">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-				<a ng-click="Switch( cat, 0 )" ng-Localize="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+			<li ng-repeat="cat in CategoriesSecondary" class="clickable" ng-class="[ Category == cat ? 'active' : 'notactive' ]">
+				<a ng-click="Switch( cat, 0 )" ng-Localize="'dupes.'+cat" ng-show="cat != ''" ng-class="[ Category == cat ? 'active' : 'notactive' ]"></a>
 
 				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
-					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					<li ng-repeat="tag in SubCategories" class="clickable" ng-class="[ Tagged == tag ? 'active' : 'notactive' ]">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Localize="'dupes.'+tag" ng-show="tag != ''" ng-class="[ Tagged == tag ? 'active' : 'notactive' ]">{{subcat}}</a>
 					</li>
 				</ul>
 			</li>
@@ -59,10 +66,10 @@
 			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Localize="'dupes.none'">...</workshopmessage>
 			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed_ugc'" ng-Localize="'ugc.disabled'">...</workshopmessage>
 
-			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" ng-class="{ 'installed': IsSubscribed( file ) }">
 
-				<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='{{!file.info.blocked ? ( "../" + file.background ) : "img/workshop_author_blocked.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;" loading="lazy"/>
+				<preview>
+					<img ng-if="file.background" ng-src="../{{file.background}}" loading="lazy"/>
 				</preview>
 
 				<name>
@@ -81,8 +88,8 @@
 				<controls>
 
 					<left>
-						<control class="{{IfElse( file.info.voted_up, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, true )"><img src='img/thumb-up.png' loading="lazy"/></control>
-						<control class="{{IfElse( file.info.voted_down, 'disabled', '' )}}" ng-hide="file.local" ng-click="Rate( file, false )"><img src='img/thumb-down.png' loading="lazy"/></control>
+						<control ng-class="{ 'disabled': file.info.voted_up }" ng-hide="file.local" ng-click="Rate( file, true )"><img src='img/thumb-up.png' loading="lazy"/></control>
+						<control ng-class="{ 'disabled': file.info.voted_down }" ng-hide="file.local" ng-click="Rate( file, false )"><img src='img/thumb-down.png' loading="lazy"/></control>
 						<control ng-hide="file.local || file.info.favorite" ng-click="Favorite( file, true )"><img src='img/favourite_addon.png' loading="lazy"/></control>
 						<control ng-hide="file.local || !file.info.favorite" ng-click="Favorite( file, false )"><img src='img/favourite_addon_remove.png' loading="lazy"/></control>
 						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Localize="'dupes.publish'">..</control>
@@ -104,7 +111,7 @@
 					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
 
 					<div class="pages">
-						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+						<span ng-repeat="p in Pages"><a class="page" ng-class="{ 'active': (p == Page) }" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
 					</div>
 					<span class="pagenum">{{Page}}</span>
 				</pagination>
