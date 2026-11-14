@@ -208,6 +208,10 @@
 	input SetTimer(float) : "This input makes the grenade live, and specifies how many seconds before it explodes."
 ]
 
+@PointClass base(Targetname, Parentname, Angles, RenderFields, DamageFilter) studio( "models/weapons/w_slam.mdl" ) sphere(DmgRadius) = npc_tripmine : "S.L.A.M. Tripmine"
+[
+
+]
 
 @NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "Combine Cannon"
 [
