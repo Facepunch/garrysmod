@@ -20,30 +20,64 @@ function table.Inherit( t, base )
 end
 
 --[[---------------------------------------------------------
-	Name: Copy(t, lookup_table)
-	Desc: Taken straight from http://lua-users.org/wiki/PitLibTablestuff
-		and modified to the new Lua 5.1 code by me.
-		Original function by PeterPrade!
------------------------------------------------------------]]
-function table.Copy( t, lookup_table )
-	if ( t == nil ) then return nil end
+	Name: Copy( tbl, copyVecAngMx, noMeta, lookupTable )
+	Desc: Creates a deep copy of the given table. 
+	      The copyVecAngMx argument will make it copy Vectors, Angles, and VMatrixes.
 
-	local copy = {}
-	setmetatable( copy, debug.getmetatable( t ) )
-	for i, v in pairs( t ) do
-		if ( !istable( v ) ) then
-			copy[ i ] = v
-		else
-			lookup_table = lookup_table or {}
-			lookup_table[ t ] = copy
-			if ( lookup_table[ v ] ) then
-				copy[ i ] = lookup_table[ v ] -- we already copied this table. reuse the copy.
-			else
-				copy[ i ] = table.Copy( v, lookup_table ) -- not yet copied. copy it.
-			end
-		end
+	      The noMeta argument will make it not set the metatable of the given table to the copy.
+	      This does not affect sub tables.
+
+	      The lookupTable argument is optional and is for internal use.
+
+	      Reference: http://lua-users.org/wiki/PitLibTablestuff 
+	      Original function by PeterPrade!
+-----------------------------------------------------------]]
+local type = type
+
+function table.Copy( tbl, copyVecAngMx, noMeta, lookupTable )
+	if ( !istable( tbl ) ) then error( "bad argument #1 to 'Copy' (table expected, got " .. type( tbl ) .. ")", 2 ) end
+
+	-- Backwards compatibility 
+	if ( copyVecAngMx && istable( copyVecAngMx ) ) then
+		lookupTable = copyVecAngMx
+		copyVecAngMx = nil
 	end
-	return copy
+    
+    	local copy = {}
+    
+    	for k, v in pairs( tbl ) do
+        	if ( istable( v ) ) then
+            		if ( !lookupTable ) then lookupTable = {} end
+            
+            		lookupTable[ tbl ] = copy
+            
+            		local lookupRes = lookupTable[ v ]
+            
+            		if ( lookupRes ) then
+                		copy[ k ] = lookupRes
+            		else
+                		copy[ k ] = table.Copy( v, copyVecAngMx, nil, lookupTable )
+            		end
+        	else
+            		if ( copyVecAngMx ) then
+                		if ( isvector( v ) ) then
+                    			v = Vector( v )
+                		elseif ( isangle( v ) ) then
+                    			v = Angle( v )
+				elseif ( ismatrix( v ) ) then
+					v = Matrix( v )
+				end
+			end
+			
+                	copy[ k ] = v
+        	end
+    	end
+
+    	if ( !noMeta ) then
+        	setmetatable( copy, debug.getmetatable( tbl ) )
+    	end
+    
+    	return copy
 end
 
 --[[---------------------------------------------------------
