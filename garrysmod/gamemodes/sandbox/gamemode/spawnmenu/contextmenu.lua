@@ -177,7 +177,7 @@ function CreateContextMenu()
 	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
 	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
 
-	for k, wdgt in pairs( list.Get( "DesktopWindows" ) ) do
+	for k, wdgt in SortedPairs( list.Get( "DesktopWindows" ) ) do
 
 		local icon = IconLayout:Add( "DButton" )
 		icon:SetText( "" )
