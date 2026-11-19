@@ -613,7 +613,10 @@ local function ReceiveEquipment()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_items = net.ReadInt(bitsRequired(EQUIP_MAX, true))
+   ply.equipment_items_tbl = util.ReadBitFields(EQUIP.GetBitChunk(EQUIP_MAX), bitsRequired(EQUIP.GetBitFlag(EQUIP_MAX)))
+
+   -- backwards compatibility
+   ply.equipment_items = ply.equipment_items_tbl[1]
 end
 net.Receive("TTT_Equipment", ReceiveEquipment)
 
