@@ -617,11 +617,12 @@ local function ReceiveEquipment()
 end
 net.Receive("TTT_Equipment", ReceiveEquipment)
 
+local credits_max = CreateConVar("ttt_credits_max", "15", FCVAR_REPLICATED)
 local function ReceiveCredits()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_credits = net.ReadUInt(8)
+   ply.equipment_credits = net.ReadUInt(bitsRequired(credits_max:GetInt()))
 end
 net.Receive("TTT_Credits", ReceiveCredits)
 

@@ -40,8 +40,9 @@ function plymeta:InitKarma()
 end
 
 --- Equipment credits
+local credits_max = CreateConVar("ttt_credits_max", "15", FCVAR_NOTIFY + FCVAR_REPLICATED)
 function plymeta:SetCredits(amt)
-   self.equipment_credits = amt
+   self.equipment_credits = math.min(amt, credits_max:GetInt())
    self:SendCredits()
 end
 
@@ -66,7 +67,7 @@ end
 
 function plymeta:SendCredits()
    net.Start("TTT_Credits")
-       net.WriteUInt(self:GetCredits(), 8)
+      net.WriteUInt(self:GetCredits(), util.BitsRequired(credits_max:GetInt()))
    net.Send(self)
 end
 
