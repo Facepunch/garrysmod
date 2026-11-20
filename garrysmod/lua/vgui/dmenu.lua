@@ -65,12 +65,7 @@ end
 
 function PANEL:AddSpacer()
 
-	local pnl = vgui.Create( "DPanel", self )
-	pnl.Paint = function( p, w, h )
-		derma.SkinHook( "Paint", "MenuSpacer", p, w, h )
-	end
-
-	pnl:SetTall( 1 )
+	local pnl = vgui.Create( "DVerticalSpacer", self )
 	self:AddPanel( pnl )
 
 	return pnl
@@ -298,7 +293,9 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		local submenu = menu:AddSubMenu( "Option Free" )
 		submenu:AddOption( "Submenu 1", MenuItemSelected )
 		submenu:AddOption( "Submenu 2", MenuItemSelected )
+		submenu:AddOption( "Submenu 3", MenuItemSelected )
 
+		menu:AddSpacer()
 		menu:AddOption( "Option For", MenuItemSelected )
 
 		menu:Open()

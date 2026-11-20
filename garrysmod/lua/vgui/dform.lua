@@ -72,6 +72,15 @@ function PANEL:AddItem( left, right )
 
 end
 
+function PANEL:AddSpacer()
+
+	local left = vgui.Create( "DVerticalSpacer", self )
+	self:AddItem( left )
+
+	return left
+
+end
+
 function PANEL:TextEntry( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
