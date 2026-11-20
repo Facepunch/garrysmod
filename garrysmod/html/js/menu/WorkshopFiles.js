@@ -262,6 +262,7 @@ WorkshopFiles.prototype.ReceiveFileInfo = function( id, data )
 
 		this.Scope.Files[k].filled	= true;
 		this.Scope.Files[k].info	= data;
+		if ( data.blocked ) this.Scope.Files[k].background = "../html/img/workshop_author_blocked.png";
 
 		this.Changed();
 	}
@@ -304,6 +305,8 @@ WorkshopFiles.prototype.ReceiveImage = function( id, url )
 	for ( var k in this.Scope.Files )
 	{
 		if ( this.Scope.Files[k].id != id ) continue;
+
+		if (this.Scope.Files[k].background) break;
 
 		this.Scope.Files[k].background = url;
 		this.Changed();
@@ -349,7 +352,6 @@ WorkshopFiles.prototype.RefreshDimensions = function()
 
 	self.Scope.IconWidth	= Math.floor( w / iconswide ) - 26;
 	self.Scope.IconHeight	= Math.floor( h / iconstall ) - 26;
-	self.Scope.IconMax		= Math.max( self.Scope.IconWidth, self.Scope.IconHeight ) + 1;
 }
 
 WorkshopFiles.prototype.UpdatePageNav = function()
