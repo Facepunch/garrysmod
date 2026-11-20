@@ -63,10 +63,11 @@ properties.Add( "keepupright_stop", {
 	Order = 900,
 	MenuIcon = "icon16/arrow_rotate_clockwise.png",
 
-	Filter = function( self, ent )
+	Filter = function( self, ent, ply )
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:GetClass() != "prop_physics" ) then return false end
 		if ( !ent:GetNWBool( "IsUpright" ) ) then return false end
+		if ( !gamemode.Call( "CanProperty", ply, "keepupright", ent ) ) then return false end
 		return true
 	end,
 
@@ -87,6 +88,7 @@ properties.Add( "keepupright_stop", {
 		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( ent:GetClass() != "prop_physics" ) then return end
 		if ( !ent:GetNWBool( "IsUpright" ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		constraint.RemoveConstraints( ent, "Keepupright" )
 
