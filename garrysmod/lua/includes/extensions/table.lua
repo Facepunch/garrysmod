@@ -614,22 +614,18 @@ end
 --[[---------------------------------------------------------
 	A Pairs function
 -----------------------------------------------------------]]
-function RandomPairs( pTable, Desc )
+function RandomPairs( pTable )
 
-	local sortedTbl = toKeyValues( pTable )
+	local keys = getKeys( pTable )
+	table.Shuffle( keys )
 
-	for k, v in pairs( sortedTbl ) do
-		v.rand = math.random( 1, 1000000 )
+	local i = 0
+	return function()
+		i = i + 1
+		local key = keys[ i ]
+		if ( key == nil ) then return end
+		return key, pTable[ key ]
 	end
-
-	-- descending/ascending for a random order, really?
-	if ( Desc ) then
-		table.sort( sortedTbl, function( a, b ) return a.rand > b.rand end )
-	else
-		table.sort( sortedTbl, function( a, b ) return a.rand < b.rand end )
-	end
-
-	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
 end
 
