@@ -32,19 +32,20 @@ Format = string.format
 -- Send C the flags for any materials we want to create
 --
 local C_Material = Material
+local string_find = string.find
 function Material( name, words )
 
-	if ( !words ) then return C_Material( name ) end
+	if ( not words ) then return C_Material( name ) end
 
-	local str = (words:find("vertexlitgeneric") and "1" or "0")
-	str = str .. (words:find("nocull") and "1" or "0")
-	str = str .. (words:find("alphatest") and "1" or "0")
-	str = str .. (words:find("mips") and "1" or "0")
-	str = str .. (words:find("noclamp") and "1" or "0")
-	str = str .. (words:find("smooth") and "1" or "0")
-	str = str .. (words:find("ignorez") and "1" or "0")
-
-	return C_Material( name, str )
+	return C_Material(name,
+		((string_find(words, "vertexlitgeneric", 1, true)) and "1" or "0") ..
+		((string_find(words, "nocull",           1, true)) and "1" or "0") ..
+		((string_find(words, "alphatest",        1, true)) and "1" or "0") ..
+		((string_find(words, "mips",             1, true)) and "1" or "0") ..
+		((string_find(words, "noclamp",          1, true)) and "1" or "0") ..
+		((string_find(words, "smooth",           1, true)) and "1" or "0") ..
+		((string_find(words, "ignorez",          1, true)) and "1" or "0")
+	)
 
 end
 
