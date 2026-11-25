@@ -83,6 +83,10 @@ end
     Args: string hookName, table gamemodeTable, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
+local function ProtectGamemodeFunction( ok, ... )
+	if ( ok ) then return ... end
+end
+
 function Call( name, gm, ... )
 
 	--
@@ -139,7 +143,7 @@ function Call( name, gm, ... )
 	local GamemodeFunction = gm[ name ]
 	if ( GamemodeFunction == nil ) then return end
 
-	return GamemodeFunction( gm, ... )
+	return ProtectGamemodeFunction( xpcall( GamemodeFunction, ErrorNoHaltWithStack, gm, ... ) )
 
 end
 
