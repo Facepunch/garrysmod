@@ -42,8 +42,7 @@ local intbin = {
 }
 
 function math.IntToBin( int )
-	local str = string.gsub( string.format( "%o", int ), "(.)", function ( d ) return intbin[ d ] end )
-	return str
+	return ( string.gsub( string.format( "%o", int ), "([0-7])", intbin ) )
 end
 
 --[[---------------------------------------------------------
