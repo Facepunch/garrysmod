@@ -79,7 +79,7 @@ function Run( name, ... )
 end
 
 --[[---------------------------------------------------------
-    Name: Run
+    Name: Call
     Args: string hookName, table gamemodeTable, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
@@ -195,6 +195,12 @@ function CallProtected( name, gm, ... )
 
 	ProtectedCall( GamemodeFunction, gm, ... )
 end
+
+--[[---------------------------------------------------------
+	Name: RunProtected
+	Args: string hookName, vararg args. No return values.
+	Desc: Calls hooks associated with the hook name, but protected.
+-----------------------------------------------------------]]
 
 function RunProtected( name, ... )
 	if ( !currentGM ) then
