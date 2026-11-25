@@ -51,7 +51,7 @@ function Remove( event_name, name )
 
 	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Remove' (string expected, got " .. type( event_name ) .. ")" ) return end
 
-	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid
+	local notValid = name == nil or isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid
 	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Remove' (string expected, got " .. type( name ) .. ")" ) return end
 
 	if ( !Hooks[ event_name ] ) then return end
