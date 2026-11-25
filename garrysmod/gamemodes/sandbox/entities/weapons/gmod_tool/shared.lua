@@ -58,6 +58,8 @@ end
 
 function SWEP:SetupDataTables()
 
+	self:NetworkVar( "Int", 0, "Stage" )
+	self:NetworkVar( "Int", 1, "Operation" )
 	self:NetworkVar( "Entity", 0, "TargetEntity1" )
 	self:NetworkVar( "Entity", 1, "TargetEntity2" )
 	self:NetworkVar( "Entity", 2, "TargetEntity3" )
