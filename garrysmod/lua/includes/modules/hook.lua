@@ -7,6 +7,8 @@ local isbool = isbool
 local IsValid = IsValid
 local type = type
 local ErrorNoHaltWithStack = ErrorNoHaltWithStack
+local ProtectedCall = ProtectedCall
+local gmod_GetGamemode = gmod.GetGamemode
 
 module( "hook" )
 
@@ -30,7 +32,7 @@ function Add( event_name, name, func )
 	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) return end
 	if ( !isfunction( func ) ) then ErrorNoHaltWithStack( "bad argument #3 to 'Add' (function expected, got " .. type( func ) .. ")" ) return end
 
-	local notValid = name == nil || isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid
+	local notValid = name == nil or isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid
 	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Add' (string expected, got " .. type( name ) .. ")" ) return end
 
 	if ( Hooks[ event_name ] == nil ) then
@@ -70,7 +72,7 @@ local currentGM
 
 function Run( name, ... )
 	if ( !currentGM ) then
-		currentGM = gmod and gmod.GetGamemode() or nil
+		currentGM = gmod and gmod_GetGamemode() or nil
 	end
 
 	return Call( name, currentGM, ... )
@@ -99,7 +101,7 @@ function Call( name, gm, ... )
 				--
 				-- If it's a string, it's cool
 				--
-				a, b, c, d, e, f = v( ... )
+				_, a, b, c, d, e, f = ProtectedCall( v, ... )
 
 			else
 
@@ -111,7 +113,7 @@ function Call( name, gm, ... )
 					--
 					-- If the object is valid - pass it as the first argument (self)
 					--
-					a, b, c, d, e, f = v( k, ... )
+					_, a, b, c, d, e, f = ProtectedCall( v, k, ... )
 				else
 					--
 					-- If the object has become invalid - remove it
@@ -140,4 +142,65 @@ function Call( name, gm, ... )
 
 	return GamemodeFunction( gm, ... )
 
+end
+
+--[[---------------------------------------------------------
+	Name: CallProtected
+	Args: string hookName, table gamemodeTable, vararg args. No return values.
+	Desc: Calls hooks associated with the hook name, but protected.
+-----------------------------------------------------------]]
+
+function CallProtected( name, gm, ... )
+
+	--
+	-- Run hooks
+	--
+	local HookTable = Hooks[ name ]
+	if ( HookTable != nil ) then
+
+		for k, v in pairs( HookTable ) do
+
+			if ( isstring( k ) ) then
+
+				--
+				-- If it's a string, it's cool
+				--
+				ProtectedCall( v, ... )
+
+			else
+
+				--
+				-- If the key isn't a string - we assume it to be an entity
+				-- Or panel, or something else that IsValid works on.
+				--
+				if ( IsValid( k ) ) then
+					--
+					-- If the object is valid - pass it as the first argument (self)
+					--
+					ProtectedCall( v, k, ... )
+				else
+					--
+					-- If the object has become invalid - remove it
+					--
+					HookTable[ k ] = nil
+				end
+			end
+
+		end
+	end
+
+	if ( !gm ) then return end
+
+	local GamemodeFunction = gm[ name ]
+	if ( GamemodeFunction == nil ) then return end
+
+	ProtectedCall( GamemodeFunction, gm, ... )
+end
+
+function RunProtected( name, ... )
+	if ( !currentGM ) then
+		currentGM = gmod and gmod_GetGamemode() or nil
+	end
+
+	return CallProtected( name, currentGM, ... )
 end
