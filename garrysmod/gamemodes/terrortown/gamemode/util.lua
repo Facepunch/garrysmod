@@ -176,17 +176,17 @@ function util.passthrough(x) return x end
 -- Fisher-Yates shuffle
 local rand = math.random
 function table.Shuffle(t)
-  local n = #t
+   local n = #t
 
-  while n > 1 do
-    -- n is now the last pertinent index
-    local k = rand(n) -- 1 <= k <= n
-    -- Quick swap
-    t[n], t[k] = t[k], t[n]
-    n = n - 1
-  end
+   while n > 1 do
+      -- n is now the last pertinent index
+      local k = rand(n) -- 1 <= k <= n
+      -- Quick swap
+      t[n], t[k] = t[k], t[n]
+      n = n - 1
+   end
 
-  return t
+   return t
 end
 
 -- Override with nil check
@@ -372,6 +372,11 @@ end
 
 -- Returns the number of bits required to network an integer
 function util.BitsRequired(num, signed)
+   if num < 0 then
+      num = math.abs(num)
+      signed = true
+   end
+
    local bits, max = 0, 1
    while max <= num do
       bits = bits + 1
@@ -383,4 +388,27 @@ function util.BitsRequired(num, signed)
    end
 
    return bits
+end
+
+function util.ReadBitFields(num_chunks, remainder_bits)
+   local tbl = {}
+   for i = 1, num_chunks do
+      if i != num_chunks or remainder_bits == 0 or remainder_bits == 32 then
+         tbl[i] = net.ReadInt(32)
+      else
+         tbl[i] = net.ReadUInt(remainder_bits)
+      end
+   end
+
+   return tbl
+end
+
+function util.WriteBitFields(tbl, remainder_bits)
+   for i, chunk in ipairs(tbl) do
+      if i != #tbl or remainder_bits == 0 or remainder_bits == 32 then
+         net.WriteInt(chunk, 32)
+      else
+         net.WriteUInt(chunk, remainder_bits)
+      end
+   end
 end

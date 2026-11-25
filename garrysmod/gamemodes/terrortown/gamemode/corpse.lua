@@ -50,13 +50,13 @@ local function IdentifyBody(ply, rag)
       return
    end
 
-   if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
+   local traitor = rag.was_role == ROLE_TRAITOR
+   if not hook.Run("TTTCanIdentifyCorpse", ply, rag, traitor) then
       return
    end
 
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
-   local traitor = (rag.was_role == ROLE_TRAITOR)
 
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
@@ -166,8 +166,6 @@ concommand.Add("ttt_call_detective", CallDetective)
 
 local bitsRequired = util.BitsRequired
 
-local plyBits = bitsRequired(game.MaxPlayers()) -- first game.MaxPlayers() of entities are for players.
-
 function GM:TTTCanSearchCorpse(ply, corpse, is_covert, is_long_range, was_traitor)
    -- return true to allow corpse search, false to disallow.
    return true
@@ -182,13 +180,13 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       return
    end
 
-   if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
+   local traitor = rag.was_role == ROLE_TRAITOR
+   if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, traitor) then
       return
    end
 
    -- init a heap of data we'll be sending
    local nick  = CORPSE.GetPlayerNick(rag)
-   local traitor = (rag.was_role == ROLE_TRAITOR)
    local role  = rag.was_role
    local eq    = rag.equipment or EQUIP_NONE
    local c4    = rag.bomb_wire or 0
@@ -251,9 +249,9 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    -- Send a message with basic info
    net.Start("TTT_RagdollSearch")
       net.WriteUInt(rag:EntIndex(), 16) -- 16 bits
-      net.WriteUInt(owner, plyBits) -- 128 max players. ( 8 bits )
+      net.WriteUInt(owner, MAX_PLAYER_BITS) -- 128 max players. ( 8 bits )
       net.WriteString(nick)
-      net.WriteInt(eq, bitsRequired(EQUIP_MAX, true)) -- Equipment ( default: 4 bits )
+      util.WriteBitFields(eq, bitsRequired(EQUIP.GetBitFlag(EQUIP_MAX))) -- Equipment ( default: 3 bits )
       net.WriteUInt(role, 2) -- ( 2 bits )
       net.WriteUInt(c4, bitsRequired(C4_WIRE_COUNT)) -- 0 -> 2^bits ( default c4: 3 bits )
       net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits )
@@ -264,18 +262,18 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
 
       net.WriteUInt(#kill_entids, 8)
       for k, idx in ipairs(kill_entids) do
-         net.WriteUInt(idx, plyBits)
+         net.WriteUInt(idx, MAX_PLAYER_BITS)
       end
 
-      net.WriteUInt(lastid, plyBits)
+      net.WriteUInt(lastid, MAX_PLAYER_BITS)
 
       -- Who found this, so if we get this from a detective we can decide not to
       -- show a window
-      net.WriteUInt(ply:EntIndex(), plyBits)
+      net.WriteUInt(ply:EntIndex(), MAX_PLAYER_BITS)
 
       net.WriteString(words)
 
-      -- 94 + string data + plyBits * (3 + #kill_entids)
+      -- 94 + string data + MAX_PLAYER_BITS * (3 + #kill_entids)
 
    -- If found by detective, send to all, else just the finder
    if ply:IsActiveDetective() then
@@ -406,7 +404,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
    -- if someone searches this body they can find info on the victim and the
    -- death circumstances
-   rag.equipment = ply:GetEquipmentItems()
+   rag.equipment = ply:GetEquipmentItems(true)
    rag.was_role = ply:GetRole()
    rag.bomb_wire = ply.bomb_wire
    rag.dmgtype = dmginfo:GetDamageType()
