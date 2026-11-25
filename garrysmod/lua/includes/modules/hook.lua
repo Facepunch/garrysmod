@@ -8,7 +8,7 @@ local IsValid = IsValid
 local type = type
 local ErrorNoHaltWithStack = ErrorNoHaltWithStack
 local ProtectedCall = ProtectedCall
-local gmod_GetGamemode = gmod.GetGamemode
+local xpcall = xpcall
 
 module( "hook" )
 
@@ -72,12 +72,11 @@ local currentGM
 
 function Run( name, ... )
 	if ( !currentGM ) then
-		currentGM = gmod and gmod_GetGamemode() or nil
+		currentGM = gmod and gmod.GetGamemode() or nil
 	end
 
 	return Call( name, currentGM, ... )
 end
-
 
 --[[---------------------------------------------------------
     Name: Run
@@ -101,7 +100,7 @@ function Call( name, gm, ... )
 				--
 				-- If it's a string, it's cool
 				--
-				_, a, b, c, d, e, f = ProtectedCall( v, ... )
+				_, a, b, c, d, e, f = xpcall( v, ErrorNoHaltWithStack, ... )
 
 			else
 
@@ -113,7 +112,7 @@ function Call( name, gm, ... )
 					--
 					-- If the object is valid - pass it as the first argument (self)
 					--
-					_, a, b, c, d, e, f = ProtectedCall( v, k, ... )
+					_, a, b, c, d, e, f = xpcall( v, ErrorNoHaltWithStack, k, ... )
 				else
 					--
 					-- If the object has become invalid - remove it
@@ -199,7 +198,7 @@ end
 
 function RunProtected( name, ... )
 	if ( !currentGM ) then
-		currentGM = gmod and gmod_GetGamemode() or nil
+		currentGM = gmod and gmod.GetGamemode() or nil
 	end
 
 	return CallProtected( name, currentGM, ... )
