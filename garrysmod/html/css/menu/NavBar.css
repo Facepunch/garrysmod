@@ -297,7 +297,6 @@ UL.language_list LI:hover
 	list-style: none;
 	margin: 3px;
 	/*cursor: pointer;*/
-	display: none;
 }
 
 UL.games_list.popup LI
