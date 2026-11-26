@@ -88,21 +88,26 @@ end
 -----------------------------------------------------------]]
 local string_ToTable = string.ToTable
 local string_find = string.find
+
 function string.Explode( separator, str, withpattern )
 	if ( separator == "" ) then return string_ToTable( str ) end
-	if ( withpattern == nil ) then withpattern = false end
+	withpattern = not withpattern
 
 	local ret = {}
 	local current_pos = 1
+	local i = 0
 
-	for i = 1, string_len( str ) do
-		local start_pos, end_pos = string_find( str, separator, current_pos, not withpattern )
+	while true do
+		local start_pos, end_pos = string_find( str, separator, current_pos, withpattern )
 		if ( not start_pos ) then break end
+
+		i = i + 1
 		ret[ i ] = string_sub( str, current_pos, start_pos - 1 )
 		current_pos = end_pos + 1
 	end
 
-	ret[ #ret + 1 ] = string_sub( str, current_pos )
+	i = i + 1
+	ret[ i ] = string_sub( str, current_pos )
 
 	return ret
 end
