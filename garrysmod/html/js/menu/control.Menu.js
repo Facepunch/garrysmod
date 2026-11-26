@@ -25,28 +25,11 @@ function MenuController( $scope, $rootScope )
 
 	gScope.Gamemode = "";
 
-	$scope.ToggleGamemodes = function()
-	{
-		$( ".popup:not(.gamemode_list)" ).hide();
-		$( ".gamemode_list" ).toggle();
-	}
-
-	$scope.ToggleLanguage = function()
-	{
-		$( ".popup:not(.language_list)" ).hide();
-		$( ".language_list" ).toggle();
-	}
-
-	$scope.ToggleGames = function()
-	{
-		$( ".popup:not(.games_list)" ).hide();
-		$( ".games_list" ).toggle();
-	}
+	$scope.PopupOpen = "";
 
 	$scope.TogglePopup = function( name )
 	{
-		$( ".popup:not("+name+")" ).hide();
-		$( name ).toggle();
+		$scope.PopupOpen = ( $scope.PopupOpen == name ? "" : name );
 	}
 
 	$scope.SelectGamemode = function( gm )
@@ -55,7 +38,7 @@ function MenuController( $scope, $rootScope )
 		$scope.GamemodeTitle = gm.title;
 		lua.Run( "RunConsoleCommand( \"gamemode\", %s )", gm.name );
 
-		$( ".gamemode_list" ).hide();
+		$scope.PopupOpen = "";
 	}
 
 	$scope.SelectLanguage = function( lang )
@@ -63,7 +46,7 @@ function MenuController( $scope, $rootScope )
 		$rootScope.Language = lang;
 		lua.Run( "RunConsoleCommand( \"gmod_language\", %s )", lang );
 
-		$( ".language_list" ).hide();
+		$scope.PopupOpen = "";
 	}
 
 	$scope.MenuOption = function( btn, v )

@@ -140,10 +140,6 @@ UL.games_list
 {
 	right: 150px;
 	width: 260px;
-	overflow: auto;
-	max-height: 300px;
-	padding: 0;
-	border: 3px solid #333;
 }
 
 ul.games_list .popup .open
@@ -212,9 +208,7 @@ UL.games_list > hr
 
 UL.gamemode_list
 {
-	overflow: auto;
 	max-height: 80%;
-	border: 3px solid #333;
 }
 
 UL.gamemode_list LI
@@ -247,7 +241,6 @@ UL.language_list
 	right: 100px;
 	background-color: #eee;
 	text-align: center;
-	border: 3px solid #333;
 	padding-bottom: 4px;
 }
 
@@ -290,14 +283,16 @@ UL.language_list LI:hover
 	bottom: 50px;
 	right: 10px;
 	width: 230px;
+	max-height: 300px;
 	background-color: #333;
 	z-index: 1000;
 	padding: 0px;
+	border: 3px solid #333;
 	border-radius: 3px;
 	list-style: none;
 	margin: 3px;
+	overflow: auto;
 	/*cursor: pointer;*/
-	display: none;
 }
 
 UL.games_list.popup LI
@@ -313,11 +308,6 @@ UL.games_list.popup LI
 .kinect_settings
 {
 	right: 150px;
-	width: 230px;
-	overflow: auto;
-	max-height: 300px;
-	padding: 0;
-	border: 3px solid #333;
 }
 
 .kinect_settings LI
